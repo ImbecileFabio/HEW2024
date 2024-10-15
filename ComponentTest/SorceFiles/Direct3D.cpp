@@ -440,7 +440,9 @@ HRESULT CompileShader(const char* szFileName, LPCSTR szEntryPoint, LPCSTR szShad
 //--------------------------------------------------------------------------------------
 HRESULT CreateVertexShader(ID3D11Device* device, const char* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel,
 	D3D11_INPUT_ELEMENT_DESC* layout, unsigned int numElements, ID3D11VertexShader** ppVertexShader, ID3D11InputLayout** ppVertexLayout)
-{
+{	
+	std::cout << "[DirectX] -> 頂点シェーダを生成開始\n";
+
 	HRESULT   hr;
 	ID3DBlob* pBlob = nullptr;
 	void* ShaderObject;
@@ -475,6 +477,8 @@ HRESULT CreateVertexShader(ID3D11Device* device, const char* szFileName, LPCSTR 
 		return E_FAIL;
 	}
 
+	std::cout << "[DirectX] -> 頂点シェーダを生成終了\n";
+
 	return S_OK;
 }
 
@@ -483,6 +487,8 @@ HRESULT CreateVertexShader(ID3D11Device* device, const char* szFileName, LPCSTR 
 //--------------------------------------------------------------------------------------
 HRESULT CreatePixelShader(ID3D11Device* device, const char* szFileName, LPCSTR szEntryPoint, LPCSTR szShaderModel, ID3D11PixelShader** ppPixelShader)
 {
+	std::cout << "[DirectX] -> ピクセルシェーダを生成開始\n";
+
 	HRESULT   hr;
 	ID3DBlob* pBlob = nullptr;
 	void* ShaderObject;
@@ -502,6 +508,8 @@ HRESULT CreatePixelShader(ID3D11Device* device, const char* szFileName, LPCSTR s
 		if (pBlob)pBlob->Release();
 		return E_FAIL;
 	}
+
+	std::cout << "[DirectX] -> ピクセルシェーダを生成終了\n";
 
 	return S_OK;
 }

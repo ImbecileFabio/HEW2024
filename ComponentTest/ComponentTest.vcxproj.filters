@@ -97,7 +97,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="SorceFiles\PixelShader.hlsl" />
-    <FxCompile Include="SorceFiles\VertexShader.hlsl" />
+    <FxCompile Include="PixelShader.hlsl" />
+    <FxCompile Include="VertexShader.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CONOUT&amp;" />
   </ItemGroup>
 </Project>

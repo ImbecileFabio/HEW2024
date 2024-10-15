@@ -155,15 +155,17 @@
     <ClInclude Include="SorceFiles\WICTextureLoader.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="SorceFiles\PixelShader.hlsl">
+    <FxCompile Include="PixelShader.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
     </FxCompile>
-    <FxCompile Include="SorceFiles\VertexShader.hlsl">
+    <FxCompile Include="VertexShader.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vs_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <FileType>Document</FileType>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CONOUT&amp;" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

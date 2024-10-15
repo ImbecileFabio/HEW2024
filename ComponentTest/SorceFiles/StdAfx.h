@@ -7,6 +7,8 @@
 #ifndef STDAFX_H_
 #define STDAFX_H_
 
+#undef UNICODE
+
 // デバッグ時以外はコメントアウト
 #define DEBUG_
 
