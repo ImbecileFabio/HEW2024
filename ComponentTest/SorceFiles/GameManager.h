@@ -76,6 +76,7 @@ private:
 	// ここに作ったオブジェクトを置いていく(?)
 
 	class Direct3D* direct3D_;
+	class Input* input_;
 };
 
 

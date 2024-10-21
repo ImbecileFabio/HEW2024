@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\Input.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Logger.cpp" />
     <ClCompile Include="SorceFiles\Direct3D.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
@@ -141,6 +142,7 @@
     <ClCompile Include="SorceFiles\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\Input.h" />
     <ClInclude Include="SorceFiles\SubSystem\Logger.h" />
     <ClInclude Include="SorceFiles\Direct3D.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
