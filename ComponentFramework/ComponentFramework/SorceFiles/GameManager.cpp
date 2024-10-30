@@ -10,6 +10,7 @@
 #include "GameManager.h"
 #include "Renderer.h"
 #include "GameObjects/GameObject.h"
+#include "GameObjects/GameObject/Player.h"
 
 
 
@@ -18,6 +19,7 @@
 //-----------------------------------------------------------------
 GameManager::GameManager()
 	:updating_game_objects_(false)
+	, renderer_(nullptr)
 {
 	std::cout << "[ゲームマネージャー] -> 起動\n";
 	this->InitAll();
@@ -42,15 +44,16 @@ void GameManager::InitAll(void)
 
 	// レンダラー初期化
 	renderer_ = new Renderer(this);
+	renderer_->Init();
+
 
 	game_objects_.clear();
 	pending_game_objects_.clear();
-	renderer_->Init();
 
 	std::cout << "[ゲームマネージャー] -> ゲームオブジェクト生成開始\n";
 	std::cout << "\n";
 
-	// player_ = new Player(this);
+	player_ = new Player(this);
 
 	std::cout << "\n";
 	std::cout << "[ゲームマネージャー] -> ゲームオブジェクト生成終了\n";
@@ -61,9 +64,17 @@ void GameManager::InitAll(void)
 //-----------------------------------------------------------------
 void GameManager::UninitAll(void)
 {
-	std::cout << "[ゲームマネージャー] -> 終了処理\n";
+	std::cout << "[ゲームマネージャー] -> リソース開放開始\n";
 
-	renderer_->Uninit();
+	if (renderer_)
+	{
+		renderer_->Uninit();
+		delete renderer_;
+		renderer_ = nullptr;
+	}
+
+
+	std::cout << "[ゲームマネージャー] -> リソース開放終了\n";
 
 
 
@@ -87,13 +98,13 @@ void GameManager::UpdateAll()
 void GameManager::GenerateOutputAll(void)
 {
 	std::cout << "[ゲームマネージャ] -> 出力生成処理\n";
-	// 初期色に
-	renderer_->Begin();
 
-	renderer_->Draw();
-
-	// 描画終了
-	renderer_->End();
+	if(renderer_)
+	{
+		renderer_->Begin();
+		renderer_->Draw();
+		renderer_->End();
+	}
 }
 
 //-----------------------------------------------------------------

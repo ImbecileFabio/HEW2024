@@ -13,6 +13,9 @@
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
+class GameObject;
+class Renderer;
+class Player;
 
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
@@ -23,7 +26,7 @@ public:
 	GameManager(void);
 	~GameManager(void);
 	
-	class GameManager* Create(void)
+	static GameManager* Create(void)
 	{
 		return new GameManager();
 	}
@@ -33,11 +36,11 @@ public:
 	void UpdateAll(void);
 	void GenerateOutputAll(void);
 
-	class Renderer* GetRenderer(void) { return renderer_; }
+	Renderer* GetRenderer(void) { return renderer_; }
 
 	// ゲームオブジェクトの追加
-	void AddGameObject(class GameObject* gameObject);
-	void RemoveGameObject(class GameObject* gameObject);
+	void AddGameObject(GameObject* gameObject);
+	void RemoveGameObject(GameObject* gameObject);
 
 private:
 	void UpdateGameObjects(void);	//更新処理
@@ -46,16 +49,17 @@ private:
 	bool updating_game_objects_;
 
 	// ゲームオブジェクト
-	std::vector<class GameObject*> game_objects_;
-	std::vector<class GameObject*> pending_game_objects_;
+	std::vector<GameObject*> game_objects_;
+	std::vector<GameObject*> pending_game_objects_;
 
 private:
 	// 作ったオブジェクトをここに記述
-	class Renderer* renderer_;	// レンダラー
+	Renderer* renderer_;	// レンダラー
+	Player* player_;		// プレイヤー
 };
 
 
-#endif GAME_MANAGER_H_
+#endif //GAME_MANAGER_H_
 //=================================================================
 //			End of File 
 //=================================================================

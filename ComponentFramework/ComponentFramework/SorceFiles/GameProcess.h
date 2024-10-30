@@ -14,7 +14,7 @@
 
 
 /*----- 前方宣言 -----*/
-
+class GameManager;
 
 //--------------------------------------------------
 // ゲームプロセスクラス
@@ -29,22 +29,14 @@ public:
 	void Run(void);
 	void ShutDown(void);
 
-	// 幅を取得
+	// ウィンドウの幅と高さを返す
 	static uint32_t GetWidth() { return width_; }
-
-	// 高さを取得
 	static uint32_t GetHeight() { return height_; }
 	
 	// ウィンドウハンドルを返す
-	static HWND GetWindow(){ return hWnd_; }
+	static HWND GetWindowHandle(){ return hWnd_; }
 
 private:
-	static HINSTANCE hInst_;	// インスタンスハンドル
-	static HWND		 hWnd_;		// ウィンドウハンドル
-	static uint32_t	 width_;	// ウィンドウの横幅
-	static uint32_t	 height_;	// ウィンドウの縦幅
-
-	class GameManager* game_manager_;
 
 	bool Init(void);
 	void Uninit(void);
@@ -54,6 +46,13 @@ private:
 	void GenerateOutput(void);
 
 	static LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp);
+
+	static HINSTANCE hInst_;	// アプリケーションインスタンスハンドル
+	static HWND		 hWnd_;		// ウィンドウハンドル
+	static uint32_t	 width_;	// ウィンドウの横幅
+	static uint32_t	 height_;	// ウィンドウの縦幅
+
+	GameManager* game_manager_;	// ゲーム管理インスタンス
 };
 
 #endif // GAME_PROCESS_H_

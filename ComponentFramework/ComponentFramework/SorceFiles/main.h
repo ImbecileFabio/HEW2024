@@ -18,10 +18,6 @@
 //--------------------------------------------------
 // 
 // SpriteComponent‚Ì•`‰æ
-// Index,VertexBuffer
-// GameManager‚Ìstd::iter_swap
-// Renderer‚ÌGetDrawOrder
-// Renderer‚Ìsprites_‚Ìstatic–â‘è
 //
 //
 //

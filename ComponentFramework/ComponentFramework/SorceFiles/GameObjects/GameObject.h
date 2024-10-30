@@ -12,7 +12,8 @@
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
-
+class GameManager;
+class Component;
 
 //--------------------------------------------------
 // ゲームオブジェクトクラス
@@ -53,10 +54,9 @@ public:
 
 	void Init(void);
 	void Uninit(void);
-	virtual void InputGameObject(void);	// 後でoverrideできるように
 	void Update(void);
 	void UpdateComponents(void);
-	virtual void UpdateGameObject(void);	// 後でoverrideできるように
+	virtual void UpdateGameObject(void);	// オーバーライド用
 
 	// 姿勢情報の更新
 	void ComputeWorldTransform();
@@ -67,7 +67,7 @@ public:
 	void SetState(State state) { state_ = state; }
 	State GetState(void) { return state_; }
 
-	virtual TypeID GetType(void) const { return TypeID::GameObject; }	// 後でoverrideできるように
+	virtual TypeID GetType(void) const { return TypeID::GameObject; }	//オーバーライド用
 
 	const std::vector<class Component*>& GetComponents() const { return components_; }
 

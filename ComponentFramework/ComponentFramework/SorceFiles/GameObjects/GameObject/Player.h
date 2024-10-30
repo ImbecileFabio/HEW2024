@@ -1,8 +1,8 @@
 //==================================================
-// [Camera.h] カメラオブジェクトヘッダ
+// [Player.h] プレイヤーオブジェクトヘッダ
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：カメラの処理を宣言
+// 説明：プレイヤーの操作および制御を行うクラス
 //==================================================
 #ifndef PLAYER_H_
 #define PLAYER_H_
@@ -14,19 +14,20 @@
 /*----- 前方宣言 -----*/
 
 //--------------------------------------------------
-// カエラオブジェクト
+// プレイヤーオブジェクト
 //--------------------------------------------------
 class Player : public GameObject
 {
 public:
 	Player(class GameManager* gameManager);
-	~Player(void);
+	~Player();
 
 	void UpdateGameObject(void) override;
 
 	virtual TypeID GetType(void) const { return TypeID::Player; }
 private:
 	class SpriteComponent* sprite_;
+	class TransformComponent* transform_;
 };
 
 

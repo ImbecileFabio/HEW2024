@@ -12,13 +12,14 @@
 #include "GameManager.h"
 #include "Renderer.h"
 
-const auto ClassName = TEXT("2024 framework ひな形");	// ウィンドウクラス
-const auto WindowName = TEXT("2024 framework ひな形(フィールド描画)");	// ウィンドウ名
+// ウィンドウクラス、ウィンドウ名の設定
+const auto ClassName = TEXT("2024 framework ひな形");
+const auto WindowName = TEXT("2024 framework ひな形(フィールド描画)");
 
-HINSTANCE	GameProcess::hInst_;		// インスタンスハンドル
-HWND		GameProcess::hWnd_;			// ウィンドウハンドル
-uint32_t	GameProcess::width_;		// ウィンドウの横幅
-uint32_t	GameProcess::height_;		// ウィンドウの縦幅
+HINSTANCE	GameProcess::hInst_ = nullptr;
+HWND		GameProcess::hWnd_ = nullptr;
+uint32_t	GameProcess::width_ = 0;
+uint32_t	GameProcess::height_ = 0;
 
 //--------------------------------------------------
 // コンストラクタ
@@ -48,12 +49,7 @@ bool GameProcess::StartUp(void)
 	std::cout << "[ゲームプロセス] -> 起動\n";
 	std::cout << "\n";
 
-	// 成功したかどうか
-	bool is_init_success;
-
-	is_init_success = GameProcess::Init();
-
-	return is_init_success;
+	return GameProcess::Init();
 }
 
 //--------------------------------------------------
@@ -67,21 +63,16 @@ void GameProcess::Run(void)
 	// メッセージ
 	MSG msg = {};
 
-	// FPS計測用変数
+	LARGE_INTEGER frequency;
+	QueryPerformanceFrequency(&frequency);
+
+	LARGE_INTEGER prevCount;
+	QueryPerformanceCounter(&prevCount);
+
 	int fpsCounter = 0;
-	long long oldTick = GetTickCount64(); // 前回計測時の時間
-	long long nowTick = oldTick; // 今回計測時の時間
-
-	// FPS固定用変数
-	LARGE_INTEGER liWork; // workがつく変数は作業用変数
-	long long frequency;// どれくらい細かく時間をカウントできるか
-	QueryPerformanceFrequency(&liWork);
-	frequency = liWork.QuadPart;
-	// 時間（単位：カウント）取得
-	QueryPerformanceCounter(&liWork);
-	long long oldCount = liWork.QuadPart;// 前回計測時の時間
-	long long nowCount = oldCount;// 今回計測時の時間
-
+	int fps = 0;	// 表示するfps
+	DWORD lastTime = GetTickCount64();
+	
 	//--------------------------------------------------
 	// ゲームループ
 	//--------------------------------------------------
@@ -99,22 +90,33 @@ void GameProcess::Run(void)
 		}
 		else
 		{
-			QueryPerformanceCounter(&liWork);	// 現在時間を取得
-			nowCount = liWork.QuadPart;
+			LARGE_INTEGER currCount;
+			QueryPerformanceCounter(&currCount);	// 現在時間を取得
 			// 1/60	秒が経過したか?
-			if (nowCount >= oldCount + frequency / 60)
+			if (currCount.QuadPart >= prevCount.QuadPart + frequency.QuadPart / 60)
 			{
 				GameProcess::Update();
 				GameProcess::GenerateOutput();
 
-				fpsCounter++;	// ゲームを実行したら+1する
-				oldCount = nowCount;
+				fpsCounter++;
+				prevCount = currCount;
+			}
+			// 毎秒FPSをウィンドウタイトルに反映
+			DWORD currTime = GetTickCount64();
+			if (currTime - lastTime >= 1000)	//	一秒ごとに更新
+			{
+				fps = fpsCounter;
+				fpsCounter = 0;
+				lastTime = currTime;
+
+				// ウィンドウタイトルの更新
+				std::string windowTitle = std::string(WindowName) + " - FPS:" + std::to_string(fps);
+				SetWindowTextA(hWnd_, windowTitle.c_str());
+
 			}
 		}
 	}
 
-	// 終了処理
-	//Uninit();
 }
 
 //--------------------------------------------------
@@ -156,8 +158,10 @@ void GameProcess::Uninit(void)
 	std::cout << "[ゲームプロセス] -> ◆終了処理開始◆\n";
 	{
 		delete game_manager_;
+		game_manager_ = nullptr;
 	}
 
+	GameProcess::UninitWnd();
 	std::cout << "[ゲームプロセス] -> ◇終了処理終了◇\n";
 	std::cout << "\n";
 

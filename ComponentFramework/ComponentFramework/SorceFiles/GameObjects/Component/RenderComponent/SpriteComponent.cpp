@@ -41,7 +41,7 @@ void SpriteComponent::SetObjectName(std::string _objectName)
 
 void SpriteComponent::Draw(void)
 {
-	std::cout << "[" +  object_name_ + "] -> •`‰æ\n";
+	std::cout << "ƒ" + object_name_ + "„ -> •`‰æ\n";
 
 
 
