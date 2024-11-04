@@ -31,8 +31,10 @@ public:
 		, RenderComponent
 		, SpriteComponent
 
-		// Õ“Ë”»’è
-		, ColliderComponent
+		// ’¸“_î•ñ
+		, VertexComponent
+		// 
+		, IndexComponent
 
 		// p¨§Œä
 		, TransformComponent

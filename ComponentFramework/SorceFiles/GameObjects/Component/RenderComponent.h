@@ -10,6 +10,10 @@
 /*----- インクルード -----*/
 #include "../Component.h"
 
+/*----- 構造体宣言 -----*/
+
+/*----- 前方宣言 -----*/
+
 //--------------------------------------------------
 // 描画コンポーネントのベースクラス
 //--------------------------------------------------
@@ -22,7 +26,6 @@ public:
 	TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 
 private:
-
 };
 
 #endif	// RENDER_COMPONENT_H_

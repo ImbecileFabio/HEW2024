@@ -14,12 +14,12 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Player::Player(class GameManager* gameManager)
-	:GameObject(gameManager)
+Player::Player(class GameManager* _gameManager)
+	:GameObject(_gameManager)
 {
 	std::cout << "＜プレイヤー＞ -> 生成\n";
 
-	sprite_ = new SpriteComponent(this);
+	sprite_ = new SpriteComponent(this, L"../../../Asset/Texture/icon.png");
 	sprite_->SetObjectName("プレイヤー");
 
 	transform_ = new TransformComponent(this);

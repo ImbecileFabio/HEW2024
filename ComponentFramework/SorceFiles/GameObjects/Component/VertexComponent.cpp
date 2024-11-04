@@ -1,37 +1,37 @@
 //==================================================
-// [ColliderComponent.h] コライダーのベース
+// [VertexComponent.h] 
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：だそうです
+// 説明：
 //==================================================
 
 
 /*----- インクルード -----*/
 #include "../../StdAfx.h"
-#include "ColliderComponent.h"
+#include "VertexComponent.h"
 
 using namespace DirectX::SimpleMath;
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-ColliderComponent::ColliderComponent(GameObject* owner, int updateOrder)
+VertexComponent::VertexComponent(GameObject* owner, int updateOrder)
 	:Component(owner, updateOrder)
 {
 }
 	
 
 //--------------------------------------------------
-// コライダーコンポーネント
+// デストラクタ
 //--------------------------------------------------
-ColliderComponent::~ColliderComponent(void)
+VertexComponent::~VertexComponent(void)
 {
 }
 
 //=======================================
 //初期化処理
 //=======================================
-void ColliderComponent::Init()
+void VertexComponent::Init()
 {
 	// 頂点データ
 	std::vector<VERTEX_3D>	vertices;
@@ -54,18 +54,5 @@ void ColliderComponent::Init()
 	vertices[3].uv = Vector2(0, 0);
 
 	// 頂点バッファ生成
-	m_VertexBuffer.Create(vertices);
-
-	// インデックスバッファ生成
-	std::vector<unsigned int> indices;
-	indices.resize(4);
-
-	indices[0] = 0;
-	indices[1] = 1;
-	indices[2] = 2;
-	indices[3] = 3;
-
-	// インデックスバッファ生成
-	m_IndexBuffer.Create(indices);
-
+	vertex_buffer_.Create(vertices);
 }

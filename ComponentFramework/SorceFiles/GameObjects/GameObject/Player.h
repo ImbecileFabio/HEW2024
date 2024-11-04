@@ -19,15 +19,15 @@
 class Player : public GameObject
 {
 public:
-	Player(class GameManager* gameManager);
+	Player(class GameManager* _gameManager);
 	~Player();
 
 	void UpdateGameObject(void) override;
 
 	virtual TypeID GetType(void) const { return TypeID::Player; }
 private:
-	class SpriteComponent* sprite_;
-	class TransformComponent* transform_;
+	class SpriteComponent* sprite_ = nullptr;
+	class TransformComponent* transform_ = nullptr;
 };
 
 

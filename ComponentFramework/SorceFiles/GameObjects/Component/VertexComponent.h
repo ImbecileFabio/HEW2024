@@ -1,11 +1,11 @@
 //==================================================
-// [ColliderComponent.h] コライダーのベース
+// [VertexComponent.h] コライダーのベース
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：だそうです
+// 説明：こいつを継承して当たり判定を作る
 //==================================================
-#ifndef COLLIDER_COMPONENT_H_
-#define COLLIDER_COMPONENT_H_
+#ifndef VERTEX_COMPONENT_H_
+#define VERTEX_COMPONENT_H_
 
 /*----- インクルード -----*/
 #include "../Component.h"
@@ -19,20 +19,20 @@
 //--------------------------------------------------
 // コライダーコンポーネント
 //--------------------------------------------------
-class ColliderComponent :
+class VertexComponent :
     public Component
 {
 public:
-    ColliderComponent(class GameObject* owner, int updateOrder = 100);
-    ~ColliderComponent(void);
+    VertexComponent(class GameObject* owner, int updateOrder = 100);
+    ~VertexComponent(void);
 
     void Init();
 
-    virtual TypeID GetComponentType() const override { return TypeID::ColliderComponent; }
+    virtual TypeID GetComponentType() const override { return TypeID::VertexComponent; }
 
 private:
-    IndexBuffer	 m_IndexBuffer; // インデックスバッファ
-    VertexBuffer<VERTEX_3D>	m_VertexBuffer; // 頂点バッファ
+    IndexBuffer	 index_buffer_; // インデックスバッファ
+    VertexBuffer<VERTEX_3D>	vertex_buffer_; // 頂点バッファ
 
 };
 

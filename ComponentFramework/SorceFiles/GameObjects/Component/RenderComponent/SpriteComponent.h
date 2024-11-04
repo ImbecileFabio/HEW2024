@@ -9,6 +9,7 @@
 
 /*----- インクルード -----*/
 #include "../RenderComponent.h"
+#include "../../../WICTextureLoader.h"
 
 /*----- 構造体定義 -----*/
 
@@ -21,7 +22,7 @@ class SpriteComponent :
     public RenderComponent
 {
 public:
-    SpriteComponent(class GameObject* owner, int drawOrder = 100);
+    SpriteComponent(class GameObject* _owner, const wchar_t* _imgname, int _drawOrder = 100);
     ~SpriteComponent(void);
 
     void SetObjectName(std::string _objectName);
@@ -33,6 +34,8 @@ public:
     TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 
 private:
+    ID3D11ShaderResourceView* texture_view_ = nullptr;
+
     int draw_order_;            // 更新順位
     std::string object_name_;   // オブジェクト名
 };
@@ -41,5 +44,4 @@ private:
 #endif	// SPRITE_COMPONENT_H_
 //==================================================
 //				End of FIle
-//==================================================#include "../RenderComponent.h"
-
+//==================================================

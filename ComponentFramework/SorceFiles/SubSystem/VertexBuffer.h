@@ -20,7 +20,7 @@ using Microsoft::WRL::ComPtr;
 template <typename T>
 class VertexBuffer {
 
-	ComPtr<ID3D11Buffer> m_VertexBuffer;
+	ComPtr<ID3D11Buffer> vertex_buffer_;
 
 public:
 	void Create(const std::vector<T>& vertices) {
@@ -36,7 +36,7 @@ public:
 			sizeof(T),						// １頂点当たりバイト数
 			(unsigned int)vertices.size(),	// 頂点数
 			(void*)vertices.data(),			// 頂点データ格納メモリ先頭アドレス
-			&m_VertexBuffer);				// 頂点バッファ
+			&vertex_buffer_);				// 頂点バッファ
 
 		assert(sts == true);
 	}
@@ -51,7 +51,7 @@ public:
 		// 頂点バッファをセットする
 		unsigned int stride = sizeof(T);
 		unsigned  offset = 0;
-		devicecontext->IASetVertexBuffers(0, 1, m_VertexBuffer.GetAddressOf(), &stride, &offset);
+		devicecontext->IASetVertexBuffers(0, 1, vertex_buffer_.GetAddressOf(), &stride, &offset);
 
 	}
 
@@ -61,13 +61,13 @@ public:
 		//頂点データ書き換え
 		D3D11_MAPPED_SUBRESOURCE msr;
 		HRESULT hr = Renderer::GetDeviceContext()->Map(
-			m_VertexBuffer.Get(),
+			vertex_buffer_.Get(),
 			0,
 			D3D11_MAP_WRITE_DISCARD, 0, &msr);
 
 		if (SUCCEEDED(hr)) {
 			memcpy(msr.pData, vertices.data(), vertices.size() * sizeof(T));
-			Renderer::GetDeviceContext()->Unmap(m_VertexBuffer.Get(), 0);
+			Renderer::GetDeviceContext()->Unmap(vertex_buffer_.Get(), 0);
 		}
 	}
 };
