@@ -130,7 +130,7 @@ void GameManager::RemoveGameObject(GameObject* gameObject)
 	if (iter != game_objects_.end())
 	{
 		// 一致する"gameObject"をコンテナの末尾へ移動させ、メモリ自体を破棄する
-		std::iter_swap(iter, game_objects_.end() - 1);
+		std::ranges::iter_swap(iter, game_objects_.end() - 1);
 		game_objects_.pop_back();
 	}
 }
