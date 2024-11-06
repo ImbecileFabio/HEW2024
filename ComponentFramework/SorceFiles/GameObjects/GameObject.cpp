@@ -10,6 +10,7 @@
 #include "../GameManager.h"
 #include "Component.h"
 #include "GameObject.h"
+#include "Component/TransformComponent.h"
 
 
 // ゲームオブジェクトのリスト
@@ -33,8 +34,8 @@ GameObject::GameObject(GameManager* gameManager)
 	// ゲームオブジェクトを管理先へ追加
 	game_manager_->AddGameObject(this);
 
-	//// 姿勢制御コンポーネントの追加
-	//transform_component_ = new TransformComponent(this);
+	// 姿勢制御コンポーネントの追加
+	transform_component_ = new TransformComponent(this);
 
 	// ゲームオブジェクトの初期化
 	this->Init();

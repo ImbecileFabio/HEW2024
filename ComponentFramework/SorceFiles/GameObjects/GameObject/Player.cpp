@@ -19,10 +19,8 @@ Player::Player(class GameManager* _gameManager)
 {
 	std::cout << "＜プレイヤー＞ -> 生成\n";
 
-	sprite_ = new SpriteComponent(this, L"../../../Asset/Texture/icon.png");
+	sprite_ = new SpriteComponent(this, "Asset/Texture/icon.png");
 	sprite_->SetObjectName("プレイヤー");
-
-	transform_ = new TransformComponent(this);
 }
 
 //--------------------------------------------------
@@ -34,7 +32,6 @@ Player::~Player(void)
 	// ここでコンポーネントの解放行う...?
 	std::cout << "＜プレイヤー＞ -> 破棄\n";
 	delete sprite_;
-	delete transform_;
 }
 
 //--------------------------------------------------

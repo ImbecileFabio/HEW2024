@@ -16,7 +16,6 @@
 RenderComponent::RenderComponent(GameObject* owner, int updateOrder)
 	: Component(owner, updateOrder)
 {
-
 }
 
 //--------------------------------------------------

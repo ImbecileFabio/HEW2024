@@ -26,6 +26,7 @@ public:
 	TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 
 private:
+
 };
 
 #endif	// RENDER_COMPONENT_H_

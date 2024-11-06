@@ -41,7 +41,7 @@ public:
 	// ゲームオブジェクトの追加
 	void AddGameObject(GameObject* gameObject);
 	void RemoveGameObject(GameObject* gameObject);
-
+	
 private:
 	void UpdateGameObjects(void);	//更新処理
 

@@ -14,16 +14,19 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 /*----- インクルード -----*/
+#include <windows.h>
+
 #include <iostream>
 #include <stdio.h>
-#include <windows.h>
+#include <string>
+
 #include <assert.h>
 #include <functional>
 #include <locale.h>
-#include <string>
 #include <cstdint>
 #include <chrono>
 #include <thread>
+
 #include <vector>
 #include <memory>
 

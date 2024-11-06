@@ -71,6 +71,17 @@ public:
 
 	const std::vector<class Component*>& GetComponents() const { return components_; }
 
+	// 任意の型Tのコンポーネントを取得する関数
+	template<typename T>
+	T* GetComponent() const {
+		for (Component* component : components_) {
+			if (T* target = dynamic_cast<T*>(component)) {
+				return target;
+			}
+		}
+		return nullptr;
+	}
+
 	class GameManager* GetGameManager(void) { return game_manager_; }
 
 private:
@@ -80,11 +91,13 @@ private:
 	// GameObjectの状態
 	State state_;
 
-	// 姿勢情報を再計算するか
-	bool re_compute_transform_;
-
 	// 所有コンポーネント
 	std::vector<class Component*> components_;
+
+	// 姿勢制御コンポーネント
+	class TransformComponent* transform_component_;
+	// 姿勢情報を再計算するか
+	bool re_compute_transform_;
 };
 
 #endif	// GAMEOBJECT_H_

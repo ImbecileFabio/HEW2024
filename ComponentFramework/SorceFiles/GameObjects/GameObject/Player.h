@@ -12,6 +12,7 @@
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
+class SpriteComponent;
 
 //--------------------------------------------------
 // プレイヤーオブジェクト
@@ -26,8 +27,7 @@ public:
 
 	virtual TypeID GetType(void) const { return TypeID::Player; }
 private:
-	class SpriteComponent* sprite_ = nullptr;
-	class TransformComponent* transform_ = nullptr;
+	SpriteComponent* sprite_;
 };
 
 
