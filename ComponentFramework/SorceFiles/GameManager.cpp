@@ -144,12 +144,12 @@ void GameManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	for (auto game_object : game_objects_)
+	for (auto& game_object : game_objects_)
 		game_object->Update();
 	updating_game_objects_ = false;
 
 	// 待機リストのゲームオブジェクトの操作
-	for (auto pending_game_object : pending_game_objects_)
+	for (auto& pending_game_object : pending_game_objects_)
 	{
 		pending_game_object->Update();
 		game_objects_.emplace_back(pending_game_object);

@@ -69,9 +69,14 @@ public:
 
 	virtual TypeID GetType(void) const { return TypeID::GameObject; }	//オーバーライド用
 
+	// コンポーネントリストを返す
 	const std::vector<class Component*>& GetComponents() const { return components_; }
 
-	// 任意の型Tのコンポーネントを取得する関数
+	/* 
+	* @param	取得したいConponent(target)
+	* @brief	Gameobjectがもってるコンポーネントリストからtargetを探す
+	* @retuan	見つかれば target を	見つからなければ nullptr を返す
+	*/
 	template<typename T>
 	T* GetComponent() const {
 		for (Component* component : components_) {
@@ -79,9 +84,11 @@ public:
 				return target;
 			}
 		}
+		std::cout << "<GetComponent> -> nullptrが返された\n";
 		return nullptr;
 	}
 
+	// ゲームマネージャーを返す
 	class GameManager* GetGameManager(void) { return game_manager_; }
 
 private:

@@ -100,28 +100,20 @@ void SpriteComponent::Draw(void)
 {
 	std::cout << "ƒ" + object_name_ + "„ -> •`‰æ\n";
 
-	Matrix r;
-	Matrix t;
-	Matrix s;
+	Matrix pos;
+	Matrix rot;
+	Matrix scale;
 
 	GameObject* gameObject = GetOwner();
 	TransformComponent* transform = gameObject->GetComponent<TransformComponent>();
 	if (transform)
 	{
-		// SRTî•ñì¬
-		r = Matrix::CreateFromYawPitchRoll(transform->GetRotation());
-
-		t = Matrix::CreateTranslation(
-			transform_->position_.x,
-			transform_.position_.y,
-			transform_.position_.z);
-
-		s = Matrix::CreateScale(
-			transform_.scale_.x,
-			transform_.scale_.y,
-			transform_.scale_.z);
-
-
+		auto r = transform->GetRotation();
+		auto t = transform->GetPosition();
+		auto s = transform->GetScale();
+		rot = Matrix::CreateFromYawPitchRoll(r);
+		pos = Matrix::CreateTranslation(t);
+		
 	}
 	else 
 	{
