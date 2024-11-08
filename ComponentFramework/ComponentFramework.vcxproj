@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
@@ -36,7 +38,8 @@
     <ClCompile Include="SorceFiles\WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\DX\22\素材\stb_image.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />

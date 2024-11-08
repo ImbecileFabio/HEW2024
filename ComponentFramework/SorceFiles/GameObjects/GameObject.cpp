@@ -21,6 +21,7 @@ const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 
 	// アクター（独立した役割を持つゲームオブジェクト）
 	, "Player"
+	, "Camera"
 };
 
 //--------------------------------------------------
@@ -30,12 +31,13 @@ GameObject::GameObject(GameManager* gameManager)
 	: game_manager_(gameManager)
 	, state_(State::Active)
 	, re_compute_transform_(true)
+	, transform_(nullptr)
 {
 	// ゲームオブジェクトを管理先へ追加
 	game_manager_->AddGameObject(this);
 
 	// 姿勢制御コンポーネントの追加
-	transform_component_ = new TransformComponent(this);
+	transform_ = new TransformComponent(this);
 
 	// ゲームオブジェクトの初期化
 	this->Init();
@@ -107,7 +109,7 @@ void GameObject::ComputeWorldTransform()
 	re_compute_transform_ = false;
 
 	// 拡大, 回転, 平行移動の情報を格納
-	for (auto com : components_)
+	for (auto& com : components_)
 		com->OnUpdateWorldTransform();
 }
 
@@ -139,7 +141,3 @@ void GameObject::RemoveComponent(Component* component)
 	if (iter != components_.end())
 		components_.erase(iter);
 }
-
-//==================================================
-//				End of FIle
-//==================================================

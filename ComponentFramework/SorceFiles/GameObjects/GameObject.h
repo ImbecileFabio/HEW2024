@@ -14,6 +14,7 @@
 /*----- 前方宣言 -----*/
 class GameManager;
 class Component;
+class TransformComponent;
 
 //--------------------------------------------------
 // ゲームオブジェクトクラス
@@ -30,6 +31,7 @@ public:
 		// アクター（独立した役割を持つゲームオブジェクト）
 		// ここに追加したゲームオブジェクトを追加していく
 		, Player
+		, Camera
 
 		// ゲームオブジェクトのIDの最大値
 		, MAX
@@ -59,6 +61,7 @@ public:
 	virtual void UpdateGameObject(void);	// オーバーライド用
 
 	// 姿勢情報の更新
+
 	void ComputeWorldTransform();
 
 	void AddComponent(class Component* component);
@@ -72,17 +75,18 @@ public:
 	// コンポーネントリストを返す
 	const std::vector<class Component*>& GetComponents() const { return components_; }
 
-	/* 
+	/*
 	* @param	取得したいConponent(target)
 	* @brief	Gameobjectがもってるコンポーネントリストからtargetを探す
 	* @retuan	見つかれば target を	見つからなければ nullptr を返す
 	*/
 	template<typename T>
-	T* GetComponent() const {
-		for (Component* component : components_) {
-			if (T* target = dynamic_cast<T*>(component)) {
-				return target;
-			}
+	T* GetComponent()
+	{
+		for (Component* component : components_)
+		{
+			T* target = dynamic_cast<T*>(component);
+			if (target) return target;
 		}
 		std::cout << "<GetComponent> -> nullptrが返された\n";
 		return nullptr;
@@ -93,21 +97,18 @@ public:
 
 private:
 	// GameObjectの所有者
-	class GameManager* game_manager_;
+	class GameManager* game_manager_{};
 
 	// GameObjectの状態
-	State state_;
+	State state_{};
 
 	// 所有コンポーネント
-	std::vector<class Component*> components_;
+	std::vector<class Component*> components_{};
 
 	// 姿勢制御コンポーネント
-	class TransformComponent* transform_component_;
+	TransformComponent* transform_{};
 	// 姿勢情報を再計算するか
-	bool re_compute_transform_;
+	bool re_compute_transform_{};
 };
 
 #endif	// GAMEOBJECT_H_
-//==================================================
-//				End of FIle
-//==================================================

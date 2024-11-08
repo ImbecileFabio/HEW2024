@@ -20,16 +20,13 @@
 class RenderComponent : public Component
 {
 public:
-	RenderComponent(class GameObject* owner, int drawOrder = 100);
+	RenderComponent(class GameObject* _owner, int _drawOrder = 100);
 	~RenderComponent(void);
 
-	TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
+	virtual TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 
 private:
 
 };
 
 #endif	// RENDER_COMPONENT_H_
-//==================================================
-//				End of FIle
-//==================================================

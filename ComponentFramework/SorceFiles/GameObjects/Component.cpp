@@ -20,13 +20,11 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "RenderComponent"
 	, "SpriteComponent"
 	
-	// 頂点情報
-	, "VertexComponent"
-	//
-	, "IndexComponent"
-
 	// 姿勢制御
 	, "TransformComponent"
+
+	// カメラ
+	, "CameraComponent"
 
 };
 
@@ -49,27 +47,6 @@ Component::~Component(void)
 }
 
 //--------------------------------------------------
-// 初期化処理
-//--------------------------------------------------
-void Component::Init(void)
-{
-}
-
-//--------------------------------------------------
-// 終了処理
-//--------------------------------------------------
-void Component::Uninit(void)
-{
-}
-
-//--------------------------------------------------
-// 更新処理
-//--------------------------------------------------
-void Component::Update(void)
-{
-}
-
-//--------------------------------------------------
 // コンポーネントの姿勢制御の更新
 //--------------------------------------------------
 void Component::OnUpdateWorldTransform()
@@ -89,7 +66,3 @@ void Component::LoadProperties(void)
 void Component::SaveProperties(void)
 {
 }
-
-//--------------------------------------------------
-//				End of File
-//--------------------------------------------------

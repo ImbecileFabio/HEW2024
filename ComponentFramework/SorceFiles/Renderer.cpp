@@ -30,7 +30,7 @@ ID3D11Buffer* Renderer::m_ProjectionBuffer{}; // プロジェクション行列
 ID3D11DepthStencilState* Renderer::m_DepthStateEnable{};
 ID3D11DepthStencilState* Renderer::m_DepthStateDisable{};
 
-ID3D11BlendState* Renderer::m_BlendState[MAX_BLENDSTATE]; // ブレンドステート配列
+ID3D11BlendState* Renderer::m_BlendState[MAX_BLENDSTATE]{}; // ブレンドステート配列
 ID3D11BlendState* Renderer::m_BlendStateATC{}; // 特定のアルファテストとカバレッジ（ATC）用のブレンドステート
 
 

@@ -11,6 +11,7 @@
 #include "Renderer.h"
 #include "GameObjects/GameObject.h"
 #include "GameObjects/GameObject/Player.h"
+#include "GameObjects/GameObject/Camera.h"
 
 
 
@@ -18,8 +19,6 @@
 // コンストラクタ
 //-----------------------------------------------------------------
 GameManager::GameManager()
-	:updating_game_objects_(false)
-	, renderer_(nullptr)
 {
 	std::cout << "[ゲームマネージャー] -> 起動\n";
 	this->InitAll();
@@ -54,6 +53,7 @@ void GameManager::InitAll(void)
 	std::cout << "\n";
 
 	player_ = new Player(this);
+	camera_ = new Camera(this);
 
 	std::cout << "\n";
 	std::cout << "[ゲームマネージャー] -> ゲームオブジェクト生成終了\n";
@@ -122,6 +122,7 @@ void GameManager::AddGameObject(GameObject* gameObject)
 //-----------------------------------------------------------------
 // ゲームオブジェクトの削除処理
 //-----------------------------------------------------------------
+
 void GameManager::RemoveGameObject(GameObject* gameObject)
 {
 	// 待機コンテナ
@@ -156,8 +157,3 @@ void GameManager::UpdateGameObjects(void)
 	}
 
 }
-
-
-//=================================================================
-//			End of File 
-//=================================================================
