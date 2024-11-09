@@ -18,7 +18,7 @@ Player::Player(class GameManager* _gameManager)
 	:GameObject(_gameManager)
 {
 	std::cout << "＜プレイヤー＞ -> 生成\n";
-
+	
 	sprite_component_ = new SpriteComponent(this, "Asset/Texture/icon.png");
 	sprite_component_->SetObjectName("プレイヤー");
 }

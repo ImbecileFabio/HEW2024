@@ -43,9 +43,9 @@ public:
 	enum class State
 	{
 		None = -1
-		, Active	// 活動するゲームオブジェクトか？
-		, Paused	// 停止するゲームオブジェクトか？
-		, Dead		// 死ぬゲームオブジェクトか？
+		, Active	// 活動するゲームオブジェクトか
+		, Paused	// 停止するゲームオブジェクトか
+		, Dead		// 死ぬゲームオブジェクトか
 
 		, MAX		// 状態の最大値
 	};
@@ -77,13 +77,14 @@ public:
 
 	/*
 	* @param	取得したいConponent(target)
-	* @brief	Gameobjectがもってるコンポーネントリストからtargetを探す
+	* @brief	GameobjectのComponentListからtargetにキャストする
 	* @retuan	見つかれば target を	見つからなければ nullptr を返す
 	*/
+	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
 	template<typename T>
 	T* GetComponent()
 	{
-		for (Component* component : components_)
+		for (auto component : components_)
 		{
 			T* target = dynamic_cast<T*>(component);
 			if (target) return target;
@@ -106,7 +107,7 @@ private:
 	std::vector<class Component*> components_{};
 
 	// 姿勢制御コンポーネント
-	TransformComponent* transform_{};
+	TransformComponent* transform_component_{};
 	// 姿勢情報を再計算するか
 	bool re_compute_transform_{};
 };

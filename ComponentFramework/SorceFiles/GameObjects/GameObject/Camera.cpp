@@ -7,6 +7,7 @@
 
 #include "../../StdAfx.h"
 #include "Camera.h"
+#include "../Component/CameraComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -15,7 +16,7 @@ Camera::Camera(GameManager* _gameManager)
 	:GameObject(_gameManager)
 {
 	std::cout << "＜カメラ＞ -> 生成\n";
-
+	camera_component_ = new CameraComponent(this);
 }
 
 //--------------------------------------------------

@@ -31,13 +31,12 @@ GameObject::GameObject(GameManager* gameManager)
 	: game_manager_(gameManager)
 	, state_(State::Active)
 	, re_compute_transform_(true)
-	, transform_(nullptr)
 {
 	// ゲームオブジェクトを管理先へ追加
 	game_manager_->AddGameObject(this);
 
 	// 姿勢制御コンポーネントの追加
-	transform_ = new TransformComponent(this);
+	transform_component_ = new TransformComponent(this);
 
 	// ゲームオブジェクトの初期化
 	this->Init();

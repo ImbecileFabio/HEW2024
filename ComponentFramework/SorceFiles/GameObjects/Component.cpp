@@ -15,7 +15,7 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	// 自分自身
 	"Component"
 
-	//ここに追加したコンポーネントを記述していく
+	//ここに追加したコンポーネントを追加していく
 	// レンダリング
 	, "RenderComponent"
 	, "SpriteComponent"
