@@ -24,7 +24,6 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	: RenderComponent(_owner)
 	, draw_order_(_drawOrder)
 {
-	InitBuffers();
 
 	// テクスチャ読み込み
 	bool sts = texture_.Load(_imgname);
@@ -32,16 +31,34 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 
 	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
 
+	// バッファ初期化
+	InitBuffers();
+
 	object_name_ = std::string("不明なオブジェクト");
 }
 
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-SpriteComponent::~SpriteComponent(void)
+SpriteComponent::~SpriteComponent()
+{
+	Uninit();
+}
+
+//--------------------------------------------------
+// 初期化処理
+//--------------------------------------------------
+void SpriteComponent::Init()
 {
 }
 
+//--------------------------------------------------
+// 終了処理
+//--------------------------------------------------
+void SpriteComponent::Uninit()
+{
+
+}
 
 //--------------------------------------------------
 // バッファ初期化
@@ -89,41 +106,52 @@ void SpriteComponent::InitBuffers()
 }
 
 //--------------------------------------------------
-// 名前を定義する関数
+// 名前を定義する処理
 //--------------------------------------------------
 void SpriteComponent::SetObjectName(std::string _objectName)
 {
 	object_name_ = _objectName;
 }
 
-void SpriteComponent::Draw(void)
+
+//--------------------------------------------------
+// 更新処理
+//--------------------------------------------------
+void SpriteComponent::Update()
 {
-	std::cout << "＜" + object_name_ + "＞ -> 描画\n";
+}
 
-	Matrix pos;
+//--------------------------------------------------
+// 描画処理
+//--------------------------------------------------
+void SpriteComponent::Draw()
+{
+	std::cout << "<" + object_name_ + "> -> 描画開始\n";
+
 	Matrix rot;
+	Matrix pos;
 	Matrix scale;
-
-	GameObject* gameObject = GetOwner();
-	TransformComponent* transform = gameObject->GetComponent<TransformComponent>();
+	
+	TransformComponent* transform = this->owner_->GetComponent<TransformComponent>();
 	if (transform)
 	{
-		auto r = transform->GetRotation();
 		auto t = transform->GetPosition();
+		auto r = transform->GetRotation();
 		auto s = transform->GetScale();
-		rot = Matrix::CreateFromYawPitchRoll(r);
+		rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
 		pos = Matrix::CreateTranslation(t);
-		
+		scale = Matrix::CreateScale(s);
 	}
 	else 
 	{
-		r = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
-		t = Matrix::CreateTranslation(0.f, 0.f, 0.f);
-		s = Matrix::CreateScale(1.f, 1.f, 1.f);
+		std::cout << "<" + object_name_ + "> -> 位置取得失敗\n";
+		rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
+		pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
+		scale = Matrix::CreateScale(10.f, 10.f, 1.f);
 	}
 	
 	Matrix worldmtx;
-	worldmtx = s * r * t;
+	worldmtx = scale * rot * pos;
 	Renderer::SetWorldMatrix(&worldmtx); // GPUにセット
 
 	// 描画の処理
@@ -143,6 +171,5 @@ void SpriteComponent::Draw(void)
 		4,							// 描画するインデックス数（四角形なんで４）
 		0,							// 最初のインデックスバッファの位置
 		0);
-
-	
 }
+

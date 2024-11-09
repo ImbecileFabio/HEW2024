@@ -28,14 +28,18 @@ class SpriteComponent :
     public RenderComponent
 {
 public:
-    SpriteComponent(class GameObject* _owner, const std::string _imgname, int _drawOrder = 100);
-    ~SpriteComponent(void);
+    SpriteComponent(class GameObject* _owner, const std::string _imgname = NULL, int _drawOrder = 100);
+    ~SpriteComponent();
+
+    void Init() override;
+    void Update() override;
+    void Uninit() override;
+    void Draw() ;
 
     void SetObjectName(std::string _objectName);
-    void Draw(void);
 
     // 更新順位を返す
-    int GetDrawOrder(void) { return draw_order_; }
+    int& GetDrawOrder(void) { return draw_order_; }
     // コンポーネントのIDを返す
     TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 
@@ -61,6 +65,3 @@ private:
 
 
 #endif	// SPRITE_COMPONENT_H_
-//==================================================
-//				End of FIle
-//==================================================

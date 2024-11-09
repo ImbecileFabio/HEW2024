@@ -16,6 +16,7 @@
 class GameObject;
 class Renderer;
 class Player;
+class Camera;
 
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
@@ -49,18 +50,16 @@ private:
 	bool updating_game_objects_;
 
 	// ゲームオブジェクト
-	std::vector<GameObject*> game_objects_;
-	std::vector<GameObject*> pending_game_objects_;
+	std::vector<GameObject*> game_objects_{};
+	std::vector<GameObject*> pending_game_objects_{};
 
 private:
 	// 作ったオブジェクトをここに記述
-	Renderer* renderer_;	// レンダラー
-	Player* player_;		// プレイヤー
+	Renderer* renderer_{};	// レンダラー
+	Player* player_{};		// プレイヤー
+	Camera* camera_{};		// カメラ
 };
 
 
 #endif //GAME_MANAGER_H_
-//=================================================================
-//			End of File 
-//=================================================================
 

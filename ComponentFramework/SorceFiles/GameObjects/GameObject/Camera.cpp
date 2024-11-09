@@ -1,27 +1,35 @@
 //==================================================
-// [RenderComponent.cpp] 描画モジュール
+// [Camera.cpp] カメラオブジェクト
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：描画処理の定義
+// 説明：カメラの定義
 //==================================================
 
-/*----- インクルード -----*/
 #include "../../StdAfx.h"
-#include "RenderComponent.h"
-
+#include "Camera.h"
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
-	: Component(_owner, _updateOrder)
+Camera::Camera(GameManager* _gameManager)
+	:GameObject(_gameManager)
 {
+	std::cout << "＜カメラ＞ -> 生成\n";
+
 }
 
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-RenderComponent::~RenderComponent(void)
+Camera::~Camera()
 {
+	std::cout << "＜カメラ＞ -> 破棄\n";
+}
 
+//--------------------------------------------------
+// 更新処理
+//--------------------------------------------------
+void Camera::UpdateGameObject()
+{
+	std::cout << "＜カメラ＞ -> 更新\n";
 }

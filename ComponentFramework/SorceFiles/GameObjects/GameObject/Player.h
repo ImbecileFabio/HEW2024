@@ -25,14 +25,11 @@ public:
 
 	void UpdateGameObject(void) override;
 
-	virtual TypeID GetType(void) const { return TypeID::Player; }
+	TypeID GetType(void) const { return TypeID::Player; }
 private:
-	SpriteComponent* sprite_;
+	// 所持するコンポーネントをここに書く
+	SpriteComponent* sprite_component_{};
 };
 
 
 #endif	// PLAYER_H_
-//==================================================
-//				End of FIle
-//==================================================
-

@@ -31,14 +31,11 @@ public:
 		, RenderComponent
 		, SpriteComponent
 
-		// 頂点情報
-		, VertexComponent
-		// 
-		, IndexComponent
-
 		// 姿勢制御
 		, TransformComponent
 
+		// カメラ
+		, CameraComponent
 
 		// コンポーネントの最大値
 		, MAX
@@ -50,17 +47,13 @@ public:
 	Component(class GameObject* gameObject, int updateOrder = 100);
 	virtual ~Component(void);
 
-	virtual void Init(void);
-	virtual void Uninit(void);
-	virtual void Update(void);
+	virtual void Init(void) = 0;
+	virtual void Uninit(void) = 0;
+	virtual void Update(void) = 0;
 
 	virtual void OnUpdateWorldTransform();
 
-	// 後でサブクラスが挙動を上書きできるように
-	virtual void CallComponent(void) {};
-
-
-	class GameObject* GetOwner(void) { return owner_; }
+	class GameObject*& GetOwner(void) { return owner_; }
 	int GetUpdateOrder(void) const { return update_order_; }
 
 	virtual TypeID GetComponentType() const = 0;
@@ -70,12 +63,9 @@ public:
 	virtual void SaveProperties(void);
 
 protected:
-	class GameObject* owner_;	// 自分（コンポーネント）の所有者
-	int update_order_;			// 自分自身の更新順位
+	class GameObject* owner_{};	// 自分（コンポーネント）の所有者
+	int update_order_{};			// 自分自身の更新順位
 };
 
 
 #endif	// COMPONENT_H_
-//==================================================
-//				End of FIle
-//==================================================

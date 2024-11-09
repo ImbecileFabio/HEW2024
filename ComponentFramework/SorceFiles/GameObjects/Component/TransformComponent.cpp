@@ -1,8 +1,8 @@
 //==================================================
-// [TransformComponent.h] 姿勢制御コンポーネント
+// [TransformComponent.cpp] 姿勢制御コンポーネント
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：姿勢制御コンポーネントのベース
+// 説明：姿勢制御コンポーネント
 //==================================================
 
 /*----- インクルード -----*/
@@ -12,8 +12,8 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-TransformComponent::TransformComponent(GameObject* owner, int updateOrder)
-	: Component(owner, updateOrder)
+TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
+	: Component(_owner, _updateOrder)
 {
 
 }
@@ -54,7 +54,3 @@ void TransformComponent::CallTransform(void)
 {
 	std::cout << "[Transform] -> 呼び出し\n";
 }
-
-//=================================================================
-//			End of File 
-//=================================================================
