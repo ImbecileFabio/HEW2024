@@ -4,14 +4,14 @@
 //--------------------------------------------------
 // 説明：ImGuiの機能を自作関数としてまとめたもの
 //==================================================
-#define DEBUG
-#ifdef DEBUG
+#define IMGUI_MANAGER_H_  // 使うときはコメントアウトを外す
+#ifdef IMGUI_MANAGER_H_
 #include "ImGuiManager.h"
-#endif // DEBUG
 //--------------------------------------------------
-// ImGuiのWin32APIを初期化
+// @param _hWnd GameProcessで使っているウィンドハンドル
+// @brief ImGuiのWin32APIを初期化
 //--------------------------------------------------
-void ImGuiApp::ImGuiWin32Init()
+void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
 {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -24,20 +24,21 @@ void ImGuiApp::ImGuiWin32Init()
     //ImGui::StyleColorsLight();
 
     // Setup Platform/Renderer backends
-    ImGui_ImplWin32_Init(this->hWnd_);  // ImGuiのWin32の初期化 ImGuiの関数
+    ImGui_ImplWin32_Init(_hWnd);  // ImGuiのWin32の初期化 ImGuiの関数
 }
 //--------------------------------------------------
-// ImGuiのDirectX11を初期化
+// @brief ImGuiのDirectX11を初期化
 //--------------------------------------------------
-void ImGuiApp::ImGuiD3D11Init()
+void ImGuiManager::ImGuiD3D11Init()
 {
     // ここでImGuiのDirectX関連を初期化 rendererから
-    ImGui_ImplDX11_Init(this->device_.Get(), this->deviceContext_.Get());
+	renderer_ = new Renderer();
+    ImGui_ImplDX11_Init(this->renderer_->GetDevice(), this->renderer_->GetDeviceContext());
 }
 //--------------------------------------------------
-// ImGuiの更新処理
+// @brief ImGuiの更新処理
 //--------------------------------------------------
-void ImGuiApp::ImGuiUpdate()
+void ImGuiManager::ImGuiUpdate()
 {
     // Start the Dear ImGui frame
     ImGui_ImplDX11_NewFrame();
@@ -47,7 +48,7 @@ void ImGuiApp::ImGuiUpdate()
 //--------------------------------------------------
 // ウィンドウを表示する関数　テスト用
 //--------------------------------------------------
-void ImGuiApp::ImGuiShowWindow()
+void ImGuiManager::ImGuiShowWindow()
 {
     // ここが自分で記述したウィンドウ設定
     if (showWindowObject)
@@ -60,21 +61,25 @@ void ImGuiApp::ImGuiShowWindow()
     }
 }
 //--------------------------------------------------
-// 描画処理
+// @brief 描画処理
 //--------------------------------------------------
-void ImGuiApp::ImGuiRender()
+void ImGuiManager::ImGuiRender()
 {
     // Rendering
+    renderer_->Begin();
     ImGui::Render();
     const float clear_color_with_alpha[4] = { clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w };
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+    renderer_->End();
 }
 //--------------------------------------------------
-// 終了処理
+// @brief 終了処理
 //--------------------------------------------------
-void ImGuiApp::ImGuiUnInit()
+void ImGuiManager::ImGuiUnInit()
 {
+	renderer_->Uninit();
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
 }
+#endif // IMGUI_MANAGER_H_

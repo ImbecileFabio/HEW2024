@@ -47,6 +47,7 @@ class Renderer
 {
 public:
 	Renderer(class GameManager* gameManager);
+	Renderer() {};
 	~Renderer(void);
 
 	void Init();
