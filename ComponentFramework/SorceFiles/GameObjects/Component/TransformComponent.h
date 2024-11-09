@@ -32,9 +32,13 @@ public:
 
 	void CallTransform(void);
 
-	DirectX::SimpleMath::Vector3 GetPosition() { return position_; }
-	DirectX::SimpleMath::Vector3 GetRotation() { return rotation_; }
-	DirectX::SimpleMath::Vector3 GetScale() { return scale_; }
+	DirectX::SimpleMath::Vector3& GetPosition() { return position_; }
+	DirectX::SimpleMath::Vector3& GetRotation() { return rotation_; }
+	DirectX::SimpleMath::Vector3& GetScale() { return scale_; }
+
+	void SetPosition(DirectX::SimpleMath::Vector3 _pos) { position_ = _pos; }
+	//void SetRotation(DirectX::SimpleMath::Vector3 _rot) { rotation_ = _rot; }
+	//void SetScale(DirectX::SimpleMath::Vector3 _sca) { scale_ = _sca; }
 
 	virtual TypeID GetComponentType() const override { return TypeID::TransformComponent; }
 

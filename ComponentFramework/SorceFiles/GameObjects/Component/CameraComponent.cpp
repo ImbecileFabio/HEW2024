@@ -17,8 +17,6 @@
 /*----- ネームスペース -----*/
 using namespace DirectX::SimpleMath;
 
-/*----- グローバル変数 -----*/
-Vector3 g_pos;
 
 //--------------------------------------------------
 // コンストラクタ
@@ -41,11 +39,8 @@ CameraComponent::~CameraComponent()
 //--------------------------------------------------
 void CameraComponent::Init()
 {
-	TransformComponent* transform = owner_->GetComponent<TransformComponent>();
-
-	g_pos = transform->GetPosition();
-
-	g_pos = Vector3(10.f, 0.f, 0.f);
+	auto pos = Vector3(0.f, -10.f, 0.f);
+	owner_->GetComponent<TransformComponent>()->SetPosition(pos);
 	target_ = Vector3(0.f, 0.f, 0.f);
 
 }
@@ -65,7 +60,7 @@ void CameraComponent::Update()
 	// ビュー変換行列作成
 	Vector3 up = Vector3(0.f, 1.f, 0.f);
 	// 左手系に変更
-	view_matrix_ = DirectX::XMMatrixLookAtLH(g_pos, target_, up);
+	view_matrix_ = DirectX::XMMatrixLookAtLH(owner_->GetComponent<TransformComponent>()->GetPosition(), target_, up);
 
 	Renderer::SetViewMatrix(&view_matrix_);
 
