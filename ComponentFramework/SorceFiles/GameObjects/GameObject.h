@@ -51,29 +51,29 @@ public:
 	};
 
 public:
-	GameObject(class GameManager* gameManager);
+	GameObject(GameManager* gameManager);
 	virtual ~GameObject(void);
 
 	void Init(void);
 	void Uninit(void);
 	void Update(void);
 	void UpdateComponents(void);
-	virtual void UpdateGameObject(void);	// オーバーライド用
+	virtual void UpdateGameObject(void) = 0;	// オーバーライド用
 
 	// 姿勢情報の更新
 
 	void ComputeWorldTransform();
 
-	void AddComponent(class Component* component);
-	void RemoveComponent(class Component* component);
+	void AddComponent(Component* component);
+	void RemoveComponent(Component* component);
 
-	void SetState(State state) { state_ = state; }
+	void SetState(State _state) { state_ = _state; }
 	State GetState(void) { return state_; }
 
 	virtual TypeID GetType(void) const { return TypeID::GameObject; }	//オーバーライド用
 
 	// コンポーネントリストを返す
-	const std::vector<class Component*>& GetComponents() const { return components_; }
+	const std::vector<Component*>& GetComponents() const { return components_; }
 
 	/*
 	* @param	取得したいConponent(target)
@@ -81,33 +81,34 @@ public:
 	* @retuan	見つかれば target を	見つからなければ nullptr を返す
 	*/
 	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
-	template<typename T>
-	T* GetComponent()
+	template <typename T>
+	T* GetComponent() const
 	{
-		for (auto component : components_)
+		for (auto& component : components_)
 		{
 			T* target = dynamic_cast<T*>(component);
-			if (target) return target;
+
+			if (target != nullptr) { return target; }
 		}
 		std::cout << "<GetComponent> -> nullptrが返された\n";
 		return nullptr;
 	}
 
 	// ゲームマネージャーを返す
-	class GameManager* GetGameManager(void) { return game_manager_; }
+	class GameManager* GetGameManager(void) { return game_manager_.get(); }
 
 private:
 	// GameObjectの所有者
-	class GameManager* game_manager_{};
+	std::shared_ptr<GameManager> game_manager_{};
 
 	// GameObjectの状態
 	State state_{};
 
 	// 所有コンポーネント
-	std::vector<class Component*> components_{};
+	std::vector<Component*> components_{};
 
 	// 姿勢制御コンポーネント
-	TransformComponent* transform_component_{};
+	std::unique_ptr<TransformComponent> transform_component_{};
 	// 姿勢情報を再計算するか
 	bool re_compute_transform_{};
 };

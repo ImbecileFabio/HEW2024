@@ -12,7 +12,6 @@
 #include "../../../SubSystem/VertexBuffer.h"
 #include "../../../SubSystem/IndexBuffer.h"
 #include "../../../SubSystem/Shader.h"
-#include "../TransformComponent.h"
 #include "../../../SubSystem/Texture.h"
 
 
@@ -48,9 +47,6 @@ private:
 
     int draw_order_;            // 更新順位
     std::string object_name_;   // オブジェクト名
-
-    // テクスチャ
-    ID3D11ShaderResourceView* texture_view_ = nullptr;
 
     // バッファ
     VertexBuffer<VERTEX_3D> vertex_buffer_;

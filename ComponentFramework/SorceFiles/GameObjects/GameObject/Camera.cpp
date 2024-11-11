@@ -7,6 +7,7 @@
 
 #include "../../StdAfx.h"
 #include "Camera.h"
+#include "../../GameManager.h"
 #include "../Component/CameraComponent.h"
 
 //--------------------------------------------------
@@ -16,7 +17,7 @@ Camera::Camera(GameManager* _gameManager)
 	:GameObject(_gameManager)
 {
 	std::cout << "＜カメラ＞ -> 生成\n";
-	camera_component_ = new CameraComponent(this);
+	camera_component_ = std::make_unique<CameraComponent>(this);
 }
 
 //--------------------------------------------------
@@ -24,7 +25,7 @@ Camera::Camera(GameManager* _gameManager)
 //--------------------------------------------------
 Camera::~Camera()
 {
-	std::cout << "＜カメラ＞ -> 破棄\n";
+	std::cout << "＜カメラオブジェクト＞ -> 破棄\n";
 }
 
 //--------------------------------------------------
@@ -32,5 +33,5 @@ Camera::~Camera()
 //--------------------------------------------------
 void Camera::UpdateGameObject()
 {
-	std::cout << "＜カメラ＞ -> 更新\n";
+
 }

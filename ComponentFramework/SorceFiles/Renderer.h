@@ -3,6 +3,7 @@
 // 著者：有馬啓太
 //--------------------------------------------------
 // 説明：DirectXの宣言
+// コンポーネント化したい気持ちはある
 //==================================================
 #ifndef RENDERER_H_
 #define RENDERER_H_
@@ -39,6 +40,10 @@ enum EBlendState {
 
 
 /*----- 前方宣言 -----*/
+class GameManager;
+class Renderer;
+class SpriteComponent;
+
 
 //-----------------------------------------------------------------
 //Rendererクラス
@@ -46,8 +51,8 @@ enum EBlendState {
 class Renderer
 {
 public:
-	Renderer(class GameManager* gameManager);
-	~Renderer(void);
+	Renderer();
+	~Renderer();
 
 	void Init();
 	void Uninit();
@@ -55,8 +60,8 @@ public:
 	void Draw();
 	void End();
 
-	void AddSprite(class SpriteComponent* spriteComponent);
-	void RemoveSprite(class SpriteComponent* spriteComponent);
+	void AddSprite(SpriteComponent* spriteComponent);
+	void RemoveSprite(SpriteComponent* spriteComponent);
 
 	static void SetDepthEnable(bool Enable);
 

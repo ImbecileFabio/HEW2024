@@ -8,7 +8,7 @@
 #define COMPONENT_H_
 
 /*----- インクルード -----*/
-
+#include "GameObject.h"
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
@@ -44,8 +44,8 @@ public:
 	static const char* ComponentTypeNames[static_cast<int>(TypeID::MAX)];
 
 public:
-	Component(class GameObject* gameObject, int updateOrder = 100);
-	virtual ~Component(void);
+	Component(GameObject* gameObject, int updateOrder = 100);
+	virtual ~Component();
 
 	virtual void Init(void) = 0;
 	virtual void Uninit(void) = 0;
@@ -53,7 +53,7 @@ public:
 
 	virtual void OnUpdateWorldTransform();
 
-	class GameObject*& GetOwner(void) { return owner_; }
+	GameObject* GetOwner(void) const { return owner_; }
 	int GetUpdateOrder(void) const { return update_order_; }
 
 	virtual TypeID GetComponentType() const = 0;
@@ -62,8 +62,8 @@ public:
 	virtual void LoadProperties(void);
 	virtual void SaveProperties(void);
 
-protected:
-	class GameObject* owner_{};	// 自分（コンポーネント）の所有者
+private:
+	GameObject* owner_{};	// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
 };
 

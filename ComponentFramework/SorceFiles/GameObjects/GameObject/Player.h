@@ -9,6 +9,7 @@
 
 /*----- インクルード -----*/
 #include "../GameObject.h"
+
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
@@ -21,14 +22,13 @@ class Player : public GameObject
 {
 public:
 	Player(class GameManager* _gameManager);
-	~Player();
-
+	~Player(void);
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) const { return TypeID::Player; }
 private:
 	// 所持するコンポーネントをここに書く
-	SpriteComponent* sprite_component_{};
+	std::unique_ptr<SpriteComponent> sprite_component_{};	// スプライトコンポーネント
 };
 
 
