@@ -9,16 +9,17 @@
 #include "StdAfx.h"
 #include "GameManager.h"
 #include "Renderer.h"
+#include "GameObjects/GameObject.h"
 #include "GameObjects/GameObject/Player.h"
-#include "GameObjects/GameObject/Camera.h"
-
+#include "ImGuiManager.h"
 
 
 //-----------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------
 GameManager::GameManager()
-	: updating_game_objects_(false)
+	:updating_game_objects_(false)
+	, renderer_(nullptr)
 {
 	std::cout << "[ゲームマネージャー] -> 起動\n";
 	this->InitAll();
@@ -41,16 +42,21 @@ void GameManager::InitAll(void)
 {
 	std::cout << "[ゲームマネージャー] -> 初期化処理\n";
 
+	// レンダラー初期化
+	renderer_ = new Renderer(this);
+	renderer_->Init();
+
+
 	game_objects_.clear();
 	pending_game_objects_.clear();
 
-	// レンダラー初期化
-	renderer_ = std::make_unique<Renderer>();
-	renderer_->Init();
+	std::cout << "[ゲームマネージャー] -> ゲームオブジェクト生成開始\n";
+	std::cout << "\n";
 
-	// ゲームオブジェクト初期化
-	//player_ = std::make_unique<Player>(this);
-	//camera_ = std::make_unique<Camera>(this);
+	player_ = new Player(this);
+
+	std::cout << "\n";
+	std::cout << "[ゲームマネージャー] -> ゲームオブジェクト生成終了\n";
 }
 
 //-----------------------------------------------------------------
@@ -63,9 +69,10 @@ void GameManager::UninitAll(void)
 	if (renderer_)
 	{
 		renderer_->Uninit();
+		delete renderer_;
+		renderer_ = nullptr;
 	}
 
-	game_objects_.clear();
 
 	std::cout << "[ゲームマネージャー] -> リソース開放終了\n";
 
@@ -80,6 +87,7 @@ void GameManager::UninitAll(void)
 //-----------------------------------------------------------------
 void GameManager::UpdateAll()
 {
+	std::cout << "[ゲームマネージャ] -> 更新処理\n";
 	// ゲームオブジェクトの更新
 	this->UpdateGameObjects();
 }
@@ -89,10 +97,15 @@ void GameManager::UpdateAll()
 //-----------------------------------------------------------------
 void GameManager::GenerateOutputAll(void)
 {
+	std::cout << "[ゲームマネージャ] -> 出力生成処理\n";
+
 	if(renderer_)
 	{
 		renderer_->Begin();
 		renderer_->Draw();
+
+		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
+
 		renderer_->End();
 	}
 }
@@ -102,7 +115,7 @@ void GameManager::GenerateOutputAll(void)
 //-----------------------------------------------------------------
 void GameManager::AddGameObject(GameObject* gameObject)
 {
-	// ゲームオブジェクトの更新中かで登録先を変更
+	// ゲームオブジェクトのお更新中かで登録先を変更
 	if (updating_game_objects_)
 		pending_game_objects_.emplace_back(gameObject);	// 待機コンテナ
 	else
@@ -112,7 +125,6 @@ void GameManager::AddGameObject(GameObject* gameObject)
 //-----------------------------------------------------------------
 // ゲームオブジェクトの削除処理
 //-----------------------------------------------------------------
-
 void GameManager::RemoveGameObject(GameObject* gameObject)
 {
 	// 待機コンテナ
@@ -135,15 +147,20 @@ void GameManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	for (auto& game_object : game_objects_)
+	for (auto game_object : game_objects_)
 		game_object->Update();
 	updating_game_objects_ = false;
 
 	// 待機リストのゲームオブジェクトの操作
-	for (auto& pending_game_object : pending_game_objects_)
+	for (auto pending_game_object : pending_game_objects_)
 	{
 		pending_game_object->Update();
 		game_objects_.emplace_back(pending_game_object);
 	}
 
 }
+
+
+//=================================================================
+//			End of File 
+//=================================================================

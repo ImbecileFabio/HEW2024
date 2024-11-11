@@ -7,6 +7,8 @@
 #define IMGUI_DEBUG  // 使うときはコメントアウトを外す
 #ifdef IMGUI_DEBUG
 #include "ImGuiManager.h"
+/*----static変数------*/
+ImGuiManager* ImGuiManager::staticPointer = nullptr;
 //--------------------------------------------------
 // @param _hWnd GameProcessで使っているウィンドハンドル
 // @brief ImGuiのWin32APIを初期化
@@ -29,10 +31,10 @@ void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
 //--------------------------------------------------
 // @brief ImGuiのDirectX11を初期化
 //--------------------------------------------------
-void ImGuiManager::ImGuiD3D11Init()
+void ImGuiManager::ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext)
 {
     // ここでImGuiのDirectX関連を初期化 rendererから
-    ImGui_ImplDX11_Init(this->renderer_.GetDevice(), this->renderer_.GetDeviceContext());
+    ImGui_ImplDX11_Init(_device, _deviceContext);
 }
 //--------------------------------------------------
 // @brief ImGuiの更新処理　これをループの初めに置いておかないと機能しない
@@ -63,18 +65,17 @@ void ImGuiManager::ImGuiShowWindow()
 //--------------------------------------------------
 void ImGuiManager::ImGuiRender()
 {
-    renderer_.Begin();
+#ifdef _DEBUG
     ImGui::Render();
     const float clear_color_with_alpha[4] = { clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w };
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-    renderer_.End();
+#endif
 }
 //--------------------------------------------------
 // @brief 終了処理
 //--------------------------------------------------
 void ImGuiManager::ImGuiUnInit()
 {
-	renderer_.Uninit();
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();

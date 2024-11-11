@@ -18,15 +18,15 @@
 class ImGuiManager
 {
 public:
+	static ImGuiManager* staticPointer;
+
 	void ImGuiWin32Init(HWND _hWnd);
-	void ImGuiD3D11Init();
-	void ImGuiUpdate();		// ゲームループのはじめに行う更新処理
+	void ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext);		// ゲームループのはじめに行う更新処理
+	void ImGuiUpdate();	
 	void ImGuiShowWindow();	// ウィンドウを表示
 	void ImGuiRender();		// 描画
 	void ImGuiUnInit();		// 終了
 private:
-	Renderer renderer_;	// ID3D11DeviceとID3D11DeviceContextがほしいため
-
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 	DirectX::SimpleMath::Vector3 position_ = {0.0f, 0.0f, 0.0f};
