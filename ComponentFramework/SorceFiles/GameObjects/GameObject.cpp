@@ -27,8 +27,8 @@ const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-GameObject::GameObject(GameManager* gameManager)
-	: game_manager_(gameManager)
+GameObject::GameObject(GameManager* _gameManager)
+	: game_manager_(_gameManager)
 	, state_(State::Active)
 	, re_compute_transform_(true)
 {
@@ -36,7 +36,7 @@ GameObject::GameObject(GameManager* gameManager)
 	game_manager_->AddGameObject(this);
 
 	// 姿勢制御コンポーネントの追加
-	transform_component_ = new TransformComponent(this);
+	transform_component_ = std::make_unique<TransformComponent>(this);
 
 	// ゲームオブジェクトの初期化
 	this->Init();
@@ -48,8 +48,6 @@ GameObject::GameObject(GameManager* gameManager)
 GameObject::~GameObject(void)
 {
 	this->Uninit();
-
-	game_manager_->RemoveGameObject(this);
 }
 
 //--------------------------------------------------
@@ -64,9 +62,8 @@ void GameObject::Init(void)
 //--------------------------------------------------
 void GameObject::Uninit(void)
 {
-	// コンポーネントの破棄
-	while (!components_.empty())
-		delete components_.back();
+
+	game_manager_->RemoveGameObject(this);
 }
 
 
@@ -91,13 +88,6 @@ void GameObject::UpdateComponents(void)
 {
 	for (auto com : components_)
 		com->Update();
-}
-
-//--------------------------------------------------
-// ゲームオブジェクトの更新処理：サブクラスが挙動をoverrideできるように
-//--------------------------------------------------
-void GameObject::UpdateGameObject(void)
-{
 }
 
 //--------------------------------------------------

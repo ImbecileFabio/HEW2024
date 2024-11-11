@@ -29,10 +29,10 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	bool sts = texture_.Load(_imgname);
 	assert(sts == true);
 
-	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
-
 	// バッファ初期化
 	InitBuffers();
+
+	GetOwner()->GetGameManager()->GetRenderer()->AddSprite(this);
 
 	object_name_ = std::string("不明なオブジェクト");
 }
@@ -42,6 +42,8 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 //--------------------------------------------------
 SpriteComponent::~SpriteComponent()
 {
+	std::cout << "＜SpriteComponent＞ -> 破棄\n";
+
 	Uninit();
 }
 
@@ -50,6 +52,7 @@ SpriteComponent::~SpriteComponent()
 //--------------------------------------------------
 void SpriteComponent::Init()
 {
+
 }
 
 //--------------------------------------------------
@@ -57,7 +60,6 @@ void SpriteComponent::Init()
 //--------------------------------------------------
 void SpriteComponent::Uninit()
 {
-
 }
 
 //--------------------------------------------------
@@ -126,13 +128,11 @@ void SpriteComponent::Update()
 //--------------------------------------------------
 void SpriteComponent::Draw()
 {
-	std::cout << "<" + object_name_ + "> -> 描画開始\n";
-
 	Matrix rot;
 	Matrix pos;
 	Matrix scale;
 	
-	TransformComponent* transform = this->owner_->GetComponent<TransformComponent>();
+	TransformComponent* transform = GetOwner()->GetComponent<TransformComponent>();
 	if (transform)
 	{
 		auto t = transform->GetPosition();

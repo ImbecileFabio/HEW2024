@@ -6,7 +6,8 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "../../StdAfx.h"
+#include "../GameObject.h"
+#include "../Component.h"
 #include "TransformComponent.h"
 
 //--------------------------------------------------
@@ -15,15 +16,19 @@
 TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
-
+	SetPosition(DirectX::SimpleMath::Vector3::Zero);
+	SetRotation(DirectX::SimpleMath::Vector3::Zero);
+	SetScale(DirectX::SimpleMath::Vector3::One);
 
 }
 
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-TransformComponent::~TransformComponent(void)
+TransformComponent::~TransformComponent()
 {
+	std::cout << "＜TransformComponent＞ -> 破棄\n";
+
 }
 
 //--------------------------------------------------
@@ -53,5 +58,5 @@ void TransformComponent::Update(void)
 //--------------------------------------------------
 void TransformComponent::CallTransform(void)
 {
-	std::cout << "[Transform] -> 呼び出し\n";
+
 }

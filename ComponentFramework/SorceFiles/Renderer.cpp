@@ -37,7 +37,7 @@ ID3D11BlendState* Renderer::m_BlendStateATC{}; // 特定のアルファテストとカバレッ
 //-----------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------
-Renderer::Renderer(GameManager* gameManager)
+Renderer::Renderer()
 {
 	std::cout << "[レンダラー] -> 生成\n";
 }
@@ -260,17 +260,10 @@ void Renderer::Begin()
 //-----------------------------------------------------------------
 void Renderer::Draw()
 {
-	std::cout << "\n";
-	std::cout << "[レンダラー] -> 描画開始\n";
-
-	for (auto sprite : sprites_)
+	for (auto& sprite : sprites_)
 	{
 		sprite->Draw();
 	}
-
-	std::cout << "[レンダラー] -> 描画終了\n";
-	std::cout << "\n";
-
 }
 
 

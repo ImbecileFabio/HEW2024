@@ -31,19 +31,17 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Component::Component(GameObject* owner, int updateOrder)
-	: owner_(owner)
-	, update_order_(updateOrder)
+Component::Component(GameObject* _owner, int _updateOrder)
+	: owner_(_owner)
+	, update_order_(_updateOrder)
 {
 	owner_->AddComponent(this);
 }
 
-//--------------------------------------------------
-// デストラクタ
-//--------------------------------------------------
-Component::~Component(void)
+Component::~Component()
 {
-	owner_->RemoveComponent(this);
+	GetOwner()->RemoveComponent(this);
+
 }
 
 //--------------------------------------------------

@@ -27,7 +27,7 @@ public:
     TypeID GetType(void) { return TypeID::Camera; }
 private:
     // 所持するコンポーネントをここに書く
-    CameraComponent* camera_component_{};
+    std::unique_ptr<CameraComponent> camera_component_{};
 
 };
 

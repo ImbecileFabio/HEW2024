@@ -23,5 +23,13 @@ RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 RenderComponent::~RenderComponent(void)
 {
+	std::cout << "ƒRenderComponent„ -> ”jŠü\n";
 
+}
+
+//--------------------------------------------------
+// I—¹ˆ—
+//--------------------------------------------------
+void RenderComponent::Uninit()
+{
 }

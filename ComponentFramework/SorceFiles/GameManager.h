@@ -27,9 +27,9 @@ public:
 	GameManager(void);
 	~GameManager(void);
 	
-	static GameManager* Create(void)
+	static std::shared_ptr<GameManager> Create(void)
 	{
-		return new GameManager();
+		return std::make_shared<GameManager>();
 	}
 
 	void InitAll(void);
@@ -37,7 +37,7 @@ public:
 	void UpdateAll(void);
 	void GenerateOutputAll(void);
 
-	Renderer* GetRenderer(void) { return renderer_; }
+	Renderer* GetRenderer(void) const { return renderer_.get(); }
 
 	// ゲームオブジェクトの追加
 	void AddGameObject(GameObject* gameObject);
@@ -50,14 +50,14 @@ private:
 	bool updating_game_objects_;
 
 	// ゲームオブジェクト
-	std::vector<GameObject*> game_objects_{};
-	std::vector<GameObject*> pending_game_objects_{};
+	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ
+	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
 
 private:
 	// 作ったオブジェクトをここに記述
-	Renderer* renderer_{};	// レンダラー
-	Player* player_{};		// プレイヤー
-	Camera* camera_{};		// カメラ
+	std::unique_ptr<Renderer> renderer_{};	// レンダラー
+	std::unique_ptr<Player> player_{};		// プレイヤー
+	std::unique_ptr<Camera> camera_{};		// カメラ
 };
 
 

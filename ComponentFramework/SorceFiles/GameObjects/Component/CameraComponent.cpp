@@ -24,7 +24,9 @@ using namespace DirectX::SimpleMath;
 CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
-	Init();
+	auto pos = Vector3(0.f, -10.f, 0.f);
+	target_ = Vector3(0.f, 0.f, 0.f);
+
 }
 
 //--------------------------------------------------
@@ -32,6 +34,9 @@ CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 CameraComponent::~CameraComponent()
 {
+	std::cout << "ƒCamelaComponent„ -> ”jŠü\n";
+
+	Uninit();
 }
 
 //--------------------------------------------------
@@ -39,9 +44,6 @@ CameraComponent::~CameraComponent()
 //--------------------------------------------------
 void CameraComponent::Init()
 {
-	auto pos = Vector3(0.f, -10.f, 0.f);
-	owner_->GetComponent<TransformComponent>()->SetPosition(pos);
-	target_ = Vector3(0.f, 0.f, 0.f);
 
 }
 
@@ -50,6 +52,7 @@ void CameraComponent::Init()
 //--------------------------------------------------
 void CameraComponent::Uninit()
 {
+	
 }
 
 //--------------------------------------------------
@@ -60,7 +63,7 @@ void CameraComponent::Update()
 	// ƒrƒ…[•ÏŠ·s—ñì¬
 	Vector3 up = Vector3(0.f, 1.f, 0.f);
 	// ¶ŽèŒn‚É•ÏX
-	view_matrix_ = DirectX::XMMatrixLookAtLH(owner_->GetComponent<TransformComponent>()->GetPosition(), target_, up);
+	view_matrix_ = DirectX::XMMatrixLookAtLH(GetOwner()->GetComponent<TransformComponent>()->GetPosition(), target_, up);
 
 	Renderer::SetViewMatrix(&view_matrix_);
 

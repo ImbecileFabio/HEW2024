@@ -21,7 +21,11 @@ class RenderComponent : public Component
 {
 public:
 	RenderComponent(class GameObject* _owner, int _drawOrder = 100);
-	~RenderComponent(void);
+	~RenderComponent();
+
+	void Init(void) override {};
+	void Uninit(void) override;
+	void Update(void) override {};
 
 	virtual TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 

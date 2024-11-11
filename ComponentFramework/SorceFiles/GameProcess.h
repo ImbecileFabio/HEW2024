@@ -52,7 +52,7 @@ private:
 	static uint32_t	 width_;	// ウィンドウの横幅
 	static uint32_t	 height_;	// ウィンドウの縦幅
 
-	GameManager* game_manager_{};	// ゲーム管理インスタンス
+	std::shared_ptr<GameManager> game_manager_{};	// ゲーム管理インスタンス
 };
 
 #endif // GAME_PROCESS_H_

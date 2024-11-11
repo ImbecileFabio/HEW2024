@@ -60,9 +60,6 @@ bool GameProcess::StartUp(void)
 //--------------------------------------------------
 void GameProcess::Run(void)
 {
-	std::cout << "[ゲームプロセス] -> 実行\n";
-	std::cout << "\n";
-
 	// メッセージ
 	MSG msg = {};
 
@@ -171,11 +168,6 @@ bool GameProcess::Init(void)
 void GameProcess::Uninit(void)
 {
 	std::cout << "[ゲームプロセス] -> ◆終了処理開始◆\n";
-	{
-		delete game_manager_;
-		game_manager_ = nullptr;
-	}
-
 	GameProcess::UninitWnd();
 	std::cout << "[ゲームプロセス] -> ◇終了処理終了◇\n";
 	std::cout << "\n";
@@ -282,14 +274,8 @@ void GameProcess::UninitWnd(void)
 //--------------------------------------------------
 void GameProcess::Update(void)
 {
-	std::cout << "[ゲームプロセス] -> ◆更新処理開始◆\n";
-
-	{
-		game_manager_->UpdateAll();
-	}
-	std::cout << "[ゲームプロセス] -> ◇更新処理終了◇\n";
-	std::cout << "\n";
-
+	// ゲームオブジェクトの更新
+	game_manager_->UpdateAll();
 }
 
 //--------------------------------------------------
@@ -297,14 +283,8 @@ void GameProcess::Update(void)
 //--------------------------------------------------
 void GameProcess::GenerateOutput(void)
 {
-	std::cout << "[ゲームプロセス] -> ◆出力生成処理開始◆\n";
-
-	{
-		// オブジェクト描画
-		game_manager_->GenerateOutputAll();
-	}
-	std::cout << "[ゲームプロセス] -> ◇出力生成処理終了◇\n";
-	std::cout << "\n";
+	// 出力生成
+	game_manager_->GenerateOutputAll();
 }
 
 //--------------------------------------------------
