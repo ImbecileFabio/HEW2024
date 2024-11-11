@@ -1,11 +1,11 @@
 //==================================================
-// [ImGuiManager.cpp] ImGuiを扱うためのcppファイル
-// 著者：尾上莉奈
+// [ImGuiManager.cpp] ImGuiを扱うためのCPPファイル
+// 著者：
 //--------------------------------------------------
 // 説明：ImGuiの機能を自作関数としてまとめたもの
 //==================================================
-#define IMGUI_MANAGER_H_  // 使うときはコメントアウトを外す
-#ifdef IMGUI_MANAGER_H_
+#define IMGUI_DEBUG  // 使うときはコメントアウトを外す
+#ifdef IMGUI_DEBUG
 #include "ImGuiManager.h"
 //--------------------------------------------------
 // @param _hWnd GameProcessで使っているウィンドハンドル
@@ -32,21 +32,19 @@ void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
 void ImGuiManager::ImGuiD3D11Init()
 {
     // ここでImGuiのDirectX関連を初期化 rendererから
-	renderer_ = new Renderer();
-    ImGui_ImplDX11_Init(this->renderer_->GetDevice(), this->renderer_->GetDeviceContext());
+    ImGui_ImplDX11_Init(this->renderer_.GetDevice(), this->renderer_.GetDeviceContext());
 }
 //--------------------------------------------------
-// @brief ImGuiの更新処理
+// @brief ImGuiの更新処理　これをループの初めに置いておかないと機能しない
 //--------------------------------------------------
 void ImGuiManager::ImGuiUpdate()
 {
-    // Start the Dear ImGui frame
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
 }
 //--------------------------------------------------
-// ウィンドウを表示する関数　テスト用
+// @brief ウィンドウを表示する関数　テスト用
 //--------------------------------------------------
 void ImGuiManager::ImGuiShowWindow()
 {
@@ -65,21 +63,20 @@ void ImGuiManager::ImGuiShowWindow()
 //--------------------------------------------------
 void ImGuiManager::ImGuiRender()
 {
-    // Rendering
-    renderer_->Begin();
+    renderer_.Begin();
     ImGui::Render();
     const float clear_color_with_alpha[4] = { clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w };
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-    renderer_->End();
+    renderer_.End();
 }
 //--------------------------------------------------
 // @brief 終了処理
 //--------------------------------------------------
 void ImGuiManager::ImGuiUnInit()
 {
-	renderer_->Uninit();
+	renderer_.Uninit();
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
 }
-#endif // IMGUI_MANAGER_H_
+#endif // IMGUI_DEBUG

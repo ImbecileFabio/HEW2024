@@ -5,8 +5,8 @@
 // 説明：GUIを使えるようにするヘッダ　開発のときだけ使う
 //==================================================
 #pragma once
-#define IMGUI_MANAGER_H_	// ImGuiを使うときはコメントアウトを外すといける
-#ifdef IMGUI_MANAGER_H_
+#define IMGUI_DEBUG	// ImGuiを使うときはコメントアウトを外すといける
+#ifdef IMGUI_DEBUG
 #include "ImGui/imgui_impl_dx11.h"	// 追加したImGuiフォルダから  
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui.h"
@@ -25,7 +25,7 @@ public:
 	void ImGuiRender();		// 描画
 	void ImGuiUnInit();		// 終了
 private:
-	Renderer* renderer_ = nullptr;	// ID3D11DeviceとID3D11DeviceContextがほしいため
+	Renderer renderer_;	// ID3D11DeviceとID3D11DeviceContextがほしいため
 
 	ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -36,4 +36,4 @@ private:
 	bool showWindowObject = true;	// ウィンドウを表示するかどうか
 };
 
-#endif // IMGUI_MANAGER_H_
+#endif // IMGUI_DEBUG

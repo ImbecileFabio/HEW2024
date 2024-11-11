@@ -11,8 +11,8 @@
 #include "GameProcess.h"
 #include "GameManager.h"
 #include "Renderer.h"
-#define IMGUI_MANAGER_H_	//ImGuiを使うときはコメントアウトを外すといける
-#ifdef IMGUI_MANAGER_H_
+#define IMGUI_DEBUG	//ImGuiを使うときはコメントアウトを外すといける
+#ifdef IMGUI_DEBUG
 #include "ImGuiManager.h"
 #endif
 // ウィンドウクラス、ウィンドウ名の設定
@@ -75,7 +75,7 @@ void GameProcess::Run(void)
 	int fpsCounter = 0;
 	int fps = 0;	// 表示するfps
 	DWORD lastTime = GetTickCount64();
-#ifdef IMGUI_MANAGER_H_
+#ifdef IMGUI_DEBUG
 	ImGuiManager imGuiManager;
 	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGuiのWin32APIを初期化
 	imGuiManager.ImGuiD3D11Init();				// ImGuiのDirectX11を初期化	
@@ -102,13 +102,13 @@ void GameProcess::Run(void)
 			// 1/60	秒が経過したか?
 			if (currCount.QuadPart >= prevCount.QuadPart + frequency.QuadPart / 60)
 			{
-#ifdef IMGUI_MANAGER_H_
+#ifdef IMGUI_DEBUG
 				imGuiManager.ImGuiUpdate();		// ImGuiの更新処理
 				imGuiManager.ImGuiShowWindow();	// ImGuiのウィンドウを表示
 #endif
 				GameProcess::Update();
 				GameProcess::GenerateOutput();
-#ifdef IMGUI_MANAGER_H_
+#ifdef IMGUI_DEBUG
 				imGuiManager.ImGuiRender();		// ImGuiの描画処理
 #endif
 				fpsCounter++;
@@ -129,7 +129,7 @@ void GameProcess::Run(void)
 			}
 		}
 	}
-#ifdef IMGUI_MANAGER_H_
+#ifdef IMGUI_DEBUG
 	imGuiManager.ImGuiUnInit();
 #endif
 }
@@ -310,13 +310,13 @@ void GameProcess::GenerateOutput(void)
 //--------------------------------------------------
 // ウィンドウプロシージャ
 //--------------------------------------------------
-#ifdef IMGUI_MANAGER_H_
+#ifdef IMGUI_DEBUG
 // これがないとImGuiのウィンドウ操作ができない
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 LRESULT CALLBACK GameProcess::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-#ifdef IMGUI_MANAGER_H_
+#ifdef IMGUI_DEBUG
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, uMsg, wParam, lParam))	// これがないとImGuiのウィンドウ操作ができない
 		return true;
 #endif
