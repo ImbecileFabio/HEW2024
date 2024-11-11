@@ -75,9 +75,9 @@ void GameProcess::Run(void)
 #ifdef IMGUI_DEBUG
 	ImGuiManager imGuiManager;
 	ImGuiManager::staticPointer = &imGuiManager;
-	Renderer* rendererTest = new Renderer;
+	Renderer* renderer = new Renderer;
 	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGuiのWin32APIを初期化
-	imGuiManager.ImGuiD3D11Init(rendererTest->GetDevice(), rendererTest->GetDeviceContext());				// ImGuiのDirectX11を初期化	
+	imGuiManager.ImGuiD3D11Init(renderer->GetDevice(), renderer->GetDeviceContext());	// ImGuiのDirectX11を初期化
 #endif
 	//--------------------------------------------------
 	// ゲームループ
@@ -106,10 +106,8 @@ void GameProcess::Run(void)
 				imGuiManager.ImGuiShowWindow();	// ImGuiのウィンドウを表示
 #endif
 				GameProcess::Update();
-				imGuiManager.ImGuiRender();		// ImGuiの描画処理
 				GameProcess::GenerateOutput();
-#ifdef IMGUI_DEBUG
-#endif
+
 				fpsCounter++;
 				prevCount = currCount;
 			}
@@ -129,8 +127,9 @@ void GameProcess::Run(void)
 		}
 	}
 #ifdef IMGUI_DEBUG
+	renderer->Uninit();
+	delete renderer;
 	imGuiManager.ImGuiUnInit();
-	rendererTest->Uninit();
 #endif
 }
 
