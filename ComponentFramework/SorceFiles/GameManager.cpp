@@ -11,7 +11,7 @@
 #include "Renderer.h"
 #include "GameObjects/GameObject.h"
 #include "GameObjects/GameObject/Player.h"
-
+#include "ImGuiManager.h"
 
 
 //-----------------------------------------------------------------
@@ -103,6 +103,9 @@ void GameManager::GenerateOutputAll(void)
 	{
 		renderer_->Begin();
 		renderer_->Draw();
+
+		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
+
 		renderer_->End();
 	}
 }
