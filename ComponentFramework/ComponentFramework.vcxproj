@@ -21,6 +21,15 @@
   <ItemGroup>
     <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
+    <ClCompile Include="SorceFiles\ImGuiManager.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="SorceFiles\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
@@ -39,6 +48,16 @@
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
+    <ClInclude Include="SorceFiles\ImGuiManager.h" />
+    <ClInclude Include="SorceFiles\ImGui\imconfig.h" />
+    <ClInclude Include="SorceFiles\ImGui\imgui.h" />
+    <ClInclude Include="SorceFiles\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="SorceFiles\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="SorceFiles\ImGui\imgui_internal.h" />
+    <ClInclude Include="SorceFiles\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="SorceFiles\ImGui\imstb_textedit.h" />
+    <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h" />
+    <ClInclude Include="SorceFiles\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
@@ -69,6 +88,10 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="imgui.ini" />
+    <None Include="SorceFiles\imgui.ini" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
