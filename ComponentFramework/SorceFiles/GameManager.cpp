@@ -9,16 +9,16 @@
 #include "StdAfx.h"
 #include "GameManager.h"
 #include "Renderer.h"
+#include "ImGuiManager.h"
 #include "GameObjects/GameObject/Player.h"
 #include "GameObjects/GameObject/Camera.h"
-
 
 
 //-----------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------
 GameManager::GameManager()
-	: updating_game_objects_(false)
+	:updating_game_objects_(false)
 {
 	std::cout << "[ゲームマネージャー] -> 起動\n";
 	this->InitAll();
@@ -93,6 +93,9 @@ void GameManager::GenerateOutputAll(void)
 	{
 		renderer_->Begin();
 		renderer_->Draw();
+
+		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
+
 		renderer_->End();
 	}
 }
@@ -112,7 +115,6 @@ void GameManager::AddGameObject(GameObject* gameObject)
 //-----------------------------------------------------------------
 // ゲームオブジェクトの削除処理
 //-----------------------------------------------------------------
-
 void GameManager::RemoveGameObject(GameObject* gameObject)
 {
 	// 待機コンテナ
@@ -135,15 +137,20 @@ void GameManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	for (auto& game_object : game_objects_)
+	for (auto game_object : game_objects_)
 		game_object->Update();
 	updating_game_objects_ = false;
 
 	// 待機リストのゲームオブジェクトの操作
-	for (auto& pending_game_object : pending_game_objects_)
+	for (auto pending_game_object : pending_game_objects_)
 	{
 		pending_game_object->Update();
 		game_objects_.emplace_back(pending_game_object);
 	}
 
 }
+
+
+//=================================================================
+//			End of File 
+//=================================================================
