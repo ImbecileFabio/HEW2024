@@ -50,24 +50,31 @@ private:
 	// -（WAVEファイル全体を構成する一番外側のチャンク）(この中に "波形のフォーマットチャンク" と "波形データ本体チャンク" が入る)
 	struct RiffHeader
 	{
-		Chunk	chunk;   // "RIFF"
-		char	type[4]; // "WAVE"
+		Chunk	chunk;   // ?"RIFF"
+		char	type[4]; // ?"WAVE"
 	};
 
 	// FMTチャンク
+	// -（波形のフォーマットを記述するチャンク）
 	struct FormatChunk
 	{
-		Chunk		chunk; // "fmt "
+		Chunk		chunk; // ?"fmt "
 		WAVEFORMAT	fmt;   // 波形フォーマット
 	};
 
-	IXAudio2*				pXaudio2		= nullptr;		// XAudio2のポインタ
-	IXAudio2MasteringVoice* pMasteringVoice = nullptr;		// マスターボイスのポインタ
-    IXAudio2SourceVoice*	pSourceVoice[SoundLabelMAX];	// ソースボイスのポインタ（サウンド数分生成）
+	IXAudio2*				pXaudio2		= nullptr;		// -XAudio2のポインタ
+	IXAudio2MasteringVoice* pMasteringVoice = nullptr;		// -マスターボイスのポインタ
+    IXAudio2SourceVoice*	pSourceVoice[SoundLabelMAX];	// -ソースボイスのポインタ（サウンド数分生成）
+	FILE*		file = nullptr;	// -ファイルのポインタ
+	RiffHeader	riffHeader;		// -RIFFヘッダー
+	FormatChunk	formatChunk;	// -フォーマットチャンク
+	Chunk		dataChunk;		// -データチャンク	（"識別子（ID）" "チャンクのサイズ"）
+	BYTE*		pData;			// -波形データ		（"データの内容"）
 
 public:
     HRESULT Init();
 	void Uninit();
 	void Play(SoundLabel _label);
 	void Stop(SoundLabel _label);
+	HRESULT LoadWaveFile(int number);
 };
