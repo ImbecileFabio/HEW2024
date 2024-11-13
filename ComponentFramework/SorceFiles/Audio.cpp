@@ -16,7 +16,13 @@ HRESULT Audio::Init()
 	HRESULT hr;
 
 	// COMコンポーネントの初期化
-	// ハ―サルト使ってエラーチェックする（下２つも）
+	// ハ―サルト使ってエラーチェックする（下２つも）(エラーコードを出す！！！cerr << hr)
+	hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
+	if (FAILED(hr)) {
+		std::cerr << "COMの初期化に失敗しました　エラーコード：" << hr << std::endl;
+		CoUninitialize();
+		return -1;
+	}
 
 	// XAudio2の初期化
 

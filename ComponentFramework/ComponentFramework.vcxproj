@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Audio.cpp" />
+    <ClCompile Include="SorceFiles\Audio.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
     <ClCompile Include="SorceFiles\ImGuiManager.cpp" />
@@ -46,7 +48,9 @@
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Audio.h" />
+    <ClInclude Include="SorceFiles\Audio.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
     <ClInclude Include="SorceFiles\ImGuiManager.h" />

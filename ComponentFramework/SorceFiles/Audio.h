@@ -37,6 +37,8 @@ private:
 
 	};	
 
+	IXAudio2* pXAudio2 = nullptr;	// XAudio2のインターフェース
+
 public:
     HRESULT Init();
 	void Uninit();
