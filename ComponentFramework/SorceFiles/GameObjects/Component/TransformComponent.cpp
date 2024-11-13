@@ -50,13 +50,6 @@ void TransformComponent::Uninit(void)
 //--------------------------------------------------
 void TransformComponent::Update(void)
 {
-	CallTransform();
-}
-
-//--------------------------------------------------
-// åƒÇ—èoÇµèàóù
-//--------------------------------------------------
-void TransformComponent::CallTransform(void)
-{
 
 }
+

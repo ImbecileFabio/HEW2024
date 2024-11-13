@@ -49,7 +49,7 @@ void GameManager::InitAll(void)
 	renderer_->Init();
 
 	// ゲームオブジェクト初期化
-	//player_ = std::make_unique<Player>(this);
+	player_ = std::make_unique<Player>(this);
 	//camera_ = std::make_unique<Camera>(this);
 }
 
@@ -115,20 +115,17 @@ void GameManager::AddGameObject(GameObject* gameObject)
 //-----------------------------------------------------------------
 // ゲームオブジェクトの削除処理
 //-----------------------------------------------------------------
-void GameManager::RemoveGameObject(GameObject* gameObject)
-{
-	// 待機コンテナ
-	// "gameObject"をコンテナの中から探し出して破棄
-	auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), gameObject);
-	if (iter != game_objects_.end())
-	{
-		// 一致する"gameObject"をコンテナの末尾へ移動させ、メモリ自体を破棄する
-		std::ranges::iter_swap(iter, game_objects_.end() - 1);
-		game_objects_.pop_back();
-	}
+void GameManager::RemoveGameObject(GameObject* gameObject) {
+    auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), gameObject);
+    if (iter != pending_game_objects_.end()) {
+        pending_game_objects_.erase(iter);
+    } else {
+        iter = std::find(game_objects_.begin(), game_objects_.end(), gameObject);
+        if (iter != game_objects_.end()) {
+            game_objects_.erase(iter);
+        }
+    }
 }
-
-
 //-----------------------------------------------------------------
 // ゲームオブジェクトの総更新処理
 //-----------------------------------------------------------------

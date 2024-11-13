@@ -68,7 +68,7 @@ public:
 	void RemoveComponent(Component* component);
 
 	void SetState(State _state) { state_ = _state; }
-	State GetState(void) { return state_; }
+	State& GetState(void) { return state_; }
 
 	virtual TypeID GetType(void) const { return TypeID::GameObject; }	//オーバーライド用
 
@@ -82,7 +82,7 @@ public:
 	*/
 	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
 	template <typename T>
-	T* GetComponent() const
+	inline T* GetComponent()
 	{
 		for (auto& component : components_)
 		{

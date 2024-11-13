@@ -27,7 +27,6 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 
-	void CallTransform(void);
 
 	DirectX::SimpleMath::Vector3& GetPosition() { return position_; }
 	DirectX::SimpleMath::Vector3& GetRotation() { return rotation_; }
