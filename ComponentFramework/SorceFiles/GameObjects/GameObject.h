@@ -51,7 +51,7 @@ public:
 	};
 
 public:
-	GameObject(GameManager* gameManager);
+	GameObject(std::shared_ptr<GameManager> gameManager);
 	virtual ~GameObject(void);
 
 	void Init(void);
@@ -95,7 +95,7 @@ public:
 	}
 
 	// ゲームマネージャーを返す
-	class GameManager* GetGameManager(void) { return game_manager_.get(); }
+	auto GetGameManager(void) { return game_manager_; }
 
 private:
 	// GameObjectの所有者
@@ -108,7 +108,7 @@ private:
 	std::vector<Component*> components_{};
 
 	// 姿勢制御コンポーネント
-	std::unique_ptr<TransformComponent> transform_component_{};
+	std::shared_ptr<TransformComponent> transform_component_{};
 	// 姿勢情報を再計算するか
 	bool re_compute_transform_{};
 };

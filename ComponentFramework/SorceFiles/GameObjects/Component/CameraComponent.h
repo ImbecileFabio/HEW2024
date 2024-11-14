@@ -14,7 +14,7 @@
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
-
+class GameObject;
 //--------------------------------------------------
 // カメラコンポーネント
 //--------------------------------------------------
@@ -22,7 +22,7 @@ class CameraComponent :
     public Component
 {
 public:
-    CameraComponent(GameObject* _owner, int _updateOrder = 100);
+    CameraComponent(std::shared_ptr<GameObject> _owner, int _updateOrder = 100);
     ~CameraComponent();
 
     void Init() override;

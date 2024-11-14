@@ -13,6 +13,7 @@
 /*----- 構造体宣言 -----*/
 
 /*----- 前方宣言 -----*/
+class GameObject;
 
 //--------------------------------------------------
 // 描画コンポーネントのベースクラス
@@ -20,7 +21,7 @@
 class RenderComponent : public Component
 {
 public:
-	RenderComponent(class GameObject* _owner, int _drawOrder = 100);
+	RenderComponent(std::shared_ptr<GameObject> _owner, int _drawOrder = 100);
 	~RenderComponent();
 
 	void Init(void) override {};

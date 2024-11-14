@@ -21,7 +21,7 @@ using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
+CameraComponent::CameraComponent(std::shared_ptr<GameObject> _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
 	auto pos = Vector3(0.f, -10.f, 0.f);

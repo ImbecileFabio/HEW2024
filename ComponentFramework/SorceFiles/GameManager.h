@@ -37,7 +37,7 @@ public:
 	void UpdateAll(void);
 	void GenerateOutputAll(void);
 
-	Renderer* GetRenderer(void) const { return renderer_.get(); }
+	auto GetRenderer(void) const { return renderer_; }
 
 	// ゲームオブジェクトの追加
 	void AddGameObject(GameObject* gameObject);
@@ -55,9 +55,9 @@ private:
 
 private:
 	// 作ったオブジェクトをここに記述
-	std::unique_ptr<Renderer> renderer_{};	// レンダラー
-	std::unique_ptr<Player> player_{};		// プレイヤー
-	std::unique_ptr<Camera> camera_{};		// カメラ
+	std::shared_ptr<Renderer> renderer_{};	// レンダラー
+	std::shared_ptr<Player> player_{};		// プレイヤー
+	std::shared_ptr<Camera> camera_{};		// カメラ
 };
 
 

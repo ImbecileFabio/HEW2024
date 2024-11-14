@@ -27,7 +27,7 @@ const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-GameObject::GameObject(GameManager* _gameManager)
+GameObject::GameObject(std::shared_ptr<GameManager> _gameManager)
 	: game_manager_(_gameManager)
 	, state_(State::Active)
 	, re_compute_transform_(true)
@@ -36,7 +36,7 @@ GameObject::GameObject(GameManager* _gameManager)
 	game_manager_->AddGameObject(this);
 
 	// 姿勢制御コンポーネントの追加
-	transform_component_ = std::make_unique<TransformComponent>(this);
+	transform_component_ = std::make_shared<TransformComponent>(this);
 
 	// ゲームオブジェクトの初期化
 	this->Init();

@@ -21,14 +21,14 @@ class SpriteComponent;
 class Player : public GameObject
 {
 public:
-	Player(class GameManager* _gameManager);
+	Player(std::shared_ptr<GameManager> _gameManager);
 	~Player(void);
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) const { return TypeID::Player; }
 private:
 	// 所持するコンポーネントをここに書く
-	std::unique_ptr<SpriteComponent> sprite_component_{};	// スプライトコンポーネント
+	std::shared_ptr<SpriteComponent> sprite_component_{};	// スプライトコンポーネント
 };
 
 

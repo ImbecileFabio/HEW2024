@@ -44,7 +44,7 @@ public:
 	static const char* ComponentTypeNames[static_cast<int>(TypeID::MAX)];
 
 public:
-	Component(GameObject* gameObject, int updateOrder = 100);
+	Component(std::shared_ptr<GameObject> gameObject, int updateOrder = 100);
 	virtual ~Component();
 
 	virtual void Init(void) = 0;
@@ -53,7 +53,7 @@ public:
 
 	virtual void OnUpdateWorldTransform();
 
-	GameObject* GetOwner(void) const { return owner_; }
+	auto GetOwner(void) const { return owner_; }
 	int GetUpdateOrder(void) const { return update_order_; }
 
 	virtual TypeID GetComponentType() const = 0;
@@ -63,7 +63,7 @@ public:
 	virtual void SaveProperties(void);
 
 private:
-	GameObject* owner_{};	// 自分（コンポーネント）の所有者
+	std::shared_ptr<GameObject> owner_{};	// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
 };
 

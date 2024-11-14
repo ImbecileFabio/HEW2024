@@ -13,11 +13,11 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Camera::Camera(GameManager* _gameManager)
+Camera::Camera(std::shared_ptr<GameManager> _gameManager)
 	:GameObject(_gameManager)
 {
 	std::cout << "＜カメラ＞ -> 生成\n";
-	camera_component_ = std::make_unique<CameraComponent>(this);
+	camera_component_ = std::make_shared<CameraComponent>(this);
 }
 
 //--------------------------------------------------

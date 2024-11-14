@@ -15,12 +15,12 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Player::Player( GameManager* _gameManager)
+Player::Player(std::shared_ptr<GameManager> _gameManager)
 	:GameObject(_gameManager)
 {
 	std::cout << "＜プレイヤー＞ -> 生成\n";
 	
-	sprite_component_ = std::make_unique<SpriteComponent>(this, "Asset/Texture/icon.png");
+	sprite_component_ = std::make_shared<SpriteComponent>(this, "Asset/Texture/icon.png");
 	sprite_component_->SetObjectName("プレイヤー");
 }
 

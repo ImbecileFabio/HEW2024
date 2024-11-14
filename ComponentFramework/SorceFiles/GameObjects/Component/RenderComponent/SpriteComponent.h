@@ -19,6 +19,7 @@
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
+class GameObject;
 
 //--------------------------------------
 // 描画クラス
@@ -27,7 +28,7 @@ class SpriteComponent :
     public RenderComponent
 {
 public:
-    SpriteComponent(class GameObject* _owner, const std::string _imgname = NULL, int _drawOrder = 100);
+    SpriteComponent(std::shared_ptr<GameObject> _owner, const std::string _imgname = NULL, int _drawOrder = 100);
     ~SpriteComponent();
 
     void Init() override;

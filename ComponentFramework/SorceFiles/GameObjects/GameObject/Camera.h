@@ -14,12 +14,13 @@
 
 /*----- 前方宣言 -----*/
 class CameraComponent;
+class GameManeger;
 
 class Camera :
     public GameObject
 {
 public:
-    Camera(GameManager* _gameManager);
+    Camera(std::shared_ptr<GameManager> _gameManager);
     ~Camera();
 
     void UpdateGameObject() override;
@@ -27,7 +28,7 @@ public:
     TypeID GetType(void) { return TypeID::Camera; }
 private:
     // 所持するコンポーネントをここに書く
-    std::unique_ptr<CameraComponent> camera_component_{};
+    std::shared_ptr<CameraComponent> camera_component_{};
 
 };
 

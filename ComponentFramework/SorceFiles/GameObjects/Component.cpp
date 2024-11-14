@@ -31,7 +31,7 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Component::Component(GameObject* _owner, int _updateOrder)
+Component::Component(std::shared_ptr<GameObject> _owner, int _updateOrder)
 	: owner_(_owner)
 	, update_order_(_updateOrder)
 {

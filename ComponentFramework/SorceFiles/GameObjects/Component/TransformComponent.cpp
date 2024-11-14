@@ -13,12 +13,12 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
+TransformComponent::TransformComponent(std::shared_ptr<GameObject> _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
-	SetPosition(DirectX::SimpleMath::Vector3::Zero);
-	SetRotation(DirectX::SimpleMath::Vector3::Zero);
-	SetScale(DirectX::SimpleMath::Vector3::One);
+	SetPosition(DirectX::SimpleMath::Vector3(0.f, 0.f, 0.f));
+	SetRotation(DirectX::SimpleMath::Vector3(0.f, 0.f, 0.f));
+	SetScale(DirectX::SimpleMath::Vector3(1.f, 1.f, 1.f));
 
 }
 

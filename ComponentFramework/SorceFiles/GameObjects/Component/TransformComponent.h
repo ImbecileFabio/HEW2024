@@ -20,7 +20,7 @@ class GameObject;
 class TransformComponent : Component
 {
 public:
-	TransformComponent(GameObject* _owner, int updateOrder = 100);
+	TransformComponent(std::shared_ptr<GameObject> _owner, int updateOrder = 100);
 	~TransformComponent();
 
 	void Init(void) override;
@@ -28,9 +28,9 @@ public:
 	void Update(void) override;
 
 
-	DirectX::SimpleMath::Vector3& GetPosition() { return position_; }
-	DirectX::SimpleMath::Vector3& GetRotation() { return rotation_; }
-	DirectX::SimpleMath::Vector3& GetScale() { return scale_; }
+	auto& GetPosition() { return position_; }
+	auto& GetRotation() { return rotation_; }
+	auto& GetScale() { return scale_; }
 
 	void SetPosition(DirectX::SimpleMath::Vector3 _pos) { position_ = _pos; }
 	void SetRotation(DirectX::SimpleMath::Vector3 _rot) { rotation_ = _rot; }

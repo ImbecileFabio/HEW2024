@@ -20,7 +20,7 @@ using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname,  int _drawOrder)
+SpriteComponent::SpriteComponent(std::shared_ptr<GameObject> _owner,const std::string _imgname,  int _drawOrder)
 	: RenderComponent(_owner)
 	, draw_order_(_drawOrder)
 {

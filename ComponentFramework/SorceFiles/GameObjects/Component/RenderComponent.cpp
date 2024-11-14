@@ -13,7 +13,7 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
+RenderComponent::RenderComponent(std::shared_ptr<GameObject> _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
 }
