@@ -8,8 +8,6 @@
 /*----- インクルード -----*/
 #include "GameObject.h"
 #include "../GameManager.h"
-#include "Component.h"
-#include "Component/TransformComponent.h"
 
 
 // ゲームオブジェクトのリスト

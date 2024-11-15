@@ -22,7 +22,7 @@ class GameObject;
 class RenderComponent : public Component
 {
 public:
-	RenderComponent(GameObject* _owner, int _drawOrder = 100);
+	RenderComponent(GameObject* _owner, int _drawOrder = 50);
 	~RenderComponent();
 
 	void Init(void) override {};

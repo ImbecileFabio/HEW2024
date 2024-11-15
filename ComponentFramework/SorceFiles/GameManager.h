@@ -59,7 +59,7 @@ private:
 	// 作ったオブジェクトをここに記述
 	Renderer* renderer_{};	// レンダラー
 	Player* player_{};		// プレイヤー
-	//Camera* camera_{};		// カメラ
+	Camera* camera_{};		// カメラ
 };
 
 

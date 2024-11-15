@@ -214,13 +214,21 @@ bool GameProcess::InitWnd(void)
 	wc.lpszClassName = ClassName;
 	wc.hIconSm = LoadIcon(hInst, IDI_APPLICATION);
 
+#ifdef FLLSCREEN_MODE_
+	// ウィンドウスタイルを変更
+	SetWindowLong(hWnd_, GWL_STYLE, WS_POPUP);
+
+	// ウィンドウサイズを画面いっぱいに
+	SetWindowPos(hWnd_, HWND_TOP, 0, 0, width_, height_, SWP_SHOWWINDOW);
+#endif	// FLLSCREEN_MODE_
+
 	// ウィンドウの登録
 	if (!RegisterClassEx(&wc)) { return false; }
 
 	// インスタンスハンドル設定
 	hInst_ = hInst;
 	
-	// ウィンドウ巣のサイズを設定
+	// ウィンドウのサイズを設定
 	RECT rc = {};
 	rc.right = static_cast<LONG>(width_);
 	rc.bottom = static_cast<LONG>(height_);
@@ -247,12 +255,6 @@ bool GameProcess::InitWnd(void)
 
 	assert(hWnd_);
 
-#ifdef FLLSCREEN_MODE_
-	// ウィンドウスタイルを変更
-	SetWindowLong(hWnd_, GWL_STYLE, WS_POPUP);
-	// ウィンドウサイズを画面いっぱいに
-	SetWindowPos(hWnd_, HWND_TOP, 0, 0, width_, height_, SWP_SHOWWINDOW);
-#endif	// FLLSCREEN_MODE_
 	// ウィンドウを表示.
 	ShowWindow(hWnd_, SW_SHOWNORMAL);
 

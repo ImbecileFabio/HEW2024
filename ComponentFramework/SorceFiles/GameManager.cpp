@@ -58,7 +58,9 @@ void GameManager::InitAll(void)
 
     // ゲームオブジェクト初期化
     player_ = new Player(this);
-    //camera_ = std::make_unique<Camera>(buff);
+	camera_ = new Camera(this);
+
+
 }
 
 //-----------------------------------------------------------------
@@ -71,6 +73,7 @@ void GameManager::UninitAll(void)
 	// ゲームオブジェクトの破棄
 	delete renderer_;
 	delete player_;
+	delete camera_;
 
 
 	//std::cout << std::format("{}\n", "[GameManager] -> セーブデータのアンロード");
@@ -93,12 +96,15 @@ void GameManager::GenerateOutputAll(void)
 {
 	if(renderer_)
 	{
+
 		renderer_->Begin();
 		renderer_->Draw();
 
 		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
 
+
 		renderer_->End();
+
 	}
 }
 
@@ -141,7 +147,6 @@ void GameManager::RemoveGameObject(GameObject* _gameObject) {
 	{
 		std::iter_swap(iter,game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
 		game_objects_.pop_back();						// 稼働コンテナから削除
-
 	}
 
 }

@@ -6,6 +6,9 @@
 //==================================================
 
 /*----- インクルード -----*/
+#include <iostream>
+#include <format>
+
 #include "TransformComponent.h"
 #include "../GameObject.h"
 
@@ -22,7 +25,7 @@ TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 TransformComponent::~TransformComponent()
 {
-	std::format("{}", "＜TransformComponent＞ -> Destructor\n");
+	std::cout << std::format("{}", "＜TransformComponent＞ -> Destructor\n");
 
 }
 

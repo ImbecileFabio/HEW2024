@@ -6,6 +6,9 @@
 //==================================================
 
 /*----- インクルード -----*/
+#include <iostream>
+#include <format>
+
 #include "Camera.h"
 #include "../Component/CameraComponent.h"
 
@@ -15,10 +18,10 @@
 Camera::Camera(GameManager* _gameManager)
 	:GameObject(_gameManager)
 {
-	std::format("{}", "＜Camera＞ -> new\n");
+	std::cout << std::format("{}", "＜Camera＞ -> new\n");
 
 	// カメラコンポーネント
-	camera_component_ = new CameraComponent(this);
+	camera_component_ = new CameraComponent(this, 0);
 	
 }
 
@@ -27,7 +30,9 @@ Camera::Camera(GameManager* _gameManager)
 //--------------------------------------------------
 Camera::~Camera()
 {
-	std::format("{}", "＜Camera＞ -> delete\n");
+	std::cout << std::format("{}", "＜Camera＞ -> delete\n");
+	// コンポーネントの削除
+	delete camera_component_;
 }
 
 //--------------------------------------------------

@@ -25,7 +25,7 @@ class CameraComponent :
     public Component
 {
 public:
-    CameraComponent(GameObject* _owner, int _updateOrder = 100);
+    CameraComponent(GameObject* _owner, int _updateOrder = 50);
     ~CameraComponent();
 
     void Init() override;

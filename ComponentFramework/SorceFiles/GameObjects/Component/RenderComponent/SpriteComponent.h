@@ -31,7 +31,7 @@ class SpriteComponent :
 	public RenderComponent
 {
 public:
-	SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder = 100);
+	SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder = 50);
 	~SpriteComponent();
 
 	void Init() override;

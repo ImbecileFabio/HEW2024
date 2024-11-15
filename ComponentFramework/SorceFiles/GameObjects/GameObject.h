@@ -12,12 +12,17 @@
 #include <vector>
 #include <iostream>
 #include <format>
+
+#include "Component.h"
+#include "Component/TransformComponent.h"
+#include "Component/CameraComponent.h"
+#include "Component/RenderComponent.h"
+#include "Component/RenderComponent/SpriteComponent.h"
+
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
 class GameManager;
-class Component;
-class TransformComponent;
 
 //--------------------------------------------------
 // ゲームオブジェクトクラス
@@ -76,25 +81,24 @@ public:
 
 	const auto& GetComponents() const { return components_; }
 
+	auto& GetGameManager(void) { return game_manager_; }
 	/*
 	* @param	取得したいConponent(T)
 	* @brief	GameObjectのcomponents_からcastedComponentにキャストする
-	* @retuan	見つかれば castedComponent を	見つからなければ nullptr を返す
+	* @retuan	見つかればcastedComponentを	見つからなければ nullptr を返す
 	*/
 	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
 	template <typename T>
 	inline T* GetComponent() {
-		for (const auto& component : components_)
+		for (auto& component : components_)
 		{
 			T* castedComponent = dynamic_cast<T*>(component);
 			if (castedComponent) { return castedComponent; }
 		}
-		std::cout << std::format("{}\n", "<GetComponent> -> Failed, Return nullptr.");
+		std::cout << std::format("＜GetComponent<T>＞ -> Not Found Component\n");
 		return nullptr;
 	}
 
-	// @retuan	ゲームマネージャーを返す
-	auto& GetGameManager(void) { return game_manager_; }
 
 protected:
 	// GameObjectの所有者

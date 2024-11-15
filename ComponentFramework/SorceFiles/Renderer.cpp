@@ -37,7 +37,7 @@ ID3D11Buffer* Renderer::m_ProjectionBuffer{}; // プロジェクション行列
 ID3D11DepthStencilState* Renderer::m_DepthStateEnable{};
 ID3D11DepthStencilState* Renderer::m_DepthStateDisable{};
 
-ID3D11BlendState* Renderer::m_BlendState[MAX_BLENDSTATE]{}; // ブレンドステート配列
+ID3D11BlendState* Renderer::m_BlendState[MAX_BLENDSTATE]; // ブレンドステート配列
 ID3D11BlendState* Renderer::m_BlendStateATC{}; // 特定のアルファテストとカバレッジ（ATC）用のブレンドステート
 
 
@@ -258,7 +258,7 @@ void Renderer::Uninit()
 //-----------------------------------------------------------------
 void Renderer::Begin()
 {
-	float clearColor[4] = { 0.0f, 0.0f, 1.0f, 1.0f };
+	float clearColor[4] = { 0.f, 0.25, 0.25f, 1.0f };
 	m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, clearColor);
 	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }

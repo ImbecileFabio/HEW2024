@@ -6,6 +6,8 @@
 //==================================================
 
 /*----- インクルード -----*/
+#include <cassert>
+
 #include "Component.h"
 #include "GameObject.h"
 
@@ -32,9 +34,11 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 // コンストラクタ
 //--------------------------------------------------
 Component::Component(GameObject* _owner, int _updateOrder)
-	: owner_(std::move(_owner))
+	: owner_(_owner)
 	, update_order_(_updateOrder)
 {
+	// updateOrderは0以上、100以下で設定
+	assert(update_order_ <= 100 && update_order_ >= 0);
 	owner_->AddComponent(this);
 }
 

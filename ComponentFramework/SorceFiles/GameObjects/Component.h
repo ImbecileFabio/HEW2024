@@ -45,7 +45,8 @@ public:
 	static const char* ComponentTypeNames[static_cast<int>(TypeID::MAX)];
 
 public:
-	Component(GameObject* _owner, int updateOrder = 100);
+	// updateOrderÇÕ0à»è„ÅA100à»â∫Ç≈ê›íË
+	Component(GameObject* _owner, int updateOrder = 50);
 	virtual ~Component();
 
 	virtual void Init(void) = 0;

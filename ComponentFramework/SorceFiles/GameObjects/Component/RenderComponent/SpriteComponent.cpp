@@ -89,9 +89,9 @@ void SpriteComponent::InitBuffers()
 	vertices[3].color = Color(1, 1, 1, 1);
 
 	vertices[0].uv = Vector2(0, 0);
-	vertices[1].uv = Vector2(0, 0);
-	vertices[2].uv = Vector2(0, 0);
-	vertices[3].uv = Vector2(0, 0);
+	vertices[1].uv = Vector2(0, 1);
+	vertices[2].uv = Vector2(1, 0);
+	vertices[3].uv = Vector2(1, 1);
 
 	// 頂点バッファ生成
 	vertex_buffer_.Create(vertices);
@@ -139,7 +139,6 @@ void SpriteComponent::Draw()
 	Matrix scale;
 	
 	auto transform = owner_->GetComponent<TransformComponent>();
-	assert(transform);
 	if (transform)
 	{
 		auto t = transform->GetPosition();
@@ -167,7 +166,7 @@ void SpriteComponent::Draw()
 	assert(devicecontext);
 
 	// トポロジーをセット（プリミティブタイプ）
-	devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	shader_.SetGPU();
 	vertex_buffer_.SetGPU();

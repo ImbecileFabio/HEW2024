@@ -24,7 +24,7 @@ class GameObject;
 class TransformComponent : Component
 {
 public:
-	TransformComponent(GameObject* _owner, int updateOrder = 100);
+	TransformComponent(GameObject* _owner, int updateOrder = 50);
 	~TransformComponent();
 
 	void Init(void) override;
