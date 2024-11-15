@@ -6,7 +6,14 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "StdAfx.h"
+#include <iostream>
+#include <format>
+#include <io.h>
+#include <vector>
+#include <algorithm>
+#include <dxgi.h>
+#include <cassert>
+
 #include "Renderer.h"
 #include "GameProcess.h"
 #include "GameObjects/Component/RenderComponent/SpriteComponent.h"
@@ -39,7 +46,7 @@ ID3D11BlendState* Renderer::m_BlendStateATC{}; // 特定のアルファテストとカバレッ
 //-----------------------------------------------------------------
 Renderer::Renderer()
 {
-	std::cout << "[レンダラー] -> 生成\n";
+	std::cout << std::format("{}\n", "[Renderer] -> Constructor");
 }
 
 //-----------------------------------------------------------------
@@ -47,7 +54,8 @@ Renderer::Renderer()
 //-----------------------------------------------------------------
 Renderer::~Renderer(void)
 {
-	std::cout << "[レンダラー] -> 破棄\n";
+	std::cout << std::format("{}\n", "[Renderer] -> Destructor");
+	Uninit();
 }
 
 
@@ -279,9 +287,9 @@ void Renderer::End()
 //-----------------------------------------------------------------
 // 画像追加
 //-----------------------------------------------------------------
-void Renderer::AddSprite(SpriteComponent* spriteComponent)
+void Renderer::AddSprite(SpriteComponent* _spriteComponent)
 {
-	int myDrawOrder = spriteComponent->GetDrawOrder();
+	int myDrawOrder = _spriteComponent->GetDrawOrder();
 	auto iter = sprites_.begin();
 	for (;
 		iter != sprites_.end();
@@ -291,24 +299,24 @@ void Renderer::AddSprite(SpriteComponent* spriteComponent)
 	}
 
 	// イテレータの前に要素を挿入
-	sprites_.insert(iter, spriteComponent);
+	sprites_.insert(iter, _spriteComponent);
 }
 
 //-----------------------------------------------------------------
 // 画像削除
 //-----------------------------------------------------------------
-void Renderer::RemoveSprite(SpriteComponent* spriteComponent)
+void Renderer::RemoveSprite(SpriteComponent& _spriteComponent)
 {
-	auto iter = std::find(sprites_.begin(), sprites_.end(), spriteComponent);
+	auto iter = std::find(sprites_.begin(), sprites_.end(), &_spriteComponent);
 	sprites_.erase(iter);
 }
 
 //-----------------------------------------------------------------
 // 深度ステンシルの有効・無効を設定
 //-----------------------------------------------------------------
-void Renderer::SetDepthEnable(bool Enable)
+void Renderer::SetDepthEnable(bool _Enable)
 {
-	if (Enable)
+	if (_Enable)
 	{
 		// 深度テストを有効にするステンシルステートをセット
 		m_DeviceContext->OMSetDepthStencilState(m_DepthStateEnable, NULL);
@@ -323,12 +331,12 @@ void Renderer::SetDepthEnable(bool Enable)
 //-----------------------------------------------------------------
 // アルファテストとカバレッジ（ATC）の有効・無効を設定
 //-----------------------------------------------------------------
-void Renderer::SetATCEnable(bool Enable)
+void Renderer::SetATCEnable(bool _Enable)
 {
 	// ブレンドファクター（透明度などの調整に使用）
 	float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-	if (Enable)
+	if (_Enable)
 	{
 		// アルファテストとカバレッジ (ATC) を有効にするブレンドステートをセット
 		m_DeviceContext->OMSetBlendState(m_BlendStateATC, blendFactor, 0xffffffff);
@@ -370,10 +378,10 @@ void Renderer::SetWorldViewProjection2D()
 //-----------------------------------------------------------------
 // ワールド行列を設定
 //-----------------------------------------------------------------
-void Renderer::SetWorldMatrix(Matrix* WorldMatrix)
+void Renderer::SetWorldMatrix(Matrix* _WorldMatrix)
 {
 	Matrix world;
-	world = WorldMatrix->Transpose(); // 転置
+	world = _WorldMatrix->Transpose(); // 転置
 
 	// ワールド行列をGPU側へ送る
 	m_DeviceContext->UpdateSubresource(m_WorldBuffer, 0, NULL, &world, 0, 0);
@@ -382,10 +390,10 @@ void Renderer::SetWorldMatrix(Matrix* WorldMatrix)
 //-----------------------------------------------------------------
 // ビュー行列を設定
 //-----------------------------------------------------------------
-void Renderer::SetViewMatrix(Matrix* ViewMatrix)
+void Renderer::SetViewMatrix(Matrix* _ViewMatrix)
 {
 	Matrix view;
-	view = ViewMatrix->Transpose(); // 転置
+	view = _ViewMatrix->Transpose(); // 転置
 
 	// ビュー行列をGPU側へ送る
 	m_DeviceContext->UpdateSubresource(m_ViewBuffer, 0, NULL, &view, 0, 0);
@@ -394,10 +402,10 @@ void Renderer::SetViewMatrix(Matrix* ViewMatrix)
 //-----------------------------------------------------------------
 // プロジェクション行列を設定
 //-----------------------------------------------------------------
-void Renderer::SetProjectionMatrix(Matrix* ProjectionMatrix)
+void Renderer::SetProjectionMatrix(Matrix* _ProjectionMatrix)
 {
 	Matrix projection;
-	projection = ProjectionMatrix->Transpose(); // 転置
+	projection = _ProjectionMatrix->Transpose(); // 転置
 
 	// プロジェクション行列をGPU側へ送る
 	m_DeviceContext->UpdateSubresource(m_ProjectionBuffer, 0, NULL, &projection, 0, 0);
@@ -406,11 +414,11 @@ void Renderer::SetProjectionMatrix(Matrix* ProjectionMatrix)
 //-----------------------------------------------------------------
 //頂点シェーダー作成
 //-----------------------------------------------------------------
-void Renderer::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName)
+void Renderer::CreateVertexShader(ID3D11VertexShader** _VertexShader, ID3D11InputLayout** _VertexLayout, const char* _FileName)
 {
 	FILE* file; // ファイルを開くためのポインタ
 	long int fsize; // ファイルサイズを格納する変数
-	fopen_s(&file, FileName, "rb"); // シェーダーファイルをReadBinaryモードで開く
+	fopen_s(&file, _FileName, "rb"); // シェーダーファイルをReadBinaryモードで開く
 	assert(file); // ファイルが正常に開けたかどうかを確認
 
 	fsize = _filelength(_fileno(file)); // ファイルのサイズを取得
@@ -419,7 +427,7 @@ void Renderer::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11Input
 	fclose(file); // 読み込み完了後、ファイルを閉じる
 
 	// デバイスを使って頂点シェーダーを作成
-	m_Device->CreateVertexShader(buffer, fsize, NULL, VertexShader);
+	m_Device->CreateVertexShader(buffer, fsize, NULL, _VertexShader);
 
 	// 頂点レイアウト（入力レイアウト）の定義
 	D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -436,7 +444,7 @@ void Renderer::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11Input
 	UINT numElements = ARRAYSIZE(layout); // レイアウトの要素数を取得
 
 	// デバイスを使って頂点レイアウトを作成
-	m_Device->CreateInputLayout(layout, numElements, buffer, fsize, VertexLayout);
+	m_Device->CreateInputLayout(layout, numElements, buffer, fsize, _VertexLayout);
 
 	delete[] buffer; // バッファのメモリを解放
 }
@@ -444,11 +452,11 @@ void Renderer::CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11Input
 //-----------------------------------------------------------------
 //ピクセルシェーダー作成
 //-----------------------------------------------------------------
-void Renderer::CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName)
+void Renderer::CreatePixelShader(ID3D11PixelShader** _PixelShader, const char* _FileName)
 {
 	FILE* file; // ファイルを開くためのポインタ
 	long int fsize; // ファイルサイズを格納する変数
-	fopen_s(&file, FileName, "rb"); // シェーダーファイルをReadBinaryモードで開く
+	fopen_s(&file, _FileName, "rb"); // シェーダーファイルをReadBinaryモードで開く
 	assert(file); // ファイルが正常に開けたかどうかを確認
 
 	fsize = _filelength(_fileno(file)); // ファイルのサイズを取得
@@ -457,7 +465,7 @@ void Renderer::CreatePixelShader(ID3D11PixelShader** PixelShader, const char* Fi
 	fclose(file); // 読み込み完了後、ファイルを閉じる
 
 	// デバイスを使ってピクセルシェーダーを作成
-	m_Device->CreatePixelShader(buffer, fsize, NULL, PixelShader);
+	m_Device->CreatePixelShader(buffer, fsize, NULL, _PixelShader);
 
 	delete[] buffer; // バッファのメモリを解放
 }

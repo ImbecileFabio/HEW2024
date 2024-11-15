@@ -8,8 +8,11 @@
 #ifndef CAMERA_COMPONENT_H_
 #define CAMERA_COMPONENT_H_
 /*----- インクルード -----*/
-#include "../Component.h"
+#include <memory>
 #include "SimpleMath.h"
+
+#include "../Component.h"
+
 
 /*----- 構造体定義 -----*/
 
@@ -22,7 +25,7 @@ class CameraComponent :
     public Component
 {
 public:
-    CameraComponent(std::shared_ptr<GameObject> _owner, int _updateOrder = 100);
+    CameraComponent(GameObject* _owner, int _updateOrder = 100);
     ~CameraComponent();
 
     void Init() override;

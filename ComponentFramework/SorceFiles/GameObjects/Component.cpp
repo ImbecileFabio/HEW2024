@@ -31,25 +31,21 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Component::Component(std::shared_ptr<GameObject> _owner, int _updateOrder)
-	: owner_(_owner)
+Component::Component(GameObject* _owner, int _updateOrder)
+	: owner_(std::move(_owner))
 	, update_order_(_updateOrder)
 {
 	owner_->AddComponent(this);
 }
 
+//--------------------------------------------------
+// デストラクタ
+//--------------------------------------------------
 Component::~Component()
 {
-	GetOwner()->RemoveComponent(this);
-
+	owner_->RemoveComponent(this);
 }
 
-//--------------------------------------------------
-// コンポーネントの姿勢制御の更新
-//--------------------------------------------------
-void Component::OnUpdateWorldTransform()
-{
-}
 
 //--------------------------------------------------
 // コンポーネントの状態の読み込み

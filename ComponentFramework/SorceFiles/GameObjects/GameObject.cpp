@@ -6,10 +6,9 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "../StdAfx.h"
+#include "GameObject.h"
 #include "../GameManager.h"
 #include "Component.h"
-#include "GameObject.h"
 #include "Component/TransformComponent.h"
 
 
@@ -27,16 +26,15 @@ const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-GameObject::GameObject(std::shared_ptr<GameManager> _gameManager)
+GameObject::GameObject(GameManager* _gameManager)
 	: game_manager_(_gameManager)
 	, state_(State::Active)
 	, re_compute_transform_(true)
 {
-	// ゲームオブジェクトを管理先へ追加
 	game_manager_->AddGameObject(this);
 
 	// 姿勢制御コンポーネントの追加
-	transform_component_ = std::make_shared<TransformComponent>(this);
+	transform_component_ = new TransformComponent(this);
 
 	// ゲームオブジェクトの初期化
 	this->Init();
@@ -47,6 +45,7 @@ GameObject::GameObject(std::shared_ptr<GameManager> _gameManager)
 //--------------------------------------------------
 GameObject::~GameObject(void)
 {
+	// ゲームオブジェクトの終了処理
 	this->Uninit();
 }
 
@@ -62,8 +61,8 @@ void GameObject::Init(void)
 //--------------------------------------------------
 void GameObject::Uninit(void)
 {
-
-	game_manager_->RemoveGameObject(this);
+	// コンポーネントの削除
+	delete transform_component_;
 }
 
 
@@ -75,9 +74,11 @@ void GameObject::Update(void)
 	if (state_ == State::Active)
 	{
 		if (re_compute_transform_)
+		{
 			ComputeWorldTransform();
-		UpdateComponents();
-		UpdateGameObject();	// サブクラスが挙動をoverrideできるように
+		}
+		UpdateComponents();		// コンポーネントの更新
+		UpdateGameObject();		// オブジェクトの更新
 	}
 }
 
@@ -86,8 +87,10 @@ void GameObject::Update(void)
 //--------------------------------------------------
 void GameObject::UpdateComponents(void)
 {
-	for (auto com : components_)
+	for (auto& com : components_)
+	{
 		com->Update();
+	}
 }
 
 //--------------------------------------------------
@@ -105,28 +108,32 @@ void GameObject::ComputeWorldTransform()
 //--------------------------------------------------
 // コンポーネントの追加
 //--------------------------------------------------
-void GameObject::AddComponent(Component* component)
+void GameObject::AddComponent(Component* _component)
 {
-	int my_update_order = component->GetUpdateOrder();
+	int my_update_order = _component->GetUpdateOrder();
 
 	// 現在から追加されるコンポーネントのUpdateOrderと
 	// 各コンポーネントのUpdateOrderとを比較
-	// UpdateOrderがこうじゅんになるように適時追加してく
+	// UpdateOrderが昇順になるように適時追加してく
 	auto iter = components_.begin();
 	for (; iter != components_.end(); ++iter)
+	{
 		if (my_update_order < (*iter)->GetUpdateOrder()) { break; }
-	components_.insert(iter, component);
+	}
+	components_.insert(iter, _component);
 }
 
 //--------------------------------------------------
 // コンポーネントの削除
 //--------------------------------------------------
-void GameObject::RemoveComponent(Component* component)
+void GameObject::RemoveComponent(Component* _component)
 {
 	auto iter = std::find(components_.begin()
 		, components_.end()
-		, component);	// 探す対象
+		, _component);	// 探す対象
 
 	if (iter != components_.end())
-		components_.erase(iter);
+	{
+		components_.erase(iter);	// 削除
+	}
 }

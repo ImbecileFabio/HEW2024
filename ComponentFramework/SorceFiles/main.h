@@ -7,6 +7,8 @@
 #ifndef MAIN_H_
 #define MAIN_H_
 
+#undef UNICODE
+
 /*----- インクルード -----*/
 
 /*----- 構造体定義 -----*/

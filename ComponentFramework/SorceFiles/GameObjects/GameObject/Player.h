@@ -8,6 +8,7 @@
 #define PLAYER_H_
 
 /*----- インクルード -----*/
+#include <memory>
 #include "../GameObject.h"
 
 /*----- 構造体定義 -----*/
@@ -18,18 +19,18 @@ class SpriteComponent;
 //--------------------------------------------------
 // プレイヤーオブジェクト
 //--------------------------------------------------
-class Player : public GameObject
+class Player 
+	: public GameObject
 {
 public:
-	Player(std::shared_ptr<GameManager> _gameManager);
+	Player(GameManager* _gameManager);
 	~Player(void);
 	void UpdateGameObject(void) override;
 
-	TypeID GetType(void) const { return TypeID::Player; }
+	TypeID GetType(void) override { return TypeID::Player; }
+
 private:
-	// 所持するコンポーネントをここに書く
-	std::shared_ptr<SpriteComponent> sprite_component_{};	// スプライトコンポーネント
+	// 所有するコンポーネント
+	SpriteComponent* sprite_component_{};
 };
-
-
 #endif	// PLAYER_H_

@@ -7,7 +7,13 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "StdAfx.h"
+#include <Windows.h>
+#include <iostream>
+#include <format>
+#include <string>
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+
 #include "GameProcess.h"
 #include "GameManager.h"
 #include "Renderer.h"
@@ -19,9 +25,12 @@
 const auto ClassName = TEXT("2024 framework ひな形");
 const auto WindowName = TEXT("2024 framework ひな形(フィールド描画)");
 
+// fullscreen設定	コメントを外すとフルスクリーンになる
+//#define FULLSCREEN_MODE_
+
 HINSTANCE	GameProcess::hInst_ = nullptr;
 HWND		GameProcess::hWnd_ = nullptr;
-uint32_t	GameProcess::width_ = 0;
+uint32_t	GameProcess::width_ = 0;		// 画面サイズはmain.cppで設定
 uint32_t	GameProcess::height_ = 0;
 
 //--------------------------------------------------
@@ -49,8 +58,7 @@ GameProcess::~GameProcess(void)
 //--------------------------------------------------
 bool GameProcess::StartUp(void)
 {
-	std::cout << "[ゲームプロセス] -> 起動\n";
-	std::cout << "\n";
+	std::cout << std::format("{}\n\n", "[GameProcess] -> StartUp");
 
 	return GameProcess::Init();
 }
@@ -138,7 +146,7 @@ void GameProcess::Run(void)
 //--------------------------------------------------
 void GameProcess::ShutDown(void)
 {
-	std::cout << "[ゲームプロセス] -> 停止\n";
+	std::cout << std::format("{}\n", "[GameProcess] -> ShutDown");
 
 	GameProcess::Uninit();
 }
@@ -148,7 +156,7 @@ void GameProcess::ShutDown(void)
 //--------------------------------------------------
 bool GameProcess::Init(void)
 {
-	std::cout << "[ゲームプロセス] -> ◆初期化処理開始◆\n";
+	std::cout << std::format("{}\n", "[GameProcess] -> ◆Init Start◆");
 
 	{
 		// ウィンドウを生成
@@ -156,10 +164,8 @@ bool GameProcess::Init(void)
 
 		// ゲームマネージャを生成
 		game_manager_ = game_manager_->Create();
-		if (false) { return false; }
 	}
-	std::cout << "[ゲームプロセス] -> ◇初期化処理終了◇\n";
-	std::cout << "\n";
+	std::cout << std::format("{}\n\n", "[GameProcess] -> ◇Init Finish◇");
 
 	return true;
 }
@@ -169,10 +175,19 @@ bool GameProcess::Init(void)
 //--------------------------------------------------
 void GameProcess::Uninit(void)
 {
-	std::cout << "[ゲームプロセス] -> ◆終了処理開始◆\n";
+	std::cout << std::format("{}\n", "[GameProcess] -> ◆Uninit Start◆");
+
+	// ゲームマネージャの破棄
+	if (game_manager_ != nullptr)
+	{
+		delete game_manager_;
+		game_manager_ = nullptr;
+	}
+
 	GameProcess::UninitWnd();
-	std::cout << "[ゲームプロセス] -> ◇終了処理終了◇\n";
-	std::cout << "\n";
+	
+	std::cout << std::format("{}\n", "[GameProcess] -> ◇Uninit Finish◇");
+	std::cout << std::format("{}\n", "");
 
 }
 
@@ -181,7 +196,7 @@ void GameProcess::Uninit(void)
 //--------------------------------------------------
 bool GameProcess::InitWnd(void)
 {
-	std::cout << "[ゲームプロセス] -> ウィンドウ初期化開始\n";
+	std::cout << std::format("{}\n", "[GameProcess] -> InitWnd Start");
 
 	// インスタンスハンドルを取得
 	auto hInst = GetModuleHandle(nullptr);
@@ -230,11 +245,14 @@ bool GameProcess::InitWnd(void)
 		hInst_,
 		nullptr);
 
-	if (hWnd_ == nullptr)
-	{
-		return false;
-	}
+	assert(hWnd_);
 
+#ifdef FLLSCREEN_MODE_
+	// ウィンドウスタイルを変更
+	SetWindowLong(hWnd_, GWL_STYLE, WS_POPUP);
+	// ウィンドウサイズを画面いっぱいに
+	SetWindowPos(hWnd_, HWND_TOP, 0, 0, width_, height_, SWP_SHOWWINDOW);
+#endif	// FLLSCREEN_MODE_
 	// ウィンドウを表示.
 	ShowWindow(hWnd_, SW_SHOWNORMAL);
 
@@ -244,7 +262,7 @@ bool GameProcess::InitWnd(void)
 	// ウィンドウにフォーカスを設定.
 	SetFocus(hWnd_);
 
-	std::cout << "[ゲームプロセス] -> ウィンドウ初期化終了\n";
+	std::cout << std::format("{}\n", "[GameProcess] -> InitWnd Finish");
 
 	// 正常終了.
 	return true;
@@ -255,7 +273,7 @@ bool GameProcess::InitWnd(void)
 //--------------------------------------------------
 void GameProcess::UninitWnd(void)
 {
-	std::cout << "[ゲームプロセス] -> ウィンドウ終了処理開始\n";
+	std::cout << std::format("{}\n", "[GameProcess] -> UninitWnd Start");
 
 	// ウィンドウの登録を解除
 	if(hInst_ != nullptr)
@@ -266,8 +284,7 @@ void GameProcess::UninitWnd(void)
 	hInst_ = nullptr;
 	hWnd_ = nullptr;
 
-	std::cout << "[ゲームプロセス] -> ウィンドウ終了処理開始\n";
-	std::cout << "\n";
+	std::cout << std::format("{}\n\n", "[GameProcess] -> UninitWnd Finish");
 }
 
 

@@ -22,8 +22,9 @@
     <ClCompile Include="SorceFiles\Audio.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\ImGuiManager.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_demo.cpp" />
@@ -34,7 +35,6 @@
     <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SorceFiles\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject.cpp" />
@@ -43,8 +43,6 @@
     <ClCompile Include="SorceFiles\GameProcess.cpp" />
     <ClCompile Include="SorceFiles\main.cpp" />
     <ClCompile Include="SorceFiles\Renderer.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
   </ItemGroup>
@@ -52,8 +50,9 @@
     <ClInclude Include="SorceFiles\Audio.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
     <ClInclude Include="SorceFiles\ImGuiManager.h" />
     <ClInclude Include="SorceFiles\ImGui\imconfig.h" />
     <ClInclude Include="SorceFiles\ImGui\imgui.h" />
@@ -65,7 +64,6 @@
     <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h" />
     <ClInclude Include="SorceFiles\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
     <ClInclude Include="SorceFiles\SubSystem\dx11helper.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject.h" />
@@ -74,13 +72,10 @@
     <ClInclude Include="SorceFiles\GameProcess.h" />
     <ClInclude Include="SorceFiles\main.h" />
     <ClInclude Include="SorceFiles\Renderer.h" />
-    <ClInclude Include="SorceFiles\StdAfx.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
     <ClInclude Include="SorceFiles\SubSystem\IndexBuffer.h" />
     <ClInclude Include="SorceFiles\SubSystem\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\unlitTexturePS.hlsl">
@@ -189,7 +184,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -207,6 +202,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

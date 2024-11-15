@@ -8,7 +8,11 @@
 #define TRANSFORM_COMPONENT_H_
 
 /*----- インクルード -----*/
+#include <memory>
 #include <SimpleMath.h>
+
+#include "../Component.h"
+
 
 /*----- 構造体定義 -----*/
 
@@ -20,7 +24,7 @@ class GameObject;
 class TransformComponent : Component
 {
 public:
-	TransformComponent(std::shared_ptr<GameObject> _owner, int updateOrder = 100);
+	TransformComponent(GameObject* _owner, int updateOrder = 100);
 	~TransformComponent();
 
 	void Init(void) override;
@@ -40,9 +44,9 @@ public:
 
 private:
 	// SRT情報（姿勢情報）
-	DirectX::SimpleMath::Vector3 position_{};
-	DirectX::SimpleMath::Vector3 rotation_{};
-	DirectX::SimpleMath::Vector3 scale_{};
+	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };
+	DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };
+	DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };
 
 
 };

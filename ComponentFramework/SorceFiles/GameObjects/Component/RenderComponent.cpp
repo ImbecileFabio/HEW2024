@@ -6,16 +6,19 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "../../StdAfx.h"
+#include <format>
+
 #include "RenderComponent.h"
+#include "../Component.h"
 
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-RenderComponent::RenderComponent(std::shared_ptr<GameObject> _owner, int _updateOrder)
+RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
+	std::format("{}\n", "＜RenderComponent＞ -> Constructor");
 }
 
 //--------------------------------------------------
@@ -23,7 +26,7 @@ RenderComponent::RenderComponent(std::shared_ptr<GameObject> _owner, int _update
 //--------------------------------------------------
 RenderComponent::~RenderComponent(void)
 {
-	std::cout << "＜RenderComponent＞ -> 破棄\n";
+	std::format("{}\n", "＜RenderComponent＞ -> Destructor");
 
 }
 
