@@ -21,10 +21,11 @@ void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-    // Setup Dear ImGui style
-    ImGui::StyleColorsDark();   // テーマカラー
-    //ImGui::StyleColorsLight();
+    // テーマカラー
+    ImGui::StyleColorsDark();
 
+	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\meiryo.ttc", 20.0f);  // フォントの設定
+   
     // Setup Platform/Renderer backends
     ImGui_ImplWin32_Init(_hWnd);  // ImGuiのWin32の初期化 ImGuiの関数
 }
@@ -35,6 +36,14 @@ void ImGuiManager::ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _d
 {
     // ここでImGuiのDirectX関連を初期化 rendererから
     ImGui_ImplDX11_Init(_device, _deviceContext);
+}
+//--------------------------------------------------
+// @brief ImGuiのウィンドウを初期化
+//--------------------------------------------------
+void ImGuiManager::ImGuiInit()
+{
+
+	imGuiWindowVec.push_back(new ObjectStatesGUI());
 }
 //--------------------------------------------------
 // @brief ImGuiの更新処理　これをループの初めに置いておかないと機能しない
@@ -50,15 +59,10 @@ void ImGuiManager::ImGuiUpdate()
 //--------------------------------------------------
 void ImGuiManager::ImGuiShowWindow()
 {
-    // ここが自分で記述したウィンドウ設定
-    if (showWindowObject)
-    {
-        ImGui::Begin("Transform", &showWindowObject);
-		ImGui::Text("Position %f, %f, %f", position_.x, position_.y, position_.z);
-		ImGui::Text("Rotation %f, %f, %f", rotation_.x, rotation_.y, rotation_.z);
-		ImGui::Text("Scale    %f, %f, %f",    scale_.x,    scale_.y,    scale_.z);
-        ImGui::End();
-    }
+	for (const auto& window : imGuiWindowVec)
+	{
+		window->ShowWindow();
+	}
 }
 //--------------------------------------------------
 // @brief 描画処理
@@ -66,7 +70,6 @@ void ImGuiManager::ImGuiShowWindow()
 void ImGuiManager::ImGuiRender()
 {
     ImGui::Render();
-    const float clear_color_with_alpha[4] = { clear_color.x * clear_color.w, clear_color.y * clear_color.w, clear_color.z * clear_color.w, clear_color.w };
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 //--------------------------------------------------
@@ -78,4 +81,32 @@ void ImGuiManager::ImGuiUnInit()
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
 }
+//--------------------------------------------------
+// @brief ゲームオブジェクトの情報を表示するウィンドウ
+//--------------------------------------------------
+void ObjectStatesGUI::ShowWindow()
+{
+    // ここが自分で記述したウィンドウ設定
+    if (this->showFg)
+    {
+        ImGui::Begin("~(0-0)~", &showFg);
+		// transformの情報
+        if (ImGui::DragFloat3("position", &position_.x, 1.0f ,-100.0f, 100.0f, "%.3f"))
+        {
+			std::cout << position_.x << std::endl;
+        }
+        if (ImGui::DragFloat3("rotation", &rotation_.x, 1.0f, -100.0f, 100.0f, "%.3f"))
+        {
+            // ここで値を入力しているときの処理を実装予定
+        }
+        if (ImGui::DragFloat3("scale", &scale_.x, 1.0f, -100.0f, 100.0f, "%.3f"))
+        {
+
+        }
+        ImGui::End();
+    }
+}
+
+
+
 #endif // IMGUI_DEBUG

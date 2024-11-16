@@ -78,6 +78,7 @@ void GameProcess::Run(void)
 	Renderer* renderer = new Renderer;
 	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGuiのWin32APIを初期化
 	imGuiManager.ImGuiD3D11Init(renderer->GetDevice(), renderer->GetDeviceContext());	// ImGuiのDirectX11を初期化
+	imGuiManager.ImGuiInit();	// ImGuiのウィンドウを初期化
 #endif
 	//--------------------------------------------------
 	// ゲームループ
