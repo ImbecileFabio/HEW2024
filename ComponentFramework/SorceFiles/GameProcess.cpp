@@ -17,6 +17,8 @@
 #include "GameProcess.h"
 #include "GameManager.h"
 #include "Renderer.h"
+#include "InputManager.h"
+
 #define IMGUI_DEBUG	//ImGuiを使うときはコメントアウトを外すといける
 #ifdef IMGUI_DEBUG
 #include "ImGuiManager.h"
@@ -113,8 +115,11 @@ void GameProcess::Run(void)
 				imGuiManager.ImGuiUpdate();		// ImGuiの更新処理
 				imGuiManager.ImGuiShowWindow();	// ImGuiのウィンドウを表示
 #endif
-				GameProcess::Update();
-				GameProcess::GenerateOutput();
+
+				InputManager::GetInstance().Update();	// InputManagerの更新
+
+				GameProcess::Update();					// ゲームの更新処理
+				GameProcess::GenerateOutput();			// ゲームの描画処理
 
 				fpsCounter++;
 				prevCount = currCount;
@@ -164,6 +169,7 @@ bool GameProcess::Init(void)
 
 		// ゲームマネージャを生成
 		game_manager_ = game_manager_->Create();
+		assert(game_manager_);
 	}
 	std::cout << std::format("{}\n\n", "[GameProcess] -> ◇Init Finish◇");
 

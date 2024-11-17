@@ -89,8 +89,8 @@ void SpriteComponent::InitBuffers()
 	vertices[3].color = Color(1, 1, 1, 1);
 
 	vertices[0].uv = Vector2(0, 0);
-	vertices[1].uv = Vector2(0, 1);
-	vertices[2].uv = Vector2(1, 0);
+	vertices[1].uv = Vector2(1, 0);
+	vertices[2].uv = Vector2(0, 1);
 	vertices[3].uv = Vector2(1, 1);
 
 	// 頂点バッファ生成
@@ -172,7 +172,7 @@ void SpriteComponent::Draw()
 	vertex_buffer_.SetGPU();
 	index_buffer_.SetGPU();
 
-	//texture_.SetGPU();
+	texture_.SetGPU();
 
 	devicecontext->DrawIndexed(
 		4,							// 描画するインデックス数（四角形なんで４）
