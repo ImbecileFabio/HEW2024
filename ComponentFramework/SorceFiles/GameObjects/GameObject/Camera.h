@@ -8,15 +8,18 @@
 #ifndef CAMERA_H_
 #define CAMERA_H_
 /*----- インクルード -----*/
+#include <memory>
+
 #include "../GameObject.h"
 
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
+class GameManeger;
 class CameraComponent;
 
-class Camera :
-    public GameObject
+class Camera 
+    : public GameObject
 {
 public:
     Camera(GameManager* _gameManager);
@@ -25,10 +28,10 @@ public:
     void UpdateGameObject() override;
 
     TypeID GetType(void) { return TypeID::Camera; }
-private:
-    // 所持するコンポーネントをここに書く
-    std::unique_ptr<CameraComponent> camera_component_{};
 
+private:
+	// 所有するコンポーネント
+	CameraComponent* camera_component_{};
 };
 
 #endif  // CAMERA_H_

@@ -6,7 +6,11 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "../../../StdAfx.h"
+#include <iostream>
+#include <format>
+#include <cassert>
+#include <string>
+
 #include "SpriteComponent.h"
 #include "../../../GameManager.h"
 #include "../../../Renderer.h"
@@ -24,6 +28,7 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	: RenderComponent(_owner)
 	, draw_order_(_drawOrder)
 {
+	std::format("{}", "＜SpriteComponent＞ -> Constructor\n");
 
 	// テクスチャ読み込み
 	bool sts = texture_.Load(_imgname);
@@ -31,9 +36,10 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 
 	// バッファ初期化
 	InitBuffers();
+	
 
-	GetOwner()->GetGameManager()->GetRenderer()->AddSprite(this);
-
+	// 描画オブジェクトとして登録
+	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
 	object_name_ = std::string("不明なオブジェクト");
 }
 
@@ -42,7 +48,7 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 //--------------------------------------------------
 SpriteComponent::~SpriteComponent()
 {
-	std::cout << "＜SpriteComponent＞ -> 破棄\n";
+	std::cout << std::format("{}{}\n", "＜SpriteComponent＞ -> Destructor", object_name_);
 
 	Uninit();
 }
@@ -132,7 +138,7 @@ void SpriteComponent::Draw()
 	Matrix pos;
 	Matrix scale;
 	
-	TransformComponent* transform = GetOwner()->GetComponent<TransformComponent>();
+	auto transform = owner_->GetComponent<TransformComponent>();
 	if (transform)
 	{
 		auto t = transform->GetPosition();
@@ -144,10 +150,10 @@ void SpriteComponent::Draw()
 	}
 	else 
 	{
-		std::cout << "<" + object_name_ + "> -> 位置取得失敗\n";
+		std::cout << std::format("{}	＜{}＞\n", "＜SpriteComponent＞ -> Faild Get Transform", object_name_);
 		rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
 		pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
-		scale = Matrix::CreateScale(10.f, 10.f, 1.f);
+		scale = Matrix::CreateScale(1.f, 1.f, 1.f);
 	}
 	
 	Matrix worldmtx;
@@ -157,6 +163,7 @@ void SpriteComponent::Draw()
 	// 描画の処理
 	ID3D11DeviceContext* devicecontext;
 	devicecontext = Renderer::GetDeviceContext();
+	assert(devicecontext);
 
 	// トポロジーをセット（プリミティブタイプ）
 	devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

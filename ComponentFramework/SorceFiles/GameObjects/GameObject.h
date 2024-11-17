@@ -8,13 +8,21 @@
 #define GAMEOBJECT_H_
 
 /*----- インクルード -----*/
-#include "../StdAfx.h"
+#include <memory>
+#include <vector>
+#include <iostream>
+#include <format>
+
+#include "Component.h"
+#include "Component/TransformComponent.h"
+#include "Component/CameraComponent.h"
+#include "Component/RenderComponent.h"
+#include "Component/RenderComponent/SpriteComponent.h"
+
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
 class GameManager;
-class Component;
-class TransformComponent;
 
 //--------------------------------------------------
 // ゲームオブジェクトクラス
@@ -51,7 +59,7 @@ public:
 	};
 
 public:
-	GameObject(GameManager* gameManager);
+	GameObject(GameManager* _gameManager);
 	virtual ~GameObject(void);
 
 	void Init(void);
@@ -61,45 +69,40 @@ public:
 	virtual void UpdateGameObject(void) = 0;	// オーバーライド用
 
 	// 姿勢情報の更新
-
 	void ComputeWorldTransform();
 
 	void AddComponent(Component* component);
 	void RemoveComponent(Component* component);
 
 	void SetState(State _state) { state_ = _state; }
-	State GetState(void) { return state_; }
+	State& GetState(void) { return state_; }
 
-	virtual TypeID GetType(void) const { return TypeID::GameObject; }	//オーバーライド用
+	virtual TypeID GetType(void) { return TypeID::GameObject; }	//オーバーライド用
 
-	// コンポーネントリストを返す
-	const std::vector<Component*>& GetComponents() const { return components_; }
+	const auto& GetComponents() const { return components_; }
 
+	auto& GetGameManager(void) { return game_manager_; }
 	/*
-	* @param	取得したいConponent(target)
-	* @brief	GameobjectのComponentListからtargetにキャストする
-	* @retuan	見つかれば target を	見つからなければ nullptr を返す
+	* @param	取得したいConponent(T)
+	* @brief	GameObjectのcomponents_からcastedComponentにキャストする
+	* @retuan	見つかればcastedComponentを	見つからなければ nullptr を返す
 	*/
 	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
 	template <typename T>
-	T* GetComponent() const
-	{
+	inline T* GetComponent() {
 		for (auto& component : components_)
 		{
-			T* target = dynamic_cast<T*>(component);
-
-			if (target != nullptr) { return target; }
+			T* castedComponent = dynamic_cast<T*>(component);
+			if (castedComponent) { return castedComponent; }
 		}
-		std::cout << "<GetComponent> -> nullptrが返された\n";
+		std::cout << std::format("＜GetComponent<T>＞ -> Not Found Component\n");
 		return nullptr;
 	}
 
-	// ゲームマネージャーを返す
-	class GameManager* GetGameManager(void) { return game_manager_.get(); }
 
-private:
+protected:
 	// GameObjectの所有者
-	std::shared_ptr<GameManager> game_manager_{};
+	GameManager* game_manager_{};
 
 	// GameObjectの状態
 	State state_{};
@@ -107,10 +110,11 @@ private:
 	// 所有コンポーネント
 	std::vector<Component*> components_{};
 
-	// 姿勢制御コンポーネント
-	std::unique_ptr<TransformComponent> transform_component_{};
 	// 姿勢情報を再計算するか
 	bool re_compute_transform_{};
+
+	// 姿勢制御コンポーネント
+	TransformComponent* transform_component_{};
 };
 
 #endif	// GAMEOBJECT_H_

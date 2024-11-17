@@ -9,6 +9,8 @@
 
 
 /*----- インクルード -----*/
+#include<memory>
+#include<vector>
 
 /*----- 構造体定義 -----*/
 
@@ -27,24 +29,24 @@ public:
 	GameManager(void);
 	~GameManager(void);
 	
-	static std::shared_ptr<GameManager> Create(void)
-	{
-		return std::make_shared<GameManager>();
-	}
+	// インスタンス生成
+	static auto Create(void) { return new GameManager(); }
 
 	void InitAll(void);
 	void UninitAll(void);
 	void UpdateAll(void);
 	void GenerateOutputAll(void);
 
-	Renderer* GetRenderer(void) const { return renderer_.get(); }
+	auto& GetRenderer(void) const { return renderer_; }
 
 	// ゲームオブジェクトの追加
-	void AddGameObject(GameObject* gameObject);
-	void RemoveGameObject(GameObject* gameObject);
+	void AddGameObject(GameObject* _gameObject);
+	// ゲームオブジェクトの削除
+	void RemoveGameObject(GameObject* _gameObject);
 	
 private:
-	void UpdateGameObjects(void);	//更新処理
+	//更新処理
+	void UpdateGameObjects(void);
 
 	// オブジェクトが更新中か確認
 	bool updating_game_objects_;
@@ -55,9 +57,9 @@ private:
 
 private:
 	// 作ったオブジェクトをここに記述
-	std::unique_ptr<Renderer> renderer_{};	// レンダラー
-	std::unique_ptr<Player> player_{};		// プレイヤー
-	std::unique_ptr<Camera> camera_{};		// カメラ
+	Renderer* renderer_{};	// レンダラー
+	Player* player_{};		// プレイヤー
+	Camera* camera_{};		// カメラ
 };
 
 

@@ -6,9 +6,10 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "../../StdAfx.h"
-#include "CameraComponent.h"
+#include <iostream>
+#include <format>
 
+#include "CameraComponent.h"
 #include "../../GameProcess.h"
 #include "../../Renderer.h"
 #include "../GameObject.h"
@@ -24,7 +25,14 @@ using namespace DirectX::SimpleMath;
 CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
-	auto pos = Vector3(0.f, -10.f, 0.f);
+	std::format("{}", "＜CamelaComponent＞ -> Constructor\n");
+
+	auto transform = owner_->GetComponent<TransformComponent>();
+	if (transform)
+		transform->SetPosition(Vector3(0.f, 0.f, -100.f));
+	else
+		std::cout << std::format("{}\n", "＜CameraComponent＞ -> Faild Get Transform");
+
 	target_ = Vector3(0.f, 0.f, 0.f);
 
 }
@@ -34,7 +42,7 @@ CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 CameraComponent::~CameraComponent()
 {
-	std::cout << "＜CamelaComponent＞ -> 破棄\n";
+	std::cout << std::format("{}", "＜CamelaComponent＞ -> Destructor\n");
 
 	Uninit();
 }
@@ -63,7 +71,17 @@ void CameraComponent::Update()
 	// ビュー変換行列作成
 	Vector3 up = Vector3(0.f, 1.f, 0.f);
 	// 左手系に変更
-	view_matrix_ = DirectX::XMMatrixLookAtLH(GetOwner()->GetComponent<TransformComponent>()->GetPosition(), target_, up);
+	auto transform = owner_->GetComponent<TransformComponent>();
+	if (transform)
+	{
+		auto pos = transform->GetPosition();
+		view_matrix_ = DirectX::XMMatrixLookAtLH(pos, target_, up);
+	}
+	else
+	{
+		std::cout << std::format("{}\n", "＜CameraComponent＞ -> Default Position");
+		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0.f, 0.f, -500.f), Vector3(0.f, 0.f, 0.f), up);
+	}
 
 	Renderer::SetViewMatrix(&view_matrix_);
 

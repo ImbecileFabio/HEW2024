@@ -8,11 +8,13 @@
 #define RENDER_COMPONENT_H_
 
 /*----- インクルード -----*/
-#include "../Component.h"
+#include <memory>
 
+#include "../Component.h"
 /*----- 構造体宣言 -----*/
 
 /*----- 前方宣言 -----*/
+class GameObject;
 
 //--------------------------------------------------
 // 描画コンポーネントのベースクラス
@@ -20,7 +22,7 @@
 class RenderComponent : public Component
 {
 public:
-	RenderComponent(class GameObject* _owner, int _drawOrder = 100);
+	RenderComponent(GameObject* _owner, int _drawOrder = 50);
 	~RenderComponent();
 
 	void Init(void) override {};

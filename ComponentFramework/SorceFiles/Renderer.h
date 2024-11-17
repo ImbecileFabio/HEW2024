@@ -3,7 +3,6 @@
 // 著者：有馬啓太
 //--------------------------------------------------
 // 説明：DirectXの宣言
-// コンポーネント化したい気持ちはある
 //==================================================
 #ifndef RENDERER_H_
 #define RENDERER_H_
@@ -61,7 +60,7 @@ public:
 	void End();
 
 	void AddSprite(SpriteComponent* spriteComponent);
-	void RemoveSprite(SpriteComponent* spriteComponent);
+	void RemoveSprite(SpriteComponent& spriteComponent);
 
 	static void SetDepthEnable(bool Enable);
 
@@ -82,7 +81,7 @@ public:
 
 private:
 
-	std::vector<class SpriteComponent*> sprites_;
+	std::vector<SpriteComponent*> sprites_;
 
 	static D3D_FEATURE_LEVEL m_FeatureLevel;
 

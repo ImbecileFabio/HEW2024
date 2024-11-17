@@ -6,9 +6,11 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "../GameObject.h"
-#include "../Component.h"
+#include <iostream>
+#include <format>
+
 #include "TransformComponent.h"
+#include "../GameObject.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -16,10 +18,6 @@
 TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
-	SetPosition(DirectX::SimpleMath::Vector3::Zero);
-	SetRotation(DirectX::SimpleMath::Vector3::Zero);
-	SetScale(DirectX::SimpleMath::Vector3::One);
-
 }
 
 //--------------------------------------------------
@@ -27,7 +25,7 @@ TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 TransformComponent::~TransformComponent()
 {
-	std::cout << "＜TransformComponent＞ -> 破棄\n";
+	std::cout << std::format("{}", "＜TransformComponent＞ -> Destructor\n");
 
 }
 
@@ -50,13 +48,6 @@ void TransformComponent::Uninit(void)
 //--------------------------------------------------
 void TransformComponent::Update(void)
 {
-	CallTransform();
-}
-
-//--------------------------------------------------
-// 呼び出し処理
-//--------------------------------------------------
-void TransformComponent::CallTransform(void)
-{
 
 }
+

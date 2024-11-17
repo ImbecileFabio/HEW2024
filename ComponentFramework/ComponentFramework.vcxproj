@@ -23,6 +23,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
     <ClCompile Include="SorceFiles\ImGuiManager.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui.cpp" />
@@ -32,8 +35,9 @@
     <ClCompile Include="SorceFiles\ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_tables.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="SorceFiles\InputManager.cpp" />
+    <ClCompile Include="SorceFiles\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject.cpp" />
@@ -42,8 +46,6 @@
     <ClCompile Include="SorceFiles\GameProcess.cpp" />
     <ClCompile Include="SorceFiles\main.cpp" />
     <ClCompile Include="SorceFiles\Renderer.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
   </ItemGroup>
@@ -52,6 +54,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
     <ClInclude Include="SorceFiles\ImGuiManager.h" />
     <ClInclude Include="SorceFiles\ImGui\imconfig.h" />
@@ -62,8 +67,9 @@
     <ClInclude Include="SorceFiles\ImGui\imstb_rectpack.h" />
     <ClInclude Include="SorceFiles\ImGui\imstb_textedit.h" />
     <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h" />
+    <ClInclude Include="SorceFiles\InputManager.h" />
+    <ClInclude Include="SorceFiles\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
     <ClInclude Include="SorceFiles\SubSystem\dx11helper.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject.h" />
@@ -72,13 +78,10 @@
     <ClInclude Include="SorceFiles\GameProcess.h" />
     <ClInclude Include="SorceFiles\main.h" />
     <ClInclude Include="SorceFiles\Renderer.h" />
-    <ClInclude Include="SorceFiles\StdAfx.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
     <ClInclude Include="SorceFiles\SubSystem\IndexBuffer.h" />
     <ClInclude Include="SorceFiles\SubSystem\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\unlitTexturePS.hlsl">
@@ -88,10 +91,16 @@
     <FxCompile Include="Shader\unlitTextureVS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vs_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">vs_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="SorceFiles\imgui.ini" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -155,6 +164,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -183,7 +193,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
@@ -201,6 +211,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
