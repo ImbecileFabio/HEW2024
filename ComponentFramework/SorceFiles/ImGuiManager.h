@@ -10,13 +10,14 @@
 #include "ImGui/imgui_impl_dx11.h"	// 追加したImGuiフォルダから  
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui.h"
-#include "StdAfx.h"
 #include "Windows.h"
 #include "d3d11.h"
 #include "SimpleMath.h"
 /*----- 前方宣言 -----*/
 class ImGuiBase;
 class ObjectStatesGUI;
+class SystemGUI;
+class TreeGUI;	// TODO ちょっとそろそろ分けるファイルを
 /*--ImGuiのマネージャー--*/
 class ImGuiManager
 {
@@ -31,8 +32,9 @@ public:
 	void ImGuiRender();		// 描画
 	void ImGuiUnInit();		// 終了
 private:
+	bool showFg = true;    // ウィンドウが邪魔な時はこれをfalseに
+
 	ImVector<ImGuiBase*> imGuiWindowVec;	// ウィンドウを全てここで管理
-	//ImVector<std::unique_ptr<ImGuiBase>> imGuiWindowVec;	// スマポを出直してきます
 };
 /*--ImGuiの基本的処理を書いた基底クラス--*/
 class ImGuiBase
@@ -59,13 +61,22 @@ private:
 	DirectX::SimpleMath::Vector3 rotation_ = { 0.0f, 0.0f, 0.0f };
 	DirectX::SimpleMath::Vector3 scale_ = { 0.0f, 0.0f, 0.0f };
 };
-///*--実行速度とか内部の情報を表示するウィンドウ--*/
-//class SyStemStatesGUI : public ImGuiBase
-//{
-//public:
-//	SyStemStatesGUI() : ImGuiBase() {};
-//	~SyStemStatesGUI() = default;
-//	void ShowWindow() override;
-//private:
-//};
+/*--実行速度とか内部の情報を表示するウィンドウ--*/
+class SystemGUI : public ImGuiBase
+{
+public:
+	SystemGUI() : ImGuiBase() {};
+	~SystemGUI() = default;
+	void ShowWindow() override;
+private:
+};
+/*--ObjectとComponentを親子形式で表示するツリー形式ウィンドウ--*/
+class TreeGUI : public ImGuiBase
+{
+public:
+	TreeGUI() : ImGuiBase() {};
+	~TreeGUI() = default;
+	void ShowWindow() override;
+private:
+};
 #endif // IMGUI_DEBUG

@@ -1,6 +1,6 @@
 #include	<iostream>
 #include	"Texture.h"
-#include	"stb_image.h"
+#include	"../stb_image.h"
 #include	"../Renderer.h"
 
 // テクスチャをロード
