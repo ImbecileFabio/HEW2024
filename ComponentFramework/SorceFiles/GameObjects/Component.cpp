@@ -6,6 +6,8 @@
 //==================================================
 
 /*----- インクルード -----*/
+#include <cassert>
+
 #include "Component.h"
 #include "GameObject.h"
 
@@ -35,21 +37,19 @@ Component::Component(GameObject* _owner, int _updateOrder)
 	: owner_(_owner)
 	, update_order_(_updateOrder)
 {
+	// updateOrderは0以上、100以下で設定
+	assert(update_order_ <= 100 && update_order_ >= 0);
 	owner_->AddComponent(this);
 }
 
+//--------------------------------------------------
+// デストラクタ
+//--------------------------------------------------
 Component::~Component()
 {
-	GetOwner()->RemoveComponent(this);
-
+	owner_->RemoveComponent(this);
 }
 
-//--------------------------------------------------
-// コンポーネントの姿勢制御の更新
-//--------------------------------------------------
-void Component::OnUpdateWorldTransform()
-{
-}
 
 //--------------------------------------------------
 // コンポーネントの状態の読み込み

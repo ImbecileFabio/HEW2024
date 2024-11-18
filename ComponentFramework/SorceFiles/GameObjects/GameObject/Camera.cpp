@@ -5,9 +5,11 @@
 // 説明：カメラの定義
 //==================================================
 
-#include "../../StdAfx.h"
+/*----- インクルード -----*/
+#include <iostream>
+#include <format>
+
 #include "Camera.h"
-#include "../../GameManager.h"
 #include "../Component/CameraComponent.h"
 
 //--------------------------------------------------
@@ -16,8 +18,11 @@
 Camera::Camera(GameManager* _gameManager)
 	:GameObject(_gameManager)
 {
-	std::cout << "＜カメラ＞ -> 生成\n";
-	camera_component_ = std::make_unique<CameraComponent>(this);
+	std::cout << std::format("{}", "＜Camera＞ -> new\n");
+
+	// カメラコンポーネント
+	camera_component_ = new CameraComponent(this, 0);
+	
 }
 
 //--------------------------------------------------
@@ -25,7 +30,9 @@ Camera::Camera(GameManager* _gameManager)
 //--------------------------------------------------
 Camera::~Camera()
 {
-	std::cout << "＜カメラオブジェクト＞ -> 破棄\n";
+	std::cout << std::format("{}", "＜Camera＞ -> delete\n");
+	// コンポーネントの削除
+	delete camera_component_;
 }
 
 //--------------------------------------------------

@@ -9,9 +9,8 @@
 #define GAME_PROCESS_H_
 
 /*----- インクルード -----*/
-#include "StdAfx.h"
-/*----- 構造体定義 -----*/
-
+#include <Windows.h>
+#include <memory>
 
 /*----- 前方宣言 -----*/
 class GameManager;
@@ -32,9 +31,9 @@ public:
 	// ウィンドウの幅と高さを返す
 	static uint32_t GetWidth() { return width_; }
 	static uint32_t GetHeight() { return height_; }
-	
+
 	// ウィンドウハンドルを返す
-	static HWND GetWindowHandle(){ return hWnd_; }
+	static HWND GetWindowHandle() { return hWnd_; }
 
 private:
 
@@ -52,7 +51,7 @@ private:
 	static uint32_t	 width_;	// ウィンドウの横幅
 	static uint32_t	 height_;	// ウィンドウの縦幅
 
-	std::shared_ptr<GameManager> game_manager_{};	// ゲーム管理インスタンス
+	GameManager* game_manager_{};	// ゲーム管理インスタンス
 };
 
 #endif // GAME_PROCESS_H_

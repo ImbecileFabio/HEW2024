@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="Audio" Collapsed="true">
+    <Position X="3.75" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAABQAAAAAAAAAAAAAAAoAACAAAAAAA=</HashCode>
+      <FileName>SorceFiles\Audio.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImGuiManager" Collapsed="true">
+    <Position X="26.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAIAEAAAADAIAgGAAAAAAAIAABAAAAAAAA=</HashCode>
+      <FileName>SorceFiles\ImGuiManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shader" Collapsed="true">
+    <Position X="25.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAIAAAAAAAAAAAAAAAQAAgEAAAAAAAAAAAAA=</HashCode>
+      <FileName>SorceFiles\SubSystem\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player">
+    <Position X="7.25" Y="8.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAAAAAQAAABA=</HashCode>
+      <FileName>SorceFiles\GameObjects\GameObject\Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameObject">
+    <Position X="9" Y="1.75" Width="4" />
+    <Members>
+      <Method Name="~GameObject" Hidden="true" />
+      <Field Name="game_manager_" Hidden="true" />
+      <Method Name="GameObject" Hidden="true" />
+      <Field Name="re_compute_transform_" Hidden="true" />
+      <Method Name="UpdateComponents" Hidden="true" />
+      <Method Name="UpdateGameObject" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Enum Name="GameObject::TypeID" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SorceFiles\GameObjects\GameObject.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="GameObject::State" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>SorceFiles\GameObjects\GameObject.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CBQABEAAAAQIAAABAAAgBIIgAAAQAAEEAAACAAIABIA=</HashCode>
+      <FileName>SorceFiles\GameObjects\GameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Component">
+    <Position X="19" Y="1.5" Width="2.75" />
+    <Members>
+      <Method Name="~Component" Hidden="true" />
+      <Method Name="Component" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="Component::TypeID">
+        <TypeIdentifier>
+          <NewMemberFileName>SorceFiles\GameObjects\Component.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAQhAAAAEYAAhAABAAAAAAABEAAAAAAAAABCAEAAAAA=</HashCode>
+      <FileName>SorceFiles\GameObjects\Component.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameManager">
+    <Position X="2.75" Y="4.5" Width="3.5" />
+    <Members>
+      <Method Name="~GameManager" Hidden="true" />
+      <Method Name="Create" Hidden="true" />
+      <Field Name="pending_game_objects_" Hidden="true" />
+      <Method Name="UpdateGameObjects" Hidden="true" />
+      <Field Name="updating_game_objects_" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AARgAAAAAAAAAACAAAQEAAAAAAQAgGAEAAAAAAFQggg=</HashCode>
+      <FileName>SorceFiles\GameManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameProcess">
+    <Position X="3.25" Y="1" Width="2.25" />
+    <Members>
+      <Method Name="~GameProcess" Hidden="true" />
+      <Field Name="game_manager_" Hidden="true" />
+      <Method Name="GameProcess" Hidden="true" />
+      <Method Name="GenerateOutput" Hidden="true" />
+      <Method Name="GetWindowHandle" Hidden="true" />
+      <Method Name="Init" Hidden="true" />
+      <Method Name="InitWnd" Hidden="true" />
+      <Method Name="Uninit" Hidden="true" />
+      <Method Name="UninitWnd" Hidden="true" />
+      <Method Name="Update" Hidden="true" />
+      <Method Name="WndProc" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAQCACAAAAEAAAAhQAUQAABAAAAAIAAAAAACQUAABAY=</HashCode>
+      <FileName>SorceFiles\GameProcess.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Renderer" Collapsed="true">
+    <Position X="3.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIgBgABgAEAQ0BRAAEAEADAAEACEgiABACDCQQgAAA=</HashCode>
+      <FileName>SorceFiles\Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IndexBuffer" Collapsed="true">
+    <Position X="25.5" Y="13.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>SorceFiles\SubSystem\IndexBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Texture" Collapsed="true">
+    <Position X="25.5" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAgAAAAIAABABBAAAAAAACAAAAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>SorceFiles\SubSystem\Texture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VertexBuffer&lt;T&gt;" Collapsed="true">
+    <Position X="25.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAIAAAAAAAAAAAAAAAAAAAEBAAAAAAAAAAAA=</HashCode>
+      <FileName>SorceFiles\SubSystem\VertexBuffer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ImGuiViewport" Collapsed="true">
+    <Position X="26.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAgBAAAAAAAgAAAAAAQAAAAIACAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>SorceFiles\ImGui\imgui.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="ImGuiViewportP" Collapsed="true">
+    <Position X="26.75" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>XABAACAEAAAgAEQIAAAAAEAiAAgAAAAACAAAAAAAAAA=</HashCode>
+      <FileName>SorceFiles\ImGui\imgui_internal.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Yu Gothic UI" Size="9" />
+</ClassDiagram>

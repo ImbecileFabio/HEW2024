@@ -6,8 +6,10 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "../../StdAfx.h"
+#include <format>
+
 #include "RenderComponent.h"
+#include "../Component.h"
 
 
 //--------------------------------------------------
@@ -16,6 +18,7 @@
 RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
+	std::format("{}\n", "＜RenderComponent＞ -> Constructor");
 }
 
 //--------------------------------------------------
@@ -23,7 +26,7 @@ RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 RenderComponent::~RenderComponent(void)
 {
-	std::cout << "＜RenderComponent＞ -> 破棄\n";
+	std::format("{}\n", "＜RenderComponent＞ -> Destructor");
 
 }
 

@@ -6,22 +6,26 @@
 //==================================================
 
 /*----- インクルード -----*/
-#include "../../StdAfx.h"
+#include <iostream>
+#include <format>
+
 #include "Player.h"
 #include "../../GameManager.h"
+#include "../Component.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/TransformComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Player::Player( GameManager* _gameManager)
+Player::Player(GameManager* _gameManager)
 	:GameObject(_gameManager)
 {
-	std::cout << "＜プレイヤー＞ -> 生成\n";
-	
-	sprite_component_ = std::make_unique<SpriteComponent>(this, "Asset/Texture/icon.png");
-	sprite_component_->SetObjectName("プレイヤー");
+	std::cout << std::format("{}\n", "＜Player＞ -> Constructor");
+
+	// スプライトコンポーネント
+	sprite_component_= new SpriteComponent(this, "Asset/Texture/icon.png");
+	sprite_component_->SetObjectName("Player");
 }
 
 //--------------------------------------------------
@@ -29,7 +33,9 @@ Player::Player( GameManager* _gameManager)
 //--------------------------------------------------
 Player::~Player(void)
 {
-	std::cout << "＜プレイヤーオブジェクト＞ -> 破棄\n";
+	std::cout << std::format("{}\n", "＜Player＞ -> Destructor");
+	// ここでコンポーネントを削除
+	delete sprite_component_;
 }
 
 //--------------------------------------------------
