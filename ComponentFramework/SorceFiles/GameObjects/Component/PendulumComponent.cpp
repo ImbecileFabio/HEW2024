@@ -1,44 +1,38 @@
 //==================================================
-// [Camera.cpp] カメラオブジェクト
+// [PendulumComponent.cpp] 振り子モジュール
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：カメラの定義
+// 説明：振り子の処理の定義
 //==================================================
 
 /*----- インクルード -----*/
-#include <iostream>
 #include <format>
 
-#include "Camera.h"
-#include "../Component/CameraComponent.h"
+#include "PendulumComponent.h"
+#include "../Component.h"
+
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Camera::Camera(GameManager* _gameManager)
-	:GameObject(_gameManager)
+PendulumComponent::PendulumComponent(GameObject* _owner, int _updateOrder)
+	: Component(_owner, _updateOrder)
 {
-	std::cout << std::format("＜Camera＞ -> new\n");
-
-	// カメラコンポーネント
-	camera_component_ = new CameraComponent(this, 0);
-	
+	std::format("＜PendulumComponent＞ -> Constructor\n");
 }
 
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-Camera::~Camera()
+PendulumComponent::~PendulumComponent(void)
 {
-	std::cout << std::format("＜Camera＞ -> delete\n");
-	// コンポーネントの削除
-	delete camera_component_;
+	std::format("＜PendulumComponent＞ -> Destructor\n");
+
 }
 
 //--------------------------------------------------
-// 更新処理
+// 終了処理
 //--------------------------------------------------
-void Camera::UpdateGameObject()
+void PendulumComponent::Uninit()
 {
-
 }

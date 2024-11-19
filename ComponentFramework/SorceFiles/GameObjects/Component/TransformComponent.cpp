@@ -18,6 +18,8 @@
 TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
+	std::cout << std::format("ƒTransformComponent„ -> Constructor\n");
+
 }
 
 //--------------------------------------------------
@@ -25,7 +27,7 @@ TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 TransformComponent::~TransformComponent()
 {
-	std::cout << std::format("{}", "ƒTransformComponent„ -> Destructor\n");
+	std::cout << std::format("ƒTransformComponent„ -> Destructor\n");
 
 }
 

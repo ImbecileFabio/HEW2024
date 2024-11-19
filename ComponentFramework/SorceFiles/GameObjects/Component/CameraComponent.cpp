@@ -25,13 +25,13 @@ using namespace DirectX::SimpleMath;
 CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
-	std::format("{}", "ƒCamelaComponent„ -> Constructor\n");
+	std::format("ƒCamelaComponent„ -> Constructor\n");
 
 	auto transform = owner_->GetComponent<TransformComponent>();
 	if (transform)
-		transform->SetPosition(Vector3(0.f, 0.f, -100.f));
+		transform->position_ = Vector3(0.f, 0.f, -10.f);
 	else
-		std::cout << std::format("{}\n", "ƒCameraComponent„ -> Faild Get Transform");
+		std::cout << std::format("ƒCameraComponent„ -> Faild Get Transform\n");
 
 	target_ = Vector3(0.f, 0.f, 0.f);
 
@@ -42,7 +42,7 @@ CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 CameraComponent::~CameraComponent()
 {
-	std::cout << std::format("{}", "ƒCamelaComponent„ -> Destructor\n");
+	std::cout << std::format("ƒCamelaComponent„ -> Destructor\n");
 
 	Uninit();
 }
@@ -79,7 +79,7 @@ void CameraComponent::Update()
 	}
 	else
 	{
-		std::cout << std::format("{}\n", "ƒCameraComponent„ -> Default Position");
+		std::cout << std::format("ƒCameraComponent„ -> Default Position\n");
 		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0.f, 0.f, -500.f), Vector3(0.f, 0.f, 0.f), up);
 	}
 

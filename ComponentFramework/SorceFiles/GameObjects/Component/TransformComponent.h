@@ -36,17 +36,21 @@ public:
 	auto& GetRotation() { return rotation_; }
 	auto& GetScale() { return scale_; }
 
-	void SetPosition(DirectX::SimpleMath::Vector3 _pos) { position_ = _pos; }
-	void SetRotation(DirectX::SimpleMath::Vector3 _rot) { rotation_ = _rot; }
-	void SetScale(DirectX::SimpleMath::Vector3 _sca) { scale_ = _sca; }
-
 	virtual TypeID GetComponentType() const override { return TypeID::TransformComponent; }
 
-private:
+	/////////////////////////////////////////////////////////
+	// 仮でpublicにしているが、本来はprivateにする
 	// SRT情報（姿勢情報）
 	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };
 	DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };
-	DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };
+	DirectX::SimpleMath::Vector3 scale_{ 10.f, 10.f, 1.f };
+	/////////////////////////////////////////////////////////
+
+private:
+	//// SRT情報（姿勢情報）
+	//DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };
+	//DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };
+	//DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };
 
 
 };

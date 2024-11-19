@@ -37,6 +37,8 @@ public:
 
 		// カメラ
 		, CameraComponent
+		// 振り子
+		, PendulumComponent
 
 		// コンポーネントの最大値
 		, MAX

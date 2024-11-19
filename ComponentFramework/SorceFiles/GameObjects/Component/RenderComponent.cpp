@@ -18,7 +18,7 @@
 RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
-	std::format("{}\n", "ƒRenderComponent„ -> Constructor");
+	std::format("ƒRenderComponent„ -> Constructor\n");
 }
 
 //--------------------------------------------------
@@ -26,7 +26,7 @@ RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 RenderComponent::~RenderComponent(void)
 {
-	std::format("{}\n", "ƒRenderComponent„ -> Destructor");
+	std::format("ƒRenderComponent„ -> Destructor\n");
 
 }
 

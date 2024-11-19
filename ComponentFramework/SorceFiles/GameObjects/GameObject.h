@@ -40,6 +40,7 @@ public:
 		// ここに追加したゲームオブジェクトを追加していく
 		, Player
 		, Camera
+		, Pendulum
 
 		// ゲームオブジェクトのIDの最大値
 		, MAX
@@ -99,6 +100,10 @@ public:
 		return nullptr;
 	}
 
+	// 仮で
+	auto& GetTransformComponent() {
+		return transform_component_;
+	}
 
 protected:
 	// GameObjectの所有者
