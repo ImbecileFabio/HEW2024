@@ -11,15 +11,12 @@
 // 初期化
 //--------------------------------------------------
 
-HRESULT AudioManager::Init()
+void AudioManager::Init()
 {
-	HRESULT hr;
-
 	// COMコンポーネントの初期化
 	hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	if (FAILED(hr)) {
 		std::cerr << "COMの初期化に失敗しました。　エラーコード：" << hr << std::endl;
-		return hr;
 	}
 
 	// XAudio2の初期化
@@ -28,7 +25,6 @@ HRESULT AudioManager::Init()
 	if (FAILED(hr)) {
 		std::cerr << "XAudio2の初期化に失敗しました。　エラーコード：" << hr << std::endl;
 		Uninit();
-		return hr;
 	}
 
 	// マスターボイスの作成
@@ -36,25 +32,20 @@ HRESULT AudioManager::Init()
 	if (FAILED(hr)) {
 		std::cerr << "マスターボイスの作成に失敗しました。　エラーコード：" << hr << std::endl;
 		Uninit();
-		return hr;
 	}
 
 
-	// WAVEファイルの読み込み
-	for (int i = 0; i < SoundLabelMAX; i++)
+	// WAVEファイルの読み込みとソースファイルの作成
+	for (int SoundLabel_number = 0; SoundLabel_number < SoundLabel_MAX; SoundLabel_number++)
 	{
-		hr = LoadWaveFile(i);	// 長くなりそうなので関数化します
-		if (FAILED(hr)) {
+		if (LoadWaveFile(SoundLabel_number) == -1) {		// 長くなりそうなので関数化します
 			std::cerr << "WAVEファイルの読み込みに失敗しました。　エラーコード：" << hr << std::endl;
 			Uninit();
-			return hr;
 		}
 	}
 
-
-	//完了、戻り値を返す
+	//完了
 	std::cout << "オーディオの初期化が完了しました。";
-	return hr;
 }
 
 
@@ -64,15 +55,22 @@ HRESULT AudioManager::Init()
 
 void AudioManager::Uninit()
 {
-	if (pMasteringVoice) {					// マスターボイス
+	for (int SoundLabel_number = 0; SoundLabel_number < SoundLabel_MAX; SoundLabel_number++)	// ソースボイス
+	{
+		if (pSourceVoice[SoundLabel_number]) {
+			pSourceVoice[SoundLabel_number]->DestroyVoice();
+			pSourceVoice[SoundLabel_number] = nullptr;
+		}
+	}
+	if (pMasteringVoice) {																		// マスターボイス
 		pMasteringVoice->DestroyVoice();
 		pMasteringVoice = nullptr;
 	}		
-	if (pXaudio2) {							// Xaudio2
+	if (pXaudio2) {																				// Xaudio2
 		pXaudio2->Release();
 		pXaudio2 = nullptr;
 	}
-	CoUninitialize();						// COMコンポーネント
+	CoUninitialize();																			// COMコンポーネント
 
 	std::cout << "オーディオの解放が完了しました。";
 }
@@ -84,11 +82,25 @@ void AudioManager::Uninit()
 
 void AudioManager::Play(SoundLabel _label)
 {
-
+	hr = pSourceVoice[_label]->SubmitSourceBuffer(&audioDataBuffer);
+	if (FAILED(hr)) {
+		std::cerr << "オーディオデータのバッファの送信に失敗しました。　エラーコード：" << hr << std::endl;
+	}
+	hr = pSourceVoice[_label]->Start();
+	if (FAILED(hr)) {
+		std::cerr << "オーディオの再生に失敗しました。　エラーコード：" << hr << std::endl;
+	}
 }
 void AudioManager::Stop(SoundLabel _label)
 {
-
+	hr = pSourceVoice[_label]->Stop();
+	if (FAILED(hr)) {
+		std::cerr << "オーディオの停止に失敗しました。　エラーコード：" << hr << std::endl;
+	}
+	hr = pSourceVoice[_label]->FlushSourceBuffers();
+	if (FAILED(hr)) {
+		std::cerr << "オーディオデータのバッファのクリアに失敗しました。　エラーコード：" << hr << std::endl;
+	}
 }
 
 
@@ -96,22 +108,66 @@ void AudioManager::Stop(SoundLabel _label)
 // WAVEファイルの読み込み
 //--------------------------------------------------
 
-HRESULT AudioManager::LoadWaveFile(int number)
+int AudioManager::LoadWaveFile(int _label)
 {
-	HRESULT hr;
-
 	// WAVEファイルを開く
-	hr = fopen_s(&file, param[number].fileName, "rb");
-	if (FAILED(hr)) {
-		std::cerr << "WAVEファイルのオープンに失敗しました。　エラーコード：" << hr << std::endl;
-		return hr;
+	if (fopen_s(&pFile, param[_label].fileName, "rb") != 0) {
+		std::cerr << "WAVEファイルのオープンに失敗しました。" << std::endl;
+		return -1;
 	}
 
 	// RIFFヘッダーの読み込み
+	if (fread(&riffHeader, sizeof(riffHeader), 1, pFile) != 1) {
+		std::cerr << "RIFFヘッダーの読み込みに失敗しました。" << std::endl;
+		return -1;
+	}
 
 	// フォーマットチャンクの読み込み
+	if (fread(&formatChunk, sizeof(formatChunk), 1, pFile) != 1) {
+		std::cerr << "フォーマットチャンクの読み込みに失敗しました。" << std::endl;
+		return -1;
+	}
 
 	// データチャンクの読み込み
+	if (fread(&dataChunk, sizeof(dataChunk), 1, pFile) != 1) {
+		std::cerr << "データチャンクの読み込みに失敗しました。" << std::endl;
+		return -1;
+	}
+	pDataBuffer = (BYTE*)malloc(dataChunk.size);		// 波形データ分のメモリを確保（mallocは引数分のメモリを確保する関数）
+	// 波形データの読み込み
+	if (pDataBuffer == nullptr) {
+		std::cerr << "バッファが初期化されていません。" << std::endl;
+		return -1;
+	}
+	if (fread(pDataBuffer, dataChunk.size, 1, pFile) != 1) {
+		std::cerr << "波形データの読み込みに失敗しました。" << std::endl;
+		return -1;
+	}
+
 
 	// WAVEファイルのクローズ
+	if (fclose(pFile) != 0) {
+		std::cerr << "WAVEファイルのクローズに失敗しました。" << std::endl;
+		return -1;
+	}
+	pFile = nullptr;
+
+
+	// ソースボイスの作成
+	WAVEFORMATEX WaveFormatEx{};																// -波形フォーマット構造体
+	memcpy(&WaveFormatEx, &formatChunk.fmt, sizeof(formatChunk.fmt));							// -波形フォーマットの設定	
+	WaveFormatEx.wBitsPerSample = formatChunk.fmt.nBlockAlign * 8 / formatChunk.fmt.nChannels;	// -1サンプル辺りのバッファサイズを算出する
+	hr = pXaudio2->CreateSourceVoice(&pSourceVoice[_label], &WaveFormatEx);						// -波形フォーマットを元にSourceVoiceの生成
+	if (FAILED(hr)) {
+		std::cerr << "ソースボイスの作成に失敗しました。　エラーコード：" << hr << std::endl;
+		free(pDataBuffer);
+		return -1;
+	}
+
+	// 再生する波形データの設定
+	audioDataBuffer.pAudioData = (BYTE*)pDataBuffer;	// -オーディオバッファへのアドレス指定
+	audioDataBuffer.Flags = XAUDIO2_END_OF_STREAM;		// -バッファの終わりを指定
+	audioDataBuffer.AudioBytes = dataChunk.size;		// -バッファのサイズ設定
+
+	return 0;
 }
