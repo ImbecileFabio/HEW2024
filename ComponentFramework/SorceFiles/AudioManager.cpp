@@ -8,6 +8,23 @@
 #include "AudioManager.h"
 
 //--------------------------------------------------
+// コンストラクタとデストラクタ
+//--------------------------------------------------
+
+AudioManager::AudioManager()
+{
+	// ポインタの初期化
+	pXaudio2		= nullptr;
+	pMasteringVoice	= nullptr;
+	pFile			= nullptr;
+	Init();
+}
+AudioManager::~AudioManager()
+{
+	Uninit();
+}
+
+//--------------------------------------------------
 // 初期化
 //--------------------------------------------------
 
@@ -154,7 +171,6 @@ int AudioManager::LoadWaveFile(int _label)
 
 
 	// ソースボイスの作成
-	WAVEFORMATEX WaveFormatEx{};																// -波形フォーマット構造体
 	memcpy(&WaveFormatEx, &formatChunk.fmt, sizeof(formatChunk.fmt));							// -波形フォーマットの設定	
 	WaveFormatEx.wBitsPerSample = formatChunk.fmt.nBlockAlign * 8 / formatChunk.fmt.nChannels;	// -1サンプル辺りのバッファサイズを算出する
 	hr = pXaudio2->CreateSourceVoice(&pSourceVoice[_label], &WaveFormatEx);						// -波形フォーマットを元にSourceVoiceの生成

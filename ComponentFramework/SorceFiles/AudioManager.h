@@ -69,17 +69,21 @@ private:
 	};
 
 	HRESULT hr;		// -エラーチェック用の変数
-	IXAudio2*				pXaudio2		= nullptr;		// -XAudio2のポインタ
-	IXAudio2MasteringVoice* pMasteringVoice = nullptr;		// -マスターボイスのポインタ
+	IXAudio2*				pXaudio2;						// -XAudio2のポインタ
+	IXAudio2MasteringVoice* pMasteringVoice;				// -マスターボイスのポインタ
     IXAudio2SourceVoice*	pSourceVoice[SoundLabel_MAX];	// -ソースボイスのポインタ（サウンド数分生成）
-	FILE*			pFile = nullptr;	// -ファイルのポインタ
+	FILE*			pFile;				// -ファイルのポインタ
 	RiffHeader		riffHeader;			// -RIFFヘッダー
 	FormatChunk		formatChunk;		// -フォーマットチャンク
 	Chunk			dataChunk;			// -データチャンク	（"識別子（ID）" "チャンクのサイズ"）
 	BYTE*			pDataBuffer;		// -波形データ		（"データの内容"）
 	XAUDIO2_BUFFER	audioDataBuffer{};	// -オーディオデータを再生するために使用するバッファ
+	WAVEFORMATEX	WaveFormatEx{};		// -波形フォーマット構造体
+
 
 public:
+	 AudioManager();
+	~AudioManager();
     void Init();
 	void Uninit();
 	void Play(SoundLabel _label);
