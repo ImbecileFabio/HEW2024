@@ -5,14 +5,14 @@
 // 説明：サウンドの制御をおこなうクラス
 // 　　　Init()で初期化、
 //		Uninit()で解放、
-// 　　　Play()で再生、
-//		Stop()で停止を行う。
+// 　　　Play(サウンドラベル)で再生、
+//		Stop(サウンドラベル)で停止を行う。
 //==================================================
 #pragma once
 #include <xaudio2.h>
 #include <iostream>
 
-// サウンドファイル
+// サウンドファイルのラベル
 typedef enum
 {
 	SoundLabel_SampleBGM = 0,	// サンプルBGM
