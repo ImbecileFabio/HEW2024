@@ -13,6 +13,11 @@
 #include "../Component.h"
 /*----- 構造体宣言 -----*/
 
+
+
+
+
+
 /*----- 前方宣言 -----*/
 class GameObject;
 
@@ -22,18 +27,22 @@ class GameObject;
 class PendulumComponent : public Component
 {
 public:
-	PendulumComponent(GameObject* _owner, int _drawOrder = 50);
+	PendulumComponent(GameObject* _owner, float _rength = 10.f, float _angle = 0,  int _updateOrder = 50);
 	~PendulumComponent();
 
 	void Init(void) override {};
 	void Uninit(void) override;
-	void Update(void) override {};
+	void Update(void) override;
+
+	
 
 	virtual TypeID GetComponentType(void) const override { return TypeID::PendulumComponent; }
 
 private:
 	float angle_{};		// 角度
 	float rength_{};	// 長さ
+	float angularVelocity_{}; // 角速度
+
 
 };
 

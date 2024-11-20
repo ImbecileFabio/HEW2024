@@ -49,5 +49,4 @@ Pendulum::~Pendulum(void)
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
 {
-	GetAsyncKeyState(VK_UP);
 }

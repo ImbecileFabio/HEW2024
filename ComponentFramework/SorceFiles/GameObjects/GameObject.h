@@ -13,11 +13,13 @@
 #include <iostream>
 #include <format>
 
+#include "../InputManager.h"
 #include "Component.h"
 #include "Component/TransformComponent.h"
 #include "Component/CameraComponent.h"
 #include "Component/RenderComponent.h"
 #include "Component/RenderComponent/SpriteComponent.h"
+
 
 /*----- \‘¢‘Ì’è‹` -----*/
 

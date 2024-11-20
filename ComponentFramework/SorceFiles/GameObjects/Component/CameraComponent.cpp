@@ -27,11 +27,6 @@ CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 {
 	std::format("ƒCamelaComponent„ -> Constructor\n");
 
-	auto transform = owner_->GetComponent<TransformComponent>();
-	if (transform)
-		transform->position_ = Vector3(0.f, 0.f, -10.f);
-	else
-		std::cout << std::format("ƒCameraComponent„ -> Faild Get Transform\n");
 
 	target_ = Vector3(0.f, 0.f, 0.f);
 

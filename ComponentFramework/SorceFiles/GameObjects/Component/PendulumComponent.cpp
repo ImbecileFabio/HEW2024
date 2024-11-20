@@ -6,17 +6,24 @@
 //==================================================
 
 /*----- インクルード -----*/
+#include <iostream>
 #include <format>
+#include <SimpleMath.h>
+
 
 #include "PendulumComponent.h"
+#include "../GameObject.h"
 #include "../Component.h"
 
+using namespace DirectX::SimpleMath;
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-PendulumComponent::PendulumComponent(GameObject* _owner, int _updateOrder)
+PendulumComponent::PendulumComponent(GameObject* _owner, float _rength, float _angle, int _updateOrder)
 	: Component(_owner, _updateOrder)
+	, rength_(_rength)
+	, angle_(_angle)
 {
 	std::format("＜PendulumComponent＞ -> Constructor\n");
 }
@@ -30,9 +37,23 @@ PendulumComponent::~PendulumComponent(void)
 
 }
 
+
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------
 void PendulumComponent::Uninit()
 {
+}
+
+
+//--------------------------------------------------
+// 更新処理
+//--------------------------------------------------
+void PendulumComponent::Update(void)
+{
+
+	auto& transform = owner_->GetTransformComponent();
+
+	transform->position_.y = -rength_;
+	transform->rotation_.z += 0.1f;
 }

@@ -43,7 +43,7 @@ public:
 	// SRTî•ñip¨î•ñj
 	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };
 	DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };
-	DirectX::SimpleMath::Vector3 scale_{ 10.f, 10.f, 1.f };
+	DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };
 	/////////////////////////////////////////////////////////
 
 private:
