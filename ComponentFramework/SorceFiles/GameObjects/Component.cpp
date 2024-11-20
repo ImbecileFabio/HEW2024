@@ -27,6 +27,8 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 
 	// ƒJƒƒ‰
 	, "CameraComponent"
+	// U‚èq
+	, "PendulumComponent"
 
 };
 

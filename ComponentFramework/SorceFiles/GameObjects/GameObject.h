@@ -13,11 +13,13 @@
 #include <iostream>
 #include <format>
 
+#include "../InputManager.h"
 #include "Component.h"
 #include "Component/TransformComponent.h"
 #include "Component/CameraComponent.h"
 #include "Component/RenderComponent.h"
 #include "Component/RenderComponent/SpriteComponent.h"
+
 
 /*----- 構造体定義 -----*/
 
@@ -40,6 +42,7 @@ public:
 		// ここに追加したゲームオブジェクトを追加していく
 		, Player
 		, Camera
+		, Pendulum
 
 		// ゲームオブジェクトのIDの最大値
 		, MAX
@@ -99,6 +102,10 @@ public:
 		return nullptr;
 	}
 
+	// 仮で
+	auto& GetTransformComponent() {
+		return transform_component_;
+	}
 
 protected:
 	// GameObjectの所有者
