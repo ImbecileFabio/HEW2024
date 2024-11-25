@@ -25,11 +25,10 @@ ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
 	std::cout << std::format("{}\n", "＜ColliderTestObject＞ -> Constructor");
 
 	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH"TestBlock.png");
-	sprite_component_->SetObjectName("ColliderTestObject");
+	this->sprite_component_ = new SpriteComponent(this, TEXTURE_PATH "TestBlock.png");
 
 	// 四角当たり判定コンポーネント
-	box_collider_component_ = new BoxColliderComponent(this);
+	this->box_collider_component_ = new BoxColliderComponent(this);
 }
 
 //--------------------------------------------------
@@ -45,5 +44,8 @@ ColliderTestObject::~ColliderTestObject(void)
 //--------------------------------------------------
 void ColliderTestObject::UpdateGameObject(void)
 {
-
+	if (box_collider_component_->testFg)
+	{
+		transform_component_->position_.x = 100.0f;
+	}
 }

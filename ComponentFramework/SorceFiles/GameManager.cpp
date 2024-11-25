@@ -20,6 +20,8 @@
 #include "GameObjects/GameObject/Player.h"
 #include "GameObjects/GameObject/Camera.h"
 #include "GameObjects/GameObject/Pendulum.h"
+#include "GameObjects/GameObject/ColliderTestObject.h"
+#include "GameObjects/Component/ColliderComponent.h"
 
 
 //-----------------------------------------------------------------
@@ -62,7 +64,9 @@ void GameManager::InitAll(void)
 	camera_ = new Camera(this);
 	pendulum_ = new Pendulum(this);
 
-
+	collider_test_object00_ = new ColliderTestObject(this);
+	collider_test_object01_ = new ColliderTestObject(this);
+	// テスト用に重なる位置に設定
 }
 
 //-----------------------------------------------------------------
@@ -77,7 +81,8 @@ void GameManager::UninitAll(void)
 	//delete player_;
 	delete camera_;
 	delete pendulum_;
-
+	delete collider_test_object00_;
+	delete collider_test_object01_;
 
 	//std::cout << std::format("[GameManager] -> セーブデータのアンロード\n");
 	//std::cout << std::format("[GameManager] -> グラフィックスの破棄\n");
@@ -90,6 +95,7 @@ void GameManager::UpdateAll()
 {
 	// ゲームオブジェクトの更新
 	this->UpdateGameObjects();
+	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
 
 //-----------------------------------------------------------------
@@ -158,11 +164,35 @@ void GameManager::RemoveGameObject(GameObject* _gameObject) {
 //-----------------------------------------------------------------
 void GameManager::UpdateGameObjects(void)
 {
+	collider_objects_.clear(); // 毎フレームリセット
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
 	for (auto& gameObject : game_objects_)
 	{
 		gameObject->Update();		// 更新処理
+
+		// コライダーを持っているオブジェクトをコライダーリストに追加
+		if (gameObject->GetComponent<BoxColliderComponent>())
+		{
+			this->collider_objects_.emplace_back(gameObject);
+		}
+	}
+	//for (int i = 0; i < collider_objects_.size(); i++)
+	//{	
+	//	// コライダーリストの次の要素と当たり判定をチェック
+	//	if (i + 1 != collider_objects_.size())
+	//	{
+	//		this->collider_objects_[i]->GetComponent<BoxColliderComponent>()->
+	//			CheckCollision(this->collider_objects_[i + 1]->GetComponent<BoxColliderComponent>()->GetBoxSize());
+	//	}
+	//}	
+	for (int i = 0; i < collider_objects_.size(); i++)
+	{
+		for (int j = i + 1; j < collider_objects_.size(); j++)
+		{
+			this->collider_objects_[i]->GetComponent<BoxColliderComponent>()->
+				CheckCollision(this->collider_objects_[j]->GetComponent<BoxColliderComponent>()->GetBoxSize());
+		}
 	}
 	updating_game_objects_ = false;
 

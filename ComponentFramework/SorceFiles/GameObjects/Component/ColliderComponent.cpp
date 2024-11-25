@@ -19,15 +19,6 @@ BoxColliderComponent::~BoxColliderComponent()
 //--------------------------------------------------
 void BoxColliderComponent::Init(void)
 {
-	// とりあえず想定通りの図形がでるかどうかのテスト
-	// 生成したオブジェクトから座標を持ってくる
-	position_ = owner_->GetComponent<TransformComponent>()->GetPosition();
-	DirectX::SimpleMath::Vector3 size = owner_->GetComponent<TransformComponent>()->GetScale();
-
-	boxSize_.w = position_.y + size.y / 2;	// 上
-	boxSize_.x = position_.y - size.y / 2;	// 下
-	boxSize_.y = position_.x - size.x / 2;	// 左
-	boxSize_.z = position_.x + size.x / 2;	// 右
 }
 //--------------------------------------------------
 // @brief 四角形の当たり判定の終了処理
@@ -40,18 +31,41 @@ void BoxColliderComponent::Uninit(void)
 //--------------------------------------------------
 void BoxColliderComponent::Update(void)
 {
+	this->position_ = this->owner_->	// GameObjectの座標を取得
+		GetTransformComponent()->GetPosition();
+	DirectX::SimpleMath::Vector3 size = this->owner_->	// サイズを取得
+		GetTransformComponent()->GetScale();
+	this->boxSize_.w = position_.y + size.y / 2;	// 上	// 当たり判定を更新
+	this->boxSize_.x = position_.y - size.y / 2;	// 下
+	this->boxSize_.y = position_.x - size.x / 2;	// 左
+	this->boxSize_.z = position_.x + size.x / 2;	// 右
 }
 //--------------------------------------------------
 // @brief 四角形の当たり判定が重なっているかどうかの処理
-// @param _collider 当たり判定を行う相手
+// @param _other 当たり判定を行う相手
 // @return 重なっているかどうか
 //--------------------------------------------------
-bool BoxColliderComponent::CheckCollision(const BoxColliderComponent* _collider) const
-{
-	DirectX::SimpleMath::Vector4 other = _collider->boxSize();	// 相手の当たり判定のサイズを取得
-	if (boxSize_.w < other.x || boxSize_.x > other.w || boxSize_.y > other.z || boxSize_.z < other.y)
-	{	// 重なったら
-		return true;
+void BoxColliderComponent::CheckCollision(const DirectX::SimpleMath::Vector4& _other)
+{	
+	// 右と左
+	if (boxSize_.z < _other.y)
+	{
+		testFg = false; return;
 	}
-	return false;
+	// 左と右
+	if (boxSize_.y > _other.z)
+	{
+		testFg = false; return;
+	}
+	// 下と上
+	if (boxSize_.x > _other.w)
+	{
+		testFg = false; return;
+	}
+	// 上と下
+	if (boxSize_.w < _other.x)
+	{
+		testFg = false; return;
+	}
+	testFg = true;
 }

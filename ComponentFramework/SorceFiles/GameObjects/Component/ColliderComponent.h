@@ -28,12 +28,14 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 
-	bool CheckCollision(const BoxColliderComponent* _collider) const;
+	void CheckCollision(const DirectX::SimpleMath::Vector4& _other);
 
 	TypeID GetComponentType(void) const override { return TypeID::BoxColliderComponent; }
 
 	void SetPosition(DirectX::SimpleMath::Vector3 _pos)  { position_ = _pos; }
-	DirectX::SimpleMath::Vector4 boxSize(void) const	 { return boxSize_; }
+	DirectX::SimpleMath::Vector4 GetBoxSize(void) const	 { return boxSize_; }
+
+	bool testFg;
 private:
 	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };	// 当たり判定の原点
 	DirectX::SimpleMath::Vector4 boxSize_ { 0.f, 0.f, 0.f,0.f };// 当たり判定のサイズ 上・下・左・右

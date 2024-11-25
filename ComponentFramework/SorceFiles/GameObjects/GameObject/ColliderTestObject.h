@@ -31,7 +31,7 @@ public:
 
 private:
 	// 所有するコンポーネント
-	SpriteComponent* sprite_component_{};
+	SpriteComponent* sprite_component_{};		// スプライト
 	BoxColliderComponent* box_collider_component_{};		// 当たり判定（四角）
 };
 #endif	// COLLIDERTESTOBJECT_H_

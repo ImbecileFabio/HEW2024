@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp" />
     <ClCompile Include="SorceFiles\AudioManager.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -55,7 +54,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h" />
     <ClInclude Include="SorceFiles\AudioManager.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
