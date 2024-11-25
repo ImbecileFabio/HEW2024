@@ -1,30 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="Audio" Collapsed="true">
-    <Position X="3.75" Y="11.25" Width="1.5" />
+    <Position X="5.75" Y="11.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAACAAABQAAAAAAAAAAAAAAAoAACAAAAAAA=</HashCode>
       <FileName>SorceFiles\Audio.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ImGuiManager" Collapsed="true">
-    <Position X="26.75" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAIAEAAAADAIAgGAAAAAAAIAABAAAAAAAA=</HashCode>
-      <FileName>SorceFiles\ImGuiManager.h</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Shader" Collapsed="true">
-    <Position X="25.5" Y="11.5" Width="1.5" />
+    <Position X="19.25" Y="12.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAIAAAAAAAAAAAAAAAQAAgEAAAAAAAAAAAAA=</HashCode>
       <FileName>SorceFiles\SubSystem\Shader.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Player">
-    <Position X="7.25" Y="8.25" Width="3.5" />
+  <Class Name="Player" Collapsed="true">
+    <Position X="8.75" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAAAAAQAAABA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAIAAAAAAAEAAgAAAQAAABA=</HashCode>
       <FileName>SorceFiles\GameObjects\GameObject\Player.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -51,7 +44,7 @@
       </Enum>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>CBQABEAAAAQIAAABAAAgBIIgAAAQAAEEAAACAAIABIA=</HashCode>
+      <HashCode>CBQABEAAAAQIAAABAAAgBIIgAAAQAAEEAAACAAIgBIA=</HashCode>
       <FileName>SorceFiles\GameObjects\GameObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -76,7 +69,7 @@
       <FileName>SorceFiles\GameObjects\Component.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameManager">
+  <Class Name="GameManager" Collapsed="true">
     <Position X="2.75" Y="4.5" Width="3.5" />
     <Members>
       <Method Name="~GameManager" Hidden="true" />
@@ -90,8 +83,8 @@
       <FileName>SorceFiles\GameManager.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameProcess">
-    <Position X="3.25" Y="1" Width="2.25" />
+  <Class Name="GameProcess" Collapsed="true">
+    <Position X="3.5" Y="2.75" Width="2.25" />
     <Members>
       <Method Name="~GameProcess" Hidden="true" />
       <Field Name="game_manager_" Hidden="true" />
@@ -118,39 +111,81 @@
     </TypeIdentifier>
   </Class>
   <Class Name="IndexBuffer" Collapsed="true">
-    <Position X="25.5" Y="13.75" Width="1.5" />
+    <Position X="16.75" Y="12.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAQAIAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
       <FileName>SorceFiles\SubSystem\IndexBuffer.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Texture" Collapsed="true">
-    <Position X="25.5" Y="12.25" Width="1.5" />
+    <Position X="26" Y="10.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAgAAAAIAABABBAAAAAAACAAAAAACAAAAAAAAAAAA=</HashCode>
       <FileName>SorceFiles\SubSystem\Texture.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="VertexBuffer&lt;T&gt;" Collapsed="true">
-    <Position X="25.5" Y="13" Width="1.5" />
+    <Position X="17" Y="12" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAIAAAAIAAAAAAAAAAAAAAAAAAAEBAAAAAAAAAAAA=</HashCode>
       <FileName>SorceFiles\SubSystem\VertexBuffer.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Struct Name="ImGuiViewport" Collapsed="true">
-    <Position X="26.75" Y="6.75" Width="1.5" />
+  <Class Name="AudioManager" Collapsed="true">
+    <Position X="10.75" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AIAgBAAAAAAAgAAAAAAQAAAAIACAAAAAQAAAAAAAAAA=</HashCode>
-      <FileName>SorceFiles\ImGui\imgui.h</FileName>
+      <HashCode>AAAAgAAAAAAGAAABQAAgAAAAAAAAAAAApgACAAAAQEA=</HashCode>
+      <FileName>SorceFiles\AudioManager.h</FileName>
     </TypeIdentifier>
-  </Struct>
-  <Struct Name="ImGuiViewportP" Collapsed="true">
-    <Position X="26.75" Y="8" Width="1.5" />
+  </Class>
+  <Class Name="CameraComponent" Collapsed="true">
+    <Position X="17" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>XABAACAEAAAgAEQIAAAAAEAiAAgAAAAACAAAAAAAAAA=</HashCode>
-      <FileName>SorceFiles\ImGui\imgui_internal.h</FileName>
+      <HashCode>AAYAAgAAAAAAIAABAAAAAAABAAAAAAAAAAACAAAABAA=</HashCode>
+      <FileName>SorceFiles\GameObjects\Component\CameraComponent.h</FileName>
     </TypeIdentifier>
-  </Struct>
+  </Class>
+  <Class Name="RenderComponent" Collapsed="true">
+    <Position X="23.25" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAABAAAAAAABAAAQAAAAAAACAAAAgAA=</HashCode>
+      <FileName>SorceFiles\GameObjects\Component\RenderComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpriteComponent" Collapsed="true">
+    <Position X="23.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAoABAgkAAAABIAAAAABAAFAKAQAAAAA=</HashCode>
+      <FileName>SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TransformComponent" Collapsed="true">
+    <Position X="20.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAHCAAAABAACAIAADAAAAAggAIAACAgAAAAA=</HashCode>
+      <FileName>SorceFiles\GameObjects\Component\TransformComponent.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Camera" Collapsed="true">
+    <Position X="11.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAQAAAAAIAAAAAAAEAAAAABAAAAAA=</HashCode>
+      <FileName>SorceFiles\GameObjects\GameObject\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ImGuiManager" Collapsed="true">
+    <Position X="12.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQAAIAEAAAADAIAgGAAAAAAAIAABAAAAAAAA=</HashCode>
+      <FileName>SorceFiles\ImGuiManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputManager" Collapsed="true">
+    <Position X="14.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAYAgAEgEEAAAEEBgIABEAAABAAAAIFBAQAoYAEAAUA=</HashCode>
+      <FileName>SorceFiles\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
   <Font Name="Yu Gothic UI" Size="9" />
 </ClassDiagram>

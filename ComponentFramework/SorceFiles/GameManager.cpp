@@ -19,7 +19,7 @@
 #include "GameObjects/GameObject.h"
 #include "GameObjects/GameObject/Player.h"
 #include "GameObjects/GameObject/Camera.h"
-#include "GameObjects/GameObject/ColliderTestObject.h"
+#include "GameObjects/GameObject/Pendulum.h"
 
 
 //-----------------------------------------------------------------
@@ -28,7 +28,7 @@
 GameManager::GameManager()
 	:updating_game_objects_(false)
 {
-	std::cout << std::format("{}\n", "[GameManager] -> Constructor");
+	std::cout << std::format("[GameManager] -> Constructor\n");
 	this->InitAll();
 
 }
@@ -39,7 +39,7 @@ GameManager::GameManager()
 GameManager::~GameManager(void)
 {
 	this->UninitAll();
-	std::cout << std::format("{}\n", "[GameManager] -> Destructor");
+	std::cout << std::format("[GameManager] -> Destructor\n");
 }
 
 //-----------------------------------------------------------------
@@ -47,7 +47,7 @@ GameManager::~GameManager(void)
 //-----------------------------------------------------------------
 void GameManager::InitAll(void)
 {
-	std::cout << std::format("{}\n", "[GameManager] -> InitAll Start");
+	std::cout << std::format("[GameManager] -> InitAll Start\n");
 
 	// レンダラー初期化
 	renderer_ = new Renderer();
@@ -55,12 +55,14 @@ void GameManager::InitAll(void)
 
 	game_objects_.clear();
 	pending_game_objects_.clear();
-	
+
+
     // ゲームオブジェクト初期化
-    player_ = new Player(this);
+    //player_ = new Player(this);
 	camera_ = new Camera(this);
-	collider_test_object_ = new ColliderTestObject(this);
-	collider_test_object_->Init();
+	pendulum_ = new Pendulum(this);
+
+
 }
 
 //-----------------------------------------------------------------
@@ -68,14 +70,17 @@ void GameManager::InitAll(void)
 //-----------------------------------------------------------------
 void GameManager::UninitAll(void)
 {
-	std::cout << std::format("{}\n", "[GameManager] -> UninitAll Start");
+	std::cout << std::format("[GameManager] -> UninitAll Start\n");
 
 	// ゲームオブジェクトの破棄
 	delete renderer_;
-	delete player_;
+	//delete player_;
 	delete camera_;
-	//std::cout << std::format("{}\n", "[GameManager] -> セーブデータのアンロード");
-	//std::cout << std::format("{}\n", "[GameManager] -> グラフィックスの破棄");
+	delete pendulum_;
+
+
+	//std::cout << std::format("[GameManager] -> セーブデータのアンロード\n");
+	//std::cout << std::format("[GameManager] -> グラフィックスの破棄\n");
 }
 
 //-----------------------------------------------------------------
@@ -85,7 +90,6 @@ void GameManager::UpdateAll()
 {
 	// ゲームオブジェクトの更新
 	this->UpdateGameObjects();
-	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);	// 稼働中のオブジェクトリストをImGuiに渡す
 }
 
 //-----------------------------------------------------------------
@@ -100,6 +104,7 @@ void GameManager::GenerateOutputAll(void)
 		renderer_->Draw();
 
 		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
+
 
 		renderer_->End();
 

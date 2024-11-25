@@ -19,6 +19,7 @@ const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 	// アクター（独立した役割を持つゲームオブジェクト）
 	, "Player"
 	, "Camera"
+	, "Pendulum"
 };
 
 //--------------------------------------------------

@@ -28,7 +28,7 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	: RenderComponent(_owner)
 	, draw_order_(_drawOrder)
 {
-	std::format("{}", "＜SpriteComponent＞ -> Constructor\n");
+	std::format("＜SpriteComponent＞ -> Constructor\n");
 
 	// テクスチャ読み込み
 	bool sts = texture_.Load(_imgname);
@@ -48,7 +48,7 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 //--------------------------------------------------
 SpriteComponent::~SpriteComponent()
 {
-	std::cout << std::format("{}{}\n", "＜SpriteComponent＞ -> Destructor", object_name_);
+	std::cout << std::format("＜SpriteComponent＞ -> Destructor {}\n", object_name_);
 
 	Uninit();
 }
@@ -138,24 +138,33 @@ void SpriteComponent::Draw()
 	Matrix pos;
 	Matrix scale;
 	
-	auto transform = owner_->GetComponent<TransformComponent>();
-	if (transform)
-	{
-		auto t = transform->GetPosition();
-		auto r = transform->GetRotation();
-		auto s = transform->GetScale();
-		rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
-		pos = Matrix::CreateTranslation(t);
-		scale = Matrix::CreateScale(s);
-	}
-	else 
-	{
-		std::cout << std::format("{}	＜{}＞\n", "＜SpriteComponent＞ -> Faild Get Transform", object_name_);
-		rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
-		pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
-		scale = Matrix::CreateScale(1.f, 1.f, 1.f);
-	}
-	
+	//auto transform = owner_->GetComponent<TransformComponent>();
+	//if (transform)
+	//{
+	//	auto t = transform->GetPosition();
+	//	auto r = transform->GetRotation();
+	//	auto s = transform->GetScale();
+	//	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
+	//	pos = Matrix::CreateTranslation(t);
+	//	scale = Matrix::CreateScale(s);
+	//}
+	//else 
+	//{
+	//	std::cout << std::format("＜SpriteComponent＞ -> Faild Get Transform	＜{}＞\n", object_name_);
+	//	rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
+	//	pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
+	//	scale = Matrix::CreateScale(1.f, 1.f, 1.f);
+	//}
+
+	// 仮で ///////////
+	auto r = this->owner_->GetTransformComponent()->GetRotation();
+	auto t = this->owner_->GetTransformComponent()->GetPosition();
+	auto s = this->owner_->GetTransformComponent()->GetScale();
+	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
+	pos = Matrix::CreateTranslation(t);
+	scale = Matrix::CreateScale(s);
+	/////////////////
+
 	Matrix worldmtx;
 	worldmtx = scale * rot * pos;
 	Renderer::SetWorldMatrix(&worldmtx); // GPUにセット
