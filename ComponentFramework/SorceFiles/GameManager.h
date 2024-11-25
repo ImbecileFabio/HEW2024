@@ -20,6 +20,7 @@ class Renderer;
 class Player;
 class Camera;
 class Pendulum;
+class TestObject;
 
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
@@ -62,6 +63,7 @@ private:
 	Player* player_{};		// プレイヤー
 	Camera* camera_{};		// カメラ
 	Pendulum* pendulum_{};	// 振り子
+	TestObject* test_object_{};
 };
 
 

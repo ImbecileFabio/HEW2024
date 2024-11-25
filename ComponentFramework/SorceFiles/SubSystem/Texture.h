@@ -5,6 +5,7 @@
 #include	<wrl/client.h> // ComPtrの定義を含むヘッダファイル
 #include	<filesystem>
 
+
 using Microsoft::WRL::ComPtr;
 
 //-----------------------------------------------------------------------------

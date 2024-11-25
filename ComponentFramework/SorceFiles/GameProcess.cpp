@@ -27,8 +27,8 @@
 const auto ClassName = TEXT("2024 framework ひな形");
 const auto WindowName = TEXT("2024 framework ひな形(フィールド描画)");
 
-// fullscreen設定	コメントを外すとフルスクリーンになる
-//#define FULLSCREEN_MODE_
+// ↓fullscreen設定	コメントを外すとフルスクリーンになる
+#define FULLSCREEN_MODE_
 
 HINSTANCE	GameProcess::hInst_ = nullptr;
 HWND		GameProcess::hWnd_ = nullptr;
@@ -335,7 +335,7 @@ LRESULT CALLBACK GameProcess::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 
 	case WM_CLOSE:	// 「x」ボタンが押されたら
 	{
-		int res = MessageBoxA(NULL, "おわります？", "確認", MB_OKCANCEL);
+		int res = MessageBoxA(NULL, "owaowari", "確認", MB_OKCANCEL);
 		if (res == IDOK)
 		{
 			DestroyWindow(hWnd);	// 「WM_DESTROY」メッセージを送る

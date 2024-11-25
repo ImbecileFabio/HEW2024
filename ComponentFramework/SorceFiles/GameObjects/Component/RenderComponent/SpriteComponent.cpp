@@ -78,10 +78,10 @@ void SpriteComponent::InitBuffers()
 
 	vertices.resize(4);
 
-	vertices[0].position = Vector3(-10, 10, 0);
-	vertices[1].position = Vector3(10, 10, 0);
-	vertices[2].position = Vector3(-10, -10, 0);
-	vertices[3].position = Vector3(10, -10, 0);
+	vertices[0].position = Vector3(-0.5f, 0.5f, 0);
+	vertices[1].position = Vector3(0.5f,0.5f, 0);
+	vertices[2].position = Vector3(-0.5f, -0.5f, 0);
+	vertices[3].position = Vector3(0.5f, -0.5f, 0);
 
 	vertices[0].color = Color(1, 1, 1, 1);
 	vertices[1].color = Color(1, 1, 1, 1);
@@ -121,6 +121,16 @@ void SpriteComponent::SetObjectName(std::string _objectName)
 	object_name_ = _objectName;
 }
 
+//--------------------------------------------------
+// サイズを設定
+//--------------------------------------------------
+void SpriteComponent::SetSize(float _x, float _y)
+{
+	auto transform = this->owner_->GetTransformComponent();
+
+	transform->SetScale(Vector3(_x, _y, 1.f));
+}
+
 
 //--------------------------------------------------
 // 更新処理
@@ -157,9 +167,9 @@ void SpriteComponent::Draw()
 	//}
 
 	// 仮で ///////////
-	auto r = this->owner_->GetTransformComponent()->GetRotation();
-	auto t = this->owner_->GetTransformComponent()->GetPosition();
-	auto s = this->owner_->GetTransformComponent()->GetScale();
+	auto r = owner_->GetTransformComponent()->GetRotation();
+	auto t = owner_->GetTransformComponent()->GetPosition();
+	auto s = owner_->GetTransformComponent()->GetScale();
 	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
 	pos = Matrix::CreateTranslation(t);
 	scale = Matrix::CreateScale(s);

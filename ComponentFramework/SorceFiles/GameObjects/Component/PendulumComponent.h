@@ -27,7 +27,7 @@ class GameObject;
 class PendulumComponent : public Component
 {
 public:
-	PendulumComponent(GameObject* _owner, float _rength = 10.f, float _angle = 0,  int _updateOrder = 50);
+	PendulumComponent(GameObject* _owner, float _rength = 30.f, float _angle = 0,  int _updateOrder = 50);
 	~PendulumComponent();
 
 	void Init(void) override {};
