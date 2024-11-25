@@ -10,6 +10,8 @@
 #include "ImGui/imgui_impl_dx11.h"	// 追加したImGuiフォルダから  
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui.h"
+#include "GameManager.h"
+#include "GameObjects/GameObject.h"
 #include "Windows.h"
 #include "d3d11.h"
 #include "SimpleMath.h"
@@ -28,14 +30,15 @@ public:
 	void ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext);		// ゲームループのはじめに行う更新処理
 	void ImGuiInit();		// 初期化
 	void ImGuiUpdate();		
-	void ImGuiShowWindow();	// ウィンドウを表示
+	void ImGuiShowWindow(std::vector<GameObject*>& _r);	// 値を触りたいリストの参照を持ってくる
 	void ImGuiRender();		// 描画
 	void ImGuiUnInit();		// 終了
 private:
-	bool showFg = true;    // ウィンドウが邪魔な時はこれをfalseに
+	bool showFg = true;    // ウィンドウが邪魔な時はこれをFALSEに
 
 	ImVector<ImGuiBase*> imGuiWindowVec;	// ウィンドウを全てここで管理
 };
+
 /*--ImGuiの基本的処理を書いた基底クラス--*/
 class ImGuiBase
 {
@@ -44,7 +47,7 @@ public:
 	virtual ~ImGuiBase() = default;
 	virtual void SaveFile() {};	// 入力したデータを保存
 	virtual void LoadFile() {};	// ファイルを読みこむ
-	virtual void ShowWindow() = 0;	// ウィンドウを表示
+	virtual void ShowWindow(std::vector<GameObject*>& _r) = 0;	// ウィンドウを表示
 protected:
 	ImVec2 position_ = {0.0f, 0.0f};	// ウィンドウの座標
 	bool showFg = true;		// ウィンドウを表示するかどうか
@@ -55,9 +58,9 @@ class ObjectStatesGUI : public ImGuiBase
 public:
 	ObjectStatesGUI() : ImGuiBase() {};
 	~ObjectStatesGUI() = default;
-	void ShowWindow() override;
+	void ShowWindow(std::vector<GameObject*>& _r) override;
 private:
-	DirectX::SimpleMath::Vector3 position_ = { 2.0f, 8.0f, 0.0f };	// 値格納用変数
+	DirectX::SimpleMath::Vector3 position_ = { 0.0f, 0.0f, 0.0f };	// 値格納用変数
 	DirectX::SimpleMath::Vector3 rotation_ = { 0.0f, 0.0f, 0.0f };
 	DirectX::SimpleMath::Vector3 scale_ = { 0.0f, 0.0f, 0.0f };
 };
@@ -67,7 +70,7 @@ class SystemGUI : public ImGuiBase
 public:
 	SystemGUI() : ImGuiBase() {};
 	~SystemGUI() = default;
-	void ShowWindow() override;
+	void ShowWindow(std::vector<GameObject*>& _r) override;
 private:
 };
 /*--ObjectとComponentを親子形式で表示するツリー形式ウィンドウ--*/
@@ -76,7 +79,7 @@ class TreeGUI : public ImGuiBase
 public:
 	TreeGUI() : ImGuiBase() {};
 	~TreeGUI() = default;
-	void ShowWindow() override;
+	void ShowWindow(std::vector<GameObject*>& _r) override;
 private:
 };
 #endif // IMGUI_DEBUG

@@ -6,6 +6,7 @@
 //==================================================
 #define IMGUI_DEBUG  // 使うときはコメントアウトを外す
 #ifdef IMGUI_DEBUG
+#include <iostream>
 #include "ImGuiManager.h"
 /*----static変数------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
@@ -56,15 +57,16 @@ void ImGuiManager::ImGuiUpdate()
     ImGui::NewFrame();
 }
 //--------------------------------------------------
-// @brief ウィンドウを表示する関数　テスト用
+// @brief ImGuiをウィンドウを一括管理とデータ渡し
+// @param _r GameObjectListの参照
 //--------------------------------------------------
-void ImGuiManager::ImGuiShowWindow()
-{   
+void ImGuiManager::ImGuiShowWindow(std::vector<GameObject*>& _r)
+{
     if (showFg)
     {
         for (const auto& window : imGuiWindowVec)
         {
-            window->ShowWindow();
+            window->ShowWindow(_r);
         }
     }
 }
@@ -88,14 +90,19 @@ void ImGuiManager::ImGuiUnInit()
 //--------------------------------------------------
 // @brief ゲームオブジェクトの情報を表示するウィンドウ
 //--------------------------------------------------
-void ObjectStatesGUI::ShowWindow()
+void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _r)
 {
     // ここが自分で記述したウィンドウ設定
     if (this->showFg)
     {
         ImGui::Begin("~(0-0)~", &showFg);
+        // オブジェクト生成
+        if (ImGui::Button("Object seisei"))
+        {
+
+        }
         // オブジェクトの名前
-        
+        ImGui::Text("ObjectName, %s", "Player_HOGE");
 		// transformの情報
         if (ImGui::DragFloat3("position", &position_.x, 1.0f ,-100.0f, 100.0f, "%.3f"))
         {
@@ -108,13 +115,23 @@ void ObjectStatesGUI::ShowWindow()
         {
 
         }
+        ImGui::Separator(); // 区切り線
+        ImGui::Text("ComponentList");
+        if (ImGui::Button("AddComponent"))
+        {
+
+        }
+        if (ImGui::Button("ReMoveComponent"))
+        {
+
+        }
         ImGui::End();
     }
 }
 //--------------------------------------------------
 // @brief システムの情報を表示するウィンドウ
 //--------------------------------------------------
-void SystemGUI::ShowWindow()
+void SystemGUI::ShowWindow(std::vector<GameObject*>& _r)
 {
     // タブを管理するタブバー
     if (ImGui::BeginTabBar("DebugWindow"))
@@ -126,6 +143,10 @@ void SystemGUI::ShowWindow()
             if(fps < 30.0f) // FPSが30下回ったときの警告文
             {   // TODO 下回ったときの状態を保存できたら嬉しい
                 ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: FPS < 30.0f");
+            }
+            if (ImGui::Button("Reset"))
+            {
+                // ステージ状態を初期化する処理
             }
 			ImGui::EndTabItem();
         }
@@ -141,7 +162,7 @@ void SystemGUI::ShowWindow()
 //--------------------------------------------------
 // @brief ObjectとComponentを親子形式で表示するツリー形式ウィンドウ
 //--------------------------------------------------
-void TreeGUI::ShowWindow()
+void TreeGUI::ShowWindow(std::vector<GameObject*>& _r)
 {
     if (ImGui::Begin("TreeView"))
     {

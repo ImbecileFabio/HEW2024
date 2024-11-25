@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -23,10 +23,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.cpp" />
     <ClCompile Include="SorceFiles\ImGuiManager.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_demo.cpp" />
@@ -53,10 +55,12 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.h" />
     <ClInclude Include="SorceFiles\ImGuiManager.h" />
     <ClInclude Include="SorceFiles\ImGui\imconfig.h" />
     <ClInclude Include="SorceFiles\ImGui\imgui.h" />

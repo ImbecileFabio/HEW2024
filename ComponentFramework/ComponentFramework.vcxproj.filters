@@ -99,6 +99,12 @@
     <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp">
       <Filter>ソース ファイル\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameManager.h">
@@ -187,6 +193,12 @@
     </ClInclude>
     <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h">
       <Filter>ヘッダー ファイル\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

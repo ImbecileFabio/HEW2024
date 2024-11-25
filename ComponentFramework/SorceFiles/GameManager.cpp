@@ -19,6 +19,7 @@
 #include "GameObjects/GameObject.h"
 #include "GameObjects/GameObject/Player.h"
 #include "GameObjects/GameObject/Camera.h"
+#include "GameObjects/GameObject/ColliderTestObject.h"
 
 
 //-----------------------------------------------------------------
@@ -54,13 +55,12 @@ void GameManager::InitAll(void)
 
 	game_objects_.clear();
 	pending_game_objects_.clear();
-
-
+	
     // ゲームオブジェクト初期化
     player_ = new Player(this);
 	camera_ = new Camera(this);
-
-
+	collider_test_object_ = new ColliderTestObject(this);
+	collider_test_object_->Init();
 }
 
 //-----------------------------------------------------------------
@@ -74,8 +74,6 @@ void GameManager::UninitAll(void)
 	delete renderer_;
 	delete player_;
 	delete camera_;
-
-
 	//std::cout << std::format("{}\n", "[GameManager] -> セーブデータのアンロード");
 	//std::cout << std::format("{}\n", "[GameManager] -> グラフィックスの破棄");
 }
@@ -87,6 +85,7 @@ void GameManager::UpdateAll()
 {
 	// ゲームオブジェクトの更新
 	this->UpdateGameObjects();
+	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);	// 稼働中のオブジェクトリストをImGuiに渡す
 }
 
 //-----------------------------------------------------------------
@@ -101,7 +100,6 @@ void GameManager::GenerateOutputAll(void)
 		renderer_->Draw();
 
 		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
-
 
 		renderer_->End();
 

@@ -19,6 +19,7 @@ class GameObject;
 class Renderer;
 class Player;
 class Camera;
+class ColliderTestObject;
 
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
@@ -60,6 +61,7 @@ private:
 	Renderer* renderer_{};	// レンダラー
 	Player* player_{};		// プレイヤー
 	Camera* camera_{};		// カメラ
+	ColliderTestObject* collider_test_object_{};	// 当たり判定テスト用オブジェクト
 };
 
 

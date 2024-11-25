@@ -40,7 +40,7 @@ public:
 		// ここに追加したゲームオブジェクトを追加していく
 		, Player
 		, Camera
-
+		, ColliderTestObject	// 当たり判定テスト用オブジェクト
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};

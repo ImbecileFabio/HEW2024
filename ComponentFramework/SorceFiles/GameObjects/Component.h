@@ -35,6 +35,8 @@ public:
 		// p¨§Œä
 		, TransformComponent
 
+		// “–‚½‚è”»’è
+		, BoxColliderComponent
 		// ƒJƒƒ‰
 		, CameraComponent
 
