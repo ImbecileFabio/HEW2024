@@ -7,6 +7,9 @@
 #ifndef RENDERER_H_
 #define RENDERER_H_
 
+#define TEXTURE_PATH_ "asset/Texture/"
+
+
 /*----- インクルード -----*/
 #include <d3d11.h>
 #include <DirectXMath.h>

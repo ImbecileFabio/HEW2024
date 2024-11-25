@@ -40,6 +40,7 @@ public:
 	void Draw() ;
 
 	void SetObjectName(std::string _objectName);
+	void SetSize(float _x, float _y);
 
 	// XV‡ˆÊ‚ğ•Ô‚·
 	int& GetDrawOrder(void) { return draw_order_; }

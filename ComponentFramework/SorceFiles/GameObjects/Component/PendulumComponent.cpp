@@ -54,6 +54,28 @@ void PendulumComponent::Update(void)
 
 	auto& transform = owner_->GetTransformComponent();
 
-	transform->position_.y = -rength_;
-	transform->rotation_.z += 0.1f;
+	//// U‚èŽq‚Ì’·‚³‚É‡‚í‚¹‚é
+	//transform->SetPosition(Vector3(0, -rength_, 0));
+
+	//// Šp“x‚ðXV
+	//angle_ += 0.1f;// ‚±‚±‚Ìˆ—‚ð‚¢‚¶‚Á‚ÄU‚èŽq‚Ì“®‚«‚ðì‚é
+	//transform->SetRotation(Vector3(0, 0, angle_));
+
+
+	//// SpriteComponent‚É“n‚·‚ÆŒvŽZ‚Ì‡”Ô‚ªˆá‚¤‚Ì‚Åæ‚É‚â‚Á‚Æ‚­
+	//auto r = transform->GetRotation();
+	//auto t = transform->GetPosition();
+	//auto s = transform->GetScale();
+	//auto rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
+	//auto pos = Matrix::CreateTranslation(t);
+	//auto scale = Matrix::CreateScale(s);
+	//
+	//Matrix mtx;
+	//mtx = scale * rot*pos;
+
+	//// s—ñ‚©‚çˆÊ’u‚ð’Šo
+	//transform->SetPosition(mtx.Translation());
+	//
+	//transform->SetRotation(Vector3(0, 0, 0));
+
 }

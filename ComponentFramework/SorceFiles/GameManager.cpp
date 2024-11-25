@@ -21,6 +21,9 @@
 #include "GameObjects/GameObject/Camera.h"
 #include "GameObjects/GameObject/Pendulum.h"
 
+// デバッグようおぶじぇえくと
+#include "GameObjects/GameObject/TestObject.h"
+
 
 //-----------------------------------------------------------------
 // コンストラクタ
@@ -58,9 +61,11 @@ void GameManager::InitAll(void)
 
 
     // ゲームオブジェクト初期化
-    //player_ = new Player(this);
+    player_ = new Player(this);
 	camera_ = new Camera(this);
-	pendulum_ = new Pendulum(this);
+	test_object_ = new TestObject(this);
+	
+	//pendulum_ = new Pendulum(this);
 
 
 }
@@ -74,9 +79,11 @@ void GameManager::UninitAll(void)
 
 	// ゲームオブジェクトの破棄
 	delete renderer_;
-	//delete player_;
+	delete player_;
 	delete camera_;
-	delete pendulum_;
+
+	delete test_object_;
+	//delete pendulum_;
 
 
 	//std::cout << std::format("[GameManager] -> セーブデータのアンロード\n");

@@ -92,8 +92,8 @@ public:
 	*/
 	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
 	template <typename T>
-	inline T* GetComponent() {
-		for (auto& component : components_)
+	inline T* GetComponent() const {
+		for (auto component : components_)
 		{
 			T* castedComponent = dynamic_cast<T*>(component);
 			if (castedComponent) { return castedComponent; }
@@ -103,13 +103,13 @@ public:
 	}
 
 	// 仮で
-	auto& GetTransformComponent() {
+	const auto& GetTransformComponent() {
 		return transform_component_;
 	}
 
 protected:
 	// GameObjectの所有者
-	GameManager* game_manager_{};
+	 GameManager* game_manager_{};
 
 	// GameObjectの状態
 	State state_{};
