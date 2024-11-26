@@ -22,6 +22,8 @@ Camera::Camera(GameManager* _gameManager)
 
 	// カメラコンポーネント
 	camera_component_ = new CameraComponent(this, 0);
+
+	transform_component_->SetPosition(0, 0, -10);
 	
 }
 

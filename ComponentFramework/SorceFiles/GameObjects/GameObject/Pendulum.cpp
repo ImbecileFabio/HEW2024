@@ -27,8 +27,8 @@ Pendulum::Pendulum(GameManager* _gameManager)
 	// スプライトコンポーネント
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"HEW仮素材/Ball.png");
 	sprite_component_->SetObjectName("Pendulum");
-	sprite_component_->SetSize(100, 100);
 
+	transform_component_->SetScale(100, 100);
 	// 振り子コンポーネント
 	pendulum_component_ = new PendulumComponent(this);
 

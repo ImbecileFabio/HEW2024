@@ -87,6 +87,7 @@ void Renderer::Init()
 		D3D11_SDK_VERSION, &swapChainDesc, &m_SwapChain, &m_Device, &m_FeatureLevel, &m_DeviceContext);
 	if (FAILED(hr)) return;
 
+
 	// レンダーターゲットビュー作成
 	ID3D11Texture2D* renderTarget{};
 	hr = m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (LPVOID*)&renderTarget);
@@ -187,7 +188,7 @@ void Renderer::Init()
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc{};
 	depthStencilDesc.DepthEnable = TRUE;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
 	depthStencilDesc.StencilEnable = FALSE;
 
 	hr = m_Device->CreateDepthStencilState(&depthStencilDesc, &m_DepthStateEnable); //深度有効ステート
@@ -234,6 +235,8 @@ void Renderer::Init()
 	hr = m_Device->CreateBuffer(&bufferDesc, NULL, &m_ProjectionBuffer);
 	m_DeviceContext->VSSetConstantBuffers(2, 1, &m_ProjectionBuffer);
 	if (FAILED(hr)) return;
+
+	SetWorldViewProjection2D();
 }
 
 //-----------------------------------------------------------------
@@ -406,6 +409,10 @@ void Renderer::SetProjectionMatrix(Matrix* _ProjectionMatrix)
 {
 	Matrix projection;
 	projection = _ProjectionMatrix->Transpose(); // 転置
+
+
+
+
 
 	// プロジェクション行列をGPU側へ送る
 	m_DeviceContext->UpdateSubresource(m_ProjectionBuffer, 0, NULL, &projection, 0, 0);

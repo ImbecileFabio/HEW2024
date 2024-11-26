@@ -121,15 +121,6 @@ void SpriteComponent::SetObjectName(std::string _objectName)
 	object_name_ = _objectName;
 }
 
-//--------------------------------------------------
-// ƒTƒCƒY‚ðÝ’è
-//--------------------------------------------------
-void SpriteComponent::SetSize(float _x, float _y)
-{
-	auto transform = this->owner_->GetTransformComponent();
-
-	transform->SetScale(Vector3(_x, _y, 1.f));
-}
 
 
 //--------------------------------------------------
@@ -174,6 +165,8 @@ void SpriteComponent::Draw()
 	pos = Matrix::CreateTranslation(t);
 	scale = Matrix::CreateScale(s);
 	/////////////////
+
+
 
 	Matrix worldmtx;
 	worldmtx = scale * rot * pos;

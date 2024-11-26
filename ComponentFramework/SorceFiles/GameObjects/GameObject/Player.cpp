@@ -26,6 +26,8 @@ Player::Player(GameManager* _gameManager)
 	// スプライトコンポーネント
 	sprite_component_= new SpriteComponent(this, "Asset/Texture/icon.png");
 	sprite_component_->SetObjectName("Player");
+
+	transform_component_->SetScale(100, 100);
 }
 
 //--------------------------------------------------

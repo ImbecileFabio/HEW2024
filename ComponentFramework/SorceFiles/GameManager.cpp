@@ -61,8 +61,8 @@ void GameManager::InitAll(void)
 
 
     // ゲームオブジェクト初期化
-    player_ = new Player(this);
 	camera_ = new Camera(this);
+    player_ = new Player(this);
 	test_object_ = new TestObject(this);
 	
 	//pendulum_ = new Pendulum(this);
@@ -79,12 +79,12 @@ void GameManager::UninitAll(void)
 
 	// ゲームオブジェクトの破棄
 	delete renderer_;
-	delete player_;
 	delete camera_;
+	delete player_;
 
-	delete test_object_;
+	//delete test_object_;
 	//delete pendulum_;
-
+	
 
 	//std::cout << std::format("[GameManager] -> セーブデータのアンロード\n");
 	//std::cout << std::format("[GameManager] -> グラフィックスの破棄\n");

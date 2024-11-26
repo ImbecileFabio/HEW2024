@@ -218,13 +218,12 @@ bool GameProcess::InitWnd(void)
 	wc.lpszClassName = ClassName;
 	wc.hIconSm = LoadIcon(hInst, IDI_APPLICATION);
 
-#ifdef FLLSCREEN_MODE_
+#ifdef FULLSCREEN_MODE_
 	// ウィンドウスタイルを変更
 	SetWindowLong(hWnd_, GWL_STYLE, WS_POPUP);
-
 	// ウィンドウサイズを画面いっぱいに
 	SetWindowPos(hWnd_, HWND_TOP, 0, 0, width_, height_, SWP_SHOWWINDOW);
-#endif	// FLLSCREEN_MODE_
+#endif	// FULLSCREEN_MODE_
 
 	// ウィンドウの登録
 	if (!RegisterClassEx(&wc)) { return false; }
