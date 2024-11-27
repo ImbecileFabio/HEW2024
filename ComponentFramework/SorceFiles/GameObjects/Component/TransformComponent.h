@@ -23,7 +23,7 @@ using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // 姿勢制御コンポーネント
 //--------------------------------------------------
-class TransformComponent : Component
+class TransformComponent : public Component
 {
 public:
 	TransformComponent(GameObject* _owner, int updateOrder = 50);

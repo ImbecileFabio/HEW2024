@@ -16,11 +16,7 @@ VelocityComponent::VelocityComponent(GameObject* _owner, int _updateOrder)
 	:RigidbodyComponent(_owner, _updateOrder) {
 	std::cout << std::format("＜VelocityComponent＞ -> Constructor\n");
 
-	// 使用フラグがtrueなら作用する
-	use_acceleration_	= true;
-	use_velocity_		= true;
-	use_gravity_		= true;
-	gravity_ = { 0.0f,-1.0f,0.0f };	// 一応固定
+	Init();
 }
 
 //--------------------------------------------------
@@ -36,7 +32,11 @@ VelocityComponent::~VelocityComponent() {
 // 初期化処理
 //--------------------------------------------------
 void VelocityComponent::Init() {
-
+	// 使用フラグがtrueなら作用する
+	use_acceleration_ = true;
+	use_velocity_ = true;
+	use_gravity_ = true;
+	gravity_ = { 0.0f,-1.0f,0.0f };	// 一応固定
 }
 
 //--------------------------------------------------

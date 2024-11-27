@@ -3,6 +3,12 @@
 // 著者：中谷凌也
 //--------------------------------------------------
 // 説明：物理演算をおこなうクラス
+//		１．位置、速度
+//		２．重力
+//		３．衝突検出		（ColliderComponentでやる！）
+//		４．角速度、回転
+//		５．制約
+//		６．（デバッグ）
 //==================================================
 
 #include "RigidbodyComponent.h"
@@ -12,15 +18,12 @@
 //--------------------------------------------------
 RigidbodyComponent::RigidbodyComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder){
-	std::cout << std::format("＜RigidbodyComponent＞ -> Constructor\n");
 }
 
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
 RigidbodyComponent::~RigidbodyComponent(){
-	std::cout << std::format("＜RigidbodyComponent＞ -> Destructor\n");
-
 	Uninit();
 }
 
