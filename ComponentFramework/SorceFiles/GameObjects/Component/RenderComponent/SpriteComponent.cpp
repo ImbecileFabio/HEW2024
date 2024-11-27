@@ -78,10 +78,10 @@ void SpriteComponent::InitBuffers()
 
 	vertices.resize(4);
 
-	vertices[0].position = Vector3(-0.5f,  0.5f, 0);
-	vertices[1].position = Vector3( 0.5f,  0.5f, 0);
-	vertices[2].position = Vector3(-0.5f, -0.5f, 0);
-	vertices[3].position = Vector3( 0.5f, -0.5f, 0);
+	vertices[0].position = Vector3(-0.5f,  0.5f, 0.5f);
+	vertices[1].position = Vector3( 0.5f,  0.5f, 0.5f);
+	vertices[2].position = Vector3(-0.5f, -0.5f, 0.5f);
+	vertices[3].position = Vector3( 0.5f, -0.5f, 0.5f);
 
 	vertices[0].color = Color(1, 1, 1, 1);
 	vertices[1].color = Color(1, 1, 1, 1);
