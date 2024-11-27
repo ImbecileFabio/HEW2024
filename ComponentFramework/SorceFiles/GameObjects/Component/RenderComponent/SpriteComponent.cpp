@@ -121,15 +121,6 @@ void SpriteComponent::SetObjectName(std::string _objectName)
 	object_name_ = _objectName;
 }
 
-//--------------------------------------------------
-// サイズを設定
-//--------------------------------------------------
-void SpriteComponent::SetSize(float _x, float _y)
-{
-	auto transform = this->owner_->GetTransformComponent();
-
-	transform->SetScale(Vector3(_x, _y, 1.f));
-}
 
 
 //--------------------------------------------------
@@ -148,32 +139,25 @@ void SpriteComponent::Draw()
 	Matrix pos;
 	Matrix scale;
 	
-	//auto transform = owner_->GetComponent<TransformComponent>();
-	//if (transform)
-	//{
-	//	auto t = transform->GetPosition();
-	//	auto r = transform->GetRotation();
-	//	auto s = transform->GetScale();
-	//	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
-	//	pos = Matrix::CreateTranslation(t);
-	//	scale = Matrix::CreateScale(s);
-	//}
-	//else 
-	//{
-	//	std::cout << std::format("＜SpriteComponent＞ -> Faild Get Transform	＜{}＞\n", object_name_);
-	//	rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
-	//	pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
-	//	scale = Matrix::CreateScale(1.f, 1.f, 1.f);
-	//}
+	auto transform = owner_->GetComponent<TransformComponent>();
+	if (transform)
+	{
+		auto t = transform->GetPosition();
+		auto r = transform->GetRotation();
+		auto s = transform->GetScale();
+		rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
+		pos = Matrix::CreateTranslation(t);
+		scale = Matrix::CreateScale(s);
+	}
+	else 
+	{
+		std::cout << std::format("＜SpriteComponent＞ -> Faild Get Transform	＜{}＞\n", object_name_);
+		rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
+		pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
+		scale = Matrix::CreateScale(1.f, 1.f, 1.f);
+	}
 
-	// 仮で ///////////
-	auto r = owner_->GetTransformComponent()->GetRotation();
-	auto t = owner_->GetTransformComponent()->GetPosition();
-	auto s = owner_->GetTransformComponent()->GetScale();
-	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
-	pos = Matrix::CreateTranslation(t);
-	scale = Matrix::CreateScale(s);
-	/////////////////
+
 
 	Matrix worldmtx;
 	worldmtx = scale * rot * pos;
@@ -186,6 +170,13 @@ void SpriteComponent::Draw()
 
 	// トポロジーをセット（プリミティブタイプ）
 	devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+
+
+
+
+
+
 
 	shader_.SetGPU();
 	vertex_buffer_.SetGPU();
