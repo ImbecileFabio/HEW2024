@@ -49,7 +49,9 @@ public:
 	// Getter
 	auto& GetPosition() const { return position_; }
 	auto& GetRotation() const { return rotation_; }
+	auto& GetRotationZ() const {return rotation_.z;}
 	auto& GetScale()    const { return scale_; }
+	
 
 	virtual TypeID GetComponentType() const override { return TypeID::TransformComponent; }
 

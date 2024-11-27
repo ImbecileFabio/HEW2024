@@ -22,6 +22,7 @@ using namespace DirectX::SimpleMath;
 /*----- 前方宣言 -----*/
 class SpriteComponent;
 class PendulumComponent;
+
 //--------------------------------------------------
 // プレイヤーオブジェクト
 //--------------------------------------------------

@@ -13,7 +13,6 @@ class VelocityComponent :
     public RigidbodyComponent
 {
 private:
-	DirectX::SimpleMath::Vector3 position_;
 	DirectX::SimpleMath::Vector3 acceleration_;
 	bool	use_acceleration_;
 	DirectX::SimpleMath::Vector3 velocity_;
@@ -27,7 +26,7 @@ public:
 
 	void Init();
 	void Uninit();
-	void Updata();		// すべての更新を行う
+	void Update();		// すべての更新を行う
 
 	// 加速度
 	void	SetAcceleration(const DirectX::SimpleMath::Vector3 _acceleration);
@@ -45,4 +44,7 @@ public:
 	// 重力
 	void	SetUseGravity(const bool _use_gravity);
 	bool	GetUseGravity() const;
+
+	TypeID GetComponentType() const override { return TypeID::VelocityComponent; }
+
 };

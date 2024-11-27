@@ -18,6 +18,9 @@ public:
 	~AngularVelocityComponent();
 	void Init();
 	void Uninit();
-	void Updata();
+	void Update();
+
+	TypeID GetComponentType() const override { return TypeID::AngularVelocityComponent; }
+
 };
 

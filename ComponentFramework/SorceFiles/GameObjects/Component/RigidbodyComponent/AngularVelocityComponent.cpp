@@ -39,6 +39,6 @@ void AngularVelocityComponent::Uninit() {
 //--------------------------------------------------
 // çXêVèàóù
 //--------------------------------------------------
-void AngularVelocityComponent::Updata() {
+void AngularVelocityComponent::Update() {
 	//UpdateVelocity();
 }
