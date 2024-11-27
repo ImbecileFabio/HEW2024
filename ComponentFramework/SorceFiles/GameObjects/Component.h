@@ -36,6 +36,12 @@ public:
 		, TransformComponent
 		// リジッドボディ
 		, RigidBodyComponent
+		, VelocityComponent
+		, AngularVelocityComponent
+		// コライダー
+		, ColliderComponent
+		, BoxColliderComponent
+		, CircleColliderComponent
 
 		// カメラ
 		, CameraComponent
