@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
@@ -64,6 +65,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\TestObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
