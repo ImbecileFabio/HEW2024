@@ -1,5 +1,5 @@
 //==================================================
-// [RigidbodyComponent.h] 物理演算オブジェクト
+// [RigidbodyComponent.h] 物理演算コンポーネント
 // 著者：中谷凌也
 //--------------------------------------------------
 // 説明：物理演算をおこなうクラス
@@ -13,21 +13,23 @@
 
 #pragma once
 #include "../Component.h"
+#include "../GameObject.h"
+#include "TransformComponent.h"
 #include <iostream>
 #include <format>
 #include <SimpleMath.h>
-
-using namespace DirectX;
 
 class RigidbodyComponent :
     public Component
 {
 private:
-	Vector3 position_;
-	Vector3 acceleration_;
-	bool use_acceleration_ = true;	// 使用フラグがtrueなら作用する
-	Vector3 velocity_;
-	bool use_velocity_ = true;
+//	Vector3 position_;
+//	Vector3 acceleration_;
+//	bool use_acceleration_ = true;			// 使用フラグがtrueなら作用する
+//	Vector3 velocity_;
+//	bool use_velocity_ = true;
+//	Vector3 gravity_ = { 0.0f,-1.0f,0.0f };	// 一応固定
+//	bool use_gravity_ = true;
 
 	//DirectX::XMFLOAT3 m_velocity;			// -速度
 	//float m_gravity;						// -重力
@@ -38,6 +40,7 @@ private:
 	//bool m_freezeRotation;					// -このフラグが立っていると回転の変更が無効になる
 	//bool m_collisionDetection;				// -衝突検出の有無
 	//bool m_constraints;						// -制約の設定（他のオブジェクトに干渉するか否か的な）
+
 public:
 	RigidbodyComponent(GameObject* _owner, int _updateOrder = 50);
 	~RigidbodyComponent();
@@ -46,19 +49,22 @@ public:
 	void Uninit();
 	void Updata();		// すべての更新を行う
 
-	// 加速度
-	void	SetAcceleration(const Vector3 _acceleration);
-	Vector3 GetAcceleration() const;
-	void	SetUseAcceleration(const bool _use_acceleration);
-	bool	GetUseAcceleration() const;
-
-	// 速度
-	void	SetVelocity(const Vector3 _velocity);
-	void	UpdateVelocity();
-	Vector3	GetVelocity() const;
-	void	SetUseVelocity(const bool _use_velocity);
-	bool	GetUseVelocity() const;
-	
+//	// 加速度
+//	void	SetAcceleration(const Vector3 _acceleration);
+//	Vector3 GetAcceleration() const;
+//	void	SetUseAcceleration(const bool _use_acceleration);
+//	bool	GetUseAcceleration() const;
+//
+//	// 速度
+//	void	SetVelocity(const Vector3 _velocity);
+//	void	UpdateVelocity();
+//	Vector3	GetVelocity() const;
+//	void	SetUseVelocity(const bool _use_velocity);
+//	bool	GetUseVelocity() const;
+//
+//	// 重力
+//	void	SetUseGravity(const bool _use_gravity);
+//	bool	GetUseGravity() const;
 
 	//void Init() {};
 	//void Uninit() {};
