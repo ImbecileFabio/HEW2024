@@ -139,32 +139,23 @@ void SpriteComponent::Draw()
 	Matrix pos;
 	Matrix scale;
 	
-	//auto transform = owner_->GetComponent<TransformComponent>();
-	//if (transform)
-	//{
-	//	auto t = transform->GetPosition();
-	//	auto r = transform->GetRotation();
-	//	auto s = transform->GetScale();
-	//	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
-	//	pos = Matrix::CreateTranslation(t);
-	//	scale = Matrix::CreateScale(s);
-	//}
-	//else 
-	//{
-	//	std::cout << std::format("ÅÉSpriteComponentÅÑ -> Faild Get Transform	ÅÉ{}ÅÑ\n", object_name_);
-	//	rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
-	//	pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
-	//	scale = Matrix::CreateScale(1.f, 1.f, 1.f);
-	//}
-
-	// âºÇ≈ ///////////
-	auto r = owner_->GetTransformComponent()->GetRotation();
-	auto t = owner_->GetTransformComponent()->GetPosition();
-	auto s = owner_->GetTransformComponent()->GetScale();
-	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
-	pos = Matrix::CreateTranslation(t);
-	scale = Matrix::CreateScale(s);
-	/////////////////
+	auto transform = owner_->GetComponent<TransformComponent>();
+	if (transform)
+	{
+		auto t = transform->GetPosition();
+		auto r = transform->GetRotation();
+		auto s = transform->GetScale();
+		rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
+		pos = Matrix::CreateTranslation(t);
+		scale = Matrix::CreateScale(s);
+	}
+	else 
+	{
+		std::cout << std::format("ÅÉSpriteComponentÅÑ -> Faild Get Transform	ÅÉ{}ÅÑ\n", object_name_);
+		rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
+		pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
+		scale = Matrix::CreateScale(1.f, 1.f, 1.f);
+	}
 
 
 

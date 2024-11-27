@@ -52,7 +52,7 @@ private:
 	// SRTî•ñip¨î•ñj
 	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };
 	DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };
-	DirectX::SimpleMath::Vector3 scale_{ 100.f, 100.f, 0.f };
+	DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };
 
 
 };

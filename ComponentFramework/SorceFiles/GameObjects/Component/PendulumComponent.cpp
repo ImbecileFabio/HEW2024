@@ -52,7 +52,7 @@ void PendulumComponent::Uninit()
 void PendulumComponent::Update(void)
 {
 
-	auto& transform = owner_->GetTransformComponent();
+	auto transform = owner_->GetComponent<TransformComponent>();
 
 	// U‚èŽq‚Ì’·‚³‚É‡‚í‚¹‚é
 	transform->SetPosition(0, -rength_);

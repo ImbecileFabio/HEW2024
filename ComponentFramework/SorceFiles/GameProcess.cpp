@@ -28,7 +28,7 @@ const auto ClassName = TEXT("2024 framework ひな形");
 const auto WindowName = TEXT("2024 framework ひな形(フィールド描画)");
 
 // ↓fullscreen設定	コメントを外すとフルスクリーンになる
-#define FULLSCREEN_MODE_
+//#define FULLSCREEN_MODE_
 
 HINSTANCE	GameProcess::hInst_ = nullptr;
 HWND		GameProcess::hWnd_ = nullptr;
@@ -38,11 +38,11 @@ uint32_t	GameProcess::height_ = 0;
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-GameProcess::GameProcess(uint32_t width, uint32_t height)
+GameProcess::GameProcess(uint32_t _width, uint32_t _height)
 	: game_manager_(nullptr)
 {
-	width_ = width;
-	height_ = height;
+	width_ = _width;
+	height_ = _height;
 
 	timeBeginPeriod(1);
 }

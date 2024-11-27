@@ -82,7 +82,7 @@ void GameManager::UninitAll(void)
 	delete camera_;
 	delete player_;
 
-	//delete test_object_;
+	delete test_object_;
 	//delete pendulum_;
 	
 

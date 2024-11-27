@@ -236,7 +236,6 @@ void Renderer::Init()
 	m_DeviceContext->VSSetConstantBuffers(2, 1, &m_ProjectionBuffer);
 	if (FAILED(hr)) return;
 
-	SetWorldViewProjection2D();
 }
 
 //-----------------------------------------------------------------
@@ -409,9 +408,6 @@ void Renderer::SetProjectionMatrix(Matrix* _ProjectionMatrix)
 {
 	Matrix projection;
 	projection = _ProjectionMatrix->Transpose(); // 転置
-
-
-
 
 
 	// プロジェクション行列をGPU側へ送る

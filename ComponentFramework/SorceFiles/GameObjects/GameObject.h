@@ -90,26 +90,21 @@ public:
 	* @brief	GameObjectのcomponents_からtargetにキャストする
 	* @retuan	見つかればtargetを	見つからなければ nullptr を返す
 	*/
-	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
 	template <typename T>
 	inline T* GetComponent() const {
 
 		T* target = nullptr;
 		for (auto component : components_)
 		{
-			target = dynamic_cast<TransformComponent*>(component);
-			if (target) {
+			target = dynamic_cast<T*>(component);
+			if (target) 
+			{
 				return target;
 			}
 		}
 
 		std::cout << std::format("＜GetComponent<T>＞ -> Not Found Component\n");
 		return nullptr;
-	}
-
-	// 仮で
-	const auto& GetTransformComponent() {
-		return transform_component_;
 	}
 
 protected:
