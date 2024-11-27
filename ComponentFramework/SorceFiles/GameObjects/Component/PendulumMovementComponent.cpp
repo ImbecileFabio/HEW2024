@@ -44,5 +44,5 @@ void PendulumMovementComponent::Uninit() {
 // XVˆ—
 //--------------------------------------------------
 void PendulumMovementComponent::Updata() {
-
+	
 }

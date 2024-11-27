@@ -29,8 +29,8 @@ class VelocityComponent :
     public RigidbodyComponent
 {
 private:
-	DirectX::SimpleMath::Vector3 position_;
-	DirectX::SimpleMath::Vector3 acceleration_;
+	float position_;
+	float acceleration_;
 	bool	use_acceleration_;
 	DirectX::SimpleMath::Vector3 velocity_;
 	bool	use_velocity_;
