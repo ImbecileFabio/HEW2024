@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Robot.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.cpp" />
@@ -48,7 +49,6 @@
     <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component.cpp" />
-    <ClCompile Include="SorceFiles\GameManager.cpp" />
     <ClCompile Include="SorceFiles\GameProcess.cpp" />
     <ClCompile Include="SorceFiles\main.cpp" />
     <ClCompile Include="SorceFiles\Renderer.cpp" />
@@ -57,6 +57,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\TestObject.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Robot.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.h" />
@@ -87,7 +88,6 @@
     <ClInclude Include="SorceFiles\SubSystem\dx11helper.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component.h" />
-    <ClInclude Include="SorceFiles\GameManager.h" />
     <ClInclude Include="SorceFiles\GameProcess.h" />
     <ClInclude Include="SorceFiles\main.h" />
     <ClInclude Include="SorceFiles\Renderer.h" />

@@ -14,8 +14,8 @@
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 
-#include "GameProcess.h"
 #include "GameManager.h"
+#include "GameProcess.h"
 #include "Renderer.h"
 #include "InputManager.h"
 
@@ -113,7 +113,6 @@ void GameProcess::Run(void)
 			{
 #ifdef IMGUI_DEBUG
 				imGuiManager.ImGuiUpdate();		// ImGuiの更新処理
-				imGuiManager.ImGuiShowWindow();	// ImGuiのウィンドウを表示
 #endif
 
 				InputManager::GetInstance().Update();	// InputManagerの更新
