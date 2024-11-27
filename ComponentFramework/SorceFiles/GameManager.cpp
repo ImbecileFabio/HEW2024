@@ -66,7 +66,8 @@ void GameManager::InitAll(void)
 
 	collider_test_object00_ = new ColliderTestObject(this);
 	collider_test_object01_ = new ColliderTestObject(this);
-	// テスト用に重なる位置に設定
+	collider_test_object00_->GetTransformComponent()->position_.x = 2.0f;
+	collider_test_object01_->GetTransformComponent()->position_.x = 20.0f;
 }
 
 //-----------------------------------------------------------------
@@ -172,7 +173,7 @@ void GameManager::UpdateGameObjects(void)
 		gameObject->Update();		// 更新処理
 
 		// コライダーを持っているオブジェクトをコライダーリストに追加
-		if (gameObject->GetComponent<BoxColliderComponent>())
+		if (gameObject->GetComponent<CircleColliderComponent>())
 		{
 			this->collider_objects_.emplace_back(gameObject);
 		}
@@ -190,8 +191,8 @@ void GameManager::UpdateGameObjects(void)
 	{
 		for (int j = i + 1; j < collider_objects_.size(); j++)
 		{
-			this->collider_objects_[i]->GetComponent<BoxColliderComponent>()->
-				CheckCollision(this->collider_objects_[j]->GetComponent<BoxColliderComponent>()->GetBoxSize());
+			this->collider_objects_[i]->GetComponent<CircleColliderComponent>()->
+				CheckCollision(this->collider_objects_[j]->GetComponent<CircleColliderComponent>()->GetCircleSize());
 		}
 	}
 	updating_game_objects_ = false;

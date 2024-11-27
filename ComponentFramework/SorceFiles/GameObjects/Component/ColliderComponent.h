@@ -11,7 +11,11 @@
 #include <SimpleMath.h>
 #include "../Component.h"
 /*----- 構造体宣言 -----*/
-
+struct CIRCLE
+{
+	DirectX::SimpleMath::Vector3 position;
+	float radius;
+};
 /*----- 前方宣言 -----*/
 class GameObject;
 
@@ -39,6 +43,31 @@ public:
 private:
 	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };	// 当たり判定の原点
 	DirectX::SimpleMath::Vector4 boxSize_ { 0.f, 0.f, 0.f,0.f };// 当たり判定のサイズ 上・下・左・右
+};
+
+//--------------------------------------------------
+// 丸の当たり判定
+//--------------------------------------------------
+class CircleColliderComponent :public Component
+{
+public:
+	CircleColliderComponent(GameObject* _owner, int _updateOrder = 50);
+	~CircleColliderComponent();
+
+	void Init(void) override;
+	void Uninit(void) override;
+	void Update(void) override;
+
+	void CheckCollision(const CIRCLE& _other);
+
+	TypeID GetComponentType(void) const override { return TypeID::CircleColliderComponent; }
+
+	void SetPosition(DirectX::SimpleMath::Vector3 _pos) { circle_.position = _pos; }
+	CIRCLE GetCircleSize(void) const { return circle_; }
+
+	bool testFg;
+private:
+	CIRCLE circle_;	// 原点・半径をまとめた構造体
 };
 
 #endif // COLLIDER_COMPONENT_H_

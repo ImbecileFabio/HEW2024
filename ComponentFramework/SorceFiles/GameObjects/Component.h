@@ -37,6 +37,7 @@ public:
 
 		// “–‚½‚è”»’è
 		, BoxColliderComponent
+		, CircleColliderComponent
 		// ƒJƒƒ‰
 		, CameraComponent
 		// U‚èq
