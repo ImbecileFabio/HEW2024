@@ -78,10 +78,10 @@ void SpriteComponent::InitBuffers()
 
 	vertices.resize(4);
 
-	vertices[0].position = Vector3(-10, 10, 0);
-	vertices[1].position = Vector3(10, 10, 0);
-	vertices[2].position = Vector3(-10, -10, 0);
-	vertices[3].position = Vector3(10, -10, 0);
+	vertices[0].position = Vector3(-0.5f, 0.5f, 0);
+	vertices[1].position = Vector3(0.5f,0.5f, 0);
+	vertices[2].position = Vector3(-0.5f, -0.5f, 0);
+	vertices[3].position = Vector3(0.5f, -0.5f, 0);
 
 	vertices[0].color = Color(1, 1, 1, 1);
 	vertices[1].color = Color(1, 1, 1, 1);
@@ -122,6 +122,7 @@ void SpriteComponent::SetObjectName(std::string _objectName)
 }
 
 
+
 //--------------------------------------------------
 // XVˆ—
 //--------------------------------------------------
@@ -138,32 +139,25 @@ void SpriteComponent::Draw()
 	Matrix pos;
 	Matrix scale;
 	
-	//auto transform = owner_->GetComponent<TransformComponent>();
-	//if (transform)
-	//{
-	//	auto t = transform->GetPosition();
-	//	auto r = transform->GetRotation();
-	//	auto s = transform->GetScale();
-	//	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
-	//	pos = Matrix::CreateTranslation(t);
-	//	scale = Matrix::CreateScale(s);
-	//}
-	//else 
-	//{
-	//	std::cout << std::format("ƒSpriteComponent„ -> Faild Get Transform	ƒ{}„\n", object_name_);
-	//	rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
-	//	pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
-	//	scale = Matrix::CreateScale(1.f, 1.f, 1.f);
-	//}
+	auto transform = owner_->GetComponent<TransformComponent>();
+	if (transform)
+	{
+		auto t = transform->GetPosition();
+		auto r = transform->GetRotation();
+		auto s = transform->GetScale();
+		rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
+		pos = Matrix::CreateTranslation(t);
+		scale = Matrix::CreateScale(s);
+	}
+	else 
+	{
+		std::cout << std::format("ƒSpriteComponent„ -> Faild Get Transform	ƒ{}„\n", object_name_);
+		rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
+		pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
+		scale = Matrix::CreateScale(1.f, 1.f, 1.f);
+	}
 
-	// ‰¼‚Å ///////////
-	auto r = this->owner_->GetTransformComponent()->GetRotation();
-	auto t = this->owner_->GetTransformComponent()->GetPosition();
-	auto s = this->owner_->GetTransformComponent()->GetScale();
-	rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
-	pos = Matrix::CreateTranslation(t);
-	scale = Matrix::CreateScale(s);
-	/////////////////
+
 
 	Matrix worldmtx;
 	worldmtx = scale * rot * pos;

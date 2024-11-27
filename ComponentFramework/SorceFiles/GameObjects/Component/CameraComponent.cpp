@@ -75,7 +75,7 @@ void CameraComponent::Update()
 	else
 	{
 		std::cout << std::format("ƒCameraComponent„ -> Default Position\n");
-		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0.f, 0.f, -500.f), Vector3(0.f, 0.f, 0.f), up);
+		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0.f, 0.f, -10.f), Vector3(0.f, 0.f, 0.f), up);
 	}
 
 	Renderer::SetViewMatrix(&view_matrix_);

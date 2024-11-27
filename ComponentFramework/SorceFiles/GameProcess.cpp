@@ -27,7 +27,7 @@
 const auto ClassName = TEXT("2024 framework ひな形");
 const auto WindowName = TEXT("2024 framework ひな形(フィールド描画)");
 
-// fullscreen設定	コメントを外すとフルスクリーンになる
+// ↓fullscreen設定	コメントを外すとフルスクリーンになる
 //#define FULLSCREEN_MODE_
 
 HINSTANCE	GameProcess::hInst_ = nullptr;
@@ -38,11 +38,11 @@ uint32_t	GameProcess::height_ = 0;
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-GameProcess::GameProcess(uint32_t width, uint32_t height)
+GameProcess::GameProcess(uint32_t _width, uint32_t _height)
 	: game_manager_(nullptr)
 {
-	width_ = width;
-	height_ = height;
+	width_ = _width;
+	height_ = _height;
 
 	timeBeginPeriod(1);
 }
@@ -88,7 +88,6 @@ void GameProcess::Run(void)
 	Renderer* renderer = new Renderer;
 	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGuiのWin32APIを初期化
 	imGuiManager.ImGuiD3D11Init(renderer->GetDevice(), renderer->GetDeviceContext());	// ImGuiのDirectX11を初期化
-	imGuiManager.ImGuiInit();	// ImGuiのウィンドウを初期化
 #endif
 	//--------------------------------------------------
 	// ゲームループ
@@ -114,6 +113,7 @@ void GameProcess::Run(void)
 			{
 #ifdef IMGUI_DEBUG
 				imGuiManager.ImGuiUpdate();		// ImGuiの更新処理
+				imGuiManager.ImGuiShowWindow();	// ImGuiのウィンドウを表示
 #endif
 
 				InputManager::GetInstance().Update();	// InputManagerの更新
@@ -218,13 +218,12 @@ bool GameProcess::InitWnd(void)
 	wc.lpszClassName = ClassName;
 	wc.hIconSm = LoadIcon(hInst, IDI_APPLICATION);
 
-#ifdef FLLSCREEN_MODE_
+#ifdef FULLSCREEN_MODE_
 	// ウィンドウスタイルを変更
 	SetWindowLong(hWnd_, GWL_STYLE, WS_POPUP);
-
 	// ウィンドウサイズを画面いっぱいに
 	SetWindowPos(hWnd_, HWND_TOP, 0, 0, width_, height_, SWP_SHOWWINDOW);
-#endif	// FLLSCREEN_MODE_
+#endif	// FULLSCREEN_MODE_
 
 	// ウィンドウの登録
 	if (!RegisterClassEx(&wc)) { return false; }
@@ -335,7 +334,7 @@ LRESULT CALLBACK GameProcess::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 
 	case WM_CLOSE:	// 「x」ボタンが押されたら
 	{
-		int res = MessageBoxA(NULL, "おわります？", "確認", MB_OKCANCEL);
+		int res = MessageBoxA(NULL, "owaowari", "確認", MB_OKCANCEL);
 		if (res == IDOK)
 		{
 			DestroyWindow(hWnd);	// 「WM_DESTROY」メッセージを送る

@@ -52,7 +52,7 @@ void PendulumComponent::Uninit()
 void PendulumComponent::Update(void)
 {
 
-	auto& transform = owner_->GetTransformComponent();
+	auto transform = owner_->GetComponent<TransformComponent>();
 
 	transform->position_.y = -rength_;
 	transform->rotation_.z += 0.1f;

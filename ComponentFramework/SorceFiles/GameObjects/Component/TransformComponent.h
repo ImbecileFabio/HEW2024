@@ -13,15 +13,17 @@
 
 #include "../Component.h"
 
-
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
 class GameObject;
+
+
+using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // 姿勢制御コンポーネント
 //--------------------------------------------------
-class TransformComponent : Component
+class TransformComponent : public Component
 {
 public:
 	TransformComponent(GameObject* _owner, int updateOrder = 50);
@@ -31,26 +33,26 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 
-
-	auto& GetPosition() { return position_; }
-	auto& GetRotation() { return rotation_; }
-	auto& GetScale() { return scale_; }
+	// Setter
+	void SetPosition(const float _x,const float _y,const float _z = 0) 
+	{ position_.x = _x;	position_.y = _y;	position_.z = _z;}
+	void SetRotation(const float _z)
+	{ rotation_.z = _z; }
+	void SetScale(const float _x,const float _y)
+	{ scale_.x = _x; scale_.y = _y; }
+	// Getter
+	auto& GetPosition() const { return position_; }
+	auto& GetRotation() const { return rotation_; }
+	auto& GetScale()    const { return scale_; }
 
 	virtual TypeID GetComponentType() const override { return TypeID::TransformComponent; }
 
-	/////////////////////////////////////////////////////////
-	// 仮でpublicにしているが、本来はprivateにする
+
+private:
 	// SRT情報（姿勢情報）
 	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };
 	DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };
 	DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };
-	/////////////////////////////////////////////////////////
-
-private:
-	//// SRT情報（姿勢情報）
-	//DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };
-	//DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };
-	//DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };
 
 
 };

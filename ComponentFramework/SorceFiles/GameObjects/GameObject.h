@@ -43,7 +43,7 @@ public:
 		, Player
 		, Camera
 		, Pendulum
-		, ColliderTestObject
+
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};
@@ -87,29 +87,29 @@ public:
 	auto& GetGameManager(void) { return game_manager_; }
 	/*
 	* @param	取得したいConponent(T)
-	* @brief	GameObjectのcomponents_からcastedComponentにキャストする
-	* @retuan	見つかればcastedComponentを	見つからなければ nullptr を返す
+	* @brief	GameObjectのcomponents_からtargetにキャストする
+	* @retuan	見つかればtargetを	見つからなければ nullptr を返す
 	*/
-	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
 	template <typename T>
-	inline T* GetComponent() {
-		for (auto& component : components_)
+	inline T* GetComponent() const {
+
+		T* target = nullptr;
+		for (auto component : components_)
 		{
-			T* castedComponent = dynamic_cast<T*>(component);
-			if (castedComponent) { return castedComponent; }
+			target = dynamic_cast<T*>(component);
+			if (target) 
+			{
+				return target;
+			}
 		}
+
 		std::cout << std::format("＜GetComponent<T>＞ -> Not Found Component\n");
 		return nullptr;
 	}
 
-	// 仮で
-	auto& GetTransformComponent() {
-		return transform_component_;
-	}
-
 protected:
 	// GameObjectの所有者
-	GameManager* game_manager_{};
+	 GameManager* game_manager_{};
 
 	// GameObjectの状態
 	State state_{};
