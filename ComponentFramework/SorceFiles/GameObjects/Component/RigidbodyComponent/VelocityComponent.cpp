@@ -51,9 +51,8 @@ void VelocityComponent::Uninit() {
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void VelocityComponent::Updata() {
+void VelocityComponent::Update() {
 	position_ = this->owner_->GetComponent<TransformComponent>()->GetPosition();	// -現在座標の取得
-	position_ = owner_->GetComponent<TransformComponent>()->GetPosition();	// -現在座標の取得
 
 	// 速度を適用
 	if (use_velocity_) {

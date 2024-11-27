@@ -44,7 +44,7 @@ void RigidbodyComponent::Uninit(){
 //--------------------------------------------------
 // XVˆ—
 //--------------------------------------------------
-void RigidbodyComponent::Updata() {
+void RigidbodyComponent::Update() {
 	//UpdateVelocity();
 }
 

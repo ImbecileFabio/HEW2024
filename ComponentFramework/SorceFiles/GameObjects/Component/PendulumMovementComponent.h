@@ -18,5 +18,5 @@ public:
 
 	void Init();
 	void Uninit();
-	void Updata();
+	void Update();
 };

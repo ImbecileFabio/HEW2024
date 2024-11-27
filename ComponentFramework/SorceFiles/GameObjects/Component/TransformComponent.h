@@ -49,7 +49,6 @@ public:
 	// Getter
 	auto& GetPosition() const { return position_; }
 	auto& GetRotation() const { return rotation_; }
-	auto& GetRotationZ() const {return rotation_.z;}
 	auto& GetScale()    const { return scale_; }
 	
 

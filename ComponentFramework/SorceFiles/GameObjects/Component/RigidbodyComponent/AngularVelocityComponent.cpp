@@ -33,8 +33,8 @@ AngularVelocityComponent::~AngularVelocityComponent() {
 void AngularVelocityComponent::Init() {
 	use_angularAcceleration_	= true;
 	use_angularVelocity_		= true;
-	angularAcceleration_	= { 0.f,0.f,0.f };
-	angularVelocity_		= { 0.f,0.f,0.f };
+	angularAcceleration_	= 0.f;
+	angularVelocity_		= 0.f;
 }
 
 //--------------------------------------------------
@@ -47,21 +47,17 @@ void AngularVelocityComponent::Uninit() {
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void AngularVelocityComponent::Updata() {
-	rotation_ = this->owner_->GetComponent<TransformComponent>()->GetRotation();
+void AngularVelocityComponent::Update() {
+	rotation_ = this->owner_->GetComponent<TransformComponent>()->GetRotation().z;	// -現在座標の取得
 
 	// 角加速度を適用
 	if (use_angularVelocity_) {
 		// 角速度を適用
 		if (use_angularAcceleration_) {
-			angularVelocity_.x += angularAcceleration_.x;
-			angularVelocity_.y += angularAcceleration_.y;
-			angularVelocity_.z += angularAcceleration_.z;
+			angularVelocity_ += angularAcceleration_;
 		}
 
-		rotation_.x += angularVelocity_.x;
-		rotation_.y += angularVelocity_.y;
-		rotation_.z += angularVelocity_.z;
+		rotation_ += angularVelocity_;
 	}
 
 	this->owner_->GetComponent<TransformComponent>()->SetRotation(rotation_);
@@ -71,10 +67,10 @@ void AngularVelocityComponent::Updata() {
 //--------------------------------------------------
 //角加速度
 //--------------------------------------------------
-void	AngularVelocityComponent::SetAngularAcceleration(const Vector3 _angularAcceleration) {
+void	AngularVelocityComponent::SetAngularAcceleration(const float _angularAcceleration) {
 	angularAcceleration_ = _angularAcceleration;
 }
-Vector3 AngularVelocityComponent::GetAngularAcceleration() const {
+float AngularVelocityComponent::GetAngularAcceleration() const {
 	return angularAcceleration_;
 }
 void	AngularVelocityComponent::SetUseAngularAcceleration(const bool _use_angularAcceleration) {
@@ -87,10 +83,10 @@ bool	AngularVelocityComponent::GetUseAngularAcceleration() const {
 //--------------------------------------------------
 //角速度
 //--------------------------------------------------
-void	AngularVelocityComponent::SetAngularVelocity(const Vector3 _angularVelocity) {
+void	AngularVelocityComponent::SetAngularVelocity(const float _angularVelocity) {
 	angularVelocity_ = _angularVelocity;
 }
-Vector3 AngularVelocityComponent::GetAngularVelocity() const {
+float AngularVelocityComponent::GetAngularVelocity() const {
 	return angularVelocity_;
 }
 void	AngularVelocityComponent::SetUseAngularVelocity(const bool _use_angularVelocity) {

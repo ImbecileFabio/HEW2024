@@ -23,10 +23,10 @@ class AngularVelocityComponent :
     public RigidbodyComponent
 {
 private:
-	DirectX::SimpleMath::Vector3 rotation_;
-	DirectX::SimpleMath::Vector3 angularAcceleration_;		// -Šp‰Á‘¬“x
+	float rotation_;
+	float angularAcceleration_;		// -Šp‰Á‘¬“x
 	bool use_angularAcceleration_;							// -Šp‰Á‘¬“x‚ÌŽg—pƒtƒ‰ƒO
-	DirectX::SimpleMath::Vector3 angularVelocity_;			// -Šp‘¬“x
+	float angularVelocity_;			// -Šp‘¬“x
 	bool use_angularVelocity_;								// -Šp‘¬“x‚ÌŽg—pƒtƒ‰ƒO
 public:
 	AngularVelocityComponent(GameObject* _owner, int _updateOrder = 50);
@@ -34,19 +34,20 @@ public:
 
 	void Init();
 	void Uninit();
-	void Updata();
+	void Update();
 
 	// Šp‰Á‘¬“x
-	void	SetAngularAcceleration(const DirectX::SimpleMath::Vector3 _angularAcceleration);
-	DirectX::SimpleMath::Vector3 GetAngularAcceleration() const;
+	void	SetAngularAcceleration(const float _angularAcceleration);
+	float GetAngularAcceleration() const;
 	void	SetUseAngularAcceleration(const bool _use_angularAcceleration);
 	bool	GetUseAngularAcceleration() const;
 
 	// Šp‘¬“x
-	void	SetAngularVelocity(const DirectX::SimpleMath::Vector3 _angularVelocity);
-	DirectX::SimpleMath::Vector3 GetAngularVelocity() const;
+	void	SetAngularVelocity(const float _angularVelocity);
+	float GetAngularVelocity() const;
 	void	SetUseAngularVelocity(const bool _use_angularVelocity);
 	bool	GetUseAngularVelocity() const;
 
+	virtual TypeID GetComponentType() const override { return TypeID::AngularVelocityComponent; }
 };
 

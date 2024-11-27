@@ -45,9 +45,9 @@ public:
 	RigidbodyComponent(GameObject* _owner, int _updateOrder = 50);
 	~RigidbodyComponent();
 
-	void Init();
-	void Uninit();
-	void Updata();		// すべての更新を行う
+	virtual void Init();
+	virtual void Uninit();
+	virtual void Update();		// すべての更新を行う
 
 //	// 加速度
 //	void	SetAcceleration(const Vector3 _acceleration);
