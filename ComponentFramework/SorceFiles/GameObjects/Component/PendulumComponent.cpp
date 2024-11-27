@@ -25,7 +25,7 @@ PendulumComponent::PendulumComponent(GameObject* _owner, float _rength, float _a
 	, rength_(_rength)
 	, angle_(_angle)
 {
-	std::format("ƒPendulumComponent„ -> Constructor\n");
+	std::cout << std::format("ƒPendulumComponent„ -> Constructor\n");
 }
 
 //--------------------------------------------------
@@ -33,7 +33,7 @@ PendulumComponent::PendulumComponent(GameObject* _owner, float _rength, float _a
 //--------------------------------------------------
 PendulumComponent::~PendulumComponent(void)
 {
-	std::format("ƒPendulumComponent„ -> Destructor\n");
+	std::cout << std::format("ƒPendulumComponent„ -> Destructor\n");
 
 }
 

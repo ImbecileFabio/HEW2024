@@ -25,7 +25,7 @@ using namespace DirectX::SimpleMath;
 CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
-	std::format("＜CamelaComponent＞ -> Constructor\n");
+	std::cout << std::format("＜CamelaComponent＞ -> Constructor\n");
 
 
 	target_ = Vector3(0.f, 0.f, 0.f);
@@ -75,7 +75,7 @@ void CameraComponent::Update()
 	else
 	{
 		std::cout << std::format("＜CameraComponent＞ -> Default Position\n");
-		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0.f, 0.f, -10.f), Vector3(0.f, 0.f, 0.f), up);
+		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0, 0, -1), Vector3(0.f, 0.f, 0.f), up);
 	}
 
 	Renderer::SetViewMatrix(&view_matrix_);
@@ -88,7 +88,8 @@ void CameraComponent::Update()
 	float farPlane = 1000.f;	// ファークリップ
 
 	Matrix projectionMatrix;
-	projectionMatrix = DirectX::XMMatrixPerspectiveFovLH(fieldOfView, aspectRatio, nearPlane, farPlane);
+	projectionMatrix = DirectX::XMMatrixOrthographicLH(fieldOfView, aspectRatio, nearPlane, farPlane);
+
 
 	Renderer::SetProjectionMatrix(&projectionMatrix);
 }

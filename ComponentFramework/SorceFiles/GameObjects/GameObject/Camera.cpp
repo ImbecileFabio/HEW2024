@@ -42,24 +42,4 @@ Camera::~Camera()
 //--------------------------------------------------
 void Camera::UpdateGameObject()
 {
-
-	auto position = transform_component_->GetPosition();
-
-	if (InputManager::GetInstance().GetKeyPress(VK_UP))
-	{
-		transform_component_->SetPosition(position.x, position.y + 1);
-	}
-	if (InputManager::GetInstance().GetKeyPress(VK_DOWN))
-	{
-		transform_component_->SetPosition(position.x, position.y - 1);
-	}
-	if (InputManager::GetInstance().GetKeyPress(VK_LEFT))
-	{
-		transform_component_->SetPosition(position.x - 1, position.y);
-	}
-	if (InputManager::GetInstance().GetKeyPress(VK_RIGHT))
-	{
-		transform_component_->SetPosition(position.x + 1, position.y);
-	}
-
 }

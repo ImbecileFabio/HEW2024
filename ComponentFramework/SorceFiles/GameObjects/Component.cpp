@@ -26,6 +26,12 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "TransformComponent"
 	// リジッドボディ
 	, "RigidBodyComponent"
+	, "VelocityComponent"
+	, "AngularVelocityComponent"
+	// コライダー
+	, "ColliderComponent"
+	, "BoxColliderComponent"
+	, "CircleColliderComponent"
 
 	// カメラ
 	, "CameraComponent"

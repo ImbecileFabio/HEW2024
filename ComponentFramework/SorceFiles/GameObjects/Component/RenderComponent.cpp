@@ -6,6 +6,7 @@
 //==================================================
 
 /*----- インクルード -----*/
+#include <iostream>
 #include <format>
 
 #include "RenderComponent.h"
@@ -18,7 +19,7 @@
 RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 {
-	std::format("＜RenderComponent＞ -> Constructor\n");
+	std::cout << std::format("＜RenderComponent＞ -> Constructor\n");
 }
 
 //--------------------------------------------------
@@ -26,7 +27,7 @@ RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 RenderComponent::~RenderComponent(void)
 {
-	std::format("＜RenderComponent＞ -> Destructor\n");
+	std::cout << std::format("＜RenderComponent＞ -> Destructor\n");
 
 }
 

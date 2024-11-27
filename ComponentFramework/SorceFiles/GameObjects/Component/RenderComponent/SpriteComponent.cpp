@@ -27,7 +27,7 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	: RenderComponent(_owner)
 	, draw_order_(_drawOrder)
 {
-	std::format("＜SpriteComponent＞ -> Constructor\n");
+	std::cout << std::format("＜SpriteComponent＞ -> Constructor\n");
 
 	// テクスチャ読み込み
 	bool sts = texture_.Load(_imgname);
@@ -77,10 +77,10 @@ void SpriteComponent::InitBuffers()
 
 	vertices.resize(4);
 
-	vertices[0].position = Vector3(-0.5f, 0.5f, 0);
-	vertices[1].position = Vector3(0.5f,0.5f, 0);
+	vertices[0].position = Vector3(-0.5f,  0.5f, 0);
+	vertices[1].position = Vector3( 0.5f,  0.5f, 0);
 	vertices[2].position = Vector3(-0.5f, -0.5f, 0);
-	vertices[3].position = Vector3(0.5f, -0.5f, 0);
+	vertices[3].position = Vector3( 0.5f, -0.5f, 0);
 
 	vertices[0].color = Color(1, 1, 1, 1);
 	vertices[1].color = Color(1, 1, 1, 1);
@@ -169,6 +169,8 @@ void SpriteComponent::Draw()
 
 	// トポロジーをセット（プリミティブタイプ）
 	devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+
 
 	shader_.SetGPU();
 	vertex_buffer_.SetGPU();

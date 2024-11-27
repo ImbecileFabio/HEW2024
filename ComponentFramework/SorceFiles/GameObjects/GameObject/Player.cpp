@@ -14,6 +14,7 @@
 #include "../Component.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/TransformComponent.h"
+#include "../Component/RigidbodyComponent/VelocityComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -27,7 +28,11 @@ Player::Player(GameManager* _gameManager)
 	sprite_component_= new SpriteComponent(this, TEXTURE_PATH_"icon.png");
 	sprite_component_->SetObjectName("Player");
 
-	transform_component_->SetScale(1, 1);
+	transform_component_->SetPosition(100, 100);
+	transform_component_->SetScale(100, 100);
+
+
+	velocity_component_ = new VelocityComponent(this);
 }
 
 //--------------------------------------------------
