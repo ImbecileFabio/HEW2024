@@ -24,8 +24,10 @@ Player::Player(GameManager* _gameManager)
 	std::cout << std::format("＜Player＞ -> Constructor\n");
 
 	// スプライトコンポーネント
-	sprite_component_= new SpriteComponent(this, "Asset/Texture/icon.png");
+	sprite_component_= new SpriteComponent(this, TEXTURE_PATH_"icon.png");
 	sprite_component_->SetObjectName("Player");
+
+	transform_component_->SetScale(1, 1);
 }
 
 //--------------------------------------------------
@@ -43,4 +45,5 @@ Player::~Player(void)
 //--------------------------------------------------
 void Player::UpdateGameObject(void)
 {
+
 }

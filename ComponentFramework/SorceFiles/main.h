@@ -23,11 +23,13 @@
 // GetComponentのnullptr事件
 // とりあえず今は仮でTransformを受け渡せるようにしたほうがいい 
 // 
-// AddComponentで既に同じComponentがあった時に重複を防ぐ処理があったほうがいいかも
+// 
+// 
+// で既に同じComponentがあった時に重複を防ぐ処理があったほうがいいかも
 // 
 // SceneMnagerの実装をする
 // 
-// 
+// あと単純に並行投影にしなきゃ
 //
 //
 

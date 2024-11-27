@@ -16,26 +16,6 @@
   </Class>
   <Class Name="GameObject" Collapsed="true">
     <Position X="10.5" Y="4.5" Width="4" />
-    <Members>
-      <Method Name="~GameObject" Hidden="true" />
-      <Field Name="game_manager_" Hidden="true" />
-      <Method Name="GameObject" Hidden="true" />
-      <Field Name="re_compute_transform_" Hidden="true" />
-      <Method Name="UpdateComponents" Hidden="true" />
-      <Method Name="UpdateGameObject" Hidden="true" />
-    </Members>
-    <NestedTypes>
-      <Enum Name="GameObject::TypeID" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>SorceFiles\GameObjects\GameObject.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-      <Enum Name="GameObject::State" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>SorceFiles\GameObjects\GameObject.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>CBQABEAAAAQIAAABAEAgBIIgAAAQAAEEAAACAAIgBIA=</HashCode>
       <FileName>SorceFiles\GameObjects\GameObject.h</FileName>
@@ -43,20 +23,9 @@
   </Class>
   <Class Name="Component" Collapsed="true">
     <Position X="11.25" Y="7.5" Width="2.75" />
-    <Members>
-      <Method Name="~Component" Hidden="true" />
-      <Method Name="Component" Hidden="true" />
-    </Members>
     <Compartments>
       <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
-    <NestedTypes>
-      <Enum Name="Component::TypeID">
-        <TypeIdentifier>
-          <NewMemberFileName>SorceFiles\GameObjects\Component.h</NewMemberFileName>
-        </TypeIdentifier>
-      </Enum>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AAQhAAAAEYAAhAABAAAAAAABEAAAAAAAAABCAEAAAAA=</HashCode>
       <FileName>SorceFiles\GameObjects\Component.h</FileName>
@@ -64,20 +33,13 @@
   </Class>
   <Class Name="GameManager" Collapsed="true">
     <Position X="10.75" Y="3.25" Width="3.5" />
-    <Members>
-      <Method Name="~GameManager" Hidden="true" />
-      <Method Name="Create" Hidden="true" />
-      <Field Name="pending_game_objects_" Hidden="true" />
-      <Method Name="UpdateGameObjects" Hidden="true" />
-      <Field Name="updating_game_objects_" Hidden="true" />
-    </Members>
     <TypeIdentifier>
-      <HashCode>AARgAAAAAAAAAACAAAQEAAAAAAQQgGAEAAAAAAFQggg=</HashCode>
+      <HashCode>AARgAAAAAAAAAACAAAYEAAAAAAQQgGAEAAAAAAFQggg=</HashCode>
       <FileName>SorceFiles\GameManager.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GameProcess" Collapsed="true">
-    <Position X="11.5" Y="2" Width="2.25" />
+  <Class Name="GameProcess">
+    <Position X="11.5" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAQCACAAAAEAAAAhQAUQAABAAAAAIAAAAAACQUAABAY=</HashCode>
       <FileName>SorceFiles\GameProcess.h</FileName>
@@ -114,7 +76,7 @@
   <Class Name="AudioManager" Collapsed="true">
     <Position X="7.5" Y="4" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAGCAABQAAgAAAAAgABAAAAogACAAACQEA=</HashCode>
+      <HashCode>AAAAAAAAACAGCAABQAAgAAAAAgABAAAAogECAACCQEA=</HashCode>
       <FileName>SorceFiles\AudioManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -142,7 +104,7 @@
   <Class Name="TransformComponent" Collapsed="true">
     <Position X="11.75" Y="9.5" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAHCAAAABAACAIAADAAAAAAAAIAACAAAAAAA=</HashCode>
+      <HashCode>AAQAAAAAAHCAAAABAACAIAADAAAAAggAIAACAgAAAAA=</HashCode>
       <FileName>SorceFiles\GameObjects\Component\TransformComponent.h</FileName>
     </TypeIdentifier>
   </Class>

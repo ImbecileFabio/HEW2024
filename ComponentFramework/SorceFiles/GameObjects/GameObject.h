@@ -87,24 +87,24 @@ public:
 	auto& GetGameManager(void) { return game_manager_; }
 	/*
 	* @param	取得したいConponent(T)
-	* @brief	GameObjectのcomponents_からcastedComponentにキャストする
-	* @retuan	見つかればcastedComponentを	見つからなければ nullptr を返す
+	* @brief	GameObjectのcomponents_からtargetにキャストする
+	* @retuan	見つかればtargetを	見つからなければ nullptr を返す
 	*/
-	//なんか絶対にnullptr返されるんだけど！！！！！！！！！！！！！！！
 	template <typename T>
 	inline T* GetComponent() const {
+
+		T* target = nullptr;
 		for (auto component : components_)
 		{
-			T* castedComponent = dynamic_cast<T*>(component);
-			if (castedComponent) { return castedComponent; }
+			target = dynamic_cast<T*>(component);
+			if (target) 
+			{
+				return target;
+			}
 		}
+
 		std::cout << std::format("＜GetComponent<T>＞ -> Not Found Component\n");
 		return nullptr;
-	}
-
-	// 仮で
-	const auto& GetTransformComponent() {
-		return transform_component_;
 	}
 
 protected:
