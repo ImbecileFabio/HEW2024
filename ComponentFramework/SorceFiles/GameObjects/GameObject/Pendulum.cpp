@@ -25,7 +25,7 @@ Pendulum::Pendulum(GameManager* _gameManager)
 	std::cout << std::format("＜Pendulum＞ -> Constructor\n");
 
 	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, "Asset/Texture/HEW仮素材/Ball.png");
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"HEW仮素材/Ball.png");
 	sprite_component_->SetObjectName("Pendulum");
 
 	// 振り子コンポーネント

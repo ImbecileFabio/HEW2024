@@ -99,7 +99,7 @@ void AudioManager::Uninit()
 
 void AudioManager::Play(SoundLabel _label)
 {
-	hr = pSourceVoice[_label]->SubmitSourceBuffer(&AudioDataBuffer);
+	hr = pSourceVoice[_label]->SubmitSourceBuffer(&audioDataBuffer);
 	if (FAILED(hr)) {
 		std::cerr << "オーディオデータのバッファの送信に失敗しました。　エラーコード：" << hr << std::endl;
 	}
@@ -134,29 +134,29 @@ int AudioManager::LoadWaveFile(int _label)
 	}
 
 	// RIFFヘッダーの読み込み
-	if (fread(&RiffHeader, sizeof(RiffHeader), 1, pFile) != 1) {
+	if (fread(&riffHeader, sizeof(riffHeader), 1, pFile) != 1) {
 		std::cerr << "RIFFヘッダーの読み込みに失敗しました。" << std::endl;
 		return -1;
 	}
 
 	// フォーマットチャンクの読み込み
-	if (fread(&FormatChunk, sizeof(FormatChunk), 1, pFile) != 1) {
+	if (fread(&formatChunk, sizeof(formatChunk), 1, pFile) != 1) {
 		std::cerr << "フォーマットチャンクの読み込みに失敗しました。" << std::endl;
 		return -1;
 	}
 
 	// データチャンクの読み込み
-	if (fread(&DataChunk, sizeof(DataChunk), 1, pFile) != 1) {
+	if (fread(&dataChunk, sizeof(dataChunk), 1, pFile) != 1) {
 		std::cerr << "データチャンクの読み込みに失敗しました。" << std::endl;
 		return -1;
 	}
-	pDataBuffer = (BYTE*)malloc(DataChunk.size);		// 波形データ分のメモリを確保（mallocは引数分のメモリを確保する関数）
+	pDataBuffer = (BYTE*)malloc(dataChunk.size);		// 波形データ分のメモリを確保（mallocは引数分のメモリを確保する関数）
 	// 波形データの読み込み
 	if (pDataBuffer == nullptr) {
 		std::cerr << "バッファが初期化されていません。" << std::endl;
 		return -1;
 	}
-	if (fread(pDataBuffer, DataChunk.size, 1, pFile) != 1) {
+	if (fread(pDataBuffer, dataChunk.size, 1, pFile) != 1) {
 		std::cerr << "波形データの読み込みに失敗しました。" << std::endl;
 		return -1;
 	}
@@ -171,8 +171,8 @@ int AudioManager::LoadWaveFile(int _label)
 
 
 	// ソースボイスの作成
-	memcpy(&WaveFormatEx, &FormatChunk.fmt, sizeof(FormatChunk.fmt));							// -波形フォーマットの設定	
-	WaveFormatEx.wBitsPerSample = FormatChunk.fmt.nBlockAlign * 8 / FormatChunk.fmt.nChannels;	// -1サンプル辺りのバッファサイズを算出する
+	memcpy(&WaveFormatEx, &formatChunk.fmt, sizeof(formatChunk.fmt));							// -波形フォーマットの設定	
+	WaveFormatEx.wBitsPerSample = formatChunk.fmt.nBlockAlign * 8 / formatChunk.fmt.nChannels;	// -1サンプル辺りのバッファサイズを算出する
 	hr = pXaudio2->CreateSourceVoice(&pSourceVoice[_label], &WaveFormatEx);						// -波形フォーマットを元にSourceVoiceの生成
 	if (FAILED(hr)) {
 		std::cerr << "ソースボイスの作成に失敗しました。　エラーコード：" << hr << std::endl;
@@ -181,9 +181,9 @@ int AudioManager::LoadWaveFile(int _label)
 	}
 
 	// 再生する波形データの設定
-	AudioDataBuffer.pAudioData = (BYTE*)pDataBuffer;	// -オーディオバッファへのアドレス指定
-	AudioDataBuffer.Flags = XAUDIO2_END_OF_STREAM;		// -バッファの終わりを指定
-	AudioDataBuffer.AudioBytes = DataChunk.size;		// -バッファのサイズ設定
+	audioDataBuffer.pAudioData = (BYTE*)pDataBuffer;	// -オーディオバッファへのアドレス指定
+	audioDataBuffer.Flags = XAUDIO2_END_OF_STREAM;		// -バッファの終わりを指定
+	audioDataBuffer.AudioBytes = dataChunk.size;		// -バッファのサイズ設定
 
 	return 0;
 }

@@ -73,11 +73,11 @@ private:
 	IXAudio2MasteringVoice* pMasteringVoice;				// -マスターボイスのポインタ
     IXAudio2SourceVoice*	pSourceVoice[SoundLabel_MAX];	// -ソースボイスのポインタ（サウンド数分生成）
 	FILE*			pFile;				// -ファイルのポインタ
-	RiffHeader		RiffHeader;			// -RIFFヘッダー
-	FormatChunk		FormatChunk;		// -フォーマットチャンク
-	Chunk			DataChunk;			// -データチャンク	（"識別子（ID）" "チャンクのサイズ"）
+	RiffHeader		riffHeader;			// -RIFFヘッダー
+	FormatChunk		formatChunk;		// -フォーマットチャンク
+	Chunk			dataChunk;			// -データチャンク	（"識別子（ID）" "チャンクのサイズ"）
 	BYTE*			pDataBuffer;		// -波形データ		（"データの内容"）
-	XAUDIO2_BUFFER	AudioDataBuffer{};	// -オーディオデータを再生するために使用するバッファ
+	XAUDIO2_BUFFER	audioDataBuffer{};	// -オーディオデータを再生するために使用するバッファ
 	WAVEFORMATEX	WaveFormatEx{};		// -波形フォーマット構造体
 
 
@@ -88,5 +88,5 @@ public:
 	void Uninit();
 	void Play(SoundLabel _label);
 	void Stop(SoundLabel _label);
-	int LoadWaveFile(int _label);	// waveファイルの読み込み
+	int LoadWaveFile(int number);	// waveファイルの読み込み
 };

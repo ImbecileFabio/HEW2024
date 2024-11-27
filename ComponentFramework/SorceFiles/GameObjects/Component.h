@@ -34,9 +34,9 @@ public:
 
 		// 姿勢制御
 		, TransformComponent
+		// リジッドボディ
+		, RigidBodyComponent
 
-		// 当たり判定
-		, BoxColliderComponent
 		// カメラ
 		, CameraComponent
 		// 振り子
@@ -58,7 +58,7 @@ public:
 	virtual void Update(void) = 0;
 
 	// コンポーネントの姿勢制御の更新
-	virtual void OnUpdateWorldTransform() {};
+	virtual void OnUpdateWorldTransform() {}; 
 
     auto GetOwner(void) { return owner_; }
 	int GetUpdateOrder(void) const { return update_order_; }
@@ -71,7 +71,7 @@ public:
 
 
 protected:
-	GameObject* owner_{};	// 自分（コンポーネント）の所有者
+	GameObject* owner_;	// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
 };
 

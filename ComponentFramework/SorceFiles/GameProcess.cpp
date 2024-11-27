@@ -113,7 +113,6 @@ void GameProcess::Run(void)
 			{
 #ifdef IMGUI_DEBUG
 				imGuiManager.ImGuiUpdate();		// ImGuiの更新処理
-				imGuiManager.ImGuiShowWindow();	// ImGuiのウィンドウを表示
 #endif
 
 				InputManager::GetInstance().Update();	// InputManagerの更新
