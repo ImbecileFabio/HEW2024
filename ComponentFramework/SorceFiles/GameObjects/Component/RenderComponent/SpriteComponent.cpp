@@ -171,6 +171,13 @@ void SpriteComponent::Draw()
 	// トポロジーをセット（プリミティブタイプ）
 	devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
+
+
+
+
+
+
+
 	shader_.SetGPU();
 	vertex_buffer_.SetGPU();
 	index_buffer_.SetGPU();
