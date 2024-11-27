@@ -49,7 +49,6 @@ public:
 	virtual void LoadFile() {};	// ファイルを読みこむ
 	virtual void ShowWindow(std::vector<GameObject*>& _r) = 0;	// ウィンドウを表示
 protected:
-	void ChangeWorldtoScreen(const DirectX::SimpleMath::Vector3& _worldPosition);					// ワールド座標をスクリーン座標に変換する
 	ImVec2 position_ = {0.0f, 0.0f};	// ウィンドウの座標
 	bool showFg = true;		// ウィンドウを表示するかどうか
 };
@@ -74,7 +73,7 @@ public:
 	void ShowWindow(std::vector<GameObject*>& _r) override;
 private:
 };
-/*--Objectとを親子形式で表示するツリー形式ウィンドウ--*/
+/*--ObjectとComponentを親子形式で表示するツリー形式ウィンドウ--*/
 class TreeGUI : public ImGuiBase
 {
 public:
@@ -82,6 +81,5 @@ public:
 	~TreeGUI() = default;
 	void ShowWindow(std::vector<GameObject*>& _r) override;
 private:
-	std::vector<GameObject*> gameObjects_ = {};	// 
 };
 #endif // IMGUI_DEBUG

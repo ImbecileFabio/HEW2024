@@ -8,7 +8,6 @@
 #ifdef IMGUI_DEBUG
 #include <iostream>
 #include "ImGuiManager.h"
-#include "GameObjects/Component/ColliderComponent.h"
 /*----staticïœêî------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
 //--------------------------------------------------
@@ -63,7 +62,6 @@ void ImGuiManager::ImGuiUpdate()
 //--------------------------------------------------
 void ImGuiManager::ImGuiShowWindow(std::vector<GameObject*>& _r)
 {
-    GameObject* test = nullptr;
     if (showFg)
     {
         for (const auto& window : imGuiWindowVec)
@@ -194,5 +192,4 @@ void TreeGUI::ShowWindow(std::vector<GameObject*>& _r)
 }
 
 #endif // IMGUI_DEBUG
-
 

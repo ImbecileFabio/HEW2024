@@ -10,7 +10,6 @@
 #include <format>
 
 #include "ColliderTestObject.h"
-#include "../../InputManager.h"
 #include "../../GameManager.h"
 #include "../Component.h"
 #include "../Component/ColliderComponent.h"
@@ -29,7 +28,7 @@ ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
 	this->sprite_component_ = new SpriteComponent(this, TEXTURE_PATH "TestBlock.png");
 
 	// 四角当たり判定コンポーネント
-	this->circle_collider_component_ = new CircleColliderComponent(this);
+	this->box_collider_component_ = new BoxColliderComponent(this);
 }
 
 //--------------------------------------------------
@@ -38,15 +37,15 @@ ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
 ColliderTestObject::~ColliderTestObject(void)
 {
 	delete sprite_component_;
-	delete circle_collider_component_;
+	delete box_collider_component_;
 }
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
 void ColliderTestObject::UpdateGameObject(void)
 {
-	if (circle_collider_component_->testFg)
+	if (box_collider_component_->testFg)
 	{
-		//transform_component_->position_.x = 100.0f;
+		transform_component_->position_.x = 100.0f;
 	}
 }

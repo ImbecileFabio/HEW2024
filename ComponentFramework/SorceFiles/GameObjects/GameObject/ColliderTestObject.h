@@ -16,7 +16,6 @@
 /*----- 前方宣言 -----*/
 class SpriteComponent;
 class BoxColliderComponent;
-class CircleColliderComponent;
 //--------------------------------------------------
 // 当たり判定テスト用オブジェクト
 //--------------------------------------------------
@@ -33,6 +32,6 @@ public:
 private:
 	// 所有するコンポーネント
 	SpriteComponent* sprite_component_{};		// スプライト
-	CircleColliderComponent* circle_collider_component_{};		// 当たり判定（四角）
+	BoxColliderComponent* box_collider_component_{};		// 当たり判定（四角）
 };
 #endif	// COLLIDERTESTOBJECT_H_
