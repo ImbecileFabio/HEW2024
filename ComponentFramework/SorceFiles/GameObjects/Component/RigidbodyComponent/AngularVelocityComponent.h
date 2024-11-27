@@ -12,7 +12,7 @@ class AngularVelocityComponent :
     public RigidbodyComponent
 {
 private:
-	float angularVelocity;
+	
 public:
 	AngularVelocityComponent(GameObject* _owner, int _updateOrder = 50);
 	~AngularVelocityComponent();

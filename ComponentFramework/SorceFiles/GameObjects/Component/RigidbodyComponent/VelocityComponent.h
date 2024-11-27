@@ -5,6 +5,21 @@
 // 説明：速度演算をおこなうクラス
 //		１．位置、速度
 //		２．重力
+// 
+//	・加速度
+//		SetAcceleration(VECTOR3型);			加速度のセット
+//		GetAcceleration() const;				加速度の取得
+//		SetUseAcceleration(true　or false);	加速度の使用フラグ
+//		GetUseAcceleration() const;			加速度の使用フラグの取得
+//	・速度
+//		SetVelocity(VECTOR3型);				速度のセット
+//		UpdateVelocity();	
+//		GetVelocity() const;					速度の取得
+//		SetUseVelocity(true　or false);		速度の使用フラグ
+//		GetUseVelocity() const;				速度の使用フラグの取得
+//	・重力
+//		SetUseGravity(true　or false);			重力の使用フラグ
+//		GetUseGravity() const;				重力の使用フラグの取得
 //==================================================
 
 #pragma once
