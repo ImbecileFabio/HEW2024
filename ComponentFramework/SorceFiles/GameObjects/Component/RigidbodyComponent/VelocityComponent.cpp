@@ -50,7 +50,7 @@ void VelocityComponent::Uninit() {
 // 更新処理
 //--------------------------------------------------
 void VelocityComponent::Updata() {
-	position_ = owner_->GetTransformComponent()->GetPosition();	// -現在座標の取得
+	position_ = owner_->GetComponent<TransformComponent>()->GetPosition();	// -現在座標の取得
 
 	// 加速度を適用
 	if (use_acceleration_) {
@@ -69,7 +69,7 @@ void VelocityComponent::Updata() {
 	position_.y += velocity_.y;
 	position_.z += velocity_.z;
 
-	owner_->GetTransformComponent()->SetPosition(velocity_);
+	owner_->GetComponent<TransformComponent>()->SetPosition(velocity_);
 }
 
 
