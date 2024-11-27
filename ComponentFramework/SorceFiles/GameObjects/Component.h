@@ -36,7 +36,10 @@ public:
 		, TransformComponent
 		// リジッドボディ
 		, RigidBodyComponent
-
+		// 当たり判定
+		, ColliderBaseComponent
+		, BoxColliderComponent
+		, CircleColliderComponent
 		// カメラ
 		, CameraComponent
 		// 振り子

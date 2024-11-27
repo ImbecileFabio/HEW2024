@@ -23,6 +23,7 @@
 
 // デバッグようおぶじぇえくと
 #include "GameObjects/GameObject/TestObject.h"
+#include "GameObjects/GameObject/ColliderTestObject.h"
 
 
 //-----------------------------------------------------------------
@@ -62,9 +63,10 @@ void GameManager::InitAll(void)
 
     // ゲームオブジェクト初期化
 	camera_ = new Camera(this);
-    player_ = new Player(this);
+    //player_ = new Player(this);
 	test_object_ = new TestObject(this);
-	
+
+	collider_test_object_ = new ColliderTestObject(this);
 	//pendulum_ = new Pendulum(this);
 
 
@@ -83,6 +85,7 @@ void GameManager::UninitAll(void)
 	delete player_;
 
 	delete test_object_;
+	delete collider_test_object_;
 	//delete pendulum_;
 	
 
@@ -97,6 +100,7 @@ void GameManager::UpdateAll()
 {
 	// ゲームオブジェクトの更新
 	this->UpdateGameObjects();
+	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
 
 //-----------------------------------------------------------------

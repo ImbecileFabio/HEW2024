@@ -88,6 +88,7 @@ void GameProcess::Run(void)
 	Renderer* renderer = new Renderer;
 	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGuiのWin32APIを初期化
 	imGuiManager.ImGuiD3D11Init(renderer->GetDevice(), renderer->GetDeviceContext());	// ImGuiのDirectX11を初期化
+	imGuiManager.ImGuiInit();
 #endif
 	//--------------------------------------------------
 	// ゲームループ
@@ -112,7 +113,7 @@ void GameProcess::Run(void)
 			if (currCount.QuadPart >= prevCount.QuadPart + frequency.QuadPart / 60)
 			{
 #ifdef IMGUI_DEBUG
-				imGuiManager.ImGuiUpdate();		// ImGuiの更新処理
+				imGuiManager.ImGuiUpdate();
 #endif
 
 				InputManager::GetInstance().Update();	// InputManagerの更新

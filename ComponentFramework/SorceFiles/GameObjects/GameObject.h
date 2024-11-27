@@ -44,6 +44,7 @@ public:
 		, Camera
 		, Pendulum
 
+		, ColliderTestObject	// テスト
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};

@@ -20,7 +20,7 @@ class Player;
 class Camera;
 class Pendulum;
 class TestObject;
-
+class ColliderTestObject;
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
 //-----------------------------------------------------------------
@@ -63,6 +63,7 @@ private:
 	Camera* camera_{};		// カメラ
 	Pendulum* pendulum_{};	// 振り子
 	TestObject* test_object_{};
+	ColliderTestObject* collider_test_object_{};
 };
 
 
