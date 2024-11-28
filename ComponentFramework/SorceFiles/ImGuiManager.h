@@ -50,6 +50,7 @@ public:
 	virtual void LoadFile() {};	// ファイルを読みこむ
 	virtual void ShowWindow(std::vector<GameObject*>& _r) = 0;	// ウィンドウを表示
 protected:
+	ImVector<GameObject*> stock_ = {};
 	ImVec2 position_ = { 0.0f, 0.0f };	// ウィンドウの座標
 	bool showFg = true;		// ウィンドウを表示するかどうか
 };

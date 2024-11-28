@@ -168,23 +168,21 @@ void TreeGUI::ShowWindow(std::vector<GameObject*>& _r)
     {
         // 稼働中のオブジェクトリスト
         if (ImGui::TreeNode("active_objects"))
-        {   // オブジェクト
-            if (ImGui::TreeNode("object_hoge"))
-            {   // コンポーネント
-                ImGui::Text("component_hoge");
-                ImGui::TreePop();
+        {
+            for (int i = 0; i < _r.size(); i++)
+            {   // 現在のコンテナのサイズで作成
+                                // リスト表示
+                if (ImGui::Selectable(_r[i]->GetComponent<SpriteComponent>().GetName().c_str())) {
+                    // オブジェクトが選択された場合の処理（例: 詳細表示など）
+                    // ImGui::Text("Selected: %s", obj->GetName().c_str());
+                }
             }
             ImGui::TreePop();
         }
         ImGui::Separator();
         // ここから待機中のオブジェクトリスト
         if (ImGui::TreeNode("stand_by_objects"))
-        {   // オブジェクト
-            if (ImGui::TreeNode("object_hoge"))
-            {   // コンポーネント
-                ImGui::Text("component_hoge");
-                ImGui::TreePop();
-            }
+        {
             ImGui::TreePop();
         }
         ImGui::End();

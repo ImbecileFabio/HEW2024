@@ -32,9 +32,8 @@ public:
 	virtual bool CheckCollisionCollider(BoxColliderComponent* _other) = 0;
 
 	TypeID GetComponentType(void) const override { return TypeID::ColliderBaseComponent; }
-
-	bool testFg;
-private:
+protected:
+	bool hitFg = false;
 };
 
 #endif // COLLIDER_BASE_COMPONENT_H_

@@ -2,15 +2,15 @@
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 
-ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
-	:GameObject(_gameManager)
+ColliderTestObject::ColliderTestObject(GameManager* _colliderManager)
+	:GameObject(_colliderManager)
 {
-	spriteComponent = new SpriteComponent(this, TEXTURE_PATH_"Ball.png");
+	spriteComponent = new SpriteComponent(this, TEXTURE_PATH_"zako.png");
 	spriteComponent->SetObjectName("Test");
 
 	circleColliderComponent = new CircleColliderComponent(this, 100);
 
-	transform_component_->SetScale(1.0f, 1.0f);
+	transform_component_->SetScale(100.0f, 100.0f);
 }
 
 ColliderTestObject::~ColliderTestObject()

@@ -39,6 +39,11 @@ GameObject::GameObject(GameManager* _gameManager)
 	this->Init();
 }
 
+GameObject::GameObject(ColliderManager* _colliderManager)
+{
+
+}
+
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------

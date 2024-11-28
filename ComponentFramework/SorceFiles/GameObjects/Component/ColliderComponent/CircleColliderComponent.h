@@ -30,57 +30,14 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 
-	bool CheckCollisionCollider(ColliderBaseComponent* _other)
-	{
-		return  _other->CheckCollisionCollider(this);
-	}
-	bool CheckCollisionCollider(CircleColliderComponent* _other)
-	{
-		float a = this->circle_.position.x - _other->GetCircleSize().position.x;
-		float b = this->circle_.position.y - _other->GetCircleSize().position.y;
-		float c = (a * a) + (b * b);
-		float sumRadius = this->circle_.radius + _other->GetCircleSize().radius;
-
-		if (c <= sumRadius * sumRadius)
-		{
-			std::cout << std::format("[CircleColliderComponent] -> CheckCollision\n");
-			this->testFg = true;
-			return true;
-		}
-
-	}
-	bool CheckCollisionCollider(BoxColliderComponent* _other)
-	{
-		//// 右と左
-		//if (boxSize_.z < _other.y)
-		//{
-		//	testFg = false; return false;
-		//}
-		//// 左と右
-		//if (boxSize_.y > _other.z)
-		//{
-		//	testFg = false; return false;
-		//}
-		//// 下と上
-		//if (boxSize_.x > _other.w)
-		//{
-		//	testFg = false; return false;
-		//}
-		//// 上と下
-		//if (boxSize_.w < _other.x)
-		//{
-		//	testFg = false; return false;
-		//}
-		//return true;
-		return false;
-	}
+	bool CheckCollisionCollider(ColliderBaseComponent* _other) override;
+	bool CheckCollisionCollider(CircleColliderComponent* _other) override;
+	bool CheckCollisionCollider(BoxColliderComponent* _other) override;
 
 	TypeID GetComponentType(void) const override { return TypeID::CircleColliderComponent; }
 
 	void SetPosition(DirectX::SimpleMath::Vector3 _pos) { circle_.position = _pos; }
 	CIRCLE GetCircleSize(void) const { return circle_; }
-
-	bool testFg;
 private:
 	CIRCLE circle_;	// 原点・半径
 };

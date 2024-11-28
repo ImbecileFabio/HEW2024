@@ -63,8 +63,6 @@ private:
 	Camera* camera_{};		// ƒJƒƒ‰
 	Pendulum* pendulum_{};	// U‚èq
 	TestObject* test_object_{};
-	ColliderTestObject* collider_test_object_01{};
-	ColliderTestObject* collider_test_object_02{};
 };
 
 

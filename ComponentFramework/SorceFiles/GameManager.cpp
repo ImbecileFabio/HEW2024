@@ -65,9 +65,6 @@ void GameManager::InitAll(void)
 	camera_ = new Camera(this);
     //player_ = new Player(this);
 	test_object_ = new TestObject(this);
-
-	collider_test_object_01 = new ColliderTestObject(this);
-	collider_test_object_02 = new ColliderTestObject(this);
 	//pendulum_ = new Pendulum(this);
 }
 
@@ -84,8 +81,6 @@ void GameManager::UninitAll(void)
 	delete player_;
 
 	delete test_object_;
-	delete collider_test_object_01;
-	delete collider_test_object_02;
 	//delete pendulum_;
 	
 
@@ -115,7 +110,6 @@ void GameManager::GenerateOutputAll(void)
 		renderer_->Draw();
 
 		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
-
 
 		renderer_->End();
 
@@ -171,19 +165,23 @@ void GameManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
+	collider_game_objects_.clear();	// Clearしないと処理が落ちる
+
 	for (auto& gameObject : game_objects_)
 	{
 		gameObject->Update();		// 更新処理
+		if (gameObject->GetComponent<CircleColliderComponent>())
+		{
+			collider_game_objects_.emplace_back(gameObject);
+		}
 	}
+	// 当たり判定コンテナで処理
 	for (int i = 0; i < collider_game_objects_.size(); i++)
 	{
 		for (int j = i + 1; j < collider_game_objects_.size(); j++)
 		{
-			collider_game_objects_[i]->GetComponent<CircleColliderComponent>().
-			//collider_game_objects_[i].GetComponent<CircleColliderComponent>().
-			//	CheckCollision(collider_game_objects_[j]->GetComponent<CircleColliderComponent>());
-			//collider_game_objects_[i].GetComponent<CircleColliderComponent>().
-			//	CheckCollision(collider_game_objects_[j]->GetComponent<CircleColliderComponent>());
+			collider_game_objects_[i]->GetComponent<CircleColliderComponent>()->
+				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<CircleColliderComponent>());
 		}
 	}
 	updating_game_objects_ = false;
