@@ -10,11 +10,8 @@ ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
 
 	circleColliderComponent = new CircleColliderComponent(this, 100);
 
-	transform_component_->SetScale( 1, 1);
+	transform_component_->SetScale(1.0f, 1.0f);
 }
-
-//Perspective=“§‹“Š‰e
-//Ortho~=•½s“Š‰e
 
 ColliderTestObject::~ColliderTestObject()
 {

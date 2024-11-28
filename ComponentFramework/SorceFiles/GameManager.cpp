@@ -24,7 +24,7 @@
 // デバッグようおぶじぇえくと
 #include "GameObjects/GameObject/TestObject.h"
 #include "GameObjects/GameObject/ColliderTestObject.h"
-
+#include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 
 //-----------------------------------------------------------------
 // コンストラクタ
@@ -66,10 +66,9 @@ void GameManager::InitAll(void)
     //player_ = new Player(this);
 	test_object_ = new TestObject(this);
 
-	collider_test_object_ = new ColliderTestObject(this);
+	collider_test_object_01 = new ColliderTestObject(this);
+	collider_test_object_02 = new ColliderTestObject(this);
 	//pendulum_ = new Pendulum(this);
-
-
 }
 
 //-----------------------------------------------------------------
@@ -85,7 +84,8 @@ void GameManager::UninitAll(void)
 	delete player_;
 
 	delete test_object_;
-	delete collider_test_object_;
+	delete collider_test_object_01;
+	delete collider_test_object_02;
 	//delete pendulum_;
 	
 
@@ -174,6 +174,17 @@ void GameManager::UpdateGameObjects(void)
 	for (auto& gameObject : game_objects_)
 	{
 		gameObject->Update();		// 更新処理
+	}
+	for (int i = 0; i < collider_game_objects_.size(); i++)
+	{
+		for (int j = i + 1; j < collider_game_objects_.size(); j++)
+		{
+			collider_game_objects_[i]->GetComponent<CircleColliderComponent>().
+			//collider_game_objects_[i].GetComponent<CircleColliderComponent>().
+			//	CheckCollision(collider_game_objects_[j]->GetComponent<CircleColliderComponent>());
+			//collider_game_objects_[i].GetComponent<CircleColliderComponent>().
+			//	CheckCollision(collider_game_objects_[j]->GetComponent<CircleColliderComponent>());
+		}
 	}
 	updating_game_objects_ = false;
 
