@@ -81,14 +81,12 @@ void CameraComponent::Update()
 	Renderer::SetViewMatrix(&view_matrix_);
 
 	// プロジェクション行列の生成
-	constexpr float fieldOfView = DirectX::XMConvertToRadians(45.f);
-
-	float aspectRatio = static_cast<float>(GameProcess::GetWidth()) / static_cast<float>(GameProcess::GetHeight());	// アス比
-	float nearPlane = 1.f;		// ニアクリップ
-	float farPlane = 1000.f;	// ファークリップ
+	float nearPlane = 0.0f;		// ニアクリップ
+	float farPlane = 3.0f;	// ファークリップ
 
 	Matrix projectionMatrix;
-	projectionMatrix = DirectX::XMMatrixOrthographicLH(fieldOfView, aspectRatio, nearPlane, farPlane);
+	projectionMatrix = DirectX::XMMatrixOrthographicLH(GameProcess::GetWidth(), GameProcess::GetHeight(), nearPlane, farPlane);
+
 
 
 	Renderer::SetProjectionMatrix(&projectionMatrix);

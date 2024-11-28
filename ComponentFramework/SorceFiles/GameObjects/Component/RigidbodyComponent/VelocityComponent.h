@@ -5,6 +5,7 @@
 // 説明：速度演算をおこなうクラス
 //		１．位置、速度
 //		２．重力
+//		５．制約
 // 
 //	・加速度
 //		SetAcceleration(VECTOR3型);			加速度のセット
@@ -28,6 +29,7 @@ class VelocityComponent :
     public RigidbodyComponent
 {
 private:
+	DirectX::SimpleMath::Vector3 position_;
 	DirectX::SimpleMath::Vector3 acceleration_;
 	bool	use_acceleration_;
 	DirectX::SimpleMath::Vector3 velocity_;
@@ -60,6 +62,5 @@ public:
 	void	SetUseGravity(const bool _use_gravity);
 	bool	GetUseGravity() const;
 
-	TypeID GetComponentType() const override { return TypeID::VelocityComponent; }
-
+	virtual TypeID GetComponentType() const override { return TypeID::VelocityComponent; }
 };

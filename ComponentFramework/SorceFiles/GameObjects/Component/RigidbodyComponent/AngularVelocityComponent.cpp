@@ -31,7 +31,10 @@ AngularVelocityComponent::~AngularVelocityComponent() {
 // 初期化処理
 //--------------------------------------------------
 void AngularVelocityComponent::Init() {
-
+	use_angularAcceleration_	= true;
+	use_angularVelocity_		= true;
+	angularAcceleration_	= 0.f;
+	angularVelocity_		= 0.f;
 }
 
 //--------------------------------------------------
@@ -45,5 +48,50 @@ void AngularVelocityComponent::Uninit() {
 // 更新処理
 //--------------------------------------------------
 void AngularVelocityComponent::Update() {
-	//UpdateVelocity();
+	rotation_ = this->owner_->GetComponent<TransformComponent>()->GetRotation().z;	// -現在座標の取得
+
+	// 角加速度を適用
+	if (use_angularVelocity_) {
+		// 角速度を適用
+		if (use_angularAcceleration_) {
+			angularVelocity_ += angularAcceleration_;
+		}
+
+		rotation_ += angularVelocity_;
+	}
+
+	this->owner_->GetComponent<TransformComponent>()->SetRotation(rotation_);
+}
+
+
+//--------------------------------------------------
+//角加速度
+//--------------------------------------------------
+void	AngularVelocityComponent::SetAngularAcceleration(const float _angularAcceleration) {
+	angularAcceleration_ = _angularAcceleration;
+}
+float AngularVelocityComponent::GetAngularAcceleration() const {
+	return angularAcceleration_;
+}
+void	AngularVelocityComponent::SetUseAngularAcceleration(const bool _use_angularAcceleration) {
+	use_angularAcceleration_ = _use_angularAcceleration;
+}
+bool	AngularVelocityComponent::GetUseAngularAcceleration() const {
+	return use_angularAcceleration_;
+}
+
+//--------------------------------------------------
+//角速度
+//--------------------------------------------------
+void	AngularVelocityComponent::SetAngularVelocity(const float _angularVelocity) {
+	angularVelocity_ = _angularVelocity;
+}
+float AngularVelocityComponent::GetAngularVelocity() const {
+	return angularVelocity_;
+}
+void	AngularVelocityComponent::SetUseAngularVelocity(const bool _use_angularVelocity) {
+	use_angularVelocity_ = _use_angularVelocity;
+}
+bool	AngularVelocityComponent::GetUseAngularVelocity() const {
+	return use_angularVelocity_;
 }
