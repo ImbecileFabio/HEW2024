@@ -42,7 +42,8 @@ private:
 	CIRCLE circle_;	// Œ´“_E”¼Œa
 };
 
-#endif // _CIRCLE_COLLIDER_COMPONENT_H_	
+#endif 
+// _CIRCLE_COLLIDER_COMPONENT_H_	
 //{
 	//	for (auto& otherCol : targetCols) {
 	//		playerCol->CheckCollisionCollider(otherCol);

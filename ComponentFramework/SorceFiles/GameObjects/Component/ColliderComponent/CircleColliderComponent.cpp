@@ -8,7 +8,6 @@
 CircleColliderComponent::CircleColliderComponent(GameObject* _owner, int _updateOrder)
 	: ColliderBaseComponent(_owner, _updateOrder)
 {
-	testFg = false;
 }
 //--------------------------------------------------
 // @brief  円の当たり判定のデストラクタ
