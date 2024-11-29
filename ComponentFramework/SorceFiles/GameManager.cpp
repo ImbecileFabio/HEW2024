@@ -170,7 +170,7 @@ void GameManager::UpdateGameObjects(void)
 	for (auto& gameObject : game_objects_)
 	{
 		gameObject->Update();		// XVˆ—
-		if (gameObject->GetComponent<CircleColliderComponent>())
+		if (gameObject->GetComponent<ColliderBaseComponent>())
 		{
 			collider_game_objects_.emplace_back(gameObject);
 		}
@@ -180,8 +180,8 @@ void GameManager::UpdateGameObjects(void)
 	{
 		for (int j = i + 1; j < collider_game_objects_.size(); j++)
 		{
-			collider_game_objects_[i]->GetComponent<CircleColliderComponent>()->
-				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<CircleColliderComponent>());
+			collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
+				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>());
 		}
 	}
 	updating_game_objects_ = false;

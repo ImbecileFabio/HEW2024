@@ -1,0 +1,36 @@
+//=================================================================
+// [ColiderManager.h] コライダーマネージャーモジュールヘッダ
+// 著者：尾上莉奈
+//-----------------------------------------------------------------
+// 説明：コライダーの管理を行うクラス
+//=================================================================
+#ifndef COLLDIER_MANAGER_H_
+#define COLLIDER_MANAGER_H_
+/*----- インクルード -----*/
+#include<memory>
+#include<vector>
+/*----- 構造体定義 -----*/
+
+/*----- 前方宣言 -----*/
+class GameObject;
+class ColliderTestObject;
+//-----------------------------------------------------------------
+// コライダーマネージャークラス
+//-----------------------------------------------------------------
+class ColliderManager
+{
+public:
+	ColliderManager(void);
+	~ColliderManager(void);
+	// インスタンス生成
+	static auto Create(void) { return new ColliderManager(); }
+	void InitAll(void);
+	void UninitAll(void);
+	void UpdateAll(void);
+	// ゲームオブジェクトの追加
+	void AddGameObject(GameObject* _gameObject);
+	// ゲームオブジェクトの削除
+	void RemoveGameObject(GameObject* _gameObject);
+private:
+};
+#endif // _COLLDIER_MANAGER_H_

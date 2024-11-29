@@ -13,7 +13,7 @@
 
 /*----- 前方宣言 -----*/
 class GameObject;
-class CircleColliderComponent;
+class ColliderBaseComponent;
 class SpriteComponent;
 //--------------------------------------------------
 // 当たり判定テストするオブジェクト
@@ -28,6 +28,6 @@ public:
 	TypeID GetType(void) override { return TypeID::ColliderTestObject; }
 private:
 	SpriteComponent* spriteComponent = {};
-	CircleColliderComponent* circleColliderComponent = {};
+	ColliderBaseComponent* colliderComponent = {};
 };
 #endif // _TEST_COLLIDER_OBJECT_H_
