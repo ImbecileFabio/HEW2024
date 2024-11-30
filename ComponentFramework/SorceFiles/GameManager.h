@@ -58,7 +58,6 @@ private:
 	// ゲームオブジェクト
 	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ
 	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
-	std::vector<GameObject*> collider_game_objects_{};	// 当たり判定用コンテナ
 private:
 	// 作ったオブジェクトをここに記述
 	Renderer* renderer_{};	// レンダラー
