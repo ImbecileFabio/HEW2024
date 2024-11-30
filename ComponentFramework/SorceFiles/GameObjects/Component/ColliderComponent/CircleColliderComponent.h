@@ -43,6 +43,8 @@ private:
 
 #endif 
 // _CIRCLE_COLLIDER_COMPONENT_H_	
+
+
 //{
 	//	for (auto& otherCol : targetCols) {
 	//		playerCol->CheckCollisionCollider(otherCol);
