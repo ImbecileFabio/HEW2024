@@ -66,6 +66,7 @@ private:
 	Pendulum* pendulum_{};	// U‚èq
 	TestObject* test_object_{};
 	ColliderTestObject* collider_test_object_{};
+	ColliderTestObject* collider_test_object_MK2_{};
 };
 
 

@@ -29,5 +29,7 @@ public:
 private:
 	SpriteComponent* spriteComponent = {};
 	ColliderBaseComponent* colliderComponent = {};
+private:
+	// ”h¶ƒNƒ‰ƒX‚ğ
 };
 #endif // _TEST_COLLIDER_OBJECT_H_
