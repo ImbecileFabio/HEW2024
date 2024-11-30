@@ -75,7 +75,6 @@ void GameManager::InitAll(void)
 		if (colliderObjects->GetComponent<ColliderBaseComponent>())
 		{
 			this->collider_manager_->AddGameObject(colliderObjects);
-			this->RemoveGameObject(colliderObjects);
 		}
 	}
 }
@@ -93,6 +92,7 @@ void GameManager::UninitAll(void)
 	delete player_;
 
 	delete test_object_;
+	delete collider_test_object_;
 	//delete pendulum_;
 	
 
