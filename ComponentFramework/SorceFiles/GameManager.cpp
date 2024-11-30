@@ -14,6 +14,7 @@
 #include <memory>
 
 #include "GameManager.h"
+#include "ColliderManager.h"
 #include "Renderer.h"
 #include "ImGuiManager.h"
 #include "GameObjects/GameObject.h"
@@ -60,12 +61,23 @@ void GameManager::InitAll(void)
 	game_objects_.clear();
 	pending_game_objects_.clear();
 
+	collider_manager_ = ColliderManager::Create();
 
     // ゲームオブジェクト初期化
 	camera_ = new Camera(this);
     //player_ = new Player(this);
 	test_object_ = new TestObject(this);
 	//pendulum_ = new Pendulum(this);
+	collider_test_object_ = new ColliderTestObject(this);
+	// GameManegerで生成して、ColliderManagerに登録する
+	for (auto& colliderObjects : game_objects_)
+	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
+		if (colliderObjects->GetComponent<ColliderBaseComponent>())
+		{
+			this->collider_manager_->AddGameObject(colliderObjects);
+			this->RemoveGameObject(colliderObjects);
+		}
+	}
 }
 
 //-----------------------------------------------------------------
@@ -95,9 +107,9 @@ void GameManager::UpdateAll()
 {
 	// ゲームオブジェクトの更新
 	this->UpdateGameObjects();
+	this->collider_manager_->UpdateAll();
 	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
-
 //-----------------------------------------------------------------
 // 出力生成処理
 //-----------------------------------------------------------------
@@ -165,24 +177,10 @@ void GameManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	collider_game_objects_.clear();	// Clearしないと処理が落ちる
 
 	for (auto& gameObject : game_objects_)
 	{
 		gameObject->Update();		// 更新処理
-		if (gameObject->GetComponent<ColliderBaseComponent>())
-		{
-			collider_game_objects_.emplace_back(gameObject);
-		}
-	}
-	// 当たり判定コンテナで処理
-	for (int i = 0; i < collider_game_objects_.size(); i++)
-	{
-		for (int j = i + 1; j < collider_game_objects_.size(); j++)
-		{
-			collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
-				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>());
-		}
 	}
 	updating_game_objects_ = false;
 
