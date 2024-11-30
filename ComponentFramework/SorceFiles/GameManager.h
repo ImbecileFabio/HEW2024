@@ -11,7 +11,6 @@
 /*----- インクルード -----*/
 #include<memory>
 #include<vector>
-
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
@@ -21,7 +20,8 @@ class Player;
 class Camera;
 class Pendulum;
 class TestObject;
-
+class ColliderTestObject;
+class ColliderManager;
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
 //-----------------------------------------------------------------
@@ -53,10 +53,11 @@ private:
 	// オブジェクトが更新中か確認
 	bool updating_game_objects_;
 
+	ColliderManager* collider_manager_{};				// コライダーマネージャー
+
 	// ゲームオブジェクト
 	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ
 	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
-
 private:
 	// 作ったオブジェクトをここに記述
 	Renderer* renderer_{};	// レンダラー
@@ -64,6 +65,7 @@ private:
 	Camera* camera_{};		// カメラ
 	Pendulum* pendulum_{};	// 振り子
 	TestObject* test_object_{};
+	ColliderTestObject* collider_test_object_{};
 };
 
 

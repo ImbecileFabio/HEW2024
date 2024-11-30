@@ -25,7 +25,7 @@
 
 /*----- 前方宣言 -----*/
 class GameManager;
-
+class ColliderManager;
 //--------------------------------------------------
 // ゲームオブジェクトクラス
 //--------------------------------------------------
@@ -44,6 +44,7 @@ public:
 		, Camera
 		, Pendulum
 
+		, ColliderTestObject	// テスト
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};
@@ -63,6 +64,7 @@ public:
 
 public:
 	GameObject(GameManager* _gameManager);
+	GameObject(ColliderManager* _colliderManager);
 	virtual ~GameObject(void);
 
 	void Init(void);

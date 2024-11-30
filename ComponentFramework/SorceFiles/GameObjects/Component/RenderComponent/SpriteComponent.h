@@ -40,7 +40,7 @@ public:
 	void Draw() ;
 
 	void SetObjectName(std::string _objectName);
-
+	std::string GetObjectName() { return object_name_; }
 	// 更新順位を返す
 	int& GetDrawOrder(void) { return draw_order_; }
 	// コンポーネントのIDを返す

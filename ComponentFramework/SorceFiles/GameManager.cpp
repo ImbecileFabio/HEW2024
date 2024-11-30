@@ -14,6 +14,7 @@
 #include <memory>
 
 #include "GameManager.h"
+#include "ColliderManager.h"
 #include "Renderer.h"
 #include "ImGuiManager.h"
 #include "GameObjects/GameObject.h"
@@ -23,7 +24,8 @@
 
 // デバッグようおぶじぇえくと
 #include "GameObjects/GameObject/TestObject.h"
-
+#include "GameObjects/GameObject/ColliderTestObject.h"
+#include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 
 //-----------------------------------------------------------------
 // コンストラクタ
@@ -59,15 +61,22 @@ void GameManager::InitAll(void)
 	game_objects_.clear();
 	pending_game_objects_.clear();
 
+	collider_manager_ = ColliderManager::Create();
 
     // ゲームオブジェクト初期化
 	camera_ = new Camera(this);
-    player_ = new Player(this);
+    //player_ = new Player(this);
 	test_object_ = new TestObject(this);
-	
 	//pendulum_ = new Pendulum(this);
-
-
+	collider_test_object_ = new ColliderTestObject(this);
+	// GameManegerで生成して、ColliderManagerに登録する
+	for (auto& colliderObjects : game_objects_)
+	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
+		if (colliderObjects->GetComponent<ColliderBaseComponent>())
+		{
+			this->collider_manager_->AddGameObject(colliderObjects);
+		}
+	}
 }
 
 //-----------------------------------------------------------------
@@ -83,6 +92,7 @@ void GameManager::UninitAll(void)
 	delete player_;
 
 	delete test_object_;
+	delete collider_test_object_;
 	//delete pendulum_;
 	
 
@@ -97,8 +107,9 @@ void GameManager::UpdateAll()
 {
 	// ゲームオブジェクトの更新
 	this->UpdateGameObjects();
+	this->collider_manager_->UpdateAll();
+	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
-
 //-----------------------------------------------------------------
 // 出力生成処理
 //-----------------------------------------------------------------
@@ -111,7 +122,6 @@ void GameManager::GenerateOutputAll(void)
 		renderer_->Draw();
 
 		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
-
 
 		renderer_->End();
 
@@ -167,6 +177,7 @@ void GameManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
+
 	for (auto& gameObject : game_objects_)
 	{
 		gameObject->Update();		// 更新処理
