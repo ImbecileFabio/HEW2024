@@ -32,8 +32,8 @@ Player::Player(GameManager* _gameManager)
 	transform_component_->SetScale(50, 50);
 
 
-	//velocity_component_ = new VelocityComponent(this);
-	//velocity_component_->SetVelocity(Vector3(0, 0, 0));
+	velocity_component_ = new VelocityComponent(this);
+	velocity_component_->SetVelocity(Vector3(0, 10, 0));
 }
 
 //--------------------------------------------------
@@ -44,7 +44,8 @@ Player::~Player(void)
 	std::cout << std::format("＜Player＞ -> Destructor\n");
 	// ここでコンポーネントを削除
 	delete sprite_component_;
-	//delete velocity_component_;
+	delete collider_component_;
+	delete velocity_component_;
 }
 
 //--------------------------------------------------

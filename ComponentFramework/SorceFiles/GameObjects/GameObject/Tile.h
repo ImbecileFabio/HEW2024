@@ -15,7 +15,7 @@
 
 /*----- 前方宣言 -----*/
 class SpriteComponent;
-class ColliderComponent;
+class BoxColliderComponent;
 //--------------------------------------------------
 // タイルオブジェクト
 //--------------------------------------------------
@@ -32,6 +32,6 @@ public:
 private:
 	// 所有するコンポーネント
 	SpriteComponent* sprite_component_{};
-	ColliderComponent* collider_component_{};
+	BoxColliderComponent* collider_component_{};
 };
 #endif	// TILE_H_

@@ -15,6 +15,7 @@
 
 /*----- 前方宣言 -----*/
 class SpriteComponent;
+class BoxColliderComponent;
 class VelocityComponent;
 
 //--------------------------------------------------
@@ -33,7 +34,8 @@ public:
 private:
 	// 所有するコンポーネント
 	SpriteComponent* sprite_component_{};
-	//VelocityComponent* velocity_component_{};
+	BoxColliderComponent* collider_component_{};
+	VelocityComponent* velocity_component_{};
 	
 };
 #endif	// PLAYER_H_
