@@ -19,21 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SorceFiles\AudioManager.cpp" />
+    <ClCompile Include="SorceFiles\CallBackManager.cpp" />
+    <ClCompile Include="SorceFiles\ColliderManager.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\CallBackTestComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Robot.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp" />
+    <ClCompile Include="SorceFiles\AudioManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
@@ -61,24 +67,29 @@
     <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\TestObject.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SorceFiles\AudioManager.h" />
+    <ClInclude Include="SorceFiles\CallBackManager.h" />
+    <ClInclude Include="SorceFiles\ColliderManager.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\CallBackTestComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Robot.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h" />
+    <ClInclude Include="SorceFiles\AudioManager.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
@@ -111,7 +122,6 @@
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\TestObject.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Tile.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\unlitTexturePS.hlsl">
@@ -185,6 +195,10 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\directxtk\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\directxtk\lib\x64\Debug;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\directxtk\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\directxtk\lib\x64\Debug;$(LibraryPath)</LibraryPath>
   </PropertyGroup>

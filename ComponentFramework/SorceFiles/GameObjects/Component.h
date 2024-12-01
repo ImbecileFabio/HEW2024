@@ -39,7 +39,7 @@ public:
 		, VelocityComponent
 		, AngularVelocityComponent
 		// コライダー
-		, ColliderComponent
+		, ColliderBaseComponent
 		, BoxColliderComponent
 		, CircleColliderComponent
 

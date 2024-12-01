@@ -12,8 +12,7 @@
 #include <string>
 
 #include "SpriteComponent.h"
-#include "../../../GameManager.h"
-#include "../../../Renderer.h"
+#include "../../../GameManager.h";
 #include "../../../SubSystem/dx11helper.h"
 #include "../../GameObject.h"
 #include "../TransformComponent.h"
