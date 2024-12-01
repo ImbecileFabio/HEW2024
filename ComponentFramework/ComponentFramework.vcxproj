@@ -22,6 +22,7 @@
     <ClCompile Include="SorceFiles\CallBackManager.cpp" />
     <ClCompile Include="SorceFiles\ColliderManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\CallBackTestComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
@@ -71,6 +72,7 @@
     <ClInclude Include="SorceFiles\CallBackManager.h" />
     <ClInclude Include="SorceFiles\ColliderManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\CallBackTestComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
