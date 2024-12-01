@@ -15,7 +15,7 @@
 class GameObject;
 class ColliderBaseComponent;
 class SpriteComponent;
-class ColliderManager;
+class CallBackManager;
 //--------------------------------------------------
 // 当たり判定テストするオブジェクト
 //--------------------------------------------------
@@ -34,5 +34,6 @@ private:
 	// あたり判定を持たせたいオブジェクトはColliderManagerに登録する
 	// GameManagerがないとGetRenderer()が使えないぜ　RIP
 	//ColliderManager* p_colliderManager_ = {};
+	//CallBackManager* p_callBackManager_ = {};	// コールバックを使用したいオブジェクトに配置
 };
 #endif // _TEST_COLLIDER_OBJECT_H_
