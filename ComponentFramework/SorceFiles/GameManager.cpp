@@ -69,6 +69,7 @@ void GameManager::InitAll(void)
 	test_object_ = new TestObject(this);
 	//pendulum_ = new Pendulum(this);
 	collider_test_object_ = new ColliderTestObject(this);
+	collider_test_object_MK2_ = new ColliderTestObject(this);
 	// GameManegerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_objects_)
 	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
@@ -93,6 +94,8 @@ void GameManager::UninitAll(void)
 
 	delete test_object_;
 	delete collider_test_object_;
+	delete collider_test_object_MK2_;
+	delete collider_manager_;
 	//delete pendulum_;
 	
 

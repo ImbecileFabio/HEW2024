@@ -23,9 +23,7 @@ public:
 	~CallBackManager(void);
 	// インスタンス生成
 	static auto Create(void) { return new CallBackManager(); }
-	void InitAll(void);
-	void UninitAll(void);
-	void UpdateAll(void);
+
 private:
 };
 #endif // CALLBACK_MANAGER_H_

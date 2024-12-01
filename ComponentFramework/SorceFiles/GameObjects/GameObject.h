@@ -64,7 +64,6 @@ public:
 
 public:
 	GameObject(GameManager* _gameManager);
-	GameObject(ColliderManager* _colliderManager);
 	virtual ~GameObject(void);
 
 	void Init(void);

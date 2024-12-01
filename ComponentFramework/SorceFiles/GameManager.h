@@ -53,7 +53,7 @@ private:
 	// オブジェクトが更新中か確認
 	bool updating_game_objects_;
 
-	ColliderManager* collider_manager_{};				// コライダーマネージャー
+	ColliderManager* collider_manager_{};				// 実体をここに置く
 
 	// ゲームオブジェクト
 	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ
@@ -66,6 +66,7 @@ private:
 	Pendulum* pendulum_{};	// 振り子
 	TestObject* test_object_{};
 	ColliderTestObject* collider_test_object_{};
+	ColliderTestObject* collider_test_object_MK2_{};
 };
 
 
