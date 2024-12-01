@@ -3,6 +3,8 @@
 // 著者：尾上莉奈
 //--------------------------------------------------
 // 説明：当たり判定のベースコンポーネント
+// オブジェクトにColliderBaseComponentを追加して、
+// インスタンス生成するときはBox||CircleComponentを使ってください
 //==================================================
 #ifndef COLLIDER_BASE_COMPONENT_H_
 #define COLLIDER_BASE_COMPONENT_H_
@@ -15,7 +17,7 @@
 class CircleColliderComponent;
 class BoxColliderComponent;
 //--------------------------------------------------
-// 円の当たり判定
+// 当たり判定ベースクラス
 //--------------------------------------------------
 class ColliderBaseComponent :public Component
 {

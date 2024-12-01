@@ -38,12 +38,6 @@ GameObject::GameObject(GameManager* _gameManager)
 	// ゲームオブジェクトの初期化
 	this->Init();
 }
-
-GameObject::GameObject(ColliderManager* _colliderManager)
-{
-
-}
-
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------

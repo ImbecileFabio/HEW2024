@@ -15,6 +15,7 @@
 class GameObject;
 class ColliderBaseComponent;
 class SpriteComponent;
+class ColliderManager;
 //--------------------------------------------------
 // 当たり判定テストするオブジェクト
 //--------------------------------------------------
@@ -27,9 +28,11 @@ public:
 
 	TypeID GetType(void) override { return TypeID::ColliderTestObject; }
 private:
-	SpriteComponent* spriteComponent = {};
-	ColliderBaseComponent* colliderComponent = {};
+	SpriteComponent* spriteComponent_ = {};
+	ColliderBaseComponent* colliderComponent_ = {};
 private:
-	// 派生クラスを
+	// あたり判定を持たせたいオブジェクトはColliderManagerに登録する
+	// GameManagerがないとGetRenderer()が使えないぜ　RIP
+	//ColliderManager* p_colliderManager_ = {};
 };
 #endif // _TEST_COLLIDER_OBJECT_H_
