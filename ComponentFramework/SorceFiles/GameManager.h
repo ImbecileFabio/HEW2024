@@ -16,11 +16,6 @@
 
 /*----- 前方宣言 -----*/
 class GameObject;
-class Renderer;
-class Player;
-class Camera;
-class Pendulum;
-class TestObject;
 
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
@@ -55,15 +50,17 @@ private:
 
 	// ゲームオブジェクト
 	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ
-	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
+	std::vector<GameObject*>  pending_game_objects_{};	// 待機コンテナ
 
 private:
 	// 作ったオブジェクトをここに記述
-	Renderer* renderer_{};	// レンダラー
-	Player* player_{};		// プレイヤー
-	Camera* camera_{};		// カメラ
-	Pendulum* pendulum_{};	// 振り子
-	TestObject* test_object_{};
+	class Renderer* renderer_{};	// レンダラー
+	class Player* player_{};		// プレイヤー
+	class Camera* camera_{};		// カメラ
+	class Pendulum* pendulum_{};	// 振り子
+	class Tile* tile_{};			// タイル
+
+	class TestObject* test_object_{};
 };
 
 

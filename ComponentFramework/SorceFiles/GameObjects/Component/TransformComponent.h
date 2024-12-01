@@ -3,6 +3,7 @@
 // 著者：有馬啓太
 //--------------------------------------------------
 // 説明：姿勢制御コンポーネントのベース
+// Position, Rotation, Scaleの情報を持つ
 //==================================================
 #ifndef TRANSFORM_COMPONENT_H_
 #define TRANSFORM_COMPONENT_H_

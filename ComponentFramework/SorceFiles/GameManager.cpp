@@ -20,6 +20,7 @@
 #include "GameObjects/GameObject/Player.h"
 #include "GameObjects/GameObject/Camera.h"
 #include "GameObjects/GameObject/Pendulum.h"
+#include "GameObjects/GameObject/Tile.h"
 
 // デバッグようおぶじぇえくと
 #include "GameObjects/GameObject/TestObject.h"
@@ -64,6 +65,7 @@ void GameManager::InitAll(void)
 	camera_ = new Camera(this);
     player_ = new Player(this);
 	test_object_ = new TestObject(this);
+	tile_ = new Tile(this);
 	
 	//pendulum_ = new Pendulum(this);
 
@@ -81,6 +83,7 @@ void GameManager::UninitAll(void)
 	delete renderer_;
 	delete camera_;
 	delete player_;
+	delete tile_;
 
 	delete test_object_;
 	//delete pendulum_;
@@ -121,16 +124,16 @@ void GameManager::GenerateOutputAll(void)
 //-----------------------------------------------------------------
 // ゲームオブジェクトの追加処理
 //-----------------------------------------------------------------
-void GameManager::AddGameObject (GameObject* gameObject)
+void GameManager::AddGameObject (GameObject* _gameObject)
 {
 	// ゲームオブジェクトの更新中かで登録先を変更
 	if (updating_game_objects_)
 	{
-		pending_game_objects_.emplace_back(gameObject);	// 待機コンテナ
+		pending_game_objects_.emplace_back(_gameObject);	// 待機コンテナ
 	}
 	else
 	{
-		game_objects_.emplace_back(gameObject);			// 稼働コンテナ
+		game_objects_.emplace_back(_gameObject);			// 稼働コンテナ
 	}
 }
 

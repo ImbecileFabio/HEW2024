@@ -1,11 +1,11 @@
 //==================================================
-// [Player.h] プレイヤーオブジェクトヘッダ
+// [Tile.h] タイルオブジェクト
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：プレイヤーの操作および制御を行うクラス
+// 説明：床や壁のタイルオブジェクト
 //==================================================
-#ifndef PLAYER_H_
-#define PLAYER_H_
+#ifndef TILE_H_
+#define TILE_H_
 
 /*----- インクルード -----*/
 #include <memory>
@@ -15,25 +15,23 @@
 
 /*----- 前方宣言 -----*/
 class SpriteComponent;
-class VelocityComponent;
-
+class ColliderComponent;
 //--------------------------------------------------
-// プレイヤーオブジェクト
+// タイルオブジェクト
 //--------------------------------------------------
-class Player 
+class Tile
 	: public GameObject
 {
 public:
-	Player(GameManager* _gameManager);
-	~Player(void);
+	Tile(GameManager* _gameManager);
+	~Tile(void);
 	void UpdateGameObject(void) override;
 
-	TypeID GetType(void) override { return TypeID::Player; }
+	TypeID GetType(void) override { return TypeID::Tile; }
 
 private:
 	// 所有するコンポーネント
 	SpriteComponent* sprite_component_{};
-	//VelocityComponent* velocity_component_{};
-	
+	ColliderComponent* collider_component_{};
 };
-#endif	// PLAYER_H_
+#endif	// TILE_H_

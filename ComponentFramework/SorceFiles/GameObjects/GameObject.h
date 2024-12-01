@@ -43,6 +43,7 @@ public:
 		, Player
 		, Camera
 		, Pendulum
+		, Tile
 
 		// ゲームオブジェクトのIDの最大値
 		, MAX
