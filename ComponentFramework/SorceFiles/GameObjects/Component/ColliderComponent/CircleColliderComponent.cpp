@@ -65,6 +65,7 @@ bool CircleColliderComponent::CheckCollisionCollider(CircleColliderComponent* _o
 		this->hitFg = true;
 		return true;
 	}
+	return false;
 }
 //--------------------------------------------------
 // @brief ‰~‚ÆlŠp‚Ì“–‚½‚è”»’è‚ğ‚Æ‚éŠÖ”
