@@ -61,7 +61,7 @@ void PendulumComponent::Update(void)
 	angle_ += 0.1f;// ‚±‚±‚Ìˆ—‚ð‚¢‚¶‚Á‚ÄU‚èŽq‚Ì“®‚«‚ðì‚é
 	transform->SetRotation(angle_);
 
-
+	// ‚Ü‚¾³‚µ‚­‚Í‚È‚¢
 	// SpriteComponent‚É“n‚·‚ÆŒvŽZ‚Ì‡”Ô‚ªˆá‚¤‚Ì‚Åæ‚É‚â‚Á‚Æ‚­
 	auto r = transform->GetRotation();
 	auto t = transform->GetPosition();

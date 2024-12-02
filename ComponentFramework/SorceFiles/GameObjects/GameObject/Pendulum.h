@@ -32,6 +32,8 @@ class Pendulum
 public:
 	Pendulum(GameManager* _gameManager);
 	~Pendulum(void);
+
+	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::Pendulum; }

@@ -24,6 +24,8 @@ class ColliderTestObject : public GameObject
 public:
 	ColliderTestObject(GameManager* _gameManager);
 	~ColliderTestObject(void);
+	
+	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::ColliderTestObject; }

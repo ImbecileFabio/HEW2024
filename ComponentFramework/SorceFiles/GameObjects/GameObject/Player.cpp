@@ -12,8 +12,10 @@
 #include "Player.h"
 #include "../../GameManager.h"
 #include "../Component.h"
-#include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/TransformComponent.h"
+#include "../Component/RenderComponent/SpriteComponent.h"
+#include "../Component/ColliderComponent/ColliderBaseComponent.h"
+#include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 
 //--------------------------------------------------
@@ -24,16 +26,7 @@ Player::Player(GameManager* _gameManager)
 {
 	std::cout << std::format("＜Player＞ -> Constructor\n");
 
-	// スプライトコンポーネント
-	sprite_component_= new SpriteComponent(this, TEXTURE_PATH_"icon.png");
-	sprite_component_->SetObjectName("Player");
-
-	transform_component_->SetPosition(0, 0);
-	transform_component_->SetScale(50, 50);
-
-
-	velocity_component_ = new VelocityComponent(this);
-	velocity_component_->SetVelocity(Vector3(0, 10, 0));
+	this->InitGameObject();
 }
 
 //--------------------------------------------------
@@ -46,6 +39,26 @@ Player::~Player(void)
 	delete sprite_component_;
 	delete collider_component_;
 	delete velocity_component_;
+}
+
+//--------------------------------------------------
+// 初期化処理
+//--------------------------------------------------
+void Player::InitGameObject(void)
+{
+	transform_component_->SetPosition(0, 0);
+	transform_component_->SetScale(50, 50);
+
+	// スプライトコンポーネント
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"icon.png");
+	sprite_component_->SetObjectName("Player");
+
+	// 速度コンポーネント
+	velocity_component_ = new VelocityComponent(this);
+	velocity_component_->SetVelocity(Vector3(0, 10, 0));
+
+
+	collider_component_ = new BoxColliderComponent(this);
 }
 
 //--------------------------------------------------

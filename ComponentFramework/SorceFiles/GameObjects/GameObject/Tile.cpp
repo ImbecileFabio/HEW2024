@@ -12,8 +12,10 @@
 #include "Tile.h"
 #include "../../GameManager.h"
 #include "../Component.h"
-#include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/TransformComponent.h"
+#include "../Component/RenderComponent/SpriteComponent.h"
+#include "../Component/ColliderComponent/ColliderBaseComponent.h"
+#include "../Component/ColliderComponent/BoxColliderComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -23,12 +25,8 @@ Tile::Tile(GameManager* _gameManager)
 {
 	std::cout << std::format("＜Tile＞ -> Constructor\n");
 
-	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/HEW仮素材/TestBlock4.png");
-	sprite_component_->SetObjectName("Tile");
 
-	transform_component_->SetPosition(0,-100);
-	transform_component_->SetScale(50, 50);
+	this->InitGameObject();
 
 }
 
@@ -43,6 +41,21 @@ Tile::~Tile(void)
 	delete collider_component_;
 }
 
+//--------------------------------------------------
+// 初期化処理
+//--------------------------------------------------
+void Tile::InitGameObject(void)
+{
+	transform_component_->SetPosition(0, -100);
+	transform_component_->SetScale(50, 50);
+
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/HEW仮素材/TestBlock4.png");
+	sprite_component_->SetObjectName("Tile");
+
+
+	collider_component_ = new BoxColliderComponent(this);
+}
+ 
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
