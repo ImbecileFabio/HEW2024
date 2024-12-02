@@ -85,7 +85,7 @@ void CameraComponent::Update()
 	float farPlane = 3.0f;	// ファークリップ
 
 	Matrix projectionMatrix;
-	projectionMatrix = DirectX::XMMatrixOrthographicLH(GameProcess::GetWidth(), GameProcess::GetHeight(), nearPlane, farPlane);
+	projectionMatrix = DirectX::XMMatrixOrthographicLH(static_cast<float>(GameProcess::GetWidth()), static_cast<float>(GameProcess::GetHeight()), nearPlane, farPlane);
 
 
 
