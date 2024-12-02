@@ -45,7 +45,6 @@ bool BoxColliderComponent::CheckCollisionCollider(ColliderBaseComponent* _other)
 }
 bool BoxColliderComponent::CheckCollisionCollider(CircleColliderComponent* _other)
 {
-	this->hitFg = false;
 	return false;
 }
 bool BoxColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
@@ -53,24 +52,23 @@ bool BoxColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
 	// âEÇ∆ç∂
 	if (boxSize_.z < _other->GetBoxSize().y)
 	{
-		this->hitFg = false; return false;
+		return false;
 	}
 	// ç∂Ç∆âE
 	if (boxSize_.y > _other->GetBoxSize().z)
 	{
-		this->hitFg = false; return false;
+		return false;
 	}
 	// â∫Ç∆è„
 	if (boxSize_.x > _other->GetBoxSize().w)
 	{
-		this->hitFg = false; return false;
+		return false;
 	}
 	// è„Ç∆â∫
 	if (boxSize_.w < _other->GetBoxSize().x)
 	{
-		this->hitFg = false; return false;
+		return false;
 	}
-	this->hitFg = true;
 	return true;
 }
 //--------------------------------------------------

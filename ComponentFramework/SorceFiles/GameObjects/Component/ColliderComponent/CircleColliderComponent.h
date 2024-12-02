@@ -1,5 +1,5 @@
 //==================================================
-// [BoxColliderComponent.h] 描画モジュールヘッダ
+// [BoxColliderComponent.h] 四角の当たり判定モジュールヘッダ
 // 著者：尾上莉奈
 //--------------------------------------------------
 // 説明：当たり判定のコンポーネント　試作
@@ -14,8 +14,8 @@
 /*----- 構造体宣言 -----*/
 struct CIRCLE
 {
-	DirectX::SimpleMath::Vector3 position;
-	float radius;
+	DirectX::SimpleMath::Vector3 position = {0.0f, 0.0f, 0.0f};
+	float radius = 0.0f;
 };
 //--------------------------------------------------
 // 円の当たり判定

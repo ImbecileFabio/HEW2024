@@ -32,7 +32,6 @@ public:
 
 	void SetPosition(DirectX::SimpleMath::Vector3 _pos) { position_ = _pos; }
 	DirectX::SimpleMath::Vector4 GetBoxSize(void) const { return boxSize_; }
-	bool GetHitFg(void) { return hitFg; }
 
 private:
 	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };	// “–‚½‚è”»’è‚ÌŒ´“_
