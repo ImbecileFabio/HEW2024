@@ -96,9 +96,16 @@ void ColliderManager::UpdateGameObjects(void)
 	for (int i = 0; i < collider_game_objects_.size(); i++)
 	{
 		for (int j = i + 1; j < collider_game_objects_.size(); j++)
-		{
-			collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
-				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>());
+		{	// Õ“Ë‚µ‚½‚©A‚µ‚Ä‚¢‚È‚¢‚©
+			if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
+				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
+			{
+
+			}
+			else
+			{
+
+			}
 		}
 	}
 	updating_game_objects_ = false;
