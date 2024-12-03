@@ -72,9 +72,6 @@
     <ClCompile Include="SorceFiles\AudioManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SorceFiles\stb_image.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -133,12 +130,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SorceFiles\ColliderManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\CallBackManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\CallBackTestComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -209,9 +200,6 @@
     <ClInclude Include="SorceFiles\AudioManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SorceFiles\stb_image.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -270,12 +258,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SorceFiles\ColliderManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\CallBackManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\CallBackTestComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

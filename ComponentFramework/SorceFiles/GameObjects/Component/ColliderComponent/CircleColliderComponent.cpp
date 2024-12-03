@@ -55,7 +55,6 @@ bool CircleColliderComponent::CheckCollisionCollider(CircleColliderComponent* _o
 
 	if (c <= sumRadius * sumRadius)
 	{
-		std::cout << std::format("[CircleColliderComponent] -> CheckCollision\n");
 		return true;
 	}
 	return false;
