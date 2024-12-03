@@ -5,16 +5,17 @@
 // 説明：物理演算をおこなうクラス
 //		４．角速度、回転
 // 
+//		Update();								処理の実行
 //	・角加速度
 //		SetAngularAcceleration(VECTOR3型);			角加速度のセット
 // 		GetAngularAcceleration() const;			角加速度の取得
 // 		SetUseAngularAcceleration(true　or false);	角加速度のフラグ
 // 		GetUseAngularAcceleration() const;			角加速度のフラグの取得
 //	・角速度
-//		SetAngularVelocity(VECTOR3型);				速度のセット
-// 		GetAngularVelocity() const;				速度の取得
-// 		SetUseAngularVelocity(true　or false);		速度の使用フラグ
-// 		GetUseAngularVelocity() const;				速度の使用フラグの取得
+//		SetAngularVelocity(VECTOR3型);				角速度のセット
+// 		GetAngularVelocity() const;				角速度の取得
+// 		SetUseAngularVelocity(true　or false);		角速度の使用フラグ
+// 		GetUseAngularVelocity() const;				角速度の使用フラグの取得
 //==================================================
 
 #pragma once

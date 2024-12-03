@@ -7,6 +7,7 @@
 //		２．重力
 //		５．制約
 // 
+//		Update();							処理の実行
 //	・加速度
 //		SetAcceleration(VECTOR3型);			加速度のセット
 //		GetAcceleration() const;				加速度の取得
