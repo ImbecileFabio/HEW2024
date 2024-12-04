@@ -43,6 +43,8 @@ public:
 		, Player
 		, Camera
 		, Pendulum
+		, Tile
+		, Robot
 
 		, ColliderTestObject	// テスト
 		// ゲームオブジェクトのIDの最大値
@@ -70,6 +72,8 @@ public:
 	void Uninit(void);
 	void Update(void);
 	void UpdateComponents(void);
+
+	virtual void InitGameObject(void) = 0;	// オーバーライド用
 	virtual void UpdateGameObject(void) = 0;	// オーバーライド用
 
 	// 姿勢情報の更新
@@ -104,7 +108,7 @@ public:
 			}
 		}
 
-		std::cout << std::format("＜GetComponent<T>＞ -> Not Found Component\n");
+		std::cout << std::format("＜GetComponent<{}>＞ ->Component Not Found\n", typeid(T).name());
 		return nullptr;
 	}
 

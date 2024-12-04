@@ -8,6 +8,8 @@ class TestObject :
 	public:
 		TestObject(GameManager* _gameManager);
 		~TestObject(void);
+
+		void InitGameObject(void) override;
 		void UpdateGameObject(void) override;
 
 

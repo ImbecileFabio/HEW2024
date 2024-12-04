@@ -20,11 +20,7 @@ Camera::Camera(GameManager* _gameManager)
 {
 	std::cout << std::format("＜Camera＞ -> new\n");
 
-	// カメラコンポーネント
-	camera_component_ = new CameraComponent(this, 0);
-
-	transform_component_->SetPosition(0, 0, -1);
-	
+	this->InitGameObject();	
 }
 
 //--------------------------------------------------
@@ -35,6 +31,18 @@ Camera::~Camera()
 	std::cout << std::format("＜Camera＞ -> delete\n");
 	// コンポーネントの削除
 	delete camera_component_;
+}
+
+
+//--------------------------------------------------
+// 初期化処理
+//--------------------------------------------------
+void Camera::InitGameObject(void)
+{
+	// カメラコンポーネント
+	camera_component_ = new CameraComponent(this, 0);
+
+	transform_component_->SetPosition(0, 0, -1);
 }
 
 //--------------------------------------------------

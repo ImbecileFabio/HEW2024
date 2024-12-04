@@ -81,7 +81,7 @@ void Renderer::Init()
 	swapChainDesc.OutputWindow = GameProcess::GetWindowHandle(); // スワップチェーンのターゲットウィンドウを設定
 	swapChainDesc.SampleDesc.Count = 1; // マルチサンプリングの設定（アンチエイリアスのサンプル数とクオリティ）
 	swapChainDesc.SampleDesc.Quality = 0; //同上
-	swapChainDesc.Windowed = TRUE; // ウィンドウモード（フルスクリーンではなく、ウィンドウモードで実行）
+	swapChainDesc.Windowed = FALSE; // ウィンドウモード（フルスクリーンではなく、ウィンドウモードで実行）
 
 	hr = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, NULL, 0,
 		D3D11_SDK_VERSION, &swapChainDesc, &m_SwapChain, &m_Device, &m_FeatureLevel, &m_DeviceContext);
@@ -151,7 +151,7 @@ void Renderer::Init()
 	// ブレンド ステート生成
 	D3D11_BLEND_DESC BlendDesc;
 	ZeroMemory(&BlendDesc, sizeof(BlendDesc));                   // BlendDesc構造体をゼロで初期化し、メモリをクリア
-	BlendDesc.AlphaToCoverageEnable = FALSE;                     // アルファ・トゥ・カバレッジを無効化（透明度をカバレッジとして利用しない）
+	BlendDesc.AlphaToCoverageEnable = TRUE;                     // アルファ・トゥ・カバレッジを無効化（透明度をカバレッジとして利用しない）
 	BlendDesc.IndependentBlendEnable = TRUE;                     // 各レンダーターゲットに対して個別のブレンド設定を有効化
 	BlendDesc.RenderTarget[0].BlendEnable = FALSE;               // ブレンドを無効に設定（不透明な描画）
 	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;  // ソース（描画するピクセル）のアルファ値を使用
@@ -260,7 +260,7 @@ void Renderer::Uninit()
 //-----------------------------------------------------------------
 void Renderer::Begin()
 {
-	float clearColor[4] = { 0.f, 0.f, 0.25f, 1.0f };
+	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 	m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, clearColor);
 	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }

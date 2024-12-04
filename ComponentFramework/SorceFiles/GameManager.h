@@ -15,13 +15,8 @@
 
 /*----- 前方宣言 -----*/
 class GameObject;
-class Renderer;
-class Player;
-class Camera;
-class Pendulum;
-class TestObject;
-class ColliderTestObject;
 class ColliderManager;
+
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
 //-----------------------------------------------------------------
@@ -30,7 +25,7 @@ class GameManager
 public:
 	GameManager(void);
 	~GameManager(void);
-	
+
 	// インスタンス生成
 	static auto Create(void) { return new GameManager(); }
 
@@ -45,7 +40,7 @@ public:
 	void AddGameObject(GameObject* _gameObject);
 	// ゲームオブジェクトの削除
 	void RemoveGameObject(GameObject* _gameObject);
-	
+
 private:
 	//更新処理
 	void UpdateGameObjects(void);
@@ -60,15 +55,16 @@ private:
 	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
 private:
 	// 作ったオブジェクトをここに記述
-	Renderer* renderer_{};	// レンダラー
-	Player* player_{};		// プレイヤー
-	Camera* camera_{};		// カメラ
-	Pendulum* pendulum_{};	// 振り子
-	TestObject* test_object_{};
-	ColliderTestObject* collider_test_object_{};
-	ColliderTestObject* collider_test_object_MK2_{};
+	class Renderer* renderer_{};	// レンダラー
+	class Player* player_{};		// プレイヤー
+	class Camera* camera_{};		// カメラ
+	class Pendulum* pendulum_{};	// 振り子
+	class Tile* tile_{};			// タイル
+	class TestObject* test_object_{};
+	class ColliderTestObject* collider_test_object_{};
+	class ColliderTestObject* collider_test_object_MK2_{};
+	class Robot* robot_{};
 };
 
 
 #endif //GAME_MANAGER_H_
-

@@ -28,7 +28,7 @@ const auto ClassName = TEXT("2024 framework ひな形");
 const auto WindowName = TEXT("2024 framework ひな形(フィールド描画)");
 
 // ↓fullscreen設定	コメントを外すとフルスクリーンになる
-//#define FULLSCREEN_MODE_
+// #define FULLSCREEN_MODE_
 
 HINSTANCE	GameProcess::hInst_ = nullptr;
 HWND		GameProcess::hWnd_ = nullptr;

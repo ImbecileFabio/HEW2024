@@ -74,11 +74,13 @@ void VelocityComponent::Update() {
 		position_.z += velocity_.z;
 	}
 
-	position_.x += velocity_.x;
-	position_.y += velocity_.y;
-	position_.z += velocity_.z;
+	// d—Í‚ÌãŒÀ
+	if (gravity_.x > 5.0f) { gravity_.x = 5.0f; }
+	if (gravity_.y > 5.0f) { gravity_.y = 5.0f; }
+	if (gravity_.z > 5.0f) { gravity_.z = 5.0f; }
 
-	owner_->GetComponent<TransformComponent>()->SetPosition(velocity_);
+
+	owner_->GetComponent<TransformComponent>()->SetPosition(position_);
 }
 
 

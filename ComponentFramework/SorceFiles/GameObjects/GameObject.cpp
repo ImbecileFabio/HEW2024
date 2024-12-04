@@ -20,6 +20,8 @@ const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "Player"
 	, "Camera"
 	, "Pendulum"
+	, "Tile"
+	, "Robot"
 };
 
 //--------------------------------------------------

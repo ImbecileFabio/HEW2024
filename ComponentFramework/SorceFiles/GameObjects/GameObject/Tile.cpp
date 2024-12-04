@@ -1,70 +1,65 @@
 //==================================================
-// [Player.cpp] プレイヤーオブジェクト
+// [Tile.cpp] タイルオブジェクト
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：プレイヤーの処理を定義
+// 説明：タイルの処理を定義
 //==================================================
 
 /*----- インクルード -----*/
 #include <iostream>
 #include <format>
 
-#include "Player.h"
+#include "Tile.h"
 #include "../../GameManager.h"
 #include "../Component.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/ColliderComponent/ColliderBaseComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
-#include "../Component/RigidbodyComponent/VelocityComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Player::Player(GameManager* _gameManager)
+Tile::Tile(GameManager* _gameManager)
 	:GameObject(_gameManager)
 {
-	std::cout << std::format("＜Player＞ -> Constructor\n");
+	std::cout << std::format("＜Tile＞ -> Constructor\n");
+
 
 	this->InitGameObject();
+
 }
 
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-Player::~Player(void)
+Tile::~Tile(void)
 {
-	std::cout << std::format("＜Player＞ -> Destructor\n");
+	std::cout << std::format("＜Tile＞ -> Destructor\n");
 	// ここでコンポーネントを削除
 	delete sprite_component_;
 	delete collider_component_;
-	delete velocity_component_;
 }
 
 //--------------------------------------------------
 // 初期化処理
 //--------------------------------------------------
-void Player::InitGameObject(void)
+void Tile::InitGameObject(void)
 {
-	transform_component_->SetPosition(0, 0);
-	transform_component_->SetScale(50, 50);
+	transform_component_->SetPosition(0, -127);
+	transform_component_->SetScale(512, 64);
 
-	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"icon.png");
-	sprite_component_->SetObjectName("Player");
-
-	// 速度コンポーネント
-	velocity_component_ = new VelocityComponent(this);
-	velocity_component_->SetVelocity(Vector3(0, 10, 0));
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"tile_01.png");
+	sprite_component_->SetObjectName("Tile");
 
 
 	collider_component_ = new BoxColliderComponent(this);
 }
-
+ 
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void Player::UpdateGameObject(void)
+void Tile::UpdateGameObject(void)
 {
 
 }

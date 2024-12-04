@@ -25,6 +25,7 @@ public:
     Camera(GameManager* _gameManager);
     ~Camera();
 
+    void InitGameObject(void) override;
     void UpdateGameObject() override;
 
     TypeID GetType(void) { return TypeID::Camera; }

@@ -21,6 +21,8 @@
 #include "GameObjects/GameObject/Player.h"
 #include "GameObjects/GameObject/Camera.h"
 #include "GameObjects/GameObject/Pendulum.h"
+#include "GameObjects/GameObject/Tile.h"
+#include "GameObjects/GameObject/Robot.h"
 
 // デバッグようおぶじぇえくと
 #include "GameObjects/GameObject/TestObject.h"
@@ -67,9 +69,13 @@ void GameManager::InitAll(void)
 	camera_ = new Camera(this);
     //player_ = new Player(this);
 	test_object_ = new TestObject(this);
+	tile_ = new Tile(this);
+	robot_ = new Robot(this);
+
+	//tile_ = new Tile(this);
 	//pendulum_ = new Pendulum(this);
-	collider_test_object_ = new ColliderTestObject(this);
-	collider_test_object_MK2_ = new ColliderTestObject(this);
+	//collider_test_object_ = new ColliderTestObject(this);
+	//collider_test_object_MK2_ = new ColliderTestObject(this);
 	// GameManegerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_objects_)
 	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
@@ -90,12 +96,12 @@ void GameManager::UninitAll(void)
 	// ゲームオブジェクトの破棄
 	delete renderer_;
 	delete camera_;
-	delete player_;
+	//delete player_;
 
 	delete test_object_;
-	delete collider_test_object_;
-	delete collider_test_object_MK2_;
-	delete collider_manager_;
+	//delete collider_test_object_;
+	//delete collider_test_object_MK2_;
+	//delete collider_manager_;
 	//delete pendulum_;
 	
 
