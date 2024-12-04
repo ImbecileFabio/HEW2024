@@ -6,6 +6,7 @@
 //==================================================
 
 #include "PendulumMovementComponent.h"
+#include "RigidbodyComponent/AngularVelocityComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -30,8 +31,10 @@ PendulumMovementComponent::~PendulumMovementComponent() {
 // 初期化処理
 //--------------------------------------------------
 void PendulumMovementComponent::Init() {
-	angle_ = -(this->owner_->GetComponent<TransformComponent>()->GetRotation().z);
-	pendulumRadian_ = 0.f;
+	isPendulumAngle_	= 0.f;
+	wasPendulumAngle_	= 0.f;
+	pendulumRadian_		= 0.f;
+	turnPendulum_		= true;
 }
 
 //--------------------------------------------------
@@ -44,7 +47,12 @@ void PendulumMovementComponent::Uninit() {
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void PendulumMovementComponent::Update() {
+void PendulumMovementComponent::Update(float _angle, DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
+	//std::cout << std::format("{}  {}  {}  {}  {}\n", turnPendulum_, isPendulumAngle_, wasPendulumAngle_,
+	//	this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity(),
+	//	this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularAcceleration());
+	PendulumAcceleration(_angle);			// 角加速度を設定, 角速度を適用
+	PendulumPosition(_fulcrum, _length);	// 座標を計算
 	
 }
 
@@ -53,16 +61,14 @@ void PendulumMovementComponent::Update() {
 // 振り子の座標を計算
 //--------------------------------------------------
 void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
-	angle_ = -(this->owner_->GetComponent<TransformComponent>()->GetRotation().z);
-
-	if (angle_ > 0) {		// -角度が正の場合
-		ConversionRadian(angle_);
+	if (isPendulumAngle_ > 0) {		// -角度が正の場合
+		ConversionRadian(isPendulumAngle_);
 		pemdulumPosition_.x = _fulcrum.x + _length * cos(pendulumRadian_);
 		pemdulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
 
 	}
-	else if (angle_ < 0) {	// -角度が負の場合
-		ConversionRadian(-angle_);
+	else if (isPendulumAngle_ < 0) {	// -角度が負の場合
+		ConversionRadian(-isPendulumAngle_);
 		pemdulumPosition_.x = _fulcrum.x - _length * cos(pendulumRadian_);
 		pemdulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
 	}
@@ -72,22 +78,66 @@ void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _f
 	}
 	
 	this->owner_->GetComponent<TransformComponent>()->SetPosition(pemdulumPosition_);
+	this->owner_->GetComponent<TransformComponent>()->SetRotation(-isPendulumAngle_);
 }
 
 //--------------------------------------------------
 // 振り子の角度の推移を計算
 //--------------------------------------------------
-void PendulumMovementComponent::PendulumAngle(float _angularAcceleration) {
-	if (angle_ > 0) {			// -正の角度の場合
-		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration( _angularAcceleration);
-		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
-	} else if (angle_ < 0) {	// -負の角度の場合
-		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(-_angularAcceleration);
-		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
-	} else {					// -角度が0の場合
-		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(0.f);
-		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
+void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration) {
+	if (turnPendulum_) {
+		if (isPendulumAngle_ > 0) {
+			this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(-_angularAcceleration);
+			PendulumVelocity();			// -角速度を適用 
+			if (isPendulumAngle_ <= 0) {	// -角度が0を跨いでしまったら
+				isPendulumAngle_ = -wasPendulumAngle_;
+			}
+		}
+		else {
+			this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(_angularAcceleration);
+			PendulumVelocity();			// -角速度を適用 
+			// 最高到達点に至ったら反転
+			if (this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity() >= 0) {	
+				turnPendulum_ = false;
+			}
+		}
+	} else {
+		if (isPendulumAngle_ < 0) {
+			this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration( _angularAcceleration);
+			PendulumVelocity();			// -角速度を適用 
+			if (isPendulumAngle_ >= 0) {	// -角度が0を跨いでしまったら
+				isPendulumAngle_ = -wasPendulumAngle_;
+			}
+		}
+		else {
+			this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(-_angularAcceleration);
+			PendulumVelocity();			// -角速度を適用 
+			// 最高到達点に至ったら反転
+			if (this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity() <= 0) {
+				turnPendulum_ = true;
+			}
+		}
 	}
+	//if (isPendulumAngle_ > 0) {			// -正の角度の場合
+	//	this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(-_angularAcceleration);
+	//} else if (isPendulumAngle_ < 0) {	// -負の角度の場合
+	//	this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration( _angularAcceleration);
+	//} else {					// -角度が0の場合
+	//	this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(0.f);
+	//}
+}
+
+//--------------------------------------------------
+// 振り子の角度に角速度を適用
+//--------------------------------------------------
+void PendulumMovementComponent::PendulumVelocity() {
+	// 角速度に角加速度を適用した値を、角速度に入力する
+	this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularVelocity(
+		this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity() +
+		this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularAcceleration());
+
+	wasPendulumAngle_ = isPendulumAngle_;
+	isPendulumAngle_ += this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity();
 }
 
 //--------------------------------------------------
@@ -95,4 +145,19 @@ void PendulumMovementComponent::PendulumAngle(float _angularAcceleration) {
 //--------------------------------------------------
 void PendulumMovementComponent::ConversionRadian(float _angle) {
 	pendulumRadian_ = (90 - _angle) * (PI / 180.0f);
+}
+
+//--------------------------------------------------
+// 振り子の角度のセッターゲッター
+//--------------------------------------------------
+void PendulumMovementComponent::SetPendulumAngle(float _pendulumAngle) {
+	if (_pendulumAngle > 0) {
+		turnPendulum_ = true;
+	} else {
+		turnPendulum_ = false;
+	}
+	isPendulumAngle_ = _pendulumAngle;
+}
+float PendulumMovementComponent::GetPendulumAngle() {
+	return isPendulumAngle_;
 }
