@@ -100,9 +100,8 @@ void ColliderManager::UpdateGameObjects(void)
 			if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
 				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
 			{	
-				if (collider_game_objects_[j] != nullptr)
-					break;
 				// “–‚½‚Á‚½‘¤‚Ìˆ—‚ğŒÄ‚Ñ‚¾‚·
+				std::cout << std::format("‚ ‚¢‚¤‚¦‚¨\n");
 				collider_game_objects_[i]->OnCollisionEnter2D(*collider_game_objects_[j]);
 			}
 		}

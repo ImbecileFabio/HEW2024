@@ -90,7 +90,7 @@ void ImGuiManager::ImGuiUnInit()
 //--------------------------------------------------
 // @brief ゲームオブジェクトの情報を表示するウィンドウ
 //--------------------------------------------------
-void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _r)
+void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 {
     // ここが自分で記述したウィンドウ設定
     if (this->showFg)
@@ -131,7 +131,7 @@ void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _r)
 //--------------------------------------------------
 // @brief システムの情報を表示するウィンドウ
 //--------------------------------------------------
-void SystemGUI::ShowWindow(std::vector<GameObject*>& _r)
+void SystemGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 {
     // タブを管理するタブバー
     if (ImGui::BeginTabBar("DebugWindow"))
@@ -162,21 +162,13 @@ void SystemGUI::ShowWindow(std::vector<GameObject*>& _r)
 //--------------------------------------------------
 // @brief ObjectとComponentを親子形式で表示するツリー形式ウィンドウ
 //--------------------------------------------------
-void TreeGUI::ShowWindow(std::vector<GameObject*>& _r)
+void TreeGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 {
-    if (ImGui::Begin("TreeView"))
+    if (ImGui::Begin("TreeView"), nullptr ,ImGuiWindowFlags_AlwaysVerticalScrollbar)
     {
         // 稼働中のオブジェクトリスト
         if (ImGui::TreeNode("active_objects"))
         {
-            //for (int i = 0; i < _r.size(); i++)
-            //{   // 現在のコンテナのサイズで作成
-            //                    // リスト表示
-            //    //if (ImGui::Selectable(_r[i]->GetComponent<SpriteComponent>().GetName().c_str())) {
-            //    //    // オブジェクトが選択された場合の処理（例: 詳細表示など）
-            //    //    // ImGui::Text("Selected: %s", obj->GetName().c_str());
-            //    //}
-            //}
             ImGui::TreePop();
         }
         ImGui::Separator();

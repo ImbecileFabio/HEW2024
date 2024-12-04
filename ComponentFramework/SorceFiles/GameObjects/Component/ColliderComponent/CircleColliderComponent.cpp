@@ -32,11 +32,10 @@ void CircleColliderComponent::Init(void)
 //--------------------------------------------------
 void CircleColliderComponent::Update(void)
 {
+	this->circle_.position = this->owner_->GetComponent<TransformComponent>()->GetPosition();
 	DirectX::SimpleMath::Vector3 scale =
 		this->owner_->GetComponent<TransformComponent>()->GetScale();
-	this->circle_.radius = std::min<float>(scale.x, scale.y) / 2;
-	this->circle_.position = 
-		this->owner_->GetComponent<TransformComponent>()->GetPosition();
+	this->circle_.radius = std::min<float>(scale.x, scale.y) / 2.0f;
 }
 //--------------------------------------------------
 // @brief ポリフォーリズムを使って、コンポーネントで渡す関数を判別してくれる偉大なコード
@@ -61,6 +60,7 @@ bool CircleColliderComponent::CheckCollisionCollider(CircleColliderComponent* _o
 
 	if (c <= sumRadius * sumRadius)
 	{
+		std::cout << std::format("[CircleColliderComponent] -> CheckCollider Start\n");
 		return true;
 	}
 	return false;

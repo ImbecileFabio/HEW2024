@@ -8,6 +8,7 @@
 #pragma once
 #define IMGUI_DEBUG	// ImGuiを使うときはコメントアウトを外すといける
 #ifdef IMGUI_DEBUG
+#include <array>
 #include "ImGui/imgui_impl_dx11.h"	// 追加したImGuiフォルダから  
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui.h"
@@ -60,7 +61,7 @@ class ObjectStatesGUI : public ImGuiBase
 public:
 	ObjectStatesGUI() : ImGuiBase() {};
 	~ObjectStatesGUI() = default;
-	void ShowWindow(std::vector<GameObject*>& _r) override;
+	void ShowWindow(std::vector<GameObject*>& _activeObjects) override;
 private:
 	DirectX::SimpleMath::Vector3 position_ = { 0.0f, 0.0f, 0.0f };	// 値格納用変数
 	DirectX::SimpleMath::Vector3 rotation_ = { 0.0f, 0.0f, 0.0f };
@@ -72,7 +73,7 @@ class SystemGUI : public ImGuiBase
 public:
 	SystemGUI() : ImGuiBase() {};
 	~SystemGUI() = default;
-	void ShowWindow(std::vector<GameObject*>& _r) override;
+	void ShowWindow(std::vector<GameObject*>& _activeObjects) override;
 private:
 };
 /*--ObjectとComponentを親子形式で表示するツリー形式ウィンドウ--*/
@@ -81,7 +82,7 @@ class TreeGUI : public ImGuiBase
 public:
 	TreeGUI() : ImGuiBase() {};
 	~TreeGUI() = default;
-	void ShowWindow(std::vector<GameObject*>& _r) override;
+	void ShowWindow(std::vector<GameObject*>& _activeObjects) override;
 private:
 };
 #endif // IMGUI_DEBUG

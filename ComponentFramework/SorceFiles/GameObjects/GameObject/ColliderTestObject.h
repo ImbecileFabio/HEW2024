@@ -29,13 +29,6 @@ public:
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::ColliderTestObject; }
-	// Objectごとに衝突を検知したときの処理を書くといいはず
-	void OnCollisionEnter2D(GameObject& _other) override;	// 当たり判定の全体処理
-	void OnCollisionExit2D(GameObject& _other) override {};	// 当たり判定の終了処理
-	void OnCollisionStay2D(GameObject& _other) override {};	// 当たり判定の継続処理
-	void OnTriggerEnter2D(GameObject& _other) override {};	// トリガーの全体処理
-	void OnTriggerExit2D(GameObject& _other) override {};	// トリガーの終了処理
-	void OnTriggerStay2D(GameObject& _other) override {};	// トリガーの継続処理
 
 private:
 	SpriteComponent* spriteComponent_ = {};

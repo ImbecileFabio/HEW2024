@@ -72,14 +72,6 @@ public:
 	void UpdateComponents(void);
 	virtual void UpdateGameObject(void) = 0;	// オーバーライド用
 
-	// 当たり判定関連の処理
-	virtual void OnCollisionEnter2D(GameObject& _other) { ; }		// 当たり判定の全体処理
-	virtual void OnCollisionExit2D (GameObject& _other) { ; }		// 当たり判定の終了処理
-	virtual void OnCollisionStay2D (GameObject& _other) { ; }		// 当たり判定の継続処理
-	virtual void OnTriggerEnter2D  (GameObject& _other) { ; }		// トリガーの全体処理
-	virtual void OnTriggerExit2D   (GameObject& _other) { ; }		// トリガーの終了処理
-	virtual void OnTriggerStay2D   (GameObject& _other) { ; }		// トリガーの継続処理
-
 	// 姿勢情報の更新
 	void ComputeWorldTransform();
 

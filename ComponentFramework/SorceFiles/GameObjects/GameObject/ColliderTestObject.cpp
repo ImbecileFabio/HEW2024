@@ -13,7 +13,6 @@ ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
 	this->colliderComponent_ = new CircleColliderComponent(this, 100);
 
 	this->transform_component_->SetScale(100.0f, 100.0f);
-
 	this->GetComponent<TransformComponent>()->SetRotation(60.f);
 	this->angVelCom_ = new AngularVelocityComponent(this);
 	this->penCom_ = new PendulumMovementComponent(this);
@@ -23,6 +22,8 @@ ColliderTestObject::~ColliderTestObject()
 {
 	delete spriteComponent_;
 	delete colliderComponent_;
+	delete angVelCom_;
+	delete penCom_;
 }
 void ColliderTestObject::UpdateGameObject(void)
 {
@@ -32,5 +33,5 @@ void ColliderTestObject::UpdateGameObject(void)
 /*とりあえずテスト用のEnterだけ*/
 void ColliderTestObject::OnCollisionEnter2D(GameObject& _other)
 {
-	std::cout << std::format("[ColliderTestObject] -> OnCollisionEnter2D Start\n");
+
 }
