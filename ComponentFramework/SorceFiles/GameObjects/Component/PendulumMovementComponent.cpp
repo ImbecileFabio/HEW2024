@@ -30,7 +30,7 @@ PendulumMovementComponent::~PendulumMovementComponent() {
 // èâä˙âªèàóù
 //--------------------------------------------------
 void PendulumMovementComponent::Init() {
-	angle_ = 0.f;
+	angle_ = -(this->owner_->GetComponent<TransformComponent>()->GetRotation().z);
 	pendulumRadian_ = 0.f;
 }
 
@@ -53,15 +53,18 @@ void PendulumMovementComponent::Update() {
 // êUÇËéqÇÃç¿ïWÇåvéZ
 //--------------------------------------------------
 void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
+	angle_ = -(this->owner_->GetComponent<TransformComponent>()->GetRotation().z);
+
 	if (angle_ > 0) {		// -äpìxÇ™ê≥ÇÃèÍçá
 		ConversionRadian(angle_);
-		pemdulumPosition_.x = _fulcrum.x + _length * sin(pendulumRadian_);
-		pemdulumPosition_.y = _fulcrum.y - _length * cos(pendulumRadian_);
+		pemdulumPosition_.x = _fulcrum.x + _length * cos(pendulumRadian_);
+		pemdulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
+
 	}
 	else if (angle_ < 0) {	// -äpìxÇ™ïâÇÃèÍçá
 		ConversionRadian(-angle_);
-		pemdulumPosition_.x = _fulcrum.x - _length * sin(pendulumRadian_);
-		pemdulumPosition_.y = _fulcrum.y - _length * cos(pendulumRadian_);
+		pemdulumPosition_.x = _fulcrum.x - _length * cos(pendulumRadian_);
+		pemdulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
 	}
 	else {					// -äpìxÇ™0ÇÃèÍçá
 		pemdulumPosition_.x = 0;
@@ -69,7 +72,6 @@ void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _f
 	}
 	
 	this->owner_->GetComponent<TransformComponent>()->SetPosition(pemdulumPosition_);
-	this->owner_->GetComponent<TransformComponent>()->SetRotation(-angle_);
 }
 
 //--------------------------------------------------
@@ -78,10 +80,13 @@ void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _f
 void PendulumMovementComponent::PendulumAngle(float _angularAcceleration) {
 	if (angle_ > 0) {			// -ê≥ÇÃäpìxÇÃèÍçá
 		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration( _angularAcceleration);
+		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
 	} else if (angle_ < 0) {	// -ïâÇÃäpìxÇÃèÍçá
 		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(-_angularAcceleration);
+		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
 	} else {					// -äpìxÇ™0ÇÃèÍçá
 		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(0.f);
+		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
 	}
 }
 

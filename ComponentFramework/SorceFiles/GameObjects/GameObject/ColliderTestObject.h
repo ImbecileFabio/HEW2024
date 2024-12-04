@@ -16,6 +16,8 @@ class GameObject;
 class ColliderBaseComponent;
 class SpriteComponent;
 class CallBackManager;
+class AngularVelocityComponent;
+class PendulumMovementComponent;
 //--------------------------------------------------
 // 当たり判定テストするオブジェクト
 //--------------------------------------------------
@@ -30,6 +32,11 @@ public:
 private:
 	SpriteComponent* spriteComponent_ = {};
 	ColliderBaseComponent* colliderComponent_ = {};
+
+	// ペンデュラムの動きのテスト
+	AngularVelocityComponent* angVelCom_ = {};
+	PendulumMovementComponent* penCom_ = {};	
+	
 private:
 	// あたり判定を持たせたいオブジェクトはColliderManagerに登録する
 	// GameManagerがないとGetRenderer()が使えないぜ　RIP

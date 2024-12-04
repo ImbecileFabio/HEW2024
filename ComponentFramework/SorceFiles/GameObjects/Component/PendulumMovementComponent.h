@@ -28,7 +28,6 @@ class PendulumMovementComponent : public Component
 private:
 	DirectX::SimpleMath::Vector3 pemdulumPosition_;	// -位置
 	float angle_;									// -振り子の角度
-	//float length_;									// -振り子の中心からの長さ
 	float pendulumRadian_;							// -振り子の角度（ラジアン）
 
 public:
@@ -44,5 +43,5 @@ public:
 
 	void ConversionRadian(float _angle);	// 角度をラジアンに変換
 
-	//virtual TypeID GetComponentType() const override { return TypeID::PendulumMovementComponent; }
+	virtual TypeID GetComponentType() const override { return TypeID::PendulumMovementComponent; }
 };
