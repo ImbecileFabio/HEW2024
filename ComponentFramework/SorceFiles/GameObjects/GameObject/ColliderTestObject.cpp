@@ -2,6 +2,7 @@
 #include "../../ColliderManager.h"
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
+#include "../Component/RigidbodyComponent/AngularVelocityComponent.h"
 #include "../Component/PendulumMovementComponent.h"
 
 ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
