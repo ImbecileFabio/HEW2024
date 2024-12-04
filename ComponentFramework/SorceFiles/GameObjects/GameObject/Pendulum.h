@@ -35,7 +35,6 @@ public:
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::Pendulum; }
-
 private:
 	// 所有するコンポーネント
 	SpriteComponent* sprite_component_{};

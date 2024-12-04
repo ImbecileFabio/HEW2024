@@ -22,3 +22,8 @@ ColliderTestObject::~ColliderTestObject()
 void ColliderTestObject::UpdateGameObject(void)
 {
 }
+/*とりあえずテスト用のEnterだけ*/
+void ColliderTestObject::OnCollisionEnter2D(GameObject& _other)
+{
+	std::cout << std::format("[ColliderTestObject] -> OnCollisionEnter2D Start\n");
+}

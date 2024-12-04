@@ -99,33 +99,11 @@ void ColliderManager::UpdateGameObjects(void)
 		{	// 衝突したか、していないか
 			if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
 				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
-			{	// 当たった側
-				switch (collider_game_objects_[i]->GetType())
-				{
-				case GameObject::TypeID::Pendulum:	// 衝突された側が振り子
-					switch (collider_game_objects_[j]->GetType())	// 当たった相手がTypeIDならば
-					{
-					case GameObject::TypeID::Pendulum:	// 振り子が当たったのが振り子ならば
-						// ここに振り子が止まっているか動いているかで処理変える？
-						// 呼びだすのはコンポーネントのはず多分　わからないです
-						break;
-					}
+			{	
+				if (collider_game_objects_[j] != nullptr)
 					break;
-				case GameObject::TypeID::Player:	// 衝突された側がプレイヤー
-					break;
-				// ここはデバッグ用だから消して大丈夫
-				case GameObject::TypeID::ColliderTestObject:
-					switch (collider_game_objects_[j]->GetType())	// 当たった相手がTypeIDならば
-					{
-					case GameObject::TypeID::ColliderTestObject:	// 振り子が当たったのが振り子ならば
-						break;
-					}
-					break;
-				};
-			}
-			else
-			{
-
+				// 当たった側の処理を呼びだす
+				collider_game_objects_[i]->OnCollisionEnter2D(*collider_game_objects_[j]);
 			}
 		}
 	}
