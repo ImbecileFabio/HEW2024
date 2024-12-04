@@ -33,6 +33,9 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "BoxColliderComponent"
 	, "CircleColliderComponent"
 
+	// U‚èq‚Ì“®‚«
+	, "PendulumMovementComponent"
+
 	// ƒJƒƒ‰
 	, "CameraComponent"
 	// U‚èq
