@@ -55,7 +55,6 @@
     <ClCompile Include="SorceFiles\ImGui\imgui_tables.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SorceFiles\InputManager.cpp" />
-    <ClCompile Include="SorceFiles\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
@@ -107,7 +106,6 @@
     <ClInclude Include="SorceFiles\ImGui\imstb_textedit.h" />
     <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h" />
     <ClInclude Include="SorceFiles\InputManager.h" />
-    <ClInclude Include="SorceFiles\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
     <ClInclude Include="SorceFiles\SubSystem\dx11helper.h" />

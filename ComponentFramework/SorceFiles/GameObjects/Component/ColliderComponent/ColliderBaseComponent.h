@@ -35,7 +35,6 @@ public:
 
 	TypeID GetComponentType(void) const override { return TypeID::ColliderBaseComponent; }
 protected:
-	bool hitFg = false;
 };
 
 #endif // COLLIDER_BASE_COMPONENT_H_

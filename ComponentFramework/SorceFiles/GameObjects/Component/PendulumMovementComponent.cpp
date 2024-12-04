@@ -30,7 +30,8 @@ PendulumMovementComponent::~PendulumMovementComponent() {
 // ‰Šú‰»ˆ—
 //--------------------------------------------------
 void PendulumMovementComponent::Init() {
-
+	angle_ = -(this->owner_->GetComponent<TransformComponent>()->GetRotation().z);
+	pendulumRadian_ = 0.f;
 }
 
 //--------------------------------------------------
@@ -45,4 +46,53 @@ void PendulumMovementComponent::Uninit() {
 //--------------------------------------------------
 void PendulumMovementComponent::Update() {
 	
+}
+
+
+//--------------------------------------------------
+// U‚èq‚ÌÀ•W‚ğŒvZ
+//--------------------------------------------------
+void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
+	angle_ = -(this->owner_->GetComponent<TransformComponent>()->GetRotation().z);
+
+	if (angle_ > 0) {		// -Šp“x‚ª³‚Ìê‡
+		ConversionRadian(angle_);
+		pemdulumPosition_.x = _fulcrum.x + _length * cos(pendulumRadian_);
+		pemdulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
+
+	}
+	else if (angle_ < 0) {	// -Šp“x‚ª•‰‚Ìê‡
+		ConversionRadian(-angle_);
+		pemdulumPosition_.x = _fulcrum.x - _length * cos(pendulumRadian_);
+		pemdulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
+	}
+	else {					// -Šp“x‚ª0‚Ìê‡
+		pemdulumPosition_.x = 0;
+		pemdulumPosition_.y = _fulcrum.y - _length;
+	}
+	
+	this->owner_->GetComponent<TransformComponent>()->SetPosition(pemdulumPosition_);
+}
+
+//--------------------------------------------------
+// U‚èq‚ÌŠp“x‚Ì„ˆÚ‚ğŒvZ
+//--------------------------------------------------
+void PendulumMovementComponent::PendulumAngle(float _angularAcceleration) {
+	if (angle_ > 0) {			// -³‚ÌŠp“x‚Ìê‡
+		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration( _angularAcceleration);
+		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
+	} else if (angle_ < 0) {	// -•‰‚ÌŠp“x‚Ìê‡
+		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(-_angularAcceleration);
+		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
+	} else {					// -Šp“x‚ª0‚Ìê‡
+		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(0.f);
+		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
+	}
+}
+
+//--------------------------------------------------
+// Šp“x‚ğƒ‰ƒWƒAƒ“‚É•ÏŠ·
+//--------------------------------------------------
+void PendulumMovementComponent::ConversionRadian(float _angle) {
+	pendulumRadian_ = (90 - _angle) * (PI / 180.0f);
 }

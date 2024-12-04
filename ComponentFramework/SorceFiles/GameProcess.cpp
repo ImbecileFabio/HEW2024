@@ -85,9 +85,9 @@ void GameProcess::Run(void)
 #ifdef IMGUI_DEBUG
 	ImGuiManager imGuiManager;
 	ImGuiManager::staticPointer = &imGuiManager;
-	Renderer* renderer = new Renderer;
 	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGui‚ÌWin32API‚ð‰Šú‰»
-	imGuiManager.ImGuiD3D11Init(renderer->GetDevice(), renderer->GetDeviceContext());	// ImGui‚ÌDirectX11‚ð‰Šú‰»
+	imGuiManager.ImGuiD3D11Init(this->game_manager_->GetRenderer()->GetDevice(),
+		this->game_manager_->GetRenderer()->GetDeviceContext());	// ImGui‚ÌDirectX11‚ð‰Šú‰»
 	imGuiManager.ImGuiInit();
 #endif
 	//--------------------------------------------------
@@ -140,8 +140,6 @@ void GameProcess::Run(void)
 		}
 	}
 #ifdef IMGUI_DEBUG
-	renderer->Uninit();
-	delete renderer;
 	imGuiManager.ImGuiUnInit();
 #endif
 }

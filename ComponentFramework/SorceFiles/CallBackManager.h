@@ -9,6 +9,8 @@
 /*----- インクルード -----*/
 #include<memory>
 #include<vector>
+#include<functional>
+#include<unordered_map>
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
@@ -19,10 +21,12 @@
 class CallBackManager
 {
 public:
-	CallBackManager(void);
-	~CallBackManager(void);
+	CallBackManager (void) = default;
+	~CallBackManager(void) = default;
 	// インスタンス生成
 	static auto Create(void) { return new CallBackManager(); }
+
+	using Callback = std::function<void()>;	// コールバック関数型
 
 private:
 };
