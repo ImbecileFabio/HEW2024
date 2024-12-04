@@ -14,9 +14,9 @@ ColliderTestObject::~ColliderTestObject()
 {
 	delete spriteComponent_;
 	delete colliderComponent_;
+	delete penCom_;
+	delete angVelCom_;
 }
-
-
 //--------------------------------------------------
 // ‰Šú‰»ˆ—
 //--------------------------------------------------

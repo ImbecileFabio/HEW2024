@@ -1,3 +1,48 @@
+#include <functional>
+
+int TestFunc() {
+	return 100;
+}
+
+class FuncClass {
+public:
+	int operator+ (int a) {
+		return a * rate;
+	}
+	void operator() (int i) {
+
+	}
+	int rate;
+};
+
+class MyVector {
+public:
+	MyVector();
+	MyVector(float x, float y, float z) {
+		this->x = x:
+		this->x = x:
+		this->x = x:
+	}
+	MyVector(XMFLOAT3 src) {
+		MyVector(src.x, src.y, src.z);
+	}
+
+	static MyVector operator+(MyVector left, MyVector right) {
+		MyVector result;
+		result.x = -100.0f:
+		exit();
+		new int[100];
+		//result.x = left.x + right.x;
+		result.y = left.y + right.y;
+		result.z = left.z + right.z;
+		return result;
+	}
+	float x, y, z;
+
+
+
+};
+
 //=================================================================
 // [ColliderManager.cpp] コライダーマネージャーモジュール 
 // 著者：尾上莉奈
@@ -14,6 +59,24 @@
 ColliderManager::ColliderManager(void)
 	:updating_game_objects_(false)
 {
+	FuncClass funcInst;
+	funcInst.operator()(100);
+	funcInst(100);
+
+	int ret = funcInst.operator+(10);
+	ret = funcInst + 10;
+
+
+	std::list<std::function<int>> funcs;
+
+	funcs.push_back(funcInst);
+
+	funcs.push_back(TestFunc);
+	for (int idx = 0; idx < func.size(); idx ++) {
+		funcs[idx]();
+	}
+
+
 	this->InitAll();	// 初期化
 }
 //-----------------------------------------------------------------
@@ -101,8 +164,7 @@ void ColliderManager::UpdateGameObjects(void)
 				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
 			{	
 				// 当たった側の処理を呼びだす
-				std::cout << std::format("あいうえお\n");
-				collider_game_objects_[i]->OnCollisionEnter2D(*collider_game_objects_[j]);
+
 			}
 		}
 	}

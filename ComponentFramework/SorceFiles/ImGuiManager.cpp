@@ -134,7 +134,7 @@ void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 void SystemGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 {
     // タブを管理するタブバー
-    if (ImGui::BeginTabBar("DebugWindow"))
+    if (ImGui::BeginTabBar("DebugWindow"), ImGuiWindowFlags_AlwaysVerticalScrollbar)
     {   // システム情報を表示
         if (ImGui::BeginTabItem("System"))
         {
@@ -164,11 +164,12 @@ void SystemGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 //--------------------------------------------------
 void TreeGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 {
-    if (ImGui::Begin("TreeView"), nullptr ,ImGuiWindowFlags_AlwaysVerticalScrollbar)
+    if (ImGui::Begin("TreeView"),ImGuiWindowFlags_AlwaysVerticalScrollbar)
     {
         // 稼働中のオブジェクトリスト
         if (ImGui::TreeNode("active_objects"))
         {
+
             ImGui::TreePop();
         }
         ImGui::Separator();
