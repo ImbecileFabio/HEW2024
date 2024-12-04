@@ -42,10 +42,10 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetPosition(0, -100);
-	transform_component_->SetScale(50, 50);
+	transform_component_->SetPosition(0, -25);
+	transform_component_->SetScale(150, 150);
 
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/icon.png");
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
 	sprite_component_->SetObjectName("Robot");
 
 

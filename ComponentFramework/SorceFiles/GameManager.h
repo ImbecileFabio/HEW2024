@@ -63,6 +63,7 @@ private:
 	class TestObject* test_object_{};
 	class ColliderTestObject* collider_test_object_{};
 	class ColliderTestObject* collider_test_object_MK2_{};
+	class Robot* robot_{};
 };
 
 

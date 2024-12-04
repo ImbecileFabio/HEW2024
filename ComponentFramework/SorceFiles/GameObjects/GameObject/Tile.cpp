@@ -46,10 +46,10 @@ Tile::~Tile(void)
 //--------------------------------------------------
 void Tile::InitGameObject(void)
 {
-	transform_component_->SetPosition(0, -100);
-	transform_component_->SetScale(50, 50);
+	transform_component_->SetPosition(0, -127);
+	transform_component_->SetScale(512, 64);
 
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/HEW‰¼‘fÞ/TestBlock4.png");
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"tile_01.png");
 	sprite_component_->SetObjectName("Tile");
 
 

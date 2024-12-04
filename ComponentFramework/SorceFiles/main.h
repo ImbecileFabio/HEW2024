@@ -20,17 +20,7 @@
 //--------------------------------------------------
 // 
 // ====== ¡Œã‚ÌŽÀ‘•—\’è =========
-// GetComponent‚ÌnullptrŽ–Œ
-// ‚Æ‚è‚ ‚¦‚¸¡‚Í‰¼‚ÅTransform‚ðŽó‚¯“n‚¹‚é‚æ‚¤‚É‚µ‚½‚Ù‚¤‚ª‚¢‚¢ 
-// 
-// 
-// 
-// ‚ÅŠù‚É“¯‚¶Component‚ª‚ ‚Á‚½Žž‚Éd•¡‚ð–h‚®ˆ—‚ª‚ ‚Á‚½‚Ù‚¤‚ª‚¢‚¢‚©‚à
-// 
 // SceneMnager‚ÌŽÀ‘•‚ð‚·‚é
-// 
-// ‚ ‚Æ’Pƒ‚É•Às“Š‰e‚É‚µ‚È‚«‚á
-//
 //
 
 #endif	// MAIN_H_
