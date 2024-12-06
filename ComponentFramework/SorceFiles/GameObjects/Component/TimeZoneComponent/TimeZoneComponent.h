@@ -26,9 +26,10 @@ public:
 
 	TypeID GetComponentType(void) const override { return TypeID::TimeZoneComponent; }
 private:
+	// タイムゾーンが持つ速度の変数 範囲に入ったオブジェクトに速度を渡す
+	float speed_ = 0.0f;
 	// タイムゾーンが入ったオブジェクトの当たり判定を参照で持つよ
 	ColliderBaseComponent* colliderComponent_ = {};
 	RigidbodyComponent* rigidbodyComponent_ = {};	// 速度の値にアクセスする
 };
-
 #endif // TIME_ZONE_COMPONENT_H_

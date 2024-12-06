@@ -6,7 +6,7 @@
 //=================================================================
 /*----- インクルード -----*/
 #include "ColliderManager.h"
-#include "GameObjects/GameObject/ColliderTestObject.h"
+#include "GameObjects/GameObject.h"
 #include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 //-----------------------------------------------------------------
 // @brief  コンストラクタ

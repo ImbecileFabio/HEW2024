@@ -46,7 +46,6 @@ public:
 		, Tile
 		, Robot
 
-		, ColliderTestObject	// テスト
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};

@@ -16,7 +16,6 @@
 /*----- 前方宣言 -----*/
 class GameObject;
 class ColliderManager;
-
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
 //-----------------------------------------------------------------
@@ -61,8 +60,6 @@ private:
 	class Pendulum* pendulum_{};	// 振り子
 	class Tile* tile_{};			// タイル
 	class TestObject* test_object_{};
-	class ColliderTestObject* collider_test_object_{};
-	class ColliderTestObject* collider_test_object_MK2_{};
 	class Robot* robot_{};
 };
 

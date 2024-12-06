@@ -93,9 +93,6 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\PendulumComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -124,9 +121,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SorceFiles\ColliderManager.cpp">
@@ -233,9 +227,6 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\PendulumComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -264,9 +255,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SorceFiles\ColliderManager.h">

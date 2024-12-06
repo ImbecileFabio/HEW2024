@@ -26,7 +26,6 @@
 
 // デバッグようおぶじぇえくと
 #include "GameObjects/GameObject/TestObject.h"
-#include "GameObjects/GameObject/ColliderTestObject.h"
 #include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 
 //-----------------------------------------------------------------
@@ -67,9 +66,9 @@ void GameManager::InitAll(void)
 
     // ゲームオブジェクト初期化
 	camera_ = new Camera(this);
-    //player_ = new Player(this);
 	test_object_ = new TestObject(this);
 	tile_ = new Tile(this);
+	pendulum_ = new Pendulum(this);
 	robot_ = new Robot(this);
 	// GameManegerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_objects_)
@@ -91,17 +90,9 @@ void GameManager::UninitAll(void)
 	// ゲームオブジェクトの破棄
 	delete renderer_;
 	delete camera_;
-	//delete player_;
-
+	delete pendulum_;
 	delete test_object_;
-	//delete collider_test_object_;
-	//delete collider_test_object_MK2_;
-	//delete collider_manager_;
-	//delete pendulum_;
-	
-
-	//std::cout << std::format("[GameManager] -> セーブデータのアンロード\n");
-	//std::cout << std::format("[GameManager] -> グラフィックスの破棄\n");
+	delete collider_manager_;
 }
 
 //-----------------------------------------------------------------
