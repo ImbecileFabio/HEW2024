@@ -45,6 +45,8 @@ public:
 		// イベント
 		, EventBaseComponent
 		, ColliderEventComponent
+		// タイムゾーン
+		, TimeZoneComponent
 		// 振り子の動き
 		, PendulumMovementComponent
 

@@ -71,11 +71,6 @@ void GameManager::InitAll(void)
 	test_object_ = new TestObject(this);
 	tile_ = new Tile(this);
 	robot_ = new Robot(this);
-
-	//tile_ = new Tile(this);
-	//pendulum_ = new Pendulum(this);
-	//collider_test_object_ = new ColliderTestObject(this);
-	//collider_test_object_MK2_ = new ColliderTestObject(this);
 	// GameManegerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_objects_)
 	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録

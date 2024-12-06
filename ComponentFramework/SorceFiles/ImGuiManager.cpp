@@ -97,7 +97,7 @@ void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
     {
         ImGui::Begin("~(0-0)~", &showFg);
         // オブジェクト生成
-        if (ImGui::Button("Object seisei"))
+        if (ImGui::Button("Object Create"))
         {
 
         }
@@ -169,7 +169,6 @@ void TreeGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
         // 稼働中のオブジェクトリスト
         if (ImGui::TreeNode("active_objects"))
         {
-
             ImGui::TreePop();
         }
         ImGui::Separator();

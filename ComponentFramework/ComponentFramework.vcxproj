@@ -28,6 +28,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Robot.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\ColliderTestObject.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Robot.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h" />

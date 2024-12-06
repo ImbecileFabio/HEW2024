@@ -8,6 +8,18 @@
 ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
 	: GameObject(_gameManager)
 {
+	this->InitGameObject();
+}
+
+ColliderTestObject::~ColliderTestObject()
+{
+	delete spriteComponent_;
+	delete colliderComponent_;
+	delete angVelCom_;
+	delete penCom_;
+}
+void ColliderTestObject::InitGameObject(void)
+{
 	this->spriteComponent_ = new SpriteComponent(this, TEXTURE_PATH_"zako.png");
 	this->spriteComponent_->SetObjectName("Test");
 
@@ -19,14 +31,8 @@ ColliderTestObject::ColliderTestObject(GameManager* _gameManager)
 	this->angVelCom_ = new AngularVelocityComponent(this);
 	this->penCom_ = new PendulumMovementComponent(this);
 	this->penCom_->SetPendulumAngle(60.f);
-}
+	
 
-ColliderTestObject::~ColliderTestObject()
-{
-	delete spriteComponent_;
-	delete colliderComponent_;
-	delete angVelCom_;
-	delete penCom_;
 }
 void ColliderTestObject::UpdateGameObject(void)
 {

@@ -1,48 +1,3 @@
-#include <functional>
-
-int TestFunc() {
-	return 100;
-}
-
-class FuncClass {
-public:
-	int operator+ (int a) {
-		return a * rate;
-	}
-	void operator() (int i) {
-
-	}
-	int rate;
-};
-
-class MyVector {
-public:
-	MyVector();
-	MyVector(float x, float y, float z) {
-		this->x = x:
-		this->x = x:
-		this->x = x:
-	}
-	MyVector(XMFLOAT3 src) {
-		MyVector(src.x, src.y, src.z);
-	}
-
-	static MyVector operator+(MyVector left, MyVector right) {
-		MyVector result;
-		result.x = -100.0f:
-		exit();
-		new int[100];
-		//result.x = left.x + right.x;
-		result.y = left.y + right.y;
-		result.z = left.z + right.z;
-		return result;
-	}
-	float x, y, z;
-
-
-
-};
-
 //=================================================================
 // [ColliderManager.cpp] コライダーマネージャーモジュール 
 // 著者：尾上莉奈
@@ -59,24 +14,6 @@ public:
 ColliderManager::ColliderManager(void)
 	:updating_game_objects_(false)
 {
-	FuncClass funcInst;
-	funcInst.operator()(100);
-	funcInst(100);
-
-	int ret = funcInst.operator+(10);
-	ret = funcInst + 10;
-
-
-	std::list<std::function<int>> funcs;
-
-	funcs.push_back(funcInst);
-
-	funcs.push_back(TestFunc);
-	for (int idx = 0; idx < func.size(); idx ++) {
-		funcs[idx]();
-	}
-
-
 	this->InitAll();	// 初期化
 }
 //-----------------------------------------------------------------
@@ -150,7 +87,6 @@ void ColliderManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	//collider_game_objects_.clear();	// Clearしないと処理が落ちる
 	for (auto& gameObject : collider_game_objects_)
 	{
 		gameObject->Update();		// 更新処理
@@ -188,3 +124,64 @@ void ColliderManager::UpdateGameObjects(void)
 		}
 	}
 }
+
+//#include <functional>
+//
+//int TestFunc() {
+//	return 100;
+//}
+//
+//class FuncClass {
+//public:
+//	int operator+ (int a) {
+//		return a * rate;
+//	}
+//	void operator() (int i) {
+//
+//	}
+//	int rate;
+//};
+//
+//class MyVector {
+//public:
+//	MyVector();
+//	MyVector(float x, float y, float z) {
+//		this->x = x:
+//		this->x = x :
+//			this->x = x :
+//	}
+//	MyVector(XMFLOAT3 src) {
+//		MyVector(src.x, src.y, src.z);
+//	}
+//
+//	static MyVector operator+(MyVector left, MyVector right) {
+//		MyVector result;
+//		result.x = -100.0f:
+//		exit();
+//		new int[100];
+//		result.x = left.x + right.x;
+//		result.y = left.y + right.y;
+//		result.z = left.z + right.z;
+//		return result;
+//	}
+//	float x, y, z;
+//
+//
+//
+//};
+//FuncClass funcInst;
+//funcInst.operator()(100);
+//funcInst(100);
+//
+//int ret = funcInst.operator+(10);
+//ret = funcInst + 10;
+//
+//
+//std::list<std::function<int>> funcs;
+//
+//funcs.push_back(funcInst);
+//
+//funcs.push_back(TestFunc);
+//for (int idx = 0; idx < func.size(); idx++) {
+//	funcs[idx]();
+//}
