@@ -7,6 +7,7 @@
 #ifndef GAMEOBJECT_H_
 #define GAMEOBJECT_H_
 
+
 /*----- インクルード -----*/
 #include <memory>
 #include <vector>
@@ -54,12 +55,13 @@ public:
 	// ゲームオブジェクトが所有する方のID
 	static const char* GameObjectTypeNames[static_cast<int>(TypeID::MAX)];
 
+	// オブジェクトの状態
 	enum class State
 	{
 		None = -1
-		, Active	// 活動するゲームオブジェクトか
-		, Paused	// 停止するゲームオブジェクトか
-		, Dead		// 死ぬゲームオブジェクトか
+		, Active	// Updateされる
+		, Paused	// Updateされない
+		, Dead		// emplace_backされる
 
 		, MAX		// 状態の最大値
 	};
@@ -79,17 +81,14 @@ public:
 	// 姿勢情報の更新
 	void ComputeWorldTransform();
 
+	// ゲームオブジェクトの名前設定、取得
+	void SetName(const std::string& _name) { name_ = _name; }
+	auto& GetName() const { return name_; }
+
+	// コンポーネントの追加、削除(ゲームオブジェクト側に持たせたほうがいいかもしれないかもしれない)
 	void AddComponent(Component* component);
 	void RemoveComponent(Component* component);
 
-	void SetState(State _state) { state_ = _state; }
-	State& GetState(void) { return state_; }
-
-	virtual TypeID GetType(void) { return TypeID::GameObject; }	//オーバーライド用
-
-	const auto& GetComponents() const { return components_; }
-
-	auto& GetGameManager(void) { return game_manager_; }
 	/*
 	* @param	取得したいConponent(T)
 	* @brief	GameObjectのcomponents_からtargetにキャストする
@@ -107,14 +106,28 @@ public:
 				return target;
 			}
 		}
-
 		std::cout << std::format("＜GetComponent<{}>＞ ->Component Not Found\n", typeid(T).name());
 		return nullptr;
 	}
+	// コンポーネントリストの取得
+	const auto& GetComponents() const { return components_; }
+
+	// ゲームオブジェクトの状態の変更
+	void SetState(State _state) { state_ = _state; }
+	State& GetState(void) { return state_; }
+
+	virtual TypeID GetType(void) { return TypeID::GameObject; }
+
+	auto& GetGameManager(void) { return game_manager_; }
+
+	
 
 protected:
 	// GameObjectの所有者
 	 GameManager* game_manager_{};
+
+	 // オブジェクトの名前
+	 std::string name_{};
 
 	// GameObjectの状態
 	State state_{};

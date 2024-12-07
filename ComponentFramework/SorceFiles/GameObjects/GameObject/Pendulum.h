@@ -20,8 +20,6 @@ using namespace DirectX::SimpleMath;
 
 
 /*----- 前方宣言 -----*/
-class SpriteComponent;
-class PendulumComponent;
 
 //--------------------------------------------------
 // プレイヤーオブジェクト
@@ -40,7 +38,7 @@ public:
 
 private:
 	// 所有するコンポーネント
-	SpriteComponent* sprite_component_{};
-	PendulumComponent* pendulum_component_{};
+	class SpriteComponent* sprite_component_{};
+	class PendulumMovementComponent* pendulum_component_{};
 };
 #endif	// PENDULUM_H_

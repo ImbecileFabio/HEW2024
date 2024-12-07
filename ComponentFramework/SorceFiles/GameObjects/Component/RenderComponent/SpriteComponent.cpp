@@ -12,7 +12,7 @@
 #include <string>
 
 #include "SpriteComponent.h"
-#include "../../../GameManager.h";
+#include "../../../GameManager.h"
 #include "../../../SubSystem/dx11helper.h"
 #include "../../GameObject.h"
 #include "../TransformComponent.h"
@@ -144,7 +144,7 @@ void SpriteComponent::Draw()
 		auto t = transform->GetPosition();
 		auto r = transform->GetRotation();
 		auto s = transform->GetScale();
-		rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
+		rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
 		pos = Matrix::CreateTranslation(t);
 		scale = Matrix::CreateScale(s);
 	}

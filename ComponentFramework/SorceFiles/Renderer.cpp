@@ -81,7 +81,7 @@ void Renderer::Init()
 	swapChainDesc.OutputWindow = GameProcess::GetWindowHandle(); // スワップチェーンのターゲットウィンドウを設定
 	swapChainDesc.SampleDesc.Count = 1; // マルチサンプリングの設定（アンチエイリアスのサンプル数とクオリティ）
 	swapChainDesc.SampleDesc.Quality = 0; //同上
-	swapChainDesc.Windowed = FALSE; // ウィンドウモード（フルスクリーンではなく、ウィンドウモードで実行）
+	swapChainDesc.Windowed = TRUE; // ウィンドウモード（フルスクリーンではなく、ウィンドウモードで実行）
 
 	hr = D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, NULL, 0, NULL, 0,
 		D3D11_SDK_VERSION, &swapChainDesc, &m_SwapChain, &m_Device, &m_FeatureLevel, &m_DeviceContext);

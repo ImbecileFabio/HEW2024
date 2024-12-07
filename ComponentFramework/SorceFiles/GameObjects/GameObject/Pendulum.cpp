@@ -14,7 +14,7 @@
 #include "../Component.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/TransformComponent.h"
-#include "../Component/PendulumComponent.h"
+#include "../Component/PendulumMovementComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -48,7 +48,7 @@ void Pendulum::InitGameObject(void)
 	sprite_component_->SetObjectName("Pendulum");
 
 	// 振り子コンポーネント
-	pendulum_component_ = new PendulumComponent(this);
+	pendulum_component_ = new PendulumMovementComponent(this);
 }
 
 //--------------------------------------------------

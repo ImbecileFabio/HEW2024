@@ -39,6 +39,9 @@ Camera::~Camera()
 //--------------------------------------------------
 void Camera::InitGameObject(void)
 {
+	// 名前設定
+	SetName("Camera");
+
 	// カメラコンポーネント
 	camera_component_ = new CameraComponent(this, 0);
 

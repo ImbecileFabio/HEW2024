@@ -51,7 +51,7 @@ Component::Component(GameObject* _owner, int _updateOrder)
 	, update_order_(_updateOrder)
 {
 	// updateOrder‚Í0ˆÈãA100ˆÈ‰º‚Åİ’è
-	assert(update_order_ <= 100 && update_order_ >= 0);
+	if (update_order_ < 0 || update_order_ > 100) { update_order_ = 50; }
 	owner_->AddComponent(this);
 }
 
