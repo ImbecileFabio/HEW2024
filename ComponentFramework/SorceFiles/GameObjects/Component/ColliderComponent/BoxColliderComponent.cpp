@@ -58,24 +58,24 @@ bool BoxColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
 	// 右と左
 	if (boxSize_.z < _other->GetBoxSize().y)
 	{
-		return false;
+		this->hitFg_ = false;  return false;
 	}
 	// 左と右
 	if (boxSize_.y > _other->GetBoxSize().z)
 	{
-		return false;
+		this->hitFg_ = false; return false;
 	}
 	// 下と上
 	if (boxSize_.x > _other->GetBoxSize().w)
 	{
-		return false;
+		this->hitFg_ = false; return false;
 	}
 	// 上と下
 	if (boxSize_.w < _other->GetBoxSize().x)
 	{
-		return false;
+		this->hitFg_ = false; return false;
 	}
-	return true;
+	this->hitFg_ = true; return true;
 }
 //--------------------------------------------------
 // @brief 四角形の当たり判定が重なっているかどうかの処理
