@@ -36,9 +36,9 @@ void VelocityComponent::Init() {
 	use_acceleration_	= true;
 	use_velocity_		= true;
 	use_gravity_		= true;
-	acceleration_	= { 0.f,0.f,0.f };
-	velocity_		= { 0.f,0.f,0.f };
-	gravity_		= { 0.f,-1.f,0.f };	// ˆê‰žŒÅ’è
+	acceleration_	= { 0.0f, 0.0f,0.0f };
+	velocity_		= { 0.0f, 0.0f,0.0f };
+	gravity_		= { 0.0f,-1.0f,0.0f };	// ˆê‰žŒÅ’è
 }
 
 //--------------------------------------------------

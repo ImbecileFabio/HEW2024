@@ -20,9 +20,8 @@
 // コンストラクタ
 //--------------------------------------------------
 Pendulum::Pendulum(GameManager* _gameManager)
-	:GameObject(_gameManager)
+	:GameObject(_gameManager, "Pendulum")
 {
-	std::cout << std::format("＜Pendulum＞ -> Constructor\n");
 	this->InitGameObject();
 
 }
@@ -32,10 +31,9 @@ Pendulum::Pendulum(GameManager* _gameManager)
 //--------------------------------------------------
 Pendulum::~Pendulum(void)
 {
-	std::cout << std::format("＜Pendulum＞ -> Destructor\n");
 	// ここでコンポーネントを削除
 	delete sprite_component_;
-	delete pendulum_component_;
+	delete pendulum_movement_component_;
 }
 
 //--------------------------------------------------
@@ -44,11 +42,10 @@ Pendulum::~Pendulum(void)
 void Pendulum::InitGameObject(void)
 {
 	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"HEW仮素材/Ball.png");
-	sprite_component_->SetObjectName("Pendulum");
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"zako.png");
 
 	// 振り子コンポーネント
-	pendulum_component_ = new PendulumMovementComponent(this);
+	pendulum_movement_component_ = new PendulumMovementComponent(this);
 }
 
 //--------------------------------------------------

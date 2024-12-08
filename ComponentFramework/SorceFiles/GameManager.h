@@ -64,10 +64,10 @@ public:
 	void RemoveGameObject(GameObject* _gameObject);
 
 private:
-	SceneBase* current_scene_{};	// シーン
-
-	//更新処理
+	// 更新処理
 	void UpdateGameObjects(void);
+	// シーン
+	SceneBase* current_scene_{};
 
 	// オブジェクトが更新中か確認
 	bool updating_game_objects_;

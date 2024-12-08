@@ -39,29 +39,22 @@ public:
 	void Uninit() override;
 	void Draw() ;
 
-	void SetObjectName(std::string _objectName);
-	std::string GetObjectName() { return object_name_; }
 	// 更新順位を返す
 	int& GetDrawOrder(void) { return draw_order_; }
 	// コンポーネントのIDを返す
 	TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 
 private:
-	void InitBuffers();
+	void InitBuffers();	// バッファの初期化
 
-	int draw_order_;            // 更新順位
-	std::string object_name_;   // オブジェクト名
+	int draw_order_;	// 更新順位
 
 	// バッファ
 	VertexBuffer<VERTEX_3D> vertex_buffer_;
 	IndexBuffer index_buffer_;
 
-	// シェーダ
-	Shader shader_;
+	Shader shader_;	// シェーダ
 
-	// テクスチャ
-	Texture texture_;
+	Texture texture_;	// テクスチャ
 };
-
-
 #endif	// SPRITE_COMPONENT_H_

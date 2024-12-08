@@ -67,7 +67,7 @@
     <ClCompile Include="SorceFiles\Renderer.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\TestObject.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp" />
     <ClCompile Include="SorceFiles\Scene\TitleScene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
   </ItemGroup>
@@ -125,7 +125,7 @@
     <ClInclude Include="SorceFiles\SubSystem\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\TestObject.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h" />
     <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
   </ItemGroup>

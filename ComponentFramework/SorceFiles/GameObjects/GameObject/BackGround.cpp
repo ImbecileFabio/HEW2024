@@ -1,14 +1,14 @@
-#include "TestObject.h"
+#include "BackGround.h"
 
-TestObject::TestObject(GameManager* _gameManager)
-	:GameObject(_gameManager)
+BackGround::BackGround(GameManager* _gameManager)
+	:GameObject(_gameManager, "BackGround")
 {
 
 	this->InitGameObject();
 
 }
 
-TestObject::~TestObject(void)
+BackGround::~BackGround(void)
 {
 	delete sprite_component_;
 }
@@ -16,14 +16,14 @@ TestObject::~TestObject(void)
 //--------------------------------------------------
 // ‰Šú‰»ˆ—
 //--------------------------------------------------
-void TestObject::InitGameObject(void)
+void BackGround::InitGameObject(void)
 {
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"backdrop_02.png", 100);
 
 	transform_component_->SetScale(2880, 1080);
 }
 
-void TestObject::UpdateGameObject(void)
+void BackGround::UpdateGameObject(void)
 {
 
 }

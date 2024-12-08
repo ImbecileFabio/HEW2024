@@ -39,6 +39,6 @@ public:
 private:
 	// 所有するコンポーネント
 	class SpriteComponent* sprite_component_{};
-	class PendulumMovementComponent* pendulum_component_{};
+	class PendulumMovementComponent* pendulum_movement_component_{};
 };
 #endif	// PENDULUM_H_

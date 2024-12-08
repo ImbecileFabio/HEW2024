@@ -21,13 +21,9 @@
 // コンストラクタ
 //--------------------------------------------------
 Tile::Tile(GameManager* _gameManager)
-	:GameObject(_gameManager)
+	:GameObject(_gameManager, "Tile")
 {
-	std::cout << std::format("＜Tile＞ -> Constructor\n");
-
-
 	this->InitGameObject();
-
 }
 
 //--------------------------------------------------
@@ -35,7 +31,6 @@ Tile::Tile(GameManager* _gameManager)
 //--------------------------------------------------
 Tile::~Tile(void)
 {
-	std::cout << std::format("＜Tile＞ -> Destructor\n");
 	// ここでコンポーネントを削除
 	delete sprite_component_;
 	delete collider_component_;
@@ -50,8 +45,6 @@ void Tile::InitGameObject(void)
 	transform_component_->SetScale(512, 64);
 
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"tile_01.png");
-	sprite_component_->SetObjectName("Tile");
-
 
 	collider_component_ = new BoxColliderComponent(this);
 }

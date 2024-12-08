@@ -38,8 +38,8 @@ public:
     virtual TypeID GetComponentType(void) const override { return TypeID::CameraComponent; }
 
 private:
-    DirectX::SimpleMath::Vector3 target_;
-    DirectX::SimpleMath::Matrix view_matrix_;
+    DirectX::SimpleMath::Vector3 target_;       // 座標
+	DirectX::SimpleMath::Matrix view_matrix_;   // ビュー行列
 };
 
 #endif // CAMERA_COMPONENT_H_

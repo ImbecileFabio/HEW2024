@@ -67,7 +67,7 @@ public:
 	};
 
 public:
-	GameObject(GameManager* _gameManager);
+	GameObject(GameManager* _gameManager, std::string _objectName);
 	virtual ~GameObject(void);
 
 	void Init(void);
@@ -82,18 +82,18 @@ public:
 	void ComputeWorldTransform();
 
 	// ゲームオブジェクトの名前設定、取得
-	void SetName(const std::string& _name) { name_ = _name; }
-	auto& GetName() const { return name_; }
+	void SetObjectName(std::string _objectName) { object_name_ = _objectName; }
+	auto& GetObjectName() const { return object_name_; }
 
-	// コンポーネントの追加、削除(ゲームオブジェクト側に持たせたほうがいいかもしれないかもしれない)
+	// コンポーネントの追加、削除
 	void AddComponent(Component* component);
 	void RemoveComponent(Component* component);
 
-	/*
-	* @param	取得したいConponent(T)
-	* @brief	GameObjectのcomponents_からtargetにキャストする
-	* @retuan	見つかればtargetを	見つからなければ nullptr を返す
-	*/
+	//--------------------------------------------------
+	// @param	取得したいConponent(T)
+	// @brief	GameObjectのcomponents_からtargetにキャストする
+	// @retuan	見つかればtargetを	見つからなければ nullptr を返す
+	//--------------------------------------------------
 	template <typename T>
 	inline T* GetComponent() const {
 
@@ -127,7 +127,7 @@ protected:
 	 GameManager* game_manager_{};
 
 	 // オブジェクトの名前
-	 std::string name_{};
+	 std::string object_name_{};
 
 	// GameObjectの状態
 	State state_{};

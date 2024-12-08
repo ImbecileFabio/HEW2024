@@ -25,7 +25,7 @@
 #include "GameObjects/GameObject/Robot.h"
 
 // デバッグようおぶじぇえくと
-#include "GameObjects/GameObject/TestObject.h"
+#include "GameObjects/GameObject/BackGround.h"
 #include "GameObjects/GameObject/ColliderTestObject.h"
 #include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 
@@ -125,7 +125,7 @@ void GameManager::GenerateOutputAll(void)
 //-----------------------------------------------------------------
 void GameManager::ChangeScene(SceneName _scene)
 {
-	std::cout << std::format("[GameManager] -> ChangeScene\n");
+	std::cout << std::format("\n[GameManager] -> ChangeScene\n");
 
 	// 現在のシーンの終了処理
 	current_scene_->Uninit();

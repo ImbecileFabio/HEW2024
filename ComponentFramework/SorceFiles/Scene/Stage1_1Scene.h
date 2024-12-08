@@ -10,9 +10,9 @@
 /*----- インクルード -----*/
 #include "SceneBase.h"
 
-//==================================================
+//--------------------------------------------------
 // ステージ1-1シーンクラス
-//==================================================
+//--------------------------------------------------
 class Stage1_1Scene :
 	public SceneBase
 {
@@ -27,13 +27,13 @@ public:
 private:
 	// 作ったオブジェクトをここに記述
 
-	class Player* player_{};		// プレイヤー
-	class Camera* camera_{};		// カメラ
-	class Pendulum* pendulum_{};	// 振り子
-	class Tile* tile_{};			// タイル
-	class TestObject* test_object_{};
-	class Robot* robot_{};
+	class BackGround* back_ground_{};	// 背景
+	class Camera* camera_{};			// カメラ
+	class Pendulum* pendulum_{};		// 振り子
+	class Tile* tile_{};				// タイル
+	class Robot* robot_{};				// ロボット
 
+	class ColliderTestObject* collider_test_object_{};
 };
 
 #endif  // STAGE1_1SCENE_H_

@@ -80,13 +80,10 @@ void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _f
 void PendulumMovementComponent::PendulumAngle(float _angularAcceleration) {
 	if (angle_ > 0) {			// -³‚ÌŠp“x‚Ìê‡
 		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration( _angularAcceleration);
-		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
 	} else if (angle_ < 0) {	// -•‰‚ÌŠp“x‚Ìê‡
 		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(-_angularAcceleration);
-		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
 	} else {					// -Šp“x‚ª0‚Ìê‡
 		this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularAcceleration(0.f);
-		this->owner_->GetComponent<AngularVelocityComponent>()->Update();
 	}
 }
 

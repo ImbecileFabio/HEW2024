@@ -1,13 +1,13 @@
 #pragma once
 
 #include "../GameObject.h"
-class TestObject :
+class BackGround :
     public GameObject
 {
 
 	public:
-		TestObject(GameManager* _gameManager);
-		~TestObject(void);
+		BackGround(GameManager* _gameManager);
+		~BackGround(void);
 
 		void InitGameObject(void) override;
 		void UpdateGameObject(void) override;
