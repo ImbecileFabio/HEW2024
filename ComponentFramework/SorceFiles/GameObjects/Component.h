@@ -49,7 +49,8 @@ public:
 		, TimeZoneComponent
 		// 振り子の動き
 		, PendulumMovementComponent
-
+		// リフト
+		, LiftComponent
 		// カメラ
 		, CameraComponent
 		// 振り子

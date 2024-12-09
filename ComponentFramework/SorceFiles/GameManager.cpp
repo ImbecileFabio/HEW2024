@@ -23,6 +23,7 @@
 #include "GameObjects/GameObject/Pendulum.h"
 #include "GameObjects/GameObject/Tile.h"
 #include "GameObjects/GameObject/Robot.h"
+#include "GameObjects/GameObject/Lift.h"
 
 // デバッグようおぶじぇえくと
 #include "GameObjects/GameObject/TestObject.h"
@@ -70,6 +71,7 @@ void GameManager::InitAll(void)
 	tile_ = new Tile(this);
 	pendulum_ = new Pendulum(this);
 	robot_ = new Robot(this);
+	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-200.0f, 0.0f, 0.0f}, this);
 	// GameManegerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_objects_)
 	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
@@ -93,6 +95,7 @@ void GameManager::UninitAll(void)
 	delete pendulum_;
 	delete test_object_;
 	delete collider_manager_;
+	delete tile_;
 }
 
 //-----------------------------------------------------------------

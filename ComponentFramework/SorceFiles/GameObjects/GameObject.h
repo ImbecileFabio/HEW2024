@@ -45,6 +45,7 @@ public:
 		, Pendulum
 		, Tile
 		, Robot
+		, Lift
 
 		// ゲームオブジェクトのIDの最大値
 		, MAX

@@ -61,6 +61,7 @@ private:
 	class Tile* tile_{};			// タイル
 	class TestObject* test_object_{};
 	class Robot* robot_{};
+	class Lift* lift_{};			// リフト
 };
 
 
