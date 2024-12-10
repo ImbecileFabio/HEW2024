@@ -12,9 +12,8 @@
 #include "../ColliderManager.h"
 
 #include "../GameObjects/GameObject.h"
-#include "../GameObjects/GameObject/BackGround.h"
-#include "../GameObjects/GameObject/Player.h"
 #include "../GameObjects/GameObject/Camera.h"
+#include "../GameObjects/GameObject/BackGround.h"
 #include "../GameObjects/GameObject/Pendulum.h"
 #include "../GameObjects/GameObject/Tile.h"
 #include "../GameObjects/GameObject/Robot.h"
@@ -49,7 +48,7 @@ void Stage1_1Scene::Init()
 	back_ground_ = new BackGround(game_manager_);
 	tile_ = new Tile(game_manager_);
 
-	//robot_ = new Robot(game_manager_);
+	robot_ = new Robot(game_manager_);
 	
 	//collider_test_object_ = new ColliderTestObject(game_manager_);
 

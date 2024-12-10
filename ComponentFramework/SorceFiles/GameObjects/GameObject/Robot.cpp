@@ -1,13 +1,14 @@
 //==================================================
-// [Robot.cpp] タイルオブジェクト
+// [Robot.cpp] ロボットオブジェクト
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：タイルの処理を定義
+// 説明：ロボットの処理を定義
 //==================================================
 
 /*----- インクルード -----*/
 #include <iostream>
 #include <format>
+#include <algorithm>
 
 #include "Robot.h"
 #include "../../GameManager.h"
@@ -50,7 +51,6 @@ void Robot::InitGameObject(void)
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 
 	velocity_component_ = new VelocityComponent(this);	// 速度
-	velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	velocity_component_->SetUseGravity(false);
 
 
@@ -61,5 +61,31 @@ void Robot::InitGameObject(void)
 //--------------------------------------------------
 void Robot::UpdateGameObject(void)
 {
+	auto& input =  InputManager::GetInstance();
+	// 移動処理
+	if (input.GetKeyPress(VK_D))
+	{
+		velocity_component_->SetAcceleration(DirectX::SimpleMath::Vector3( 0.1f, 0.0f, 0.0f));
+	}
+	else if (input.GetKeyPress(VK_A))
+	{
+		velocity_component_->SetAcceleration(DirectX::SimpleMath::Vector3(-0.1f, 0.0f, 0.0f));
+	}
+	else
+	{
+		// 加速度の絶対値を減速率に基づいて減少させる
+		DirectX::SimpleMath::Vector3 current_acceleration = velocity_component_->GetAcceleration();
+		if (current_acceleration.x > 0.0f)
+		{
+			current_acceleration.x = std::max(0.0f, current_acceleration.x - DECELERATION_RATE);
+		}
+		else if (current_acceleration.x < 0.0f)
+		{
+			current_acceleration.x = std::min(0.0f, current_acceleration.x + DECELERATION_RATE);
+		}
+		velocity_component_->SetAcceleration(current_acceleration);
+	}
+
+	
 
 }
