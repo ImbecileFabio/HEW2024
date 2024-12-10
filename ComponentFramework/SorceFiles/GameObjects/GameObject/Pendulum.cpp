@@ -17,6 +17,7 @@
 #include "../Component/TimeZoneComponent/TimeZoneComponent.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/PendulumMovementComponent.h"
+#include "../Component/RigidbodyComponent/AngularVelocityComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -38,6 +39,9 @@ Pendulum::~Pendulum(void)
 	// ここでコンポーネントを削除
 	delete sprite_component_;
 	delete pendulum_component_;
+	delete collider_component_;
+	delete time_zone_component_;
+	delete angular_velocity_component_;
 }
 
 //--------------------------------------------------
@@ -51,7 +55,8 @@ void Pendulum::InitGameObject(void)
 	// 当たり判定コンポーネント
 	collider_component_ = new CircleColliderComponent(this);
 	// タイムゾーンコンポーネント
-	time_zone_component_ = new TimeZoneComponent(this);
+	time_zone_component_		= new TimeZoneComponent(this);
+	angular_velocity_component_ = new AngularVelocityComponent(this);
 	// 振り子コンポーネント
 	pendulum_component_ = new PendulumMovementComponent(this);
 	transform_component_->SetScale(300.0f, 300.0f);

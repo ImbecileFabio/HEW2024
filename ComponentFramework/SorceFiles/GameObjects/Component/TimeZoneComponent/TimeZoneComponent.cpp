@@ -1,6 +1,6 @@
 #include "TimeZoneComponent.h"
 #include "../../Component/ColliderComponent/ColliderBaseComponent.h"
-#include "../../Component/RigidbodyComponent.h"
+#include "../../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../../GameObject.h"
 
 //--------------------------------------------------
@@ -23,16 +23,16 @@ TimeZoneComponent::~TimeZoneComponent()
 //--------------------------------------------------
 void TimeZoneComponent::Init(void)
 {	// オブジェクトのコライダーを参照で持つ
-	this->colliderComponent_ = this->owner_->GetComponent<ColliderBaseComponent>();	
-	this->rigidbodyComponent_ = this->owner_->GetComponent<RigidbodyComponent>();
+	this->collider_component_ = this->owner_->GetComponent<ColliderBaseComponent>();	
+	this->velocity_component_ = this->owner_->GetComponent<VelocityComponent>();
 }
 //--------------------------------------------------
 // @brief タイムゾーンの終了処理
 //--------------------------------------------------
 void TimeZoneComponent::Uninit(void)
 {
-	delete this->colliderComponent_;
-	delete this->rigidbodyComponent_;
+	delete this->collider_component_;
+	delete this->velocity_component_;
 }
 //--------------------------------------------------
 // @brief タイムゾーンの更新処理
