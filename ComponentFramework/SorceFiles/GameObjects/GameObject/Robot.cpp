@@ -8,7 +8,6 @@
 /*----- インクルード -----*/
 #include <iostream>
 #include <format>
-#include <algorithm>
 
 #include "Robot.h"
 #include "../../GameManager.h"
@@ -70,20 +69,6 @@ void Robot::UpdateGameObject(void)
 	else if (input.GetKeyPress(VK_A))
 	{
 		velocity_component_->SetAcceleration(DirectX::SimpleMath::Vector3(-0.1f, 0.0f, 0.0f));
-	}
-	else
-	{
-		// 加速度の絶対値を減速率に基づいて減少させる
-		DirectX::SimpleMath::Vector3 current_acceleration = velocity_component_->GetAcceleration();
-		if (current_acceleration.x > 0.0f)
-		{
-			current_acceleration.x = std::max(0.0f, current_acceleration.x - DECELERATION_RATE);
-		}
-		else if (current_acceleration.x < 0.0f)
-		{
-			current_acceleration.x = std::min(0.0f, current_acceleration.x + DECELERATION_RATE);
-		}
-		velocity_component_->SetAcceleration(current_acceleration);
 	}
 
 	
