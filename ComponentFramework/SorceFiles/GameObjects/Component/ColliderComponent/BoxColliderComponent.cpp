@@ -14,12 +14,15 @@
 BoxColliderComponent::BoxColliderComponent(GameObject* _owner, int _updateOrder)
 	: ColliderBaseComponent(_owner, _updateOrder)
 {
+
+	this->Init();
 }
 //--------------------------------------------------
 // @brief デストラクタ
 //--------------------------------------------------
 BoxColliderComponent::~BoxColliderComponent()
 {
+	this->Uninit();
 }
 //--------------------------------------------------
 // @brief 四角形の当たり判定の初期化処理

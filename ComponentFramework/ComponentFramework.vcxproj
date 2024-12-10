@@ -30,6 +30,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Lift.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Robot.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp" />
@@ -56,6 +57,10 @@
     <ClCompile Include="SorceFiles\ImGui\imgui_tables.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SorceFiles\InputManager.cpp" />
+    <ClCompile Include="SorceFiles\Scene\ResultScene.cpp" />
+    <ClCompile Include="SorceFiles\Scene\SceneBase.cpp" />
+    <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
+    <ClCompile Include="SorceFiles\Scene\TitleScene.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
@@ -67,7 +72,6 @@
     <ClCompile Include="SorceFiles\Renderer.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\TestObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\ColliderManager.h" />
@@ -81,6 +85,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Lift.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Robot.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h" />
@@ -108,6 +113,10 @@
     <ClInclude Include="SorceFiles\ImGui\imstb_textedit.h" />
     <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h" />
     <ClInclude Include="SorceFiles\InputManager.h" />
+    <ClInclude Include="SorceFiles\Scene\ResultScene.h" />
+    <ClInclude Include="SorceFiles\Scene\SceneBase.h" />
+    <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
+    <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
     <ClInclude Include="SorceFiles\SubSystem\dx11helper.h" />
@@ -123,7 +132,6 @@
     <ClInclude Include="SorceFiles\SubSystem\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\TestObject.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\unlitTexturePS.hlsl">

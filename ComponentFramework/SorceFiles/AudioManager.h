@@ -17,9 +17,8 @@ typedef enum
 {
 	SoundLabel_SampleBGM = 0,	// サンプルBGM
 	SoundLabel_SampleSE,		// サンプルSE
-//	SoundLabel○○○,				// この形で列挙していく予定
-								// ↓
-								// ↓
+//	SoundLabel○○○,			// この形で列挙していく予定
+	SoundLabel_TitleBGM,		// タイトルBGM
 
 	SoundLabel_MAX,				// サウンドの総数
 } SoundLabel;
@@ -37,10 +36,10 @@ private:
 	// パラメーター構造体の初期化
 	Param param[SoundLabel_MAX] = {
 		{ "../Asset/Sound/BGM/Devine-Fencer.wav", true  },	// サンプルBGM音源
-		{ "../Asset/Sound/SE /SE33.wav"			, false },	// サンプルSE音源
+		{ "../Asset/Sound/SE/SE33.wav"			, false },	// サンプルSE音源
 		// ↓
 		// ↓
-
+		{"Asset/Sound/BGM/Title_BGM.wav", true}
 	};	
 	
 	// -チャンクは "識別子（ID）" "チャンクのサイズ"　"データの内容"　の3つで構成されている

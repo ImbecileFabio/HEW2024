@@ -30,10 +30,3 @@ RenderComponent::~RenderComponent(void)
 	std::cout << std::format("ƒRenderComponent„ -> Destructor\n");
 
 }
-
-//--------------------------------------------------
-// I—¹ˆ—
-//--------------------------------------------------
-void RenderComponent::Uninit()
-{
-}

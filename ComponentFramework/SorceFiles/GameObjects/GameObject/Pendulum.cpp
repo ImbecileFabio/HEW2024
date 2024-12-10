@@ -22,11 +22,9 @@
 // コンストラクタ
 //--------------------------------------------------
 Pendulum::Pendulum(GameManager* _gameManager)
-	:GameObject(_gameManager)
+	:GameObject(_gameManager, "Pendulum")
 {
-	std::cout << std::format("＜Pendulum＞ -> Constructor\n");
 	this->InitGameObject();
-
 }
 
 //--------------------------------------------------
@@ -34,7 +32,6 @@ Pendulum::Pendulum(GameManager* _gameManager)
 //--------------------------------------------------
 Pendulum::~Pendulum(void)
 {
-	std::cout << std::format("＜Pendulum＞ -> Destructor\n");
 	// ここでコンポーネントを削除
 	delete sprite_component_;
 	delete pendulum_component_;
@@ -47,7 +44,6 @@ void Pendulum::InitGameObject(void)
 {
 	// スプライトコンポーネント
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v01/ball_01.png");
-	sprite_component_->SetObjectName("Pendulum");
 	// 当たり判定コンポーネント
 	collider_component_ = new CircleColliderComponent(this);
 	// タイムゾーンコンポーネント

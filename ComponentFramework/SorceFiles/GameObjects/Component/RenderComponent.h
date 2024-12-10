@@ -26,7 +26,7 @@ public:
 	~RenderComponent();
 
 	void Init(void) override {};
-	void Uninit(void) override;
+	void Uninit(void) override {};
 	void Update(void) override {};
 
 	virtual TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }

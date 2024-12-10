@@ -15,10 +15,9 @@
 // @param _gameManager オブジェクトを所持しているマネージャー
 //--------------------------------------------------
 Lift::Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::SimpleMath::Vector3 _minPos, GameManager* _gameManager)
-	:GameObject(_gameManager)
+	:GameObject(_gameManager, "Lift")
 	,moveState_(_moveState), maxPos_(_maxPos), minPos_(_minPos), switchFg_(false)
 {
-	std::cout << std::format("＜Lift＞ -> Constructor\n");
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -26,7 +25,6 @@ Lift::Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::
 //--------------------------------------------------
 Lift::~Lift()
 {
-	std::cout << std::format("＜Lift＞ -> Destructor\n");
 	delete spriteComponent_;
 	delete velocityComponent_;
 }
@@ -56,6 +54,7 @@ void Lift::UpdateGameObject(void)
 	case Lift::MoveState::length:	// 縦移動
 		break;
 	case Lift::MoveState::side:		// 横移動
+	{
 		if (pos.x < maxPos_.x && switchFg_ == false)
 		{
 			velocityComponent_->SetAcceleration({ 0.1f, 0.0f, 0.0f });
@@ -72,15 +71,16 @@ void Lift::UpdateGameObject(void)
 		if (current_acceleration.x > 0.0f)
 		{
 			current_acceleration.x =
-				std::max({ 0.0f , current_acceleration.x - 0.01f });
+				max( 0.0f , current_acceleration.x - 0.01f );
 		}
 		else if (current_acceleration.x < 0.0f)
 		{
-			current_acceleration.x = 
-				std::min({ 0.0f , current_acceleration.x + 0.01f });
+			current_acceleration.x =
+				min(0.0f , current_acceleration.x + 0.01f );
 		}
 		velocityComponent_->SetAcceleration(current_acceleration);
 		break;
+	}
 	default:
 		break;
 	}

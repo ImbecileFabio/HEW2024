@@ -14,9 +14,6 @@
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
-class SpriteComponent;
-class ColliderBaseComponent;
-class VelocityComponent;
 
 //--------------------------------------------------
 // プレイヤーオブジェクト
@@ -35,9 +32,9 @@ public:
 
 private:
 	// 所有するコンポーネント
-	SpriteComponent* sprite_component_{};
-	ColliderBaseComponent* collider_component_{};
-	VelocityComponent* velocity_component_{};
+	class SpriteComponent* sprite_component_{};
+	class ColliderBaseComponent* collider_component_{};
+	class VelocityComponent* velocity_component_{};
 	
 };
 #endif	// PLAYER_H_

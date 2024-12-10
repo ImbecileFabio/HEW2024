@@ -16,10 +16,8 @@
 // コンストラクタ
 //--------------------------------------------------
 Camera::Camera(GameManager* _gameManager)
-	:GameObject(_gameManager)
+	:GameObject(_gameManager, "Camera")
 {
-	std::cout << std::format("＜Camera＞ -> new\n");
-
 	this->InitGameObject();	
 }
 
@@ -28,7 +26,6 @@ Camera::Camera(GameManager* _gameManager)
 //--------------------------------------------------
 Camera::~Camera()
 {
-	std::cout << std::format("＜Camera＞ -> delete\n");
 	// コンポーネントの削除
 	delete camera_component_;
 }

@@ -14,8 +14,7 @@
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
-class SpriteComponent;
-class ColliderBaseComponent;
+
 //--------------------------------------------------
 // タイルオブジェクト
 //--------------------------------------------------
@@ -33,7 +32,8 @@ public:
 
 private:
 	// 所有するコンポーネント
-	SpriteComponent* sprite_component_{};
-	ColliderBaseComponent* collider_component_{};
+	class SpriteComponent* sprite_component_{};
+	class ColliderBaseComponent* collider_component_{};	// 当たり判定
+	class VelocityComponent* velocity_component_{};		// 速度
 };
 #endif	// ROBOT_H_

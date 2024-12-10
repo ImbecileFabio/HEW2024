@@ -16,9 +16,11 @@
 
 /*----- 前方宣言 -----*/
 class GameManeger;
-class CameraComponent;
 
-class Camera 
+//==================================================
+// カメラクラス
+//==================================================
+class Camera
     : public GameObject
 {
 public:
@@ -32,7 +34,7 @@ public:
 
 private:
 	// 所有するコンポーネント
-	CameraComponent* camera_component_{};
+	class CameraComponent* camera_component_{};
 };
 
 #endif  // CAMERA_H_
