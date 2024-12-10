@@ -58,6 +58,7 @@ private:
 	class Player* player_{};		// プレイヤー
 	class Camera* camera_{};		// カメラ
 	class Pendulum* pendulum_{};	// 振り子
+	class Pendulum* pendulum_2_{};	// 振り子
 	class Tile* tile_{};			// タイル
 	class TestObject* test_object_{};
 	class Robot* robot_{};

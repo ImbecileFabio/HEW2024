@@ -48,64 +48,39 @@ void Lift::InitGameObject(void)
 //--------------------------------------------------
 void Lift::UpdateGameObject(void)
 {
-	DirectX::SimpleMath::Vector3 pos				  = this->transform_component_->GetPosition();
-	DirectX::SimpleMath::Vector3 current_acceleration = this->velocityComponent_->GetAcceleration();
+	DirectX::SimpleMath::Vector3 pos = this->transform_component_->GetPosition();
 	switch (moveState_)
 	{
 	case Lift::MoveState::length:	// 縦移動
 		if (pos.y <= maxPos_.y && switchFg_ == false)
 		{
-			velocityComponent_->SetAcceleration({ 0.0f, 0.1f, 0.0f });
 			velocityComponent_->SetVelocity	   ({ 0.0f, 2.0f, 0.0f });
 			if (pos.y >= maxPos_.y)
 				switchFg_ = true;
 		}
 		if (pos.y >= minPos_.y && switchFg_ == true)
 		{
-			velocityComponent_->SetAcceleration({ 0.0f, -0.1f, 0.0f });
 			velocityComponent_->SetVelocity	   ({ 0.0f, -2.0f, 0.0f });
 			if (pos.y <= minPos_.y)
 				switchFg_ = false;
-		}
-		// 加速度の絶対値を減速率に基づいて減少させる
-		if (current_acceleration.y > 0.0f)
-		{
-			current_acceleration.y = max(0.0f, current_acceleration.y - 0.01f);
-		}
-		else if (current_acceleration.y < 0.0f)
-		{
-			current_acceleration.y = min(0.0f, current_acceleration.y + 0.01f);
 		}
 		break;
 	case Lift::MoveState::side:		// 横移動
 		if (pos.x <= maxPos_.x && switchFg_ == false)
 		{
-			velocityComponent_->SetAcceleration({ 0.1f, 0.0f, 0.0f });
 			velocityComponent_->SetVelocity	   ({ 2.0f, 0.0f, 0.0f });
 			if (pos.x >= maxPos_.x)
 				switchFg_ = true;
 		}
 		if (pos.x >= minPos_.x && switchFg_ == true)
 		{
-			velocityComponent_->SetAcceleration({ -0.1f, 0.0f, 0.0f });
 			velocityComponent_->SetVelocity	   ({ -2.0f, 0.0f, 0.0f });
 			if (pos.x <= minPos_.x)
 				switchFg_ = false;
-		}
-		// 加速度の絶対値を減速率に基づいて減少させる
-		if (current_acceleration.x > 0.0f)
-		{
-			current_acceleration.x = max(0.0f , current_acceleration.x - 0.01f);
-		}
-		else if (current_acceleration.x < 0.0f)
-		{
-			current_acceleration.x = min(0.0f , current_acceleration.x + 0.01f);
 		}
 		break;
 	default:
 		break;
 	}
 	this->transform_component_->SetPosition(pos);
-	velocityComponent_->SetAcceleration(current_acceleration);
-
 }

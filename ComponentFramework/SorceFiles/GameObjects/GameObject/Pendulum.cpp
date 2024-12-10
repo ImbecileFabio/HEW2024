@@ -59,6 +59,7 @@ void Pendulum::InitGameObject(void)
 	angular_velocity_component_ = new AngularVelocityComponent(this);
 	// 振り子コンポーネント
 	pendulum_component_ = new PendulumMovementComponent(this);
+	pendulum_component_->SetPendulumAngle(60.0f);
 	transform_component_->SetScale(300.0f, 300.0f);
 }
 
@@ -67,4 +68,5 @@ void Pendulum::InitGameObject(void)
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
 {
+	this->pendulum_component_->Update(0.01f, Vector3(0.0f, 0.0f, 0.0f), 200.0f);
 }

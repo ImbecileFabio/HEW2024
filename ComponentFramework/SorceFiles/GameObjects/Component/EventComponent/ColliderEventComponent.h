@@ -16,14 +16,21 @@ class ColliderEventComponent :
     public EventBaseComponent
 {
 public:
-	ColliderEventComponent(GameObject* _owner, int _updateOrder = 50) :EventBaseComponent(_owner, _updateOrder) {};
-	~ColliderEventComponent() {};
+	ColliderEventComponent(GameObject* _owner, int _updateOrder = 50);
+	~ColliderEventComponent();
 
-	void Init(void) override {};
-	void Uninit(void) override {};
-	void Update(void) override {};
+	void Init(void) override;
+	void Uninit(void) override;
+	void Update(void) override;
+
+	void AllTriggers();	// UPDATEで回してBOOLが{TRUEこれ・FALSE}になったら
+	void AllActions();
+	void AddEvent	(std::function<void()> _event);
+	void RemoveEvent(std::function<void()> _event) {};
 
 	TypeID GetComponentType(void) const override { return TypeID::ColliderEventComponent; }
+private:
+	std::list<std::function<void>> functions_{};	// 各オブジェクトが持つコライダーに反応して実行するのを関数
 };
 
 #endif // COLLIDER_EVENT_COMPONENT_H_
