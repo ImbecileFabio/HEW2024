@@ -9,9 +9,6 @@
 /*----- インクルード -----*/
 #include "../GameObject.h"
 #include <SimpleMath.h>
-/*----- 前方宣言 -----*/
-class VelocityComponent;
-class SpriteComponent;
 //--------------------------------------------------
 // リフトオブジェクト
 //--------------------------------------------------
@@ -36,6 +33,7 @@ private:
 	bool switchFg_;			// スイッチフラグ
 	MoveState moveState_;	// 移動状態
 
-	SpriteComponent* spriteComponent_ = {};	// 画像表示
+	class SpriteComponent* spriteComponent_		= {};	// 画像表示
+	class VelocityComponent* velocityComponent_ = {};
 };
 #endif // _LIFT_OBJECT_H_
