@@ -23,7 +23,7 @@ class ColliderBaseComponent :public Component
 {
 public:
 	ColliderBaseComponent(GameObject* _owner, int _updateOrder = 50);
-	~ColliderBaseComponent();
+	virtual ~ColliderBaseComponent();
 
 	void Init(void) override {};
 	void Uninit(void) override {};
@@ -33,8 +33,11 @@ public:
 	virtual bool CheckCollisionCollider(CircleColliderComponent* _other)= 0;
 	virtual bool CheckCollisionCollider(BoxColliderComponent* _other) = 0;
 
+	bool GetHitFg(void) { return hitFg_; }
+
 	TypeID GetComponentType(void) const override { return TypeID::ColliderBaseComponent; }
 protected:
+	bool hitFg_ = false;
 };
 
 #endif // COLLIDER_BASE_COMPONENT_H_

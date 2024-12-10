@@ -32,8 +32,6 @@ private:
 	class Pendulum* pendulum_{};		// 振り子
 	class Tile* tile_{};				// タイル
 	class Robot* robot_{};				// ロボット
-
-	class ColliderTestObject* collider_test_object_{};
 };
 
 #endif  // STAGE1_1SCENE_H_

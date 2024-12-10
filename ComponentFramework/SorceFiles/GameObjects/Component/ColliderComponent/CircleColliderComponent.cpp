@@ -26,17 +26,16 @@ CircleColliderComponent::~CircleColliderComponent()
 //--------------------------------------------------
 void CircleColliderComponent::Init(void)
 {
+	DirectX::SimpleMath::Vector3 scale =
+		this->owner_->GetComponent<TransformComponent>()->GetScale();
+	this->circle_.radius = std::min<float>(scale.x, scale.y) / 2.0f;
 }
 //--------------------------------------------------
 // @brief 円の当たり判定の更新処理
 //--------------------------------------------------
 void CircleColliderComponent::Update(void)
 {
-	DirectX::SimpleMath::Vector3 scale =
-		this->owner_->GetComponent<TransformComponent>()->GetScale();
-	this->circle_.radius = std::min<float>(scale.x, scale.y) / 2;
-	this->circle_.position = 
-		this->owner_->GetComponent<TransformComponent>()->GetPosition();
+	this->circle_.position = this->owner_->GetComponent<TransformComponent>()->GetPosition();
 }
 //--------------------------------------------------
 // @brief ポリフォーリズムを使って、コンポーネントで渡す関数を判別してくれる偉大なコード
@@ -61,10 +60,11 @@ bool CircleColliderComponent::CheckCollisionCollider(CircleColliderComponent* _o
 
 	if (c <= sumRadius * sumRadius)
 	{
-		std::cout << std::format("[CircleColliderComponent] -> CheckCollision\n");
+		std::cout << std::format("[CircleColliderComponent] -> CheckCollider Start\n");
+		this->hitFg_ = true;
 		return true;
 	}
-	return false;
+	this->hitFg_ = false;  return false;
 }
 //--------------------------------------------------
 // @brief 円と四角の当たり判定をとる関数

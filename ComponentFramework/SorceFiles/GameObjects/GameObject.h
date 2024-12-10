@@ -13,6 +13,7 @@
 #include <vector>
 #include <iostream>
 #include <format>
+#include <typeinfo>
 
 #include "../InputManager.h"
 #include "Component.h"
@@ -27,6 +28,7 @@
 /*----- 前方宣言 -----*/
 class GameManager;
 class ColliderManager;
+class ColliderBaseComponent;
 //--------------------------------------------------
 // ゲームオブジェクトクラス
 //--------------------------------------------------
@@ -46,8 +48,8 @@ public:
 		, Pendulum
 		, Tile
 		, Robot
+		, Lift
 
-		, ColliderTestObject	// テスト
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};

@@ -81,7 +81,7 @@ void GameProcess::Run(void)
 
 	int fpsCounter = 0;
 	int fps = 0;	// 表示するfps
-	DWORD lastTime = GetTickCount64();
+	DWORD lastTime = static_cast<DWORD>(GetTickCount64());
 #ifdef IMGUI_DEBUG
 	ImGuiManager imGuiManager;
 	ImGuiManager::staticPointer = &imGuiManager;
@@ -125,7 +125,7 @@ void GameProcess::Run(void)
 				prevCount = currCount;
 			}
 			// 毎秒FPSをウィンドウタイトルに反映
-			DWORD currTime = GetTickCount64();
+			DWORD currTime = static_cast<DWORD>(GetTickCount64());
 			if (currTime - lastTime >= 1000)	//	一秒ごとに更新
 			{
 				fps = fpsCounter;

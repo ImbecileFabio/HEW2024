@@ -10,17 +10,14 @@
 
 #include "../GameManager.h"
 #include "../ColliderManager.h"
+#include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
 
 #include "../GameObjects/GameObject.h"
-#include "../GameObjects/GameObject/Camera.h"
 #include "../GameObjects/GameObject/BackGround.h"
+#include "../GameObjects/GameObject/Camera.h"
 #include "../GameObjects/GameObject/Pendulum.h"
 #include "../GameObjects/GameObject/Tile.h"
 #include "../GameObjects/GameObject/Robot.h"
-
-// デバッグようおぶじぇえくと
-#include "../GameObjects/GameObject/ColliderTestObject.h"
-#include "../GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -50,7 +47,6 @@ void Stage1_1Scene::Init()
 
 	robot_ = new Robot(game_manager_);
 	
-	//collider_test_object_ = new ColliderTestObject(game_manager_);
 
 	//pendulum_ = new Pendulum(game_manager_);
 	
@@ -76,7 +72,6 @@ void Stage1_1Scene::Uninit()
 	delete pendulum_;
 	delete tile_;
 	delete robot_;
-	delete collider_test_object_;
 
 }
 
