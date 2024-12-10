@@ -136,7 +136,7 @@ protected:
 
 	// 所有コンポーネント
 	std::vector<Component*> components_{};
-
+	
 	// 姿勢情報を再計算するか
 	bool re_compute_transform_{};
 
@@ -145,3 +145,5 @@ protected:
 };
 
 #endif	// GAMEOBJECT_H_
+
+
