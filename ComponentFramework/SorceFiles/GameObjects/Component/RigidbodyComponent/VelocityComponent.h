@@ -44,7 +44,7 @@ public:
 
 	void Init();
 	void Uninit();
-	void Update();		// すべての更新を行う
+	void Update(float _speed = 1.f);		// すべての更新を行う
 
 	// 加速度
 	void	SetAcceleration(const DirectX::SimpleMath::Vector3 _acceleration);

@@ -36,9 +36,9 @@ void VelocityComponent::Init() {
 	use_acceleration_	= true;
 	use_velocity_		= true;
 	use_gravity_		= true;
-	acceleration_	= { 0.0f, 0.0f,0.0f };
-	velocity_		= { 0.0f, 0.0f,0.0f };
-	gravity_		= { 0.0f,-0.1f,0.0f };	// 一応固定
+	acceleration_	= { 0.f,0.f,0.f };
+	velocity_		= { 0.f,0.f,0.f };
+	gravity_		= { 0.f,-1.f,0.f };	// 一応固定
 }
 
 //--------------------------------------------------
@@ -51,25 +51,30 @@ void VelocityComponent::Uninit() {
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void VelocityComponent::Update() {
+void VelocityComponent::Update(float _speed) {
 	position_ = this->owner_->GetComponent<TransformComponent>()->GetPosition();	// -現在座標の取得
 
 	// 速度を適用
 	if (use_velocity_) {
 		// 加速度を適用
 		if (use_acceleration_) {
-			velocity_ += acceleration_;
+			velocity_.x += acceleration_.x;
+			velocity_.y += acceleration_.y;
+			velocity_.z += acceleration_.z;
 		}
-		// 重力を適用
+		// 重力を適用（一応三つとも）
 		if (use_gravity_) {
-			velocity_ += gravity_;
+			velocity_.x += gravity_.x;
+			velocity_.y += gravity_.y;
+			velocity_.z += gravity_.z;
 		}
 
-		position_ += velocity_;
+		position_.x += (velocity_.x * _speed);
+		position_.y += (velocity_.y * _speed);
+		position_.z += (velocity_.z * _speed);
 	}
 
-
-	owner_->GetComponent<TransformComponent>()->SetPosition(position_);
+	owner_->GetComponent<TransformComponent>()->SetPosition(velocity_);
 }
 
 
