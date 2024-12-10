@@ -19,6 +19,7 @@ AudioManager::AudioManager()
 	pFile			= nullptr;
 	Init();
 }
+
 AudioManager::~AudioManager()
 {
 	Uninit();
@@ -96,7 +97,6 @@ void AudioManager::Uninit()
 //--------------------------------------------------
 // Ä¶‚Æ’âŽ~
 //--------------------------------------------------
-
 void AudioManager::Play(SoundLabel _label)
 {
 	hr = pSourceVoice[_label]->SubmitSourceBuffer(&AudioDataBuffer);

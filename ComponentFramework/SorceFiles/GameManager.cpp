@@ -16,18 +16,9 @@
 #include "GameManager.h"
 #include "ColliderManager.h"
 #include "Renderer.h"
+#include "AudioManager.h"
 #include "ImGuiManager.h"
-#include "GameObjects/GameObject.h"
-#include "GameObjects/GameObject/Player.h"
-#include "GameObjects/GameObject/Camera.h"
-#include "GameObjects/GameObject/Pendulum.h"
-#include "GameObjects/GameObject/Tile.h"
-#include "GameObjects/GameObject/Robot.h"
-#include "GameObjects/GameObject/Lift.h"
 
-// デバッグようおぶじぇえくと
-#include "GameObjects/GameObject/TestObject.h"
-#include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 
 //-----------------------------------------------------------------
 // コンストラクタ
@@ -36,6 +27,17 @@ GameManager::GameManager()
 	:updating_game_objects_(false)
 {
 	std::cout << std::format("[GameManager] -> Constructor\n");
+	// レンダラー初期化
+	renderer_ = new Renderer();
+	renderer_->Init();
+
+	// オーディオマネージャー初期化
+	//audio_manager_ = new AudioManager();
+
+	// コライダーマネージャー初期化
+		
+	collider_manager_ = ColliderManager::Create();
+
 	this->InitAll();
 
 }
@@ -45,8 +47,15 @@ GameManager::GameManager()
 //-----------------------------------------------------------------
 GameManager::~GameManager(void)
 {
-	this->UninitAll();
+	// 解放処理
 	std::cout << std::format("[GameManager] -> Destructor\n");
+	this->UninitAll();
+
+	delete current_scene_;
+	delete renderer_;
+	delete audio_manager_;
+	delete collider_manager_;
+
 }
 
 //-----------------------------------------------------------------
@@ -56,30 +65,16 @@ void GameManager::InitAll(void)
 {
 	std::cout << std::format("[GameManager] -> InitAll Start\n");
 
-	// レンダラー初期化
-	renderer_ = new Renderer();
-	renderer_->Init();
 
+
+	// オブジェクトリストの初期化
 	game_objects_.clear();
 	pending_game_objects_.clear();
 
-	collider_manager_ = ColliderManager::Create();
-
+	// シーンの初期化
+	current_scene_ = new TitleScene(this);
     // ゲームオブジェクト初期化
-	camera_ = new Camera(this);
-	test_object_ = new TestObject(this);
-	tile_ = new Tile(this);
-	pendulum_ = new Pendulum(this);
-	robot_ = new Robot(this);
-	lift_ = new Lift(Lift::MoveState::side, { 2.0f, 0.0f, 0.0f }, {-200.0f, 0.0f, 0.0f}, this);
-	// GameManegerで生成して、ColliderManagerに登録する
-	for (auto& colliderObjects : game_objects_)
-	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
-		if (colliderObjects->GetComponent<ColliderBaseComponent>())
-		{
-			this->collider_manager_->AddGameObject(colliderObjects);
-		}
-	}
+	current_scene_->Init();
 }
 
 //-----------------------------------------------------------------
@@ -90,12 +85,6 @@ void GameManager::UninitAll(void)
 	std::cout << std::format("[GameManager] -> UninitAll Start\n");
 
 	// ゲームオブジェクトの破棄
-	delete renderer_;
-	delete camera_;
-	delete pendulum_;
-	delete test_object_;
-	delete collider_manager_;
-	delete tile_;
 }
 
 //-----------------------------------------------------------------
@@ -104,6 +93,7 @@ void GameManager::UninitAll(void)
 void GameManager::UpdateAll()
 {
 	// ゲームオブジェクトの更新
+	this->current_scene_->Update();
 	this->UpdateGameObjects();
 	this->collider_manager_->UpdateAll();
 	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
@@ -123,6 +113,34 @@ void GameManager::GenerateOutputAll(void)
 
 		renderer_->End();
 
+	}
+}
+
+//-----------------------------------------------------------------
+// シーン切り替え処理
+//-----------------------------------------------------------------
+void GameManager::ChangeScene(SceneName _scene)
+{
+	std::cout << std::format("\n[GameManager] -> ChangeScene\n");
+
+	// 現在のシーンの終了処理
+	current_scene_->Uninit();
+	current_scene_ = nullptr;
+
+	switch (_scene)
+	{
+	case Title:
+		current_scene_ = new TitleScene(this);
+		break;
+	case Stage1_1:
+		current_scene_ = new Stage1_1Scene(this);
+		break;
+	case Result:
+		current_scene_ = new ResultScene(this);
+		break;
+	default:
+		std::cout << std::format("[GameManager] -> ChangeScene Error\n");
+		break;
 	}
 }
 

@@ -23,7 +23,7 @@ class ColliderBaseComponent :public Component
 {
 public:
 	ColliderBaseComponent(GameObject* _owner, int _updateOrder = 50);
-	~ColliderBaseComponent();
+	virtual ~ColliderBaseComponent();
 
 	void Init(void) override {};
 	void Uninit(void) override {};

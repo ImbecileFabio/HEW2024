@@ -36,9 +36,9 @@ void VelocityComponent::Init() {
 	use_acceleration_	= true;
 	use_velocity_		= true;
 	use_gravity_		= true;
-	acceleration_	= { 0.f,0.f,0.f };
-	velocity_		= { 0.f,0.f,0.f };
-	gravity_		= { 0.f,-1.f,0.f };	// 一応固定
+	acceleration_	= { 0.0f, 0.0f,0.0f };
+	velocity_		= { 0.0f, 0.0f,0.0f };
+	gravity_		= { 0.0f,-0.1f,0.0f };	// 一応固定
 }
 
 //--------------------------------------------------
@@ -58,26 +58,15 @@ void VelocityComponent::Update() {
 	if (use_velocity_) {
 		// 加速度を適用
 		if (use_acceleration_) {
-			velocity_.x += acceleration_.x;
-			velocity_.y += acceleration_.y;
-			velocity_.z += acceleration_.z;
+			velocity_ += acceleration_;
 		}
-		// 重力を適用（一応三つとも）
+		// 重力を適用
 		if (use_gravity_) {
-			velocity_.x += gravity_.x;
-			velocity_.y += gravity_.y;
-			velocity_.z += gravity_.z;
+			velocity_ += gravity_;
 		}
 
-		position_.x += velocity_.x;
-		position_.y += velocity_.y;
-		position_.z += velocity_.z;
+		position_ += velocity_;
 	}
-
-	// 重力の上限
-	if (gravity_.x > 5.0f) { gravity_.x = 5.0f; }
-	if (gravity_.y > 5.0f) { gravity_.y = 5.0f; }
-	if (gravity_.z > 5.0f) { gravity_.z = 5.0f; }
 
 
 	owner_->GetComponent<TransformComponent>()->SetPosition(position_);

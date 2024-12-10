@@ -39,7 +39,6 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 
 	// 描画オブジェクトとして登録
 	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
-	object_name_ = std::string("不明なオブジェクト");
 }
 
 //--------------------------------------------------
@@ -47,7 +46,7 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 //--------------------------------------------------
 SpriteComponent::~SpriteComponent()
 {
-	std::cout << std::format("＜SpriteComponent＞ -> Destructor {}\n", object_name_);
+	std::cout << std::format("＜SpriteComponent＞ -> Destructor\n");
 
 	Uninit();
 }
@@ -112,15 +111,6 @@ void SpriteComponent::InitBuffers()
 
 }
 
-//--------------------------------------------------
-// 名前を定義する処理
-//--------------------------------------------------
-void SpriteComponent::SetObjectName(std::string _objectName)
-{
-	object_name_ = _objectName;
-}
-
-
 
 //--------------------------------------------------
 // 更新処理
@@ -144,13 +134,13 @@ void SpriteComponent::Draw()
 		auto t = transform->GetPosition();
 		auto r = transform->GetRotation();
 		auto s = transform->GetScale();
-		rot = Matrix::CreateFromYawPitchRoll(r.y, r.x, r.z);
+		rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
 		pos = Matrix::CreateTranslation(t);
 		scale = Matrix::CreateScale(s);
 	}
 	else 
 	{
-		std::cout << std::format("＜SpriteComponent＞ -> Faild Get Transform	＜{}＞\n", object_name_);
+		std::cout << std::format("＜SpriteComponent＞ -> default position\n");
 		rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
 		pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
 		scale = Matrix::CreateScale(1.f, 1.f, 1.f);

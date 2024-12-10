@@ -22,10 +22,8 @@
 // コンストラクタ
 //--------------------------------------------------
 Player::Player(GameManager* _gameManager)
-	:GameObject(_gameManager)
+	:GameObject(_gameManager, "Playaer")
 {
-	std::cout << std::format("＜Player＞ -> Constructor\n");
-
 	this->InitGameObject();
 }
 
@@ -34,7 +32,6 @@ Player::Player(GameManager* _gameManager)
 //--------------------------------------------------
 Player::~Player(void)
 {
-	std::cout << std::format("＜Player＞ -> Destructor\n");
 	// ここでコンポーネントを削除
 	delete sprite_component_;
 	delete collider_component_;
@@ -46,12 +43,14 @@ Player::~Player(void)
 //--------------------------------------------------
 void Player::InitGameObject(void)
 {
+	// 名前設定
+	SetObjectName("Player");
+
 	transform_component_->SetPosition(0, 0);
 	transform_component_->SetScale(50, 50);
 
 	// スプライトコンポーネント
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"icon.png");
-	sprite_component_->SetObjectName("Player");
 
 	// 速度コンポーネント
 	velocity_component_ = new VelocityComponent(this);

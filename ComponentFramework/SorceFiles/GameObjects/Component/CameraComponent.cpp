@@ -27,9 +27,7 @@ CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 {
 	std::cout << std::format("ƒCamelaComponent„ -> Constructor\n");
 
-
-	target_ = Vector3(0.f, 0.f, 0.f);
-
+	this->Init();
 }
 
 //--------------------------------------------------
@@ -47,6 +45,7 @@ CameraComponent::~CameraComponent()
 //--------------------------------------------------
 void CameraComponent::Init()
 {
+	target_ = Vector3(0.f, 0.f, 0.f);
 
 }
 
