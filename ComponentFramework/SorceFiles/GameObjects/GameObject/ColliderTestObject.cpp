@@ -30,5 +30,5 @@ ColliderTestObject::~ColliderTestObject()
 }
 void ColliderTestObject::UpdateGameObject(void)
 {
-	this->penCom_->Update(0.01f, Vector3(0.f, 0.f, 0.f), 200.f);
+	this->penCom_->Update(0.5f, Vector3(0.f, 0.f, 0.f), 200.f);
 }

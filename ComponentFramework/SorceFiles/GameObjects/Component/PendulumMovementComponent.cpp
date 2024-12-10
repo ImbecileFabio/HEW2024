@@ -48,9 +48,8 @@ void PendulumMovementComponent::Uninit() {
 // 更新処理
 //--------------------------------------------------
 void PendulumMovementComponent::Update(float _angle, DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
-	//std::cout << std::format("{}  {}  {}  {}  {}\n", turnPendulum_, isPendulumAngle_, wasPendulumAngle_,
-	//	this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity(),
-	//	this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularAcceleration());
+	std::cout << std::format("{}  {}  {}\n", turnPendulum_, isPendulumAngle_,
+		this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity());
 	PendulumAcceleration(_angle);			// 角加速度を設定, 角速度を適用
 	PendulumPosition(_fulcrum, _length);	// 座標を計算
 	
@@ -91,6 +90,8 @@ void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration)
 			PendulumVelocity();			// -角速度を適用 
 			if (isPendulumAngle_ <= 0) {	// -角度が0を跨いでしまったら
 				isPendulumAngle_ = -wasPendulumAngle_;
+				this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularVelocity(wasPendulumVelocity_);
+
 			}
 		}
 		else {
@@ -107,6 +108,7 @@ void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration)
 			PendulumVelocity();			// -角速度を適用 
 			if (isPendulumAngle_ >= 0) {	// -角度が0を跨いでしまったら
 				isPendulumAngle_ = -wasPendulumAngle_;
+				this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularVelocity(wasPendulumVelocity_);
 			}
 		}
 		else {
@@ -132,12 +134,14 @@ void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration)
 //--------------------------------------------------
 void PendulumMovementComponent::PendulumVelocity() {
 	// 角速度に角加速度を適用した値を、角速度に入力する
+	wasPendulumVelocity_ = this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity();
+
 	this->owner_->GetComponent<AngularVelocityComponent>()->SetAngularVelocity(
-		this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity() +
-		this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularAcceleration());
+		std::round((this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity() +
+					this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularAcceleration()) * 100) / 100);
 
 	wasPendulumAngle_ = isPendulumAngle_;
-	isPendulumAngle_ += this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity();
+	isPendulumAngle_  = std::round((isPendulumAngle_ + this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity()) * 100) / 100;
 }
 
 //--------------------------------------------------

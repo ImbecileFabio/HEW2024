@@ -29,6 +29,7 @@ private:
 	DirectX::SimpleMath::Vector3 pemdulumPosition_;	// -位置
 	float isPendulumAngle_;							// -現在の振り子の角度
 	float wasPendulumAngle_;						// -直前の振り子の角度
+	float wasPendulumVelocity_;
 	float pendulumRadian_;							// -振り子の角度（ラジアン）
 	bool  turnPendulum_;							// -振り子の往復で処理を切り替えるためのフラグ　true：右から左　false：左から右
 
