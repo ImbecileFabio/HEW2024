@@ -71,7 +71,7 @@ void GameManager::InitAll(void)
 	tile_ = new Tile(this);
 	pendulum_ = new Pendulum(this);
 	robot_ = new Robot(this);
-	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-200.0f, 0.0f, 0.0f}, this);
+	lift_ = new Lift(Lift::MoveState::side, { 2.0f, 0.0f, 0.0f }, {-200.0f, 0.0f, 0.0f}, this);
 	// GameManegerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_objects_)
 	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
