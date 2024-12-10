@@ -58,23 +58,16 @@ void VelocityComponent::Update(float _speed) {
 	if (use_velocity_) {
 		// 加速度を適用
 		if (use_acceleration_) {
-			velocity_.x += acceleration_.x;
-			velocity_.y += acceleration_.y;
-			velocity_.z += acceleration_.z;
+			velocity_ += acceleration_;
 		}
-		// 重力を適用（一応三つとも）
+		// 重力を適用
 		if (use_gravity_) {
-			velocity_.x += gravity_.x;
-			velocity_.y += gravity_.y;
-			velocity_.z += gravity_.z;
+			velocity_ += gravity_;
 		}
-
-		position_.x += (velocity_.x * _speed);
-		position_.y += (velocity_.y * _speed);
-		position_.z += (velocity_.z * _speed);
+		position_ += (velocity_ * _speed);
 	}
 
-	owner_->GetComponent<TransformComponent>()->SetPosition(velocity_);
+	this->owner_->GetComponent<TransformComponent>()->SetPosition(position_);
 }
 
 
