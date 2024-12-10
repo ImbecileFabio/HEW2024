@@ -41,7 +41,7 @@ public:
 	void Uninit();
 	// Update(float, VECTORå^, float);	(äpâ¡ë¨ìx, éxì_ÇÃç¿ïW, êUÇËéqÇÃí∑Ç≥)
 	void Update() {};
-	void Update(float _angle, DirectX::SimpleMath::Vector3 _fulcrum, float _length);
+	void Update(float _angleAcceleration, DirectX::SimpleMath::Vector3 _fulcrum, float _length);
 
 	void PendulumPosition(DirectX::SimpleMath::Vector3 _fulcrum, float _length);
 	void PendulumAcceleration(float _angularAcceleration);

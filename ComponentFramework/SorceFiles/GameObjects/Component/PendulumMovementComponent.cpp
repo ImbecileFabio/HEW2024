@@ -47,10 +47,10 @@ void PendulumMovementComponent::Uninit() {
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void PendulumMovementComponent::Update(float _angle, DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
+void PendulumMovementComponent::Update(float _angleAcceleration, DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
 	std::cout << std::format("{}  {}  {}\n", turnPendulum_, isPendulumAngle_,
 		this->owner_->GetComponent<AngularVelocityComponent>()->GetAngularVelocity());
-	PendulumAcceleration(_angle);			// 角加速度を設定, 角速度を適用
+	PendulumAcceleration(_angleAcceleration);			// 角加速度を設定, 角速度を適用
 	PendulumPosition(_fulcrum, _length);	// 座標を計算
 	
 }
