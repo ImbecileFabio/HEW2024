@@ -51,7 +51,7 @@ void VelocityComponent::Uninit() {
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void VelocityComponent::Update() {
+void VelocityComponent::Update(float _speed) {
 	position_ = this->owner_->GetComponent<TransformComponent>()->GetPosition();	// -現在座標の取得
 
 	// 速度を適用
@@ -69,14 +69,10 @@ void VelocityComponent::Update() {
 			velocity_.z += gravity_.z;
 		}
 
-		position_.x += velocity_.x;
-		position_.y += velocity_.y;
-		position_.z += velocity_.z;
+		position_.x += (velocity_.x * _speed);
+		position_.y += (velocity_.y * _speed);
+		position_.z += (velocity_.z * _speed);
 	}
-
-	position_.x += velocity_.x;
-	position_.y += velocity_.y;
-	position_.z += velocity_.z;
 
 	owner_->GetComponent<TransformComponent>()->SetPosition(velocity_);
 }
