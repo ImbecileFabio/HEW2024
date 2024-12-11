@@ -28,12 +28,12 @@
 //	void Update(void) override {};
 //	// イベント機能の基本的な処理
 //	void AddEventListener(std::string _eventName, std::function<void>);	// イベントリスナーを登録
-//	void EmitEvent();			// イベントを発行
+//	void EmitEvent();			// イベントを発行 
 //
 //	TypeID GetComponentType(void) const override { return TypeID::ColliderBaseComponent; }	// TODOあとで変える
 //protected:
 //	// イベントの名前とイベントリストを対にする
 //	std::unordered_map<std::string, std::list<std::function<void>>> listeners_; // イベントごとのリスナーリスト
 //	std::list<std::function<Component>> functions_;	// イベントを格納するリスト
-//};
+//};  
 //#endif // EVENT_BASE_COMPONENT_H_
