@@ -14,8 +14,6 @@
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
-class SpriteComponent;
-class VelocityComponent;
 
 //--------------------------------------------------
 // プレイヤーオブジェクト
@@ -26,13 +24,17 @@ class Player
 public:
 	Player(GameManager* _gameManager);
 	~Player(void);
+
+	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::Player; }
 
 private:
 	// 所有するコンポーネント
-	SpriteComponent* sprite_component_{};
-	VelocityComponent* velocity_component_{};
+	class SpriteComponent* sprite_component_{};
+	class ColliderBaseComponent* collider_component_{};
+	class VelocityComponent* velocity_component_{};
+	
 };
 #endif	// PLAYER_H_

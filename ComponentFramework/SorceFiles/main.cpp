@@ -8,7 +8,6 @@
 /*----- インクルード -----*/
 #include <crtdbg.h>
 #include <cstdint>
-#include <memory>
 
 #include "main.h"
 #include "GameProcess.h"

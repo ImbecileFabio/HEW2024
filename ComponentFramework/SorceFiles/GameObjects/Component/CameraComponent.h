@@ -2,7 +2,9 @@
 // [CameraComponent.h] カメラコンポーネントヘッダ
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：カメラの視野角やアス比などなど
+// 説明：
+// カメラの視野角やアス比などなど
+// 2Dなのでそんな感じ
 //==================================================
 
 #ifndef CAMERA_COMPONENT_H_
@@ -18,6 +20,7 @@
 
 /*----- 前方宣言 -----*/
 class GameObject;
+
 //--------------------------------------------------
 // カメラコンポーネント
 //--------------------------------------------------
@@ -35,8 +38,8 @@ public:
     virtual TypeID GetComponentType(void) const override { return TypeID::CameraComponent; }
 
 private:
-    DirectX::SimpleMath::Vector3 target_;
-    DirectX::SimpleMath::Matrix view_matrix_;
+    DirectX::SimpleMath::Vector3 target_;       // 座標
+	DirectX::SimpleMath::Matrix view_matrix_;   // ビュー行列
 };
 
 #endif // CAMERA_COMPONENT_H_

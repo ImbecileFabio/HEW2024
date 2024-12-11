@@ -16,20 +16,26 @@ const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 	// 自分自身
 	"GameObject"
 
-	// アクター（独立した役割を持つゲームオブジェクト）
+	// ゲームオブジェクト
 	, "Player"
 	, "Camera"
 	, "Pendulum"
+	, "Tile"
+	, "Robot"
 };
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-GameObject::GameObject(GameManager* _gameManager)
-	: game_manager_(_gameManager)
-	, state_(State::Active)
-	, re_compute_transform_(true)
+GameObject::GameObject(GameManager* _gameManager, std::string _objectName)
+	: game_manager_(_gameManager)	// 所有者
+	, object_name_(_objectName)		// オブジェクト名
+	, state_(State::Active)			// 状態
+	, re_compute_transform_(true)	// 姿勢情報の再計算
 {
+	std::cout << std::format("\n[{}] -> Constructor\n", object_name_);
+
+	// ゲームオブジェクトの登録
 	game_manager_->AddGameObject(this);
 
 	// 姿勢制御コンポーネントの追加
@@ -43,6 +49,7 @@ GameObject::GameObject(GameManager* _gameManager)
 //--------------------------------------------------
 GameObject::~GameObject(void)
 {
+	std::cout << std::format("[{}] -> Destructor\n", object_name_);
 	// ゲームオブジェクトの終了処理
 	this->Uninit();
 }

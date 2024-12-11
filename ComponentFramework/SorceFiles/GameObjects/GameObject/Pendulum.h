@@ -16,13 +16,11 @@
 using namespace DirectX::SimpleMath;
 
 /*----- 構造体定義 -----*/
-
-
-
 /*----- 前方宣言 -----*/
 class SpriteComponent;
-class PendulumComponent;
-
+class PendulumMovementComponent;
+class TimeZoneComponent;
+class ColliderBaseComponent;
 //--------------------------------------------------
 // プレイヤーオブジェクト
 //--------------------------------------------------
@@ -32,13 +30,16 @@ class Pendulum
 public:
 	Pendulum(GameManager* _gameManager);
 	~Pendulum(void);
+
+	void InitGameObject(void)   override;
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::Pendulum; }
-
 private:
 	// 所有するコンポーネント
-	SpriteComponent* sprite_component_{};
-	PendulumComponent* pendulum_component_{};
+	SpriteComponent*		   sprite_component_   {};
+	ColliderBaseComponent*	   collider_component_ {};
+	PendulumMovementComponent* pendulum_component_ {};
+	TimeZoneComponent*	       time_zone_component_{};
 };
 #endif	// PENDULUM_H_

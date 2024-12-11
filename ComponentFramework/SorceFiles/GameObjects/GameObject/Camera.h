@@ -16,22 +16,25 @@
 
 /*----- 前方宣言 -----*/
 class GameManeger;
-class CameraComponent;
 
-class Camera 
+//==================================================
+// カメラクラス
+//==================================================
+class Camera
     : public GameObject
 {
 public:
     Camera(GameManager* _gameManager);
     ~Camera();
 
+    void InitGameObject(void) override;
     void UpdateGameObject() override;
 
     TypeID GetType(void) { return TypeID::Camera; }
 
 private:
 	// 所有するコンポーネント
-	CameraComponent* camera_component_{};
+	class CameraComponent* camera_component_{};
 };
 
 #endif  // CAMERA_H_

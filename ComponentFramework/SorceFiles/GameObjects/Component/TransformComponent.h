@@ -3,6 +3,7 @@
 // 著者：有馬啓太
 //--------------------------------------------------
 // 説明：姿勢制御コンポーネントのベース
+// Position, Rotation, Scaleの情報を持つ
 //==================================================
 #ifndef TRANSFORM_COMPONENT_H_
 #define TRANSFORM_COMPONENT_H_
@@ -47,9 +48,9 @@ public:
 	void SetScale(const Vector3 _scale) { scale_ = _scale; }
 
 	// Getter
-	auto& GetPosition() const { return position_; }
-	auto& GetRotation() const { return rotation_; }
-	auto& GetScale()    const { return scale_; }
+	auto GetPosition() const { return position_; }
+	auto GetRotation() const { return rotation_; }
+	auto GetScale()    const { return scale_; }
 	
 
 	virtual TypeID GetComponentType() const override { return TypeID::TransformComponent; }
@@ -57,9 +58,9 @@ public:
 
 private:
 	// SRT情報（姿勢情報）
-	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };
-	DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };
-	DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };
+	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };	// 位置
+	DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };	// 回転
+	DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };		// サイズ
 };
 
 #endif	// TRANSFORM_COMPONENT_H_
