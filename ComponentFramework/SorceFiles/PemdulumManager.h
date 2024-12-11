@@ -11,11 +11,18 @@
 
 class PemdulumManager
 {
+private:
+	std::list<GameObject*> objectList_;
+	GameObject* pSelectedObject;
+
 public:
 	PemdulumManager();
 	~PemdulumManager();
-	std::list<GameObject*> objectList_;
 
-private:
+	void Init();
+	void Uninit();
+	void Update();
 
+	void AddGameObject(GameObject* _object);
+	 GameObject* PemgulumSelect(float _inputStick);
 };
