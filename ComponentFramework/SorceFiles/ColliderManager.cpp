@@ -101,9 +101,13 @@ void ColliderManager::UpdateGameObjects(void)
 			if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
 				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
 			{	
+				std::cout << std::format("ƒLift„ -> ‚â‚ A‚Ú‚­‚Í‚¿‚á‚Á‚Ò[\n");
+
 				// “–‚½‚Á‚½‘¤‚Ìˆ—‚ðŒÄ‚Ñ‚¾‚·
-				if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>() != nullptr &&
-					collider_game_objects_[j]->GetComponent<ColliderBaseComponent>() != nullptr)
+				if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>() == nullptr &&
+					collider_game_objects_[j]->GetComponent<ColliderBaseComponent>() == nullptr)
+					break;
+				if (collider_game_objects_[i]->GetComponent<EventBaseComponent>() == nullptr)
 					break;
 				collider_game_objects_[i]->GetComponent<EventBaseComponent>()->Update(collider_game_objects_[j]);
 			}

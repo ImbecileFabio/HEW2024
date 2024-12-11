@@ -41,7 +41,7 @@ Lift::~Lift()
 void Lift::InitGameObject(void)
 {
 	this->spriteComponent_   = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png", 0);
-	this->collider_base_component = new CircleColliderComponent(this);
+	this->collider_base_component = new BoxColliderComponent(this);
 	this->event_base_component = new ColliderEventComponent(this);
 	this->velocityComponent_ = new VelocityComponent(this);
 
@@ -101,5 +101,12 @@ void Lift::UpdateGameObject(void)
 //--------------------------------------------------
 void Lift::OnCollisionEnter(GameObject* _other)
 {
-	std::cout << std::format("ƒLift„ -> ‚È‚ñ‚©‚ ‚½‚Á‚½\n");
+	switch (_other->GetType())
+	{
+	case GameObject::TypeID::Robot:
+
+		break;
+	default:
+		break;
+	}
 }

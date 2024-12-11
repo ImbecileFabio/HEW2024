@@ -30,9 +30,9 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 
-	bool CheckCollisionCollider(ColliderBaseComponent* _other) override;
+	bool CheckCollisionCollider(ColliderBaseComponent* _other)	 override;
 	bool CheckCollisionCollider(CircleColliderComponent* _other) override;
-	bool CheckCollisionCollider(BoxColliderComponent* _other) override;
+	bool CheckCollisionCollider(BoxColliderComponent* _other)	 override;
 
 	TypeID GetComponentType(void) const override { return TypeID::CircleColliderComponent; }
 
