@@ -49,6 +49,8 @@ void Stage1_1Scene::Init()
 	
 
 	//pendulum_ = new Pendulum(game_manager_);
+
+	State = Game;
 	
 	// GameManeger‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é
 	for (auto& colliderObjects : game_manager_->GetGameObjects())

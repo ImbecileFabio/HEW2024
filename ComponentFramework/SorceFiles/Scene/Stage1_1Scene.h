@@ -25,6 +25,15 @@ public:
 	void Update() override;
 
 private:
+	// ゲームの状態
+	enum STATE {
+		Game,
+		Result,
+		Pouse,
+		Rewind
+	};
+	STATE State;
+
 	// 作ったオブジェクトをここに記述
 
 	class BackGround* back_ground_{};	// 背景

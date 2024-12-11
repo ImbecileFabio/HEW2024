@@ -12,7 +12,7 @@
 class PemdulumManager
 {
 private:
-	std::list<GameObject*> objectList_;
+	std::list<GameObject*> pemgulumList_;
 	GameObject* pSelectedObject;
 
 public:

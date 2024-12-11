@@ -21,6 +21,8 @@ PemdulumManager::~PemdulumManager(){
 // 初期化処理・終了処理・更新処理
 //--------------------------------------------------
 void PemdulumManager::Init(){
+	pemgulumList_ = 0;
+	pSelectedObject = ;
 }
 void PemdulumManager::Uninit(){
 }
@@ -35,12 +37,14 @@ void PemdulumManager::Update(){
 // 振り子をオブジェクトに追加
 //--------------------------------------------------
 void PemdulumManager::AddGameObject(GameObject* _object){
-	objectList_.push_back(_object);
+	pemgulumList_.push_back(_object);
 }
 
 //--------------------------------------------------
 // 内積が一定以内かつ最も近いオブジェクトのポインタを返す
 //--------------------------------------------------
 GameObject* PemdulumManager::PemgulumSelect(float _inputStick) {
-
+	for (auto& pemdulum : pemgulumList_) {
+		
+	}
 }
