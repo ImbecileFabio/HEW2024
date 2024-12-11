@@ -32,6 +32,8 @@ private:
 	class Pendulum* pendulum_{};		// 振り子
 	class Tile* tile_{};				// タイル
 	class Robot* robot_{};				// ロボット
+	class Lift*	 lift_{};				// リフト
+	Lift* lift_02_{};					// リフト
 };
 
 #endif  // STAGE1_1SCENE_H_

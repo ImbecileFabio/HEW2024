@@ -21,17 +21,15 @@ public:
 
 	void Init(void) override;
 	void Uninit(void) override;
-	void Update(void) override;
+	void Update(GameObject* _other) override;
 
-	void AllTriggers();	// UPDATEで回してBOOLが{TRUEこれ・FALSE}になったら
-	void AllActions();
-	void AddEvent	(std::function<void()> _event);
-	void RemoveEvent(std::function<void()> _event) {};
+	void AllActions() {};	// TRUEになった関数を実行
+	void AddEvent	(std::function<void(GameObject*)> _event);	// とりあえずオブジェクトごと渡す
+	void RemoveEvent(std::function<void(GameObject*)> _event) {};
 
 	TypeID GetComponentType(void) const override { return TypeID::ColliderEventComponent; }
 private:
-	std::list<std::function<void>> functions_{};	// 各オブジェクトが持つコライダーに反応して実行するのを関数
+	std::vector<std::function<void(GameObject*)>> functions_{};	// イベントを格納するリスト
 };
-
 #endif // COLLIDER_EVENT_COMPONENT_H_
 

@@ -12,6 +12,7 @@
 #include <functional>
 #include <string>
 #include "../../Component.h"
+#include "../../GameObject.h"
 /*----- 構造体定義 -----*/
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
@@ -25,9 +26,10 @@ public:
 
 	void Init(void) override {};
 	void Uninit(void) override {};
-	void Update(void) override {};
-	// イベント機能の基本的な処理
-	virtual void AddEvent(std::function<void> _event) = 0;
+	virtual void Update(void) override {};
+	virtual void Update(GameObject* _other) {};
+	// イベントコンポーネントごとのAddEventの引数違いをオーバーロードで置いとく
+	virtual void AddEvent(std::function<void(GameObject*)> _event) {};
 
 	TypeID GetComponentType(void) const override { return TypeID::EventBaseComponent; }
 protected:

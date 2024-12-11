@@ -22,8 +22,12 @@ void ColliderEventComponent::Init(void)
 //--------------------------------------------------
 // @brief イベントの更新処理
 //--------------------------------------------------
-void ColliderEventComponent::Update(void)
+void ColliderEventComponent::Update(GameObject* _other)
 {
+	for (int idx = 0; idx < functions_.size(); idx++)
+	{
+		functions_.at(idx)(_other);
+	}
 }
 //--------------------------------------------------
 // @brief イベントの終了処理
@@ -34,7 +38,9 @@ void ColliderEventComponent::Uninit(void)
 //--------------------------------------------------
 // @brief イベントの追加処理
 //--------------------------------------------------
-void ColliderEventComponent::AddEvent(std::function<void(GameObject* collidedObject)> _event)
+void ColliderEventComponent::AddEvent(std::function<void(GameObject* _other)> _event)
 {
 	this->functions_.emplace_back(_event);
+
+	std::cout << std::format("＜ColliderEventComponent＞ -> イベント追加？\n");
 }

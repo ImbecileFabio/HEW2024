@@ -8,6 +8,8 @@
 #include "ColliderManager.h"
 #include "GameObjects/GameObject.h"
 #include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
+#include "GameObjects/Component/ColliderComponent/BoxColliderComponent.h"
+#include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
 //-----------------------------------------------------------------
 // @brief  コンストラクタ
 //-----------------------------------------------------------------
@@ -100,8 +102,15 @@ void ColliderManager::UpdateGameObjects(void)
 				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
 			{	
 				// 当たった側の処理を呼びだす
-
+				if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>() != nullptr &&
+					collider_game_objects_[j]->GetComponent<ColliderBaseComponent>() != nullptr)
+					break;
+				collider_game_objects_[i]->GetComponent<EventBaseComponent>()->Update(collider_game_objects_[j]);
 			}
+			// まだ当たり続けてる
+			// collider_game_objects_[i].EventComponent.AllOnCollisionStay();
+			// 抜けた
+			// collider_game_objects_[i].EventComponent.AllOnCollisionExit();
 		}
 	}
 	updating_game_objects_ = false;
