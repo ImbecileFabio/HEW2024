@@ -39,5 +39,4 @@ public:
 protected:
 	bool hitFg_ = false;
 };
-
 #endif // COLLIDER_BASE_COMPONENT_H_

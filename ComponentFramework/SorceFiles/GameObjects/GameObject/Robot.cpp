@@ -60,6 +60,7 @@ void Robot::InitGameObject(void)
 //--------------------------------------------------
 void Robot::UpdateGameObject(void)
 {
+	InputManager& input = InputManager::GetInstance();
 	// ˆÚ“®ˆ—
 	if (input.GetKeyPress(VK_D))
 	{

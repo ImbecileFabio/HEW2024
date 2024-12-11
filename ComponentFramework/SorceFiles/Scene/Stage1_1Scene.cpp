@@ -18,6 +18,7 @@
 #include "../GameObjects/GameObject/Pendulum.h"
 #include "../GameObjects/GameObject/Tile.h"
 #include "../GameObjects/GameObject/Robot.h"
+#include "../GameObjects/GameObject/Lift.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -47,7 +48,8 @@ void Stage1_1Scene::Init()
 
 	robot_ = new Robot(game_manager_);
 	
-
+	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
+	lift_02_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
 	//pendulum_ = new Pendulum(game_manager_);
 	
 	// GameManegerで生成して、ColliderManagerに登録する
@@ -72,7 +74,8 @@ void Stage1_1Scene::Uninit()
 	delete pendulum_;
 	delete tile_;
 	delete robot_;
-
+	delete lift_;
+	delete lift_02_;
 }
 
 //--------------------------------------------------

@@ -2,7 +2,7 @@
 // [Lift.h] リフトヘッダ
 // 著者：尾上莉奈
 //--------------------------------------------------
-// 説明：リフトコンポーネント
+// 説明：リフトオブジェクト
 //==================================================
 #ifndef LIFT_H_
 #define LIFT_H_
@@ -33,7 +33,11 @@ private:
 	bool switchFg_;			// スイッチフラグ
 	MoveState moveState_;	// 移動状態
 
+	class ColliderBaseComponent* collider_base_component = {};
+	class EventBaseComponent* event_base_component = {};
 	class SpriteComponent* spriteComponent_		= {};	// 画像表示
 	class VelocityComponent* velocityComponent_ = {};
+
+	void OnCollisionEnter(GameObject* _other = nullptr) override;
 };
 #endif // _LIFT_OBJECT_H_
