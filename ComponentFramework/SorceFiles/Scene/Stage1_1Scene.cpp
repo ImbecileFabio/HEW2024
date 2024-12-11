@@ -51,6 +51,8 @@ void Stage1_1Scene::Init()
 	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
 	lift_02_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
 	//pendulum_ = new Pendulum(game_manager_);
+
+	State = Game;
 	
 	// GameManeger‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
