@@ -38,13 +38,15 @@ private:
 	DirectX::SimpleMath::Vector3 gravity_;
 	bool	use_gravity_;
 
+	float speed_rate_;	// 速度倍率
+
 public:
 	VelocityComponent(GameObject* _owner, int _updateOrder = 50);
 	~VelocityComponent();
 
 	void Init();
 	void Uninit();
-	void Update(float _speed = 1.f);		// すべての更新を行う
+	void Update();		// すべての更新を行う
 
 	// 加速度
 	void	SetAcceleration(const DirectX::SimpleMath::Vector3 _acceleration);

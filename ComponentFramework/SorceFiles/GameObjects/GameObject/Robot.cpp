@@ -60,21 +60,24 @@ void Robot::InitGameObject(void)
 //--------------------------------------------------
 void Robot::UpdateGameObject(void)
 {
-	InputManager& input = InputManager::GetInstance();
+
+	
+	auto& input = InputManager::GetInstance();
 	// ˆÚ“®ˆ—
 	if (input.GetKeyPress(VK_D))
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 0.1f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 5.0f, 0.0f, 0.0f));
 	}
 	else if (input.GetKeyPress(VK_A))
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-0.1f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-5.0f, 0.0f, 0.0f));
 	}
 	else
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 0.0f, 0.0f, 0.0f));
 	}
-
 	
 
+
+	
 }
