@@ -22,18 +22,22 @@ void ColliderEventComponent::Init(void)
 //--------------------------------------------------
 // @brief イベントの更新処理
 //--------------------------------------------------
-void ColliderEventComponent::Update(GameObject* _other)
-{
-	for (int idx = 0; idx < functions_.size(); idx++)
-	{
-		functions_.at(idx)(_other);
-	}
-}
+//void ColliderEventComponent::Update(GameObject* _other)
+//{
+//
+//}
 //--------------------------------------------------
 // @brief イベントの終了処理
 //--------------------------------------------------
 void ColliderEventComponent::Uninit(void)
 {
+}
+void ColliderEventComponent::AllUpdate(GameObject* _other)
+{
+	for (int idx = 0; idx < functions_.size(); idx++)
+	{
+		functions_.at(idx)(_other);
+	}
 }
 //--------------------------------------------------
 // @brief イベントの追加処理

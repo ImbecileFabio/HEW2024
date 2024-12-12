@@ -21,7 +21,9 @@ public:
 
 	void Init(void) override;
 	void Uninit(void) override;
-	void Update(GameObject* _other) override;
+	void Update() override {};
+
+	void AllUpdate(GameObject* _other);
 
 	void AllActions() {};	// TRUEになった関数を実行
 	void AddEvent	(std::function<void(GameObject*)> _event);	// とりあえずオブジェクトごと渡す

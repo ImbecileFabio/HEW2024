@@ -31,9 +31,11 @@ public:
 
 	TypeID GetType(void) override { return TypeID::Tile; }
 
+	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
 	// 所有するコンポーネント
 	SpriteComponent* sprite_component_{};
 	ColliderBaseComponent* collider_component_{};
+	class ColliderEventComponent* collider_event_component_{};
 };
 #endif	// TILE_H_

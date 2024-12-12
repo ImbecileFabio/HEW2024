@@ -14,6 +14,7 @@
 #include "../Component.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
+#include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 
@@ -34,6 +35,7 @@ Robot::~Robot(void)
 	// ここでコンポーネントを削除
 	delete sprite_component_;
 	delete collider_component_;
+	delete collider_event_component_;
 	delete velocity_component_;
 }
 
@@ -48,6 +50,12 @@ void Robot::InitGameObject(void)
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
 
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
+
+	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
+	collider_event_component_->AddEvent([this](GameObject* _other)
+		{
+			this->OnCollisionEnter(_other);
+		});
 
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	velocity_component_->SetUseGravity(false);
@@ -77,4 +85,9 @@ void Robot::UpdateGameObject(void)
 
 	
 
+}
+
+void Robot::OnCollisionEnter(GameObject* _other)
+{
+	std::cout << std::format("Robot::OnCollisionEnter\n");
 }

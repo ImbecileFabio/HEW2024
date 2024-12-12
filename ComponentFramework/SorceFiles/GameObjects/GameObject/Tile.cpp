@@ -12,9 +12,8 @@
 #include "Tile.h"
 #include "../../GameManager.h"
 #include "../Component.h"
-#include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
-#include "../Component/ColliderComponent/ColliderBaseComponent.h"
+#include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 
 //--------------------------------------------------
@@ -34,6 +33,7 @@ Tile::~Tile(void)
 	// ここでコンポーネントを削除
 	delete sprite_component_;
 	delete collider_component_;
+	delete collider_event_component_;
 }
 
 //--------------------------------------------------
@@ -47,6 +47,11 @@ void Tile::InitGameObject(void)
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"tile_01.png");
 
 	collider_component_ = new BoxColliderComponent(this);
+	collider_event_component_ = new ColliderEventComponent(this);
+	collider_event_component_->AddEvent([this](GameObject* _other)
+		{
+			this->OnCollisionEnter(_other);
+		});
 }
  
 //--------------------------------------------------
@@ -55,4 +60,19 @@ void Tile::InitGameObject(void)
 void Tile::UpdateGameObject(void)
 {
 
+}
+
+void Tile::OnCollisionEnter(GameObject* _other)
+{
+	switch (_other->GetType())
+	{
+	case GameObject::TypeID::Robot:
+		std::cout << std::format("Tile -> Robot -> OnCollisionEnter\n");
+		break;
+	case GameObject::TypeID::Lift:
+		std::cout << std::format("Tile -> Lift -> OnCollisionEnter\n");
+		break;
+	default:
+		break;
+	}
 }
