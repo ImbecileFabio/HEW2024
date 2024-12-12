@@ -89,5 +89,15 @@ void Robot::UpdateGameObject(void)
 
 void Robot::OnCollisionEnter(GameObject* _other)
 {
-	std::cout << std::format("Robot::OnCollisionEnter\n");
+	switch (_other->GetType())
+	{
+	case GameObject::TypeID::Tile:
+		std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
+		break;
+	case GameObject::TypeID::Lift:
+		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		break;
+	default:
+		break;
+	}
 }

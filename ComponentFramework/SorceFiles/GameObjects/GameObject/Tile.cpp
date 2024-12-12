@@ -45,9 +45,8 @@ void Tile::InitGameObject(void)
 	transform_component_->SetScale(512, 64);
 
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"tile_01.png");
-
-	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
+	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_->AddEvent([this](GameObject* _other)
 		{
 			this->OnCollisionEnter(_other);

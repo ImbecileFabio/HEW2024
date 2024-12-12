@@ -16,6 +16,7 @@ class ColliderEventComponent :
     public EventBaseComponent
 {
 public:
+	static int hoge;
 	ColliderEventComponent(GameObject* _owner, int _updateOrder = 50);
 	~ColliderEventComponent();
 

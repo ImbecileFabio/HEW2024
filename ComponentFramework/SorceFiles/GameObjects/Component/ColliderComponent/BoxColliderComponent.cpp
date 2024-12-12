@@ -41,12 +41,12 @@ void BoxColliderComponent::Uninit(void)
 //--------------------------------------------------
 void BoxColliderComponent::Update(void)
 {
-	this->position_ = this->owner_->GetComponent<TransformComponent>()->GetPosition();	// 位置を取得
+	DirectX::SimpleMath::Vector3 pos = this->owner_->GetComponent<TransformComponent>()->GetPosition();	// 位置を取得
 	DirectX::SimpleMath::Vector3 size = this->owner_->GetComponent<TransformComponent>()->GetScale();	// サイズを取得
-	this->boxSize_.w = position_.y + size.y / 2;	// 上	// 当たり判定を更新
-	this->boxSize_.x = position_.y - size.y / 2;	// 下
-	this->boxSize_.y = position_.x - size.x / 2;	// 左
-	this->boxSize_.z = position_.x + size.x / 2;	// 右
+	this->boxSize_.w = pos.y + size.y / 2;	// 上	// 当たり判定を更新
+	this->boxSize_.x = pos.y - size.y / 2;	// 下
+	this->boxSize_.y = pos.x - size.x / 2;	// 左
+	this->boxSize_.z = pos.x + size.x / 2;	// 右
 }
 bool BoxColliderComponent::CheckCollisionCollider(ColliderBaseComponent* _other)
 {
