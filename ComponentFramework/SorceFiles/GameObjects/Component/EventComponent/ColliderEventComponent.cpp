@@ -1,4 +1,6 @@
 #include "ColliderEventComponent.h"
+
+int ColliderEventComponent::hoge = 0;
 //--------------------------------------------------
 // @brief イベントのコンストラクタ
 //--------------------------------------------------
@@ -18,22 +20,27 @@ ColliderEventComponent::~ColliderEventComponent()
 //--------------------------------------------------
 void ColliderEventComponent::Init(void)
 {
+	functions_.clear();
 }
 //--------------------------------------------------
 // @brief イベントの更新処理
 //--------------------------------------------------
-void ColliderEventComponent::Update(GameObject* _other)
-{
-	for (int idx = 0; idx < functions_.size(); idx++)
-	{
-		functions_.at(idx)(_other);
-	}
-}
+//void ColliderEventComponent::Update(GameObject* _other)
+//{
+//
+//}
 //--------------------------------------------------
 // @brief イベントの終了処理
 //--------------------------------------------------
 void ColliderEventComponent::Uninit(void)
 {
+}
+void ColliderEventComponent::AllUpdate(GameObject* _other)
+{
+	for (auto& it : functions_)
+	{
+		it(_other);
+	}
 }
 //--------------------------------------------------
 // @brief イベントの追加処理

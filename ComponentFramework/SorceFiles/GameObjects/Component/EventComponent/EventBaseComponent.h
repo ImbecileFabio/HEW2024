@@ -27,7 +27,7 @@ public:
 	void Init(void) override {};
 	void Uninit(void) override {};
 	virtual void Update(void) override {};
-	virtual void Update(GameObject* _other) {};
+	virtual void AllUpdate(GameObject* _other) {};	// TRUEになった関数を実行
 	// イベントコンポーネントごとのAddEventの引数違いをオーバーロードで置いとく
 	virtual void AddEvent(std::function<void(GameObject*)> _event) {};
 

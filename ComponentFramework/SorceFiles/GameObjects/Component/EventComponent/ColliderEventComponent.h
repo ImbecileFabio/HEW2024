@@ -16,12 +16,15 @@ class ColliderEventComponent :
     public EventBaseComponent
 {
 public:
+	static int hoge;
 	ColliderEventComponent(GameObject* _owner, int _updateOrder = 50);
 	~ColliderEventComponent();
 
 	void Init(void) override;
 	void Uninit(void) override;
-	void Update(GameObject* _other) override;
+	void Update() override {};
+
+	void AllUpdate(GameObject* _other);
 
 	void AllActions() {};	// TRUEになった関数を実行
 	void AddEvent	(std::function<void(GameObject*)> _event);	// とりあえずオブジェクトごと渡す

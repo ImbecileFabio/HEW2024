@@ -30,8 +30,8 @@ Lift::Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::
 Lift::~Lift()
 {
 	std::cout << std::format("ƒLift„ -> Destructor\n");
-	delete collider_base_component;
-	delete event_base_component;
+	delete collider_base_component_;
+	delete collider_event_component_;
 	delete spriteComponent_;
 	delete velocityComponent_;
 }
@@ -40,19 +40,19 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-	this->spriteComponent_   = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png", 0);
-	this->collider_base_component = new CircleColliderComponent(this);
-	this->event_base_component = new ColliderEventComponent(this);
-	this->velocityComponent_ = new VelocityComponent(this);
+	transform_component_->SetScale(1000.0f, 1000.0f);
+	transform_component_->SetPosition(0.0f, 0.0f);
 
-	this->transform_component_->SetScale(300.0f, 300.0f);
-	this->transform_component_->SetPosition(0.0f, 0.0f);
+	spriteComponent_   = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png");
+	collider_base_component_ = new BoxColliderComponent(this);
+	collider_event_component_ = new ColliderEventComponent(this);
+	velocityComponent_ = new VelocityComponent(this);
 
-	this->velocityComponent_->SetUseGravity(false);
+	velocityComponent_->SetUseGravity(false);
 	// ƒCƒxƒ“ƒg’Ç‰Áˆ—
-	this->event_base_component->AddEvent([this](GameObject* _other) 
+	collider_event_component_->AddEvent([this](GameObject* _other)
 		{
-		this->OnCollisionEnter(_other);
+			this->OnCollisionEnter(_other);
 		});
 }
 //--------------------------------------------------
@@ -101,5 +101,15 @@ void Lift::UpdateGameObject(void)
 //--------------------------------------------------
 void Lift::OnCollisionEnter(GameObject* _other)
 {
-	std::cout << std::format("ƒLift„ -> ‚È‚ñ‚©‚ ‚½‚Á‚½\n");
+	switch (_other->GetType())
+	{
+	case GameObject::TypeID::Robot:
+		std::cout << std::format("Lift -> Robot -> OnCollisionEnter\n");
+		break;
+	case GameObject::TypeID::Tile:
+		std::cout << std::format("Lift -> Tile -> OnCollisionEnter\n");
+		break;
+	default:
+		break;
+	}
 }

@@ -31,11 +31,9 @@ public:
 
 	TypeID GetComponentType(void) const override { return TypeID::BoxColliderComponent; }
 
-	void SetPosition(DirectX::SimpleMath::Vector3 _pos) { position_ = _pos; }
 	DirectX::SimpleMath::Vector4 GetBoxSize(void) const { return boxSize_; }
 
 private:
-	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };	// 当たり判定の原点
 	DirectX::SimpleMath::Vector4 boxSize_{ 0.f, 0.f, 0.f,0.f };	// 当たり判定のサイズ 上・下・左・右
 };
 
