@@ -77,7 +77,14 @@ void Robot::UpdateGameObject(void)
 		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 0.0f, 0.0f, 0.0f));
 	}
 	
-
-
+	// デバッグ用で用意した
+	// 当たり判定があれば色を変える的な
+	if (input.GetKeyPress(VK_SPACE))
+	{
+		sprite_component_->SetColor(Vector4(1.0f, 0.25f, 0.25f, 1.0f));
+	}
+	else {
+		sprite_component_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	}
 	
 }

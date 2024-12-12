@@ -174,3 +174,30 @@ void SpriteComponent::Draw()
 		0);
 }
 
+//--------------------------------------------------
+// 色変更
+//--------------------------------------------------
+void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4 _color)
+{
+	// 頂点データの色を更新
+	std::vector<VERTEX_3D> vertices(4);
+
+	vertices[0].position = Vector3(-0.5f, 0.5f, 0.5f);
+	vertices[1].position = Vector3(0.5f, 0.5f, 0.5f);
+	vertices[2].position = Vector3(-0.5f, -0.5f, 0.5f);
+	vertices[3].position = Vector3(0.5f, -0.5f, 0.5f);
+
+	vertices[0].color = _color;
+	vertices[1].color = _color;
+	vertices[2].color = _color;
+	vertices[3].color = _color;
+						
+	vertices[0].uv = Vector2(0, 0);
+	vertices[1].uv = Vector2(1, 0);
+	vertices[2].uv = Vector2(0, 1);
+	vertices[3].uv = Vector2(1, 1);
+
+	// 頂点バッファを再生成
+	vertex_buffer_.Create(vertices);
+}
+

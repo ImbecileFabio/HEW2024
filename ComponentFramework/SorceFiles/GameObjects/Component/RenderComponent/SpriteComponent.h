@@ -39,6 +39,9 @@ public:
 	void Uninit() override;
 	void Draw() ;
 
+	// 色を変える
+	void SetColor(const DirectX::SimpleMath::Vector4 _color);
+
 	// 更新順位を返す
 	int& GetDrawOrder(void) { return draw_order_; }
 	// コンポーネントのIDを返す
