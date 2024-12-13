@@ -42,14 +42,12 @@ Stage1_1Scene::~Stage1_1Scene()
 //--------------------------------------------------
 void Stage1_1Scene::Init()
 {
-	camera_ = new Camera(game_manager_);
-	back_ground_ = new BackGround(game_manager_);
-	tile_ = new Tile(game_manager_);
-
-	robot_ = new Robot(game_manager_);
-	
-	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
-	//pendulum_ = new Pendulum(game_manager_);
+	camera_			= new Camera(game_manager_);
+	back_ground_	= new BackGround(game_manager_);
+	tile_			= new Tile(game_manager_);
+	robot_			= new Robot(game_manager_);
+	pendulum_		= new Pendulum(game_manager_);
+	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
 
 	State = Game;
 	
@@ -70,7 +68,6 @@ void Stage1_1Scene::Init()
 void Stage1_1Scene::Uninit()
 {
 	delete camera_;
-
 	delete back_ground_;
 	delete pendulum_;
 	delete tile_;

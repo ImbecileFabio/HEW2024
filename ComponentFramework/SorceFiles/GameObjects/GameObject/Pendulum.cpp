@@ -37,8 +37,6 @@ Pendulum::~Pendulum(void)
 	delete sprite_component_;
 	delete pendulum_component_;
 	delete collider_component_;
-	delete time_zone_component_;
-	delete angular_velocity_component_;
 }
 
 //--------------------------------------------------
@@ -47,16 +45,15 @@ Pendulum::~Pendulum(void)
 void Pendulum::InitGameObject(void)
 {
 	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v01/ball_01.png");
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/ball_01.png");
 	// 当たり判定コンポーネント
 	collider_component_ = new CircleColliderComponent(this);
-	// タイムゾーンコンポーネント
-	time_zone_component_		= new TimeZoneComponent(this);
-	angular_velocity_component_ = new AngularVelocityComponent(this);
 	// 振り子コンポーネント
 	pendulum_component_ = new PendulumMovementComponent(this);
 	pendulum_component_->SetPendulumAngle(60.0f);
-	transform_component_->SetScale(300.0f, 300.0f);
+	pendulum_component_->PendulumInit(0.1f, Vector3(0.0f, 0.0f, 0.0f), 200.0f);
+	// トランスフォームコンポーネント
+	transform_component_->SetScale(100.0f, 100.0f);
 }
 
 //--------------------------------------------------
@@ -64,5 +61,4 @@ void Pendulum::InitGameObject(void)
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
 {
-	this->pendulum_component_->Update(0.01f, Vector3(0.0f, 0.0f, 0.0f), 200.0f);
 }

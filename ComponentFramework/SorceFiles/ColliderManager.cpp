@@ -89,10 +89,10 @@ void ColliderManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	for (auto& gameObject : collider_game_objects_)
-	{
-		gameObject->Update();		// 更新処理
-	}
+	//for (auto& gameObject : collider_game_objects_)
+	//{
+	//	gameObject->Update();		// 更新処理
+	//}
 	// 当たり判定の処理
 	for (int i = 0; i < collider_game_objects_.size(); i++)
 	{

@@ -79,8 +79,6 @@ private:
 	// ゲームオブジェクト
 	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ
 	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
-
-
 };
 
 
