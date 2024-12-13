@@ -24,9 +24,10 @@ PemdulumManager::~PemdulumManager(){
 // 初期化処理・終了処理・更新処理
 //--------------------------------------------------
 void PemdulumManager::Init(){
+	GM = new GameManager;
 	// 振り子の検索、確保
-	for (GameObject* object : GameManager::GetGameObjects()) {
-		if (object->GetType() == "Pendulum")
+	for (GameObject* object : GM->GetGameObjects()) {
+		if (object->GetType() == GameObject::TypeID::Pendulum)
 		pemgulumList_.push_back(object);
 	}
 	pSelectedPemdulum = pemgulumList_.front();
@@ -52,7 +53,8 @@ void PemdulumManager::Update(){
 // 内積が一定以内かつ最も近いオブジェクトのポインタを返す（選択）
 //--------------------------------------------------
 GameObject* PemdulumManager::PemgulumSelect(float _inputStick) {
-	if (InputManager::GetLeftAnalogStick()) {
+	// スティックの入力があるとき
+	if (IM.GetLeftAnalogStick().x != 0 && IM.GetLeftAnalogStick().y != 0) {
 		for (auto& pemdulum : pemgulumList_) {
 			if (pSelectedPemdulum != pemdulum) {
 				pemdulumPosition_= pemdulum->GetComponent<TransformComponent>()->GetPosition();
@@ -66,7 +68,7 @@ GameObject* PemdulumManager::PemgulumSelect(float _inputStick) {
 //--------------------------------------------------
 void PemdulumManager::PemdulumMovementChange() {
 	// Aボタン（動作の変更）
-	if (InputManager::GetButtonTrigger(XINPUT_A)) {
+	if (IM.GetButtonTrigger(XINPUT_A)) {
 		if (pemdulumMovement_) {
 			pemdulumMovement_ = !pemdulumMovement_;
 		} else {
@@ -80,7 +82,7 @@ void PemdulumManager::PemdulumMovementChange() {
 //--------------------------------------------------
 void PemdulumManager::PemgulumLangthChange() {
 	// 十字↑（短くする）
-	if (InputManager::GetButtonTrigger(XINPUT_UP)) {
+	if (IM.GetButtonTrigger(XINPUT_UP)) {
 		if (langthState_ != LangthState::shortLangth) {
 			langthState_ -= LangthChange;
 		} else {
@@ -88,7 +90,7 @@ void PemdulumManager::PemgulumLangthChange() {
 		}
 	}
 	// 十字↓（長くする）
-	if (InputManager::GetButtonTrigger(XINPUT_DOWN)) {
+	if (IM.GetButtonTrigger(XINPUT_DOWN)) {
 		if (langthState_ != LangthState::longLangth) {
 			langthState_ += LangthChange;
 		} else {
