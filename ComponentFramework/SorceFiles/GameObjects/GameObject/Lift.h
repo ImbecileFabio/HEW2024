@@ -33,8 +33,8 @@ private:
 	bool switchFg_;			// スイッチフラグ
 	MoveState moveState_;	// 移動状態
 
-	class ColliderBaseComponent* collider_base_component = {};
-	class EventBaseComponent* event_base_component = {};
+	class ColliderBaseComponent* collider_base_component_ = {};
+	class EventBaseComponent* collider_event_component_ = {};
 	class SpriteComponent* spriteComponent_		= {};	// 画像表示
 	class VelocityComponent* velocityComponent_ = {};
 

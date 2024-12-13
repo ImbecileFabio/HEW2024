@@ -12,10 +12,6 @@
 #include "../GameObject.h"
 
 /*----- 構造体定義 -----*/
-
-/*----- 前方宣言 -----*/
-class SpriteComponent;
-class ColliderBaseComponent;
 //--------------------------------------------------
 // タイルオブジェクト
 //--------------------------------------------------
@@ -31,9 +27,11 @@ public:
 
 	TypeID GetType(void) override { return TypeID::Tile; }
 
+	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
 	// 所有するコンポーネント
-	SpriteComponent* sprite_component_{};
-	ColliderBaseComponent* collider_component_{};
+	class SpriteComponent* sprite_component_{};
+	class ColliderBaseComponent* collider_component_{};
+	class ColliderEventComponent* collider_event_component_{};
 };
 #endif	// TILE_H_

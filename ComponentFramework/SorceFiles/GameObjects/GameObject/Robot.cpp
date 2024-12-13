@@ -14,6 +14,7 @@
 #include "../Component.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
+#include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 
@@ -34,6 +35,7 @@ Robot::~Robot(void)
 	// ここでコンポーネントを削除
 	delete sprite_component_;
 	delete collider_component_;
+	delete collider_event_component_;
 	delete velocity_component_;
 }
 
@@ -49,6 +51,12 @@ void Robot::InitGameObject(void)
 
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 
+	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
+	collider_event_component_->AddEvent([this](GameObject* _other)
+		{
+			this->OnCollisionEnter(_other);
+		});
+
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	velocity_component_->SetUseGravity(false);
 
@@ -60,31 +68,36 @@ void Robot::InitGameObject(void)
 //--------------------------------------------------
 void Robot::UpdateGameObject(void)
 {
-
-	
-	auto& input = InputManager::GetInstance();
+	InputManager& input = InputManager::GetInstance();
 	// 移動処理
 	if (input.GetKeyPress(VK_D))
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 5.0f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 0.1f, 0.0f, 0.0f));
 	}
 	else if (input.GetKeyPress(VK_A))
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-5.0f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-0.1f, 0.0f, 0.0f));
 	}
 	else
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 0.0f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	}
+
 	
-	// デバッグ用で用意した
-	// 当たり判定があれば色を変える的な
-	if (input.GetKeyPress(VK_SPACE))
+
+}
+
+void Robot::OnCollisionEnter(GameObject* _other)
+{
+	switch (_other->GetType())
 	{
-		sprite_component_->SetColor(Vector4(1.0f, 0.25f, 0.25f, 1.0f));
+	case GameObject::TypeID::Tile:
+		std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
+		break;
+	case GameObject::TypeID::Lift:
+		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		break;
+	default:
+		break;
 	}
-	else {
-		sprite_component_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-	}
-	
 }

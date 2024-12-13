@@ -96,21 +96,19 @@ void ColliderManager::UpdateGameObjects(void)
 	// “–‚½‚è”»’è‚Ìˆ—
 	for (int i = 0; i < collider_game_objects_.size(); i++)
 	{
-		for (int j = i + 1; j < collider_game_objects_.size(); j++)
+		for (int j = 0; j < collider_game_objects_.size(); j++)
 		{	// Õ“Ë‚µ‚½‚©A‚µ‚Ä‚¢‚È‚¢‚©
 			if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
 				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
 			{	
 				// “–‚½‚Á‚½‘¤‚Ìˆ—‚ğŒÄ‚Ñ‚¾‚·
-				if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>() != nullptr &&
-					collider_game_objects_[j]->GetComponent<ColliderBaseComponent>() != nullptr)
+				if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>() == nullptr &&
+					collider_game_objects_[j]->GetComponent<ColliderBaseComponent>() == nullptr)
 					break;
-				collider_game_objects_[i]->GetComponent<EventBaseComponent>()->Update(collider_game_objects_[j]);
+				if (collider_game_objects_[i]->GetComponent<EventBaseComponent>() == nullptr)
+					break;
+				collider_game_objects_[i]->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_[j]);
 			}
-			// ‚Ü‚¾“–‚½‚è‘±‚¯‚Ä‚é
-			// collider_game_objects_[i].EventComponent.AllOnCollisionStay();
-			// ”²‚¯‚½
-			// collider_game_objects_[i].EventComponent.AllOnCollisionExit();
 		}
 	}
 	updating_game_objects_ = false;
