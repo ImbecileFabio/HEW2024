@@ -30,6 +30,7 @@ public:
 	void AddGameObject(GameObject* _gameObject);
 	// ゲームオブジェクトの削除
 	void RemoveGameObject(GameObject* _gameObject);
+
 private:
 	//更新処理
 	void UpdateGameObjects(void);
@@ -37,5 +38,6 @@ private:
 	bool updating_game_objects_;
 	std::vector<GameObject*> collider_game_objects_{};	// 当たり判定用コンテナ
 	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
+
 };
 #endif // _COLLDIER_MANAGER_H_

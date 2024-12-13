@@ -223,7 +223,6 @@ bool CreatePixelShader(ID3D11Device* device,
 	return true;
 }
 
-
 /*----------------------------
 コンスタントバッファを作成
 ------------------------------*/

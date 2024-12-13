@@ -26,6 +26,10 @@ RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 	, draw_order_(_updateOrder)
 {
 	std::cout << std::format("＜RenderComponent＞ -> Constructor\n");
+
+	// 描画オブジェクトとして登録
+	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
+
 }
 
 //--------------------------------------------------
@@ -85,3 +89,15 @@ void RenderComponent::InitBuffers()
 	shader_.Create("shader/unlitTextureVS.hlsl", "shader/unlitTexturePS.hlsl");
 
 }
+
+//--------------------------------------------------
+// デバッグ用のバッファ初期化
+//--------------------------------------------------
+void RenderComponent::InitDebugBuffers()
+{
+}
+
+
+//--------------------------------------------------
+// デバッグ用の頂点座標初期化
+//--------------------------------------------------

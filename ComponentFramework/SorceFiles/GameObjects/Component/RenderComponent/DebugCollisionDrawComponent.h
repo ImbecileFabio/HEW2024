@@ -19,9 +19,10 @@
 using namespace DirectX::SimpleMath;
 
 /*----- 構造体定義 -----*/
-struct DebugVertex {
-	DirectX::SimpleMath::Vector3 position;
-	DirectX::SimpleMath::Color color;
+struct GeometryShaderBuffer {
+	DirectX::XMFLOAT4X4 viewProjMatrix;	// ビュー・プロジェクション行列
+	float thickness;					// 線の太さ	
+	float padding[3];					// 16バイトアライメント用
 };
 
 /*----- 前方宣言 -----*/
@@ -48,6 +49,8 @@ public:
 private:
 	// 当たり判定描画
 	void DrawLine(const Vector2& _start, const Vector2& _end, const Color& _color, const float& _tickness);
+
+	ID3D11Buffer* constant_buffer_ = nullptr;	// 定数バッファ
 
 
 };

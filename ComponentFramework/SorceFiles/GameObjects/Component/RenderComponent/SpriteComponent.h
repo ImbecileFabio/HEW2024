@@ -34,7 +34,7 @@ public:
 	void Init() override;
 	void Update() override;
 	void Uninit() override;
-	void Draw() ;
+	void Draw();
 
 	// F‚ğ•Ï‚¦‚é
 	void SetColor(const DirectX::SimpleMath::Vector4& _color);

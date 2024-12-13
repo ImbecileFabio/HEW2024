@@ -53,15 +53,6 @@ SpriteComponent::~SpriteComponent()
 //--------------------------------------------------
 void SpriteComponent::Init()
 {
-	auto transform = owner_->GetComponent<TransformComponent>();
-	if (transform)
-	{
-		transform->SetScale(150, 150);
-	}
-
-
-	// •`‰æƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä“o˜^
-	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
 
 }
 

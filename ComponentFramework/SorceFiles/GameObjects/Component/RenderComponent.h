@@ -45,6 +45,7 @@ protected:
 	int draw_order_;	// 更新順位
 
 	void InitBuffers();	// バッファの初期化
+	void InitDebugBuffers();	// デバッグ用バッファの初期化
 
 	// バッファ
 	VertexBuffer<VERTEX_3D> vertex_buffer_;

@@ -330,6 +330,7 @@
   <ItemGroup>
     <FxCompile Include="Shader\unlitTexturePS.hlsl" />
     <FxCompile Include="Shader\unlitTextureVS.hlsl" />
+    <FxCompile Include="Shader\GeometryShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\icon.png">

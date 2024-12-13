@@ -18,6 +18,9 @@
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 
+// デバッグ用コンポーネント
+#include "../Component/RenderComponent/DebugCollisionDrawComponent.h"
+
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -37,6 +40,9 @@ Robot::~Robot(void)
 	delete collider_component_;
 	delete collider_event_component_;
 	delete velocity_component_;
+
+	// デバッグ用コンポーネント
+	delete debug_collision_draw_component_;
 }
 
 //--------------------------------------------------
@@ -45,7 +51,7 @@ Robot::~Robot(void)
 void Robot::InitGameObject(void)
 {
 	transform_component_->SetPosition(0, -25);
-	//transform_component_->SetScale(150, 150);
+	transform_component_->SetScale(150, 150);
 
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
 
@@ -83,14 +89,15 @@ void Robot::UpdateGameObject(void)
 		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	}
 
-	if(collider_component_->GetHitFg())
-	{
-		sprite_component_->SetColor(Vector4(1.0f, 0.25f, 0.25f, 1.0f));
-	}
-	else
-	{
-		sprite_component_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-	}
+	// 何かに触れている間は赤くなる
+	//if(collider_component_->GetHitFg())
+	//{
+	//	sprite_component_->SetColor(Vector4(1.0f, 0.25f, 0.25f, 1.0f));
+	//}
+	//else
+	//{
+	//	sprite_component_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	//}
 	
 }
 

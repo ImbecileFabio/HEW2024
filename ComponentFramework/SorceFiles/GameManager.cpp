@@ -35,7 +35,6 @@ GameManager::GameManager()
 	//audio_manager_ = new AudioManager();
 
 	// コライダーマネージャー初期化
-		
 	collider_manager_ = ColliderManager::Create();
 
 	this->InitAll();
@@ -93,12 +92,10 @@ void GameManager::UninitAll(void)
 void GameManager::UpdateAll()
 {
 	// ゲームオブジェクトの更新
+	this->current_scene_->Update();
 	this->UpdateGameObjects();
 	this->collider_manager_->UpdateAll();
 	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
-
-	this->current_scene_->Update();
-
 }
 //-----------------------------------------------------------------
 // 出力生成処理

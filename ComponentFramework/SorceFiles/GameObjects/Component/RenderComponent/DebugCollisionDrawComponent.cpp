@@ -17,9 +17,12 @@
 #include "../TransformComponent.h"
 #include "../ColliderComponent/BoxColliderComponent.h"
 
+
 #include <wrl/client.h>
 
 using namespace DirectX::SimpleMath;
+/*----- 前方宣言 -----*/
+bool CreateGeometryShader(ID3D11Device* device, ID3D11GeometryShader** geometryShader, ID3D11Buffer** constantBuffer);
 
 //--------------------------------------------------
 // コンストラクタ
@@ -30,7 +33,7 @@ DebugCollisionDrawComponent::DebugCollisionDrawComponent(GameObject* _owner, int
 	std::cout << std::format("＜DebugCollisionDrawComponent＞ -> Constructor\n");
 
 	// バッファ初期化
-	InitBuffers();
+	InitDebugBuffers();
 
 	this->Init();
 }
@@ -50,11 +53,6 @@ DebugCollisionDrawComponent::~DebugCollisionDrawComponent()
 //--------------------------------------------------
 void DebugCollisionDrawComponent::Init()
 {
-	auto transform = owner_->GetComponent<TransformComponent>();
-
-
-	// 描画オブジェクトとして登録
-	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
 
 }
 
@@ -84,7 +82,7 @@ void DebugCollisionDrawComponent::Draw()
 	const auto& box = collider->GetBoxSize();
 
 	Color debugColor = collider->GetHitFg() ? Color(1, 0, 0, 1) : Color(0, 1, 0, 1);	// true == Red, false == Green
-	float thickness = 2.0f;
+	float thickness = 20.0f;
 
 	 // 四角形の各辺を描画
 	DrawLine({ box.y, box.w }, { box.z, box.w }, debugColor, thickness); // 上辺
@@ -114,7 +112,10 @@ void DebugCollisionDrawComponent::DrawLine(const Vector2& _start, const Vector2&
 
 
 
-	shader_.SetGPU();
+	index_buffer_.Create({ 0, 1, 2, 1, 3, 2 });
+
+
+	shader_.SetGeometryGPU();
 	vertex_buffer_.SetGPU();
 	index_buffer_.SetGPU();
 
@@ -122,4 +123,33 @@ void DebugCollisionDrawComponent::DrawLine(const Vector2& _start, const Vector2&
 	// バッファをセット
 	Renderer::GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	Renderer::GetDeviceContext()->DrawIndexed(6, 0, 0);
+}
+
+
+
+//--------------------------------------------------------------------------------------
+// ジオメトリーシェーダを生成する
+//--------------------------------------------------------------------------------------
+bool CreateGeometryShader(ID3D11Device* device, ID3D11GeometryShader** geometryShader, ID3D11Buffer** constantBuffer) {
+	// シェーダーバイナリをコンパイル
+	ID3D10Blob* gsBlob = nullptr;
+	HRESULT hr = D3DCompileFromFile(
+		L"GeometryuShader.hlsl",
+		nullptr, nullptr, "gs_main", "hs_5_0",
+		D3DCOMPILE_ENABLE_STRICTNESS, 0, &gsBlob, nullptr);
+	assert(SUCCEEDED(hr));
+
+	// ジオメトリシェーダを作成
+	hr = device->CreateGeometryShader(gsBlob->GetBufferPointer(), gsBlob->GetBufferSize(), nullptr, geometryShader);
+	assert(SUCCEEDED(hr));
+	gsBlob->Release();
+
+	// 定数バッファを作成
+	D3D11_BUFFER_DESC bufferDesc = {};
+	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	bufferDesc.ByteWidth = sizeof(GeometryShaderBuffer);
+	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+
+	hr = device->CreateBuffer(&bufferDesc, nullptr, constantBuffer);
+	assert(SUCCEEDED(hr));
 }

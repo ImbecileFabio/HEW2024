@@ -11,11 +11,14 @@ using Microsoft::WRL::ComPtr;
 class Shader {
 public:
 	void Create(std::string vs, std::string ps);
+	void CreateGeometry(std::string gs);
 	void SetGPU();
+	void SetGeometryGPU();
 
 private:
 	ComPtr<ID3D11VertexShader> m_pVertexShader;		// 頂点シェーダー
 	ComPtr<ID3D11PixelShader>  m_pPixelShader;		// ピクセルシェーダー
 	ComPtr<ID3D11InputLayout>  m_pVertexLayout;		// 頂点レイアウト
+	ComPtr<ID3D11GeometryShader> m_pGeometryShader;	// ジオメトリシェーダー
 };
 
