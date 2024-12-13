@@ -23,5 +23,8 @@ public:
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
 
+	auto GetWidth() const { return m_width; }
+	auto GetHeight() const { return m_height; }
+
 	void SetGPU();
 };

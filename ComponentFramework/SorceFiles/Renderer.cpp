@@ -289,9 +289,9 @@ void Renderer::End()
 //-----------------------------------------------------------------
 // 画像追加
 //-----------------------------------------------------------------
-void Renderer::AddSprite(SpriteComponent* _spriteComponent)
+void Renderer::AddSprite(RenderComponent* _renderComponent)
 {
-	int myDrawOrder = _spriteComponent->GetDrawOrder();
+	int myDrawOrder = _renderComponent->GetDrawOrder();
 	auto iter = sprites_.begin();
 	for (;
 		iter != sprites_.end();
@@ -301,15 +301,15 @@ void Renderer::AddSprite(SpriteComponent* _spriteComponent)
 	}
 
 	// イテレータの前に要素を挿入
-	sprites_.insert(iter, _spriteComponent);
+	sprites_.insert(iter, _renderComponent);
 }
 
 //-----------------------------------------------------------------
 // 画像削除
 //-----------------------------------------------------------------
-void Renderer::RemoveSprite(SpriteComponent& _spriteComponent)
+void Renderer::RemoveSprite(RenderComponent* _renderComponent)
 {
-	auto iter = std::find(sprites_.begin(), sprites_.end(), &_spriteComponent);
+	auto iter = std::find(sprites_.begin(), sprites_.end(), _renderComponent);
 	sprites_.erase(iter);
 }
 

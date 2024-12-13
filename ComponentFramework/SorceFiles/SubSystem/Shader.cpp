@@ -61,3 +61,4 @@ void Shader::SetGPU()
 	devicecontext->IASetInputLayout(m_pVertexLayout.Get());				// 頂点レイアウトセット
 }
 
+

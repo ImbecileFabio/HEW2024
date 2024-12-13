@@ -11,6 +11,10 @@
 #include <memory>
 
 #include "../Component.h"
+#include "../../SubSystem/VertexBuffer.h"
+#include "../../SubSystem/IndexBuffer.h"
+#include "../../SubSystem/Shader.h"
+
 /*----- 構造体宣言 -----*/
 
 /*----- 前方宣言 -----*/
@@ -28,10 +32,27 @@ public:
 	void Init(void) override {};
 	void Uninit(void) override {};
 	void Update(void) override {};
+	
+	virtual void Draw(void) = 0;
+
+	// 更新順位を返す
+	int& GetDrawOrder(void) { return draw_order_; }
+
 
 	virtual TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 
-private:
+protected:
+	int draw_order_;	// 更新順位
+
+	void InitBuffers();	// バッファの初期化
+
+	// バッファ
+	VertexBuffer<VERTEX_3D> vertex_buffer_;
+	IndexBuffer index_buffer_;
+
+	Shader shader_;	// シェーダ
+
+	std::vector<VERTEX_3D> vertices_;	// 頂点データ
 
 };
 

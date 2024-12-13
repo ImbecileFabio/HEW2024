@@ -12,9 +12,6 @@
 #include <string>
 
 #include "../RenderComponent.h"
-#include "../../../SubSystem/VertexBuffer.h"
-#include "../../../SubSystem/IndexBuffer.h"
-#include "../../../SubSystem/Shader.h"
 #include "../../../SubSystem/Texture.h"
 
 
@@ -24,14 +21,14 @@
 /*----- 前方宣言 -----*/
 class GameObject;
 
-//--------------------------------------
+//--------------------------------------------------
 // 描画クラス
 //--------------------------------------------------
 class SpriteComponent :
 	public RenderComponent
 {
 public:
-	SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder = 50);
+	SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder = 10);
 	~SpriteComponent();
 
 	void Init() override;
@@ -40,24 +37,13 @@ public:
 	void Draw() ;
 
 	// 色を変える
-	void SetColor(const DirectX::SimpleMath::Vector4 _color);
+	void SetColor(const DirectX::SimpleMath::Vector4& _color);
 
-	// 更新順位を返す
-	int& GetDrawOrder(void) { return draw_order_; }
 	// コンポーネントのIDを返す
 	TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 
 private:
-	void InitBuffers();	// バッファの初期化
-
-	int draw_order_;	// 更新順位
-
-	// バッファ
-	VertexBuffer<VERTEX_3D> vertex_buffer_;
-	IndexBuffer index_buffer_;
-
-	Shader shader_;	// シェーダ
-
 	Texture texture_;	// テクスチャ
+
 };
 #endif	// SPRITE_COMPONENT_H_

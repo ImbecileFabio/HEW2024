@@ -44,7 +44,7 @@ enum EBlendState {
 /*----- ëOï˚êÈåæ -----*/
 class GameManager;
 class Renderer;
-class SpriteComponent;
+class RenderComponent;
 
 
 //-----------------------------------------------------------------
@@ -62,8 +62,8 @@ public:
 	void Draw();
 	void End();
 
-	void AddSprite(SpriteComponent* spriteComponent);
-	void RemoveSprite(SpriteComponent& spriteComponent);
+	void AddSprite(RenderComponent* renderComponent);
+	void RemoveSprite(RenderComponent* renderComponent);
 
 	static void SetDepthEnable(bool Enable);
 
@@ -82,9 +82,11 @@ public:
 	static void CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
 	static void CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName);
 
+
+
 private:
 
-	std::vector<SpriteComponent*> sprites_;
+	std::vector<RenderComponent*> sprites_;
 
 	static D3D_FEATURE_LEVEL m_FeatureLevel;
 

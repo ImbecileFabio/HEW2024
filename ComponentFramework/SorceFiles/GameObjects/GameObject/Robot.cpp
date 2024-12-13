@@ -45,7 +45,7 @@ Robot::~Robot(void)
 void Robot::InitGameObject(void)
 {
 	transform_component_->SetPosition(0, -25);
-	transform_component_->SetScale(150, 150);
+	//transform_component_->SetScale(150, 150);
 
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
 
@@ -72,19 +72,26 @@ void Robot::UpdateGameObject(void)
 	// ˆÚ“®ˆ—
 	if (input.GetKeyPress(VK_D))
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 0.1f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 5.0f, 0.0f, 0.0f));
 	}
 	else if (input.GetKeyPress(VK_A))
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-0.1f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-5.0f, 0.0f, 0.0f));
 	}
 	else
 	{
 		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	}
 
+	if(collider_component_->GetHitFg())
+	{
+		sprite_component_->SetColor(Vector4(1.0f, 0.25f, 0.25f, 1.0f));
+	}
+	else
+	{
+		sprite_component_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	}
 	
-
 }
 
 void Robot::OnCollisionEnter(GameObject* _other)

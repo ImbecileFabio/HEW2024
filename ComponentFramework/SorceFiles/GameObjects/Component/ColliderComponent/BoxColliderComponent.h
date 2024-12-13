@@ -25,6 +25,7 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 
+
 	bool CheckCollisionCollider(ColliderBaseComponent* _other) override;
 	bool CheckCollisionCollider(CircleColliderComponent* _other) override;
 	bool CheckCollisionCollider(BoxColliderComponent* _other) override;
@@ -34,7 +35,7 @@ public:
 	DirectX::SimpleMath::Vector4 GetBoxSize(void) const { return boxSize_; }
 
 private:
-	DirectX::SimpleMath::Vector4 boxSize_{ 0.f, 0.f, 0.f,0.f };	// 当たり判定のサイズ 上・下・左・右
+	DirectX::SimpleMath::Vector4 boxSize_{ 0.f, 0.f, 0.f, 0.f };	// 当たり判定のサイズ 上・下・左・右
 };
 
 #endif // BOX_COLLIDER_COMPONENT_H_

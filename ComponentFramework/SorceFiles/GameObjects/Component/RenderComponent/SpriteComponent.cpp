@@ -24,8 +24,7 @@ using namespace DirectX::SimpleMath;
 // コンストラクタ
 //--------------------------------------------------
 SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname,  int _drawOrder)
-	: RenderComponent(_owner)
-	, draw_order_(_drawOrder)
+	: RenderComponent(_owner, _drawOrder)
 {
 	std::cout << std::format("＜SpriteComponent＞ -> Constructor\n");
 
@@ -34,11 +33,9 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	assert(sts == true);
 
 	// バッファ初期化
-	InitBuffers();
-	
+	this->InitBuffers();
 
-	// 描画オブジェクトとして登録
-	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
+	this->Init();
 }
 
 //--------------------------------------------------
@@ -56,59 +53,24 @@ SpriteComponent::~SpriteComponent()
 //--------------------------------------------------
 void SpriteComponent::Init()
 {
+	auto transform = owner_->GetComponent<TransformComponent>();
+	if (transform)
+	{
+		transform->SetScale(150, 150);
+	}
+
+
+	// 描画オブジェクトとして登録
+	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
 
 }
 
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------
+
 void SpriteComponent::Uninit()
 {
-}
-
-//--------------------------------------------------
-// バッファ初期化
-//--------------------------------------------------
-void SpriteComponent::InitBuffers()
-{
-	// 頂点データ
-	std::vector<VERTEX_3D>	vertices;
-
-	vertices.resize(4);
-
-	vertices[0].position = Vector3(-0.5f,  0.5f, 0.5f);
-	vertices[1].position = Vector3( 0.5f,  0.5f, 0.5f);
-	vertices[2].position = Vector3(-0.5f, -0.5f, 0.5f);
-	vertices[3].position = Vector3( 0.5f, -0.5f, 0.5f);
-
-	vertices[0].color = Color(1, 1, 1, 1);
-	vertices[1].color = Color(1, 1, 1, 1);
-	vertices[2].color = Color(1, 1, 1, 1);
-	vertices[3].color = Color(1, 1, 1, 1);
-
-	vertices[0].uv = Vector2(0, 0);
-	vertices[1].uv = Vector2(1, 0);
-	vertices[2].uv = Vector2(0, 1);
-	vertices[3].uv = Vector2(1, 1);
-
-	// 頂点バッファ生成
-	vertex_buffer_.Create(vertices);
-
-	// インデックスバッファ生成
-	std::vector<unsigned int> indices;
-	indices.resize(4);
-
-	indices[0] = 0;
-	indices[1] = 1;
-	indices[2] = 2;
-	indices[3] = 3;
-
-	// インデックスバッファ生成
-	index_buffer_.Create(indices);
-
-	// シェーダオブジェクト生成
-	shader_.Create("shader/unlitTextureVS.hlsl", "shader/unlitTexturePS.hlsl");
-
 }
 
 
@@ -177,27 +139,13 @@ void SpriteComponent::Draw()
 //--------------------------------------------------
 // 色変更
 //--------------------------------------------------
-void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4 _color)
+void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4& _color)
 {
-	// 頂点データの色を更新
-	std::vector<VERTEX_3D> vertices(4);
+	for (auto& vertex : vertices_)
+	{
+		vertex.color = _color;		// 色を変更
+	}
 
-	vertices[0].position = Vector3(-0.5f, 0.5f, 0.5f);
-	vertices[1].position = Vector3(0.5f, 0.5f, 0.5f);
-	vertices[2].position = Vector3(-0.5f, -0.5f, 0.5f);
-	vertices[3].position = Vector3(0.5f, -0.5f, 0.5f);
-
-	vertices[0].color = _color;
-	vertices[1].color = _color;
-	vertices[2].color = _color;
-	vertices[3].color = _color;
-						
-	vertices[0].uv = Vector2(0, 0);
-	vertices[1].uv = Vector2(1, 0);
-	vertices[2].uv = Vector2(0, 1);
-	vertices[3].uv = Vector2(1, 1);
-
-	// 頂点バッファを再生成
-	vertex_buffer_.Create(vertices);
+	vertex_buffer_.Modify(vertices_);	// バッファを書き換え
 }
 
