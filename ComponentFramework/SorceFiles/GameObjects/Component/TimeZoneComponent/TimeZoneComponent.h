@@ -8,9 +8,6 @@
 #define TIME_ZONE_COMPONENT_H_
 /*----- インクルード -----*/
 #include "../../Component.h"
-/*----- 前方宣言 -----*/
-class ColliderBaseComponent;
-class RigidbodyComponent;
 //--------------------------------------------------
 // タイムゾーン処理クラス　加速はする？
 //--------------------------------------------------
@@ -26,10 +23,9 @@ public:
 
 	TypeID GetComponentType(void) const override { return TypeID::TimeZoneComponent; }
 private:
-	// タイムゾーンが持つ速度の変数 範囲に入ったオブジェクトに速度を渡す
-	float speed_ = 0.0f;
+	// タイムゾーン
 	// タイムゾーンが入ったオブジェクトの当たり判定を参照で持つよ
-	ColliderBaseComponent* colliderComponent_ = {};
-	RigidbodyComponent* rigidbodyComponent_ = {};	// 速度の値にアクセスする
+	class ColliderBaseComponent* collider_component_ = {};
+	class VelocityComponent*	 velocity_component_ = {};	// 速度の値にアクセスする
 };
 #endif // TIME_ZONE_COMPONENT_H_

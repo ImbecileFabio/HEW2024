@@ -74,7 +74,7 @@ private:
 
 	class Renderer* renderer_{};	// レンダラー
 	class AudioManager* audio_manager_{};	// オーディオマネージャー
-	class ColliderManager* collider_manager_{};				// 実体をここに置く
+	class ColliderManager* collider_manager_{};				// コライダーマネージャー
 
 	// ゲームオブジェクト
 	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ

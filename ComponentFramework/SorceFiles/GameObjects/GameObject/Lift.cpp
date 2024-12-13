@@ -8,6 +8,9 @@
 #include <algorithm>
 #include "Lift.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
+#include "../Component/ColliderComponent/CircleColliderComponent.h"
+#include "../Component/ColliderComponent/BoxColliderComponent.h"
+#include "../Component/EventComponent/ColliderEventComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 // @param _maxPos 正方向の最大座標
@@ -18,6 +21,7 @@ Lift::Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::
 	:GameObject(_gameManager, "Lift")
 	,moveState_(_moveState), maxPos_(_maxPos), minPos_(_minPos), switchFg_(false)
 {
+	std::cout << std::format("＜Lift＞ -> Constructor\n");
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -25,6 +29,9 @@ Lift::Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::
 //--------------------------------------------------
 Lift::~Lift()
 {
+	std::cout << std::format("＜Lift＞ -> Destructor\n");
+	delete collider_base_component_;
+	delete collider_event_component_;
 	delete spriteComponent_;
 	delete velocityComponent_;
 }
@@ -33,13 +40,20 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-	this->spriteComponent_   = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png", 0);
-	this->velocityComponent_ = new VelocityComponent(this);
+	transform_component_->SetScale(1000.0f, 1000.0f);
+	transform_component_->SetPosition(0.0f, 0.0f);
 
-	this->transform_component_->SetScale(300.0f, 300.0f);
-	this->transform_component_->SetPosition(-50.0f, 0.0f);
+	spriteComponent_   = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png");
+	collider_base_component_ = new BoxColliderComponent(this);
+	collider_event_component_ = new ColliderEventComponent(this);
+	velocityComponent_ = new VelocityComponent(this);
 
-	this->velocityComponent_->SetUseGravity(false);
+	velocityComponent_->SetUseGravity(false);
+	// イベント追加処理
+	collider_event_component_->AddEvent([this](GameObject* _other)
+		{
+			this->OnCollisionEnter(_other);
+		});
 }
 //--------------------------------------------------
 // @brief 更新処理
@@ -47,58 +61,55 @@ void Lift::InitGameObject(void)
 void Lift::UpdateGameObject(void)
 {
 	DirectX::SimpleMath::Vector3 pos = this->transform_component_->GetPosition();
-	DirectX::SimpleMath::Vector3 current_acceleration = velocityComponent_->GetAcceleration();
-
 	switch (moveState_)
 	{
 	case Lift::MoveState::length:	// 縦移動
+		if (pos.y <= maxPos_.y && switchFg_ == false)
+		{
+			velocityComponent_->SetVelocity	   ({ 0.0f, 2.0f, 0.0f });
+			if (pos.y >= maxPos_.y)
+				switchFg_ = true;
+		}
+		if (pos.y >= minPos_.y && switchFg_ == true)
+		{
+			velocityComponent_->SetVelocity	   ({ 0.0f, -2.0f, 0.0f });
+			if (pos.y <= minPos_.y)
+				switchFg_ = false;
+		}
 		break;
 	case Lift::MoveState::side:		// 横移動
-	{
-		if (pos.x < maxPos_.x && switchFg_ == false)
+		if (pos.x <= maxPos_.x && switchFg_ == false)
 		{
-			velocityComponent_->SetAcceleration({ 0.1f, 0.0f, 0.0f });
+			velocityComponent_->SetVelocity	   ({ 2.0f, 0.0f, 0.0f });
 			if (pos.x >= maxPos_.x)
 				switchFg_ = true;
 		}
-		if (pos.x > minPos_.x && switchFg_ == true)
+		if (pos.x >= minPos_.x && switchFg_ == true)
 		{
-			velocityComponent_->SetAcceleration({ -0.1f, 0.0f, 0.0f });
+			velocityComponent_->SetVelocity	   ({ -2.0f, 0.0f, 0.0f });
 			if (pos.x <= minPos_.x)
 				switchFg_ = false;
 		}
-		// 加速度の絶対値を減速率に基づいて減少させる
-		if (current_acceleration.x > 0.0f)
-		{
-			current_acceleration.x =
-				max( 0.0f , current_acceleration.x - 0.01f );
-		}
-		else if (current_acceleration.x < 0.0f)
-		{
-			current_acceleration.x =
-				min(0.0f , current_acceleration.x + 0.01f );
-		}
-		velocityComponent_->SetAcceleration(current_acceleration);
 		break;
-	}
 	default:
 		break;
 	}
 	this->transform_component_->SetPosition(pos);
 }
-//if (pos.x < maxPos_.x && switchFg_ == false)
-//{
-//	pos.x += 2.0f;
-//	if (pos.x >= maxPos_.x)
-//	{
-//		switchFg_ = true;
-//	}
-//}
-//if (pos.x > minPos_.x && switchFg_ == true)
-//{
-//	pos.x -= 2.0f;
-//	if (pos.x <= minPos_.x)
-//	{
-//		switchFg_ = false;
-//	}
-//}
+//--------------------------------------------------
+// @brief リフトに任意のオブジェクトが当たった時の処理
+//--------------------------------------------------
+void Lift::OnCollisionEnter(GameObject* _other)
+{
+	switch (_other->GetType())
+	{
+	case GameObject::TypeID::Robot:
+		std::cout << std::format("Lift -> Robot -> OnCollisionEnter\n");
+		break;
+	case GameObject::TypeID::Tile:
+		std::cout << std::format("Lift -> Tile -> OnCollisionEnter\n");
+		break;
+	default:
+		break;
+	}
+}

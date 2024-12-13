@@ -122,7 +122,10 @@ public:
 
 	auto& GetGameManager(void) { return game_manager_; }
 
-	
+	// GameObjectŒÅ—L‚ÌÕ“Ë‚µ‚½Œã‚Ìˆ—
+	virtual void OnCollisionEnter(GameObject* _other) {};	// ÚG‚µ‚½
+	virtual void OnCollisionStay(GameObject* _other) {};	// ÚG‚µ‘±‚¯‚Ä‚¢‚é
+	virtual void OnCollisionExit(GameObject* _other) {};	// ÚG‚©‚ç”²‚¯‚½
 
 protected:
 	// GameObject‚ÌŠ—LÒ
