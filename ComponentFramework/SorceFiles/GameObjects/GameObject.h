@@ -65,7 +65,7 @@ public:
 		, Active	// Update‚³‚ê‚é
 		, Paused	// Update‚³‚ê‚È‚¢
 		, Dead		// emplace_back‚³‚ê‚é
-
+		, ColliderOut // ColliderManager‚©‚çemplace_back‚³‚ê‚é
 		, MAX		// ó‘Ô‚ÌÅ‘å’l
 	};
 

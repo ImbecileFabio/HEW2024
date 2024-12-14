@@ -45,9 +45,10 @@ void Item::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Robot:
 		// ロボットが接触したら
-		std::cout << "イベント削除\n" << std::endl;
+		std::cout << "Item -> Robot -> OnCollisionEnter\n" << std::endl;
 		this->GetGameManager()->itemCountUp();
 		this->event_base_component_->RemoveEvent();
+		this->state_ = GameObject::State::ColliderOut;
 		break;
 	default:
 		break;

@@ -66,29 +66,29 @@ void ColliderManager::AddGameObject(GameObject* _gameObject)
 //-----------------------------------------------------------------
 void ColliderManager::RemoveGameObject(GameObject* _gameObject)
 {
-	for (int i = 0; i < collider_game_objects_.size(); i++)
-	{
-		if (collider_game_objects_.at(i) == _gameObject)
-		{
-			collider_game_objects_.erase(collider_game_objects_.begin() + i);
-			break;
-		}
-	}
+	//for (int i = 0; i < collider_game_objects_.size(); i++)
+	//{
+	//	if (collider_game_objects_.at(i) == _gameObject)
+	//	{
+	//		collider_game_objects_.erase(collider_game_objects_.begin() + i);
+	//		break;
+	//	}
+	//}
 	// 待機コンテナ
-	//auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), _gameObject);
-	//if (iter != pending_game_objects_.end())
-	//{
-	//	std::iter_swap(iter, pending_game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
-	//	pending_game_objects_.pop_back();						// 待機コンテナから削除
+	auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), _gameObject);
+	if (iter != pending_game_objects_.end())
+	{
+		std::iter_swap(iter, pending_game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
+		pending_game_objects_.pop_back();						// 待機コンテナから削除
 
-	//}
-	//// 稼働コンテナ
-	//iter = std::find(collider_game_objects_.begin(), collider_game_objects_.end(), _gameObject);
-	//if (iter != collider_game_objects_.end())
-	//{
-	//	std::iter_swap(iter, collider_game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
-	//	collider_game_objects_.pop_back();						// 稼働コンテナから削除
-	//}
+	}
+	// 稼働コンテナ
+	iter = std::find(collider_game_objects_.begin(), collider_game_objects_.end(), _gameObject);
+	if (iter != collider_game_objects_.end())
+	{
+		std::iter_swap(iter, collider_game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
+		collider_game_objects_.pop_back();						// 稼働コンテナから削除
+	}
 }
 //-----------------------------------------------------------------
 // @brief  オブジェクトのUpdateをすべて呼びだす処理
@@ -108,20 +108,25 @@ void ColliderManager::UpdateGameObjects(void)
 				// 当たった側の処理を呼びだす
 				if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>() == nullptr &&
 					collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>() == nullptr)
-					break;
+					continue;
 				if (collider_game_objects_.at(i)->GetComponent<EventBaseComponent>() == nullptr)
 					break;
 				size_t id = collider_game_objects_.at(i)->GetComponent<ColliderEventComponent>()->GetID();
 				collider_game_objects_.at(i)->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_.at(j), id);
-				if (collider_game_objects_.at(i)->GetType() == GameObject::TypeID::Item)
-				{
-					this->RemoveGameObject(collider_game_objects_.at(i));
-				}
 			}
 		}
 	}
 	updating_game_objects_ = false;
-
+	// 当たり判定を取らなくなったオブジェクトの移動
+	for (auto it = collider_game_objects_.begin(); it != collider_game_objects_.end(); ) {
+		if ((*it)->GetState() == GameObject::State::ColliderOut) {
+			collider_out_objects_.emplace_back(std::move(*it));
+			it = collider_game_objects_.erase(it); // 要素を削除しつつ次の要素へ
+		}
+		else {
+			++it;
+		}
+	}
 	// 待機リストのゲームオブジェクトの操作
 	for (auto& pendingGameObject : pending_game_objects_)
 	{
@@ -140,6 +145,7 @@ void ColliderManager::UpdateGameObjects(void)
 		}
 	}
 }
+
 
 //#include <functional>
 //
