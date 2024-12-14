@@ -17,7 +17,6 @@
 #include "../Component/TimeZoneComponent/TimeZoneComponent.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/PendulumMovementComponent.h"
-#include "../Component/RigidbodyComponent/AngularVelocityComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -50,8 +49,8 @@ void Pendulum::InitGameObject(void)
 	collider_component_ = new CircleColliderComponent(this);
 	// 振り子コンポーネント
 	pendulum_component_ = new PendulumMovementComponent(this);
-	pendulum_component_->SetPendulumAngle(60.0f);
-	pendulum_component_->PendulumInit(0.1f, Vector3(0.0f, 0.0f, 0.0f), 200.0f);
+	pendulum_component_->SetPendulumAngle(30.0f);
+	pendulum_component_->PendulumInit(0.2f, Vector3(0.0f, 0.0f, 0.0f), 400.0f);
 	// トランスフォームコンポーネント
 	transform_component_->SetScale(100.0f, 100.0f);
 }

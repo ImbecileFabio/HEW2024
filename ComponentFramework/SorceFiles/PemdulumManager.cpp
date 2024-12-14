@@ -42,9 +42,7 @@ void PemdulumManager::Uninit() {
 
 }
 void PemdulumManager::Update(){
-	// if(スティックの入力){
-	//	pSelectedPemdulum = 内積が一定以内かつ最も近いオブジェクトのポインタを返す関数
-	// }
+	PemgulumSelect();
 	PemdulumMovementChange();
 	PemgulumLangthChange();
 }
@@ -52,14 +50,30 @@ void PemdulumManager::Update(){
 //--------------------------------------------------
 // 内積が一定以内かつ最も近いオブジェクトのポインタを返す（選択）
 //--------------------------------------------------
-GameObject* PemdulumManager::PemgulumSelect(float _inputStick) {
+void PemdulumManager::PemgulumSelect() {
+	DirectX::XMFLOAT2 IMGLA = IM.GetLeftAnalogStick();	// InputManager GetLeftAnalogstick
+	nextPemdulumVector_Langth_ = 9999.f;
 	// スティックの入力があるとき
-	if (IM.GetLeftAnalogStick().x != 0 && IM.GetLeftAnalogStick().y != 0) {
+	if (IMGLA.x != 0 && IMGLA.y != 0) {
 		for (auto& pemdulum : pemgulumList_) {
 			if (pSelectedPemdulum != pemdulum) {
-				pemdulumPosition_= pemdulum->GetComponent<TransformComponent>()->GetPosition();
+				DirectX::SimpleMath::Vector3 PP = pemdulum->GetComponent<TransformComponent>()->GetPosition();			// PemdulumPosition
+				DirectX::SimpleMath::Vector3 SPP = pSelectedPemdulum->GetComponent<TransformComponent>()->GetPosition();	// SelectedPemdulumPosition
+				// ベクトルの正規化
+				stickVector_Langth_ = std::sqrt(IMGLA.x * IMGLA.x + IMGLA.y * IMGLA.y);
+				stickVector_Normalize_ = { IMGLA.x / stickVector_Langth_, IMGLA.y / stickVector_Langth_ };
+				pemdulumVector_Langth_ = std::sqrt((PP.x - SPP.x) * (PP.x - SPP.x) + (PP.y - SPP.y) * (PP.y - SPP.y));
+				pemdulumVector_Normalize_ = { (PP.x - SPP.x) / pemdulumVector_Langth_,(PP.y - SPP.y) / pemdulumVector_Langth_ };
+				// 内積の計算
+				innerProduct_ = stickVector_Normalize_.x * pemdulumVector_Normalize_.x + stickVector_Normalize_.y * pemdulumVector_Normalize_.y;
+
+				if (innerProduct_ > InnerProductLimit && nextPemdulumVector_Langth_ > pemdulumVector_Langth_) {
+					nextPemdulumVector_Langth_ = pemdulumVector_Langth_;
+					pNextPemdulum = pemdulum;
+				}
 			}
 		}
+		pSelectedPemdulum = pNextPemdulum;
 	}
 }
 
@@ -85,16 +99,12 @@ void PemdulumManager::PemgulumLangthChange() {
 	if (IM.GetButtonTrigger(XINPUT_UP)) {
 		if (langthState_ != LangthState::shortLangth) {
 			langthState_ -= LangthChange;
-		} else {
-			// 処理をしない
 		}
 	}
 	// 十字↓（長くする）
 	if (IM.GetButtonTrigger(XINPUT_DOWN)) {
 		if (langthState_ != LangthState::longLangth) {
 			langthState_ += LangthChange;
-		} else {
-			// 処理をしない
 		}
 	}
 }

@@ -17,6 +17,8 @@
 constexpr int NormalLangth = 200;
 constexpr int LangthChange = 50;
 
+constexpr float InnerProductLimit = 0.7;
+
 // êUÇËéqÇÃí∑Ç≥ÇÃèÛë‘
 enum class LangthState
 {
@@ -42,12 +44,16 @@ private:
 	InputManager& IM = InputManager::GetInstance();
 
 	DirectX::SimpleMath::Vector3 pemdulumPosition_;
-	DirectX::SimpleMath::Vector2 stickVector_;
-	DirectX::SimpleMath::Vector2 pemdulumVector_;
-
+	DirectX::SimpleMath::Vector2 stickVector_Normalize_;
+	float stickVector_Langth_;
+	DirectX::SimpleMath::Vector2 pemdulumVector_Normalize_;
+	float pemdulumVector_Langth_;
+	float innerProduct_;
 
 	std::list<GameObject*> pemgulumList_;
 	GameObject* pSelectedPemdulum;
+	GameObject* pNextPemdulum;
+	float nextPemdulumVector_Langth_;
 
 public:
 	PemdulumManager();
@@ -61,7 +67,7 @@ public:
 	void Uninit();
 	void Update();
 
-	 GameObject* PemgulumSelect(float _inputStick);
+	 void PemgulumSelect();
 	 void PemdulumMovementChange();
 	 void PemgulumLangthChange();
 };

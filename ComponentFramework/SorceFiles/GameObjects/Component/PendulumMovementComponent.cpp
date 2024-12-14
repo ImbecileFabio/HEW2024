@@ -130,8 +130,8 @@ void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration)
 // 振り子の角度に角速度を適用
 //--------------------------------------------------
 void PendulumMovementComponent::PendulumVelocity() {
-	SetPemdulumVelocity(std::round((GetPemdulumVelocity() + GetPendulumAcceleration()) * 100) / 100);
-	SetPendulumAngle(std::round((GetPendulumAngle() + GetPemdulumVelocity()) * 100) / 100);
+	SetPemdulumVelocity(std::round((GetPemdulumVelocity() + GetPendulumAcceleration()) * 1000) / 1000);
+	SetPendulumAngle(std::round((GetPendulumAngle() + GetPemdulumVelocity()) * 1000) / 1000);
 }
 
 //--------------------------------------------------
