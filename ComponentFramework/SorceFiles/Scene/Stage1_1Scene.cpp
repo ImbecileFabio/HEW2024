@@ -10,7 +10,9 @@
 
 #include "../GameManager.h"
 #include "../ColliderManager.h"
+#include "../PemdulumManager.h"
 #include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
+#include "../GameObjects/Component/PendulumMovementComponent.h"
 
 #include "../GameObjects/GameObject.h"
 #include "../GameObjects/GameObject/BackGround.h"
@@ -46,7 +48,9 @@ void Stage1_1Scene::Init()
 	back_ground_	= new BackGround(game_manager_);
 	tile_			= new Tile(game_manager_);
 	robot_			= new Robot(game_manager_);
-	pendulum_		= new Pendulum(game_manager_);
+	pendulum_		= new Pendulum(game_manager_, 30.f, 0.02f, Vector3(400, 0, 0), 300);
+	pendulum_2_		= new Pendulum(game_manager_, 30.f, 0.02f, Vector3(0, 0, 0), 300);
+	pendulum_3_		= new Pendulum(game_manager_, 30.f, 0.02f, Vector3(-400, 0, 0), 300);
 	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
 
 	State = Game;
@@ -60,6 +64,12 @@ void Stage1_1Scene::Init()
 		}
 	}
 
+	for (auto& pemdulumObject : game_manager_->GetGameObjects()) {
+		if (pemdulumObject->GetComponent<PendulumMovementComponent>()) {
+			game_manager_->GetPemdulumManager()->AddGameObject(pemdulumObject);
+		}
+	}
+	PemdulumManager::GetInstance()->SetSelectedPemdulum(PemdulumManager::GetInstance()->GetPemdulumList().front());
 }
 
 //--------------------------------------------------

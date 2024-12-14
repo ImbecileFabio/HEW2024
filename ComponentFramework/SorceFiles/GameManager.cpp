@@ -18,6 +18,7 @@
 #include "Renderer.h"
 #include "AudioManager.h"
 #include "ImGuiManager.h"
+#include "PemdulumManager.h"
 
 
 //-----------------------------------------------------------------
@@ -35,11 +36,12 @@ GameManager::GameManager()
 	//audio_manager_ = new AudioManager();
 
 	// コライダーマネージャー初期化
-		
 	collider_manager_ = ColliderManager::Create();
 
-	this->InitAll();
+	// 振り子マネージャー初期化
+	pemdulum_manager_ = PemdulumManager::GetInstance();
 
+	this->InitAll();
 }
 
 //-----------------------------------------------------------------
@@ -95,7 +97,8 @@ void GameManager::UpdateAll()
 	// ゲームオブジェクトの更新
 	this->current_scene_->Update();
 	this->UpdateGameObjects();
-	//this->collider_manager_->UpdateAll();
+	this->collider_manager_->UpdateAll();
+	this->pemdulum_manager_->Update();
 	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
 //-----------------------------------------------------------------

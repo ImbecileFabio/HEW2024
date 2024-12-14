@@ -10,6 +10,8 @@
 #include "GameObjects/GameObject.h"
 #include "InputManager.h"
 
+PemdulumManager* PemdulumManager::instance_ = nullptr;
+
 //--------------------------------------------------
 // コンストラクタ・デストラクタ
 //--------------------------------------------------
@@ -24,14 +26,6 @@ PemdulumManager::~PemdulumManager(){
 // 初期化処理・終了処理・更新処理
 //--------------------------------------------------
 void PemdulumManager::Init(){
-	GM = new GameManager;
-	// 振り子の検索、確保
-	for (GameObject* object : GM->GetGameObjects()) {
-		if (object->GetType() == GameObject::TypeID::Pendulum)
-		pemgulumList_.push_back(object);
-	}
-	pSelectedPemdulum = pemgulumList_.front();
-
 	// 振り子の動作、長さの状態
 	langthState_ = LangthState::normalLangth;
 	pemdulumMovement_ = false;
@@ -39,12 +33,28 @@ void PemdulumManager::Init(){
 void PemdulumManager::Uninit() {
 	pemgulumList_.clear();
 	pSelectedPemdulum = nullptr;
-
+	DestroyInstance();
 }
 void PemdulumManager::Update(){
 	PemgulumSelect();
 	PemdulumMovementChange();
 	PemgulumLangthChange();
+}
+
+//-----------------------------------------------------------------
+// オブジェクトを追加
+//-----------------------------------------------------------------
+void PemdulumManager::AddGameObject(GameObject* _gameObject)
+{
+	pemgulumList_.push_back(_gameObject);
+}
+//-----------------------------------------------------------------
+// オブジェクトを削除
+//-----------------------------------------------------------------
+void PemdulumManager::RemoveGameObject(GameObject* _gameObject)
+{
+	pemgulumList_.remove(_gameObject);
+
 }
 
 //--------------------------------------------------

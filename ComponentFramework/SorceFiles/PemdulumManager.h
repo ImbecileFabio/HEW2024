@@ -12,6 +12,7 @@
 #include "GameObjects/GameObject.h"
 #include <iostream>
 #include <list>
+#include <vector>
 #include <SimpleMath.h>
 
 constexpr int NormalLangth = 200;
@@ -27,10 +28,10 @@ enum class LangthState
 	longLangth = NormalLangth + LangthChange
 };
 
-LangthState operator +=(LangthState _langthState,int _LangthChange) {
+inline LangthState operator +=(LangthState _langthState,int _LangthChange) {
 	return static_cast<LangthState>(static_cast<int>(_langthState) + LangthChange);
 }
-LangthState operator -=(LangthState _langthState, int _LangthChange) {
+inline LangthState operator -=(LangthState _langthState, int _LangthChange) {
 	return static_cast<LangthState>(static_cast<int>(_langthState) - LangthChange);
 }
 
@@ -55,6 +56,8 @@ private:
 	GameObject* pNextPemdulum;
 	float nextPemdulumVector_Langth_;
 
+	static PemdulumManager* instance_;
+
 public:
 	PemdulumManager();
 	~PemdulumManager();
@@ -67,7 +70,28 @@ public:
 	void Uninit();
 	void Update();
 
+	// ゲームオブジェクトの追加
+	void AddGameObject(GameObject* _gameObject);
+	// ゲームオブジェクトの削除
+	void RemoveGameObject(GameObject* _gameObject);
+
 	 void PemgulumSelect();
 	 void PemdulumMovementChange();
 	 void PemgulumLangthChange();
+
+	 static PemdulumManager* GetInstance() {
+		 if (!instance_) {
+			 instance_ = new PemdulumManager;
+		 }
+		 return instance_;
+	 };
+	 void DestroyInstance() {
+		 if (instance_) {
+			 delete instance_;
+			 instance_ = nullptr;
+		 }
+	 }
+	 void SetSelectedPemdulum(GameObject* _pSelectedPemdulum) { pSelectedPemdulum = _pSelectedPemdulum; }
+	 GameObject* GetSelectedPemdulum() { return pSelectedPemdulum; }
+	 std::list<GameObject*> GetPemdulumList() { return pemgulumList_; }
 };

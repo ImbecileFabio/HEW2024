@@ -29,6 +29,7 @@ enum SceneName {
 class SceneBase;
 class GameObject;
 class ColliderManager;
+class PemdulumManager;
 
 //-----------------------------------------------------------------
 // ゲームマネージャークラス
@@ -50,6 +51,7 @@ public:
 	auto& GetRenderer(void) const { return renderer_; }
 	auto& GetAudioManager(void) const { return audio_manager_; }
 	auto& GetColliderManager() const { return collider_manager_; }
+	auto& GetPemdulumManager() const { return pemdulum_manager_; }
 
 	auto& GetGameObjects() const { return game_objects_; }
 	auto& GetPendingGameObjects() const { return pending_game_objects_; }
@@ -75,6 +77,7 @@ private:
 	class Renderer* renderer_{};	// レンダラー
 	class AudioManager* audio_manager_{};	// オーディオマネージャー
 	class ColliderManager* collider_manager_{};				// コライダーマネージャー
+	class PemdulumManager* pemdulum_manager_{};				// 振り子マネージャー
 
 	// ゲームオブジェクト
 	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ
