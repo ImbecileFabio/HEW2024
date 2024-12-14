@@ -31,6 +31,13 @@ struct VERTEX_3D
 	DirectX::SimpleMath::Vector2 uv;
 };
 
+// ジオメトリのバッファー
+struct GeometryShaderBuffer {
+	DirectX::XMFLOAT4X4 viewProjMatrix;	// ビュー・プロジェクション行列
+	float thickness;					// 線の太さ	
+	float padding[3];					// 16バイトアライメント用
+};
+
 
 // ブレンドステート
 enum EBlendState {

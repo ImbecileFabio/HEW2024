@@ -93,11 +93,20 @@ void RenderComponent::InitBuffers()
 //--------------------------------------------------
 // デバッグ用のバッファ初期化
 //--------------------------------------------------
-void RenderComponent::InitDebugBuffers()
+void RenderComponent::InitGeometryBuffers()
 {
+	GeometryShaderBuffer gsb;
+	// gsb.viewProjMatrix = ;	// ビュー・プロジェクション行列
+	gsb.thickness = 2.0f;		// 線の太さ	
+	gsb.padding[3] = {};		// 16バイトアライメント用
+
+
+	constant_buffer_.Create(gsb);
+
+	shader_.CreateGeometry("shader/GeometryShader.hlsl");
+
+
+
+
 }
 
-
-//--------------------------------------------------
-// デバッグ用の頂点座標初期化
-//--------------------------------------------------

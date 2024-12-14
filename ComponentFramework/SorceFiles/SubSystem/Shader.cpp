@@ -54,7 +54,7 @@ void Shader::CreateGeometry(std::string gs) {
 	ID3D11Device* device = Renderer::GetDevice();
 	// ジオメトリシェーダーオブジェクトを生成
 	bool sts = CreateGeometryShader(			// ジオメトリシェーダーオブジェクトを生成
-		device,							// デバイスオブジェクト
+		device,									// デバイスオブジェクト
 		gs.c_str(),
 		"gs_main",
 		"gs_5_0",

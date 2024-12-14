@@ -41,7 +41,7 @@ void gs_main(point VS_OUTPUT input[1], inout LineStream<GS_OUTPUT> OutputStream)
     v.pos = topLeft; v.color = input[0].color; OutputStream.Append(v);
     v.pos = topRight; v.color = input[0].color; OutputStream.Append(v);
     
-    // ‰E•Ó‚ñ
+    // ‰E•Ó
     v.pos = topRight; v.color = input[0].color; OutputStream.Append(v);
     v.pos = bottomRight; v.color = input[0].color; OutputStream.Append(v);
 

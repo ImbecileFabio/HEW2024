@@ -13,6 +13,7 @@
 #include "../Component.h"
 #include "../../SubSystem/VertexBuffer.h"
 #include "../../SubSystem/IndexBuffer.h"
+#include "../../SubSystem/ConstantBuffer.h"
 #include "../../SubSystem/Shader.h"
 
 /*----- 構造体宣言 -----*/
@@ -45,11 +46,14 @@ protected:
 	int draw_order_;	// 更新順位
 
 	void InitBuffers();	// バッファの初期化
-	void InitDebugBuffers();	// デバッグ用バッファの初期化
+	void InitGeometryBuffers();	// デバッグ用バッファの初期化
 
 	// バッファ
 	VertexBuffer<VERTEX_3D> vertex_buffer_;
 	IndexBuffer index_buffer_;
+	// 定数バッファ
+	ConstantBuffer<GeometryShaderBuffer> constant_buffer_;	
+
 
 	Shader shader_;	// シェーダ
 

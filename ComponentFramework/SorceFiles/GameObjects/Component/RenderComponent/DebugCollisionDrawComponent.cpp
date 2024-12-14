@@ -21,8 +21,6 @@
 #include <wrl/client.h>
 
 using namespace DirectX::SimpleMath;
-/*----- 前方宣言 -----*/
-bool CreateGeometryShader(ID3D11Device* device, ID3D11GeometryShader** geometryShader, ID3D11Buffer** constantBuffer);
 
 //--------------------------------------------------
 // コンストラクタ
@@ -33,7 +31,7 @@ DebugCollisionDrawComponent::DebugCollisionDrawComponent(GameObject* _owner, int
 	std::cout << std::format("＜DebugCollisionDrawComponent＞ -> Constructor\n");
 
 	// バッファ初期化
-	InitDebugBuffers();
+	InitGeometryBuffers();
 
 	this->Init();
 }
@@ -53,6 +51,7 @@ DebugCollisionDrawComponent::~DebugCollisionDrawComponent()
 //--------------------------------------------------
 void DebugCollisionDrawComponent::Init()
 {
+
 
 }
 
@@ -116,8 +115,6 @@ void DebugCollisionDrawComponent::DrawLine(const Vector2& _start, const Vector2&
 
 
 	shader_.SetGeometryGPU();
-	vertex_buffer_.SetGPU();
-	index_buffer_.SetGPU();
 
 
 	// バッファをセット
@@ -127,29 +124,3 @@ void DebugCollisionDrawComponent::DrawLine(const Vector2& _start, const Vector2&
 
 
 
-//--------------------------------------------------------------------------------------
-// ジオメトリーシェーダを生成する
-//--------------------------------------------------------------------------------------
-bool CreateGeometryShader(ID3D11Device* device, ID3D11GeometryShader** geometryShader, ID3D11Buffer** constantBuffer) {
-	// シェーダーバイナリをコンパイル
-	ID3D10Blob* gsBlob = nullptr;
-	HRESULT hr = D3DCompileFromFile(
-		L"GeometryuShader.hlsl",
-		nullptr, nullptr, "gs_main", "hs_5_0",
-		D3DCOMPILE_ENABLE_STRICTNESS, 0, &gsBlob, nullptr);
-	assert(SUCCEEDED(hr));
-
-	// ジオメトリシェーダを作成
-	hr = device->CreateGeometryShader(gsBlob->GetBufferPointer(), gsBlob->GetBufferSize(), nullptr, geometryShader);
-	assert(SUCCEEDED(hr));
-	gsBlob->Release();
-
-	// 定数バッファを作成
-	D3D11_BUFFER_DESC bufferDesc = {};
-	bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	bufferDesc.ByteWidth = sizeof(GeometryShaderBuffer);
-	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-
-	hr = device->CreateBuffer(&bufferDesc, nullptr, constantBuffer);
-	assert(SUCCEEDED(hr));
-}
