@@ -90,5 +90,17 @@ void Stage1_1Scene::Uninit()
 //--------------------------------------------------
 void Stage1_1Scene::Update()
 {
-
+	switch (State)
+	{
+	case Stage1_1Scene::Game:
+		break;
+	case Stage1_1Scene::Result:
+		break;
+	case Stage1_1Scene::Pouse:
+		break;
+	case Stage1_1Scene::Rewind:
+		break;
+	default:
+		break;
+	}
 }

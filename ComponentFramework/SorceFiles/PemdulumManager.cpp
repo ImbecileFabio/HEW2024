@@ -10,6 +10,8 @@
 #include "GameObjects/GameObject.h"
 #include "InputManager.h"
 
+//#define ControllerPlay
+
 PemdulumManager* PemdulumManager::instance_ = nullptr;
 
 //--------------------------------------------------
@@ -61,6 +63,7 @@ void PemdulumManager::RemoveGameObject(GameObject* _gameObject)
 // 内積が一定以内かつ最も近いオブジェクトのポインタを返す（選択）
 //--------------------------------------------------
 void PemdulumManager::PemgulumSelect() {
+#ifdef ControllerPlay
 	DirectX::XMFLOAT2 IMGLA = IM.GetLeftAnalogStick();	// InputManager GetLeftAnalogstick
 	nextPemdulumVector_Langth_ = 9999.f;
 	// スティックの入力があるとき
@@ -85,12 +88,47 @@ void PemdulumManager::PemgulumSelect() {
 		}
 		pSelectedPemdulum = pNextPemdulum;
 	}
+#else
+	pNextPemdulum = nullptr;
+	if (IM.GetButtonTrigger(VK_RIGHT)) {
+		for (auto& pemdulum : pemgulumList_) {
+			if (pSelectedPemdulum != pemdulum &&
+				pSelectedPemdulum->GetComponent<TransformComponent>()->GetPosition().x <
+				pemdulum->GetComponent<TransformComponent>()->GetPosition().x) {
+				if (pNextPemdulum == nullptr) {
+					pNextPemdulum = pemdulum;
+				}
+				else if (pNextPemdulum->GetComponent<TransformComponent>()->GetPosition().x >
+					pemdulum->GetComponent<TransformComponent>()->GetPosition().x) {
+					pNextPemdulum = pemdulum;
+				}
+			}
+		}
+	}
+	if (IM.GetButtonTrigger(VK_LEFT)) {
+		for (auto& pemdulum : pemgulumList_) {
+			if (pSelectedPemdulum != pemdulum &&
+				pSelectedPemdulum->GetComponent<TransformComponent>()->GetPosition().x >
+				pemdulum->GetComponent<TransformComponent>()->GetPosition().x) {
+				if (pNextPemdulum == nullptr) {
+					pNextPemdulum = pemdulum;
+				}
+				else if (pNextPemdulum->GetComponent<TransformComponent>()->GetPosition().x <
+					pemdulum->GetComponent<TransformComponent>()->GetPosition().x) {
+					pNextPemdulum = pemdulum;
+				}
+			}
+		}
+	}
+#endif
 }
 
 //--------------------------------------------------
 // 振り子の状態変異
 //--------------------------------------------------
 void PemdulumManager::PemdulumMovementChange() {
+#ifdef ControllerPlay
+
 	// Aボタン（動作の変更）
 	if (IM.GetButtonTrigger(XINPUT_A)) {
 		if (pemdulumMovement_) {
@@ -99,12 +137,21 @@ void PemdulumManager::PemdulumMovementChange() {
 			pemdulumMovement_ = !pemdulumMovement_;
 		}
 	}
+#else
+	// Aボタン（動作の変更）
+	if (IM.GetButtonTrigger(VK_A)) {
+		if (pemdulumMovement_) {
+			pemdulumMovement_ = !pemdulumMovement_;
+		}
+	}
+#endif
 }
 
 //--------------------------------------------------
 // 長さの変更
 //--------------------------------------------------
 void PemdulumManager::PemgulumLangthChange() {
+#ifdef ControllerPlay
 	// 十字↑（短くする）
 	if (IM.GetButtonTrigger(XINPUT_UP)) {
 		if (langthState_ != LangthState::shortLangth) {
@@ -117,4 +164,18 @@ void PemdulumManager::PemgulumLangthChange() {
 			langthState_ += LangthChange;
 		}
 	}
+#else
+	// 十字↑（短くする）
+	if (IM.GetButtonTrigger(VK_UP)) {
+		if (langthState_ != LangthState::shortLangth) {
+			langthState_ -= LangthChange;
+		}
+	}
+	// 十字↓（長くする）
+	if (IM.GetButtonTrigger(VK_DOWN)) {
+		if (langthState_ != LangthState::longLangth) {
+			langthState_ += LangthChange;
+		}
+	}
+#endif
 }

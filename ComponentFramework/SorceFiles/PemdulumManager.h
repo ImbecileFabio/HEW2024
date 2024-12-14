@@ -7,6 +7,12 @@
 //		選択
 //		状態遷移
 //		長さの変更
+// 
+// リストの中から現在選択されている振り子を選択し、操作する
+// ↓
+// 状態はコンポーネント（オブジェクト）毎に持たなくてはならない
+// ↓
+// それらから引っ張ってくる必要がある
 //==================================================
 #pragma once
 #include "GameObjects/GameObject.h"
@@ -40,9 +46,13 @@ class PemdulumManager
 private:
 	LangthState langthState_;
 	bool pemdulumMovement_;
+	GameObject* pSelectedPemdulum;
+	GameObject* pNextPemdulum;
 
 	GameManager* GM;
 	InputManager& IM = InputManager::GetInstance();
+
+	std::list<GameObject*> pemgulumList_;
 
 	DirectX::SimpleMath::Vector3 pemdulumPosition_;
 	DirectX::SimpleMath::Vector2 stickVector_Normalize_;
@@ -51,9 +61,6 @@ private:
 	float pemdulumVector_Langth_;
 	float innerProduct_;
 
-	std::list<GameObject*> pemgulumList_;
-	GameObject* pSelectedPemdulum;
-	GameObject* pNextPemdulum;
 	float nextPemdulumVector_Langth_;
 
 	static PemdulumManager* instance_;
@@ -93,5 +100,7 @@ public:
 	 }
 	 void SetSelectedPemdulum(GameObject* _pSelectedPemdulum) { pSelectedPemdulum = _pSelectedPemdulum; }
 	 GameObject* GetSelectedPemdulum() { return pSelectedPemdulum; }
+	 LangthState GetLangthState() { return langthState_; }
+	 bool GetPemdulumMovement() { return pemdulumMovement_; }
 	 std::list<GameObject*> GetPemdulumList() { return pemgulumList_; }
 };

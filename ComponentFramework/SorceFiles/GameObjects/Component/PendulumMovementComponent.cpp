@@ -6,6 +6,7 @@
 //==================================================
 
 #include "PendulumMovementComponent.h"
+#include "../../PemdulumManager.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -95,7 +96,6 @@ void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration)
 			PendulumVelocity();			// -角速度を適用 
 			if (isPendulumAngle_ <= 0) {	// -角度が0を跨いでしまったら
 				isPendulumAngle_ = -wasPendulumAngle_;
-				//SetPemdulumVelocity(wasPendulumVelocity_);
 			}
 		}
 		else {
@@ -112,7 +112,6 @@ void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration)
 			PendulumVelocity();			// -角速度を適用 
 			if (isPendulumAngle_ >= 0) {	// -角度が0を跨いでしまったら
 				isPendulumAngle_ = -wasPendulumAngle_;
-				//SetPemdulumVelocity(wasPendulumVelocity_);
 			}
 		}
 		else {
