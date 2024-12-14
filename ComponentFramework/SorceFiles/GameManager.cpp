@@ -35,7 +35,6 @@ GameManager::GameManager()
 	//audio_manager_ = new AudioManager();
 
 	// コライダーマネージャー初期化
-		
 	collider_manager_ = ColliderManager::Create();
 
 	this->InitAll();
@@ -108,6 +107,7 @@ void GameManager::GenerateOutputAll(void)
 
 		renderer_->Begin();
 		renderer_->Draw();
+		
 
 		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
 
@@ -124,8 +124,11 @@ void GameManager::ChangeScene(SceneName _scene)
 	std::cout << std::format("\n[GameManager] -> ChangeScene\n");
 
 	// 現在のシーンの終了処理
-	current_scene_->Uninit();
-	current_scene_ = nullptr;
+	if (current_scene_ != nullptr)
+	{
+		delete current_scene_;
+		current_scene_ = nullptr;
+	}
 
 	switch (_scene)
 	{
@@ -161,12 +164,9 @@ void GameManager::AddGameObject (GameObject* gameObject)
 }
 
 //-----------------------------------------------------------------
-// ゲームオブジェクトの削除処理
+// @param	削除するゲームオブジェクト
+// @brief	コンテナの中から削除するオブジェクトを探して削除する
 //-----------------------------------------------------------------
-/*
-* @param	削除するゲームオブジェクト
-* @brief	コンテナの中から削除するオブジェクトを探して削除する
-*/
 void GameManager::RemoveGameObject(GameObject* _gameObject) {
 	// 待機コンテナ
 	auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), _gameObject);

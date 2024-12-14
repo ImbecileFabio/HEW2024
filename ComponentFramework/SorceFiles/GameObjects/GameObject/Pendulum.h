@@ -31,7 +31,7 @@ public:
 	TypeID GetType(void) override { return TypeID::Pendulum; }
 private:
 	// 所有するコンポーネント
-	class SpriteComponent*		   sprite_component_   {};
+	class RenderComponent*		   sprite_component_   {};
 	class ColliderBaseComponent*	   collider_component_ {};
 	class PendulumMovementComponent* pendulum_component_ {};
 	class TimeZoneComponent*	       time_zone_component_{};

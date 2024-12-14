@@ -58,9 +58,9 @@ public:
 
 private:
 	// SRT情報（姿勢情報）
-	DirectX::SimpleMath::Vector3 position_{ 0.f, 0.f, 0.f };	// 位置
-	DirectX::SimpleMath::Vector3 rotation_{ 0.f, 0.f, 0.f };	// 回転
-	DirectX::SimpleMath::Vector3 scale_{ 1.f, 1.f, 1.f };		// サイズ
+	DirectX::SimpleMath::Vector3 position_{ 0.0f, 0.0f, 0.0f };	// 位置
+	DirectX::SimpleMath::Vector3 rotation_{ 0.0f, 0.0f, 0.0f };	// 回転
+	DirectX::SimpleMath::Vector3 scale_{ 1.0f, 1.0f, 1.0f };		// サイズ
 };
 
 #endif	// TRANSFORM_COMPONENT_H_

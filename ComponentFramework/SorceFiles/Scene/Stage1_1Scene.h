@@ -24,6 +24,7 @@ public:
 	void Uninit() override;
 	void Update() override;
 
+
 private:
 	// ƒQ[ƒ€‚Ìó‘Ô
 	enum STATE {

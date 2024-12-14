@@ -223,6 +223,36 @@ bool CreatePixelShader(ID3D11Device* device,
 	return true;
 }
 
+//--------------------------------------------------------------------------------------
+// ジオメトリーシェーダを生成する
+//--------------------------------------------------------------------------------------
+bool CreateGeometryShader(ID3D11Device* device,
+	const char* szFileName,
+	LPCSTR szEntryPoint,
+	LPCSTR szShaderModel,
+	ID3D11GeometryShader** ppGeometryShader)
+{
+	// シェーダーバイナリをコンパイル
+	ID3D10Blob* gsBlob = nullptr;
+
+	void* ShaderObject;
+	size_t	ShaderObjectSize;
+
+	HRESULT hr = CompileShader(
+		szFileName, szEntryPoint, szShaderModel,&ShaderObject, ShaderObjectSize, &gsBlob);
+	assert(SUCCEEDED(hr));
+
+	// ジオメトリシェーダを作成
+	hr = device->CreateGeometryShader(ShaderObject, ShaderObjectSize, nullptr, ppGeometryShader);
+	if(FAILED(hr))
+	{
+		if(gsBlob) gsBlob->Release();
+		return false;
+	}
+
+
+	return true;
+}
 
 /*----------------------------
 コンスタントバッファを作成

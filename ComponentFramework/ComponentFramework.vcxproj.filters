@@ -108,6 +108,9 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -159,7 +162,7 @@
     <ClCompile Include="SorceFiles\FileManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SorceFiles\PemdulumManager.cpp">
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -266,6 +269,9 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -317,13 +323,17 @@
     <ClInclude Include="SorceFiles\FileManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SorceFiles\PemdulumManager.h">
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\SubSystem\ConstantBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\unlitTexturePS.hlsl" />
     <FxCompile Include="Shader\unlitTextureVS.hlsl" />
+    <FxCompile Include="Shader\GeometryShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\icon.png">

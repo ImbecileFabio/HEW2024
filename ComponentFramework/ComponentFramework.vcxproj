@@ -27,6 +27,8 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -58,9 +60,6 @@
     <ClCompile Include="SorceFiles\ImGui\imgui_tables.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SorceFiles\InputManager.cpp" />
-    <ClCompile Include="SorceFiles\PemdulumManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="SorceFiles\Scene\ResultScene.cpp" />
     <ClCompile Include="SorceFiles\Scene\SceneBase.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
@@ -86,6 +85,8 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -118,13 +119,11 @@
     <ClInclude Include="SorceFiles\ImGui\imstb_textedit.h" />
     <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h" />
     <ClInclude Include="SorceFiles\InputManager.h" />
-    <ClInclude Include="SorceFiles\PemdulumManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="SorceFiles\Scene\ResultScene.h" />
     <ClInclude Include="SorceFiles\Scene\SceneBase.h" />
     <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
     <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
+    <ClInclude Include="SorceFiles\SubSystem\ConstantBuffer.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
     <ClInclude Include="SorceFiles\SubSystem\dx11helper.h" />
@@ -142,6 +141,17 @@
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="Shader\GeometryShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gs_main</EntryPointName>
+    </FxCompile>
     <FxCompile Include="Shader\unlitTexturePS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

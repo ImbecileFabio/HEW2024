@@ -1,11 +1,11 @@
-//==================================================
-// [Stage1_1Scene.cpp] ƒXƒe[ƒW1-1ƒV[ƒ“
-// ’˜ŽÒF—L”nŒ[‘¾
+ï»¿//==================================================
+// [Stage1_1Scene.cpp] ã‚¹ãƒ†ãƒ¼ã‚¸1-1ã‚·ãƒ¼ãƒ³
+// è‘—è€…ï¼šæœ‰é¦¬å•“å¤ª
 //--------------------------------------------------
-// à–¾FƒXƒe[ƒW1-1‚ðŠÇ—‚ð‚·‚éƒNƒ‰ƒX
+// èª¬æ˜Žï¼šã‚¹ãƒ†ãƒ¼ã‚¸1-1ã‚’ç®¡ç†ã‚’ã™ã‚‹ã‚¯ãƒ©ã‚¹
 //==================================================
 
-/*----- ƒCƒ“ƒNƒ‹[ƒh -----*/
+/*----- ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ -----*/
 #include "Stage1_1Scene.h"
 
 #include "../GameManager.h"
@@ -21,7 +21,7 @@
 #include "../GameObjects/GameObject/Lift.h"
 
 //--------------------------------------------------
-// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
+// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------
 Stage1_1Scene::Stage1_1Scene(GameManager* _gameManager)
 	: SceneBase(_gameManager, "Stage1_1")
@@ -30,7 +30,7 @@ Stage1_1Scene::Stage1_1Scene(GameManager* _gameManager)
 }
 
 //--------------------------------------------------
-// ƒfƒXƒgƒ‰ƒNƒ^
+// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
 //--------------------------------------------------
 Stage1_1Scene::~Stage1_1Scene()
 {
@@ -38,22 +38,24 @@ Stage1_1Scene::~Stage1_1Scene()
 }
 
 //--------------------------------------------------
-// ‰Šú‰»ˆ—
+// åˆæœŸåŒ–å‡¦ç†
 //--------------------------------------------------
 void Stage1_1Scene::Init()
 {
-	camera_			= new Camera(game_manager_);
-	back_ground_	= new BackGround(game_manager_);
-	tile_			= new Tile(game_manager_);
-	robot_			= new Robot(game_manager_);
-	pendulum_		= new Pendulum(game_manager_);
-	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
+	camera_ = new Camera(game_manager_);
+	//back_ground_ = new BackGround(game_manager_);
+	//tile_ = new Tile(game_manager_);
+
+	robot_ = new Robot(game_manager_);
+	
+	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
+	//pendulum_ = new Pendulum(game_manager_);
 
 	State = Game;
 	
-	// GameManeger‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é
+	// GameManegerã§ç”Ÿæˆã—ã¦ã€ColliderManagerã«ç™»éŒ²ã™ã‚‹
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
-	{	// ‚ ‚½‚è”»’è‚Ì‚ ‚éƒIƒuƒWƒFƒNƒg‚ðƒRƒ‰ƒCƒ_[ƒ}ƒl[ƒWƒƒ[‚É“o˜^
+	{	// ã‚ãŸã‚Šåˆ¤å®šã®ã‚ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
 		if (colliderObjects->GetComponent<ColliderBaseComponent>())
 		{
 			game_manager_->GetColliderManager()->AddGameObject(colliderObjects);
@@ -63,11 +65,12 @@ void Stage1_1Scene::Init()
 }
 
 //--------------------------------------------------
-// I—¹ˆ—
+// çµ‚äº†å‡¦ç†
 //--------------------------------------------------
 void Stage1_1Scene::Uninit()
 {
 	delete camera_;
+
 	delete back_ground_;
 	delete pendulum_;
 	delete tile_;
@@ -76,9 +79,17 @@ void Stage1_1Scene::Uninit()
 }
 
 //--------------------------------------------------
-// XVˆ—
+// æ›´æ–°å‡¦ç†
 //--------------------------------------------------
 void Stage1_1Scene::Update()
 {
 
+	if (InputManager::GetInstance().GetKeyTrigger(VK_R))
+	{
+		game_manager_->ChangeScene(SceneName::Title);
+	}
+
 }
+
+// ã‚³ãƒ‘ã‚¤ãƒ­ãƒƒãƒˆå›ãŒå‡ºåŠ›ã—ãŸã‚³ãƒ¡ãƒ³ãƒˆ
+// ï¿½Qï¿½[ï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½Ì’Ç‰ï¿½
