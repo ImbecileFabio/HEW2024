@@ -49,7 +49,8 @@ public:
 		, Tile
 		, Robot
 		, Lift
-
+		, TimeZone
+		, Item
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};
@@ -79,6 +80,11 @@ public:
 
 	virtual void InitGameObject(void) = 0;	// オーバーライド用
 	virtual void UpdateGameObject(void) = 0;	// オーバーライド用
+
+	// GameObject固有の衝突した後の処理
+	virtual void OnCollisionEnter(GameObject* _other) {};	// 接触した時
+	virtual void OnCollisionStay(GameObject* _other) {};	// 接触し続けている
+	virtual void OnCollisionExit(GameObject* _other) {};	// 接触から抜けた時
 
 	// 姿勢情報の更新
 	void ComputeWorldTransform();
@@ -121,12 +127,6 @@ public:
 	virtual TypeID GetType(void) { return TypeID::GameObject; }
 
 	auto& GetGameManager(void) { return game_manager_; }
-
-	// GameObject固有の衝突した後の処理
-	virtual void OnCollisionEnter(GameObject* _other) {};	// 接触した時
-	virtual void OnCollisionStay(GameObject* _other) {};	// 接触し続けている
-	virtual void OnCollisionExit(GameObject* _other) {};	// 接触から抜けた時
-
 protected:
 	// GameObjectの所有者
 	 GameManager* game_manager_{};

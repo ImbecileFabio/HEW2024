@@ -52,10 +52,8 @@ void Robot::InitGameObject(void)
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
-	collider_event_component_->AddEvent([this](GameObject* _other)
-		{
-			this->OnCollisionEnter(_other);
-		});
+	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(2, f);
 
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	velocity_component_->SetUseGravity(false);
@@ -92,10 +90,11 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Tile:
-		std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
 		break;
 	case GameObject::TypeID::Lift:
-		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		break;
+	case GameObject::TypeID::Item:
+		std::cout << std::format("Robot -> Item -> OnCollisionEnter\n");
 		break;
 	default:
 		break;

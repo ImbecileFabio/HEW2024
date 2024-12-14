@@ -156,10 +156,16 @@
     <ClCompile Include="SorceFiles\Scene\TitleScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\DebugComponent\EventDebugComponent.cpp">
+    <ClCompile Include="SorceFiles\FileManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SorceFiles\FileManager.cpp">
+    <ClCompile Include="SorceFiles\GameObjects\Component\DebugComponent\DebugPolygonComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\TimeZone.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -314,10 +320,16 @@
     <ClInclude Include="SorceFiles\Scene\TitleScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\EventDebugComponent.h">
+    <ClInclude Include="SorceFiles\FileManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SorceFiles\FileManager.h">
+    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\DebugPolygonComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\TimeZone.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

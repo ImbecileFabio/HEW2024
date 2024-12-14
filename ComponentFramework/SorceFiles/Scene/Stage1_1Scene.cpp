@@ -11,7 +11,7 @@
 #include "../GameManager.h"
 #include "../ColliderManager.h"
 #include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
-
+#include "../GameObjects/Component/EventComponent/ColliderEventComponent.h"
 #include "../GameObjects/GameObject.h"
 #include "../GameObjects/GameObject/BackGround.h"
 #include "../GameObjects/GameObject/Camera.h"
@@ -19,6 +19,7 @@
 #include "../GameObjects/GameObject/Tile.h"
 #include "../GameObjects/GameObject/Robot.h"
 #include "../GameObjects/GameObject/Lift.h"
+#include "../GameObjects/GameObject/Item.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -49,6 +50,21 @@ void Stage1_1Scene::Init()
 	robot_ = new Robot(game_manager_);
 	
 	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
+	items_.resize(2, nullptr);  // 配列を2つ分確保
+
+	items_[0] = new Item(game_manager_);
+	items_[0]->GetComponent<TransformComponent>()->SetPosition({ 0.0f, 0.0f, 0.0f });
+	items_[0]->GetComponent<TransformComponent>()->SetScale({ 100.0f, 100.0f, 0.0f });
+
+	auto f = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, items_[0], std::placeholders::_1));
+	items_[0]->GetComponent<ColliderEventComponent>()->AddEvent(0, f);
+
+	items_[1] = new Item(game_manager_);
+	items_[1]->GetComponent<TransformComponent>()->SetPosition({ 140.0f, 0.0f, 0.0f });
+	items_[1]->GetComponent<TransformComponent>()->SetScale({ 100.0f, 100.0f, 0.0f });
+
+	auto f2 = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, items_[1], std::placeholders::_1));
+	items_[1]->GetComponent<ColliderEventComponent>()->AddEvent(1, f2);
 	//pendulum_ = new Pendulum(game_manager_);
 	
 	// GameManegerで生成して、ColliderManagerに登録する

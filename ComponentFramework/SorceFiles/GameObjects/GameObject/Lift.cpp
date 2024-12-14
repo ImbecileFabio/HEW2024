@@ -40,7 +40,7 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-	transform_component_->SetScale(1000.0f, 1000.0f);
+	transform_component_->SetScale(200.0f, 100.0f);
 	transform_component_->SetPosition(0.0f, 0.0f);
 
 	spriteComponent_   = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png");
@@ -50,10 +50,8 @@ void Lift::InitGameObject(void)
 
 	velocityComponent_->SetUseGravity(false);
 	// イベント追加処理
-	collider_event_component_->AddEvent([this](GameObject* _other)
-		{
-			this->OnCollisionEnter(_other);
-		});
+	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(4, f);
 }
 //--------------------------------------------------
 // @brief 更新処理
@@ -104,10 +102,8 @@ void Lift::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Robot:
-		std::cout << std::format("Lift -> Robot -> OnCollisionEnter\n");
 		break;
 	case GameObject::TypeID::Tile:
-		std::cout << std::format("Lift -> Tile -> OnCollisionEnter\n");
 		break;
 	default:
 		break;

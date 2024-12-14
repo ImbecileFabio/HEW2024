@@ -57,7 +57,7 @@ void ColliderManager::AddGameObject(GameObject* _gameObject)
 	}
 	else
 	{
-		collider_game_objects_.emplace_back(_gameObject);			// 稼働コンテナ
+		collider_game_objects_.emplace_back(_gameObject);	// 稼働コンテナ
 	}
 }
 //-----------------------------------------------------------------
@@ -66,21 +66,29 @@ void ColliderManager::AddGameObject(GameObject* _gameObject)
 //-----------------------------------------------------------------
 void ColliderManager::RemoveGameObject(GameObject* _gameObject)
 {
+	for (int i = 0; i < collider_game_objects_.size(); i++)
+	{
+		if (collider_game_objects_.at(i) == _gameObject)
+		{
+			collider_game_objects_.erase(collider_game_objects_.begin() + i);
+			break;
+		}
+	}
 	// 待機コンテナ
-	auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), _gameObject);
-	if (iter != pending_game_objects_.end())
-	{
-		std::iter_swap(iter, pending_game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
-		pending_game_objects_.pop_back();						// 待機コンテナから削除
+	//auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), _gameObject);
+	//if (iter != pending_game_objects_.end())
+	//{
+	//	std::iter_swap(iter, pending_game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
+	//	pending_game_objects_.pop_back();						// 待機コンテナから削除
 
-	}
-	// 稼働コンテナ
-	iter = std::find(collider_game_objects_.begin(), collider_game_objects_.end(), _gameObject);
-	if (iter != collider_game_objects_.end())
-	{
-		std::iter_swap(iter, collider_game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
-		collider_game_objects_.pop_back();						// 稼働コンテナから削除
-	}
+	//}
+	//// 稼働コンテナ
+	//iter = std::find(collider_game_objects_.begin(), collider_game_objects_.end(), _gameObject);
+	//if (iter != collider_game_objects_.end())
+	//{
+	//	std::iter_swap(iter, collider_game_objects_.end() - 1);	// コンテナの最後尾と入れ替え
+	//	collider_game_objects_.pop_back();						// 稼働コンテナから削除
+	//}
 }
 //-----------------------------------------------------------------
 // @brief  オブジェクトのUpdateをすべて呼びだす処理
@@ -89,25 +97,26 @@ void ColliderManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	for (auto& gameObject : collider_game_objects_)
-	{
-		gameObject->Update();		// 更新処理
-	}
 	// 当たり判定の処理
 	for (int i = 0; i < collider_game_objects_.size(); i++)
 	{
 		for (int j = 0; j < collider_game_objects_.size(); j++)
 		{	// 衝突したか、していないか
-			if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
-				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
+			if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>()->
+				CheckCollisionCollider(collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>()))
 			{	
 				// 当たった側の処理を呼びだす
-				if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>() == nullptr &&
-					collider_game_objects_[j]->GetComponent<ColliderBaseComponent>() == nullptr)
+				if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>() == nullptr &&
+					collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>() == nullptr)
 					break;
-				if (collider_game_objects_[i]->GetComponent<EventBaseComponent>() == nullptr)
+				if (collider_game_objects_.at(i)->GetComponent<EventBaseComponent>() == nullptr)
 					break;
-				collider_game_objects_[i]->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_[j]);
+				size_t id = collider_game_objects_.at(i)->GetComponent<ColliderEventComponent>()->GetID();
+				collider_game_objects_.at(i)->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_.at(j), id);
+				if (collider_game_objects_.at(i)->GetType() == GameObject::TypeID::Item)
+				{
+					this->RemoveGameObject(collider_game_objects_.at(i));
+				}
 			}
 		}
 	}

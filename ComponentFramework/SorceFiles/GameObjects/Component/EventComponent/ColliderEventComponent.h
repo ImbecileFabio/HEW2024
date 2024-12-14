@@ -8,6 +8,7 @@
 #define COLLIDER_EVENT_COMPONENT_H_
 /*----- インクルード -----*/
 #include "EventBaseComponent.h"
+#include <map>
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
 // コライダーのイベント処理を行うクラス
@@ -16,23 +17,23 @@ class ColliderEventComponent :
     public EventBaseComponent
 {
 public:
-	static int hoge;
 	ColliderEventComponent(GameObject* _owner, int _updateOrder = 50);
 	~ColliderEventComponent();
 
-	void Init(void) override;
+	void Init(void)override;
 	void Uninit(void) override;
-	void Update() override {};
+	void Update(void) override {};
 
-	void AllUpdate(GameObject* _other);
+	void AllUpdate(GameObject* _other, size_t _id);
+	void AddEvent(size_t _id, std::function<void(GameObject* _other)>& _event) override;	// とりあえずオブジェクトごと渡す
+	void RemoveEvent();	// いらなくなったオブジェクトを消す予定
 
-	void AllActions() {};	// TRUEになった関数を実行
-	void AddEvent	(std::function<void(GameObject*)> _event);	// とりあえずオブジェクトごと渡す
-	void RemoveEvent(std::function<void(GameObject*)> _event) {};
+	size_t GetID(void) { return id_; }
 
 	TypeID GetComponentType(void) const override { return TypeID::ColliderEventComponent; }
 private:
-	std::vector<std::function<void(GameObject*)>> functions_{};	// イベントを格納するリスト
+	size_t id_{};
+	std::map<size_t, std::function<void(GameObject*)>> functions_{};
 };
 #endif // COLLIDER_EVENT_COMPONENT_H_
 

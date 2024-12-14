@@ -40,7 +40,6 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	// 描画オブジェクトとして登録
 	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
 }
-
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
