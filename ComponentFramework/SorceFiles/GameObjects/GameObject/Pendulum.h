@@ -35,6 +35,5 @@ private:
 	class ColliderBaseComponent*	   collider_component_ {};
 	class AngularVelocityComponent* angular_velocity_component_{};
 	class PendulumMovementComponent* pendulum_component_ {};
-	class TimeZoneComponent*	       time_zone_component_{};
 };
 #endif	// PENDULUM_H_

@@ -272,7 +272,10 @@ void Renderer::Draw()
 {
 	for (auto& sprite : sprites_)
 	{
-		sprite->Draw();
+		if (sprite->GetState() == SpriteComponent::State::draw)
+		{
+			sprite->Draw();
+		}
 	}
 }
 

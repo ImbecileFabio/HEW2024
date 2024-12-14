@@ -23,7 +23,6 @@
     <ClCompile Include="SorceFiles\ColliderManager.cpp" />
     <ClCompile Include="SorceFiles\FileManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\DebugComponent\DebugPolygonComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
@@ -82,7 +81,6 @@
     <ClInclude Include="SorceFiles\ColliderManager.h" />
     <ClInclude Include="SorceFiles\FileManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\DebugPolygonComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />

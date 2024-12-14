@@ -48,6 +48,7 @@ void Item::OnCollisionEnter(GameObject* _other)
 		std::cout << "Item -> Robot -> OnCollisionEnter\n" << std::endl;
 		this->GetGameManager()->itemCountUp();
 		this->event_base_component_->RemoveEvent();
+		this->sprite_component_->SetState(SpriteComponent::State::notDraw);
 		this->state_ = GameObject::State::ColliderOut;
 		break;
 	default:

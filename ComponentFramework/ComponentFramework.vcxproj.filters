@@ -159,9 +159,6 @@
     <ClCompile Include="SorceFiles\FileManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\DebugComponent\DebugPolygonComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\GameObject\TimeZone.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -321,9 +318,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SorceFiles\FileManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\DebugPolygonComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\GameObject\TimeZone.h">

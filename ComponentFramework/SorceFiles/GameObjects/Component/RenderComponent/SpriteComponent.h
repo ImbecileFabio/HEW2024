@@ -31,6 +31,12 @@ class SpriteComponent :
 	public RenderComponent
 {
 public:
+	enum class State
+	{
+		none = -1,
+		notDraw,
+		draw,
+	};
 	SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder = 50);
 	~SpriteComponent();
 
@@ -44,10 +50,14 @@ public:
 	// コンポーネントのIDを返す
 	TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 
+	void SetState(State _state) { state_ = _state; }
+	State GetState() { return state_; }
 private:
 	void InitBuffers();	// バッファの初期化
 
 	int draw_order_;	// 更新順位
+	// 描画するかしないか
+	State state_ = State::draw;
 
 	// バッファ
 	VertexBuffer<VERTEX_3D> vertex_buffer_;
