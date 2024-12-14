@@ -31,11 +31,12 @@ struct VERTEX_3D
 	DirectX::SimpleMath::Vector2 uv;
 };
 
-// ジオメトリのバッファー
+// ジオメトリバッファー
 struct GeometryShaderBuffer {
-	DirectX::XMFLOAT4X4 viewProjMatrix;	// ビュー・プロジェクション行列
+	DirectX::SimpleMath::Vector2 position;	// 位置
+	DirectX::SimpleMath::Color color;		// 色
+	DirectX::SimpleMath::Vector2 boxSize;	// サイズ
 	float thickness;					// 線の太さ	
-	float padding[3];					// 16バイトアライメント用
 };
 
 

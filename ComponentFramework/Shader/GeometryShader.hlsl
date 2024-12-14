@@ -3,8 +3,11 @@
 // 定数バッファ
 cbuffer GeometryShaderBuffer : register(b0)
 {
-    float4x4 viewProjMatrix; // ビュー×プロジェクション行列
+    float2 position;    // 中心位置
+    float4 color;       // 色
+    float thickness;    // 太さ
 };
+
 
 // 頂点シェーダの出力
 struct VS_OUTPUT
@@ -29,27 +32,38 @@ void gs_main(point VS_OUTPUT input[1], inout LineStream<GS_OUTPUT> OutputStream)
     float top = input[0].pos.y + 0.5;
     float bottom = input[0].pos.y - 0.5;
     
-    // 四隅の座標を計算
-    float4 topLeft = mul(float4(left, top, 0.0, 1.0), viewProjMatrix);
-    float4 topRight = mul(float4(right, top, 0.0, 1.0), viewProjMatrix);
-    float4 bottomLeft = mul(float4(left, bottom, 0.0, 1.0), viewProjMatrix);
-    float4 bottomRight = mul(float4(right, top, 0.0, 1.0), viewProjMatrix);
     
     GS_OUTPUT v;
  
-    // 上辺
-    v.pos = topLeft; v.color = input[0].color; OutputStream.Append(v);
-    v.pos = topRight; v.color = input[0].color; OutputStream.Append(v);
-    
+ // 上辺
+    v.pos = float4(left, top, 0.5f, 1.0f);
+    v.color = color;
+    OutputStream.Append(v);
+    v.pos = float4(right, top, 0.5f, 1.0f);
+    v.color = color;
+    OutputStream.Append(v);
+
     // 右辺
-    v.pos = topRight; v.color = input[0].color; OutputStream.Append(v);
-    v.pos = bottomRight; v.color = input[0].color; OutputStream.Append(v);
+    v.pos = float4(right, top, 0.5f, 1.0f);
+    v.color = color;
+    OutputStream.Append(v);
+    v.pos = float4(right, bottom, 0.5f, 1.0f);
+    v.color = color;
+    OutputStream.Append(v);
 
     // 下辺
-    v.pos = bottomRight; v.color = input[0].color; OutputStream.Append(v);
-    v.pos = bottomLeft; v.color = input[0].color; OutputStream.Append(v);
+    v.pos = float4(right, bottom, 0.5f, 1.0f);
+    v.color = color;
+    OutputStream.Append(v);
+    v.pos = float4(left, bottom, 0.5f, 1.0f);
+    v.color = color;
+    OutputStream.Append(v);
 
     // 左辺
-    v.pos = bottomLeft; v.color = input[0].color; OutputStream.Append(v);
-    v.pos = topLeft; v.color = input[0].color; OutputStream.Append(v);
+    v.pos = float4(left, bottom, 0.5f, 1.0f);
+    v.color = color;
+    OutputStream.Append(v);
+    v.pos = float4(left, top, 0.5f, 1.0f);
+    v.color = color;
+    OutputStream.Append(v);
 }

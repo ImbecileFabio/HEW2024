@@ -35,7 +35,7 @@ private:
 
 	class ColliderBaseComponent* collider_base_component_ = {};
 	class EventBaseComponent* collider_event_component_ = {};
-	class SpriteComponent* spriteComponent_		= {};	// ‰æ‘œ•\Ž¦
+	class RenderComponent* spriteComponent_		= {};	// ‰æ‘œ•\Ž¦
 	class VelocityComponent* velocityComponent_ = {};
 
 	void OnCollisionEnter(GameObject* _other = nullptr) override;

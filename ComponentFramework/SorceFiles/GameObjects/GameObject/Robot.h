@@ -33,12 +33,10 @@ public:
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
 	// 所有するコンポーネント
-	class SpriteComponent* sprite_component_{};
+	class RenderComponent* sprite_component_{};
 	class ColliderBaseComponent* collider_component_{};	// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
 	class VelocityComponent* velocity_component_{};		// 速度
 
-	// デバッグ用コンポーネント
-	class DebugCollisionDrawComponent* debug_collision_draw_component_{};
 };
 #endif	// ROBOT_H_

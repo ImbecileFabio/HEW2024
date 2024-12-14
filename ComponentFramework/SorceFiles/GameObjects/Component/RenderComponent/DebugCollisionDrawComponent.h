@@ -40,9 +40,6 @@ public:
 	//TypeID GetComponentType(void) const override { return TypeID::DebugCollisionDrawComponent; }
 
 private:
-	// “–‚½‚è”»’è•`‰æ
-	void DrawLine(const Vector2& _start, const Vector2& _end, const Color& _color, const float& _tickness);
-
 
 
 };

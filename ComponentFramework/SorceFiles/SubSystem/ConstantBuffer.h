@@ -23,28 +23,19 @@ class ConstantBuffer {
 	ComPtr<ID3D11Buffer> constant_buffer_;
 
 public:
-	void Create(const std::vector<T>& buffers) {
+	void Create(const std::vector<T>& _constantBuffer) {
 
 		// デバイス取得
 		ID3D11Device* device = nullptr;
 		device = Renderer::GetDevice();
 		assert(device);
 
-		// 定数バッファの設定
-		D3D11_BUFFER_DESC bufferDesc = {};
-		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-		bufferDesc.ByteWidth = buffers.size(); // 定数バッファ構造体のサイズ
-		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-		bufferDesc.CPUAccessFlags = 0; // デフォルト使用の場合、CPUアクセスは不要
-
-		// 定数バッファを作成
-		hr = device->CreateBuffer(&bufferDesc, nullptr, constantBuffer);
-		if (FAILED(hr)) {
-			return false; // バッファ作成失敗
-		}
-
-
-		assert(sts == true);
+		bool sts = CreateConstantBuffer(
+			device,
+			sizeof(T),
+			&constant_buffer_
+			);
+			assert(sts == true);
 	}
 
 	// GPUにセット
@@ -57,7 +48,7 @@ public:
 		// 頂点バッファをセットする
 		unsigned int stride = sizeof(T);
 		unsigned  offset = 0;
-		devicecontext->IASetConstantBuffers(0, 1, constant_buffer_.GetAddressOf(), &stride, &offset);
+        devicecontext->GSSetConstantBuffers(0, 1, constant_buffer_.GetAddressOf());
 
 	}
 

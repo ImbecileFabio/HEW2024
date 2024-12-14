@@ -11,6 +11,8 @@
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
+#include "../Component/RenderComponent/SpriteComponent.h"
+
 //--------------------------------------------------
 // @brief コンストラクタ
 // @param _maxPos 正方向の最大座標
@@ -40,7 +42,7 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-	//transform_component_->SetScale(1000.0f, 1000.0f);
+	transform_component_->SetScale(1000.0f, 1000.0f);
 	transform_component_->SetPosition(0.0f, 0.0f);
 
 	spriteComponent_   = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png");

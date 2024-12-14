@@ -13,6 +13,7 @@
 #include "../../Renderer.h"
 #include "../GameObject.h"
 #include "RenderComponent.h"
+#include "ColliderComponent/BoxColliderComponent.h"
 
 #include "../Component.h"
 
@@ -95,18 +96,35 @@ void RenderComponent::InitBuffers()
 //--------------------------------------------------
 void RenderComponent::InitGeometryBuffers()
 {
-	GeometryShaderBuffer gsb;
-	// gsb.viewProjMatrix = ;	// ビュー・プロジェクション行列
-	gsb.thickness = 2.0f;		// 線の太さ	
-	gsb.padding[3] = {};		// 16バイトアライメント用
+	auto collider = owner_->GetComponent<BoxColliderComponent>();
+	if (!collider) { return; }	// コライダーがない
+
+	const auto& box = collider->GetBoxSize();
 
 
-	constant_buffer_.Create(gsb);
+	// 中心座標
+	Vector2 pos =
+	{
+		(box.x + box.z) * 0.5f,
+		(box.w - box.y) * 0.5f
+	};
+
+	Vector2 size =
+	{
+		box.z - box.x,	// 幅
+		box.y - box.w 	// 高さ
+	};
+
+	GeometryShaderBuffer gsBuffer;
+	gsBuffer.position = pos;
+	gsBuffer.color = Color(1.0f, 0.0f, 0.0f, 1.0f);	// 赤色
+	gsBuffer.thickness = 2.0f;
+
+
+
+	constant_buffer_.Create(std::vector<GeometryShaderBuffer>{gsBuffer});
 
 	shader_.CreateGeometry("shader/GeometryShader.hlsl");
-
-
-
 
 }
 

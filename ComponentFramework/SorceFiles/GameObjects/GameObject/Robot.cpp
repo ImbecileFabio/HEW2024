@@ -40,9 +40,6 @@ Robot::~Robot(void)
 	delete collider_component_;
 	delete collider_event_component_;
 	delete velocity_component_;
-
-	// デバッグ用コンポーネント
-	delete debug_collision_draw_component_;
 }
 
 //--------------------------------------------------
@@ -53,12 +50,15 @@ void Robot::InitGameObject(void)
 	transform_component_->SetPosition(0, -25);
 	transform_component_->SetScale(150, 150);
 
+
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
+
 
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	collider_event_component_->AddEvent([this](GameObject* _other)
+
 		{
 			this->OnCollisionEnter(_other);
 		});
