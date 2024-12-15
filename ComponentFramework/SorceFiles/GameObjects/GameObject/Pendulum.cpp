@@ -37,7 +37,6 @@ Pendulum::~Pendulum(void)
 	delete sprite_component_;
 	delete pendulum_component_;
 	delete collider_component_;
-	delete time_zone_component_;
 	delete angular_velocity_component_;
 }
 
@@ -51,7 +50,6 @@ void Pendulum::InitGameObject(void)
 	// 当たり判定コンポーネント
 	collider_component_ = new CircleColliderComponent(this);
 	// タイムゾーンコンポーネント
-	time_zone_component_		= new TimeZoneComponent(this);
 	angular_velocity_component_ = new AngularVelocityComponent(this);
 	// 振り子コンポーネント
 	pendulum_component_ = new PendulumMovementComponent(this);
@@ -65,4 +63,16 @@ void Pendulum::InitGameObject(void)
 void Pendulum::UpdateGameObject(void)
 {
 	this->pendulum_component_->Update(0.01f, Vector3(0.0f, 0.0f, 0.0f), 200.0f);
+}
+
+void Pendulum::OnCollisionEnter(GameObject* _other)
+{
+	switch (_other->GetType())
+	{
+	case GameObject::TypeID::Robot:
+		// ロボットが接触したら
+		break;
+	default:
+		break;
+	}
 }

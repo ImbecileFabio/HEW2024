@@ -128,6 +128,8 @@ public:
 
 	auto& GetGameManager(void) { return game_manager_; }
 protected:
+	// 子オブジェクト
+	Game
 	// GameObjectの所有者
 	 GameManager* game_manager_{};
 

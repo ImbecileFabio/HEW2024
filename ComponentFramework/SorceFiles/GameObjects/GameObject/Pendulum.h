@@ -29,6 +29,8 @@ public:
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::Pendulum; }
+
+	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
 	// 所有するコンポーネント
 	class SpriteComponent*		   sprite_component_   {};

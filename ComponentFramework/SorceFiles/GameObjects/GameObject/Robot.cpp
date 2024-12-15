@@ -57,8 +57,6 @@ void Robot::InitGameObject(void)
 
 	velocity_component_ = new VelocityComponent(this);	// ‘¬“x
 	velocity_component_->SetUseGravity(false);
-
-
 }
 
 //--------------------------------------------------
