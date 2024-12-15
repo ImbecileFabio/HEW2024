@@ -27,9 +27,11 @@ public:
 	void Init(void) override {};
 	void Uninit(void) override {};
 	virtual void Update(void) override {};
-	virtual void AllUpdate(GameObject* _other) {};	// TRUEになった関数を実行
+	virtual void AllUpdate(GameObject* _other, size_t _id) {};	// TRUEになった関数を実行
 	// イベントコンポーネントごとのAddEventの引数違いをオーバーロードで置いとく
-	virtual void AddEvent(std::function<void(GameObject*)> _event) {};
+	virtual void AddEvent(size_t _id, std::function<void(GameObject* _other)>& _event) {};
+	virtual void RemoveEvent() {};	// いらなくなったオブジェクトを消す予定
+
 
 	TypeID GetComponentType(void) const override { return TypeID::EventBaseComponent; }
 protected:

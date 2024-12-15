@@ -57,7 +57,7 @@ void ColliderManager::AddGameObject(GameObject* _gameObject)
 	}
 	else
 	{
-		collider_game_objects_.emplace_back(_gameObject);			// 稼働コンテナ
+		collider_game_objects_.emplace_back(_gameObject);	// 稼働コンテナ
 	}
 }
 //-----------------------------------------------------------------
@@ -66,6 +66,14 @@ void ColliderManager::AddGameObject(GameObject* _gameObject)
 //-----------------------------------------------------------------
 void ColliderManager::RemoveGameObject(GameObject* _gameObject)
 {
+	//for (int i = 0; i < collider_game_objects_.size(); i++)
+	//{
+	//	if (collider_game_objects_.at(i) == _gameObject)
+	//	{
+	//		collider_game_objects_.erase(collider_game_objects_.begin() + i);
+	//		break;
+	//	}
+	//}
 	// 待機コンテナ
 	auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), _gameObject);
 	if (iter != pending_game_objects_.end())
@@ -89,30 +97,39 @@ void ColliderManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	//for (auto& gameObject : collider_game_objects_)
-	//{
-	//	gameObject->Update();		// 更新処理
-	//}
 	// 当たり判定の処理
 	for (int i = 0; i < collider_game_objects_.size(); i++)
 	{
 		for (int j = 0; j < collider_game_objects_.size(); j++)
 		{	// 衝突したか、していないか
-			if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>()->
-				CheckCollisionCollider(collider_game_objects_[j]->GetComponent<ColliderBaseComponent>()))
+			if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>()->
+				CheckCollisionCollider(collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>()))
 			{	
 				// 当たった側の処理を呼びだす
-				if (collider_game_objects_[i]->GetComponent<ColliderBaseComponent>() == nullptr &&
-					collider_game_objects_[j]->GetComponent<ColliderBaseComponent>() == nullptr)
+				if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>() == nullptr &&
+					collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>() == nullptr)
+					continue;
+				if (collider_game_objects_.at(i)->GetComponent<EventBaseComponent>() == nullptr)
 					break;
-				if (collider_game_objects_[i]->GetComponent<EventBaseComponent>() == nullptr)
-					break;
-				collider_game_objects_[i]->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_[j]);
+				size_t id = collider_game_objects_.at(i)->GetComponent<ColliderEventComponent>()->GetID();
+				collider_game_objects_.at(i)->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_.at(j), id);
 			}
 		}
 	}
 	updating_game_objects_ = false;
-
+	// 当たり判定を取らなくなったオブジェクトの移動
+	for (auto it = collider_game_objects_.begin(); it != collider_game_objects_.end(); ) 
+	{
+		if ((*it)->GetState() == GameObject::State::ColliderOut)
+		{
+			collider_out_objects_.emplace_back(std::move(*it));
+			it = collider_game_objects_.erase(it); // 要素を削除しつつ次の要素へ
+		}
+		else 
+		{
+			++it;
+		}
+	}
 	// 待機リストのゲームオブジェクトの操作
 	for (auto& pendingGameObject : pending_game_objects_)
 	{
@@ -131,6 +148,7 @@ void ColliderManager::UpdateGameObjects(void)
 		}
 	}
 }
+
 
 //#include <functional>
 //

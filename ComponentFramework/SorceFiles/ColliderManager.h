@@ -37,6 +37,7 @@ private:
 	// オブジェクトが更新中か確認
 	bool updating_game_objects_;
 	std::vector<GameObject*> collider_game_objects_{};	// 当たり判定用コンテナ
+	std::vector<GameObject*> collider_out_objects_{};	// 当たり判定を取らないコンテナ
 	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
 
 };

@@ -27,17 +27,6 @@
 Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
 {
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
-	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
-	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
-	velocity_component_ = new VelocityComponent(this);	// 速度
-
-	collider_event_component_->AddEvent([this](GameObject* _other)
-
-	{
-		this->OnCollisionEnter(_other);
-	});
-
 	this->InitGameObject();
 }
 
@@ -62,7 +51,17 @@ void Robot::InitGameObject(void)
 	transform_component_->SetScale(150, 150);
 
 
-	velocity_component_->SetUseGravity(true);
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
+
+
+	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
+
+	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
+	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(2, f);
+
+	velocity_component_ = new VelocityComponent(this);	// 速度
+	velocity_component_->SetUseGravity(false);
 
 
 }
@@ -87,10 +86,15 @@ void Robot::UpdateGameObject(void)
 		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	}
 
-	velocity_component_->SetUseGravity(true);
-
-
-
+	// 何かに触れている間は赤くなる
+	//if(collider_component_->GetHitFg())
+	//{
+	//	sprite_component_->SetColor(Vector4(1.0f, 0.25f, 0.25f, 1.0f));
+	//}
+	//else
+	//{
+	//	sprite_component_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	//}
 	
 }
 
@@ -100,12 +104,9 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Tile:
 		std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
-		velocity_component_->SetUseGravity(false);
 		break;
 	case GameObject::TypeID::Lift:
 		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
-		velocity_component_->SetUseGravity(false);
-
 		break;
 	default:
 		break;

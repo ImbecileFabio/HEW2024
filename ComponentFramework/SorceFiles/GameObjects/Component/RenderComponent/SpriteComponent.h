@@ -44,6 +44,5 @@ public:
 
 private:
 	Texture texture_;	// テクスチャ
-
 };
 #endif	// SPRITE_COMPONENT_H_

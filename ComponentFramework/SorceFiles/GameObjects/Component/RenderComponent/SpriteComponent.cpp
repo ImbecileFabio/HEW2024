@@ -37,7 +37,6 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 
 	this->Init();
 }
-
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------

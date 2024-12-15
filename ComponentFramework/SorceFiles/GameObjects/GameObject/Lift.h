@@ -28,7 +28,9 @@ public:
 	void UpdateGameObject(void) override;
 	DirectX::SimpleMath::Vector3 maxPos_;	// 正方向の最大座標
 	DirectX::SimpleMath::Vector3 minPos_;	// 負方向の最大座標
-	TypeID GetType(void) override { return TypeID::Lift; }
+	TypeID GetType(void) override { return TypeID::Lift; }	
+	void OnCollisionEnter(GameObject* _other = nullptr) override;
+
 private:
 	bool switchFg_;			// スイッチフラグ
 	MoveState moveState_;	// 移動状態
@@ -38,6 +40,5 @@ private:
 	class RenderComponent* spriteComponent_		= {};	// 画像表示
 	class VelocityComponent* velocityComponent_ = {};
 
-	void OnCollisionEnter(GameObject* _other = nullptr) override;
 };
 #endif // _LIFT_OBJECT_H_

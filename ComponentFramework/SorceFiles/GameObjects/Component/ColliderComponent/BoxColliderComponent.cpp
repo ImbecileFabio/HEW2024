@@ -14,7 +14,6 @@
 BoxColliderComponent::BoxColliderComponent(GameObject* _owner, int _updateOrder)
 	: ColliderBaseComponent(_owner, _updateOrder)
 {
-
 	this->Init();
 }
 //--------------------------------------------------

@@ -54,6 +54,7 @@ public:
 	auto& GetGameObjects() const { return game_objects_; }
 	auto& GetPendingGameObjects() const { return pending_game_objects_; }
 	
+	void itemCountUp() { itemCount++; }
 
 	// シーン切り替え
 	void ChangeScene(SceneName _scene);
@@ -64,6 +65,7 @@ public:
 	void RemoveGameObject(GameObject* _gameObject);
 
 private:
+	int itemCount = 0;
 	// 更新処理
 	void UpdateGameObjects(void);
 	// シーン

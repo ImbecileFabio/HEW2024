@@ -56,7 +56,7 @@ public:
 		// 振り子
 		, PendulumComponent
 		// 動作確認用
-		, EventDebugComponent
+		, DebugPolygonComponent
 		// コンポーネントの最大値
 		, MAX
 	};

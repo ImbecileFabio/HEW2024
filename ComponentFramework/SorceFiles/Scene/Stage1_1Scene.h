@@ -36,14 +36,12 @@ private:
 	STATE State;
 
 	// 作ったオブジェクトをここに記述
-
 	class BackGround* back_ground_{};	// 背景
 	class Camera* camera_{};			// カメラ
 	class Pendulum* pendulum_{};		// 振り子
 	class Tile* tile_{};				// タイル
 	class Robot* robot_{};				// ロボット
 	class Lift*	 lift_{};				// リフト
-	Lift* hoge_{};
+	std::vector<class Item*> items_;	// アイテムリスト
 };
-
 #endif  // STAGE1_1SCENE_H_
