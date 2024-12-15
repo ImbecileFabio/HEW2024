@@ -25,6 +25,13 @@
 Pendulum::Pendulum(GameManager* _gameManager)
 	:GameObject(_gameManager, "Pendulum")
 {
+	// スプライトコンポーネント
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/ball_01.png");
+	// 当たり判定コンポーネント
+	collider_component_ = new CircleColliderComponent(this);
+	// 振り子コンポーネント
+	pendulum_component_ = new PendulumMovementComponent(this);
+
 	this->InitGameObject();
 }
 
@@ -44,12 +51,6 @@ Pendulum::~Pendulum(void)
 //--------------------------------------------------
 void Pendulum::InitGameObject(void)
 {
-	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/ball_01.png");
-	// 当たり判定コンポーネント
-	collider_component_ = new CircleColliderComponent(this);
-	// 振り子コンポーネント
-	pendulum_component_ = new PendulumMovementComponent(this);
 	pendulum_component_->SetPendulumAngle(60.0f);
 	pendulum_component_->PendulumInit(0.1f, Vector3(0.0f, 0.0f, 0.0f), 200.0f);
 	// トランスフォームコンポーネント

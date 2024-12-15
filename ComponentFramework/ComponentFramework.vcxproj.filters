@@ -156,13 +156,16 @@
     <ClCompile Include="SorceFiles\FileManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\GameObject\TimeZone.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.cpp">
+    <ClCompile Include="SorceFiles\GameObjects\Component\RobotMoveComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -314,7 +317,16 @@
     <ClInclude Include="SorceFiles\Scene\TitleScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\EventDebugComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="SorceFiles\FileManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\SubSystem\ConstantBuffer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\GameObject\TimeZone.h">
@@ -323,10 +335,7 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\SubSystem\ConstantBuffer.h">
+    <ClInclude Include="SorceFiles\GameObjects\Component\RobotMoveComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

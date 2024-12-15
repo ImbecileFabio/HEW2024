@@ -9,6 +9,10 @@
 Item::Item(GameManager* _gameManager)
 	: GameObject(_gameManager, "Item")
 {
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"UI/gear/ver1/gear_01.png");
+	collider_base_component_ = new BoxColliderComponent(this);
+	event_base_component_ = new ColliderEventComponent(this);
+	
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -25,10 +29,8 @@ Item::~Item()
 //--------------------------------------------------
 void Item::InitGameObject(void)
 {
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"UI/gear/ver1/gear_01.png");
-	collider_base_component_ = new BoxColliderComponent(this);
-	event_base_component_ = new ColliderEventComponent(this);
-
+	sprite_component_->SetState(SpriteComponent::State::draw);
+	this->state_ = GameObject::State::Active;
 }
 //--------------------------------------------------
 // @brief XVˆ—

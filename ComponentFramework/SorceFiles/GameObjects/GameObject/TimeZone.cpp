@@ -8,7 +8,11 @@ TimeZone::TimeZone(GameManager* _gameManager)
 	: GameObject(_gameManager, "TimeZone")
 {
 	std::cout << std::format("＜TimeZone＞ -> Constructor\n");
-	this->InitGameObject();
+	sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"kouka/v01/kouka_01.png");
+	collider_base_component_ = new CircleColliderComponent(this);
+	event_base_component_	 = new ColliderEventComponent(this);
+	auto f = std::function<void(GameObject*)>(std::bind(&TimeZone::OnCollisionEnter, this, std::placeholders::_1));
+	event_base_component_->AddEvent(5, f);this->InitGameObject();
 }
 //--------------------------------------------------
 // @brief デストラクタ
@@ -24,12 +28,8 @@ TimeZone::~TimeZone()
 //--------------------------------------------------
 void TimeZone::InitGameObject(void)
 {
-	sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"kouka/v01/kouka_01.png");
 	this->transform_component_->SetScale(100.0f, 100.0f);
-	collider_base_component_ = new CircleColliderComponent(this);
-	event_base_component_	 = new ColliderEventComponent(this);
-	auto f = std::function<void(GameObject*)>(std::bind(&TimeZone::OnCollisionEnter, this, std::placeholders::_1));
-	event_base_component_->AddEvent(5, f);
+
 
 }
 //--------------------------------------------------

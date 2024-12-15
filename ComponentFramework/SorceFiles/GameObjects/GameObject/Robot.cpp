@@ -17,6 +17,7 @@
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
+#include "../Component/RobotMoveComponent.h"
 
 // デバッグ用コンポーネント
 #include "../Component/RenderComponent/DebugCollisionDrawComponent.h"
@@ -27,6 +28,16 @@
 Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
 {
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
+	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
+	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
+	velocity_component_ = new VelocityComponent(this);	// 速度
+	robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
+
+	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(2, f);
+
+
 	this->InitGameObject();
 }
 
@@ -51,18 +62,7 @@ void Robot::InitGameObject(void)
 	transform_component_->SetScale(150, 150);
 
 
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
-
-
-	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
-
-	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
-	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
-	collider_event_component_->AddEvent(2, f);
-
-	velocity_component_ = new VelocityComponent(this);	// 速度
-	velocity_component_->SetUseGravity(false);
-
+	velocity_component_->SetUseGravity(true);
 
 }
 
@@ -71,31 +71,14 @@ void Robot::InitGameObject(void)
 //--------------------------------------------------
 void Robot::UpdateGameObject(void)
 {
-	InputManager& input = InputManager::GetInstance();
-	// 移動処理
-	if (input.GetKeyPress(VK_D))
-	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 5.0f, 0.0f, 0.0f));
-	}
-	else if (input.GetKeyPress(VK_A))
-	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-5.0f, 0.0f, 0.0f));
-	}
-	else
-	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
-	}
 
-	// 何かに触れている間は赤くなる
-	//if(collider_component_->GetHitFg())
-	//{
-	//	sprite_component_->SetColor(Vector4(1.0f, 0.25f, 0.25f, 1.0f));
-	//}
-	//else
-	//{
-	//	sprite_component_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-	//}
-	
+	// 入力処理
+	InputManager& input = InputManager::GetInstance();
+
+
+	// 重力を適用、
+	velocity_component_->SetUseGravity(true);
+
 }
 
 void Robot::OnCollisionEnter(GameObject* _other)
@@ -103,11 +86,18 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Tile:
+	{
 		std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
+		velocity_component_->SetUseGravity(false);
+		auto size = _other->GetComponent<BoxColliderComponent>()->GetBoxSize();
 		break;
+	}
 	case GameObject::TypeID::Lift:
+	{
 		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		velocity_component_->SetUseGravity(false);
 		break;
+	}
 	default:
 		break;
 	}
