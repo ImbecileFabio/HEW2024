@@ -165,6 +165,9 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameProcess.h">
@@ -326,10 +329,17 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\SubSystem\ConstantBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\unlitTexturePS.hlsl" />
     <FxCompile Include="Shader\unlitTextureVS.hlsl" />
+    <FxCompile Include="Shader\GeometryShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\icon.png">

@@ -49,6 +49,22 @@ void Shader::Create(std::string vs, std::string ps)
 	return;
 }
 
+
+void Shader::CreateGeometry(std::string gs) {
+	ID3D11Device* device = Renderer::GetDevice();
+	// ジオメトリシェーダーオブジェクトを生成
+	bool sts = CreateGeometryShader(			// ジオメトリシェーダーオブジェクトを生成
+		device,									// デバイスオブジェクト
+		gs.c_str(),
+		"gs_main",
+		"gs_5_0",
+		&m_pGeometryShader);
+	if (!sts) {
+		MessageBox(nullptr, "CreateGeometryShader error", "error", MB_OK);
+		return;
+	}
+}
+
 //=======================================
 //GPUにデータを送る
 //=======================================
@@ -61,3 +77,11 @@ void Shader::SetGPU()
 	devicecontext->IASetInputLayout(m_pVertexLayout.Get());				// 頂点レイアウトセット
 }
 
+
+//=======================================
+//GPUにデータを送る
+//=======================================
+void Shader::SetGeometryGPU() {
+	ID3D11DeviceContext* devicecontext = Renderer::GetDeviceContext();
+	devicecontext->GSSetShader(m_pGeometryShader.Get(), nullptr, 0);		// ジオメトリシェーダーをセット
+}

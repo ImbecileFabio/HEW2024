@@ -18,6 +18,9 @@
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 
+// デバッグ用コンポーネント
+#include "../Component/RenderComponent/DebugCollisionDrawComponent.h"
+
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -47,16 +50,23 @@ void Robot::InitGameObject(void)
 	transform_component_->SetPosition(0, -25);
 	transform_component_->SetScale(150, 150);
 
+
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
+
 
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
-	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
-	collider_event_component_->AddEvent(2, f);
+	collider_event_component_->AddEvent([this](GameObject* _other)
+
+		{
+			this->OnCollisionEnter(_other);
+		});
 
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	velocity_component_->SetUseGravity(false);
+
+
 }
 
 //--------------------------------------------------
@@ -68,19 +78,27 @@ void Robot::UpdateGameObject(void)
 	// 移動処理
 	if (input.GetKeyPress(VK_D))
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 0.1f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3( 5.0f, 0.0f, 0.0f));
 	}
 	else if (input.GetKeyPress(VK_A))
 	{
-		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-0.1f, 0.0f, 0.0f));
+		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(-5.0f, 0.0f, 0.0f));
 	}
 	else
 	{
 		velocity_component_->SetVelocity(DirectX::SimpleMath::Vector3(0.0f, 0.0f, 0.0f));
 	}
 
+	// 何かに触れている間は赤くなる
+	//if(collider_component_->GetHitFg())
+	//{
+	//	sprite_component_->SetColor(Vector4(1.0f, 0.25f, 0.25f, 1.0f));
+	//}
+	//else
+	//{
+	//	sprite_component_->SetColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	//}
 	
-
 }
 
 void Robot::OnCollisionEnter(GameObject* _other)
@@ -88,11 +106,10 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Tile:
+		std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
 		break;
 	case GameObject::TypeID::Lift:
-		break;
-	case GameObject::TypeID::Item:
-		std::cout << std::format("Robot -> Item -> OnCollisionEnter\n");
+		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
 		break;
 	default:
 		break;

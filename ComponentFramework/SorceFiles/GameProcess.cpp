@@ -332,7 +332,7 @@ LRESULT CALLBACK GameProcess::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 
 	case WM_CLOSE:	// 「x」ボタンが押されたら
 	{
-		int res = MessageBoxA(NULL, "owaowari", "確認", MB_OKCANCEL);
+		int res = MessageBoxA(NULL, "終了しますか？？？？？？？？？？？？？？？？？？？？？？？", "確認", MB_OKCANCEL);
 		if (res == IDOK)
 		{
 			DestroyWindow(hWnd);	// 「WM_DESTROY」メッセージを送る

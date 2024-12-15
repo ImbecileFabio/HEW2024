@@ -8,7 +8,7 @@
 /*----- インクルード -----*/
 #include "GameObject.h"
 #include "../GameManager.h"
-
+#include "Component/ColliderComponent/BoxColliderComponent.h"
 
 // ゲームオブジェクトのリスト
 const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
@@ -68,6 +68,9 @@ void GameObject::Uninit(void)
 {
 	// コンポーネントの削除
 	delete transform_component_;
+
+	// オブジェクトリストから自身を削除
+	game_manager_->RemoveGameObject(this);
 }
 
 

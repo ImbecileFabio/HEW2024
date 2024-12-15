@@ -12,9 +12,6 @@
 #include <string>
 
 #include "../RenderComponent.h"
-#include "../../../SubSystem/VertexBuffer.h"
-#include "../../../SubSystem/IndexBuffer.h"
-#include "../../../SubSystem/Shader.h"
 #include "../../../SubSystem/Texture.h"
 
 
@@ -24,47 +21,29 @@
 /*----- 前方宣言 -----*/
 class GameObject;
 
-//--------------------------------------
+//--------------------------------------------------
 // 描画クラス
 //--------------------------------------------------
 class SpriteComponent :
 	public RenderComponent
 {
 public:
-	enum class State
-	{
-		none = -1,
-		notDraw,
-		draw,
-	};
-	SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder = 50);
+	SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder = 10);
 	~SpriteComponent();
 
 	void Init() override;
 	void Update() override;
 	void Uninit() override;
-	void Draw() ;
+	void Draw();
 
-	// 更新順位を返す
-	int& GetDrawOrder(void) { return draw_order_; }
+	// 色を変える
+	void SetColor(const DirectX::SimpleMath::Vector4& _color);
+
 	// コンポーネントのIDを返す
 	TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 
-	void SetState(State _state) { state_ = _state; }
-	State GetState() { return state_; }
 private:
-	void InitBuffers();	// バッファの初期化
-
-	int draw_order_;	// 更新順位
-	// 描画するかしないか
-	State state_ = State::draw;
-
-	// バッファ
-	VertexBuffer<VERTEX_3D> vertex_buffer_;
-	IndexBuffer index_buffer_;
-
-	Shader shader_;	// シェーダ
-
 	Texture texture_;	// テクスチャ
+
 };
 #endif	// SPRITE_COMPONENT_H_

@@ -38,6 +38,8 @@ private:
 	DirectX::SimpleMath::Vector3 gravity_;
 	bool	use_gravity_;
 
+	float speed_rate_;	// ‘¬“x”{—¦
+
 public:
 	VelocityComponent(GameObject* _owner, int _updateOrder = 50);
 	~VelocityComponent();

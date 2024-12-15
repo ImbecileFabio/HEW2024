@@ -32,7 +32,7 @@ public:
 
 private:
 	// 所有するコンポーネント
-	class SpriteComponent* sprite_component_{};
+	class RenderComponent* sprite_component_{};
 	class ColliderBaseComponent* collider_component_{};
 	class VelocityComponent* velocity_component_{};
 	

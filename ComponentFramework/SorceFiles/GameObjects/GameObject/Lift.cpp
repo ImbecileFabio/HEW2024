@@ -11,6 +11,8 @@
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
+#include "../Component/RenderComponent/SpriteComponent.h"
+
 //--------------------------------------------------
 // @brief コンストラクタ
 // @param _maxPos 正方向の最大座標

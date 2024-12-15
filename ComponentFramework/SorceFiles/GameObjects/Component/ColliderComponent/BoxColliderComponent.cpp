@@ -46,6 +46,7 @@ void BoxColliderComponent::Update(void)
 	this->boxSize_.x = pos.y - size.y / 2;	// 下
 	this->boxSize_.y = pos.x - size.x / 2;	// 左
 	this->boxSize_.z = pos.x + size.x / 2;	// 右
+
 }
 bool BoxColliderComponent::CheckCollisionCollider(ColliderBaseComponent* _other)
 {
@@ -79,6 +80,8 @@ bool BoxColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
 	}
 	this->hitFg_ = true; return true;
 }
+
+
 //--------------------------------------------------
 // @brief 四角形の当たり判定が重なっているかどうかの処理
 // @param _other 当たり判定を行う相手

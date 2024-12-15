@@ -31,6 +31,15 @@ struct VERTEX_3D
 	DirectX::SimpleMath::Vector2 uv;
 };
 
+// ジオメトリバッファー
+struct GeometryShaderBuffer {
+	DirectX::SimpleMath::Vector2 position;	// 位置
+	DirectX::SimpleMath::Color color;		// 色
+	DirectX::SimpleMath::Vector2 boxSize;	// サイズ
+	float thickness;					// 線の太さ	
+};
+
+
 // ブレンドステート
 enum EBlendState {
 	BS_NONE = 0,							// 半透明合成無し
@@ -44,7 +53,7 @@ enum EBlendState {
 /*----- 前方宣言 -----*/
 class GameManager;
 class Renderer;
-class SpriteComponent;
+class RenderComponent;
 
 
 //-----------------------------------------------------------------
@@ -62,8 +71,8 @@ public:
 	void Draw();
 	void End();
 
-	void AddSprite(SpriteComponent* spriteComponent);
-	void RemoveSprite(SpriteComponent& spriteComponent);
+	void AddSprite(RenderComponent* renderComponent);
+	void RemoveSprite(RenderComponent* renderComponent);
 
 	static void SetDepthEnable(bool Enable);
 
@@ -82,9 +91,11 @@ public:
 	static void CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
 	static void CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName);
 
+
+
 private:
 
-	std::vector<SpriteComponent*> sprites_;
+	std::vector<RenderComponent*> sprites_;
 
 	static D3D_FEATURE_LEVEL m_FeatureLevel;
 
