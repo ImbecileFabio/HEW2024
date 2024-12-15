@@ -302,9 +302,6 @@ void Renderer::AddSprite(RenderComponent* _renderComponent)
 
 	// イテレータの前に要素を挿入
 	sprites_.insert(iter, _renderComponent);
-
-	// デバッグ出力
-	std::cout << "Sprite added: " << _renderComponent << " with draw order: " << myDrawOrder << std::endl;
 }
 
 //-----------------------------------------------------------------

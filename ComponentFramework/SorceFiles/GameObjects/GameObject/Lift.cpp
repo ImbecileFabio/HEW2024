@@ -23,7 +23,15 @@ Lift::Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::
 	:GameObject(_gameManager, "Lift")
 	,moveState_(_moveState), maxPos_(_maxPos), minPos_(_minPos), switchFg_(false)
 {
-	std::cout << std::format("＜Lift＞ -> Constructor\n");
+	spriteComponent_ = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png");
+	collider_base_component_ = new BoxColliderComponent(this);
+	collider_event_component_ = new ColliderEventComponent(this);
+	velocityComponent_ = new VelocityComponent(this);
+
+	collider_event_component_->AddEvent([this](GameObject* _other)
+	{
+		this->OnCollisionEnter(_other);
+	});
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -31,7 +39,6 @@ Lift::Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::
 //--------------------------------------------------
 Lift::~Lift()
 {
-	std::cout << std::format("＜Lift＞ -> Destructor\n");
 	delete collider_base_component_;
 	delete collider_event_component_;
 	delete spriteComponent_;
@@ -42,20 +49,12 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-	transform_component_->SetScale(1000.0f, 1000.0f);
+	transform_component_->SetScale(200.0f, 200.0f);
 	transform_component_->SetPosition(0.0f, 0.0f);
 
-	spriteComponent_   = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png");
-	collider_base_component_ = new BoxColliderComponent(this);
-	collider_event_component_ = new ColliderEventComponent(this);
-	velocityComponent_ = new VelocityComponent(this);
 
 	velocityComponent_->SetUseGravity(false);
 	// イベント追加処理
-	collider_event_component_->AddEvent([this](GameObject* _other)
-		{
-			this->OnCollisionEnter(_other);
-		});
 }
 //--------------------------------------------------
 // @brief 更新処理

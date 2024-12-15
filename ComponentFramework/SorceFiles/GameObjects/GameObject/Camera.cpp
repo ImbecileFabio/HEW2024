@@ -18,6 +18,8 @@
 Camera::Camera(GameManager* _gameManager)
 	:GameObject(_gameManager, "Camera")
 {
+		// カメラコンポーネント
+	camera_component_ = new CameraComponent(this, 0);
 	this->InitGameObject();	
 }
 
@@ -36,9 +38,6 @@ Camera::~Camera()
 //--------------------------------------------------
 void Camera::InitGameObject(void)
 {
-	// カメラコンポーネント
-	camera_component_ = new CameraComponent(this, 0);
-
 	transform_component_->SetPosition(0, 0, -1);
 }
 

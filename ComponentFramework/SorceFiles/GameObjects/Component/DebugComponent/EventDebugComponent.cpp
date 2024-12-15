@@ -1,5 +1,6 @@
 #include "EventDebugComponent.h"
 #include <iostream>
+#include <format>
 
 EventDebugComponent::EventDebugComponent(GameObject* _owner, int updateOrder)
 	:Component(_owner, updateOrder)
@@ -8,6 +9,7 @@ EventDebugComponent::EventDebugComponent(GameObject* _owner, int updateOrder)
 }
 EventDebugComponent::~EventDebugComponent()
 {
+
 }
 void EventDebugComponent::Init()
 {
