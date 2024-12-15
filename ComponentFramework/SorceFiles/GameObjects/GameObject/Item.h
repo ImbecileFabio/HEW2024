@@ -21,7 +21,7 @@ public:
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 
 private:
-	class SpriteComponent* sprite_component_ = {};
+	class RenderComponent* sprite_component_ = {};
 	class EventBaseComponent* event_base_component_ = {};
 	class ColliderBaseComponent* collider_base_component_ = {};
 };

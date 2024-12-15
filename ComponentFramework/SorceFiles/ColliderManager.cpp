@@ -118,12 +118,15 @@ void ColliderManager::UpdateGameObjects(void)
 	}
 	updating_game_objects_ = false;
 	// 当たり判定を取らなくなったオブジェクトの移動
-	for (auto it = collider_game_objects_.begin(); it != collider_game_objects_.end(); ) {
-		if ((*it)->GetState() == GameObject::State::ColliderOut) {
+	for (auto it = collider_game_objects_.begin(); it != collider_game_objects_.end(); ) 
+	{
+		if ((*it)->GetState() == GameObject::State::ColliderOut)
+		{
 			collider_out_objects_.emplace_back(std::move(*it));
 			it = collider_game_objects_.erase(it); // 要素を削除しつつ次の要素へ
 		}
-		else {
+		else 
+		{
 			++it;
 		}
 	}

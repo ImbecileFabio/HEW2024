@@ -49,7 +49,8 @@ public:
 		, Tile
 		, Robot
 		, Lift
-
+		, Item
+		, TimeZone
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};
@@ -61,11 +62,11 @@ public:
 	enum class State
 	{
 		None = -1
-		, Active	// Updateされる
-		, Paused	// Updateされない
-		, Dead		// emplace_backされる
-
-		, MAX		// 状態の最大値
+		, Active		// Updateされる
+		, Paused		// Updateされない
+		, Dead			// emplace_backされる
+		, ColliderOut	// ColliderManagerから削除される
+		, MAX			// 状態の最大値
 	};
 
 public:

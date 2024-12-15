@@ -27,6 +27,12 @@ class GameObject;
 class RenderComponent : public Component
 {
 public:
+	enum class State
+	{
+		none = -1,
+		draw,
+		notDraw,
+	};
 	RenderComponent(GameObject* _owner, int _drawOrder = 50);
 	~RenderComponent();
 
@@ -42,6 +48,8 @@ public:
 
 	virtual TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 
+	void SetState(State _state) { state_ = _state; }
+	State GetState() { return state_; }
 protected:
 	int draw_order_;	// 更新順位
 
@@ -59,6 +67,7 @@ protected:
 
 	std::vector<VERTEX_3D> vertices_;	// 頂点データ
 
+	State state_ = State::draw;	// 描画するかしないか
 };
 
 #endif	// RENDER_COMPONENT_H_

@@ -44,13 +44,13 @@ Stage1_1Scene::~Stage1_1Scene()
 void Stage1_1Scene::Init()
 {
 	camera_ = new Camera(game_manager_);
-	//back_ground_ = new BackGround(game_manager_);
+	back_ground_ = new BackGround(game_manager_);
 	//tile_ = new Tile(game_manager_);
 
 	robot_ = new Robot(game_manager_);
 	
 	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
-	items_.resize(2, nullptr);  // �z���2���m��
+	items_.resize(2, nullptr);
 
 	items_[0] = new Item(game_manager_);
 	items_[0]->GetComponent<TransformComponent>()->SetPosition({ 0.0f, 0.0f, 0.0f });
@@ -69,7 +69,7 @@ void Stage1_1Scene::Init()
 
 	State = Game;
 	
-	// GameManegerで生成して、ColliderManagerに登録する
+	// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
 	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
 		if (colliderObjects->GetComponent<ColliderBaseComponent>())
@@ -106,6 +106,3 @@ void Stage1_1Scene::Update()
 	}
 
 }
-
-// コパイロット君が出力したコメント
-// �Q�[���I�u�W�F�N�g�̒ǉ�

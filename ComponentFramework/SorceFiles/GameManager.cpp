@@ -94,7 +94,7 @@ void GameManager::UpdateAll()
 	// ゲームオブジェクトの更新
 	this->current_scene_->Update();
 	this->UpdateGameObjects();
-	//this->collider_manager_->UpdateAll();
+	this->collider_manager_->UpdateAll();
 	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
 //-----------------------------------------------------------------

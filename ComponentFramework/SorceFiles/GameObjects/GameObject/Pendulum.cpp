@@ -17,7 +17,7 @@
 #include "../Component/TimeZoneComponent/TimeZoneComponent.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/PendulumMovementComponent.h"
-#include "../Component/RigidbodyComponent/AngularVelocityComponent.h"
+#include "../Component/RigidbodyComponent/VelocityComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -60,5 +60,9 @@ void Pendulum::InitGameObject(void)
 // 更新処理
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
+{
+}
+
+void Pendulum::OnCollisionEnter(GameObject* _other)
 {
 }
