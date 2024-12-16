@@ -18,6 +18,7 @@
 #include "Renderer.h"
 #include "AudioManager.h"
 #include "ImGuiManager.h"
+#include "PemdulumManager.h"
 
 
 //-----------------------------------------------------------------
@@ -37,8 +38,10 @@ GameManager::GameManager()
 	// コライダーマネージャー初期化
 	collider_manager_ = ColliderManager::Create();
 
-	this->InitAll();
+	// 振り子マネージャー初期化
+	pemdulum_manager_ = PemdulumManager::GetInstance();
 
+	this->InitAll();
 }
 
 //-----------------------------------------------------------------
@@ -95,6 +98,7 @@ void GameManager::UpdateAll()
 	this->current_scene_->Update();
 	this->UpdateGameObjects();
 	this->collider_manager_->UpdateAll();
+	this->pemdulum_manager_->Update();
 	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
 //-----------------------------------------------------------------
@@ -107,7 +111,6 @@ void GameManager::GenerateOutputAll(void)
 
 		renderer_->Begin();
 		renderer_->Draw();
-		
 
 		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
 
@@ -124,11 +127,8 @@ void GameManager::ChangeScene(SceneName _scene)
 	std::cout << std::format("\n[GameManager] -> ChangeScene\n");
 
 	// 現在のシーンの終了処理
-	if (current_scene_ != nullptr)
-	{
-		delete current_scene_;
-		current_scene_ = nullptr;
-	}
+	current_scene_->Uninit();
+	current_scene_ = nullptr;
 
 	switch (_scene)
 	{
@@ -164,9 +164,12 @@ void GameManager::AddGameObject (GameObject* gameObject)
 }
 
 //-----------------------------------------------------------------
-// @param	削除するゲームオブジェクト
-// @brief	コンテナの中から削除するオブジェクトを探して削除する
+// ゲームオブジェクトの削除処理
 //-----------------------------------------------------------------
+/*
+* @param	削除するゲームオブジェクト
+* @brief	コンテナの中から削除するオブジェクトを探して削除する
+*/
 void GameManager::RemoveGameObject(GameObject* _gameObject) {
 	// 待機コンテナ
 	auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), _gameObject);

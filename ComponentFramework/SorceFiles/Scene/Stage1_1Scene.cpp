@@ -1,17 +1,19 @@
-ï»¿//==================================================
-// [Stage1_1Scene.cpp] ã‚¹ãƒ†ãƒ¼ã‚¸1-1ã‚·ãƒ¼ãƒ³
-// è‘—è€…ï¼šæœ‰é¦¬å•“å¤ª
+//==================================================
+// [Stage1_1Scene.cpp] ƒXƒe[ƒW1-1ƒV[ƒ“
+// ’˜ŽÒF—L”nŒ[‘¾
 //--------------------------------------------------
-// èª¬æ˜Žï¼šã‚¹ãƒ†ãƒ¼ã‚¸1-1ã‚’ç®¡ç†ã‚’ã™ã‚‹ã‚¯ãƒ©ã‚¹
+// à–¾FƒXƒe[ƒW1-1‚ðŠÇ—‚ð‚·‚éƒNƒ‰ƒX
 //==================================================
 
-/*----- ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰ -----*/
+/*----- ƒCƒ“ƒNƒ‹[ƒh -----*/
 #include "Stage1_1Scene.h"
 
 #include "../GameManager.h"
 #include "../ColliderManager.h"
+#include "../PemdulumManager.h"
 #include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
-#include "../GameObjects/Component/EventComponent/ColliderEventComponent.h"
+#include "../GameObjects/Component/PendulumMovementComponent.h"
+
 #include "../GameObjects/GameObject.h"
 #include "../GameObjects/GameObject/BackGround.h"
 #include "../GameObjects/GameObject/Camera.h"
@@ -19,10 +21,9 @@
 #include "../GameObjects/GameObject/Tile.h"
 #include "../GameObjects/GameObject/Robot.h"
 #include "../GameObjects/GameObject/Lift.h"
-#include "../GameObjects/GameObject/Item.h"
 
 //--------------------------------------------------
-// ã‚³ãƒ³ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //--------------------------------------------------
 Stage1_1Scene::Stage1_1Scene(GameManager* _gameManager)
 	: SceneBase(_gameManager, "Stage1_1")
@@ -31,7 +32,7 @@ Stage1_1Scene::Stage1_1Scene(GameManager* _gameManager)
 }
 
 //--------------------------------------------------
-// ãƒ‡ã‚¹ãƒˆãƒ©ã‚¯ã‚¿
+// ƒfƒXƒgƒ‰ƒNƒ^
 //--------------------------------------------------
 Stage1_1Scene::~Stage1_1Scene()
 {
@@ -39,70 +40,72 @@ Stage1_1Scene::~Stage1_1Scene()
 }
 
 //--------------------------------------------------
-// åˆæœŸåŒ–å‡¦ç†
+// ‰Šú‰»ˆ—
 //--------------------------------------------------
 void Stage1_1Scene::Init()
 {
-	camera_ = new Camera(game_manager_);
-	back_ground_ = new BackGround(game_manager_);
-	//tile_ = new Tile(game_manager_);
-
-	robot_ = new Robot(game_manager_);
-	
-	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
-	items_.resize(2, nullptr);
-
-	items_[0] = new Item(game_manager_);
-	items_[0]->GetComponent<TransformComponent>()->SetPosition({ 0.0f, 0.0f, 0.0f });
-	items_[0]->GetComponent<TransformComponent>()->SetScale({ 100.0f, 100.0f, 0.0f });
-
-	auto f = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, items_[0], std::placeholders::_1));
-	items_[0]->GetComponent<ColliderEventComponent>()->AddEvent(0, f);
-
-	items_[1] = new Item(game_manager_);
-	items_[1]->GetComponent<TransformComponent>()->SetPosition({ 140.0f, 0.0f, 0.0f });
-	items_[1]->GetComponent<TransformComponent>()->SetScale({ 100.0f, 100.0f, 0.0f });
-
-	auto f2 = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, items_[1], std::placeholders::_1));
-	items_[1]->GetComponent<ColliderEventComponent>()->AddEvent(1, f2);
-	//pendulum_ = new Pendulum(game_manager_);
+	camera_			= new Camera(game_manager_);
+	back_ground_	= new BackGround(game_manager_);
+	tile_			= new Tile(game_manager_);
+	robot_			= new Robot(game_manager_);
+	pendulum_		= new Pendulum(game_manager_, 30.f, Vector3(0, 0, 0), true);
+	pendulum_2_		= new Pendulum(game_manager_, 30.f, Vector3(400, 0, 0), true);
+	pendulum_3_		= new Pendulum(game_manager_, 30.f, Vector3(-400, 0, 0), true);
+	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
 
 	State = Game;
 	
-	// GameManagerã§ç”Ÿæˆã—ã¦ã€ColliderManagerã«ç™»éŒ²ã™ã‚‹
+	// GameManeger‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
-	{	// ã‚ãŸã‚Šåˆ¤å®šã®ã‚ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼ã«ç™»éŒ²
+	{	// ‚ ‚½‚è”»’è‚Ì‚ ‚éƒIƒuƒWƒFƒNƒg‚ðƒRƒ‰ƒCƒ_[ƒ}ƒl[ƒWƒƒ[‚É“o˜^
 		if (colliderObjects->GetComponent<ColliderBaseComponent>())
 		{
 			game_manager_->GetColliderManager()->AddGameObject(colliderObjects);
 		}
 	}
 
+	for (auto& pemdulumObject : game_manager_->GetGameObjects()) {
+		if (pemdulumObject->GetComponent<PendulumMovementComponent>()) {
+			game_manager_->GetPemdulumManager()->AddGameObject(pemdulumObject);
+		}
+	}
+	PemdulumManager::GetInstance()->SetSelectedPemdulum(PemdulumManager::GetInstance()->GetPemdulumList().front());
 }
 
 //--------------------------------------------------
-// çµ‚äº†å‡¦ç†
+// I—¹ˆ—
 //--------------------------------------------------
 void Stage1_1Scene::Uninit()
 {
 	delete camera_;
-
 	delete back_ground_;
 	delete pendulum_;
+	delete pendulum_2_;
+	delete pendulum_3_;
 	delete tile_;
 	delete robot_;
 	delete lift_;
 }
 
 //--------------------------------------------------
-// æ›´æ–°å‡¦ç†
+// XVˆ—
 //--------------------------------------------------
 void Stage1_1Scene::Update()
 {
-
-	if (InputManager::GetInstance().GetKeyTrigger(VK_R))
+	switch (State)
 	{
-		game_manager_->ChangeScene(SceneName::Title);
+	case Stage1_1Scene::Game:
+		std::cout << std::format("1 {}\n", pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumLength());
+		std::cout << std::format("2 {}\n", pendulum_2_->GetComponent<PendulumMovementComponent>()->GetPendulumLength());
+		std::cout << std::format("3 {}\n", pendulum_3_->GetComponent<PendulumMovementComponent>()->GetPendulumLength());
+		break;
+	case Stage1_1Scene::Result:
+		break;
+	case Stage1_1Scene::Pouse:
+		break;
+	case Stage1_1Scene::Rewind:
+		break;
+	default:
+		break;
 	}
-
 }

@@ -11,21 +11,23 @@
 
 #include "Pendulum.h"
 #include "../../GameManager.h"
+#include "../../PemdulumManager.h"
 #include "../Component.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/TimeZoneComponent/TimeZoneComponent.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/PendulumMovementComponent.h"
-#include "../Component/RigidbodyComponent/VelocityComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Pendulum::Pendulum(GameManager* _gameManager)
+Pendulum::Pendulum(GameManager* _gameManager, float _pendulumAngle, Vector3 _fulcrum, bool _movement)
 	:GameObject(_gameManager, "Pendulum")
 {
 	this->InitGameObject();
+	pendulum_component_->SetPendulumAngle(_pendulumAngle);
+	pendulum_component_->PendulumInit(_fulcrum, _movement);
 }
 
 //--------------------------------------------------
@@ -44,14 +46,14 @@ Pendulum::~Pendulum(void)
 //--------------------------------------------------
 void Pendulum::InitGameObject(void)
 {
+	//PemdulumManager PM;
+	//	PM.GetSelectedPemdulum();
 	// スプライトコンポーネント
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/ball_01.png");
 	// 当たり判定コンポーネント
 	collider_component_ = new CircleColliderComponent(this);
 	// 振り子コンポーネント
 	pendulum_component_ = new PendulumMovementComponent(this);
-	pendulum_component_->SetPendulumAngle(60.0f);
-	pendulum_component_->PendulumInit(0.1f, Vector3(0.0f, 0.0f, 0.0f), 200.0f);
 	// トランスフォームコンポーネント
 	transform_component_->SetScale(100.0f, 100.0f);
 }
@@ -60,9 +62,5 @@ void Pendulum::InitGameObject(void)
 // 更新処理
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
-{
-}
-
-void Pendulum::OnCollisionEnter(GameObject* _other)
 {
 }
