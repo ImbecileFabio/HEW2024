@@ -31,14 +31,17 @@ public:
 	TypeID GetType(void) override { return TypeID::Lift; }	
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 
+	void SetPendulum(PendulumMovementComponent& _pendulum_movement_component) { pendulum_movement_component_ = _pendulum_movement_component; }
 private:
+	class PendulumMovementComponent& pendulum_movement_component_;
 	bool switchFg_;			// スイッチフラグ
 	MoveState moveState_;	// 移動状態
 
 	class ColliderBaseComponent* collider_base_component_ = {};
-	class EventBaseComponent* collider_event_component_ = {};
-	class RenderComponent* spriteComponent_		= {};	// 画像表示
+	class EventBaseComponent*	collider_event_component_ = {};
+	class RenderComponent*		spriteComponent_		= {};	// 画像表示
 	class VelocityComponent* velocityComponent_ = {};
+	class PendulumMovementComponent* pendulum_movement_component = {};
 
 };
 #endif // _LIFT_OBJECT_H_

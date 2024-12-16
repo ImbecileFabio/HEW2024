@@ -51,7 +51,8 @@ void Stage1_1Scene::Init()
 	//tile_ = new Tile(game_manager_);
 
 	robot_ = new Robot(game_manager_);
-	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
+	
+
 	items_.resize(2, nullptr);
 	// アイテムの設定
 	items_[0] = new Item(game_manager_);
@@ -65,6 +66,8 @@ void Stage1_1Scene::Init()
 	pendulum02_ = new Pendulum(game_manager_);
 	pendulum02_->GetComponent<TransformComponent>()->SetPosition(200.0f, -10.0f);
 	pendulum02_->GetComponent<PendulumMovementComponent>()->SetPendulumState(PendulumMovementComponent::PendulumState::stop);
+	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, { -100.0f, 0.0f, 0.0f }, game_manager_);
+	lift_->SetPendulum(*pendulum_->GetComponent<PendulumMovementComponent>());
 	State = Game;
 	
 	// GameManagerで生成して、ColliderManagerに登録する

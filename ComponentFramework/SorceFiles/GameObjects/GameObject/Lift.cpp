@@ -7,12 +7,13 @@
 /*----- インクルード -----*/
 #include <algorithm>
 #include "Lift.h"
+#include "Pendulum.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
-
+#include "../Component/PendulumMovementComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 // @param _maxPos 正方向の最大座標
@@ -36,6 +37,8 @@ Lift::~Lift()
 	delete collider_event_component_;
 	delete spriteComponent_;
 	delete velocityComponent_;
+	delete pendulum_movement_component;
+	delete pendulum_;
 }
 //--------------------------------------------------
 // @brief 初期化処理
@@ -50,7 +53,6 @@ void Lift::InitGameObject(void)
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocityComponent_ = new VelocityComponent(this);
 
-	velocityComponent_->SetUseGravity(false);
 	// イベント追加処理
 	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -60,7 +62,7 @@ void Lift::InitGameObject(void)
 //--------------------------------------------------
 void Lift::UpdateGameObject(void)
 {
-	DirectX::SimpleMath::Vector3 pos = this->transform_component_->GetPosition();
+	DirectX::SimpleMath::Vector3 pos = 
 	switch (moveState_)
 	{
 	case Lift::MoveState::length:	// 縦移動
