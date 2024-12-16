@@ -140,7 +140,7 @@ PendulumMovementComponent* SPM = pSelectedPemdulum->GetComponent<PendulumMovemen
 	}
 #else
 	// Aボタン（動作の変更）
-	if (IM.GetKeyTrigger(VK_A)) {
+	if (IM.GetKeyTrigger(VK_M)) {
 		SPM->SetPemdulumMovement(!SPM->GetPemdulumMovement());
 	}
 #endif

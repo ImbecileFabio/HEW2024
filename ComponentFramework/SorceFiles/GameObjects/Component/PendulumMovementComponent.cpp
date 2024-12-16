@@ -77,7 +77,9 @@ void PendulumMovementComponent::Update() {
 		break;
 	}
 
-	PendulumAcceleration(pendulumAcceleration);		// 角加速度を設定, 角速度を適用
+	if (pemdulumMovement_ && GetPendulumAngle() == 0) { StartPemdulumMovement(); }
+
+	PendulumAcceleration(pendulumAcceleration);				// 角加速度を設定, 角速度を適用
 	PendulumPosition(fulcrumPosition_, pendulumLength_);	// 座標を計算
 }
 
@@ -115,10 +117,11 @@ void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration)
 			SetPendulumAcceleration(-_angularAcceleration);
 			PendulumVelocity();			// -角速度を適用 
 			if (isPendulumAngle_ <= 0) {	// -角度が0を跨いでしまったら
-				isPendulumAngle_ = -wasPendulumAngle_;
+				SetPendulumAngle(-wasPendulumAngle_);
+				if (!pemdulumMovement_) { StopPemdulumMovement(); }
 			}
 		}
-		else {
+		else if(isPendulumAngle_ < 0) {
 			SetPendulumAcceleration(_angularAcceleration);
 			PendulumVelocity();			// -角速度を適用 
 			// 最高到達点に至ったら反転
@@ -131,10 +134,11 @@ void PendulumMovementComponent::PendulumAcceleration(float _angularAcceleration)
 			SetPendulumAcceleration( _angularAcceleration);
 			PendulumVelocity();			// -角速度を適用 
 			if (isPendulumAngle_ >= 0) {	// -角度が0を跨いでしまったら
-				isPendulumAngle_ = -wasPendulumAngle_;
+				SetPendulumAngle(-wasPendulumAngle_);
+				if (!pemdulumMovement_) { StopPemdulumMovement(); }
 			}
 		}
-		else {
+		else if(isPendulumAngle_ > 0) {
 			SetPendulumAcceleration(-_angularAcceleration);
 			PendulumVelocity();			// -角速度を適用 
 			// 最高到達点に至ったら反転
@@ -163,9 +167,11 @@ void PendulumMovementComponent::ConversionRadian(float _angle) {
 //--------------------------------------------------
 // 振り子の初期値設定
 //--------------------------------------------------
-void PendulumMovementComponent::PendulumInit(DirectX::SimpleMath::Vector3 _fulcrum, bool _movement) {
+void PendulumMovementComponent::PendulumInit(DirectX::SimpleMath::Vector3 _fulcrum, bool _movement, float _pendulumAngle) {
 	fulcrumPosition_ = _fulcrum;
 	pemdulumMovement_ = _movement;
+	maxPendulumAngle_ = _pendulumAngle;
+	SetPendulumAngle(_pendulumAngle);
 }
 
 //--------------------------------------------------
@@ -218,4 +224,22 @@ void PendulumMovementComponent::SetPendulumLength(float _pendulumLength) {
 }
 float PendulumMovementComponent::GetPendulumLength() {
 	return pendulumLength_;
+}
+
+//--------------------------------------------------
+// 振り子の停止、始動
+//--------------------------------------------------
+void PendulumMovementComponent::StartPemdulumMovement() {
+	for (int i = 1;;i++) {
+		maxPemdulumVelocity_ += pendulumAcceleration * i;
+		if (maxPemdulumVelocity_ >= maxPendulumAngle_) {
+			SetPemdulumVelocity(pendulumAcceleration * i);
+			break;
+		}
+	}
+}
+void PendulumMovementComponent::StopPemdulumMovement() {
+	SetPendulumAngle(0);
+	SetPemdulumVelocity(0);
+	SetPendulumAcceleration(0);
 }
