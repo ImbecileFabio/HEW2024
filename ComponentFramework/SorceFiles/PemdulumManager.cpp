@@ -91,7 +91,7 @@ void PemdulumManager::PemgulumSelect() {
 	}
 #else
 	pNextPemdulum = nullptr;
-	if (IM.GetButtonTrigger(VK_RIGHT)) {
+	if (IM.GetKeyTrigger(VK_L)) {
 		for (auto& pemdulum : pemgulumList_) {
 			if (pSelectedPemdulum != pemdulum &&
 				pSelectedPemdulum->GetComponent<TransformComponent>()->GetPosition().x <
@@ -106,7 +106,7 @@ void PemdulumManager::PemgulumSelect() {
 			}
 		}
 	}
-	if (IM.GetButtonTrigger(VK_LEFT)) {
+	if (IM.GetKeyTrigger(VK_J)) {
 		for (auto& pemdulum : pemgulumList_) {
 			if (pSelectedPemdulum != pemdulum &&
 				pSelectedPemdulum->GetComponent<TransformComponent>()->GetPosition().x >
@@ -140,7 +140,7 @@ PendulumMovementComponent* SPM = pSelectedPemdulum->GetComponent<PendulumMovemen
 	}
 #else
 	// Aボタン（動作の変更）
-	if (IM.GetButtonTrigger(VK_A)) {
+	if (IM.GetKeyTrigger(VK_A)) {
 		SPM->SetPemdulumMovement(!SPM->GetPemdulumMovement());
 	}
 #endif
@@ -166,15 +166,15 @@ PendulumMovementComponent* SPM = pSelectedPemdulum->GetComponent<PendulumMovemen
 	}
 #else
 	// 十字↑（短くする）
-	if (IM.GetButtonTrigger(VK_UP)) {
-		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::shortLangth) {
-			SPM->SetPendulumLength(SPM->GetPendulumLength() - langthChange);
+	if (IM.GetKeyTrigger(VK_I)) {
+		if (SPM->GetLangthState() != LangthState::shortLangth) {
+			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) - 1));
 		}
 	}
 	// 十字↓（長くする）
-	if (IM.GetButtonTrigger(VK_DOWN)) {
-		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::longLangth) {
-			SPM->SetPendulumLength(SPM->GetPendulumLength() + langthChange);
+	if (IM.GetKeyTrigger(VK_K)) {
+		if (SPM->GetLangthState() != LangthState::longLangth) {
+			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) + 1));
 		}
 	}
 #endif

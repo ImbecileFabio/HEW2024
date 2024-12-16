@@ -49,8 +49,8 @@ void Stage1_1Scene::Init()
 	tile_			= new Tile(game_manager_);
 	robot_			= new Robot(game_manager_);
 	pendulum_		= new Pendulum(game_manager_, 30.f, Vector3(0, 0, 0), true);
-	//pendulum_2_		= new Pendulum(game_manager_, 30.f, Vector3(400, 0, 0), true);
-	//pendulum_3_		= new Pendulum(game_manager_, 30.f, Vector3(-400, 0, 0), true);
+	pendulum_2_		= new Pendulum(game_manager_, 30.f, Vector3(400, 0, 0), true);
+	pendulum_3_		= new Pendulum(game_manager_, 30.f, Vector3(-400, 0, 0), true);
 	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
 
 	State = Game;
@@ -80,8 +80,8 @@ void Stage1_1Scene::Uninit()
 	delete camera_;
 	delete back_ground_;
 	delete pendulum_;
-	//delete pendulum_2_;
-	//delete pendulum_3_;
+	delete pendulum_2_;
+	delete pendulum_3_;
 	delete tile_;
 	delete robot_;
 	delete lift_;
@@ -95,6 +95,9 @@ void Stage1_1Scene::Update()
 	switch (State)
 	{
 	case Stage1_1Scene::Game:
+		std::cout << std::format("1 {}\n", pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumLength());
+		std::cout << std::format("2 {}\n", pendulum_2_->GetComponent<PendulumMovementComponent>()->GetPendulumLength());
+		std::cout << std::format("3 {}\n", pendulum_3_->GetComponent<PendulumMovementComponent>()->GetPendulumLength());
 		break;
 	case Stage1_1Scene::Result:
 		break;

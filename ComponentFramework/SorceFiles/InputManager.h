@@ -50,7 +50,7 @@
 #define VK_F 0x46
 #define VK_G 0x47
 #define VK_H 0x48
-#define VK_I 0x49ance
+#define VK_I 0x49
 #define VK_J 0x4A
 #define VK_K 0x4B
 #define VK_L 0x4C

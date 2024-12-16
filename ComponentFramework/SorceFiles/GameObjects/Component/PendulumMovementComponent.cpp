@@ -64,13 +64,13 @@ void PendulumMovementComponent::Update() {
 	// 振り子の状態遷移
 	switch (langthState_)
 	{
-	case PendulumMovementComponent::LangthState::shortLangth:
+	case LangthState::shortLangth:
 		SetPendulumLength(normalLangth - langthChange);
 		break;
-	case PendulumMovementComponent::LangthState::normalLangth:
+	case LangthState::normalLangth:
 		SetPendulumLength(normalLangth);
 		break;
-	case PendulumMovementComponent::LangthState::longLangth:
+	case LangthState::longLangth:
 		SetPendulumLength(normalLangth + langthChange);
 		break;
 	default:
@@ -78,7 +78,7 @@ void PendulumMovementComponent::Update() {
 	}
 
 	PendulumAcceleration(pendulumAcceleration);		// 角加速度を設定, 角速度を適用
-	PendulumPosition(InitFulcrum_, pendulumLength_);	// 座標を計算
+	PendulumPosition(fulcrumPosition_, pendulumLength_);	// 座標を計算
 }
 
 
@@ -164,7 +164,7 @@ void PendulumMovementComponent::ConversionRadian(float _angle) {
 // 振り子の初期値設定
 //--------------------------------------------------
 void PendulumMovementComponent::PendulumInit(DirectX::SimpleMath::Vector3 _fulcrum, bool _movement) {
-	InitFulcrum_ = _fulcrum;
+	fulcrumPosition_ = _fulcrum;
 	pemdulumMovement_ = _movement;
 }
 

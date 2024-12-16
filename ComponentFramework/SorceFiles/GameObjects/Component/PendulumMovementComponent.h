@@ -35,16 +35,16 @@ constexpr float normalLangth = 250.0f;
 constexpr float langthChange = 50.0f;
 constexpr float pendulumAcceleration = 0.1f;
 
+enum class LangthState
+{
+	shortLangth,
+	normalLangth,
+	longLangth
+};
+
 class PendulumMovementComponent : public Component
 {
 public:
-	enum class LangthState
-	{
-		shortLangth,
-		normalLangth,
-		longLangth
-	};
-
 	PendulumMovementComponent(GameObject* _owner, int _updateOrder = 50);
 	~PendulumMovementComponent();
 
@@ -96,8 +96,6 @@ private:
 	float pendulumLength_;							// -振り子の長さ
 	float pendulumRadian_;							// -振り子の角度（ラジアン）
 	bool  turnPendulum_;							// -振り子の往復で処理を切り替えるためのフラグ　true：右から左　false：左から右
-
-	DirectX::SimpleMath::Vector3 InitFulcrum_;		// -初期の支点の座標
 
 	// -振り子の状態
 	LangthState langthState_;
