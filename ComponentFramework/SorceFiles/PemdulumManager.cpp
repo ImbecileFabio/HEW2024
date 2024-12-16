@@ -7,8 +7,9 @@
 
 #include "PemdulumManager.h"
 #include "GameManager.h"
-#include "GameObjects/GameObject.h"
 #include "InputManager.h"
+#include "GameObjects/GameObject.h"
+#include "GameObjects/Component/PendulumMovementComponent.h"
 
 //#define ControllerPlay
 
@@ -28,9 +29,6 @@ PemdulumManager::~PemdulumManager(){
 // 初期化処理・終了処理・更新処理
 //--------------------------------------------------
 void PemdulumManager::Init(){
-	// 振り子の動作、長さの状態
-	langthState_ = LangthState::normalLangth;
-	pemdulumMovement_ = false;
 }
 void PemdulumManager::Uninit() {
 	pemgulumList_.clear();
@@ -38,9 +36,11 @@ void PemdulumManager::Uninit() {
 	DestroyInstance();
 }
 void PemdulumManager::Update(){
-	PemgulumSelect();
-	PemdulumMovementChange();
-	PemgulumLangthChange();
+	if (pSelectedPemdulum != nullptr) {
+		PemgulumSelect();
+		PemdulumMovementChange();
+		PemgulumLangthChange();
+	}
 }
 
 //-----------------------------------------------------------------
@@ -87,6 +87,7 @@ void PemdulumManager::PemgulumSelect() {
 			}
 		}
 		pSelectedPemdulum = pNextPemdulum;
+		pSelectedPemdulum->GetComponent<PendulumMovementComponent>()->SetPemdulumSelected(true);
 	}
 #else
 	pNextPemdulum = nullptr;
@@ -120,6 +121,10 @@ void PemdulumManager::PemgulumSelect() {
 			}
 		}
 	}
+	if (pNextPemdulum != nullptr) {
+		pSelectedPemdulum = pNextPemdulum;
+		pSelectedPemdulum->GetComponent<PendulumMovementComponent>()->SetPemdulumSelected(true);
+	}
 #endif
 }
 
@@ -127,22 +132,16 @@ void PemdulumManager::PemgulumSelect() {
 // 振り子の状態変異
 //--------------------------------------------------
 void PemdulumManager::PemdulumMovementChange() {
+PendulumMovementComponent* SPM = pSelectedPemdulum->GetComponent<PendulumMovementComponent>();
 #ifdef ControllerPlay
-
 	// Aボタン（動作の変更）
 	if (IM.GetButtonTrigger(XINPUT_A)) {
-		if (pemdulumMovement_) {
-			pemdulumMovement_ = !pemdulumMovement_;
-		} else {
-			pemdulumMovement_ = !pemdulumMovement_;
-		}
+		PM->SetPemdulumMovement(!PM->GetPemdulumMovement());
 	}
 #else
 	// Aボタン（動作の変更）
 	if (IM.GetButtonTrigger(VK_A)) {
-		if (pemdulumMovement_) {
-			pemdulumMovement_ = !pemdulumMovement_;
-		}
+		SPM->SetPemdulumMovement(!SPM->GetPemdulumMovement());
 	}
 #endif
 }
@@ -151,6 +150,7 @@ void PemdulumManager::PemdulumMovementChange() {
 // 長さの変更
 //--------------------------------------------------
 void PemdulumManager::PemgulumLangthChange() {
+PendulumMovementComponent* SPM = pSelectedPemdulum->GetComponent<PendulumMovementComponent>();
 #ifdef ControllerPlay
 	// 十字↑（短くする）
 	if (IM.GetButtonTrigger(XINPUT_UP)) {
@@ -167,15 +167,23 @@ void PemdulumManager::PemgulumLangthChange() {
 #else
 	// 十字↑（短くする）
 	if (IM.GetButtonTrigger(VK_UP)) {
-		if (langthState_ != LangthState::shortLangth) {
-			langthState_ -= LangthChange;
+		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::shortLangth) {
+			SPM->SetPendulumLength(SPM->GetPendulumLength() - langthChange);
 		}
 	}
 	// 十字↓（長くする）
 	if (IM.GetButtonTrigger(VK_DOWN)) {
-		if (langthState_ != LangthState::longLangth) {
-			langthState_ += LangthChange;
+		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::longLangth) {
+			SPM->SetPendulumLength(SPM->GetPendulumLength() + langthChange);
 		}
 	}
 #endif
+}
+
+//--------------------------------------------------
+// インスタンスの生成
+//--------------------------------------------------
+void PemdulumManager::SetSelectedPemdulum(GameObject* _pSelectedPemdulum) {
+	pSelectedPemdulum = _pSelectedPemdulum;
+	pSelectedPemdulum->GetComponent<PendulumMovementComponent>()->SetPemdulumSelected(true);
 }

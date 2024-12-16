@@ -98,7 +98,7 @@ void GameManager::UpdateAll()
 	this->current_scene_->Update();
 	this->UpdateGameObjects();
 	this->collider_manager_->UpdateAll();
-	this->pemdulum_manager_->Update();
+	//this->pemdulum_manager_->Update();
 	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
 //-----------------------------------------------------------------

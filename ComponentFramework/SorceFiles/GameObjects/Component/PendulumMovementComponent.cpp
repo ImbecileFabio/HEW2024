@@ -41,6 +41,10 @@ void PendulumMovementComponent::Init() {
 	pendulumLength_ = 0;		// -振り子の長さ
 	pendulumRadian_ = 0;		// -振り子の角度（ラジアン）
 	turnPendulum_ = true;		// -振り子の往復で処理を切り替えるためのフラグ　true：右から左　false：左から右
+
+	langthState_= LangthState::normalLangth;
+	pemdulumMovement_ = true;
+	pemdulumSelected_ = false;
 }
 
 //--------------------------------------------------
@@ -54,11 +58,27 @@ void PendulumMovementComponent::Uninit() {
 // 更新処理
 //--------------------------------------------------
 void PendulumMovementComponent::Update() {
-	// 動作確認用ログ
+	 //動作確認用ログ
 	//std::cout << std::format("{}  現在の角度：{}	角速度：{}\n", turnPendulum_, isPendulumAngle_, isPendulumVelocity_);
-	PendulumAcceleration(InitAcceleration_);		// 角加速度を設定, 角速度を適用
-	PendulumPosition(InitFulcrum_, InitLength_);	// 座標を計算
 	
+	// 振り子の状態遷移
+	switch (langthState_)
+	{
+	case PendulumMovementComponent::LangthState::shortLangth:
+		SetPendulumLength(normalLangth - langthChange);
+		break;
+	case PendulumMovementComponent::LangthState::normalLangth:
+		SetPendulumLength(normalLangth);
+		break;
+	case PendulumMovementComponent::LangthState::longLangth:
+		SetPendulumLength(normalLangth + langthChange);
+		break;
+	default:
+		break;
+	}
+
+	PendulumAcceleration(pendulumAcceleration);		// 角加速度を設定, 角速度を適用
+	PendulumPosition(InitFulcrum_, pendulumLength_);	// 座標を計算
 }
 
 
@@ -143,10 +163,9 @@ void PendulumMovementComponent::ConversionRadian(float _angle) {
 //--------------------------------------------------
 // 振り子の初期値設定
 //--------------------------------------------------
-void PendulumMovementComponent::PendulumInit(float _acceleration, DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
-	InitAcceleration_ = _acceleration;
+void PendulumMovementComponent::PendulumInit(DirectX::SimpleMath::Vector3 _fulcrum, bool _movement) {
 	InitFulcrum_ = _fulcrum;
-	InitLength_ = _length;
+	pemdulumMovement_ = _movement;
 }
 
 //--------------------------------------------------

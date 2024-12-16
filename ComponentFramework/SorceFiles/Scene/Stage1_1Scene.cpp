@@ -48,9 +48,9 @@ void Stage1_1Scene::Init()
 	back_ground_	= new BackGround(game_manager_);
 	tile_			= new Tile(game_manager_);
 	robot_			= new Robot(game_manager_);
-	pendulum_		= new Pendulum(game_manager_, 30.f, 0.02f, Vector3(400, 0, 0), 300);
-	pendulum_2_		= new Pendulum(game_manager_, 30.f, 0.02f, Vector3(0, 0, 0), 300);
-	pendulum_3_		= new Pendulum(game_manager_, 30.f, 0.02f, Vector3(-400, 0, 0), 300);
+	pendulum_		= new Pendulum(game_manager_, 30.f, Vector3(0, 0, 0), true);
+	//pendulum_2_		= new Pendulum(game_manager_, 30.f, Vector3(400, 0, 0), true);
+	//pendulum_3_		= new Pendulum(game_manager_, 30.f, Vector3(-400, 0, 0), true);
 	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
 
 	State = Game;
@@ -80,6 +80,8 @@ void Stage1_1Scene::Uninit()
 	delete camera_;
 	delete back_ground_;
 	delete pendulum_;
+	//delete pendulum_2_;
+	//delete pendulum_3_;
 	delete tile_;
 	delete robot_;
 	delete lift_;

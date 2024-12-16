@@ -21,31 +21,11 @@
 #include <vector>
 #include <SimpleMath.h>
 
-constexpr int NormalLangth = 200;
-constexpr int LangthChange = 50;
-
 constexpr float InnerProductLimit = 0.7;
-
-// êUÇËéqÇÃí∑Ç≥ÇÃèÛë‘
-enum class LangthState
-{
-	shortLangth = NormalLangth - LangthChange,
-	normalLangth = NormalLangth,
-	longLangth = NormalLangth + LangthChange
-};
-
-inline LangthState operator +=(LangthState _langthState,int _LangthChange) {
-	return static_cast<LangthState>(static_cast<int>(_langthState) + LangthChange);
-}
-inline LangthState operator -=(LangthState _langthState, int _LangthChange) {
-	return static_cast<LangthState>(static_cast<int>(_langthState) - LangthChange);
-}
 
 class PemdulumManager
 {
 private:
-	LangthState langthState_;
-	bool pemdulumMovement_;
 	GameObject* pSelectedPemdulum;
 	GameObject* pNextPemdulum;
 
@@ -68,10 +48,6 @@ private:
 public:
 	PemdulumManager();
 	~PemdulumManager();
-
-	LangthState operator +=(LangthState _langthState) {
-		return static_cast<LangthState>(static_cast<int>(_langthState) + LangthChange);
-	}
 
 	void Init();
 	void Uninit();
@@ -98,9 +74,7 @@ public:
 			 instance_ = nullptr;
 		 }
 	 }
-	 void SetSelectedPemdulum(GameObject* _pSelectedPemdulum) { pSelectedPemdulum = _pSelectedPemdulum; }
+	 void SetSelectedPemdulum(GameObject* _pSelectedPemdulum);
 	 GameObject* GetSelectedPemdulum() { return pSelectedPemdulum; }
-	 LangthState GetLangthState() { return langthState_; }
-	 bool GetPemdulumMovement() { return pemdulumMovement_; }
 	 std::list<GameObject*> GetPemdulumList() { return pemgulumList_; }
 };

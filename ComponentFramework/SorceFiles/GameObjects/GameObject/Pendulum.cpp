@@ -22,12 +22,12 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Pendulum::Pendulum(GameManager* _gameManager, float _pendulumAngle, float _acceleration, Vector3 _fulcrum, float _length)
+Pendulum::Pendulum(GameManager* _gameManager, float _pendulumAngle, Vector3 _fulcrum, bool _movement)
 	:GameObject(_gameManager, "Pendulum")
 {
 	this->InitGameObject();
 	pendulum_component_->SetPendulumAngle(_pendulumAngle);
-	pendulum_component_->PendulumInit(_acceleration, _fulcrum, _length);
+	pendulum_component_->PendulumInit(_fulcrum, _movement);
 }
 
 //--------------------------------------------------
