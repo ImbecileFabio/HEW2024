@@ -46,8 +46,6 @@ Pendulum::~Pendulum(void)
 //--------------------------------------------------
 void Pendulum::InitGameObject(void)
 {
-	//PemdulumManager PM;
-	//	PM.GetSelectedPemdulum();
 	// スプライトコンポーネント
 	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/ball_01.png");
 	// 当たり判定コンポーネント

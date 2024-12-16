@@ -30,11 +30,10 @@ public:
 
 	TypeID GetType(void) override { return TypeID::Pendulum; }
 
-	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
 	// 所有するコンポーネント
-	class RenderComponent*		   sprite_component_   {};
-	class ColliderBaseComponent*	   collider_component_ {};
+	class RenderComponent*			 sprite_component_	 {};
+	class ColliderBaseComponent*	 collider_component_ {};
 	class PendulumMovementComponent* pendulum_component_ {};
 };
 #endif	// PENDULUM_H_
