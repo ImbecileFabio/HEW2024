@@ -1,6 +1,7 @@
 #include "TimeZone.h"
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
+#include "../Component/RigidbodyComponent/VelocityComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------

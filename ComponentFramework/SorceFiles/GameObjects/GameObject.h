@@ -51,6 +51,7 @@ public:
 		, Lift
 		, Item
 		, TimeZone
+		, Stick	// 振り子の棒
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};

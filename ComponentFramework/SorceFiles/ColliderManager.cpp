@@ -132,7 +132,8 @@ void ColliderManager::UpdateGameObjects(void)
 			if (collider2 == nullptr) continue;
 
 			// Õ“Ë”»’è
-			if (collider1->CheckCollisionCollider(collider2)) {
+			if (collider1->CheckCollisionCollider(collider2))
+			{
 				// ƒCƒxƒ“ƒgˆ—
 				size_t id = event1->GetId();
 				event1->AllUpdate(*it2, id);

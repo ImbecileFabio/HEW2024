@@ -76,6 +76,7 @@
     <ClCompile Include="SorceFiles\Renderer.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Stick.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h" />
@@ -141,6 +142,7 @@
     <ClInclude Include="SorceFiles\SubSystem\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Stick.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\GeometryShader.hlsl">

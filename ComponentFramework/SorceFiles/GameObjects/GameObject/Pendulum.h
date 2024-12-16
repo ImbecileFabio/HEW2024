@@ -34,6 +34,7 @@ public:
 private:
 	// 子オブジェクト
 	class TimeZone* timeZone_ = nullptr;
+	class Stick*	stick_	  = nullptr;
 	// 所有するコンポーネント
 	class RenderComponent*				sprite_component_   {};
 	class ColliderBaseComponent*	    collider_component_ {};

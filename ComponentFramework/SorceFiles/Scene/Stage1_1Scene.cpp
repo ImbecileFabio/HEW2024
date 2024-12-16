@@ -80,7 +80,8 @@ void Stage1_1Scene::Init()
 				if(childrenColliderComponent)
 					game_manager_->GetColliderManager()->AddGameObject(childrenColliderObjects);
 			}
-		}// ここはただのコライダーの登録
+		}
+		// ここはただのコライダーの登録
 		if (colliderObjects->GetComponent<ColliderBaseComponent>())
 		{
 			game_manager_->GetColliderManager()->AddGameObject(colliderObjects);
