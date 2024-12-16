@@ -48,9 +48,10 @@ void ColliderEventComponent::AllUpdate(GameObject* _other, size_t _id)
 //--------------------------------------------------
 // @brief イベントの追加処理
 //--------------------------------------------------
-void ColliderEventComponent::AddEvent(size_t _id, std::function<void(GameObject* _other)>&_event)
+void ColliderEventComponent::AddEvent(std::function<void(GameObject* _other)>&_event)
 {
-	id_ = _id;
+	generalId_++;
+	id_ = generalId_;
 	this->functions_[id_] = _event;
 	std::cout << std::format("＜ColliderEventComponent＞ -> イベント追加\n");
 }

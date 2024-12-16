@@ -58,7 +58,7 @@ void Robot::InitGameObject(void)
 
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
-	collider_event_component_->AddEvent(2, f);
+	collider_event_component_->AddEvent(f);
 
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	velocity_component_->SetUseGravity(false);

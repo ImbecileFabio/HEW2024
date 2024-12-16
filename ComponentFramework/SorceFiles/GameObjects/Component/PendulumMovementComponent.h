@@ -84,4 +84,15 @@ public:
 	float GetPendulumLength();
 
 	virtual TypeID GetComponentType() const override { return TypeID::PendulumMovementComponent; }
+	// U‚èq‚Ì“®‚«‚Ìó‘Ô
+	enum class PendulumState
+	{
+		none = -1,
+		stop,
+		move,
+	};
+	PendulumState pendulumState_ = PendulumState::move;
+
+	PendulumState GetPendulumState(void) { return pendulumState_; }
+	void SetPendulumState(PendulumState _pendulumState) { pendulumState_ = _pendulumState; }
 };

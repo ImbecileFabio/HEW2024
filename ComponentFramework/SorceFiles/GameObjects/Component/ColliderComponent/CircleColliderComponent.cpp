@@ -5,6 +5,7 @@
 // 説明：円の当たり判定のコンポーネント
 //==================================================
 #include "CircleColliderComponent.h"
+#include "BoxColliderComponent.h"
 #include "../TransformComponent.h"
 #include "../../GameObject.h"
 #include <iostream>
@@ -26,9 +27,7 @@ CircleColliderComponent::~CircleColliderComponent()
 //--------------------------------------------------
 void CircleColliderComponent::Init(void)
 {
-	DirectX::SimpleMath::Vector3 scale =
-		this->owner_->GetComponent<TransformComponent>()->GetScale();
-	this->circle_.radius = std::min<float>(scale.x, scale.y) / 2.0f;
+
 }
 //--------------------------------------------------
 // @brief 円の当たり判定の更新処理
@@ -36,6 +35,9 @@ void CircleColliderComponent::Init(void)
 void CircleColliderComponent::Update(void)
 {
 	this->circle_.position = this->owner_->GetComponent<TransformComponent>()->GetPosition();
+	DirectX::SimpleMath::Vector3 scale =
+		this->owner_->GetComponent<TransformComponent>()->GetScale();
+	this->circle_.radius = std::min<float>(scale.x, scale.y) / 2.0f;
 }
 //--------------------------------------------------
 // @brief ポリフォーリズムを使って、コンポーネントで渡す関数を判別してくれる偉大なコード
@@ -60,7 +62,6 @@ bool CircleColliderComponent::CheckCollisionCollider(CircleColliderComponent* _o
 
 	if (c <= sumRadius * sumRadius)
 	{
-		std::cout << std::format("[CircleColliderComponent] -> CheckCollider Start\n");
 		this->hitFg_ = true;
 		return true;
 	}
@@ -73,29 +74,22 @@ bool CircleColliderComponent::CheckCollisionCollider(CircleColliderComponent* _o
 //--------------------------------------------------
 bool CircleColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
 {
-	//// 右と左
-		//if (boxSize_.z < _other.y)
-		//{
-		//	testFg = false; return false;
-		//}
-		//// 左と右
-		//if (boxSize_.y > _other.z)
-		//{
-		//	testFg = false; return false;
-		//}
-		//// 下と上
-		//if (boxSize_.x > _other.w)
-		//{
-		//	testFg = false; return false;
-		//}
-		//// 上と下
-		//if (boxSize_.w < _other.x)
-		//{
-		//	testFg = false; return false;
-		//}
-		//return true;
-		return false;
-
+	auto boxSize = _other->GetBoxSize();
+	// 四角形内で円の中心に最も近い点を計算
+	float closestX =
+		max(boxSize.y, min(circle_.position.x, boxSize.z));	// 左と右
+	float closestY =
+		max(boxSize.x, min(circle_.position.y, boxSize.w));	// 下と上
+	// 最近点と円の中心の距離を計算
+	float distanceX = circle_.position.x - closestX;
+	float distanceY = circle_.position.y - closestY;
+	// 判定
+	if ((distanceX * distanceX) + (distanceY * distanceY) < (circle_.radius * circle_.radius))
+	{
+		this->hitFg_ = true;
+		return true;
+	}
+	return false;
 }
 //--------------------------------------------------
 // @brief 円の当たり判定の終了処理

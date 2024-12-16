@@ -127,8 +127,6 @@ public:
 	virtual void OnCollisionEnter(GameObject* _other) {};	// ÚG‚µ‚½
 	virtual void OnCollisionStay(GameObject* _other) {};	// ÚG‚µ‘±‚¯‚Ä‚¢‚é
 	virtual void OnCollisionExit(GameObject* _other) {};	// ÚG‚©‚ç”²‚¯‚½
-
-
 protected:
 	// GameObject‚ÌŠ—LÒ
 	 GameManager* game_manager_{};

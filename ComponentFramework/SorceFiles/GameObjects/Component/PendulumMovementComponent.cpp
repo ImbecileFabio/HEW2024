@@ -55,9 +55,15 @@ void PendulumMovementComponent::Uninit() {
 void PendulumMovementComponent::Update() {
 	// 動作確認用ログ
 	//std::cout << std::format("{}  現在の角度：{}	角速度：{}\n", turnPendulum_, isPendulumAngle_, isPendulumVelocity_);
-	PendulumAcceleration(InitAcceleration_);		// 角加速度を設定, 角速度を適用
-	PendulumPosition(InitFulcrum_, InitLength_);	// 座標を計算
-	
+	if (pendulumState_ == PendulumState::move)
+	{
+		PendulumAcceleration(InitAcceleration_);		// 角加速度を設定, 角速度を適用
+		PendulumPosition(InitFulcrum_, InitLength_);	// 座標を計算
+	}
+	if (pendulumState_ == PendulumState::stop)
+	{
+
+	}	
 }
 
 

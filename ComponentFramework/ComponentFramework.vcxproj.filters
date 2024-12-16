@@ -108,9 +108,6 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -166,6 +163,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\Component\ChildrenComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -272,9 +272,6 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\AngularVelocityComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -333,6 +330,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SorceFiles\SubSystem\ConstantBuffer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\Component\ChildrenComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp" />
     <ClCompile Include="SorceFiles\ColliderManager.cpp" />
     <ClCompile Include="SorceFiles\FileManager.cpp" />
@@ -77,6 +78,7 @@
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h" />
     <ClInclude Include="SorceFiles\ColliderManager.h" />
     <ClInclude Include="SorceFiles\FileManager.h" />

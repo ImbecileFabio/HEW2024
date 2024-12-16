@@ -55,8 +55,8 @@ public:
 		, CameraComponent
 		// 振り子
 		, PendulumComponent
-		// 動作確認用
-		, DebugPolygonComponent
+		// 子オブジェクト
+		, ChildrenComponent
 		// コンポーネントの最大値
 		, MAX
 	};

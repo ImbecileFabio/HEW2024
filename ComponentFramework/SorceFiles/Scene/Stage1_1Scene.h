@@ -39,6 +39,7 @@ private:
 	class BackGround* back_ground_{};	// 背景
 	class Camera* camera_{};			// カメラ
 	class Pendulum* pendulum_{};		// 振り子
+	Pendulum* pendulum02_{};
 	class Tile* tile_{};				// タイル
 	class Robot* robot_{};				// ロボット
 	class Lift*	 lift_{};				// リフト

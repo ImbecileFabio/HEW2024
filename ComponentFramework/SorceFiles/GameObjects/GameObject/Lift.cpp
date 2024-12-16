@@ -53,7 +53,7 @@ void Lift::InitGameObject(void)
 	velocityComponent_->SetUseGravity(false);
 	// イベント追加処理
 	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
-	collider_event_component_->AddEvent(4, f);
+	collider_event_component_->AddEvent(f);
 }
 //--------------------------------------------------
 // @brief 更新処理

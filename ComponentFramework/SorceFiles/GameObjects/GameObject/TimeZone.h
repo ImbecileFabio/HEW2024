@@ -21,9 +21,9 @@ public:
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::TimeZone; }
-private:
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
-	class SpriteComponent*				sprite_component_ = {};
+private:
+	class RenderComponent*				sprite_component_ = {};
 	class ColliderBaseComponent* collider_base_component_ = {};
 	class EventBaseComponent*		event_base_component_ = {};
 };

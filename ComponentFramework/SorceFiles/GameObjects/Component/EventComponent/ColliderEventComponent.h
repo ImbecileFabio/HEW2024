@@ -25,14 +25,11 @@ public:
 	void Update(void) override {};
 
 	void AllUpdate(GameObject* _other, size_t _id);
-	void AddEvent(size_t _id, std::function<void(GameObject* _other)>& _event) override;	// とりあえずオブジェクトごと渡す
+	void AddEvent(std::function<void(GameObject* _other)>& _event);	// とりあえずオブジェクトごと渡す
 	void RemoveEvent();	// いらなくなったオブジェクトを消す予定
-
-	size_t GetID(void) { return id_; }
 
 	TypeID GetComponentType(void) const override { return TypeID::ColliderEventComponent; }
 private:
-	size_t id_{};
 	std::map<size_t, std::function<void(GameObject*)>> functions_{};
 };
 #endif // COLLIDER_EVENT_COMPONENT_H_

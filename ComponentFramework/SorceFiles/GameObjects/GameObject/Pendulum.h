@@ -32,9 +32,13 @@ public:
 
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
+	// 子オブジェクト
+	class TimeZone* timeZone_ = nullptr;
 	// 所有するコンポーネント
-	class RenderComponent*		   sprite_component_   {};
-	class ColliderBaseComponent*	   collider_component_ {};
-	class PendulumMovementComponent* pendulum_component_ {};
+	class RenderComponent*				sprite_component_   {};
+	class ColliderBaseComponent*	    collider_component_ {};
+	class PendulumMovementComponent*	pendulum_component_ {};
+	class ChildrenComponent*			children_component_ {};
+	class EventBaseComponent*			collider_event_component{};
 };
 #endif	// PENDULUM_H_

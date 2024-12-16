@@ -97,22 +97,45 @@ void ColliderManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
+	//// 当たり判定の処理
+	//for (int i = 0; i < collider_game_objects_.size(); i++)
+	//{
+	//	for (int j = 0; j < collider_game_objects_.size(); j++)
+	//	{	// 衝突したか、していないか
+	//		if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>()->
+	//			CheckCollisionCollider(collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>()))
+	//		{	
+	//			// 当たった側の処理を呼びだす
+	//			if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>() == nullptr &&
+	//				collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>() == nullptr)
+	//				continue;
+	//			if (collider_game_objects_.at(i)->GetComponent<EventBaseComponent>() == nullptr)
+	//				break;
+	//			size_t id = collider_game_objects_.at(i)->GetComponent<ColliderEventComponent>()->GetID();
+	//			collider_game_objects_.at(i)->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_.at(j), id);
+	//		}
+	//	}
+	//}
 	// 当たり判定の処理
-	for (int i = 0; i < collider_game_objects_.size(); i++)
-	{
-		for (int j = 0; j < collider_game_objects_.size(); j++)
-		{	// 衝突したか、していないか
-			if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>()->
-				CheckCollisionCollider(collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>()))
-			{	
-				// 当たった側の処理を呼びだす
-				if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>() == nullptr &&
-					collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>() == nullptr)
-					continue;
-				if (collider_game_objects_.at(i)->GetComponent<EventBaseComponent>() == nullptr)
-					break;
-				size_t id = collider_game_objects_.at(i)->GetComponent<ColliderEventComponent>()->GetID();
-				collider_game_objects_.at(i)->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_.at(j), id);
+	for (auto it1 = collider_game_objects_.begin(); it1 != collider_game_objects_.end(); ++it1) {
+		auto collider1 = (*it1)->GetComponent<ColliderBaseComponent>();
+		auto event1 = (*it1)->GetComponent<EventBaseComponent>();
+
+		// collider1 または event1 が nullptr の場合はスキップ
+		if (collider1 == nullptr || event1 == nullptr) continue;
+
+		for (auto it2 = collider_game_objects_.begin(); it2 != collider_game_objects_.end(); ++it2) {
+			// 自己判定をスキップ
+			if (it1 == it2) continue;
+
+			auto collider2 = (*it2)->GetComponent<ColliderBaseComponent>();
+			if (collider2 == nullptr) continue;
+
+			// 衝突判定
+			if (collider1->CheckCollisionCollider(collider2)) {
+				// イベント処理
+				size_t id = event1->GetId();
+				event1->AllUpdate(*it2, id);
 			}
 		}
 	}
