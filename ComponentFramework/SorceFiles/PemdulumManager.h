@@ -1,5 +1,5 @@
 //==================================================
-// [PemdulumManager.h] 
+// [PendulumManager.h] 
 // 著者：中谷凌也
 //--------------------------------------------------
 // 説明：振り子の管理（選択）
@@ -7,12 +7,6 @@
 //		選択
 //		状態遷移
 //		長さの変更
-// 
-// リストの中から現在選択されている振り子を選択し、操作する
-// ↓
-// 状態はコンポーネント（オブジェクト）毎に持たなくてはならない
-// ↓
-// それらから引っ張ってくる必要がある
 //==================================================
 #pragma once
 #include "GameObjects/GameObject.h"
@@ -23,31 +17,31 @@
 
 constexpr float InnerProductLimit = 0.7f;
 
-class PemdulumManager
+class PendulumManager
 {
 private:
-	GameObject* pSelectedPemdulum;
-	GameObject* pNextPemdulum;
+	GameObject* pSelectedPendulum;
+	GameObject* pNextPendulum;
 
 	GameManager* GM;
 	InputManager& IM = InputManager::GetInstance();
 
-	std::list<GameObject*> pemgulumList_;
+	std::list<GameObject*> pendulum_list_;
 
-	DirectX::SimpleMath::Vector3 pemdulumPosition_;
+	DirectX::SimpleMath::Vector3 pendulumPosition_;
 	DirectX::SimpleMath::Vector2 stickVector_Normalize_;
 	float stickVector_Langth_;
-	DirectX::SimpleMath::Vector2 pemdulumVector_Normalize_;
-	float pemdulumVector_Langth_;
+	DirectX::SimpleMath::Vector2 pendulumVector_Normalize_;
+	float pendulumVector_Langth_;
 	float innerProduct_;
 
-	float nextPemdulumVector_Langth_;
+	float nextPendulumVector_Langth_;
 
-	static PemdulumManager* instance_;
+	static PendulumManager* instance_;
 
 public:
-	PemdulumManager();
-	~PemdulumManager();
+	PendulumManager();
+	~PendulumManager();
 
 	void Init();
 	void Uninit();
@@ -58,13 +52,13 @@ public:
 	// ゲームオブジェクトの削除
 	void RemoveGameObject(GameObject* _gameObject);
 
-	 void PemgulumSelect();
-	 void PemdulumMovementChange();
-	 void PemgulumLangthChange();
+	 void PendulumSelect();
+	 void PendulumMovementChange();
+	 void PendulumLangthChange();
 
-	 static PemdulumManager* GetInstance() {
+	 static PendulumManager* GetInstance() {
 		 if (!instance_) {
-			 instance_ = new PemdulumManager;
+			 instance_ = new PendulumManager;
 		 }
 		 return instance_;
 	 };
@@ -74,7 +68,7 @@ public:
 			 instance_ = nullptr;
 		 }
 	 }
-	 void SetSelectedPemdulum(GameObject* _pSelectedPemdulum);
-	 GameObject* GetSelectedPemdulum() { return pSelectedPemdulum; }
-	 std::list<GameObject*> GetPemdulumList() { return pemgulumList_; }
+	 void SetSelectedPendulum(GameObject* _pSelectedPendulum);
+	 GameObject* GetSelectedPendulum() { return pSelectedPendulum; }
+	 std::list<GameObject*> GetPendulumList() { return pendulum_list_; }
 };

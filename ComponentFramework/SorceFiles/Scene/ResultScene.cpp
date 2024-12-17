@@ -45,4 +45,8 @@ void ResultScene::Uninit()
 //--------------------------------------------------
 void ResultScene::Update()
 {
+	if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))
+	{
+		game_manager_->ChangeScene(SceneName::Title);
+	}
 }

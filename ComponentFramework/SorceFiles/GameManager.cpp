@@ -39,7 +39,7 @@ GameManager::GameManager()
 	collider_manager_ = ColliderManager::Create();
 
 	// 振り子マネージャー初期化
-	pemdulum_manager_ = PemdulumManager::GetInstance();
+	pendulum_manager_ = PendulumManager::GetInstance();
 
 	this->InitAll();
 }
@@ -98,7 +98,7 @@ void GameManager::UpdateAll()
 	this->current_scene_->Update();
 	this->UpdateGameObjects();
 	this->collider_manager_->UpdateAll();
-	this->pemdulum_manager_->Update();
+	this->pendulum_manager_->Update();
 	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
 }
 //-----------------------------------------------------------------

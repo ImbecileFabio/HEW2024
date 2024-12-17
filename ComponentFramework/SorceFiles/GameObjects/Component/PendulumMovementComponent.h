@@ -10,12 +10,12 @@
 // 
 //		SetPendulumAngle(float);				振り子の角度をセット（初期値用）
 //		GetPendulumAngle();					振り子の角度を取得
-//		SetPemdulumVelocity(float);			角速度をセット
-//		GetPemdulumVelocity();				角速度を取得
+//		SetPendulumVelocity(float);			角速度をセット
+//		GetPendulumVelocity();				角速度を取得
 //		SetPendulumAcceleration(float);		角加速度をセット
 //		GetPendulumAcceleration();				角加速度を取得
-//		SetPemdulumFulcrum(VECTOR3型);			支点の座標をセット
-//		GetPemdulumFulcrum();					支点の座標を取得
+//		SetPendulumFulcrum(VECTOR3型);			支点の座標をセット
+//		GetPendulumFulcrum();					支点の座標を取得
 //		SetPendulumLength(float);				支柱の長さをセット
 //		GetPendulumLength();					支柱の長さを取得
 // 
@@ -63,34 +63,34 @@ public:
 	void  SetPendulumAngle(float _pendulumAngle);
 	float GetPendulumAngle();
 	// 角速度
-	void  SetPemdulumVelocity(float _angularVelocity);
-	float GetPemdulumVelocity();
+	void  SetPendulumVelocity(float _angularVelocity);
+	float GetPendulumVelocity();
 	// 角加速度
 	void  SetPendulumAcceleration(float _pendulumAcceleration);
 	float GetPendulumAcceleration();
 	// 支点の座標
-	void  SetPemdulumFulcrum(DirectX::SimpleMath::Vector3 _fulcrumPosition);
-	DirectX::SimpleMath::Vector3 GetPemdulumFulcrum();
+	void  SetPendulumFulcrum(DirectX::SimpleMath::Vector3 _fulcrumPosition);
+	DirectX::SimpleMath::Vector3 GetPendulumFulcrum();
 	// 支柱の長さ
 	void  SetPendulumLength(float _pendulumLength);
 	float GetPendulumLength();
 
 	// 振り子の停止、始動
-	void StartPemdulumMovement();
-	void StopPemdulumMovement();
+	void StartPendulumMovement();
+	void StopPendulumMovement();
 
 	virtual TypeID GetComponentType() const override { return TypeID::PendulumMovementComponent; }
 
 	// -振り子の状態
 	void SetLangthState(LangthState _langthState) { langthState_ = _langthState; }
 	LangthState GetLangthState() { return langthState_; }
-	void SetPemdulumMovement(bool _pemdulumMovement) { pemdulumMovement_ = _pemdulumMovement; }
-	bool GetPemdulumMovement() { return pemdulumMovement_; }
-	void SetPemdulumSelected(bool _pemdulumSelected) { pemdulumSelected_ = _pemdulumSelected; }
-	bool GetPemdulumSelected() { return pemdulumSelected_; }
+	void SetPendulumMovement(bool _pemdulumMovement) { pendulumMovement_ = _pemdulumMovement; }
+	bool GetPendulumMovement() { return pendulumMovement_; }
+	void SetPendulumSelected(bool _pemdulumSelected) { pendulumSelected_ = _pemdulumSelected; }
+	bool GetPendulumSelected() { return pendulumSelected_; }
 
 private:
-	DirectX::SimpleMath::Vector3 pemdulumPosition_;	// -位置
+	DirectX::SimpleMath::Vector3 pendulumPosition_;	// -位置
 	float isPendulumAngle_;							// -現在の振り子の角度
 	float wasPendulumAngle_;						// -直前の振り子の角度
 	float isPendulumVelocity_;						// -現在の角速度
@@ -101,10 +101,10 @@ private:
 	float pendulumRadian_;							// -振り子の角度（ラジアン）
 	bool  turnPendulum_;							// -振り子の往復で処理を切り替えるためのフラグ　true：右から左　false：左から右
 	float maxPendulumAngle_;						// -振り子の最大角度
-	float maxPemdulumVelocity_;						// -振り子の最大速度
+	float maxPendulumVelocity_;						// -振り子の最大速度
 
 	// -振り子の状態
 	LangthState langthState_;
-	bool pemdulumMovement_;
-	bool pemdulumSelected_;
+	bool pendulumMovement_;
+	bool pendulumSelected_;
 };
