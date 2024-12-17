@@ -37,7 +37,6 @@ public:
 		// リジッドボディ
 		, RigidBodyComponent
 		, VelocityComponent
-		, AngularVelocityComponent
 		// コライダー
 		, ColliderBaseComponent
 		, BoxColliderComponent
@@ -45,6 +44,8 @@ public:
 		// イベント
 		, EventBaseComponent
 		, ColliderEventComponent
+		// ロボット
+		, RobotMoveComponent
 		// タイムゾーン
 		, TimeZoneComponent
 		// 振り子の動き
@@ -53,10 +54,11 @@ public:
 		, LiftComponent
 		// カメラ
 		, CameraComponent
-		// 振り子
-		, PendulumComponent
 		// 子オブジェクト
 		, ChildrenComponent
+		// 押し出し
+		, PushOutComponent
+
 		// コンポーネントの最大値
 		, MAX
 	};

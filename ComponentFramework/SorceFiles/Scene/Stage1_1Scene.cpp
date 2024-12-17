@@ -28,6 +28,34 @@
 Stage1_1Scene::Stage1_1Scene(GameManager* _gameManager)
 	: SceneBase(_gameManager, "Stage1_1")
 {
+	camera_ = new Camera(game_manager_);
+	back_ground_ = new BackGround(game_manager_);
+	tile_ = new Tile(game_manager_);
+
+	robot_ = new Robot(game_manager_);
+
+	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, { -100.0f, 0.0f, 0.0f }, game_manager_);
+	items_.resize(2, nullptr);
+
+	items_[0] = new Item(game_manager_);
+	auto f = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, items_[0], std::placeholders::_1));
+	items_[0]->GetComponent<ColliderEventComponent>()->AddEvent(0, f);
+
+
+	items_[1] = new Item(game_manager_);
+	auto f2 = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, items_[1], std::placeholders::_1));
+	items_[1]->GetComponent<ColliderEventComponent>()->AddEvent(1, f2);
+	//pendulum_ = new Pendulum(game_manager_);
+
+		// GameManagerで生成して、ColliderManagerに登録する
+	for (auto& colliderObjects : game_manager_->GetGameObjects())
+	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
+		if (colliderObjects->GetComponent<ColliderBaseComponent>())
+		{
+			game_manager_->GetColliderManager()->AddGameObject(colliderObjects);
+		}
+	}
+
 	this->Init();
 }
 
@@ -121,6 +149,8 @@ void Stage1_1Scene::Update()
 	case Stage1_1Scene::Pouse:
 		break;
 	case Stage1_1Scene::Rewind:
+		this->Init();
+
 		break;
 	default:
 		break;

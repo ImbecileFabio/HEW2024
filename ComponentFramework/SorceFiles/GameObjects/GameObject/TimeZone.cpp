@@ -9,7 +9,14 @@ TimeZone::TimeZone(GameManager* _gameManager)
 	: GameObject(_gameManager, "TimeZone")
 {
 	std::cout << std::format("＜TimeZone＞ -> Constructor\n");
-	this->InitGameObject();
+	// 映らない　どうして
+		//sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"kouka/v01/kouka_01.png");
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"zako.png", 60);
+	collider_base_component_ = new CircleColliderComponent(this);
+	event_base_component_ = new ColliderEventComponent(this);
+
+	auto f = std::function<void(GameObject*)>(std::bind(&TimeZone::OnCollisionEnter, this, std::placeholders::_1));
+	event_base_component_->AddEvent(f);
 }
 //--------------------------------------------------
 // @brief デストラクタ
@@ -24,14 +31,8 @@ TimeZone::~TimeZone()
 // @brief 初期化処理
 //--------------------------------------------------
 void TimeZone::InitGameObject(void)
-{	// 映らない　どうして
-	//sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"kouka/v01/kouka_01.png");
-	sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"zako.png", 60);
+{
 	this->transform_component_->SetScale(200.0f, 200.0f);
-	collider_base_component_ = new CircleColliderComponent(this);
-	event_base_component_	 = new ColliderEventComponent(this);
-	auto f = std::function<void(GameObject*)>(std::bind(&TimeZone::OnCollisionEnter, this, std::placeholders::_1));
-	event_base_component_->AddEvent(f);
 }
 //--------------------------------------------------
 // @brief 更新処理

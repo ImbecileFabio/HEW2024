@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RobotMoveComponent.cpp" />
     <ClCompile Include="SorceFiles\ColliderManager.cpp" />
     <ClCompile Include="SorceFiles\FileManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ChildrenComponent.cpp" />
@@ -79,10 +81,13 @@
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RobotMoveComponent.h" />
     <ClInclude Include="SorceFiles\ColliderManager.h" />
     <ClInclude Include="SorceFiles\FileManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\EventDebugComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
@@ -149,6 +154,23 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">ps_main</EntryPointName>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ps_main</EntryPointName>
+    <FxCompile Include="Shader\GeometryShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gs_main</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gs_main</EntryPointName>
+    </FxCompile>
+    <FxCompile Include="Shader\unlitTexturePS.hlsl">
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ps_main</EntryPointName>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
     <FxCompile Include="Shader\unlitTextureVS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">vs_main</EntryPointName>
@@ -280,6 +302,8 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
