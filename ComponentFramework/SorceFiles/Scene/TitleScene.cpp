@@ -9,6 +9,7 @@
 #include "TitleScene.h"
 
 #include "../GameManager.h"
+#include "../AudioManager.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -45,8 +46,10 @@ void TitleScene::Uninit()
 //--------------------------------------------------
 void TitleScene::Update()
 {
+	//game_manager_->GetAudioManager()->Play(SoundLabel_TitleBGM);
 	if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))
 	{
 		game_manager_->ChangeScene(SceneName::Stage1_1);
+		//game_manager_->GetAudioManager()->Stop(SoundLabel_TitleBGM);
 	}
 }

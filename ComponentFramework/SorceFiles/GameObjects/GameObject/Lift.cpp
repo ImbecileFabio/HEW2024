@@ -37,7 +37,6 @@ Lift::~Lift()
 	delete collider_event_component_;
 	delete spriteComponent_;
 	delete velocityComponent_;
-	delete pendulum_;
 }
 //--------------------------------------------------
 // @brief 初期化処理
@@ -52,6 +51,7 @@ void Lift::InitGameObject(void)
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocityComponent_ = new VelocityComponent(this);
 	velocityComponent_->SetUseGravity(false);
+
 	// イベント追加処理
 	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -61,7 +61,7 @@ void Lift::InitGameObject(void)
 //--------------------------------------------------
 void Lift::UpdateGameObject(void)
 {
-	bool moveFg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPemdulumMovement();
+	bool moveFg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
 	if (moveFg)
 	{
 		DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
@@ -99,7 +99,7 @@ void Lift::UpdateGameObject(void)
 			break;
 		}
 		// リフトの座標を支点として渡し続ける
-		pendulum_->GetComponent<PendulumMovementComponent>()->SetPemdulumFulcrum(liftPos);
+		pendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(liftPos);
 	}
 	else
 	{
