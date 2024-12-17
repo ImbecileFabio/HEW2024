@@ -57,6 +57,7 @@ public:
 	auto& GetPendingGameObjects() const { return pending_game_objects_; }
 	
 	void itemCountUp() { itemCount++; }
+	int GetItemCount() { return itemCount; }
 
 	// ƒV[ƒ“Ø‚è‘Ö‚¦
 	void ChangeScene(SceneName _scene);

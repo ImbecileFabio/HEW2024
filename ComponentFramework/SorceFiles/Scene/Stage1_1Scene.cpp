@@ -96,9 +96,11 @@ void Stage1_1Scene::Uninit()
 	delete pendulum_;
 	delete pendulum_2_;
 	delete pendulum_3_;
-	delete tile_;
 	delete robot_;
 	delete lift_;
+	delete tile_;
+	delete tile_2_;
+	delete tile_3_;
 }
 
 //--------------------------------------------------
@@ -109,9 +111,9 @@ void Stage1_1Scene::Update()
 	switch (State)
 	{
 	case Stage1_1Scene::Game:
-//		if(Ž•ŽÔŽæ“¾” == gearCounter){
-// 		   State = Result;
-//		}
+		if(game_manager_->GetItemCount() == gearCounter) {
+ 		   State = Result;
+		}
 		break;
 	case Stage1_1Scene::Result:
 		game_manager_->ChangeScene(SceneName::Result);
