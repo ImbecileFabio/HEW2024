@@ -95,8 +95,12 @@ void Stage1_1Scene::Update()
 	switch (State)
 	{
 	case Stage1_1Scene::Game:
+//		if(Ž•ŽÔŽæ“¾” == gearCounter){
+// 		   State = Result;
+//		}
 		break;
 	case Stage1_1Scene::Result:
+		game_manager_->ChangeScene(SceneName::Result);
 		break;
 	case Stage1_1Scene::Pouse:
 		break;
