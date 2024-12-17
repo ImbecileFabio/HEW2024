@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SorceFiles\GameObjects\Component\ChildrenComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp" />
     <ClCompile Include="SorceFiles\ColliderManager.cpp" />
     <ClCompile Include="SorceFiles\FileManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp" />
@@ -28,7 +26,6 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
@@ -51,7 +48,6 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Tile.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\TimeZone.cpp" />
     <ClCompile Include="SorceFiles\ImGuiManager.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_demo.cpp" />
@@ -61,6 +57,7 @@
     <ClCompile Include="SorceFiles\ImGui\imgui_tables.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp" />
     <ClCompile Include="SorceFiles\InputManager.cpp" />
+    <ClCompile Include="SorceFiles\PemdulumManager.cpp" />
     <ClCompile Include="SorceFiles\Scene\ResultScene.cpp" />
     <ClCompile Include="SorceFiles\Scene\SceneBase.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
@@ -76,11 +73,8 @@
     <ClCompile Include="SorceFiles\Renderer.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Stick.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h" />
     <ClInclude Include="SorceFiles\ColliderManager.h" />
     <ClInclude Include="SorceFiles\FileManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h" />
@@ -88,7 +82,6 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugCollisionDrawComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
@@ -111,7 +104,6 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Tile.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\TimeZone.h" />
     <ClInclude Include="SorceFiles\ImGuiManager.h" />
     <ClInclude Include="SorceFiles\ImGui\imconfig.h" />
     <ClInclude Include="SorceFiles\ImGui\imgui.h" />
@@ -122,11 +114,11 @@
     <ClInclude Include="SorceFiles\ImGui\imstb_textedit.h" />
     <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h" />
     <ClInclude Include="SorceFiles\InputManager.h" />
+    <ClInclude Include="SorceFiles\PemdulumManager.h" />
     <ClInclude Include="SorceFiles\Scene\ResultScene.h" />
     <ClInclude Include="SorceFiles\Scene\SceneBase.h" />
     <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
     <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
-    <ClInclude Include="SorceFiles\SubSystem\ConstantBuffer.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
     <ClInclude Include="SorceFiles\SubSystem\dx11helper.h" />
@@ -142,20 +134,8 @@
     <ClInclude Include="SorceFiles\SubSystem\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Stick.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\GeometryShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">4.0</ShaderModel>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gs_main</EntryPointName>
-    </FxCompile>
     <FxCompile Include="Shader\unlitTexturePS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
