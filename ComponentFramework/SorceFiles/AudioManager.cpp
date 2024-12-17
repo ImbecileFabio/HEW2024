@@ -57,7 +57,7 @@ void AudioManager::Init()
 	for (int SoundLabel_number = 0; SoundLabel_number < SoundLabel_MAX; SoundLabel_number++)
 	{
 		if (LoadWaveFile(SoundLabel_number) == -1) {		// 長くなりそうなので関数化します
-			std::cerr << "WAVEファイルの読み込みに失敗しました。　エラーコード：" << hr << std::endl;
+			std::cerr << "WAVEファイルの読み込みに失敗しました。" << std::endl;
 			Uninit();
 		}
 	}
