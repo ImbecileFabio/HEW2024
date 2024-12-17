@@ -44,7 +44,6 @@ public:
 		// イベント
 		, EventBaseComponent
 		, ColliderEventComponent
-
 		// ロボット
 		, RobotMoveComponent
 		// タイムゾーン
@@ -55,8 +54,9 @@ public:
 		, LiftComponent
 		// カメラ
 		, CameraComponent
-		// 動作確認用
-		, DebugPolygonComponent
+		// 押し出し
+		, PushOutComponent
+
 		// コンポーネントの最大値
 		, MAX
 	};

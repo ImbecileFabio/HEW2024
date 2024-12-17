@@ -38,6 +38,6 @@ private:
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
 	class VelocityComponent* velocity_component_{};		// 速度
 	class RobotMoveComponent* robot_move_component_{};	// ロボットの移動
-
+	class PushOutComponent* push_out_component_{};	// 押し出し
 };
 #endif	// ROBOT_H_

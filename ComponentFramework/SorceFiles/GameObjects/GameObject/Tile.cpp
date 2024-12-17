@@ -15,6 +15,7 @@
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
+#include "../Component/PushOutComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ

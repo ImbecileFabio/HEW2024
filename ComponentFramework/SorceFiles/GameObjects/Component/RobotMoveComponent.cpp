@@ -57,9 +57,9 @@ void RobotMoveComponent::Update()
 	auto collider = this->owner_->GetComponent<BoxColliderComponent>();
 	auto transform = this->owner_->GetComponent<TransformComponent>();
 
-	if (!velocity || !collider)
+	if (!velocity || !collider || !transform)
 	{
-		std::cout << std::format("[RobotMoveComponent]-> TransformComponent または BoxColliderComponent が取得できませんでした\n");
+		std::cout << std::format("[RobotMoveComponent]-> コンポーネントが取得できませんでした\n");
 		return; 
 	}
 
@@ -85,12 +85,13 @@ void RobotMoveComponent::CheckTurnAround(TransformComponent& _transform, BoxColl
 	// 地面の検出を実装する予定
 	
 	auto pos = _transform.GetPosition();
+	auto size = _collider.GetBoxSize();
 	// 画面外に出そうになるなら
-	if (pos.x < -960)
+	if (pos.x < (-960 - size.x / 2))
 	{
 		right_move_flg_ = true;
 	}
-	else if (pos.x > 960)
+	else if (pos.x > (960 + size.x / 2))
 	{
 		right_move_flg_ = false;
 	}

@@ -168,6 +168,9 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\RobotMoveComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameProcess.h">
@@ -336,6 +339,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\RobotMoveComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
