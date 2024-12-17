@@ -16,7 +16,7 @@
 typedef enum
 {
 	SoundLabel_SampleBGM = 0,	// サンプルBGM
-	SoundLabel_SampleSE,		// サンプルSE
+	//SoundLabel_SampleSE,		// サンプルSE
 	SoundLabel_TitleBGM,		// タイトルBGM
 //	SoundLabel○○○,			// この形で列挙していく予定
 
@@ -35,10 +35,10 @@ private:
 
 	// パラメーター構造体の初期化
 	Param param[SoundLabel_MAX] = {
-		{ "../Asset/Sound/BGM/Devine-Fencer.wav", true  },	// サンプルBGM音源
-		{ "../Asset/Sound/SE/SE33.wav"			, false },	// サンプルSE音源
+		{ "Asset/Sound/BGM/Devine-Fencer.wav", true  },	// サンプルBGM音源
+		//{ "../Asset/Sound/SE/SE33.wav"			, false },	// サンプルSE音源
 
-		{"../Asset/Sound/BGM/Title_BGM.wav", true}			// タイトルBGM
+		{"Asset/Sound/BGM/Title_BGM.wav", true}			// タイトルBGM
 		// ↓
 		// ↓
 	};	
