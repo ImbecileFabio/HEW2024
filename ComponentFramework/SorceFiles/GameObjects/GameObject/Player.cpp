@@ -49,7 +49,6 @@ Player::~Player(void)
 //--------------------------------------------------
 void Player::InitGameObject(void)
 {
-	transform_component_->SetPosition(0, 0);
 	transform_component_->SetScale(50, 50);
 
 	velocity_component_->SetVelocity(Vector3(0, 10, 0));

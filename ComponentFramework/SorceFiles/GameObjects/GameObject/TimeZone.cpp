@@ -17,6 +17,8 @@ TimeZone::TimeZone(GameManager* _gameManager)
 
 	auto f = std::function<void(GameObject*)>(std::bind(&TimeZone::OnCollisionEnter, this, std::placeholders::_1));
 	event_base_component_->AddEvent(f);
+
+	InitGameObject();
 }
 //--------------------------------------------------
 // @brief デストラクタ

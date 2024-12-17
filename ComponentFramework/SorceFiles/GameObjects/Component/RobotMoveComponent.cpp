@@ -111,7 +111,6 @@ std::optional<float> RobotMoveComponent::ChackStepHeight(const TransformComponen
 
 	for (const auto& obj : _gameObjects) {
 		auto boxsize = obj->GetComponent<BoxColliderComponent>()->GetBoxSize();
-
 		// 水平方向に足元のラインが重なっているかチェック
 		if (boxsize.y <= scanStart.x && boxsize.z >= scanStart.x) {
 			// 段差の高さを計算

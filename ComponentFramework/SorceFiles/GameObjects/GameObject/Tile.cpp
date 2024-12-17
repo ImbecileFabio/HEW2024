@@ -29,6 +29,8 @@ Tile::Tile(GameManager* _gameManager)
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Tile::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
+
+	InitGameObject();
 }
 
 //--------------------------------------------------
@@ -47,8 +49,6 @@ Tile::~Tile(void)
 //--------------------------------------------------
 void Tile::InitGameObject(void)
 {
-	transform_component_->SetScale(512, 64);
-	transform_component_->SetPosition(0, -127);
 	transform_component_->SetScale(512, 64);
 }
  

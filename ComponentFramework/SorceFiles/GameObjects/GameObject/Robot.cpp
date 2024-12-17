@@ -23,8 +23,6 @@
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
 
-// デバッグ用コンポーネント
-#include "../Component/RenderComponent/DebugCollisionDrawComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -63,7 +61,6 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetPosition(0, -25);
 	transform_component_->SetScale(150, 150);
 
 	velocity_component_->SetUseGravity(true);

@@ -260,7 +260,7 @@ void Renderer::Uninit()
 //-----------------------------------------------------------------
 void Renderer::Begin()
 {
-	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };
 	m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, clearColor);
 	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
