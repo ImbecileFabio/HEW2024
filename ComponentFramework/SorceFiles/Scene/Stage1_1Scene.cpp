@@ -66,10 +66,10 @@ void Stage1_1Scene::Init()
 
 	for (auto& pemdulumObject : game_manager_->GetGameObjects()) {
 		if (pemdulumObject->GetComponent<PendulumMovementComponent>()) {
-			game_manager_->GetPemdulumManager()->AddGameObject(pemdulumObject);
+			game_manager_->GetPendulumManager()->AddGameObject(pemdulumObject);
 		}
 	}
-	PemdulumManager::GetInstance()->SetSelectedPemdulum(PemdulumManager::GetInstance()->GetPemdulumList().front());
+	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 }
 
 //--------------------------------------------------
