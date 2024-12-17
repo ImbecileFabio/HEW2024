@@ -9,6 +9,8 @@
 /*----- インクルード -----*/
 #include "../GameObject.h"
 #include <SimpleMath.h>
+/*----- 前方宣言 -----*/
+class Pendulum;
 //--------------------------------------------------
 // リフトオブジェクト
 //--------------------------------------------------
@@ -31,9 +33,9 @@ public:
 	TypeID GetType(void) override { return TypeID::Lift; }	
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 
-	void SetPendulum(PendulumMovementComponent& _pendulum_movement_component) { pendulum_movement_component_ = _pendulum_movement_component; }
+	void SetPendulum(Pendulum* _pendulum) { pendulum_ = _pendulum; }
 private:
-	class PendulumMovementComponent& pendulum_movement_component_;
+	Pendulum* pendulum_ = nullptr;
 	bool switchFg_;			// スイッチフラグ
 	MoveState moveState_;	// 移動状態
 
@@ -41,7 +43,5 @@ private:
 	class EventBaseComponent*	collider_event_component_ = {};
 	class RenderComponent*		spriteComponent_		= {};	// 画像表示
 	class VelocityComponent* velocityComponent_ = {};
-	class PendulumMovementComponent* pendulum_movement_component = {};
-
 };
 #endif // _LIFT_OBJECT_H_

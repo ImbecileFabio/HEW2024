@@ -67,7 +67,7 @@ void Stage1_1Scene::Init()
 	pendulum02_->GetComponent<TransformComponent>()->SetPosition(200.0f, -10.0f);
 	pendulum02_->GetComponent<PendulumMovementComponent>()->SetPendulumState(PendulumMovementComponent::PendulumState::stop);
 	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, { -100.0f, 0.0f, 0.0f }, game_manager_);
-	lift_->SetPendulum(*pendulum_->GetComponent<PendulumMovementComponent>());
+	lift_->SetPendulum(pendulum_);
 	State = Game;
 	
 	// GameManagerで生成して、ColliderManagerに登録する

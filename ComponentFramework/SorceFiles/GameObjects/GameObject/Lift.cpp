@@ -37,7 +37,6 @@ Lift::~Lift()
 	delete collider_event_component_;
 	delete spriteComponent_;
 	delete velocityComponent_;
-	delete pendulum_movement_component;
 	delete pendulum_;
 }
 //--------------------------------------------------
@@ -52,7 +51,7 @@ void Lift::InitGameObject(void)
 	collider_base_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocityComponent_ = new VelocityComponent(this);
-
+	velocityComponent_->SetUseGravity(false);
 	// イベント追加処理
 	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -62,41 +61,43 @@ void Lift::InitGameObject(void)
 //--------------------------------------------------
 void Lift::UpdateGameObject(void)
 {
-	DirectX::SimpleMath::Vector3 pos = 
+	DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
+	DirectX::SimpleMath::Vector3 fulcrumPos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPemdulumFulcrum();
 	switch (moveState_)
 	{
 	case Lift::MoveState::length:	// 縦移動
-		if (pos.y <= maxPos_.y && switchFg_ == false)
+		if (liftPos.y <= maxPos_.y && switchFg_ == false)
 		{
 			velocityComponent_->SetVelocity	   ({ 0.0f, 2.0f, 0.0f });
-			if (pos.y >= maxPos_.y)
+			if (liftPos.y >= maxPos_.y)
 				switchFg_ = true;
 		}
-		if (pos.y >= minPos_.y && switchFg_ == true)
+		if (liftPos.y >= minPos_.y && switchFg_ == true)
 		{
 			velocityComponent_->SetVelocity	   ({ 0.0f, -2.0f, 0.0f });
-			if (pos.y <= minPos_.y)
+			if (liftPos.y <= minPos_.y)
 				switchFg_ = false;
 		}
 		break;
 	case Lift::MoveState::side:		// 横移動
-		if (pos.x <= maxPos_.x && switchFg_ == false)
+		if (liftPos.x <= maxPos_.x && switchFg_ == false)
 		{
 			velocityComponent_->SetVelocity	   ({ 2.0f, 0.0f, 0.0f });
-			if (pos.x >= maxPos_.x)
+			if (liftPos.x >= maxPos_.x)
 				switchFg_ = true;
 		}
-		if (pos.x >= minPos_.x && switchFg_ == true)
+		if (liftPos.x >= minPos_.x && switchFg_ == true)
 		{
 			velocityComponent_->SetVelocity	   ({ -2.0f, 0.0f, 0.0f });
-			if (pos.x <= minPos_.x)
+			if (liftPos.x <= minPos_.x)
 				switchFg_ = false;
 		}
 		break;
 	default:
 		break;
 	}
-	this->transform_component_->SetPosition(pos);
+	pendulum_->GetComponent<PendulumMovementComponent>()->PendulumPosition( liftPos, 200.0f);
+	this->transform_component_->SetPosition(liftPos);
 }
 //--------------------------------------------------
 // @brief リフトに任意のオブジェクトが当たった時の処理

@@ -87,7 +87,6 @@ void Pendulum::UpdateGameObject(void)
 //--------------------------------------------------
 void Pendulum::OnCollisionEnter(GameObject* _other)
 {
-	//auto pendulumMovementComponent = _other->GetComponent<PendulumMovementComponent>();
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::TimeZone:

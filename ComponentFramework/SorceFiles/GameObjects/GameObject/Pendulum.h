@@ -36,9 +36,9 @@ private:
 	class TimeZone* timeZone_ = nullptr;
 	class Stick*	stick_	  = nullptr;
 	// 所有するコンポーネント
+	class PendulumMovementComponent* pendulum_component_{};
 	class RenderComponent*				sprite_component_   {};
 	class ColliderBaseComponent*	    collider_component_ {};
-	class PendulumMovementComponent*	pendulum_component_ {};
 	class ChildrenComponent*			children_component_ {};
 	class EventBaseComponent*			collider_event_component{};
 };
