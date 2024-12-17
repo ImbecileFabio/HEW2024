@@ -21,7 +21,7 @@
 #include <vector>
 #include <SimpleMath.h>
 
-constexpr float InnerProductLimit = 0.7;
+constexpr float InnerProductLimit = 0.7f;
 
 class PemdulumManager
 {

@@ -62,7 +62,6 @@ void Lift::InitGameObject(void)
 void Lift::UpdateGameObject(void)
 {
 	DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
-	DirectX::SimpleMath::Vector3 fulcrumPos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPemdulumFulcrum();
 	switch (moveState_)
 	{
 	case Lift::MoveState::length:	// cˆÚ“®
@@ -96,7 +95,6 @@ void Lift::UpdateGameObject(void)
 	default:
 		break;
 	}
-	pendulum_->GetComponent<PendulumMovementComponent>()->PendulumPosition( liftPos, 200.0f);
 	this->transform_component_->SetPosition(liftPos);
 }
 //--------------------------------------------------

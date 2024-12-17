@@ -18,6 +18,7 @@
 #include "../Component/TimeZoneComponent/TimeZoneComponent.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/PendulumMovementComponent.h"
+#include "../Component/EventComponent/ColliderEventComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -54,11 +55,21 @@ void Pendulum::InitGameObject(void)
 	pendulum_component_ = new PendulumMovementComponent(this);
 	// トランスフォームコンポーネント
 	transform_component_->SetScale(100.0f, 100.0f);
+	// イベント追加処理
+	collider_event_component_ = new ColliderEventComponent(this);
+	auto f = std::function<void(GameObject*)>(std::bind(&Pendulum::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(f);
 }
 
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
+{
+}
+//--------------------------------------------------
+// 当たり判定の実行処理
+//--------------------------------------------------
+void Pendulum::OnCollisionEnter(GameObject* _other)
 {
 }

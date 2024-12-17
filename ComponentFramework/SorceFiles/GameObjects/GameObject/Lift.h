@@ -35,13 +35,13 @@ public:
 
 	void SetPendulum(Pendulum* _pendulum) { pendulum_ = _pendulum; }
 private:
-	Pendulum* pendulum_ = nullptr;
-	bool switchFg_;			// スイッチフラグ
-	MoveState moveState_;	// 移動状態
+	Pendulum* pendulum_ = nullptr;	// リフトの動きと連動させる振り子の参照
+	bool switchFg_;					// スイッチフラグ
+	MoveState moveState_;			// 移動状態
 
 	class ColliderBaseComponent* collider_base_component_ = {};
 	class EventBaseComponent*	collider_event_component_ = {};
-	class RenderComponent*		spriteComponent_		= {};	// 画像表示
-	class VelocityComponent* velocityComponent_ = {};
+	class RenderComponent*		spriteComponent_		  = {};	// 画像表示
+	class VelocityComponent*	velocityComponent_		  = {};
 };
 #endif // _LIFT_OBJECT_H_

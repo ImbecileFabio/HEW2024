@@ -13,14 +13,15 @@
 #include "../PemdulumManager.h"
 #include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
 #include "../GameObjects/Component/PendulumMovementComponent.h"
+#include "../GameObjects/Component/ChildrenComponent.h"
 
-#include "../GameObjects/GameObject.h"
 #include "../GameObjects/GameObject/BackGround.h"
 #include "../GameObjects/GameObject/Camera.h"
 #include "../GameObjects/GameObject/Pendulum.h"
 #include "../GameObjects/GameObject/Tile.h"
 #include "../GameObjects/GameObject/Robot.h"
 #include "../GameObjects/GameObject/Lift.h"
+#include "../GameObjects/GameObject/Item.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -44,20 +45,36 @@ Stage1_1Scene::~Stage1_1Scene()
 //--------------------------------------------------
 void Stage1_1Scene::Init()
 {
-	camera_			= new Camera(game_manager_);
-	back_ground_	= new BackGround(game_manager_);
-	tile_			= new Tile(game_manager_);
-	robot_			= new Robot(game_manager_);
-	pendulum_		= new Pendulum(game_manager_, 30.f, Vector3(0, 0, 0), true);
-	pendulum_2_		= new Pendulum(game_manager_, 30.f, Vector3(400, 0, 0), true);
-	pendulum_3_		= new Pendulum(game_manager_, 30.f, Vector3(-400, 0, 0), true);
-	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
+	camera_ = new Camera(game_manager_);
+	back_ground_ = new BackGround(game_manager_);
+	tile_ = new Tile(game_manager_);
+	robot_ = new Robot(game_manager_);
+	pendulum_ = new Pendulum(game_manager_, 30.f, Vector3(0, 0, 0), true);
+	pendulum_2_ = new Pendulum(game_manager_, 30.f, Vector3(400, 0, 0), true);
+	pendulum_3_ = new Pendulum(game_manager_, 30.f, Vector3(-400, 0, 0), true);
+	lift_ = new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, { -100.0f, 0.0f, 0.0f }, game_manager_);
+
+	items_.resize(2, nullptr);
+	items_[0] = new Item(game_manager_);
+	items_[0]->GetComponent<TransformComponent>()->SetScale(100.0f , 100.0f);
+	items_[1] = new Item(game_manager_);
+	items_[1]->GetComponent<TransformComponent>()->SetScale(100.0f, 100.0f);
 
 	State = Game;
-	
-	// GameManegerで生成して、ColliderManagerに登録する
+
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
-	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
+	{
+		auto children = colliderObjects->GetComponent<ChildrenComponent>();
+		if (children)
+		{
+			for (auto& childrenColliderObjects : children->GetChildren())
+			{
+				auto childrenColliderComponent = childrenColliderObjects->GetComponent<ColliderBaseComponent>();
+				if (childrenColliderComponent)
+					game_manager_->GetColliderManager()->AddGameObject(childrenColliderObjects);
+			}
+		}
+		// あたり判定のあるオブジェクトをコライダーマネージャーに登録
 		if (colliderObjects->GetComponent<ColliderBaseComponent>())
 		{
 			game_manager_->GetColliderManager()->AddGameObject(colliderObjects);
@@ -66,12 +83,11 @@ void Stage1_1Scene::Init()
 
 	for (auto& pemdulumObject : game_manager_->GetGameObjects()) {
 		if (pemdulumObject->GetComponent<PendulumMovementComponent>()) {
-			game_manager_->GetPemdulumManager()->AddGameObject(pemdulumObject);
+				game_manager_->GetPemdulumManager()->AddGameObject(pemdulumObject);
 		}
 	}
 	PemdulumManager::GetInstance()->SetSelectedPemdulum(PemdulumManager::GetInstance()->GetPemdulumList().front());
 }
-
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------

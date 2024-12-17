@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="SorceFiles\ColliderManager.cpp" />
     <ClCompile Include="SorceFiles\FileManager.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ChildrenComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.cpp" />
@@ -31,6 +32,7 @@
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Lift.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Robot.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp" />
@@ -47,7 +49,9 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Stick.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Tile.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\TimeZone.cpp" />
     <ClCompile Include="SorceFiles\ImGuiManager.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui.cpp" />
     <ClCompile Include="SorceFiles\ImGui\imgui_demo.cpp" />
@@ -77,6 +81,7 @@
   <ItemGroup>
     <ClInclude Include="SorceFiles\ColliderManager.h" />
     <ClInclude Include="SorceFiles\FileManager.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h" />
@@ -87,6 +92,7 @@
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Lift.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Robot.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h" />
@@ -103,7 +109,9 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Stick.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Tile.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\TimeZone.h" />
     <ClInclude Include="SorceFiles\ImGuiManager.h" />
     <ClInclude Include="SorceFiles\ImGui\imconfig.h" />
     <ClInclude Include="SorceFiles\ImGui\imgui.h" />
