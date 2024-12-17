@@ -42,6 +42,8 @@ private:
 	class Pendulum* pendulum_2_{};
 	class Pendulum* pendulum_3_{};
 	class Tile* tile_{};				// タイル
+	class Tile* tile_2_{};				// タイル
+	class Tile* tile_3_{};				// タイル
 	class Robot* robot_{};				// ロボット
 	class Lift*	 lift_{};				// リフト
 	std::vector<class Item*> items_;	// アイテムリスト
