@@ -80,6 +80,7 @@ void Robot::UpdateGameObject(void)
 	// 入力処理
 	InputManager& input = InputManager::GetInstance();
 
+	// デバッグ用、ロボを操作できる
 	// 移動処理
 	if (input.GetKeyPress(VK_A))
 	{
@@ -102,7 +103,7 @@ void Robot::UpdateGameObject(void)
 		velocity_component_->SetVelocity(Vector3(0, 0, 0));
 	}
 
-	// デバッグ用、クリックされた位置にロボが移動する
+	// マウスクリックで移動
 	if (input.GetMouseButtonPress(0)) {
 		auto mousePos = input.GetMousePosition();
 		transform_component_->SetPosition(
