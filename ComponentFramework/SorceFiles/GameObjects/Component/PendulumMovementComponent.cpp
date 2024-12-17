@@ -59,7 +59,7 @@ void PendulumMovementComponent::Uninit() {
 //--------------------------------------------------
 void PendulumMovementComponent::Update() {
 	 //動作確認用ログ
-	//std::cout << std::format("{}  現在の角度：{}	角速度：{}\n", turnPendulum_, isPendulumAngle_, isPendulumVelocity_);
+	std::cout << std::format("{}  現在の角度：{}	角速度：{}\n", turnPendulum_, isPendulumAngle_, isPendulumVelocity_);
 	
 	// 振り子の状態遷移
 	switch (langthState_)
@@ -77,7 +77,10 @@ void PendulumMovementComponent::Update() {
 		break;
 	}
 
-	if (pemdulumMovement_ && GetPendulumAngle() == 0) { StartPemdulumMovement(); }
+	if (pemdulumMovement_ && GetPendulumAngle() == 0) { 
+		StartPemdulumMovement();
+		PendulumVelocity();
+	}
 
 	PendulumAcceleration(pendulumAcceleration);				// 角加速度を設定, 角速度を適用
 	PendulumPosition(fulcrumPosition_, pendulumLength_);	// 座標を計算
@@ -100,7 +103,7 @@ void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _f
 		pemdulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
 	}
 	else {					// -角度が0の場合
-		pemdulumPosition_.x = 0;
+		pemdulumPosition_.x = _fulcrum.x;
 		pemdulumPosition_.y = _fulcrum.y - _length;
 	}
 	
@@ -230,6 +233,7 @@ float PendulumMovementComponent::GetPendulumLength() {
 // 振り子の停止、始動
 //--------------------------------------------------
 void PendulumMovementComponent::StartPemdulumMovement() {
+	maxPemdulumVelocity_ = 0;
 	for (int i = 1;;i++) {
 		maxPemdulumVelocity_ += pendulumAcceleration * i;
 		if (maxPemdulumVelocity_ >= maxPendulumAngle_) {
