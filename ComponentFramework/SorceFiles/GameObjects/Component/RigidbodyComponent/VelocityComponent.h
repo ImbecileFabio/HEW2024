@@ -47,7 +47,9 @@ public:
 	void Init();
 	void Uninit();
 	void Update();		// すべての更新を行う
-
+	// 速度係数
+	void    SetSpeedRate   (const float _speed_rate);
+	float   GetSpeedRate   (void);
 	// 加速度
 	void	SetAcceleration(const DirectX::SimpleMath::Vector3 _acceleration);
 	DirectX::SimpleMath::Vector3 GetAcceleration() const;

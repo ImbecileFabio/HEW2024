@@ -39,6 +39,7 @@ void VelocityComponent::Init() {
 	acceleration_	= { 0.f,0.f,0.f };
 	velocity_		= { 0.f,0.f,0.f };
 	gravity_		= { 0.f,-1.f,0.f };	// 一応固定
+	speed_rate_ = 1.0f;
 }
 
 //--------------------------------------------------
@@ -53,8 +54,6 @@ void VelocityComponent::Uninit() {
 //--------------------------------------------------
 void VelocityComponent::Update() {
 	position_ = this->owner_->GetComponent<TransformComponent>()->GetPosition();	// -現在座標の取得
-
-	speed_rate_ = 1.0f;
 
 	// 速度を適用
 	if (use_velocity_) {
@@ -71,8 +70,20 @@ void VelocityComponent::Update() {
 
 	this->owner_->GetComponent<TransformComponent>()->SetPosition(position_);
 }
-
-
+//--------------------------------------------------
+// 速度係数をセット
+//--------------------------------------------------
+void VelocityComponent::SetSpeedRate(const float _speed_rate)
+{
+	speed_rate_ = _speed_rate;
+}
+//--------------------------------------------------
+// 速度係数をゲット
+//--------------------------------------------------
+float VelocityComponent::GetSpeedRate(void)
+{
+	return speed_rate_;
+}
 //--------------------------------------------------
 // 加速度
 //--------------------------------------------------
@@ -97,9 +108,6 @@ bool	VelocityComponent::GetUseAcceleration() const {
 void	VelocityComponent::SetVelocity(const DirectX::SimpleMath::Vector3 _velocity) {
 	velocity_ = _velocity;
 }
-//void	VelocityComponent::UpdateVelocity() {
-//
-//}
 DirectX::SimpleMath::Vector3	VelocityComponent::GetVelocity() const {
 	return velocity_;
 }

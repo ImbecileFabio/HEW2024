@@ -43,7 +43,7 @@ void PendulumMovementComponent::Init() {
 	turnPendulum_ = true;		// -振り子の往復で処理を切り替えるためのフラグ　true：右から左　false：左から右
 
 	langthState_= LangthState::normalLangth;
-	pemdulumMovement_ = true;
+	pemdulumMovement_ = false;
 	pemdulumSelected_ = false;
 }
 

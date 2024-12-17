@@ -26,9 +26,8 @@ TimeZone::~TimeZone()
 void TimeZone::InitGameObject(void)
 {	// ‰f‚ç‚È‚¢@‚Ç‚¤‚µ‚Ä
 	//sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"kouka/v01/kouka_01.png");
-	sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"zako.png");
-	this->transform_component_->SetScale(100.0f, 100.0f);
-	this->transform_component_->SetPosition(100.0f, 0.0f);
+	sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"zako.png", 60);
+	this->transform_component_->SetScale(200.0f, 200.0f);
 	collider_base_component_ = new CircleColliderComponent(this);
 	event_base_component_	 = new ColliderEventComponent(this);
 	auto f = std::function<void(GameObject*)>(std::bind(&TimeZone::OnCollisionEnter, this, std::placeholders::_1));
@@ -48,10 +47,10 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Robot:
-		// ƒ^ƒCƒ€ƒ][ƒ“‚Ì•û‚ÅˆêŠ‡ŠÇ—‚µ‚Ä‚¨‚¢‚½•û‚ªU‚ç‚Î‚è‚É‚­‚¢‚©‚à
-		std::cout << std::format("ƒTimeZone„ -> ƒRobot„ -> OnCollisionEnter\n");
+		_other->GetComponent<VelocityComponent>()->SetSpeedRate(0.5f);
 		break;
 	case GameObject::TypeID::Lift:
+		_other->GetComponent<VelocityComponent>()->SetSpeedRate(0.5f);
 		break;
 	default:
 		break;

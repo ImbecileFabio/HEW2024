@@ -61,41 +61,50 @@ void Lift::InitGameObject(void)
 //--------------------------------------------------
 void Lift::UpdateGameObject(void)
 {
-	DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
-	switch (moveState_)
+	bool moveFg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPemdulumMovement();
+	if (moveFg)
 	{
-	case Lift::MoveState::length:	// 縦移動
-		if (liftPos.y <= maxPos_.y && switchFg_ == false)
+		DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
+		switch (moveState_)
 		{
-			velocityComponent_->SetVelocity	   ({ 0.0f, 2.0f, 0.0f });
-			if (liftPos.y >= maxPos_.y)
-				switchFg_ = true;
+		case Lift::MoveState::length:	// 縦移動
+			if (liftPos.y <= maxPos_.y && switchFg_ == false)
+			{
+				velocityComponent_->SetVelocity({ 0.0f, 2.0f, 0.0f });
+				if (liftPos.y >= maxPos_.y)
+					switchFg_ = true;
+			}
+			if (liftPos.y >= minPos_.y && switchFg_ == true)
+			{
+				velocityComponent_->SetVelocity({ 0.0f, -2.0f, 0.0f });
+				if (liftPos.y <= minPos_.y)
+					switchFg_ = false;
+			}
+			break;
+		case Lift::MoveState::side:		// 横移動
+			if (liftPos.x <= maxPos_.x && switchFg_ == false)
+			{
+				velocityComponent_->SetVelocity({ 2.0f, 0.0f, 0.0f });
+				if (liftPos.x >= maxPos_.x)
+					switchFg_ = true;
+			}
+			if (liftPos.x >= minPos_.x && switchFg_ == true)
+			{
+				velocityComponent_->SetVelocity({ -2.0f, 0.0f, 0.0f });
+				if (liftPos.x <= minPos_.x)
+					switchFg_ = false;
+			}
+			break;
+		default:
+			break;
 		}
-		if (liftPos.y >= minPos_.y && switchFg_ == true)
-		{
-			velocityComponent_->SetVelocity	   ({ 0.0f, -2.0f, 0.0f });
-			if (liftPos.y <= minPos_.y)
-				switchFg_ = false;
-		}
-		break;
-	case Lift::MoveState::side:		// 横移動
-		if (liftPos.x <= maxPos_.x && switchFg_ == false)
-		{
-			velocityComponent_->SetVelocity	   ({ 2.0f, 0.0f, 0.0f });
-			if (liftPos.x >= maxPos_.x)
-				switchFg_ = true;
-		}
-		if (liftPos.x >= minPos_.x && switchFg_ == true)
-		{
-			velocityComponent_->SetVelocity	   ({ -2.0f, 0.0f, 0.0f });
-			if (liftPos.x <= minPos_.x)
-				switchFg_ = false;
-		}
-		break;
-	default:
-		break;
+		// リフトの座標を支点として渡し続ける
+		pendulum_->GetComponent<PendulumMovementComponent>()->SetPemdulumFulcrum(liftPos);
 	}
-	this->transform_component_->SetPosition(liftPos);
+	else
+	{
+		velocityComponent_->SetVelocity({ 0.0f, 0.0f, 0.0f });
+	}
 }
 //--------------------------------------------------
 // @brief リフトに任意のオブジェクトが当たった時の処理

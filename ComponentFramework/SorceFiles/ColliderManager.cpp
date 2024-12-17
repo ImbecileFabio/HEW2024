@@ -10,6 +10,7 @@
 #include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 #include "GameObjects/Component/ColliderComponent/BoxColliderComponent.h"
 #include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
+#include "GameObjects/Component/RigidbodyComponent/VelocityComponent.h"
 //-----------------------------------------------------------------
 // @brief  コンストラクタ
 //-----------------------------------------------------------------
@@ -137,6 +138,18 @@ void ColliderManager::UpdateGameObjects(void)
 				// イベント処理
 				size_t id = event1->GetId();
 				event1->AllUpdate(*it2, id);
+			}
+			else
+			{
+				// 衝突してないときの処理　あとで絶対修正します
+				switch ((*it1)->GetType())
+				{
+					case GameObject::TypeID::Robot:
+							(*it1)->GetComponent<VelocityComponent>()->SetSpeedRate(1.0f);
+							break;
+				default:
+					break;
+				}
 			}
 		}
 	}

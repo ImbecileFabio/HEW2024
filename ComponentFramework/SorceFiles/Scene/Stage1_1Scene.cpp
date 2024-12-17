@@ -48,14 +48,16 @@ void Stage1_1Scene::Init()
 	back_ground_	= new BackGround(game_manager_);
 	tile_			= new Tile(game_manager_);
 	robot_			= new Robot(game_manager_);
-	pendulum_		= new Pendulum(game_manager_, Vector3(0, 0, 0), true, 30.f);
-	pendulum_2_		= new Pendulum(game_manager_, Vector3(400, 0, 0), true, 30.f);
-	pendulum_3_		= new Pendulum(game_manager_, Vector3(-400, 0, 0), true, 30.f);
+	pendulum_		= new Pendulum(game_manager_, Vector3(0.0f, 0, 0), false, 30.f);
+	auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPemdulumFulcrum();
+	pendulum_2_		= new Pendulum(game_manager_, Vector3(100, 0, 0), false, 30.f);
+	//pendulum_3_		= new Pendulum(game_manager_, Vector3(-400, 0, 0), false, 30.f);
 	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);
-
+	lift_->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
+	lift_->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
 	State = Game;
 	
-	// GameManegerで生成して、ColliderManagerに登録する
+	// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
 	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
 		if (colliderObjects->GetComponent<ColliderBaseComponent>())

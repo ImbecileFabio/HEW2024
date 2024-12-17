@@ -10,6 +10,7 @@
 #include <format>
 
 #include "Pendulum.h"
+#include "TimeZone.h"
 #include "../../GameManager.h"
 #include "../../PemdulumManager.h"
 #include "../Component.h"
@@ -19,6 +20,7 @@
 #include "../Component/TransformComponent.h"
 #include "../Component/PendulumMovementComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
+#include "../Component/ChildrenComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -39,6 +41,8 @@ Pendulum::~Pendulum(void)
 	delete sprite_component_;
 	delete pendulum_component_;
 	delete collider_component_;
+	delete children_component_;
+	delete time_zone_;
 }
 
 //--------------------------------------------------
@@ -54,6 +58,11 @@ void Pendulum::InitGameObject(void)
 	pendulum_component_ = new PendulumMovementComponent(this);
 	// トランスフォームコンポーネント
 	transform_component_->SetScale(100.0f, 100.0f);
+	// 子タイムゾーン
+	time_zone_ = new TimeZone(game_manager_);
+	// 子オブジェクト管理コンポーネント
+	children_component_ = new ChildrenComponent(this, this);
+	children_component_->AddChild(time_zone_);
 	// イベント追加処理
 	collider_event_component_ = new ColliderEventComponent(this);
 	auto f = std::function<void(GameObject*)>(std::bind(&Pendulum::OnCollisionEnter, this, std::placeholders::_1));
@@ -65,10 +74,29 @@ void Pendulum::InitGameObject(void)
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
 {
+	auto pos = pendulum_component_->GetPemdulumFulcrum();
+	time_zone_->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
 }
 //--------------------------------------------------
 // 当たり判定の実行処理
 //--------------------------------------------------
 void Pendulum::OnCollisionEnter(GameObject* _other)
 {
+	bool moveFg = false;
+	switch (_other->GetType())
+	{
+	case GameObject::TypeID::Pendulum:
+		moveFg = _other->GetComponent<PendulumMovementComponent>()->GetPemdulumMovement();
+		// 振り子が止まっていたら
+		if (!moveFg)
+		{
+			std::cout << std::format("＜ColliderEventComponent＞ -> 振り子当たった\n");
+			// 振り子の動きを開始
+			_other->GetComponent<PendulumMovementComponent>()->SetPemdulumMovement(true);
+			_other->GetComponent<PendulumMovementComponent>()->StartPemdulumMovement();
+		}
+		break;
+	default:
+		break;
+	}
 }
