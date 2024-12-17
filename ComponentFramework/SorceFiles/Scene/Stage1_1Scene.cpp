@@ -49,7 +49,7 @@ void Stage1_1Scene::Init()
 	tile_			= new Tile(game_manager_);
 	robot_			= new Robot(game_manager_);
 	pendulum_		= new Pendulum(game_manager_, Vector3(0.0f, 0, 0), false, 30.f);
-	auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPemdulumFulcrum();
+	auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumFulcrum();
 	pendulum_2_		= new Pendulum(game_manager_, Vector3(100, 0, 0), false, 30.f);
 	//pendulum_3_		= new Pendulum(game_manager_, Vector3(-400, 0, 0), false, 30.f);
 	lift_			= new Lift(Lift::MoveState::side, { 100.0f, 0.0f, 0.0f }, {-100.0f, 0.0f, 0.0f}, game_manager_);

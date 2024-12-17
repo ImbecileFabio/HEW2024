@@ -39,10 +39,11 @@ Pendulum::~Pendulum(void)
 {
 	// ここでコンポーネントを削除
 	delete sprite_component_;
-	delete pendulum_component_;
 	delete collider_component_;
-	delete children_component_;
+	delete pendulum_component_;
 	delete time_zone_;
+	delete children_component_;
+	delete collider_event_component_;
 }
 
 //--------------------------------------------------
@@ -74,7 +75,7 @@ void Pendulum::InitGameObject(void)
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
 {
-	auto pos = pendulum_component_->GetPemdulumFulcrum();
+	auto pos = pendulum_component_->GetPendulumFulcrum();
 	time_zone_->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
 }
 //--------------------------------------------------
@@ -86,14 +87,14 @@ void Pendulum::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Pendulum:
-		moveFg = _other->GetComponent<PendulumMovementComponent>()->GetPemdulumMovement();
+		moveFg = _other->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
 		// 振り子が止まっていたら
 		if (!moveFg)
 		{
 			std::cout << std::format("＜ColliderEventComponent＞ -> 振り子当たった\n");
 			// 振り子の動きを開始
-			_other->GetComponent<PendulumMovementComponent>()->SetPemdulumMovement(true);
-			_other->GetComponent<PendulumMovementComponent>()->StartPemdulumMovement();
+			_other->GetComponent<PendulumMovementComponent>()->SetPendulumMovement(true);
+			_other->GetComponent<PendulumMovementComponent>()->StartPendulumMovement();
 		}
 		break;
 	default:
