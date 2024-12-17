@@ -49,7 +49,7 @@ public:
 	~PendulumMovementComponent();
 
 	void Init();
-	void PendulumInit(DirectX::SimpleMath::Vector3 _fulcrum, bool _movement);	// 振り子の初期化
+	void PendulumInit(DirectX::SimpleMath::Vector3 _fulcrum, bool _movement, float _pendulumAngle);	// 振り子の初期化
 	void Uninit();
 	void Update();
 
@@ -75,6 +75,10 @@ public:
 	void  SetPendulumLength(float _pendulumLength);
 	float GetPendulumLength();
 
+	// 振り子の停止、始動
+	void StartPemdulumMovement();
+	void StopPemdulumMovement();
+
 	virtual TypeID GetComponentType() const override { return TypeID::PendulumMovementComponent; }
 
 	// -振り子の状態
@@ -96,6 +100,8 @@ private:
 	float pendulumLength_;							// -振り子の長さ
 	float pendulumRadian_;							// -振り子の角度（ラジアン）
 	bool  turnPendulum_;							// -振り子の往復で処理を切り替えるためのフラグ　true：右から左　false：左から右
+	float maxPendulumAngle_;						// -振り子の最大角度
+	float maxPemdulumVelocity_;						// -振り子の最大速度
 
 	// -振り子の状態
 	LangthState langthState_;

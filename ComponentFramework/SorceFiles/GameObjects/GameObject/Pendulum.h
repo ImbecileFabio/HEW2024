@@ -22,7 +22,7 @@ class Pendulum
 	: public GameObject
 {
 public:
-	Pendulum(GameManager* _gameManager, float _pendulumAngle, Vector3 _fulcrum, bool _movement);
+	Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, float _pendulumAngle);
 	~Pendulum(void);
 
 	void InitGameObject(void)   override;
