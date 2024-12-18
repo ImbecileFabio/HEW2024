@@ -260,7 +260,7 @@ void Renderer::Uninit()
 //-----------------------------------------------------------------
 void Renderer::Begin()
 {
-	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };
 	m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, clearColor);
 	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
@@ -305,9 +305,6 @@ void Renderer::AddSprite(RenderComponent* _renderComponent)
 
 	// イテレータの前に要素を挿入
 	sprites_.insert(iter, _renderComponent);
-
-	// デバッグ出力
-	std::cout << "Sprite added: " << _renderComponent << " with draw order: " << myDrawOrder << std::endl;
 }
 
 //-----------------------------------------------------------------

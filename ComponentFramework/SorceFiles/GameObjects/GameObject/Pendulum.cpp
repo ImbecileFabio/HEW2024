@@ -28,8 +28,25 @@
 Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, float _pendulumAngle)
 	:GameObject(_gameManager, "Pendulum")
 {
-	this->InitGameObject();
+	// スプライトコンポーネント
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/ball_01.png");
+	// 当たり判定コンポーネント
+	collider_component_ = new CircleColliderComponent(this);
+	// 振り子コンポーネント
+	pendulum_component_ = new PendulumMovementComponent(this);
+	// 子タイムゾーン
+	time_zone_ = new TimeZone(game_manager_);
+	// 子オブジェクト管理コンポーネント
+	children_component_ = new ChildrenComponent(this, this);
+	children_component_->AddChild(time_zone_);
+
+	// イベント追加処理
+	collider_event_component_ = new ColliderEventComponent(this);
+	auto f = std::function<void(GameObject*)>(std::bind(&Pendulum::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(f);
+
 	pendulum_component_->PendulumInit(_fulcrum, _movement, _pendulumAngle);
+	this->InitGameObject();
 }
 
 //--------------------------------------------------
@@ -51,23 +68,8 @@ Pendulum::~Pendulum(void)
 //--------------------------------------------------
 void Pendulum::InitGameObject(void)
 {
-	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/ball_01.png");
-	// 当たり判定コンポーネント
-	collider_component_ = new CircleColliderComponent(this);
-	// 振り子コンポーネント
-	pendulum_component_ = new PendulumMovementComponent(this);
 	// トランスフォームコンポーネント
 	transform_component_->SetScale(100.0f, 100.0f);
-	// 子タイムゾーン
-	time_zone_ = new TimeZone(game_manager_);
-	// 子オブジェクト管理コンポーネント
-	children_component_ = new ChildrenComponent(this, this);
-	children_component_->AddChild(time_zone_);
-	// イベント追加処理
-	collider_event_component_ = new ColliderEventComponent(this);
-	auto f = std::function<void(GameObject*)>(std::bind(&Pendulum::OnCollisionEnter, this, std::placeholders::_1));
-	collider_event_component_->AddEvent(f);
 }
 
 //--------------------------------------------------
