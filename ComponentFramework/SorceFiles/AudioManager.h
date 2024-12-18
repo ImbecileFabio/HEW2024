@@ -35,7 +35,7 @@ private:
 
 	// パラメーター構造体の初期化
 	Param param[SoundLabel_MAX] = {
-		{ "Asset/Sound/BGM/Devine-Fencer.wav", true  },	// サンプルBGM音源
+		{"Asset/Sound/BGM/Devine-Fencer.wav", true},	// サンプルBGM音源
 		//{ "../Asset/Sound/SE/SE33.wav"			, false },	// サンプルSE音源
 
 		{"Asset/Sound/BGM/Title_BGM.wav", true}			// タイトルBGM

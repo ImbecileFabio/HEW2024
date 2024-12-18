@@ -33,7 +33,7 @@ GameManager::GameManager()
 	renderer_->Init();
 
 	// オーディオマネージャー初期化
-	//audio_manager_ = new AudioManager();
+	audio_manager_ = new AudioManager();
 
 	// コライダーマネージャー初期化
 	collider_manager_ = ColliderManager::Create();
