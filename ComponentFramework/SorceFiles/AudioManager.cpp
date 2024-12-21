@@ -99,10 +99,43 @@ void AudioManager::Uninit()
 //--------------------------------------------------
 void AudioManager::Play(SoundLabel _label)
 {
-	hr = pSourceVoice[_label]->SubmitSourceBuffer(&AudioDataBuffer);
-	if (FAILED(hr)) {
-		std::cerr << "オーディオデータのバッファの送信に失敗しました。　エラーコード：" << hr << std::endl;
+	//// 再生する波形データの設定
+	//AudioDataBuffer.pAudioData = (BYTE*)pDataBuffer;	// -オーディオバッファへのアドレス指定
+	//AudioDataBuffer.Flags = XAUDIO2_END_OF_STREAM;		// -バッファの終わりを指定
+	//AudioDataBuffer.AudioBytes = DataChunk.size;		// -バッファのサイズ設定
+
+	//hr = pSourceVoice[_label]->SubmitSourceBuffer(&AudioDataBuffer);
+	//if (FAILED(hr)) {
+	//	std::cerr << "オーディオデータのバッファの送信に失敗しました。　エラーコード：" << hr << std::endl;
+	//}
+
+	// オーディオデータバッファの設定
+	AudioDataBuffer.pAudioData = (BYTE*)pDataBuffer;    // オーディオバッファへのアドレス指定
+	AudioDataBuffer.Flags = XAUDIO2_END_OF_STREAM;      // バッファの終わりを指定
+	AudioDataBuffer.AudioBytes = DataChunk.size;        // バッファのサイズ設定
+
+	// ソースボイスへのバッファの送信
+	if (pSourceVoice) {
+		HRESULT hr = pSourceVoice[_label]->SubmitSourceBuffer(&AudioDataBuffer);
+		if (FAILED(hr)) {
+			// エラーハンドリング
+			if (hr == DXGI_ERROR_DEVICE_REMOVED) {
+				// デバイスが削除された場合の処理
+				std::cerr << "DirectX デバイスが削除されました。" << std::endl;
+				// 必要に応じて、デバイスを再初期化する処理を追加
+			}
+			else {
+				// その他のエラー処理
+				std::cerr << "SubmitSourceBuffer エラー: " << hr << std::endl;
+			}
+		}
 	}
+	else {
+		// pSourceVoice が無効な場合の処理
+		std::cerr << "SourceVoice が初期化されていません。" << std::endl;
+	}
+
+
 	hr = pSourceVoice[_label]->Start();
 	if (FAILED(hr)) {
 		std::cerr << "オーディオの再生に失敗しました。　エラーコード：" << hr << std::endl;
@@ -150,7 +183,11 @@ int AudioManager::LoadWaveFile(int _label)
 		std::cerr << "データチャンクの読み込みに失敗しました。" << std::endl;
 		return -1;
 	}
-	pDataBuffer = (BYTE*)malloc(DataChunk.size);		// 波形データ分のメモリを確保（mallocは引数分のメモリを確保する関数）
+	pDataBuffer = (char*)malloc(DataChunk.size);		// 波形データ分のメモリを確保（mallocは引数分のメモリを確保する関数）
+	if (pDataBuffer != NULL) {
+		memset(pDataBuffer, 0, DataChunk.size); // メモリをゼロクリア
+	}
+
 	// 波形データの読み込み
 	if (pDataBuffer == nullptr) {
 		std::cerr << "バッファが初期化されていません。" << std::endl;
@@ -179,11 +216,5 @@ int AudioManager::LoadWaveFile(int _label)
 		free(pDataBuffer);
 		return -1;
 	}
-
-	// 再生する波形データの設定
-	AudioDataBuffer.pAudioData = (BYTE*)pDataBuffer;	// -オーディオバッファへのアドレス指定
-	AudioDataBuffer.Flags = XAUDIO2_END_OF_STREAM;		// -バッファの終わりを指定
-	AudioDataBuffer.AudioBytes = DataChunk.size;		// -バッファのサイズ設定
-
 	return 0;
 }

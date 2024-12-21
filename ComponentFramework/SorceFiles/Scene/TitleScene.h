@@ -24,6 +24,8 @@ public:
 	void Uninit() override;
 	void Update() override;
 
+private:
+	Sound sound;
 };
 
 #endif  // TITLE_SCENE_H_

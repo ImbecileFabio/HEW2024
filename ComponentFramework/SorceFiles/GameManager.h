@@ -49,7 +49,6 @@ public:
 	void GenerateOutputAll(void);
 
 	auto& GetRenderer(void) const { return renderer_; }
-	auto& GetAudioManager(void) const { return audio_manager_; }
 	auto& GetColliderManager() const { return collider_manager_; }
 	auto& GetPendulumManager() const { return pendulum_manager_; }
 
@@ -78,7 +77,6 @@ private:
 	bool updating_game_objects_;
 
 	class Renderer* renderer_{};	// レンダラー
-	class AudioManager* audio_manager_{};	// オーディオマネージャー
 	class ColliderManager* collider_manager_{};				// コライダーマネージャー
 	class PendulumManager* pendulum_manager_{};				// 振り子マネージャー
 

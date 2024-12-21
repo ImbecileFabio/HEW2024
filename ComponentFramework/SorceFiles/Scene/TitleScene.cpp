@@ -9,7 +9,6 @@
 #include "TitleScene.h"
 
 #include "../GameManager.h"
-#include "../AudioManager.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -25,6 +24,7 @@ TitleScene::TitleScene(GameManager* _gameManager)
 //--------------------------------------------------
 TitleScene::~TitleScene()
 {
+	this->Uninit();
 }
 
 //--------------------------------------------------
@@ -32,7 +32,8 @@ TitleScene::~TitleScene()
 //--------------------------------------------------
 void TitleScene::Init()
 {
-	game_manager_->GetAudioManager()->Play(SoundLabel_TitleBGM);
+	sound.Init();
+	sound.Play(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------
@@ -40,6 +41,7 @@ void TitleScene::Init()
 //--------------------------------------------------
 void TitleScene::Uninit()
 {
+	//sound.Uninit();
 }
 
 //--------------------------------------------------
@@ -50,6 +52,6 @@ void TitleScene::Update()
 	if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))
 	{
 		game_manager_->ChangeScene(SceneName::Stage1_1);
-		game_manager_->GetAudioManager()->Stop(SoundLabel_TitleBGM);
+		sound.Stop(SoundLabel_TitleBGM);
 	}
 }

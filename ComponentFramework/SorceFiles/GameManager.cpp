@@ -32,9 +32,6 @@ GameManager::GameManager()
 	renderer_ = new Renderer();
 	renderer_->Init();
 
-	// オーディオマネージャー初期化
-	audio_manager_ = new AudioManager();
-
 	// コライダーマネージャー初期化
 	collider_manager_ = ColliderManager::Create();
 
@@ -55,7 +52,6 @@ GameManager::~GameManager(void)
 
 	delete current_scene_;
 	delete renderer_;
-	delete audio_manager_;
 	delete collider_manager_;
 
 }
@@ -75,8 +71,6 @@ void GameManager::InitAll(void)
 
 	// シーンの初期化
 	current_scene_ = new TitleScene(this);
-    // ゲームオブジェクト初期化
-	current_scene_->Init();
 }
 
 //-----------------------------------------------------------------
