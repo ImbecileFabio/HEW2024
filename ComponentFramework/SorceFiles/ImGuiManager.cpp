@@ -178,13 +178,15 @@ void TreeGUI::ShowWindow()
         if (ImGui::TreeNode("active_objects"))
         {
             // objectList_ の中身を全て表示
-            for (const auto& obj : *objectList_)
+            for (auto& obj : *objectList_)
             {
+                ImGui::PushID(reinterpret_cast<void*>(obj));
                 // オブジェクトの名前を表示（仮に GetName 関数がある場合）
                 if (ImGui::Selectable(obj->GetObjectName().c_str()))
 				{
                     selectObject_ = obj;
                 }
+                ImGui::PopID();  // IDをポップして、次の要素に影響しないようにする
             }
 
             ImGui::TreePop();
