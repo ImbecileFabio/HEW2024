@@ -8,7 +8,7 @@
 #pragma once
 #define IMGUI_DEBUG	// ImGuiを使うときはコメントアウトを外すといける
 #ifdef IMGUI_DEBUG
-#include <array>
+#include <stack>
 #include "ImGui/imgui_impl_dx11.h"	// 追加したImGuiフォルダから  
 #include "ImGui/imgui_impl_win32.h"
 #include "ImGui/imgui.h"
@@ -34,7 +34,7 @@ public:
 	virtual void LoadFile() {};	// ファイルを読みこむ
 	virtual void ShowWindow() = 0;	// ウィンドウを表示
 protected:
-	ImVector<GameObject*> stock_ = {};
+	static GameObject* selectObject_;
 	ImVec2 position_ = { 0.0f, 0.0f };	// ウィンドウの座標
 	bool showFg = true;		// ウィンドウを表示するかどうか
 };
@@ -45,13 +45,13 @@ class ImGuiManager
 public:
 	static ImGuiManager* staticPointer;
 
-	void ImGuiWin32Init(HWND _hWnd);
-	void ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext);		// ゲームループのはじめに行う更新処理
-	void ImGuiInit();		// 初期化
+	void ImGuiWin32Initialize(HWND _hWnd);
+	void ImGuiD3D11Initialize(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext);		// ゲームループのはじめに行う更新処理
+	void ImGuiInitialize();		// 初期化
 	void ImGuiUpdate();
 	void ImGuiShowWindow();	// 値を触りたいリストの参照を持ってくる
 	void ImGuiRender();		// 描画
-	void ImGuiUnInit();		// 終了
+	void ImGuiUnInitialize();		// 終了
 
 	void SetObjectList(std::vector<GameObject*>& _objectList) { ImGuiBase::objectList_ = &_objectList; }	// オブジェクトリストをセット
 private:

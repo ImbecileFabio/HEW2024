@@ -85,11 +85,11 @@ void GameProcess::Run(void)
 #ifdef IMGUI_DEBUG
 	ImGuiManager imGuiManager;
 	ImGuiManager::staticPointer = &imGuiManager;
-	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGuiのWin32APIを初期化
-	imGuiManager.ImGuiD3D11Init(this->game_manager_->GetRenderer()->GetDevice(),
+	imGuiManager.ImGuiWin32Initialize(this->hWnd_);	// ImGuiのWin32APIを初期化
+	imGuiManager.ImGuiD3D11Initialize(this->game_manager_->GetRenderer()->GetDevice(),
 		this->game_manager_->GetRenderer()->GetDeviceContext());	// ImGuiのDirectX11を初期化
 	// ImGuiで管理したいオブジェクトリストを一回だけ渡しておく
-	ImGuiManager::staticPointer->ImGuiInit();
+	ImGuiManager::staticPointer->ImGuiInitialize();
 #endif
 	//--------------------------------------------------
 	// ゲームループ
@@ -146,7 +146,7 @@ void GameProcess::Run(void)
 
 	}
 #ifdef IMGUI_DEBUG
-	imGuiManager.ImGuiUnInit();
+	imGuiManager.ImGuiUnInitialize();
 #endif
 }
 

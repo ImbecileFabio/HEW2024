@@ -11,11 +11,12 @@
 /*----static変数------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
 std::vector<GameObject*>* ImGuiBase::objectList_ = {};
+GameObject* ImGuiBase::selectObject_ = {};
 //--------------------------------------------------
 // @param _hWnd GameProcessで使っているウィンドハンドル
 // @brief ImGuiのWin32APIを初期化
 //--------------------------------------------------
-void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
+void ImGuiManager::ImGuiWin32Initialize(HWND _hWnd)
 {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -34,7 +35,7 @@ void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
 //--------------------------------------------------
 // @brief ImGuiのDirectX11を初期化
 //--------------------------------------------------
-void ImGuiManager::ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext)
+void ImGuiManager::ImGuiD3D11Initialize(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext)
 {
     // ここでImGuiのDirectX関連を初期化 rendererから
     ImGui_ImplDX11_Init(_device, _deviceContext);
@@ -42,7 +43,7 @@ void ImGuiManager::ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _d
 //--------------------------------------------------
 // @brief ImGuiのウィンドウを初期化
 //--------------------------------------------------
-void ImGuiManager::ImGuiInit()
+void ImGuiManager::ImGuiInitialize()
 {   // ここで作ったウィンドウをリストに追加する
     imGuiWindowList_.push_back(new ObjectStatesGUI());
     imGuiWindowList_.push_back(new SystemGUI());
@@ -81,7 +82,7 @@ void ImGuiManager::ImGuiRender()
 //--------------------------------------------------
 // @brief 終了処理
 //--------------------------------------------------
-void ImGuiManager::ImGuiUnInit()
+void ImGuiManager::ImGuiUnInitialize()
 {
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
@@ -91,8 +92,7 @@ void ImGuiManager::ImGuiUnInit()
 // @brief 基底クラスのコンストラクタ
 //--------------------------------------------------
 ImGuiBase::ImGuiBase()
-    :stock_(),
-	showFg(true)
+    :showFg(true)
 {
 }
 //--------------------------------------------------
@@ -109,34 +109,34 @@ void ObjectStatesGUI::ShowWindow()
         {
 
         }
-        // オブジェクトの名前
-        ImGui::Text("ObjectName, %s", "Player_HOGE");
-        // transformの情報
-        if (ImGui::DragFloat3("position", &position_.x, 1.0f, -100.0f, 100.0f, "%.3f"))
+        if (selectObject_ != nullptr)
         {
-        }
-        if (ImGui::DragFloat3("rotation", &rotation_.x, 1.0f, -100.0f, 100.0f, "%.3f"))
-        {
-            // ここで値を入力しているときの処理を実装予定
-        }
-        if (ImGui::DragFloat3("scale", &scale_.x, 1.0f, -100.0f, 100.0f, "%.3f"))
-        {
-
-        }
-        ImGui::Separator(); // 区切り線
-        ImGui::Text("ComponentList");
-        if (ImGui::Button("AddComponent"))
-        {
-
-        }
-        if (ImGui::Button("ReMoveComponent"))
-        {
-
+            // オブジェクトの名前
+            ImGui::Text(selectObject_->GetObjectName().c_str());
+            // transformの情報
+            auto transform = selectObject_->GetComponent<TransformComponent>();
+			auto position = transform->GetPosition();
+			auto rotation = transform->GetRotation();
+			auto scale = transform->GetScale();
+            if (ImGui::DragFloat3("position", &position.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            {
+				transform->SetPosition(position);
+            }
+            if (ImGui::DragFloat3("rotation", &rotation.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            {
+                transform->SetRotation(rotation);
+            }
+            if (ImGui::DragFloat3("scale", &scale.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            {
+                transform->SetScale(scale);
+            }
+            ImGui::Separator(); // 区切り線
+            ImGui::Text("ComponentList");
         }
         ImGui::End();
     }
 }
-//--------------------------------------------------
+//-------------------------------------------------
 // @brief システムの情報を表示するウィンドウ
 //--------------------------------------------------
 void SystemGUI::ShowWindow()
@@ -172,7 +172,7 @@ void SystemGUI::ShowWindow()
 //--------------------------------------------------
 void TreeGUI::ShowWindow()
 {
-    if (ImGui::Begin("TreeView", nullptr,ImGuiWindowFlags_AlwaysVerticalScrollbar))
+    if (ImGui::Begin("TreeView", nullptr, ImGuiWindowFlags_AlwaysVerticalScrollbar))
     {
         // 稼働中のオブジェクトリスト
         if (ImGui::TreeNode("active_objects"))
@@ -181,8 +181,12 @@ void TreeGUI::ShowWindow()
             for (const auto& obj : *objectList_)
             {
                 // オブジェクトの名前を表示（仮に GetName 関数がある場合）
-                ImGui::Text("Object Name: %s", obj->GetObjectName().c_str());
+                if (ImGui::Selectable(obj->GetObjectName().c_str()))
+				{
+                    selectObject_ = obj;
+                }
             }
+
             ImGui::TreePop();
         }
         ImGui::End();
