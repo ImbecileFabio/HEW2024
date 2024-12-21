@@ -31,6 +31,8 @@ ColliderManager::~ColliderManager(void)
 void ColliderManager::InitAll(void)
 {
 	collider_game_objects_.clear();	// 当たり判定用コンテナのクリア
+	collider_out_objects_.clear();
+	pending_game_objects_.clear();
 }
 //-----------------------------------------------------------------
 // @brief  更新処理
@@ -67,14 +69,6 @@ void ColliderManager::AddGameObject(GameObject* _gameObject)
 //-----------------------------------------------------------------
 void ColliderManager::RemoveGameObject(GameObject* _gameObject)
 {
-	//for (int i = 0; i < collider_game_objects_.size(); i++)
-	//{
-	//	if (collider_game_objects_.at(i) == _gameObject)
-	//	{
-	//		collider_game_objects_.erase(collider_game_objects_.begin() + i);
-	//		break;
-	//	}
-	//}
 	// 待機コンテナ
 	auto iter = std::find(pending_game_objects_.begin(), pending_game_objects_.end(), _gameObject);
 	if (iter != pending_game_objects_.end())
@@ -98,26 +92,6 @@ void ColliderManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	//// 当たり判定の処理
-	//for (int i = 0; i < collider_game_objects_.size(); i++)
-	//{
-	//	for (int j = 0; j < collider_game_objects_.size(); j++)
-	//	{	// 衝突したか、していないか
-	//		if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>()->
-	//			CheckCollisionCollider(collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>()))
-	//		{	
-	//			// 当たった側の処理を呼びだす
-	//			if (collider_game_objects_.at(i)->GetComponent<ColliderBaseComponent>() == nullptr &&
-	//				collider_game_objects_.at(j)->GetComponent<ColliderBaseComponent>() == nullptr)
-	//				continue;
-	//			if (collider_game_objects_.at(i)->GetComponent<EventBaseComponent>() == nullptr)
-	//				break;
-	//			size_t id = collider_game_objects_.at(i)->GetComponent<ColliderEventComponent>()->GetID();
-	//			collider_game_objects_.at(i)->GetComponent<EventBaseComponent>()->AllUpdate(collider_game_objects_.at(j), id);
-	//		}
-	//	}
-	//}
-	// 当たり判定の処理
 	for (auto it1 = collider_game_objects_.begin(); it1 != collider_game_objects_.end(); ++it1) {
 		auto collider1 = (*it1)->GetComponent<ColliderBaseComponent>();
 		auto event1 = (*it1)->GetComponent<EventBaseComponent>();

@@ -13,6 +13,7 @@
 #include "../PemdulumManager.h"
 #include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
 #include "../GameObjects/Component/PendulumMovementComponent.h"
+#include "../GameObjects/Component/ChildrenComponent.h"
 
 #include "../GameObjects/GameObject.h"
 #include "../GameObjects/GameObject/BackGround.h"
@@ -57,7 +58,7 @@ void Stage1_1Scene::Init()
 
 	pendulum_ = new Pendulum(game_manager_, Vector3(260.0f, -60, 0), false, 30.f);
 	auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumFulcrum();
-	//pendulum_3_		= new Pendulum(game_manager_, Vector3(-400, 0, 0), false, 30.f);
+	pendulum_3_		= new Pendulum(game_manager_, Vector3(0, 0, 0), false, 30.f);
 	lift_ = new Lift(Lift::MoveState::length, { 0.0f, 60.0f, 0.0f }, { 0.0f, -100.0f, 0.0f }, game_manager_);
 	lift_->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
 	lift_->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
@@ -71,18 +72,33 @@ void Stage1_1Scene::Init()
 
 	// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
-	{	// あたり判定のあるオブジェクトをコライダーマネージャーに登録
+	{	// 子オブジェクトを追加
+		auto childrenComponent = colliderObjects->GetComponent<ChildrenComponent>();
+		if (childrenComponent)
+		{
+			auto childrenObjects = childrenComponent->GetChildren();
+			for (auto& children : childrenObjects)
+			{
+				// あたり判定のあるオブジェクトをコライダーマネージャーに登録
+				if (children->GetComponent<ColliderBaseComponent>())
+				{
+					game_manager_->GetColliderManager()->AddGameObject(children);
+				}
+			}
+		}
+		// あたり判定のあるオブジェクトをコライダーマネージャーに登録
 		if (colliderObjects->GetComponent<ColliderBaseComponent>())
 		{
 			game_manager_->GetColliderManager()->AddGameObject(colliderObjects);
 		}
 	}
 
-	for (auto& pemdulumObject : game_manager_->GetGameObjects()) {
-		if (pemdulumObject->GetComponent<PendulumMovementComponent>()) {
-			game_manager_->GetPendulumManager()->AddGameObject(pemdulumObject);
+	for (auto& pendulumObject : game_manager_->GetGameObjects()) {
+		if (pendulumObject->GetComponent<PendulumMovementComponent>()) {
+			game_manager_->GetPendulumManager()->AddGameObject(pendulumObject);
 		}
 	}
+
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 }
 
@@ -97,6 +113,8 @@ void Stage1_1Scene::Uninit()
 	delete pendulum_2_;
 	delete pendulum_3_;
 	delete tile_;
+	delete tile_2_;
+	delete tile_3_;
 	delete robot_;
 	delete lift_;
 }
@@ -109,9 +127,10 @@ void Stage1_1Scene::Update()
 	switch (State)
 	{
 	case Stage1_1Scene::Game:
-		//		if(歯車取得数 == gearCounter){
-		// 		   State = Result;
-		//		}
+		if(game_manager_->GetItemCount() == gearCounter) 
+		{
+		 	State = Result;
+		}
 		break;
 	case Stage1_1Scene::Result:
 		game_manager_->ChangeScene(SceneName::Result);

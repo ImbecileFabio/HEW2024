@@ -88,7 +88,8 @@ void GameProcess::Run(void)
 	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGuiのWin32APIを初期化
 	imGuiManager.ImGuiD3D11Init(this->game_manager_->GetRenderer()->GetDevice(),
 		this->game_manager_->GetRenderer()->GetDeviceContext());	// ImGuiのDirectX11を初期化
-	imGuiManager.ImGuiInit();
+	// ImGuiで管理したいオブジェクトリストを一回だけ渡しておく
+	ImGuiManager::staticPointer->ImGuiInit();
 #endif
 	//--------------------------------------------------
 	// ゲームループ

@@ -10,6 +10,7 @@
 #include "ImGuiManager.h"
 /*----static変数------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
+std::vector<GameObject*>* ImGuiBase::objectList_ = {};
 //--------------------------------------------------
 // @param _hWnd GameProcessで使っているウィンドハンドル
 // @brief ImGuiのWin32APIを初期化
@@ -43,9 +44,9 @@ void ImGuiManager::ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _d
 //--------------------------------------------------
 void ImGuiManager::ImGuiInit()
 {   // ここで作ったウィンドウをリストに追加する
-    imGuiWindowVec.push_back(new ObjectStatesGUI());
-    imGuiWindowVec.push_back(new SystemGUI());
-    imGuiWindowVec.push_back(new TreeGUI());
+    imGuiWindowList_.push_back(new ObjectStatesGUI());
+    imGuiWindowList_.push_back(new SystemGUI());
+    imGuiWindowList_.push_back(new TreeGUI());
 }
 //--------------------------------------------------
 // @brief ImGuiの更新処理　これをループの初めに置いておかないと機能しない
@@ -58,15 +59,14 @@ void ImGuiManager::ImGuiUpdate()
 }
 //--------------------------------------------------
 // @brief ImGuiをウィンドウを一括管理とデータ渡し
-// @param _r GameObjectListの参照
 //--------------------------------------------------
-void ImGuiManager::ImGuiShowWindow(std::vector<GameObject*>& _r)
+void ImGuiManager::ImGuiShowWindow()
 {
     if (showFg)
     {
-        for (const auto& window : imGuiWindowVec)
+        for (const auto& window : imGuiWindowList_)
         {
-            window->ShowWindow(_r);
+            window->ShowWindow();
         }
     }
 }
@@ -88,9 +88,17 @@ void ImGuiManager::ImGuiUnInit()
     ImGui::DestroyContext();
 }
 //--------------------------------------------------
+// @brief 基底クラスのコンストラクタ
+//--------------------------------------------------
+ImGuiBase::ImGuiBase()
+    :stock_(),
+	showFg(true)
+{
+}
+//--------------------------------------------------
 // @brief ゲームオブジェクトの情報を表示するウィンドウ
 //--------------------------------------------------
-void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
+void ObjectStatesGUI::ShowWindow()
 {
     // ここが自分で記述したウィンドウ設定
     if (this->showFg)
@@ -131,7 +139,7 @@ void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 //--------------------------------------------------
 // @brief システムの情報を表示するウィンドウ
 //--------------------------------------------------
-void SystemGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
+void SystemGUI::ShowWindow()
 {
     // タブを管理するタブバー
     if (ImGui::BeginTabBar("DebugWindow"), ImGuiWindowFlags_AlwaysVerticalScrollbar)
@@ -162,19 +170,19 @@ void SystemGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 //--------------------------------------------------
 // @brief ObjectとComponentを親子形式で表示するツリー形式ウィンドウ
 //--------------------------------------------------
-void TreeGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
+void TreeGUI::ShowWindow()
 {
-    if (ImGui::Begin("TreeView"),ImGuiWindowFlags_AlwaysVerticalScrollbar)
+    if (ImGui::Begin("TreeView", nullptr,ImGuiWindowFlags_AlwaysVerticalScrollbar))
     {
         // 稼働中のオブジェクトリスト
         if (ImGui::TreeNode("active_objects"))
         {
-            ImGui::TreePop();
-        }
-        ImGui::Separator();
-        // ここから待機中のオブジェクトリスト
-        if (ImGui::TreeNode("stand_by_objects"))
-        {
+            // objectList_ の中身を全て表示
+            for (const auto& obj : *objectList_)
+            {
+                // オブジェクトの名前を表示（仮に GetName 関数がある場合）
+                ImGui::Text("Object Name: %s", obj->GetObjectName().c_str());
+            }
             ImGui::TreePop();
         }
         ImGui::End();
@@ -182,4 +190,3 @@ void TreeGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 }
 
 #endif // IMGUI_DEBUG
-

@@ -72,11 +72,12 @@ void GameManager::InitAll(void)
 	// オブジェクトリストの初期化
 	game_objects_.clear();
 	pending_game_objects_.clear();
-
 	// シーンの初期化
 	current_scene_ = new TitleScene(this);
     // ゲームオブジェクト初期化
 	current_scene_->Init();
+
+	ImGuiManager::staticPointer->SetObjectList(game_objects_);
 }
 
 //-----------------------------------------------------------------
@@ -99,7 +100,7 @@ void GameManager::UpdateAll()
 	this->UpdateGameObjects();
 	this->collider_manager_->UpdateAll();
 	this->pendulum_manager_->Update();
-	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
+	ImGuiManager::staticPointer->ImGuiShowWindow();
 }
 //-----------------------------------------------------------------
 // 出力生成処理

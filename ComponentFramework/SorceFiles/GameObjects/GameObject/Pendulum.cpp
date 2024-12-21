@@ -93,7 +93,6 @@ void Pendulum::OnCollisionEnter(GameObject* _other)
 		// U‚èq‚ª~‚Ü‚Á‚Ä‚¢‚½‚ç
 		if (!moveFg)
 		{
-			std::cout << std::format("ƒColliderEventComponent„ -> U‚èq“–‚½‚Á‚½\n");
 			// U‚èq‚Ì“®‚«‚ğŠJn
 			_other->GetComponent<PendulumMovementComponent>()->SetPendulumMovement(true);
 			_other->GetComponent<PendulumMovementComponent>()->StartPendulumMovement();

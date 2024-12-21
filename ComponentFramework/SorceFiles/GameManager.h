@@ -52,7 +52,7 @@ public:
 	auto& GetAudioManager(void) const { return audio_manager_; }
 	auto& GetColliderManager() const { return collider_manager_; }
 	auto& GetPendulumManager() const { return pendulum_manager_; }
-
+	
 	auto& GetGameObjects() const { return game_objects_; }
 	auto& GetPendingGameObjects() const { return pending_game_objects_; }
 	
