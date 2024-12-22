@@ -16,7 +16,6 @@
 #include "../Component.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
-#include "../Component/TimeZoneComponent/TimeZoneComponent.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/PendulumMovementComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"

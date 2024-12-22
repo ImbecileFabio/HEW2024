@@ -45,6 +45,8 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "LiftComponent"
 	// カメラ
 	, "CameraComponent"
+	// 子オブジェクト管理
+	, "ChildrenComponent"
 	// 押し出し
 	, "PushOutComponent"
 };

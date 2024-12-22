@@ -8,6 +8,11 @@
 #ifdef IMGUI_DEBUG
 #include <iostream>
 #include "ImGuiManager.h"
+#include "GameObjects/Component/ColliderComponent/BoxColliderComponent.h"
+#include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
+#include "GameObjects/Component/RigidbodyComponent/VelocityComponent.h"
+#include "GameObjects/Component/PendulumMovementComponent.h"
+#include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
 /*----static変数------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
 std::vector<GameObject*>* ImGuiBase::objectList_ = {};
@@ -25,9 +30,11 @@ void ImGuiManager::ImGuiWin32Initialize(HWND _hWnd)
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     // テーマカラー
-    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsDark();
+	//ImGui::StyleColorsLight();
+	ImGui::StyleColorsClassic();
 
-    io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\meiryo.ttc", 22.0f);  // フォントの設定
+    io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\meiryo.ttc", 24.0f);  // フォントの設定
 
     // Setup Platform/Renderer backends
     ImGui_ImplWin32_Init(_hWnd);  // ImGuiのWin32の初期化 ImGuiの関数
@@ -103,7 +110,7 @@ void ObjectStatesGUI::ShowWindow()
     // ここが自分で記述したウィンドウ設定
     if (this->showFg)
     {
-        ImGui::Begin("~(0-0)~", &showFg);
+        ImGui::Begin("~(0-0)~", &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar);
         // オブジェクト生成
         if (ImGui::Button("Object Create"))
         {
@@ -132,6 +139,114 @@ void ObjectStatesGUI::ShowWindow()
             }
             ImGui::Separator(); // 区切り線
             ImGui::Text("ComponentList");
+			for (auto& component : selectObject_->GetComponents())
+			{
+                ImGui::Text(component->ComponentTypeNames[static_cast<int>(component->GetComponentType())]);
+                switch (component->GetComponentType())
+                {
+                case Component::TypeID::SpriteComponent:
+                {
+                    auto sprite = dynamic_cast<SpriteComponent*>(component);
+					int drawOrder = sprite->GetDrawOrder();
+					int updateOrder = sprite->GetUpdateOrder();
+                    if (ImGui::DragInt("DrawOrder", &drawOrder, 1, -1000, 1000, "%d"))
+                    {
+                    }
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+                    ImGui::Separator(); // 区切り線
+                }
+                    break;
+                case Component::TypeID::BoxColliderComponent:
+                {
+                    auto boxCollider = dynamic_cast<BoxColliderComponent*>(component);
+                    auto boxSize = boxCollider->GetBoxSize();
+					int updateOrder = boxCollider->GetUpdateOrder();
+                    if (ImGui::DragFloat4("BoxSize", &boxSize.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                    }
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+                    ImGui::Separator(); // 区切り線
+				}
+				    break;
+                case Component::TypeID::CircleColliderComponent:
+                {
+					auto circleCollider = dynamic_cast<CircleColliderComponent*>(component);
+                    auto circleSize = circleCollider->GetCircleSize();
+					int updateOrder = circleCollider->GetUpdateOrder();		
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+					if (ImGui::DragFloat4("CircleSize", &circleSize.position.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					{
+					}
+                    ImGui::Separator(); // 区切り線
+                }
+                    break;
+                case Component::TypeID::VelocityComponent:
+                {
+                    auto velocityComponent = dynamic_cast<VelocityComponent*>(component);
+                    auto acceleration = velocityComponent->GetAcceleration();
+                    auto velocity = velocityComponent->GetVelocity();
+                    auto speedRate = velocityComponent->GetSpeedRate();
+					int updateOrder = velocityComponent->GetUpdateOrder();
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+                    if (ImGui::DragFloat3("Acceleration", &acceleration.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                    }
+                    if (ImGui::DragFloat3("Velocity", &velocity.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                    }
+                    if (ImGui::DragFloat("SpeedRate", &speedRate, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                    }
+                    ImGui::Separator(); // 区切り線
+                    break;
+                }
+                case Component::TypeID::PendulumMovementComponent:
+                {
+					auto pendulumMovement = dynamic_cast<PendulumMovementComponent*>(component);
+                    auto velocity     = pendulumMovement->GetPendulumVelocity();
+					auto angle        = pendulumMovement->GetPendulumAngle();
+                    auto acceleration = pendulumMovement->GetPendulumAcceleration();
+                    auto fulcrum      = pendulumMovement->GetPendulumFulcrum();
+                    auto length       = pendulumMovement->GetPendulumLength();
+					int updateOrder = pendulumMovement->GetUpdateOrder();
+					ImGui::Text("UpdateOrder : %d", updateOrder);
+					if (ImGui::DragFloat3("Angle", &velocity, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					{
+						pendulumMovement->SetPendulumVelocity(velocity);
+					}
+                    if (ImGui::DragFloat3("Fulcrum", &fulcrum.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                        pendulumMovement->SetPendulumFulcrum(fulcrum);
+                    }
+					if (ImGui::DragFloat("Speed", &angle, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					{
+                        pendulumMovement->SetPendulumAngle(angle);
+					}
+                    if (ImGui::DragFloat("Acceleration", &acceleration, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+						pendulumMovement->SetPendulumAcceleration(acceleration);
+                    }
+					if (ImGui::DragFloat("Length", &length, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					{
+						pendulumMovement->SetPendulumLength(length);
+					}
+                    ImGui::Separator(); // 区切り線
+					break;
+                }
+                case Component::TypeID::ColliderEventComponent:
+                {
+					auto colliderEvent = dynamic_cast<ColliderEventComponent*>(component);
+					size_t id = colliderEvent->GetId();
+					int updateOrder = colliderEvent->GetUpdateOrder();
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+					ImGui::Text("ID : %d", id);
+                    ImGui::Separator(); // 区切り線
+                }
+					break;
+                default:
+                    break;
+                }
+			}
         }
         ImGui::End();
     }
@@ -177,6 +292,7 @@ void TreeGUI::ShowWindow()
         // 稼働中のオブジェクトリスト
         if (ImGui::TreeNode("active_objects"))
         {
+			if (objectList_ == nullptr) return;
             // objectList_ の中身を全て表示
             for (auto& obj : *objectList_)
             {
