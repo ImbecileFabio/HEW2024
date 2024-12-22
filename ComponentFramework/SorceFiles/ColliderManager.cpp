@@ -11,7 +11,8 @@
 #include "GameObjects/Component/ColliderComponent/BoxColliderComponent.h"
 #include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
 #include "GameObjects/Component/RigidbodyComponent/VelocityComponent.h"
-//-----------------------------------------------------------------
+#include "ImGuiManager.h"
+//----------------------------------------------------------------
 // @brief  コンストラクタ
 //-----------------------------------------------------------------
 ColliderManager::ColliderManager(void)
@@ -33,6 +34,7 @@ void ColliderManager::InitAll(void)
 	collider_game_objects_.clear();	// 当たり判定用コンテナのクリア
 	collider_out_objects_.clear();
 	pending_game_objects_.clear();
+
 }
 //-----------------------------------------------------------------
 // @brief  更新処理
@@ -46,6 +48,9 @@ void ColliderManager::UpdateAll(void)
 //-----------------------------------------------------------------
 void ColliderManager::UninitAll(void)
 {
+	collider_game_objects_.clear();	// 当たり判定用コンテナのクリア
+	collider_out_objects_.clear();
+	pending_game_objects_.clear();
 }
 //-----------------------------------------------------------------
 // @brief  オブジェクトを追加

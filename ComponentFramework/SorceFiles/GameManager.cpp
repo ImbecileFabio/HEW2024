@@ -78,6 +78,7 @@ void GameManager::InitAll(void)
 	current_scene_->Init();
 
 	ImGuiManager::staticPointer->SetObjectList(game_objects_);
+
 }
 
 //-----------------------------------------------------------------
@@ -140,6 +141,9 @@ void GameManager::ChangeScene(SceneName _scene)
 		current_scene_ = new Stage1_1Scene(this);
 		break;
 	case Result:
+		itemCount = 0;
+		collider_manager_->UninitAll();
+		pendulum_manager_->Uninit();
 		current_scene_ = new ResultScene(this);
 		break;
 	default:

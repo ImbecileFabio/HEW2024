@@ -11,6 +11,7 @@
 #include "../GameManager.h"
 #include "../ColliderManager.h"
 #include "../PemdulumManager.h"
+#include "../InputManager.h"
 #include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
 #include "../GameObjects/Component/PendulumMovementComponent.h"
 #include "../GameObjects/Component/ChildrenComponent.h"
@@ -70,7 +71,7 @@ void Stage1_1Scene::Init()
 
 	State = Game;
 
-	// GameManagerで生成して、ColliderManagerに登録する
+	//// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
 	{	// 子オブジェクトを追加
 		auto childrenComponent = colliderObjects->GetComponent<ChildrenComponent>();
@@ -117,6 +118,10 @@ void Stage1_1Scene::Uninit()
 	delete tile_3_;
 	delete robot_;
 	delete lift_;
+	for (auto& item : items_)
+	{
+		delete item;
+	}
 }
 
 //--------------------------------------------------
@@ -124,12 +129,17 @@ void Stage1_1Scene::Uninit()
 //--------------------------------------------------
 void Stage1_1Scene::Update()
 {
+	auto& input = InputManager::GetInstance();
 	switch (State)
 	{
 	case Stage1_1Scene::Game:
 		if(game_manager_->GetItemCount() == gearCounter) 
 		{
 		 	State = Result;
+		}
+		if (input.GetKeyTrigger(VK_RETURN))
+		{
+			State = Result;
 		}
 		break;
 	case Stage1_1Scene::Result:

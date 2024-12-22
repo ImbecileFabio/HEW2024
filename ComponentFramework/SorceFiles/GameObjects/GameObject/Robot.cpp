@@ -75,7 +75,6 @@ void Robot::UpdateGameObject(void)
 	// 入力処理
 	InputManager& input = InputManager::GetInstance();
 
-	// デバッグ用、ロボを操作できる
 	// 移動処理
 	if (input.GetKeyPress(VK_A))
 	{

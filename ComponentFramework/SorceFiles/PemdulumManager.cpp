@@ -33,7 +33,7 @@ void PendulumManager::Init(){
 void PendulumManager::Uninit() {
 	pendulum_list_.clear();
 	pSelectedPendulum = nullptr;
-	DestroyInstance();
+	//DestroyInstance();
 }
 void PendulumManager::Update(){
 	if (pSelectedPendulum != nullptr) {
