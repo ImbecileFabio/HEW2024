@@ -46,60 +46,50 @@ void PushOutComponent::Uninit(void)
 }
 
 //-----------------------------------------------------------------
-// @brief 衝突を解決する処理
 // @param _other 衝突したオブジェクト
+// @brief 押し出し量を計算する処理
 //-----------------------------------------------------------------
-void PushOutComponent::ResolveCollision(GameObject* other) {
-    auto myTransform = owner_->GetComponent<TransformComponent>();
-    auto myCollider = owner_->GetComponent<BoxColliderComponent>();
-    auto otherTransform = other->GetComponent<TransformComponent>();
-    auto otherCollider = other->GetComponent<BoxColliderComponent>();
+void PushOutComponent::ResolveCollision(GameObject* _other) {
 
-    // 必要なコンポーネントがなければ何もしない
-    if (!myTransform || !myCollider || !otherTransform || !otherCollider)
-    {
+    auto myTransform = owner_->GetTransformComponent();
+    auto myCollider = owner_->GetComponent<ColliderBaseComponent>();
+    auto otherTransform = _other->GetTransformComponent();
+    auto otherCollider = _other->GetComponent<ColliderBaseComponent>();
+
+    auto myBoxCollider = dynamic_cast<BoxColliderComponent*>(myCollider);
+    auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider);
+
+    if (!myBoxCollider || !otherBoxCollider) {
+		std::cout << "PushOutComponent::ResolveCollision -> BoxColliderComponent Not Found\n";
         return;
     }
-
-    // 自分と相手の AABB を取得
-    auto myBox = myCollider->GetBoxSize();
+       // 位置を取得
     auto myPos = myTransform->GetPosition();
-    auto otherBox = otherCollider->GetBoxSize();
     auto otherPos = otherTransform->GetPosition();
 
-    // ペネトレーション量を計算
-    DirectX::SimpleMath::Vector3 penetration = CalculatePushOut(myPos, myBox, otherPos, otherBox);
+    // 自分と相手の AABB を取得
+    auto myhitbox = myBoxCollider->GetWorldHitBox();
+    auto otherhitbox = otherBoxCollider->GetWorldHitBox();
+
+    // ペネトレーション量
+    DirectX::SimpleMath::Vector3 penetration;
+
+    // 重なり量を計算
+    float overlapX = min(myhitbox.max_.x, otherhitbox.max_.x) - max(myhitbox.min_.x, otherhitbox.min_.x);
+    float overlapY = min(myhitbox.max_.y, otherhitbox.max_.y) - max(myhitbox.min_.y, otherhitbox.min_.y);
+
+    if (overlapX <= 0.0f || overlapY <= 0.0f) { return; }
+
+
+    // 最小の重なり量を押し出し方向として返す
+    if (overlapX < overlapY) {
+        penetration = { overlapX * (myhitbox.min_.x < otherhitbox.min_.x ? -1.0f : 1.0f), 0.0f, 0.0f };
+    }
+    else {
+        penetration = { 0.0f, overlapY * (myhitbox.min_.y < otherhitbox.min_.y ? -1.0f : 1.0f), 0.0f };
+    }
+
 
     // 自分の位置を押し出し
     myTransform->SetPosition(myPos + penetration);
-}
-
-
-//-----------------------------------------------------------------
-// @brief 押し出し量を計算する
-// @param myPos 自分の位置, myBox 自分のAABB, otherPos 相手の位置, otherBox 相手のAABB
-// @return 押し出し量
-//-----------------------------------------------------------------
-DirectX::SimpleMath::Vector3 PushOutComponent::CalculatePushOut(
-    const DirectX::SimpleMath::Vector3& myPos, const DirectX::SimpleMath::Vector4& myBox,
-    const DirectX::SimpleMath::Vector3& otherPos, const DirectX::SimpleMath::Vector4& otherBox
-) {
-    // 自分のAABB境界を計算
-    DirectX::SimpleMath::Vector3 myMin = { myBox.y, myBox.x , 0.0f };    // 左下
-	DirectX::SimpleMath::Vector3 myMax = { myBox.z, myBox.w , 0.0f };	// 右上
-
-    // 相手のAABB境界を計算
-    DirectX::SimpleMath::Vector3 otherMin = { otherBox.y, otherBox.x , 0.0f  };
-    DirectX::SimpleMath::Vector3 otherMax = { otherBox.z, otherBox.w , 0.0f  };
-
-    // 重なり量を計算
-    float overlapX = min(myMax.x, otherMax.x) - max(myMin.x, otherMin.x);
-    float overlapY = min(myMax.y, otherMax.y) - max(myMin.y, otherMin.y);
-
-    // 最小の重なり量を押し出し方向として返す
-    if (overlapX < overlapY) {return { overlapX * (myPos.x < otherPos.x ? -1.0f : 1.0f), 0.0f, 0.0f };
-    }
-    else {
-        return { 0.0f, overlapY * (myPos.y < otherPos.y ? -1.0f : 1.0f), 0.0f };
-    }
 }

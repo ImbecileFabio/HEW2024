@@ -29,6 +29,7 @@ BoxColliderComponent::~BoxColliderComponent()
 //--------------------------------------------------
 void BoxColliderComponent::Init(void)
 {
+
 }
 //--------------------------------------------------
 // @brief 四角形の当たり判定の終了処理
@@ -41,14 +42,13 @@ void BoxColliderComponent::Uninit(void)
 //--------------------------------------------------
 void BoxColliderComponent::Update(void)
 {
-	DirectX::SimpleMath::Vector3 pos = this->owner_->GetComponent<TransformComponent>()->GetPosition();	// 位置を取得
-	DirectX::SimpleMath::Vector3 size = this->owner_->GetComponent<TransformComponent>()->GetScale();	// サイズを取得
-	this->boxSize_.w = pos.y + size.y / 2;	// 上	// 当たり判定を更新
-	this->boxSize_.x = pos.y - size.y / 2;	// 下
-	this->boxSize_.y = pos.x - size.x / 2;	// 左
-	this->boxSize_.z = pos.x + size.x / 2;	// 右
+	// ひとまず画像のかたちの当たり判定を設定
+	this->SetSize(this->owner_->GetTransformComponent()->GetSize() * this->owner_->GetTransformComponent()->GetScale());
 
+	auto pos = this->owner_->GetTransformComponent()->GetPosition();// 位置を取得
+	this->SetWorldHitBox(pos);
 }
+
 bool BoxColliderComponent::CheckCollisionCollider(ColliderBaseComponent* _other)
 {
 	return  _other->CheckCollisionCollider(this);
@@ -58,12 +58,13 @@ bool BoxColliderComponent::CheckCollisionCollider(ColliderBaseComponent* _other)
 //--------------------------------------------------
 bool BoxColliderComponent::CheckCollisionCollider(CircleColliderComponent* _other)
 {
-	auto circleSize = _other->GetCircleSize();
+	auto myHitBox = this->GetWorldHitBox();			// 自
+	auto circleSize = _other->GetCircleSize();	// 他
 	// 四角形内で円の中心に最も近い点を計算
 	float closestX =
-		max(boxSize_.y, min(circleSize.position.x, boxSize_.z));	// 左と右
+		max(myHitBox.min_.x, min(circleSize.position.x, myHitBox.max_.x));	// 左と右
 	float closestY =
-		max(boxSize_.x, min(circleSize.position.y, boxSize_.w));	// 下と上
+		max(myHitBox.min_.y, min(circleSize.position.y, myHitBox.max_.y));	// 下と上
 	// 最近点と円の中心の距離を計算
 	float distanceX = circleSize.position.x - closestX;
 	float distanceY = circleSize.position.y - closestY;
@@ -75,30 +76,45 @@ bool BoxColliderComponent::CheckCollisionCollider(CircleColliderComponent* _othe
 	}
 	return false;
 }
+
+//--------------------------------------------------
+// @brief 四角形同士の当たり判定
+//--------------------------------------------------
 bool BoxColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
 {
-	// 右と左
-	if (boxSize_.z < _other->GetBoxSize().y)
-	{
-		this->hitFg_ = false;  return false;
+	auto myHitbox    = this->GetWorldHitBox();		// 自
+	auto otherHitbox = _other->GetWorldHitBox();	// 他
+	// x方向
+	if ( myHitbox.max_.x < otherHitbox.min_.x || myHitbox.min_.x > otherHitbox.max_.x) {
+		this->hitFg_ = false;
+		return false;
 	}
-	// 左と右
-	if (boxSize_.y > _other->GetBoxSize().z)
-	{
-		this->hitFg_ = false; return false;
+	// y方向
+	if(myHitbox.max_.y < otherHitbox.min_.y || myHitbox.min_.y > myHitbox.max_.y){
+		this->hitFg_ = false;
+		return false;
 	}
-	// 下と上
-	if (boxSize_.x > _other->GetBoxSize().w)
-	{
-		this->hitFg_ = false; return false;
-	}
-	// 上と下
-	if (boxSize_.w < _other->GetBoxSize().x)
-	{
-		this->hitFg_ = false; return false;
-	}
-	this->hitFg_ = true; return true;
+
+	// x, yともに重なっている
+	this->hitFg_ = true;
+	return true;
 }
+
+//--------------------------------------------------
+// @param _position ownerの中心位置
+// @brief 当たり判定の座標を決定
+//--------------------------------------------------
+void BoxColliderComponent::SetWorldHitBox(Vector3 _position)
+{
+	// オフセット適用
+	_position += offset_;
+
+	hit_box_ = AABB{
+		Vector2(_position.x - size_.x / 2, _position.y - size_.y / 2),		// 左下
+		Vector2(_position.x + size_.x / 2, _position.y + size_.y / 2)		// 右上
+	};
+}
+
 
 
 //--------------------------------------------------

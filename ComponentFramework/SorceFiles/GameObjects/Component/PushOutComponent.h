@@ -14,6 +14,7 @@
 #include "ColliderComponent/BoxColliderComponent.h"
 #include "TransformComponent.h"
 
+
 //-----------------------------------------------------------------
 // 押し出しコンポーネント
 //-----------------------------------------------------------------
@@ -32,12 +33,7 @@ public:
 	TypeID GetComponentType(void) const override { return TypeID::PushOutComponent; }
 
 private:
-    DirectX::SimpleMath::Vector3 CalculatePushOut(
-        const DirectX::SimpleMath::Vector3& myPos, const DirectX::SimpleMath::Vector4& myBox,
-        const DirectX::SimpleMath::Vector3& otherPos, const DirectX::SimpleMath::Vector4& otherBox
-    );
 
-    // 頻繁に呼び出すようなら最初っからownerのComponent情報をメンバ変数で持っといたほうが処理は軽いかも？
 };
 
 

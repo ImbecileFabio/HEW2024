@@ -3,6 +3,8 @@
 // 著者：尾上莉奈
 //--------------------------------------------------
 // 説明：四角の当たり判定のコンポーネント
+// 
+// 24/12/21 arima AABB関連を追加してみた
 //==================================================
 #ifndef BOX_COLLIDER_COMPONENT_H_
 #define BOX_COLLIDER_COMPONENT_H_
@@ -10,8 +12,18 @@
 #include <memory>
 #include <SimpleMath.h>
 #include "ColliderBaseComponent.h"
-/*----- 構造体宣言 -----*/
+
+using namespace DirectX::SimpleMath;
+
+/*----- 構造体定義 -----*/
+struct AABB {
+	Vector2 min_;		// 矩形の左下
+	Vector2 max_;		// 矩形の右上
+};
+
 /*----- 前方宣言 -----*/
+class TransformComponent;
+
 //--------------------------------------------------
 // 四角形の当たり判定
 //--------------------------------------------------
@@ -32,10 +44,13 @@ public:
 
 	TypeID GetComponentType(void) const override { return TypeID::BoxColliderComponent; }
 
-	DirectX::SimpleMath::Vector4 GetBoxSize(void) const { return boxSize_; }
+	// 当たり判定の位置を決定したり
+	void SetWorldHitBox(Vector3 _position);
+	auto GetWorldHitBox(void) const { return hit_box_; }
+	
 
 private:
-	DirectX::SimpleMath::Vector4 boxSize_{ 0.f, 0.f, 0.f, 0.f };	// 当たり判定のサイズ 上・下・左・右
+	AABB hit_box_{};	// 当たり判定の矩形
 };
 
 #endif // BOX_COLLIDER_COMPONENT_H_

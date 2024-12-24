@@ -12,6 +12,8 @@
 #include <memory>
 #include <SimpleMath.h>
 #include "../../Component.h"
+
+using namespace DirectX::SimpleMath;
 /*----- 構造体宣言 -----*/
 /*----- 前方宣言 -----*/
 class CircleColliderComponent;
@@ -35,8 +37,19 @@ public:
 
 	bool GetHitFg(void) { return hitFg_; }
 
+	// ほぼ矩形用
+	void SetSize(const float& _x, const float& _y) { SetSize(Vector3(_x, _y, 1.0f)); }
+	void SetSize(const Vector3& _size) { size_ = _size; }
+	auto GetSize(void) { return size_; }
+
+	void SetOffset(const float _x, const float _y) { SetOffset(Vector3(_x, _y, 0.0f)); }
+	void SetOffset(const Vector3 _offset) { offset_ = _offset; }
+	auto GetOffset(void) { return offset_; }
+
 	TypeID GetComponentType(void) const override { return TypeID::ColliderBaseComponent; }
 protected:
-	bool hitFg_ = false;
+	bool hitFg_ = false;	// 当たっているかどうか
+	Vector3 size_{ 100.0f, 100.0f, 0.0f };		// サイズ
+	Vector3 offset_{0.0f, 0.0f, 0.0f};		// オフセット
 };
 #endif // COLLIDER_BASE_COMPONENT_H_

@@ -6,6 +6,8 @@
 //==================================================
 
 /*----- インクルード -----*/
+#include <memory>
+
 #include "RobotMoveComponent.h"
 
 #include "../GameObject.h"
@@ -17,11 +19,12 @@
 //--------------------------------------------------
 RobotMoveComponent::RobotMoveComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
-	, speed_(20.0f)
+	, speed_(1.0f)
 	, direction_(Vector2(1.0f, 0.0f))
+	, max_step_height_(100.0f)
 	, step_scan_distance_(1.0f)
-	, max_step_scan_distance_(150.0f)
 {
+	
 
 	this->Init();
 }
@@ -58,7 +61,7 @@ void RobotMoveComponent::Update()
 {
 	auto velocity = this->owner_->GetComponent<VelocityComponent>();
 	auto collider = this->owner_->GetComponent<BoxColliderComponent>();
-	auto transform = this->owner_->GetComponent<TransformComponent>();
+	auto transform = this->owner_->GetTransformComponent();
 
 	if (!velocity || !collider || !transform)
 	{
@@ -66,63 +69,67 @@ void RobotMoveComponent::Update()
 		return; 
 	}
 
-	this->CheckTurnAround(*transform, *collider);
+	// 段差をチェック
+	auto objects = this->owner_->GetGameManager()->GetGameObjects();
+	auto stepHeightOpt = CheckStepHeight(*transform, collider->GetSize(), objects);
+
+	// 段差がある場合
+	if (stepHeightOpt.has_value()) {
+		float stepHeight = stepHeightOpt.value();
+		// 段差が最大値以下なら
+		if (std::abs(stepHeight) <= max_step_height_) {
+			// 段差を上るor降りる
+			auto pos = transform->GetPosition();
+			transform->SetPosition(Vector3(pos.x, pos.y + stepHeight, pos.z));
+		}
+		// 段差が最大値を超える場合
+		else {
+			// 段差が高すぎる場合は進路方向をを反転
+			direction_ = Vector2(-direction_.x, direction_.y);
+		}
+	}
+
 
 	// 進行方向に進む
 	velocity->SetVelocity(Vector3(direction_.x * speed_, direction_.y * speed_, 0.0f));
 
-	// 段差をチェック
-	auto objects = this->owner_->GetGameManager()->GetGameObjects();
-	auto stepHeight = ChackStepHeight(*transform, objects);
 }
 
-
-//--------------------------------------------------
-// 進行方向を決める
-//--------------------------------------------------
-void RobotMoveComponent::CheckTurnAround(const TransformComponent& _transform, const BoxColliderComponent& _collider)
-{
-	auto pos = _transform.GetPosition();
-	auto size = _collider.GetBoxSize();
-	// 画面外に出そうになるなら
-	if (pos.x < (-960 - size.x / 2))
-	{
-		direction_ = Vector2(1.0f, 0.0f);
-	}
-	else if (pos.x > (960 + size.x / 2))
-	{
-		direction_ = Vector2(-1.0f, 0.0f);
-	}
-}
 
 // たぶんばぐってます
 //--------------------------------------------------
+// @param _transform 自身のトランスフォーム, _gameObjects オブジェクトリスト
 // @brief 段差の高さを調べる
-// @param _transform ロボットの姿勢, _gameObjects 環境オブジェクト
 // @return 段差の高さ
 //--------------------------------------------------
-std::optional<float> RobotMoveComponent::ChackStepHeight(const TransformComponent& _transform, const std::vector<GameObject*> _gameObjects)
+std::optional<float> RobotMoveComponent::CheckStepHeight(const TransformComponent& _transform, const Vector3& _size,  const std::vector<GameObject*> _gameObjects)
 {
 	auto position = _transform.GetPosition();
-	Vector2 scanStart = position + Vector2(direction_.x * step_scan_distance_);
-	Vector2 scnaEnd = scanStart + Vector2(0, -max_step_scan_distance_);
+	Vector2 scanStart = Vector2((position.x + _size.x ) + direction_.x * step_scan_distance_, position.y);
+	Vector2 scanEnd   = Vector2(scanStart.x, scanStart.y - max_step_height_);
 
-	float closestStepHeight = max_step_scan_distance_ + 1;	// 初期値： スキャン範囲外を超える値
+	float closestStepHeight = max_step_height_ + 1;	// 初期値： スキャン範囲外を超える値
 
+	// オブジェクトリストを走査
 	for (const auto& obj : _gameObjects) {
-		auto boxsize = obj->GetComponent<BoxColliderComponent>()->GetBoxSize();
-		// 水平方向に足元のラインが重なっているかチェック
-		if (boxsize.y <= scanStart.x && boxsize.z >= scanStart.x) {
-			// 段差の高さを計算
-			float stepHeight = position.y - boxsize.w;
-			if (stepHeight >= 0 && stepHeight <= max_step_height_) {
-				closestStepHeight = min(closestStepHeight, stepHeight);
+		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
+		if(auto boxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider))
+		{
+
+			auto hitbox = boxCollider->GetWorldHitBox();
+			// 足元のスキャンラインがAABBに重なっているか確認
+			if (scanStart.x >= hitbox.min_.x && scanStart.x <= hitbox.max_.x) {
+				float stepHeight = hitbox.max_.y - scanEnd.y;  // 段差の高さ
+				// 登れる段差の高さか確認
+				if (stepHeight > 0 && stepHeight <= max_step_height_) {
+					closestStepHeight = min(closestStepHeight, stepHeight);
+				}
 			}
 		}
 	}
-
 	// 最も近い段差が見つかればその高さを返す
 	if (closestStepHeight <= max_step_height_) {
+		std::cout << std::format("段差の高さ：{}\n", closestStepHeight);
 		return closestStepHeight;
 	}
 
