@@ -21,7 +21,8 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	// レンダリング
 	, "RenderComponent"
 	, "SpriteComponent"
-	
+	// アニメーション
+	, "AnimationComponent"
 	// 姿勢制御
 	, "TransformComponent"
 	// リジッドボディ

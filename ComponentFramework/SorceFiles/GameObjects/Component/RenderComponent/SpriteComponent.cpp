@@ -139,3 +139,4 @@ void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4& _color)
 	vertex_buffer_.Modify(vertices_);	// バッファを書き換え
 }
 
+

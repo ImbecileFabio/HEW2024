@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RobotMoveComponent.cpp" />
@@ -82,6 +83,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RobotMoveComponent.h" />

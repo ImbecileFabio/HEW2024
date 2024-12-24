@@ -22,7 +22,7 @@
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
-
+#include "../Component/RenderComponent/AnimationComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -36,7 +36,7 @@ Robot::Robot(GameManager* _gameManager)
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	//robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this);	// 押し出し
-
+	animation_component_ = new AnimationComponent(sprite_component_, this);	// アニメーション
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
 

@@ -31,7 +31,8 @@ public:
 		// レンダリング
 		, RenderComponent
 		, SpriteComponent
-
+		// アニメーション
+		, AnimationComponent
 		// 姿勢制御
 		, TransformComponent
 		// リジッドボディ

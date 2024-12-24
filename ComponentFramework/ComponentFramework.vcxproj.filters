@@ -60,6 +60,7 @@
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -121,6 +122,7 @@
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\StageView.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />
