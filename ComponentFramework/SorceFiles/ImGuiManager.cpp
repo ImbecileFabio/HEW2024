@@ -319,7 +319,7 @@ void TreeGUI::ShowWindow()
                 {
                     if (obj == nullptr)
                     {
-
+						selectObject_ = nullptr;
                     }
                     ImGui::PushID(reinterpret_cast<void*>(obj));
                     // オブジェクトの名前を表示（仮に GetName 関数がある場合）
