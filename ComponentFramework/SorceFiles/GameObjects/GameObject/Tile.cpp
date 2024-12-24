@@ -30,7 +30,7 @@ Tile::Tile(GameManager* _gameManager)
 	collider_component_ = new BoxColliderComponent(this);
 
 	// デバッグ
-	//debug_collider_draw_component_ = new DebugColliderDrawComponent(this);
+	debug_collider_draw_component_ = new DebugColliderDrawComponent(this);
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Tile::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -47,6 +47,8 @@ Tile::~Tile(void)
 	delete sprite_component_;
 	delete collider_component_;
 	delete collider_event_component_;
+
+	delete debug_collider_draw_component_;
 }
 
 //--------------------------------------------------
