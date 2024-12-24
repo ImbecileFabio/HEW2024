@@ -23,7 +23,9 @@ public:
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
-
+private:
+	class Camera*	  camera_{};	// ƒJƒƒ‰
+	class Revolution* result_{};	// ƒŠƒUƒ‹ƒg‰æ–Ê
 };
 
 #endif  // RESULT_SCENE_H_

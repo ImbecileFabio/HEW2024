@@ -54,6 +54,7 @@ public:
 	void ImGuiUnInitialize();		// 終了
 
 	void SetObjectList(std::vector<GameObject*>& _objectList) { ImGuiBase::objectList_ = &_objectList; }	// オブジェクトリストをセット
+	std::vector<ImGuiBase*> GetImGuiWindowList() { return imGuiWindowList_; }	// ウィンドウリストを取得
 private:
 	bool showFg = true;    // ウィンドウが邪魔な時はこれをFALSEに
 
@@ -67,10 +68,16 @@ public:
 	ObjectStatesGUI() : ImGuiBase() {};
 	~ObjectStatesGUI() = default;
 	void ShowWindow() override;
+
+	void SetViewMatrix(DirectX::SimpleMath::Matrix _viewMatrix) { viewMatrix_ = _viewMatrix; }
 private:
+	void ColliderDraw();
+
 	DirectX::SimpleMath::Vector3 position_ = { 0.0f, 0.0f, 0.0f };	// 値格納用変数
 	DirectX::SimpleMath::Vector3 rotation_ = { 0.0f, 0.0f, 0.0f };
 	DirectX::SimpleMath::Vector3 scale_ = { 0.0f, 0.0f, 0.0f };
+
+	DirectX::SimpleMath::Matrix viewMatrix_;	// カメラのビュー行列を保管する変数
 };
 /*--実行速度とか内部の情報を表示するウィンドウ--*/
 class SystemGUI : public ImGuiBase

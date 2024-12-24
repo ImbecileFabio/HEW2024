@@ -32,6 +32,7 @@ public:
 	virtual void AddEvent(std::function<void(GameObject* _other)>& _event) {};
 	virtual void RemoveEvent() {};	// いらなくなったオブジェクトを消す予定
 	size_t GetId() { return id_; }
+	void ResetID() { generalId_ = 0; }
 
 	TypeID GetComponentType(void) const override { return TypeID::EventBaseComponent; }
 protected:

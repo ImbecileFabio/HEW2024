@@ -13,6 +13,7 @@
 #include "../PemdulumManager.h"
 #include "../InputManager.h"
 #include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
+#include "../GameObjects/Component/EventComponent/ColliderEventComponent.h"
 #include "../GameObjects/Component/PendulumMovementComponent.h"
 #include "../GameObjects/Component/ChildrenComponent.h"
 
@@ -77,7 +78,7 @@ void Stage1_1Scene::Init()
 		auto childrenComponent = colliderObjects->GetComponent<ChildrenComponent>();
 		if (childrenComponent)
 		{
-			auto childrenObjects = childrenComponent->GetChildren();
+			auto& childrenObjects = childrenComponent->GetChildren();
 			for (auto& children : childrenObjects)
 			{
 				// あたり判定のあるオブジェクトをコライダーマネージャーに登録
@@ -118,6 +119,7 @@ void Stage1_1Scene::Uninit()
 	delete tile_3_;
 	delete robot_;
 	delete lift_;
+	items_[0]->GetComponent<EventBaseComponent>()->ResetID();
 	for (auto& item : items_)
 	{
 		delete item;
@@ -136,10 +138,6 @@ void Stage1_1Scene::Update()
 		if(game_manager_->GetItemCount() == gearCounter) 
 		{
 		 	State = Result;
-		}
-		if (input.GetKeyTrigger(VK_RETURN))
-		{
-			State = Result;
 		}
 		break;
 	case Stage1_1Scene::Result:

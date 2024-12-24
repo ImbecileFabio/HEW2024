@@ -78,7 +78,6 @@ void GameManager::InitAll(void)
 	current_scene_->Init();
 
 	ImGuiManager::staticPointer->SetObjectList(game_objects_);
-
 }
 
 //-----------------------------------------------------------------

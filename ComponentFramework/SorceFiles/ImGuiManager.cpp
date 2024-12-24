@@ -116,7 +116,14 @@ void ObjectStatesGUI::ShowWindow()
         {
 
         }
-        if (selectObject_ != nullptr)
+        if (objectList_->size() == 0)
+        {
+            selectObject_ = nullptr;
+        }
+        if (selectObject_ == nullptr)
+        {
+        }
+        else
         {
             // オブジェクトの名前
             ImGui::Text(selectObject_->GetObjectName().c_str());
@@ -141,7 +148,9 @@ void ObjectStatesGUI::ShowWindow()
             ImGui::Text("ComponentList");
 			for (auto& component : selectObject_->GetComponents())
 			{
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 1.0f, 0.1f, 1.0f)); // 緑色
                 ImGui::Text(component->ComponentTypeNames[static_cast<int>(component->GetComponentType())]);
+				ImGui::PopStyleColor();
                 switch (component->GetComponentType())
                 {
                 case Component::TypeID::SpriteComponent:
@@ -252,12 +261,18 @@ void ObjectStatesGUI::ShowWindow()
     }
 }
 //-------------------------------------------------
+// @brief コライダーを描画できそうな関数
+//--------------------------------------------------
+void ObjectStatesGUI::ColliderDraw()
+{
+}
+//-------------------------------------------------
 // @brief システムの情報を表示するウィンドウ
 //--------------------------------------------------
 void SystemGUI::ShowWindow()
 {
     // タブを管理するタブバー
-    if (ImGui::BeginTabBar("DebugWindow"), ImGuiWindowFlags_AlwaysVerticalScrollbar)
+    if (ImGui::BeginTabBar("DebugWindow"), &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar)
     {   // システム情報を表示
         if (ImGui::BeginTabItem("System"))
         {
@@ -287,25 +302,31 @@ void SystemGUI::ShowWindow()
 //--------------------------------------------------
 void TreeGUI::ShowWindow()
 {
-    if (ImGui::Begin("TreeView", nullptr, ImGuiWindowFlags_AlwaysVerticalScrollbar))
+    if (showFg)
     {
-        // 稼働中のオブジェクトリスト
-        if (ImGui::TreeNode("active_objects"))
+        if (ImGui::Begin("TreeView", &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar))
         {
-			if (objectList_ == nullptr) return;
-            // objectList_ の中身を全て表示
-            for (auto& obj : *objectList_)
+            // 稼働中のオブジェクトリスト
+            if (ImGui::TreeNode("active_objects"))
             {
-                ImGui::PushID(reinterpret_cast<void*>(obj));
-                // オブジェクトの名前を表示（仮に GetName 関数がある場合）
-                if (ImGui::Selectable(obj->GetObjectName().c_str()))
-				{
-                    selectObject_ = obj;
+                // objectList_ の中身を全て表示
+                for (auto& obj : *objectList_)
+                {
+                    ImGui::PushID(reinterpret_cast<void*>(obj));
+                    // オブジェクトの名前を表示（仮に GetName 関数がある場合）
+                    if (ImGui::Selectable(obj->GetObjectName().c_str()))
+                    {
+                        selectObject_ = obj;
+                    }
+                    ImGui::PopID();  // IDをポップして、次の要素に影響しないようにする
                 }
-                ImGui::PopID();  // IDをポップして、次の要素に影響しないようにする
-            }
 
-            ImGui::TreePop();
+                ImGui::TreePop();
+            }
+        }
+        if (objectList_->size() == 0)
+        {
+			selectObject_ = nullptr;
         }
         ImGui::End();
     }

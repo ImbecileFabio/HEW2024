@@ -9,13 +9,17 @@
 #include "ResultScene.h"
 
 #include "../GameManager.h"
-
+#include "../GameObjects/GameObject/Revolution.h"
+#include "../GameObjects/GameObject/Camera.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
 ResultScene::ResultScene(GameManager* _gameManager)
 	: SceneBase(_gameManager, "ResultScene")
 {
+	result_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/result/v01/10.JPG");
+	result_->GetComponent<TransformComponent>()->SetScale(1920.0f, 1080.0f);
+	result_->GetComponent<TransformComponent>()->SetPosition(0.0f, 0.0f);
 	this->Init();
 }
 
@@ -24,20 +28,23 @@ ResultScene::ResultScene(GameManager* _gameManager)
 //--------------------------------------------------
 ResultScene::~ResultScene()
 {
+	game_manager_->RemoveGameObject(result_);
+	delete result_;
 }
-
 //--------------------------------------------------
 // 初期化処理
 //--------------------------------------------------
 void ResultScene::Init()
 {
-}
 
+}
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------
 void ResultScene::Uninit()
 {
+	game_manager_->RemoveGameObject(result_);
+	delete result_;
 }
 
 //--------------------------------------------------
