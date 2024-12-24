@@ -17,6 +17,7 @@
 ResultScene::ResultScene(GameManager* _gameManager)
 	: SceneBase(_gameManager, "ResultScene")
 {
+	camera_ = new Camera(game_manager_);
 	result_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/result/v01/10.JPG");
 	result_->GetComponent<TransformComponent>()->SetScale(1920.0f, 1080.0f);
 	result_->GetComponent<TransformComponent>()->SetPosition(0.0f, 0.0f);
@@ -29,6 +30,8 @@ ResultScene::ResultScene(GameManager* _gameManager)
 ResultScene::~ResultScene()
 {
 	game_manager_->RemoveGameObject(result_);
+	game_manager_->RemoveGameObject(camera_);
+	delete camera_;
 	delete result_;
 }
 //--------------------------------------------------

@@ -110,21 +110,26 @@ void ObjectStatesGUI::ShowWindow()
     // ここが自分で記述したウィンドウ設定
     if (this->showFg)
     {
+        if (objectList_->size() <= 0)
+        {
+            selectObject_ = nullptr;
+        }
         ImGui::Begin("~(0-0)~", &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar);
         // オブジェクト生成
         if (ImGui::Button("Object Create"))
         {
 
         }
-        if (objectList_->size() == 0)
-        {
-            selectObject_ = nullptr;
-        }
         if (selectObject_ == nullptr)
         {
         }
         else
         {
+            if (objectList_->size() <= 0)
+            {
+                selectObject_ = nullptr;
+                return;
+            }
             // オブジェクトの名前
             ImGui::Text(selectObject_->GetObjectName().c_str());
             // transformの情報
@@ -168,7 +173,7 @@ void ObjectStatesGUI::ShowWindow()
                 case Component::TypeID::BoxColliderComponent:
                 {
                     auto boxCollider = dynamic_cast<BoxColliderComponent*>(component);
-                    auto boxSize = boxCollider->GetBoxSize();
+					auto boxSize = boxCollider->GetSize();
 					int updateOrder = boxCollider->GetUpdateOrder();
                     if (ImGui::DragFloat4("BoxSize", &boxSize.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
                     {
@@ -312,6 +317,10 @@ void TreeGUI::ShowWindow()
                 // objectList_ の中身を全て表示
                 for (auto& obj : *objectList_)
                 {
+                    if (obj == nullptr)
+                    {
+
+                    }
                     ImGui::PushID(reinterpret_cast<void*>(obj));
                     // オブジェクトの名前を表示（仮に GetName 関数がある場合）
                     if (ImGui::Selectable(obj->GetObjectName().c_str()))
