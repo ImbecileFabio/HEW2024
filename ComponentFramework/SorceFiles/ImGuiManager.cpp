@@ -158,10 +158,10 @@ void ObjectStatesGUI::ShowWindow()
                     break;
                 case Component::TypeID::BoxColliderComponent:
                 {
-                    auto boxCollider = dynamic_cast<BoxColliderComponent*>(component);
-                    auto boxSize = boxCollider->GetBoxSize();
+					auto boxCollider = dynamic_cast<BoxColliderComponent*>(component);
+                    auto boxSize = boxCollider->GetSize();
 					int updateOrder = boxCollider->GetUpdateOrder();
-                    if (ImGui::DragFloat4("BoxSize", &boxSize.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("BoxSize", &boxSize.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
                     {
                     }
                     ImGui::Text("UpdateOrder : %d", updateOrder);

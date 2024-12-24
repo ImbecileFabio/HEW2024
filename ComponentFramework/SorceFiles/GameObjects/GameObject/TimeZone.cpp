@@ -10,8 +10,8 @@ TimeZone::TimeZone(GameManager* _gameManager)
 {
 	std::cout << std::format("ÅÉTimeZoneÅÑ -> Constructor\n");
 	// âfÇÁÇ»Ç¢Å@Ç«Ç§ÇµÇƒ
-		//sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"kouka/v01/kouka_01.png");
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"zako.png", 60);
+	sprite_component_		 = new SpriteComponent(this, TEXTURE_PATH_"kouka/v01/kouka_01.png");
+	//sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"zako.png", 60);
 	collider_base_component_ = new CircleColliderComponent(this);
 	event_base_component_ = new ColliderEventComponent(this);
 
