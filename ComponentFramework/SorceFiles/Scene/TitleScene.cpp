@@ -21,9 +21,9 @@ TitleScene::TitleScene(GameManager* _gameManager)
 {
 	camera_ = new Camera(game_manager_);
 	title_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/6.JPG");
-	title_->GetComponent<TransformComponent>()->SetScale(1920.0f, 1080.0f);
+	title_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
 	select_rough_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/7.JPG");
-	select_rough_->GetComponent<TransformComponent>()->SetScale(1920.0f, 1080.0f);
+	select_rough_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
 
 	this->Init();
 }
@@ -49,9 +49,6 @@ void TitleScene::Init()
 //--------------------------------------------------
 void TitleScene::Uninit()
 {
-	game_manager_->RemoveGameObject(camera_);
-	game_manager_->RemoveGameObject(title_);
-	game_manager_->RemoveGameObject(select_rough_);
 	delete camera_;
 	delete title_;
 	delete select_rough_;

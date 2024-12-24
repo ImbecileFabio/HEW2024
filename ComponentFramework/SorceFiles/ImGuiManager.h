@@ -27,14 +27,15 @@ class ImGuiBase
 {
 public:
 	static std::vector<GameObject*>* objectList_;	// ウィンドウに表示するオブジェクトのリスト
+	static GameObject* selectObject_;
 
 	ImGuiBase();
 	virtual ~ImGuiBase() = default;
 	virtual void SaveFile() {};	// 入力したデータを保存
 	virtual void LoadFile() {};	// ファイルを読みこむ
 	virtual void ShowWindow() = 0;	// ウィンドウを表示
+
 protected:
-	static GameObject* selectObject_;
 	ImVec2 position_ = { 0.0f, 0.0f };	// ウィンドウの座標
 	bool showFg = true;		// ウィンドウを表示するかどうか
 };
@@ -53,6 +54,7 @@ public:
 	void ImGuiRender();		// 描画
 	void ImGuiUnInitialize();		// 終了
 
+	void ResetSelectObject() { ImGuiBase::selectObject_ = nullptr; }	// 選択オブジェクトをリセット
 	void SetObjectList(std::vector<GameObject*>& _objectList) { ImGuiBase::objectList_ = &_objectList; }	// オブジェクトリストをセット
 	std::vector<ImGuiBase*> GetImGuiWindowList() { return imGuiWindowList_; }	// ウィンドウリストを取得
 private:
@@ -69,15 +71,10 @@ public:
 	~ObjectStatesGUI() = default;
 	void ShowWindow() override;
 
-	void SetViewMatrix(DirectX::SimpleMath::Matrix _viewMatrix) { viewMatrix_ = _viewMatrix; }
 private:
-	void ColliderDraw();
-
 	DirectX::SimpleMath::Vector3 position_ = { 0.0f, 0.0f, 0.0f };	// 値格納用変数
 	DirectX::SimpleMath::Vector3 rotation_ = { 0.0f, 0.0f, 0.0f };
 	DirectX::SimpleMath::Vector3 scale_ = { 0.0f, 0.0f, 0.0f };
-
-	DirectX::SimpleMath::Matrix viewMatrix_;	// カメラのビュー行列を保管する変数
 };
 /*--実行速度とか内部の情報を表示するウィンドウ--*/
 class SystemGUI : public ImGuiBase

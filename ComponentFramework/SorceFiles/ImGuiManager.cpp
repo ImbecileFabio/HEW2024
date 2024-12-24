@@ -110,10 +110,6 @@ void ObjectStatesGUI::ShowWindow()
     // ここが自分で記述したウィンドウ設定
     if (this->showFg)
     {
-        if (objectList_->size() <= 0)
-        {
-            selectObject_ = nullptr;
-        }
         ImGui::Begin("~(0-0)~", &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar);
         // オブジェクト生成
         if (ImGui::Button("Object Create"))
@@ -125,7 +121,7 @@ void ObjectStatesGUI::ShowWindow()
         }
         else
         {
-            if (objectList_->size() <= 0)
+            if (objectList_->empty())
             {
                 selectObject_ = nullptr;
                 return;
@@ -266,12 +262,6 @@ void ObjectStatesGUI::ShowWindow()
     }
 }
 //-------------------------------------------------
-// @brief コライダーを描画できそうな関数
-//--------------------------------------------------
-void ObjectStatesGUI::ColliderDraw()
-{
-}
-//-------------------------------------------------
 // @brief システムの情報を表示するウィンドウ
 //--------------------------------------------------
 void SystemGUI::ShowWindow()
@@ -317,10 +307,6 @@ void TreeGUI::ShowWindow()
                 // objectList_ の中身を全て表示
                 for (auto& obj : *objectList_)
                 {
-                    if (obj == nullptr)
-                    {
-						selectObject_ = nullptr;
-                    }
                     ImGui::PushID(reinterpret_cast<void*>(obj));
                     // オブジェクトの名前を表示（仮に GetName 関数がある場合）
                     if (ImGui::Selectable(obj->GetObjectName().c_str()))
@@ -333,7 +319,7 @@ void TreeGUI::ShowWindow()
                 ImGui::TreePop();
             }
         }
-        if (objectList_->size() == 0)
+        if (objectList_->empty())
         {
 			selectObject_ = nullptr;
         }
