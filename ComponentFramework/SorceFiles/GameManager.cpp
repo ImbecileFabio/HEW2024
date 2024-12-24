@@ -146,9 +146,11 @@ void GameManager::ChangeScene(SceneName _scene)
 		current_scene_ = new ResultScene(this);
 		break;
 	default:
-		std::cout << std::format("[GameManager] -> ChangeScene Error\n");
+		std::cout << std::format("[GameManager] -> ChangeScene SError\n");
 		break;
 	}
+
+	ImGuiManager::staticPointer->ResetSelectObject();
 }
 
 //-----------------------------------------------------------------

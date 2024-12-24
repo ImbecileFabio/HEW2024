@@ -66,7 +66,6 @@ public:
 	void AddGameObject(GameObject* _gameObject);
 	// ゲームオブジェクトの削除
 	void RemoveGameObject(GameObject* _gameObject);
-
 private:
 	int itemCount = 0;
 	// 更新処理
