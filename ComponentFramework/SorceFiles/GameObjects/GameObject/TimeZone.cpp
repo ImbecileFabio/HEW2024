@@ -34,7 +34,7 @@ TimeZone::~TimeZone()
 //--------------------------------------------------
 void TimeZone::InitGameObject(void)
 {
-	this->transform_component_->SetScale(200.0f, 200.0f);
+	this->transform_component_->SetSize(200.0f, 200.0f);
 }
 //--------------------------------------------------
 // @brief XVˆ—

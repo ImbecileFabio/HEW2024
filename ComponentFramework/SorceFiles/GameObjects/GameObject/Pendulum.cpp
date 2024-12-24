@@ -68,7 +68,7 @@ Pendulum::~Pendulum(void)
 void Pendulum::InitGameObject(void)
 {
 	// トランスフォームコンポーネント
-	transform_component_->SetScale(100.0f, 100.0f);
+	transform_component_->SetSize(100.0f, 100.0f);
 }
 
 //--------------------------------------------------
@@ -77,7 +77,7 @@ void Pendulum::InitGameObject(void)
 void Pendulum::UpdateGameObject(void)
 {
 	auto pos = pendulum_component_->GetPendulumFulcrum();
-	time_zone_->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y);
+	time_zone_->GetTransformComponent()->SetPosition(pos.x, pos.y);
 }
 //--------------------------------------------------
 // 当たり判定の実行処理

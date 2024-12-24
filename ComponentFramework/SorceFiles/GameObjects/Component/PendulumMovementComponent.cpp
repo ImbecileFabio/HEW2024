@@ -57,10 +57,7 @@ void PendulumMovementComponent::Uninit() {
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void PendulumMovementComponent::Update() {
-	 //動作確認用ログ
-	std::cout << std::format("{}  現在の角度：{}	角速度：{}\n", turnPendulum_, isPendulumAngle_, isPendulumVelocity_);
-	
+void PendulumMovementComponent::Update() {	
 	// 振り子の状態遷移
 	switch (langthState_)
 	{
@@ -107,8 +104,8 @@ void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _f
 		pendulumPosition_.y = _fulcrum.y - _length;
 	}
 	
-	this->owner_->GetComponent<TransformComponent>()->SetPosition(pendulumPosition_);
-	this->owner_->GetComponent<TransformComponent>()->SetRotation(-isPendulumAngle_);
+	this->owner_->GetTransformComponent()->SetPosition(pendulumPosition_);
+	this->owner_->GetTransformComponent()->SetRotation(-isPendulumAngle_);
 }
 
 //--------------------------------------------------

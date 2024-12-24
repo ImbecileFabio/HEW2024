@@ -31,15 +31,6 @@ struct VERTEX_3D
 	DirectX::SimpleMath::Vector2 uv;
 };
 
-// ジオメトリバッファー
-struct GeometryShaderBuffer {
-	DirectX::SimpleMath::Vector2 position;	// 位置
-	DirectX::SimpleMath::Color color;		// 色
-	DirectX::SimpleMath::Vector2 boxSize;	// サイズ
-	float thickness;					// 線の太さ	
-};
-
-
 // ブレンドステート
 enum EBlendState {
 	BS_NONE = 0,							// 半透明合成無し
@@ -49,6 +40,28 @@ enum EBlendState {
 	MAX_BLENDSTATE
 };
 
+// メッシュ
+struct SUBSET
+{
+	std::string MtrlName;			// マテリアル名
+	unsigned int IndexNum = 0;		// インデックス数
+	unsigned int VertexNum = 0;		// 頂点数
+	unsigned int IndexBase = 0;		// 開始インデックス	
+	unsigned int VertexBase = 0;	// 頂点ベース
+	unsigned int MaterialIdx = 0;	// マテリアルの番号
+};
+
+// マテリアル
+struct MATERIAL
+{
+	DirectX::SimpleMath::Color Ambient; // 環境反射
+	DirectX::SimpleMath::Color Diffuse;	// 拡散反射 (≒カラー)
+	DirectX::SimpleMath::Color Specular;	// 鏡面反射
+	DirectX::SimpleMath::Color Emission;	// 発光
+	float Shiness;	// 光沢の滑らかさ
+	BOOL TextureEnable;	//テクスチャを使うか否かのフラグ
+	BOOL Dummy[2];
+};
 
 /*----- 前方宣言 -----*/
 class GameManager;
@@ -91,8 +104,8 @@ public:
 	static void CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
 	static void CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName);
 
-
-
+	static void SetMaterial(MATERIAL Material);
+	//static void SetUV(float u, float v);
 private:
 
 	std::vector<RenderComponent*> sprites_;
@@ -108,6 +121,9 @@ private:
 	static ID3D11Buffer* m_WorldBuffer;
 	static ID3D11Buffer* m_ViewBuffer;
 	static ID3D11Buffer* m_ProjectionBuffer;
+
+	static ID3D11Buffer* m_MaterialBuffer;
+	static ID3D11Buffer* m_TextureBuffer;
 
 	static ID3D11DepthStencilState* m_DepthStateEnable;
 	static ID3D11DepthStencilState* m_DepthStateDisable;

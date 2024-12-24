@@ -39,6 +39,8 @@ private:
 	class VelocityComponent* velocity_component_{};		// 速度
 	class RobotMoveComponent* robot_move_component_{};	// ロボットの移動
 	class PushOutComponent* push_out_component_{};	// 押し出し
-	class AnimationComponent* animation_component_{};	// アニメーション
+
+	//
+	class DebugColliderDrawComponent* debug_collider_draw_component_{};
 };
 #endif	// ROBOT_H_

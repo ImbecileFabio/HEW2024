@@ -54,7 +54,7 @@ void VelocityComponent::Uninit() {
 // 更新処理
 //--------------------------------------------------
 void VelocityComponent::Update() {
-	position_ = this->owner_->GetComponent<TransformComponent>()->GetPosition();	// -現在座標の取得
+	position_ = this->owner_->GetTransformComponent()->GetPosition();	// -現在座標の取得
 
 	// タイムゾーンから倍率を受け取る処理が必要かも
 	// 別の形でもよい
@@ -73,7 +73,7 @@ void VelocityComponent::Update() {
 		position_ += (velocity_ * speed_rate_);
 	}
 
-	this->owner_->GetComponent<TransformComponent>()->SetPosition(position_);
+	this->owner_->GetTransformComponent()->SetPosition(position_);
 }
 //--------------------------------------------------
 // 速度係数をセット

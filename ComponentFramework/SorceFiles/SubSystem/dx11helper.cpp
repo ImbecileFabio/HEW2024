@@ -233,23 +233,48 @@ bool CreateGeometryShader(ID3D11Device* device,
 	ID3D11GeometryShader** ppGeometryShader)
 {
 	// シェーダーバイナリをコンパイル
-	ID3D10Blob* gsBlob = nullptr;
+	ID3DBlob* gsBlob = nullptr;
+	ID3DBlob* errorBlob = nullptr;
 
-	void* ShaderObject;
-	size_t	ShaderObjectSize;
+	// HLSLをコンパイル
+	HRESULT hr = D3DCompileFromFile(
+		std::wstring(szFileName, szFileName + strlen(szFileName)).c_str(),
+		nullptr,
+		D3D_COMPILE_STANDARD_FILE_INCLUDE,
+		szEntryPoint,
+		szShaderModel,
+		D3DCOMPILE_ENABLE_STRICTNESS,
+		0,
+		&gsBlob,
+		&errorBlob
+	);
 
-	HRESULT hr = CompileShader(
-		szFileName, szEntryPoint, szShaderModel,&ShaderObject, ShaderObjectSize, &gsBlob);
-	assert(SUCCEEDED(hr));
-
-	// ジオメトリシェーダを作成
-	hr = device->CreateGeometryShader(ShaderObject, ShaderObjectSize, nullptr, ppGeometryShader);
-	if(FAILED(hr))
+	if (FAILED(hr))
 	{
-		if(gsBlob) gsBlob->Release();
+		if (errorBlob)
+		{
+			MessageBoxA(nullptr, (char*)errorBlob->GetBufferPointer(), "Shader Compilation Error", MB_OK);
+			errorBlob->Release();
+		}
+		if (gsBlob) gsBlob->Release();
 		return false;
 	}
 
+	// ジオメトリシェーダオブジェクトを生成
+	hr = device->CreateGeometryShader(
+		gsBlob->GetBufferPointer(),
+		gsBlob->GetBufferSize(),
+		nullptr,
+		ppGeometryShader
+	);
+
+	gsBlob->Release();
+
+	if (FAILED(hr))
+	{
+		MessageBox(nullptr, "Failed to create geometry shader", "error", MB_OK);
+		return false;
+	}
 
 	return true;
 }

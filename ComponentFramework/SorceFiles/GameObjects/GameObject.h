@@ -79,7 +79,7 @@ public:
 	void Update(void);
 	void UpdateComponents(void);
 
-	virtual void InitGameObject(void) = 0;	// オーバーライド用
+	virtual void InitGameObject(void);	// オーバーライド用
 	virtual void UpdateGameObject(void) = 0;	// オーバーライド用
 
 	// 姿勢情報の更新
@@ -94,9 +94,9 @@ public:
 	void RemoveComponent(Component* component);
 
 	//--------------------------------------------------
-	// @param	取得したいConponent(T)
-	// @brief	GameObjectのcomponents_からtargetにキャストする
-	// @retuan	見つかればtargetを	見つからなければ nullptr を返す
+	// @param	取得したい component(T)
+	// @brief	GameObjectの  components_からにキャストする
+	// @return	見つかれば targetを	見つからなければ nullptr を返す
 	//--------------------------------------------------
 	template <typename T>
 	inline T* GetComponent() const {
@@ -113,6 +113,10 @@ public:
 		std::cout << std::format("＜GetComponent<{}>＞ ->Component Not Found\n", typeid(T).name());
 		return nullptr;
 	}
+
+	// トランスフォームを取得
+	TransformComponent* GetTransformComponent() const { return transform_component_; }
+
 	// コンポーネントリストの取得
 	const auto& GetComponents() const { return components_; }
 

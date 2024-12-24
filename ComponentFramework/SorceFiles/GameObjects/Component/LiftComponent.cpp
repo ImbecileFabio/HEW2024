@@ -51,7 +51,7 @@
 //		break;
 //	case MoveState::side:
 //		// ‰¡ˆÚ“®
-//		DirectX::SimpleMath::Vector3 pos = this->owner_->GetComponent<TransformComponent>()->GetPosition();
+//		DirectX::SimpleMath::Vector3 pos = this->owner_->GetTransformComponent()->GetPosition();
 //		if (pos.x < maxPos_.x && switchFg_ == false)
 //		{
 //			pos.x += 2.0f;
@@ -64,7 +64,7 @@
 //			if (pos.x <= minPos_.x)
 //				switchFg_ = false;
 //		}
-//		this->owner_->GetComponent<TransformComponent>()->SetPosition(pos.x, pos.y, pos.z);
+//		this->owner_->GetTransformComponent()->SetPosition(pos.x, pos.y, pos.z);
 //		break;
 //	}
 //}

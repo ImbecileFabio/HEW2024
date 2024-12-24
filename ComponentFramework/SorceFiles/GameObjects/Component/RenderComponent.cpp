@@ -68,10 +68,10 @@ void RenderComponent::InitBuffers()
 
 	vertices_.resize(4);
 
-	vertices_[0].position = Vector3(-0.5f, 0.5f, 0.0f);
-	vertices_[1].position = Vector3(0.5f, 0.5f, 0.0f);
+	vertices_[0].position = Vector3(-0.5f, 0.5f,  0.0f);
+	vertices_[1].position = Vector3(0.5f, 0.5f,   0.0f);
 	vertices_[2].position = Vector3(-0.5f, -0.5f, 0.0f);
-	vertices_[3].position = Vector3(0.5f, -0.5f, 0.0f);
+	vertices_[3].position = Vector3(0.5f, -0.5f,  0.0f);
 
 	vertices_[0].color = Color(1, 1, 1, 1);
 	vertices_[1].color = Color(1, 1, 1, 1);
@@ -101,42 +101,13 @@ void RenderComponent::InitBuffers()
 	// シェーダオブジェクト生成
 	shader_.Create("shader/unlitTextureVS.hlsl", "shader/unlitTexturePS.hlsl");
 
-}
-
-//--------------------------------------------------
-// デバッグ用のバッファ初期化
-//--------------------------------------------------
-void RenderComponent::InitGeometryBuffers()
-{
-	auto collider = owner_->GetComponent<BoxColliderComponent>();
-	if (!collider) { return; }	// コライダーがない
-
-	const auto& box = collider->GetBoxSize();
-
-
-	// 中心座標
-	Vector2 pos =
-	{
-		(box.x + box.z) * 0.5f,
-		(box.w - box.y) * 0.5f
-	};
-
-	Vector2 size =
-	{
-		box.z - box.x,	// 幅
-		box.y - box.w 	// 高さ
-	};
-
-	GeometryShaderBuffer gsBuffer;
-	gsBuffer.position = pos;
-	gsBuffer.color = Color(1.0f, 0.0f, 0.0f, 1.0f);	// 赤色
-	gsBuffer.thickness = 2.0f;
-
-
-
-	constant_buffer_.Create(std::vector<GeometryShaderBuffer>{gsBuffer});
-
-	shader_.CreateGeometry("shader/GeometryShader.hlsl");
+	// マテリアル情報取得
+	material_ = std::make_unique<Material>();
+	MATERIAL mtrl;
+	mtrl.Diffuse = Color(1, 1, 1, 1);
+	mtrl.Shiness = 1;
+	mtrl.TextureEnable = true; // テクスチャを使うか否かのフラグ
+	material_->Create(mtrl);
 
 }
 
