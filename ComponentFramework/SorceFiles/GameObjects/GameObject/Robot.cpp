@@ -61,6 +61,8 @@ Robot::~Robot(void)
 	delete velocity_component_;
 	delete robot_move_component_;
 	delete push_out_component_;
+
+	delete debug_collider_draw_component_;
 }
 
 //--------------------------------------------------

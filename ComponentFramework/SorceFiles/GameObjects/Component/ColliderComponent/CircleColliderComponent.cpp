@@ -38,8 +38,8 @@ void CircleColliderComponent::Update(void)
 	if(transform)
 	{
 		this->circle_.position = transform->GetPosition();
-		DirectX::SimpleMath::Vector3 scale = transform->GetScale();
-		this->circle_.radius = std::min<float>(scale.x, scale.y) / 2.0f;
+		DirectX::SimpleMath::Vector3 size = transform->GetSize();
+		this->circle_.radius = std::min<float>(size.x, size.y) / 2.0f;
 	}
 }
 //--------------------------------------------------
