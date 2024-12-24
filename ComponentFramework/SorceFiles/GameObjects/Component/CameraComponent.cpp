@@ -45,7 +45,7 @@ CameraComponent::~CameraComponent()
 //--------------------------------------------------
 void CameraComponent::Init()
 {
-	target_ = Vector3(0.f, 0.f, 0.f);
+	target_ = Vector3(0.f, 0.f, 1.f);
 
 }
 
@@ -65,7 +65,7 @@ void CameraComponent::Update()
 	// ビュー変換行列作成
 	Vector3 up = Vector3(0.f, 1.f, 0.f);
 	// 左手系に変更
-	auto transform = owner_->GetComponent<TransformComponent>();
+	auto transform = owner_->GetTransformComponent();
 	if (transform)
 	{
 		auto pos = transform->GetPosition();
@@ -74,14 +74,14 @@ void CameraComponent::Update()
 	else
 	{
 		std::cout << std::format("＜CameraComponent＞ -> Default Position\n");
-		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0, 0, -1), Vector3(0.f, 0.f, 0.f), up);
+		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0, 0, -1), Vector3(0.f, 0.f, 1.f), up);
 	}
 
 	Renderer::SetViewMatrix(&view_matrix_);
 
 	// プロジェクション行列の生成
-	float nearPlane = 0.0f;		// ニアクリップ
-	float farPlane = 3.0f;	// ファークリップ
+	float nearPlane = 1.0f;		// ニアクリップ
+	float farPlane = 1000.0f;	// ファークリップ
 
 	Matrix projectionMatrix;
 	projectionMatrix = DirectX::XMMatrixOrthographicLH(static_cast<float>(GameProcess::GetWidth()), static_cast<float>(GameProcess::GetHeight()), nearPlane, farPlane);

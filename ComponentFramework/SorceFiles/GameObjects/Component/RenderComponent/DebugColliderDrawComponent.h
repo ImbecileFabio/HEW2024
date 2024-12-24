@@ -1,5 +1,5 @@
 //==================================================
-// [DebugCollisionDrawComponent.h] 当たり判定描画コンポーネント
+// [DebugColliderDrawComponent.h] 当たり判定描画コンポーネント
 // 著者：有馬啓太
 //--------------------------------------------------
 // 説明：デバッグ用の描画コンポーネントの宣言
@@ -11,7 +11,6 @@
 #include <string>
 
 #include "../RenderComponent.h"
-#include "../../../SubSystem/ConstantBuffer.h"
 #include "../../../SubSystem/Shader.h"
 
 
@@ -24,23 +23,22 @@ class GameObject;
 //--------------------------------------
 // 描画クラス
 //--------------------------------------------------
-class DebugCollisionDrawComponent :
+class DebugColliderDrawComponent :
 	public RenderComponent
 {
 public:
-	DebugCollisionDrawComponent(GameObject* _owner,int _drawOrder = 90);
-	~DebugCollisionDrawComponent();
+	DebugColliderDrawComponent(GameObject* _owner,int _drawOrder = 100);
+	~DebugColliderDrawComponent();
 
 	void Init() override;
 	void Update() override;
 	void Uninit() override;
 	void Draw();
 
-
-	//TypeID GetComponentType(void) const override { return TypeID::DebugCollisionDrawComponent; }
+	void InitDebugBuffers();
+	//TypeID GetComponentType(void) const override { return TypeID::DebugColliderDrawComponent; }
 
 private:
-
 
 };
 #endif	// DEBUG_COLLISION_DRAW_COMPONENT_H_

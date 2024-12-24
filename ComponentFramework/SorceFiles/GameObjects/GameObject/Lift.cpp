@@ -49,7 +49,7 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-	transform_component_->SetScale(200.0f, 200.0f);
+	transform_component_->SetSize(200.0f, 200.0f);
 
 	velocityComponent_->SetUseGravity(false);
 

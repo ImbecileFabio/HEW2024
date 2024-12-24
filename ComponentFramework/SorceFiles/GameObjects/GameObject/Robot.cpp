@@ -23,6 +23,9 @@
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
 
+//	デバッグ
+#include "../Component/RenderComponent/DebugColliderDrawComponent.h"
+
 
 //--------------------------------------------------
 // コンストラクタ
@@ -34,8 +37,10 @@ Robot::Robot(GameManager* _gameManager)
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	velocity_component_ = new VelocityComponent(this);	// 速度
-	//robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
+	// robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this);	// 押し出し
+
+	debug_collider_draw_component_ = new DebugColliderDrawComponent(this);
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -54,6 +59,8 @@ Robot::~Robot(void)
 	delete collider_component_;
 	delete collider_event_component_;
 	delete velocity_component_;
+	delete robot_move_component_;
+	delete push_out_component_;
 }
 
 //--------------------------------------------------
@@ -61,7 +68,7 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetScale(150, 150);
+	transform_component_->SetSize(150, 150);
 
 	velocity_component_->SetUseGravity(true);
 }
@@ -84,14 +91,6 @@ void Robot::UpdateGameObject(void)
 	else if (input.GetKeyPress(VK_D))
 	{
 		velocity_component_->SetVelocity(Vector3(10, 0, 0));
-	}
-	else if (input.GetButtonPress(VK_W))
-	{
-		velocity_component_->SetVelocity(Vector3(0, 10, 0));
-	}
-	else if (input.GetButtonPress(VK_S))
-	{
-		velocity_component_->SetVelocity(Vector3(0, -10, 0));
 	}
 	else
 	{

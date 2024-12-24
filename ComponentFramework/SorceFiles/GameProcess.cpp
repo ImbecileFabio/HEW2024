@@ -117,7 +117,7 @@ void GameProcess::Run(void)
 #ifdef IMGUI_DEBUG
 				imGuiManager.ImGuiUpdate();
 #endif
-				std::cout << std::format("[ GameLoop_Start ]\n");
+				//std::cout << std::format("\n[ GameLoop_Start ]\n");
 
 				InputManager::GetInstance().Update();	// InputManagerの更新
 
@@ -127,7 +127,7 @@ void GameProcess::Run(void)
 				fpsCounter++;
 				prevCount = currCount;
 
-				std::cout << std::format("[ GameLoop_End ]\n");
+				//std::cout << std::format("[ GameLoop_End ]\n");
 			}
 			// 毎秒FPSをウィンドウタイトルに反映
 			DWORD currTime = static_cast<DWORD>(GetTickCount64());

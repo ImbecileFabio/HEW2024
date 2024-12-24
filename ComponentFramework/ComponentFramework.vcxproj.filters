@@ -1,11 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <FxCompile Include="Shader\drawColliderPS.hlsl" />
     <FxCompile Include="Shader\unlitTexturePS.hlsl" />
     <FxCompile Include="Shader\unlitTextureVS.hlsl" />
+    <FxCompile Include="Shader\drawColliderVS.hlsl" />
+    <FxCompile Include="Shader\drawColliderGS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RobotMoveComponent.cpp" />
     <ClCompile Include="SorceFiles\ColliderManager.cpp" />
     <ClCompile Include="SorceFiles\FileManager.cpp" />
@@ -16,6 +20,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Lift.cpp" />
@@ -61,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RobotMoveComponent.h" />
     <ClInclude Include="SorceFiles\ColliderManager.h" />
     <ClInclude Include="SorceFiles\FileManager.h" />
@@ -72,6 +78,7 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Lift.h" />
@@ -117,6 +124,7 @@
     <ClInclude Include="SorceFiles\SubSystem\stb_image.h" />
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
+    <ClInclude Include="SorceFiles\SubSystem\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />
