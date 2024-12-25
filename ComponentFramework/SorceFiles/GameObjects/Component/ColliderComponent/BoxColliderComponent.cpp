@@ -42,9 +42,6 @@ void BoxColliderComponent::Uninit(void)
 //--------------------------------------------------
 void BoxColliderComponent::Update(void)
 {
-	// ‚Ð‚Æ‚Ü‚¸‰æ‘œ‚Ì‚©‚½‚¿‚Ì“–‚½‚è”»’è‚ðÝ’è
-	this->SetSize(this->owner_->GetTransformComponent()->GetSize() * this->owner_->GetTransformComponent()->GetScale());
-
 	auto pos = this->owner_->GetTransformComponent()->GetPosition();// ˆÊ’u‚ðŽæ“¾
 	this->SetWorldHitBox(pos);
 }

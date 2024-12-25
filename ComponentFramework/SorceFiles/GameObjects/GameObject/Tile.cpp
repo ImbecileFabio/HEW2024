@@ -57,6 +57,7 @@ Tile::~Tile(void)
 void Tile::InitGameObject(void)
 {
 	transform_component_->SetSize(512, 64);
+	
 }
  
 //--------------------------------------------------

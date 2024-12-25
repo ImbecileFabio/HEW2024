@@ -60,6 +60,8 @@ GameObject::~GameObject(void)
 void GameObject::Init(void)
 {
 	std::cout << std::format("[{}] -> Init\n", object_name_);
+	// コンポーネントの初期化
+	this->InitComponent();
 }
 
 //--------------------------------------------------
@@ -92,6 +94,17 @@ void GameObject::Update(void)
 }
 
 //--------------------------------------------------
+// コンポーネントの初期化処理
+//--------------------------------------------------
+void GameObject::InitComponent(void)
+{
+	for (auto& com : components_)
+	{
+		com->Init();
+	}
+}
+
+//--------------------------------------------------
 // コンポーネントの更新処理
 //--------------------------------------------------
 void GameObject::UpdateComponents(void)
@@ -100,10 +113,6 @@ void GameObject::UpdateComponents(void)
 	{
 		com->Update();
 	}
-}
-
-void GameObject::InitGameObject(void)
-{
 }
 
 //--------------------------------------------------
