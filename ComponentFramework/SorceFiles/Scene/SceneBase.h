@@ -10,7 +10,7 @@
 /*----- インクルード -----*/
 #include <vector>
 #include "../GameObjects/GameObject.h"
-#include "../sound.h"
+//#include "../sound.h"
 
 class GameManager;
 //--------------------------------------------------

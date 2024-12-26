@@ -32,8 +32,8 @@ TitleScene::~TitleScene()
 //--------------------------------------------------
 void TitleScene::Init()
 {
-	sound.Init();
-	sound.Play(SoundLabel_TitleBGM);
+	//sound.Init();
+	//sound.Play(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------
@@ -52,6 +52,6 @@ void TitleScene::Update()
 	if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))
 	{
 		game_manager_->ChangeScene(SceneName::Stage1_1);
-		sound.Stop(SoundLabel_TitleBGM);
+		//sound.Stop(SoundLabel_TitleBGM);
 	}
 }

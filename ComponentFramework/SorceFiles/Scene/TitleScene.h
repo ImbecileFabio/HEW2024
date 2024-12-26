@@ -25,7 +25,7 @@ public:
 	void Update() override;
 
 private:
-	Sound sound;
+	//Sound sound;
 };
 
 #endif  // TITLE_SCENE_H_

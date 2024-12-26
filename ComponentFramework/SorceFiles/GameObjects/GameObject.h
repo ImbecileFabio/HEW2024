@@ -15,6 +15,7 @@
 #include <format>
 #include <typeinfo>
 
+#include "../sound.h"
 #include "../InputManager.h"
 #include "Component.h"
 #include "Component/TransformComponent.h"
@@ -146,6 +147,9 @@ protected:
 
 	// 姿勢制御コンポーネント
 	TransformComponent* transform_component_{};
+
+	// サウンド管理
+	Sound sound_;
 };
 
 #endif	// GAMEOBJECT_H_
