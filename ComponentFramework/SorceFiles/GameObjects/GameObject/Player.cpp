@@ -24,6 +24,12 @@
 Player::Player(GameManager* _gameManager)
 	:GameObject(_gameManager, "Playaer")
 {
+	// スプライトコンポーネント
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"icon.png");
+	// 速度コンポーネント
+	velocity_component_ = new VelocityComponent(this);
+	collider_component_ = new BoxColliderComponent(this);
+
 	this->InitGameObject();
 }
 
@@ -43,21 +49,10 @@ Player::~Player(void)
 //--------------------------------------------------
 void Player::InitGameObject(void)
 {
-	// 名前設定
-	SetObjectName("Player");
+	transform_component_->SetSize(50, 50);
 
-	transform_component_->SetPosition(0, 0);
-	transform_component_->SetScale(50, 50);
-
-	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"icon.png");
-
-	// 速度コンポーネント
-	velocity_component_ = new VelocityComponent(this);
 	velocity_component_->SetVelocity(Vector3(0, 10, 0));
 
-
-	collider_component_ = new BoxColliderComponent(this);
 }
 
 //--------------------------------------------------

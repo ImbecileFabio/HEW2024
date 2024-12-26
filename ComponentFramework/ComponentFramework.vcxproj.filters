@@ -1,352 +1,139 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="SorceFiles\GameProcess.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\Renderer.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\SubSystem\Shader.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\SubSystem\Texture.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ImGuiManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ImGui\imgui.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ImGui\imgui_demo.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ImGui\imgui_draw.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ImGui\imgui_impl_dx11.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ImGui\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ImGui\imgui_tables.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\AudioManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\InputManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Robot.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\ColliderManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Tile.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Lift.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\Scene\ResultScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\Scene\SceneBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\Scene\TitleScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\FileManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\TimeZone.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\ChildrenComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Stick.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\PemdulumManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="SorceFiles\GameProcess.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\main.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\Renderer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\SubSystem\dx11helper.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\SubSystem\IndexBuffer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\SubSystem\Shader.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\SubSystem\stb_image.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\SubSystem\Texture.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGuiManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGui\imconfig.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGui\imgui.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGui\imgui_impl_dx11.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGui\imgui_impl_win32.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGui\imgui_internal.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGui\imstb_rectpack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGui\imstb_textedit.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\AudioManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\InputManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Robot.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\ColliderManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Tile.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Lift.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\Scene\ResultScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\Scene\SceneBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\Scene\TitleScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\FileManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\TimeZone.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Stick.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\PemdulumManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
+    <FxCompile Include="Shader\drawColliderPS.hlsl" />
     <FxCompile Include="Shader\unlitTexturePS.hlsl" />
     <FxCompile Include="Shader\unlitTextureVS.hlsl" />
+    <FxCompile Include="Shader\drawColliderVS.hlsl" />
+    <FxCompile Include="Shader\drawColliderGS.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Asset\Texture\icon.png">
-      <Filter>リソース ファイル</Filter>
-    </Image>
+    <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RobotMoveComponent.cpp" />
+    <ClCompile Include="SorceFiles\ColliderManager.cpp" />
+    <ClCompile Include="SorceFiles\FileManager.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ChildrenComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Lift.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Robot.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp" />
+    <ClCompile Include="SorceFiles\AudioManager.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Stick.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Tile.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\TimeZone.cpp" />
+    <ClCompile Include="SorceFiles\ImGuiManager.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_demo.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_impl_win32.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_tables.cpp" />
+    <ClCompile Include="SorceFiles\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="SorceFiles\InputManager.cpp" />
+    <ClCompile Include="SorceFiles\PemdulumManager.cpp" />
+    <ClCompile Include="SorceFiles\Scene\ResultScene.cpp" />
+    <ClCompile Include="SorceFiles\Scene\SceneBase.cpp" />
+    <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
+    <ClCompile Include="SorceFiles\Scene\TitleScene.cpp" />
+    <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
+    <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component.cpp" />
+    <ClCompile Include="SorceFiles\GameManager.cpp" />
+    <ClCompile Include="SorceFiles\GameProcess.cpp" />
+    <ClCompile Include="SorceFiles\main.cpp" />
+    <ClCompile Include="SorceFiles\Renderer.cpp" />
+    <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
+    <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RobotMoveComponent.h" />
+    <ClInclude Include="SorceFiles\ColliderManager.h" />
+    <ClInclude Include="SorceFiles\FileManager.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\EventDebugComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Lift.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Robot.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h" />
+    <ClInclude Include="SorceFiles\AudioManager.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Stick.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Tile.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\TimeZone.h" />
+    <ClInclude Include="SorceFiles\ImGuiManager.h" />
+    <ClInclude Include="SorceFiles\ImGui\imconfig.h" />
+    <ClInclude Include="SorceFiles\ImGui\imgui.h" />
+    <ClInclude Include="SorceFiles\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="SorceFiles\ImGui\imgui_impl_win32.h" />
+    <ClInclude Include="SorceFiles\ImGui\imgui_internal.h" />
+    <ClInclude Include="SorceFiles\ImGui\imstb_rectpack.h" />
+    <ClInclude Include="SorceFiles\ImGui\imstb_textedit.h" />
+    <ClInclude Include="SorceFiles\ImGui\imstb_truetype.h" />
+    <ClInclude Include="SorceFiles\InputManager.h" />
+    <ClInclude Include="SorceFiles\PemdulumManager.h" />
+    <ClInclude Include="SorceFiles\Scene\ResultScene.h" />
+    <ClInclude Include="SorceFiles\Scene\SceneBase.h" />
+    <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
+    <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
+    <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
+    <ClInclude Include="SorceFiles\SubSystem\dx11helper.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component.h" />
+    <ClInclude Include="SorceFiles\GameManager.h" />
+    <ClInclude Include="SorceFiles\GameProcess.h" />
+    <ClInclude Include="SorceFiles\main.h" />
+    <ClInclude Include="SorceFiles\Renderer.h" />
+    <ClInclude Include="SorceFiles\SubSystem\IndexBuffer.h" />
+    <ClInclude Include="SorceFiles\SubSystem\stb_image.h" />
+    <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
+    <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
+    <ClInclude Include="SorceFiles\SubSystem\Material.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Asset\Texture\backdrop_02.png" />
+    <Image Include="Asset\Texture\backdrop_03.png" />
+    <Image Include="Asset\Texture\Ball.png" />
+    <Image Include="Asset\Texture\icon.png" />
+    <Image Include="Asset\Texture\robot_still_01.png" />
+    <Image Include="Asset\Texture\tile_01.png" />
+    <Image Include="Asset\Texture\zako.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

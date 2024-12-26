@@ -27,27 +27,27 @@ using namespace DirectX::SimpleMath;
 class TransformComponent : public Component
 {
 public:
-	TransformComponent(GameObject* _owner, int updateOrder = 50);
+	TransformComponent(GameObject* _owner, int updateOrder = 1);
 	~TransformComponent();
 
 	void Init(void) override;
 	void Uninit(void) override;
 	void Update(void) override;
 
-	// Setter
-	// floatå^
-	void SetPosition(const float _x,const float _y,const float _z = 0) 
-	{ position_.x = _x;	position_.y = _y;	position_.z = _z;}
-	void SetRotation(const float _z)
-	{ rotation_.z = _z; }
-	void SetScale(const float _x,const float _y)
-	{ scale_.x = _x; scale_.y = _y; }
-	// Vector3å^
-	void SetPosition(const Vector3 _position) { position_ = _position; }
-	void SetRotation(const Vector3 _rotation) { rotation_ = _rotation; }
-	void SetScale(const Vector3 _scale) { scale_ = _scale; }
+	void SetSize(const float _x, const float _y)	{ SetSize(Vector3(_x, _y, 1.0f)); }
+	void SetSize(const Vector3 _size)				{ size_ = _size; }
 
-	// Getter
+	void SetPosition(const float _x, const float _y, const float _z = 0.0f)	{ SetPosition(Vector3(_x, _y, _z)); }
+	void SetPosition(const Vector3 _position)								{ position_ = _position; }
+
+	void SetRotation(const float _z)			{ SetRotation(Vector3(0.0f, 0.0f, _z)); }
+	void SetRotation(const Vector3 _rotation)	{ rotation_ = _rotation; }
+
+	void SetScale(const float _x,const float _y)		{ SetScale(Vector3(_x, _y, 1.0f)); };
+	void SetScale(const Vector3 _scale)					{ scale_ = _scale; }
+
+
+	auto GetSize()     const { return size_; }
 	auto GetPosition() const { return position_; }
 	auto GetRotation() const { return rotation_; }
 	auto GetScale()    const { return scale_; }
@@ -57,6 +57,8 @@ public:
 
 
 private:
+	DirectX::SimpleMath::Vector3 size_{100.0f, 100.0f, 1.0f};	// ÉTÉCÉY
+
 	// SRTèÓïÒÅiépê®èÓïÒÅj
 	DirectX::SimpleMath::Vector3 position_{ 0.0f, 0.0f, 0.0f };	// à íu
 	DirectX::SimpleMath::Vector3 rotation_{ 0.0f, 0.0f, 0.0f };	// âÒì]

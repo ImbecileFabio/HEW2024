@@ -59,6 +59,7 @@ GameObject::~GameObject(void)
 //--------------------------------------------------
 void GameObject::Init(void)
 {
+	std::cout << std::format("[{}] -> Init\n", object_name_);
 }
 
 //--------------------------------------------------
@@ -99,6 +100,10 @@ void GameObject::UpdateComponents(void)
 	{
 		com->Update();
 	}
+}
+
+void GameObject::InitGameObject(void)
+{
 }
 
 //--------------------------------------------------

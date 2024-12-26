@@ -15,6 +15,9 @@
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
+#include "../Component/PushOutComponent.h"
+
+#include "../Component/RenderComponent/DebugColliderDrawComponent.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -22,7 +25,17 @@
 Tile::Tile(GameManager* _gameManager)
 	:GameObject(_gameManager, "Tile")
 {
-	this->InitGameObject();
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"tile_01.png");
+	collider_event_component_ = new ColliderEventComponent(this);
+	collider_component_ = new BoxColliderComponent(this);
+
+	// デバッグ
+	debug_collider_draw_component_ = new DebugColliderDrawComponent(this);
+
+	auto f = std::function<void(GameObject*)>(std::bind(&Tile::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(f);
+
+	InitGameObject();
 }
 
 //--------------------------------------------------
@@ -34,6 +47,8 @@ Tile::~Tile(void)
 	delete sprite_component_;
 	delete collider_component_;
 	delete collider_event_component_;
+
+	delete debug_collider_draw_component_;
 }
 
 //--------------------------------------------------
@@ -41,15 +56,7 @@ Tile::~Tile(void)
 //--------------------------------------------------
 void Tile::InitGameObject(void)
 {
-	transform_component_->SetPosition(0, -127);
-	transform_component_->SetScale(512, 64);
-
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"tile_01.png");
-	collider_event_component_ = new ColliderEventComponent(this);
-	collider_component_ = new BoxColliderComponent(this);
-
-	auto f = std::function<void(GameObject*)>(std::bind(&Tile::OnCollisionEnter, this, std::placeholders::_1));
-	collider_event_component_->AddEvent(f);
+	transform_component_->SetSize(512, 64);
 }
  
 //--------------------------------------------------

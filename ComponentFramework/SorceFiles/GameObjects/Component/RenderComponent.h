@@ -13,13 +13,16 @@
 #include "../Component.h"
 #include "../../SubSystem/VertexBuffer.h"
 #include "../../SubSystem/IndexBuffer.h"
-#include "../../SubSystem/ConstantBuffer.h"
 #include "../../SubSystem/Shader.h"
+#include "../../SubSystem/Material.h"
+
 
 /*----- 構造体宣言 -----*/
 
 /*----- 前方宣言 -----*/
 class GameObject;
+
+using namespace DirectX::SimpleMath;
 
 //--------------------------------------------------
 // 描画コンポーネントのベースクラス
@@ -48,22 +51,23 @@ public:
 
 	virtual TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 
+	// UV座標の変更
+	void SetUV(const DirectX::SimpleMath::Vector2& _uv);
+
 	void SetState(State _state) { state_ = _state; }
 	State GetState() { return state_; }
 protected:
 	int draw_order_;	// 更新順位
 
 	void InitBuffers();	// バッファの初期化
-	void InitGeometryBuffers();	// デバッグ用バッファの初期化
 
 	// バッファ
 	VertexBuffer<VERTEX_3D> vertex_buffer_;
 	IndexBuffer index_buffer_;
-	// 定数バッファ
-	ConstantBuffer<GeometryShaderBuffer> constant_buffer_;	
 
 
 	Shader shader_;	// シェーダ
+	std::unique_ptr<Material> material_;
 
 	std::vector<VERTEX_3D> vertices_;	// 頂点データ
 

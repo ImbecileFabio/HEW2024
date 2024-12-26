@@ -33,7 +33,7 @@ void PendulumManager::Init(){
 void PendulumManager::Uninit() {
 	pendulum_list_.clear();
 	pSelectedPendulum = nullptr;
-	DestroyInstance();
+	//DestroyInstance();
 }
 void PendulumManager::Update(){
 	if (pSelectedPendulum != nullptr) {
@@ -70,8 +70,8 @@ void PendulumManager::PendulumSelect() {
 	if (IMGLA.x != 0 && IMGLA.y != 0) {
 		for (auto& pemdulum : pendulum_list_) {
 			if (pSelectedPendulum != pemdulum) {
-				DirectX::SimpleMath::Vector3 PP = pemdulum->GetComponent<TransformComponent>()->GetPosition();			// PemdulumPosition
-				DirectX::SimpleMath::Vector3 SPP = pSelectedPendulum->GetComponent<TransformComponent>()->GetPosition();	// SelectedPemdulumPosition
+				DirectX::SimpleMath::Vector3 PP = pemdulum->GetTransformComponent()->GetPosition();			// PemdulumPosition
+				DirectX::SimpleMath::Vector3 SPP = pSelectedPendulum->GetTransformComponent()->GetPosition();	// SelectedPemdulumPosition
 				// ƒxƒNƒgƒ‹‚Ì³‹K‰»
 				stickVector_Langth_ = std::sqrt(IMGLA.x * IMGLA.x + IMGLA.y * IMGLA.y);
 				stickVector_Normalize_ = { IMGLA.x / stickVector_Langth_, IMGLA.y / stickVector_Langth_ };
@@ -94,13 +94,13 @@ void PendulumManager::PendulumSelect() {
 	if (IM.GetKeyTrigger(VK_L)) {
 		for (auto& pemdulum : pendulum_list_) {
 			if (pSelectedPendulum != pemdulum &&
-				pSelectedPendulum->GetComponent<TransformComponent>()->GetPosition().x <
-				pemdulum->GetComponent<TransformComponent>()->GetPosition().x) {
+				pSelectedPendulum->GetTransformComponent()->GetPosition().x <
+				pemdulum->GetTransformComponent()->GetPosition().x) {
 				if (pNextPendulum == nullptr) {
 					pNextPendulum = pemdulum;
 				}
-				else if (pNextPendulum->GetComponent<TransformComponent>()->GetPosition().x >
-					pemdulum->GetComponent<TransformComponent>()->GetPosition().x) {
+				else if (pNextPendulum->GetTransformComponent()->GetPosition().x >
+					pemdulum->GetTransformComponent()->GetPosition().x) {
 					pNextPendulum = pemdulum;
 				}
 			}
@@ -109,13 +109,13 @@ void PendulumManager::PendulumSelect() {
 	if (IM.GetKeyTrigger(VK_J)) {
 		for (auto& pemdulum : pendulum_list_) {
 			if (pSelectedPendulum != pemdulum &&
-				pSelectedPendulum->GetComponent<TransformComponent>()->GetPosition().x >
-				pemdulum->GetComponent<TransformComponent>()->GetPosition().x) {
+				pSelectedPendulum->GetTransformComponent()->GetPosition().x >
+				pemdulum->GetTransformComponent()->GetPosition().x) {
 				if (pNextPendulum == nullptr) {
 					pNextPendulum = pemdulum;
 				}
-				else if (pNextPendulum->GetComponent<TransformComponent>()->GetPosition().x <
-					pemdulum->GetComponent<TransformComponent>()->GetPosition().x) {
+				else if (pNextPendulum->GetTransformComponent()->GetPosition().x <
+					pemdulum->GetTransformComponent()->GetPosition().x) {
 					pNextPendulum = pemdulum;
 				}
 			}

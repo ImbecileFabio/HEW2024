@@ -9,6 +9,12 @@
 Item::Item(GameManager* _gameManager)
 	: GameObject(_gameManager, "Item")
 {
+	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"UI/gear/ver1/gear_01.png");
+	collider_base_component_ = new BoxColliderComponent(this);
+	event_base_component_ = new ColliderEventComponent(this);
+	state_ = State::Active;
+	auto f = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, this, std::placeholders::_1));
+	event_base_component_->AddEvent(f);
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -25,11 +31,8 @@ Item::~Item()
 //--------------------------------------------------
 void Item::InitGameObject(void)
 {
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"UI/gear/ver1/gear_01.png", 0);
-	collider_base_component_ = new BoxColliderComponent(this);
-	event_base_component_ = new ColliderEventComponent(this);
-	auto f = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, this, std::placeholders::_1));
-	event_base_component_->AddEvent(f);
+	sprite_component_->SetState(SpriteComponent::State::draw);
+	this->state_ = GameObject::State::Active;
 }
 //--------------------------------------------------
 // @brief çXêVèàóù

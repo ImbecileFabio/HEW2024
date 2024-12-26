@@ -10,10 +10,9 @@ using Microsoft::WRL::ComPtr;
 //-----------------------------------------------------------------------------
 class Shader {
 public:
+	void Create(std::string vs, std::string ps, std::string gs);
 	void Create(std::string vs, std::string ps);
-	void CreateGeometry(std::string gs);
 	void SetGPU();
-	void SetGeometryGPU();
 
 private:
 	ComPtr<ID3D11VertexShader> m_pVertexShader;		// 頂点シェーダー

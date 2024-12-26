@@ -34,10 +34,13 @@ void CircleColliderComponent::Init(void)
 //--------------------------------------------------
 void CircleColliderComponent::Update(void)
 {
-	this->circle_.position = this->owner_->GetComponent<TransformComponent>()->GetPosition();
-	DirectX::SimpleMath::Vector3 scale =
-		this->owner_->GetComponent<TransformComponent>()->GetScale();
-	this->circle_.radius = std::min<float>(scale.x, scale.y) / 2.0f;
+	auto transform = this->owner_->GetTransformComponent();
+	if(transform)
+	{
+		this->circle_.position = transform->GetPosition();
+		DirectX::SimpleMath::Vector3 size = transform->GetSize();
+		this->circle_.radius = std::min<float>(size.x, size.y) / 2.0f;
+	}
 }
 //--------------------------------------------------
 // @brief ポリフォーリズムを使って、コンポーネントで渡す関数を判別してくれる偉大なコード
@@ -55,17 +58,13 @@ bool CircleColliderComponent::CheckCollisionCollider(ColliderBaseComponent* _oth
 //--------------------------------------------------
 bool CircleColliderComponent::CheckCollisionCollider(CircleColliderComponent* _other)
 {
-	float a = this->circle_.position.x - _other->GetCircleSize().position.x;
-	float b = this->circle_.position.y - _other->GetCircleSize().position.y;
-	float c = (a * a) + (b * b);
-	float sumRadius = this->circle_.radius + _other->GetCircleSize().radius;
+	float dx = this->circle_.position.x - _other->GetCircleSize().position.x;
+	float dy = this->circle_.position.y - _other->GetCircleSize().position.y;
+	float distanceSquared = (dx * dx) + (dy * dy);
+	float combinedRadius = this->circle_.radius + _other->GetCircleSize().radius;
 
-	if (c <= sumRadius * sumRadius)
-	{
-		this->hitFg_ = true;
-		return true;
-	}
-	this->hitFg_ = false;  return false;
+	this->hitFg_ = distanceSquared <= (combinedRadius * combinedRadius);
+	return this->hitFg_;
 }
 //--------------------------------------------------
 // @brief 円と四角の当たり判定をとる関数
@@ -74,12 +73,12 @@ bool CircleColliderComponent::CheckCollisionCollider(CircleColliderComponent* _o
 //--------------------------------------------------
 bool CircleColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
 {
-	auto boxSize = _other->GetBoxSize();
+	auto otherHitBox = _other->GetWorldHitBox();
 	// 四角形内で円の中心に最も近い点を計算
 	float closestX =
-		max(boxSize.y, min(circle_.position.x, boxSize.z));	// 左と右
+		max(otherHitBox.min_.x, min(circle_.position.x, otherHitBox.max_.x));	// 左と右
 	float closestY =
-		max(boxSize.x, min(circle_.position.y, boxSize.w));	// 下と上
+		max(otherHitBox.min_.y, min(circle_.position.y, otherHitBox.max_.y));	// 下と上
 	// 最近点と円の中心の距離を計算
 	float distanceX = circle_.position.x - closestX;
 	float distanceY = circle_.position.y - closestY;

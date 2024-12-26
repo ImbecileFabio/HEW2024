@@ -33,6 +33,10 @@ ID3D11Buffer* Renderer::m_WorldBuffer{}; // ワールド行列
 ID3D11Buffer* Renderer::m_ViewBuffer{}; // ビュー行列
 ID3D11Buffer* Renderer::m_ProjectionBuffer{}; // プロジェクション行列
 
+ID3D11Buffer* Renderer::m_MaterialBuffer{};	// マテリアル設定
+ID3D11Buffer* Renderer::m_TextureBuffer{};	// UV設定
+
+
 // デプスステンシルステート
 ID3D11DepthStencilState* Renderer::m_DepthStateEnable{};
 ID3D11DepthStencilState* Renderer::m_DepthStateDisable{};
@@ -151,7 +155,7 @@ void Renderer::Init()
 	// ブレンド ステート生成
 	D3D11_BLEND_DESC BlendDesc;
 	ZeroMemory(&BlendDesc, sizeof(BlendDesc));                   // BlendDesc構造体をゼロで初期化し、メモリをクリア
-	BlendDesc.AlphaToCoverageEnable = TRUE;                     // アルファ・トゥ・カバレッジを無効化（透明度をカバレッジとして利用しない）
+	BlendDesc.AlphaToCoverageEnable = FALSE;                     // アルファ・トゥ・カバレッジを無効化（透明度をカバレッジとして利用しない）
 	BlendDesc.IndependentBlendEnable = TRUE;                     // 各レンダーターゲットに対して個別のブレンド設定を有効化
 	BlendDesc.RenderTarget[0].BlendEnable = FALSE;               // ブレンドを無効に設定（不透明な描画）
 	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;  // ソース（描画するピクセル）のアルファ値を使用
@@ -188,7 +192,7 @@ void Renderer::Init()
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc{};
 	depthStencilDesc.DepthEnable = TRUE;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 	depthStencilDesc.StencilEnable = FALSE;
 
 	hr = m_Device->CreateDepthStencilState(&depthStencilDesc, &m_DepthStateEnable); //深度有効ステート
@@ -236,6 +240,24 @@ void Renderer::Init()
 	m_DeviceContext->VSSetConstantBuffers(2, 1, &m_ProjectionBuffer);
 	if (FAILED(hr)) return;
 
+	// マテリアル初期化
+	bufferDesc.ByteWidth = sizeof(MATERIAL);
+	hr = m_Device->CreateBuffer(&bufferDesc, NULL, &m_MaterialBuffer);
+	m_DeviceContext->VSSetConstantBuffers(4, 1, &m_MaterialBuffer);
+	m_DeviceContext->PSSetConstantBuffers(4, 1, &m_MaterialBuffer);
+	if (FAILED(hr)) return;
+
+	MATERIAL material{};
+	material.Diffuse = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	material.Ambient = Color(1.0f, 1.0f, 1.0f, 1.0f);
+	SetMaterial(material);
+
+	// テクスチャ初期化
+	bufferDesc.ByteWidth = sizeof(Matrix);
+	hr = m_Device->CreateBuffer(&bufferDesc, NULL, &m_TextureBuffer);
+	m_DeviceContext->VSSetConstantBuffers(5, 1, &m_TextureBuffer);
+	if (FAILED(hr)) return;
+
 }
 
 //-----------------------------------------------------------------
@@ -260,7 +282,7 @@ void Renderer::Uninit()
 //-----------------------------------------------------------------
 void Renderer::Begin()
 {
-	float clearColor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	float clearColor[4] = { 0.0f, 0.5f, 0.5f, 1.0f };
 	m_DeviceContext->ClearRenderTargetView(m_RenderTargetView, clearColor);
 	m_DeviceContext->ClearDepthStencilView(m_DepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 }
@@ -305,9 +327,6 @@ void Renderer::AddSprite(RenderComponent* _renderComponent)
 
 	// イテレータの前に要素を挿入
 	sprites_.insert(iter, _renderComponent);
-
-	// デバッグ出力
-	std::cout << "Sprite added: " << _renderComponent << " with draw order: " << myDrawOrder << std::endl;
 }
 
 //-----------------------------------------------------------------
@@ -477,4 +496,9 @@ void Renderer::CreatePixelShader(ID3D11PixelShader** _PixelShader, const char* _
 	m_Device->CreatePixelShader(buffer, fsize, NULL, _PixelShader);
 
 	delete[] buffer; // バッファのメモリを解放
+}
+
+void Renderer::SetMaterial(MATERIAL Material)
+{
+	m_DeviceContext->UpdateSubresource(m_MaterialBuffer, 0, NULL, &Material, 0, 0);
 }

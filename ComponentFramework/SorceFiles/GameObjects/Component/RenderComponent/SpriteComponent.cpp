@@ -80,22 +80,27 @@ void SpriteComponent::Draw()
 	Matrix pos;
 	Matrix scale;
 	
-	auto transform = owner_->GetComponent<TransformComponent>();
+	auto transform = owner_->GetTransformComponent();
 	if (transform)
 	{
-		auto t = transform->GetPosition();
-		auto r = transform->GetRotation();
-		auto s = transform->GetScale();
+		auto si = transform->GetSize();
+		auto t  = transform->GetPosition();
+		auto r  = transform->GetRotation();
+		auto sc = transform->GetScale();
+
+		auto finalSize = Vector3(si * sc);	// 最終的なサイズ
+
+
 		rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
 		pos = Matrix::CreateTranslation(t);
-		scale = Matrix::CreateScale(s);
+		scale = Matrix::CreateScale(finalSize);
 	}
 	else 
 	{
 		std::cout << std::format("＜SpriteComponent＞ -> default position\n");
-		rot = Matrix::CreateFromYawPitchRoll(0.f, 0.f, 0.f);
-		pos = Matrix::CreateTranslation(0.f, 0.f, 0.f);
-		scale = Matrix::CreateScale(1.f, 1.f, 1.f);
+		rot = Matrix::CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f);
+		pos = Matrix::CreateTranslation(0.0f, 0.0f, 0.0f);
+		scale = Matrix::CreateScale(100.0f, 100.0f, 100.0f);
 	}
 
 
@@ -119,6 +124,7 @@ void SpriteComponent::Draw()
 	index_buffer_.SetGPU();
 
 	texture_.SetGPU();
+	material_->SetGPU();
 
 	devicecontext->DrawIndexed(
 		4,							// 描画するインデックス数（四角形なんで４）
@@ -138,4 +144,5 @@ void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4& _color)
 
 	vertex_buffer_.Modify(vertices_);	// バッファを書き換え
 }
+
 

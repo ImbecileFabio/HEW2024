@@ -26,7 +26,10 @@ void ColliderEventComponent::Init(void)
 //--------------------------------------------------
 void ColliderEventComponent::Uninit(void)
 {
-	functions_.clear();
+	for (auto& func : functions_)
+	{
+		func.second = nullptr;
+	}
 }
 //--------------------------------------------------
 // @brief 追加されたイベントの実行処理

@@ -21,26 +21,35 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	// レンダリング
 	, "RenderComponent"
 	, "SpriteComponent"
-	
+	// アニメーション
+	, "AnimationComponent"
 	// 姿勢制御
 	, "TransformComponent"
 	// リジッドボディ
 	, "RigidBodyComponent"
 	, "VelocityComponent"
-	, "AngularVelocityComponent"
 	// コライダー
-	, "ColliderComponent"
+	, "ColliderBaseComponent"
 	, "BoxColliderComponent"
 	, "CircleColliderComponent"
+	// イベント
+	, "EventBaseComponent"
+	, "ColliderEventComponent"
 
-	// 振り子の動き
+	// ロボット
+	, "RobotMoveComponent"
+	// タイムゾーン
+	, "TimeZoneComponent"
+	// 振り子
 	, "PendulumMovementComponent"
-
+	// リフト
+	, "LiftComponent"
 	// カメラ
 	, "CameraComponent"
-	// 振り子
-	, "PendulumComponent"
-
+	// 子オブジェクト管理
+	, "ChildrenComponent"
+	// 押し出し
+	, "PushOutComponent"
 };
 
 //--------------------------------------------------

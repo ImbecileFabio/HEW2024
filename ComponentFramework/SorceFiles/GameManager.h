@@ -51,7 +51,7 @@ public:
 	auto& GetRenderer(void) const { return renderer_; }
 	auto& GetColliderManager() const { return collider_manager_; }
 	auto& GetPendulumManager() const { return pendulum_manager_; }
-
+	
 	auto& GetGameObjects() const { return game_objects_; }
 	auto& GetPendingGameObjects() const { return pending_game_objects_; }
 	
@@ -65,7 +65,6 @@ public:
 	void AddGameObject(GameObject* _gameObject);
 	// ゲームオブジェクトの削除
 	void RemoveGameObject(GameObject* _gameObject);
-
 private:
 	int itemCount = 0;
 	// 更新処理

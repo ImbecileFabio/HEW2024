@@ -1,6 +1,6 @@
 //=================================================================
 // [GameManager.cpp] ゲームマネージャーモジュール 
-// 著者：有馬啓太
+// 著者：Keita Arima
 //-----------------------------------------------------------------
 // 説明：ゲームの状態とオブジェクトの管理、追加と削除、入力、更新、描画など
 //=================================================================
@@ -32,6 +32,9 @@ GameManager::GameManager()
 	renderer_ = new Renderer();
 	renderer_->Init();
 
+	// オーディオマネージャー初期化
+	//audio_manager_ = new AudioManager();
+
 	// コライダーマネージャー初期化
 	collider_manager_ = ColliderManager::Create();
 
@@ -52,6 +55,7 @@ GameManager::~GameManager(void)
 
 	delete current_scene_;
 	delete renderer_;
+	delete audio_manager_;
 	delete collider_manager_;
 
 }
@@ -68,9 +72,12 @@ void GameManager::InitAll(void)
 	// オブジェクトリストの初期化
 	game_objects_.clear();
 	pending_game_objects_.clear();
-
 	// シーンの初期化
 	current_scene_ = new TitleScene(this);
+    // ゲームオブジェクト初期化
+	current_scene_->Init();
+
+	ImGuiManager::staticPointer->SetObjectList(game_objects_);
 }
 
 //-----------------------------------------------------------------
@@ -93,7 +100,7 @@ void GameManager::UpdateAll()
 	this->UpdateGameObjects();
 	this->collider_manager_->UpdateAll();
 	this->pendulum_manager_->Update();
-	ImGuiManager::staticPointer->ImGuiShowWindow(this->game_objects_);
+	ImGuiManager::staticPointer->ImGuiShowWindow();
 }
 //-----------------------------------------------------------------
 // 出力生成処理
@@ -133,12 +140,17 @@ void GameManager::ChangeScene(SceneName _scene)
 		current_scene_ = new Stage1_1Scene(this);
 		break;
 	case Result:
+		itemCount = 0;
+		collider_manager_->UninitAll();
+		pendulum_manager_->Uninit();
 		current_scene_ = new ResultScene(this);
 		break;
 	default:
-		std::cout << std::format("[GameManager] -> ChangeScene Error\n");
+		std::cout << std::format("[GameManager] -> ChangeScene SError\n");
 		break;
 	}
+
+	ImGuiManager::staticPointer->ResetSelectObject();
 }
 
 //-----------------------------------------------------------------

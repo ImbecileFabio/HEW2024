@@ -85,16 +85,18 @@ void GameProcess::Run(void)
 #ifdef IMGUI_DEBUG
 	ImGuiManager imGuiManager;
 	ImGuiManager::staticPointer = &imGuiManager;
-	imGuiManager.ImGuiWin32Init(this->hWnd_);	// ImGuiのWin32APIを初期化
-	imGuiManager.ImGuiD3D11Init(this->game_manager_->GetRenderer()->GetDevice(),
+	imGuiManager.ImGuiWin32Initialize(this->hWnd_);	// ImGuiのWin32APIを初期化
+	imGuiManager.ImGuiD3D11Initialize(this->game_manager_->GetRenderer()->GetDevice(),
 		this->game_manager_->GetRenderer()->GetDeviceContext());	// ImGuiのDirectX11を初期化
-	imGuiManager.ImGuiInit();
+	// ImGuiで管理したいオブジェクトリストを一回だけ渡しておく
+	ImGuiManager::staticPointer->ImGuiInitialize();
 #endif
 	//--------------------------------------------------
 	// ゲームループ
 	//--------------------------------------------------
 	while (true)
 	{
+
 		// 新たにメッセージがあれば
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
@@ -115,6 +117,7 @@ void GameProcess::Run(void)
 #ifdef IMGUI_DEBUG
 				imGuiManager.ImGuiUpdate();
 #endif
+				//std::cout << std::format("\n[ GameLoop_Start ]\n");
 
 				InputManager::GetInstance().Update();	// InputManagerの更新
 
@@ -123,6 +126,8 @@ void GameProcess::Run(void)
 
 				fpsCounter++;
 				prevCount = currCount;
+
+				//std::cout << std::format("[ GameLoop_End ]\n");
 			}
 			// 毎秒FPSをウィンドウタイトルに反映
 			DWORD currTime = static_cast<DWORD>(GetTickCount64());
@@ -138,9 +143,10 @@ void GameProcess::Run(void)
 
 			}
 		}
+
 	}
 #ifdef IMGUI_DEBUG
-	imGuiManager.ImGuiUnInit();
+	imGuiManager.ImGuiUnInitialize();
 #endif
 }
 

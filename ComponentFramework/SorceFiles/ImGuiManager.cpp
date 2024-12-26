@@ -8,13 +8,20 @@
 #ifdef IMGUI_DEBUG
 #include <iostream>
 #include "ImGuiManager.h"
+#include "GameObjects/Component/ColliderComponent/BoxColliderComponent.h"
+#include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
+#include "GameObjects/Component/RigidbodyComponent/VelocityComponent.h"
+#include "GameObjects/Component/PendulumMovementComponent.h"
+#include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
 /*----static変数------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
+std::vector<GameObject*>* ImGuiBase::objectList_ = {};
+GameObject* ImGuiBase::selectObject_ = {};
 //--------------------------------------------------
 // @param _hWnd GameProcessで使っているウィンドハンドル
 // @brief ImGuiのWin32APIを初期化
 //--------------------------------------------------
-void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
+void ImGuiManager::ImGuiWin32Initialize(HWND _hWnd)
 {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -23,9 +30,11 @@ void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     // テーマカラー
-    ImGui::StyleColorsDark();
+    //ImGui::StyleColorsDark();
+	//ImGui::StyleColorsLight();
+	ImGui::StyleColorsClassic();
 
-    io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\meiryo.ttc", 22.0f);  // フォントの設定
+    io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\meiryo.ttc", 24.0f);  // フォントの設定
 
     // Setup Platform/Renderer backends
     ImGui_ImplWin32_Init(_hWnd);  // ImGuiのWin32の初期化 ImGuiの関数
@@ -33,7 +42,7 @@ void ImGuiManager::ImGuiWin32Init(HWND _hWnd)
 //--------------------------------------------------
 // @brief ImGuiのDirectX11を初期化
 //--------------------------------------------------
-void ImGuiManager::ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext)
+void ImGuiManager::ImGuiD3D11Initialize(ID3D11Device* _device, ID3D11DeviceContext* _deviceContext)
 {
     // ここでImGuiのDirectX関連を初期化 rendererから
     ImGui_ImplDX11_Init(_device, _deviceContext);
@@ -41,11 +50,11 @@ void ImGuiManager::ImGuiD3D11Init(ID3D11Device* _device, ID3D11DeviceContext* _d
 //--------------------------------------------------
 // @brief ImGuiのウィンドウを初期化
 //--------------------------------------------------
-void ImGuiManager::ImGuiInit()
+void ImGuiManager::ImGuiInitialize()
 {   // ここで作ったウィンドウをリストに追加する
-    imGuiWindowVec.push_back(new ObjectStatesGUI());
-    imGuiWindowVec.push_back(new SystemGUI());
-    imGuiWindowVec.push_back(new TreeGUI());
+    imGuiWindowList_.push_back(new ObjectStatesGUI());
+    imGuiWindowList_.push_back(new SystemGUI());
+    imGuiWindowList_.push_back(new TreeGUI());
 }
 //--------------------------------------------------
 // @brief ImGuiの更新処理　これをループの初めに置いておかないと機能しない
@@ -58,15 +67,14 @@ void ImGuiManager::ImGuiUpdate()
 }
 //--------------------------------------------------
 // @brief ImGuiをウィンドウを一括管理とデータ渡し
-// @param _r GameObjectListの参照
 //--------------------------------------------------
-void ImGuiManager::ImGuiShowWindow(std::vector<GameObject*>& _r)
+void ImGuiManager::ImGuiShowWindow()
 {
     if (showFg)
     {
-        for (const auto& window : imGuiWindowVec)
+        for (const auto& window : imGuiWindowList_)
         {
-            window->ShowWindow(_r);
+            window->ShowWindow();
         }
     }
 }
@@ -81,60 +89,185 @@ void ImGuiManager::ImGuiRender()
 //--------------------------------------------------
 // @brief 終了処理
 //--------------------------------------------------
-void ImGuiManager::ImGuiUnInit()
+void ImGuiManager::ImGuiUnInitialize()
 {
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplWin32_Shutdown();
     ImGui::DestroyContext();
 }
 //--------------------------------------------------
+// @brief 基底クラスのコンストラクタ
+//--------------------------------------------------
+ImGuiBase::ImGuiBase()
+    :showFg(true)
+{
+}
+//--------------------------------------------------
 // @brief ゲームオブジェクトの情報を表示するウィンドウ
 //--------------------------------------------------
-void ObjectStatesGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
+void ObjectStatesGUI::ShowWindow()
 {
     // ここが自分で記述したウィンドウ設定
     if (this->showFg)
     {
-        ImGui::Begin("~(0-0)~", &showFg);
+        ImGui::Begin("~(0-0)~", &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar);
         // オブジェクト生成
         if (ImGui::Button("Object Create"))
         {
 
         }
-        // オブジェクトの名前
-        ImGui::Text("ObjectName, %s", "Player_HOGE");
-        // transformの情報
-        if (ImGui::DragFloat3("position", &position_.x, 1.0f, -100.0f, 100.0f, "%.3f"))
+        if (selectObject_ == nullptr)
         {
         }
-        if (ImGui::DragFloat3("rotation", &rotation_.x, 1.0f, -100.0f, 100.0f, "%.3f"))
+        else
         {
-            // ここで値を入力しているときの処理を実装予定
-        }
-        if (ImGui::DragFloat3("scale", &scale_.x, 1.0f, -100.0f, 100.0f, "%.3f"))
-        {
-
-        }
-        ImGui::Separator(); // 区切り線
-        ImGui::Text("ComponentList");
-        if (ImGui::Button("AddComponent"))
-        {
-
-        }
-        if (ImGui::Button("ReMoveComponent"))
-        {
-
+            if (objectList_->empty())
+            {
+                selectObject_ = nullptr;
+                return;
+            }
+            // オブジェクトの名前
+            ImGui::Text(selectObject_->GetObjectName().c_str());
+            // transformの情報
+            auto transform = selectObject_->GetComponent<TransformComponent>();
+			auto position = transform->GetPosition();
+			auto rotation = transform->GetRotation();
+			auto scale = transform->GetScale();
+            if (ImGui::DragFloat3("position", &position.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            {
+				transform->SetPosition(position);
+            }
+            if (ImGui::DragFloat3("rotation", &rotation.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            {
+                transform->SetRotation(rotation);
+            }
+            if (ImGui::DragFloat3("scale", &scale.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            {
+                transform->SetScale(scale);
+            }
+            ImGui::Separator(); // 区切り線
+            ImGui::Text("ComponentList");
+			for (auto& component : selectObject_->GetComponents())
+			{
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 1.0f, 0.1f, 1.0f)); // 緑色
+                ImGui::Text(component->ComponentTypeNames[static_cast<int>(component->GetComponentType())]);
+				ImGui::PopStyleColor();
+                switch (component->GetComponentType())
+                {
+                case Component::TypeID::SpriteComponent:
+                {
+                    auto sprite = dynamic_cast<SpriteComponent*>(component);
+					int drawOrder = sprite->GetDrawOrder();
+					int updateOrder = sprite->GetUpdateOrder();
+                    if (ImGui::DragInt("DrawOrder", &drawOrder, 1, -1000, 1000, "%d"))
+                    {
+                    }
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+                    ImGui::Separator(); // 区切り線
+                }
+                    break;
+                case Component::TypeID::BoxColliderComponent:
+                {
+                    auto boxCollider = dynamic_cast<BoxColliderComponent*>(component);
+					auto boxSize = boxCollider->GetSize();
+					int updateOrder = boxCollider->GetUpdateOrder();
+                    if (ImGui::DragFloat4("BoxSize", &boxSize.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                    }
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+                    ImGui::Separator(); // 区切り線
+				}
+				    break;
+                case Component::TypeID::CircleColliderComponent:
+                {
+					auto circleCollider = dynamic_cast<CircleColliderComponent*>(component);
+                    auto circleSize = circleCollider->GetCircleSize();
+					int updateOrder = circleCollider->GetUpdateOrder();		
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+					if (ImGui::DragFloat4("CircleSize", &circleSize.position.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					{
+					}
+                    ImGui::Separator(); // 区切り線
+                }
+                    break;
+                case Component::TypeID::VelocityComponent:
+                {
+                    auto velocityComponent = dynamic_cast<VelocityComponent*>(component);
+                    auto acceleration = velocityComponent->GetAcceleration();
+                    auto velocity = velocityComponent->GetVelocity();
+                    auto speedRate = velocityComponent->GetSpeedRate();
+					int updateOrder = velocityComponent->GetUpdateOrder();
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+                    if (ImGui::DragFloat3("Acceleration", &acceleration.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                    }
+                    if (ImGui::DragFloat3("Velocity", &velocity.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                    }
+                    if (ImGui::DragFloat("SpeedRate", &speedRate, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                    }
+                    ImGui::Separator(); // 区切り線
+                    break;
+                }
+                case Component::TypeID::PendulumMovementComponent:
+                {
+					auto pendulumMovement = dynamic_cast<PendulumMovementComponent*>(component);
+                    auto velocity     = pendulumMovement->GetPendulumVelocity();
+					auto angle        = pendulumMovement->GetPendulumAngle();
+                    auto acceleration = pendulumMovement->GetPendulumAcceleration();
+                    auto fulcrum      = pendulumMovement->GetPendulumFulcrum();
+                    auto length       = pendulumMovement->GetPendulumLength();
+					int updateOrder = pendulumMovement->GetUpdateOrder();
+					ImGui::Text("UpdateOrder : %d", updateOrder);
+					if (ImGui::DragFloat3("Angle", &velocity, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					{
+						pendulumMovement->SetPendulumVelocity(velocity);
+					}
+                    if (ImGui::DragFloat3("Fulcrum", &fulcrum.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                        pendulumMovement->SetPendulumFulcrum(fulcrum);
+                    }
+					if (ImGui::DragFloat("Speed", &angle, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					{
+                        pendulumMovement->SetPendulumAngle(angle);
+					}
+                    if (ImGui::DragFloat("Acceleration", &acceleration, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    {
+						pendulumMovement->SetPendulumAcceleration(acceleration);
+                    }
+					if (ImGui::DragFloat("Length", &length, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					{
+						pendulumMovement->SetPendulumLength(length);
+					}
+                    ImGui::Separator(); // 区切り線
+					break;
+                }
+                case Component::TypeID::ColliderEventComponent:
+                {
+					auto colliderEvent = dynamic_cast<ColliderEventComponent*>(component);
+					size_t id = colliderEvent->GetId();
+					int updateOrder = colliderEvent->GetUpdateOrder();
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+					ImGui::Text("ID : %d", id);
+                    ImGui::Separator(); // 区切り線
+                }
+					break;
+                default:
+                    break;
+                }
+			}
         }
         ImGui::End();
     }
 }
-//--------------------------------------------------
+//-------------------------------------------------
 // @brief システムの情報を表示するウィンドウ
 //--------------------------------------------------
-void SystemGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
+void SystemGUI::ShowWindow()
 {
     // タブを管理するタブバー
-    if (ImGui::BeginTabBar("DebugWindow"), ImGuiWindowFlags_AlwaysVerticalScrollbar)
+    if (ImGui::BeginTabBar("DebugWindow"), &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar)
     {   // システム情報を表示
         if (ImGui::BeginTabItem("System"))
         {
@@ -162,24 +295,36 @@ void SystemGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
 //--------------------------------------------------
 // @brief ObjectとComponentを親子形式で表示するツリー形式ウィンドウ
 //--------------------------------------------------
-void TreeGUI::ShowWindow(std::vector<GameObject*>& _activeObjects)
+void TreeGUI::ShowWindow()
 {
-    if (ImGui::Begin("TreeView"),ImGuiWindowFlags_AlwaysVerticalScrollbar)
+    if (showFg)
     {
-        // 稼働中のオブジェクトリスト
-        if (ImGui::TreeNode("active_objects"))
+        if (ImGui::Begin("TreeView", &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar))
         {
-            ImGui::TreePop();
+            // 稼働中のオブジェクトリスト
+            if (ImGui::TreeNode("active_objects"))
+            {
+                // objectList_ の中身を全て表示
+                for (auto& obj : *objectList_)
+                {
+                    ImGui::PushID(reinterpret_cast<void*>(obj));
+                    // オブジェクトの名前を表示（仮に GetName 関数がある場合）
+                    if (ImGui::Selectable(obj->GetObjectName().c_str()))
+                    {
+                        selectObject_ = obj;
+                    }
+                    ImGui::PopID();  // IDをポップして、次の要素に影響しないようにする
+                }
+
+                ImGui::TreePop();
+            }
         }
-        ImGui::Separator();
-        // ここから待機中のオブジェクトリスト
-        if (ImGui::TreeNode("stand_by_objects"))
+        if (objectList_->empty())
         {
-            ImGui::TreePop();
+			selectObject_ = nullptr;
         }
         ImGui::End();
     }
 }
 
 #endif // IMGUI_DEBUG
-
