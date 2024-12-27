@@ -19,8 +19,9 @@ class Lift : public GameObject
 public:
 	enum class MoveState
 	{
-		length,	// cˆÚ“®
-		side,	// ‰¡ˆÚ“®
+		length,		// cˆÚ“®
+		side,		// ‰¡ˆÚ“®
+		diagonal,	// Î‚ßˆÚ“®
 	};
 
 	Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::SimpleMath::Vector3 _minPos,GameManager* _gameManager);

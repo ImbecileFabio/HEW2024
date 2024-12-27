@@ -22,6 +22,7 @@ public:
 		none = -1, 
 		title,
 		select,
+		option,
 		max,
 	};
 	TitleScene(GameManager* _gameManager);

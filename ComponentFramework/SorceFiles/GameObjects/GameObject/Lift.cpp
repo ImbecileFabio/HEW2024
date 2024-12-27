@@ -66,31 +66,56 @@ void Lift::UpdateGameObject(void)
 		switch (moveState_)
 		{
 		case Lift::MoveState::length:	// ècà⁄ìÆ
-			if (liftPos.y <= maxPos_.y && switchFg_ == false)
+			if (!switchFg_) 
 			{
 				velocityComponent_->SetVelocity({ 0.0f, 2.0f, 0.0f });
-				if (liftPos.y >= maxPos_.y)
+				if (liftPos.y >= maxPos_.y) 
+				{
 					switchFg_ = true;
+				}
 			}
-			if (liftPos.y >= minPos_.y && switchFg_ == true)
+			else 
 			{
 				velocityComponent_->SetVelocity({ 0.0f, -2.0f, 0.0f });
-				if (liftPos.y <= minPos_.y)
+				if (liftPos.y <= minPos_.y) 
+				{
 					switchFg_ = false;
+				}
 			}
 			break;
 		case Lift::MoveState::side:		// â°à⁄ìÆ
-			if (liftPos.x <= maxPos_.x && switchFg_ == false)
+			if (!switchFg_) 
 			{
 				velocityComponent_->SetVelocity({ 2.0f, 0.0f, 0.0f });
 				if (liftPos.x >= maxPos_.x)
+				{
 					switchFg_ = true;
+				}
 			}
-			if (liftPos.x >= minPos_.x && switchFg_ == true)
+			else 
 			{
 				velocityComponent_->SetVelocity({ -2.0f, 0.0f, 0.0f });
 				if (liftPos.x <= minPos_.x)
+				{
 					switchFg_ = false;
+				}
+			}
+			break;
+		case Lift::MoveState::diagonal:	// éŒÇﬂà⁄ìÆ
+			if (!switchFg_) 
+			{
+				velocityComponent_->SetVelocity({ 2.0f, 2.0f, 0.0f });
+				if (liftPos.x >= maxPos_.x && liftPos.y >= maxPos_.y)
+				{
+					switchFg_ = true;
+				}
+			}
+			else {
+				velocityComponent_->SetVelocity({ -2.0f, -2.0f, 0.0f });
+				if (liftPos.x <= minPos_.x && liftPos.y <= minPos_.y) 
+				{
+					switchFg_ = false;
+				}
 			}
 			break;
 		default:

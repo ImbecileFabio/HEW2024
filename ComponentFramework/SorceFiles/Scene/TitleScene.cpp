@@ -20,10 +20,11 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	, state_(State::title)
 {
 	camera_ = new Camera(game_manager_);
-	title_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/6.JPG");
-	title_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
 	select_rough_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/7.JPG");
 	select_rough_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
+	title_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/6.JPG");
+	title_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
+
 
 	this->Init();
 }
@@ -80,6 +81,9 @@ void TitleScene::Update()
 		{
 			state_ = State::title;
 		}
+		break;
+	case TitleScene::State::option:
+		// ‚±‚±‚ÉƒIƒvƒVƒ‡ƒ“
 		break;
 	default:
 		break;
