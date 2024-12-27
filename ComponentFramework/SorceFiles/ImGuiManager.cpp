@@ -132,6 +132,7 @@ void ObjectStatesGUI::ShowWindow()
             auto transform = selectObject_->GetComponent<TransformComponent>();
 			auto position = transform->GetPosition();
 			auto rotation = transform->GetRotation();
+			auto size = transform->GetSize();
 			auto scale = transform->GetScale();
             if (ImGui::DragFloat3("position", &position.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
             {
@@ -140,6 +141,10 @@ void ObjectStatesGUI::ShowWindow()
             if (ImGui::DragFloat3("rotation", &rotation.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
             {
                 transform->SetRotation(rotation);
+            }
+            if (ImGui::DragFloat3("size", &size.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            {
+                transform->SetSize(size);
             }
             if (ImGui::DragFloat3("scale", &scale.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
             {
