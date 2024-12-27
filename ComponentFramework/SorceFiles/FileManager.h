@@ -16,10 +16,15 @@
 class FileManager
 {
 public:
-	// コンストラクタ
-	FileManager()  = default;
-	// デストラクタ
-	~FileManager() = default;
+	// シングルトンなるものをコピペ
+	static FileManager& GetInstance()
+	{
+		static FileManager instance;
+		return instance;
+	}
+	FileManager(const FileManager&) = delete;
+	FileManager& operator=(const FileManager&) = delete;
+
 	// ファイル保存
 	bool SaveFile(const std::string& _fileName, const std::string& _data);
 	// ファイル読込
@@ -29,6 +34,8 @@ public:
 	// ファイルのサイズを取得
 	size_t GetFileSize(const std::string& _fileName);
 private:
+	FileManager(); //コンストラクタ
+	~FileManager(); //デストラクタ
 	// 内部ヘルパー関数（例: ファイルストリームエラーチェック）
 	bool IsFileStreamValid(const std::ifstream& _ifstream);
 	bool IsFileStreamValid(const std::ofstream& _ofstream);

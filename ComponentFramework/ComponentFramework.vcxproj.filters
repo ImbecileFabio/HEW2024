@@ -64,6 +64,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
+    <ClCompile Include="SorceFiles\SerializeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -127,6 +128,8 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\StageView.h" />
     <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
+    <ClInclude Include="SorceFiles\SerializeManager.h" />
+    <ClInclude Include="SorceFiles\SubSystem\csv.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />

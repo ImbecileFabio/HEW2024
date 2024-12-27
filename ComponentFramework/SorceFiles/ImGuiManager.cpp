@@ -155,7 +155,7 @@ void ObjectStatesGUI::ShowWindow()
 			for (auto& component : selectObject_->GetComponents())
 			{
                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 1.0f, 0.1f, 1.0f)); // —ÎF
-                ImGui::Text(component->ComponentTypeNames[static_cast<int>(component->GetComponentType())]);
+                ImGui::Text(component->GetComponentName().c_str());
 				ImGui::PopStyleColor();
                 switch (component->GetComponentType())
                 {

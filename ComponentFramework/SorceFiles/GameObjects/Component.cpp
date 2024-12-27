@@ -89,3 +89,9 @@ void Component::LoadProperties(void)
 void Component::SaveProperties(void)
 {
 }
+
+std::string Component::GetComponentName(void)
+{
+	std::string componentName = ComponentTypeNames[static_cast<int>(GetComponentType())];
+	return componentName;
+}

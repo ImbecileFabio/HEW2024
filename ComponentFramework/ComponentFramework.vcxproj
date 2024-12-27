@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\SerializeManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
@@ -83,6 +84,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\SerializeManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -135,6 +137,7 @@
     <ClInclude Include="SorceFiles\Scene\SceneBase.h" />
     <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
     <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
+    <ClInclude Include="SorceFiles\SubSystem\csv.h" />
     <ClInclude Include="SorceFiles\SubSystem\Material.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
