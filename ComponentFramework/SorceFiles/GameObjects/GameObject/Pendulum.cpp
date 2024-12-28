@@ -90,7 +90,7 @@ void Pendulum::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Pendulum:
 		moveFg = _other->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
 		// U‚èŽq‚ªŽ~‚Ü‚Á‚Ä‚¢‚½‚ç
-		if (!moveFg)
+		if ((!moveFg)&&_other->GetComponent<PendulumMovementComponent>()->GetPendulumAngle() == 0)
 		{
 			// U‚èŽq‚Ì“®‚«‚ðŠJŽn
 			_other->GetComponent<PendulumMovementComponent>()->SetPendulumMovement(true);

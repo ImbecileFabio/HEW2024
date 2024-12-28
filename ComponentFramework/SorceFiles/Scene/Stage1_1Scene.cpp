@@ -65,10 +65,19 @@ void Stage1_1Scene::Init()
 	lift_->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
 	lift_->GetTransformComponent()->SetPosition(pos.x, pos.y);
 
-	items_.resize(1);
+	items_.resize(4);
 	items_[0] = new Item(game_manager_);
 	items_[0]->GetTransformComponent()->SetPosition(-200.0f, 140.0f);
 	items_[0]->GetTransformComponent()->SetSize(100.0f, 100.0f);
+	items_[1] = new Item(game_manager_);
+	items_[1]->GetTransformComponent()->SetPosition(200.0f, 140.0f);
+	items_[1]->GetTransformComponent()->SetSize(100.0f, 100.0f);
+	items_[2] = new Item(game_manager_);
+	items_[2]->GetTransformComponent()->SetPosition(-100.0f, 140.0f);
+	items_[2]->GetTransformComponent()->SetSize(100.0f, 100.0f);
+	items_[3] = new Item(game_manager_);
+	items_[3]->GetTransformComponent()->SetPosition(100.0f, 140.0f);
+	items_[3]->GetTransformComponent()->SetSize(100.0f, 100.0f);
 
 	State = Game;
 
@@ -120,6 +129,9 @@ void Stage1_1Scene::Uninit()
 	delete robot_;
 	delete lift_;
 	items_[0]->GetComponent<EventBaseComponent>()->ResetID();
+	items_[1]->GetComponent<EventBaseComponent>()->ResetID();
+	items_[2]->GetComponent<EventBaseComponent>()->ResetID();
+	items_[3]->GetComponent<EventBaseComponent>()->ResetID();
 	for (auto& item : items_)
 	{
 		delete item;

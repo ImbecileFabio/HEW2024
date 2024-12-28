@@ -6,7 +6,8 @@ typedef enum
 {
 	SoundLabel_TitleBGM = 0,		// タイトルBGM
 	SoundLabel_HitSE,				// 叩くSE
-	//SoundLabel_LandingSE,			// 着地SE
+	SoundLabel_LandingSE,			// 着地SE
+	SoundLabel_ItemGet,				// アイテム取得SE
 
 	SoundLabel_MAX,
 } SOUND_LABEL;
@@ -22,12 +23,13 @@ private:
 
 	PARAM m_param[SoundLabel_MAX] =
 	{
-//		{"asset/BGM/sample000.wav", true},		// サンプルBGM（ループさせるのでtrue設定）
-//		{"asset/SE/○○○.wav", false},  		// サンプルSE（ループしないのでfalse設定）
+		//{"asset/BGM/○○○.wav", true },		// サンプルBGM（ループさせるのでtrue設定）
+		//{"asset/SE /○○○.wav", false},		// サンプルSE（ループしないのでfalse設定）
 
-		{"Asset/Sound/BGM/Title_BGM.wav", true},	// タイトルBGM
-		{"Asset/Sound/SE/叩く音1.wav", false},		// 叩くSE
-		//{"Asset/Sound/SE/着地1.wav", false}		// 着地SE
+		{ "Asset/Sound/BGM/Title_BGM.wav"		  , true  },		// タイトルBGM
+		{ "Asset/Sound/SE/叩く音1 下げ&短く.wav", false },		// 叩くSE
+		{ "Asset/Sound/SE/着地1.wav"			  , false },		// 着地SE
+		{ "Asset/Sound/SE/ギア2.wav"		  , false }			// アイテム取得SE
 	};
 
 	IXAudio2* m_pXAudio2 = NULL;

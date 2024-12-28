@@ -9,6 +9,7 @@
 
 /*----- インクルード -----*/
 #include <memory>
+#include "../sound.h"
 
 /*----- 構造体定義 -----*/
 
@@ -91,6 +92,9 @@ public:
 protected:
 	GameObject* owner_;	// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
+
+	// サウンド管理
+	Sound sound_;
 };
 
 

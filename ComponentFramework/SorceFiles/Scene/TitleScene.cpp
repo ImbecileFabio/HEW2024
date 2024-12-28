@@ -9,7 +9,6 @@
 #include "TitleScene.h"
 
 #include "../GameManager.h"
-#include "../AudioManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
 //--------------------------------------------------
@@ -74,7 +73,6 @@ void TitleScene::Update()
 		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))// ゲームスタート
 		{
 			game_manager_->ChangeScene(SceneName::Stage1_1);
-			//game_manager_->GetAudioManager()->Stop(SoundLabel_TitleBGM);
 		}
 		if (InputManager::GetInstance().GetKeyTrigger(VK_X))	// タイトル戻る
 		{

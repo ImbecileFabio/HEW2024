@@ -33,7 +33,6 @@ void PendulumManager::Init(){
 void PendulumManager::Uninit() {
 	pendulum_list_.clear();
 	pSelectedPendulum = nullptr;
-	//DestroyInstance();
 }
 void PendulumManager::Update(){
 	if (pSelectedPendulum != nullptr) {
@@ -139,7 +138,7 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 		PM->SetPendulumMovement(!PM->GetPendulumMovement());
 	}
 #else
-	// Aボタン（動作の変更）
+	// Mキー（動作の変更）
 	if (IM.GetKeyTrigger(VK_M)) {
 		SPM->SetPendulumMovement(!SPM->GetPendulumMovement());
 	}
@@ -165,13 +164,13 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 		}
 	}
 #else
-	// 十字↑（短くする）
+	// Iキー（短くする）
 	if (IM.GetKeyTrigger(VK_I)) {
 		if (SPM->GetLangthState() != LangthState::shortLangth) {
 			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) - 1));
 		}
 	}
-	// 十字↓（長くする）
+	// Kキー（長くする）
 	if (IM.GetKeyTrigger(VK_K)) {
 		if (SPM->GetLangthState() != LangthState::longLangth) {
 			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) + 1));

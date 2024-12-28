@@ -16,7 +16,6 @@
 #include "GameManager.h"
 #include "ColliderManager.h"
 #include "Renderer.h"
-#include "AudioManager.h"
 #include "ImGuiManager.h"
 #include "PemdulumManager.h"
 
@@ -55,9 +54,7 @@ GameManager::~GameManager(void)
 
 	delete current_scene_;
 	delete renderer_;
-	delete audio_manager_;
 	delete collider_manager_;
-
 }
 
 //-----------------------------------------------------------------
