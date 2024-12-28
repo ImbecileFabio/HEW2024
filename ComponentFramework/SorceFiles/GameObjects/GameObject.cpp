@@ -9,7 +9,8 @@
 #include "GameObject.h"
 #include "../GameManager.h"
 #include "Component/ColliderComponent/BoxColliderComponent.h"
-
+// オブジェクトの加算されていくID
+int GameObject::next_object_id_ = 0;
 // ゲームオブジェクトのリスト
 const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 {
@@ -37,7 +38,13 @@ GameObject::GameObject(GameManager* _gameManager, std::string _objectName)
 
 	// ゲームオブジェクトの登録
 	game_manager_->AddGameObject(this);
-
+	
+	// 全体のIDを加算
+	next_object_id_++;
+	
+	// オブジェクトのIDを設定
+	object_id_ = next_object_id_;
+	
 	// 姿勢制御コンポーネントの追加
 	transform_component_ = new TransformComponent(this);
 

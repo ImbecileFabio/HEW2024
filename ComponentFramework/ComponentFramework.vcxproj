@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\SerializeManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
@@ -84,6 +85,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
     <ClInclude Include="SorceFiles\SerializeManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />

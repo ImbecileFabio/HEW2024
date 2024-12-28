@@ -150,6 +150,10 @@ protected:
 
 	// 姿勢制御コンポーネント
 	TransformComponent* transform_component_{};
+
+	// オブジェクトごとに定まるID
+	static int next_object_id_;	// 生成されたときに加算される
+	int		   object_id_{};
 };
 
 #endif	// GAMEOBJECT_H_
