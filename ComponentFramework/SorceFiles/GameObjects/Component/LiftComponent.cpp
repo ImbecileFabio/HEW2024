@@ -20,7 +20,6 @@ LiftComponent::LiftComponent(Pendulum* _pendulum, MoveState _moveState, DirectX:
 //--------------------------------------------------
 LiftComponent::~LiftComponent(void)
 {
-	delete pendulum_;
 }
 //--------------------------------------------------
 // 初期化処理
@@ -34,7 +33,7 @@ void LiftComponent::Init()
 void LiftComponent::Update()
 {
 	bool moveFg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
-	auto velocity = owner_->GetComponent<VelocityComponent>();
+	auto velocity = owner_ ->GetComponent<VelocityComponent>();
 	if (!velocity)
 	{
 		std::cout << std::format("[LiftComponent]-> コンポーネントが取得できませんでした\n");
