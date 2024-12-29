@@ -55,6 +55,7 @@ public:
 	 void PendulumSelect();
 	 void PendulumMovementChange();
 	 void PendulumLangthChange();
+	 void PendulumDirectionChange();
 
 	 static PendulumManager* GetInstance() {
 		 if (!instance_) {

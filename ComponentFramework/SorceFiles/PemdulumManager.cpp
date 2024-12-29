@@ -39,6 +39,7 @@ void PendulumManager::Update(){
 		PendulumSelect();
 		PendulumMovementChange();
 		PendulumLangthChange();
+		PendulumDirectionChange();
 	}
 }
 
@@ -174,6 +175,37 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 	if (IM.GetKeyTrigger(VK_K)) {
 		if (SPM->GetLangthState() != LangthState::longLangth) {
 			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) + 1));
+		}
+	}
+#endif
+}
+
+//--------------------------------------------------
+// 振り子を叩く向きの変更
+//--------------------------------------------------
+void PendulumManager::PendulumDirectionChange() {
+	PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovementComponent>();
+#ifdef ControllerPlay
+	// 十字左（左向き）
+	if (IM.GetButtonTrigger(XINPUT_LEFT)) {
+		if (pendulumDirection_ != -1) {
+			pendulumDirection_ = -1;
+		}
+	}
+	// 十字右（右向き）
+	if (IM.GetButtonTrigger(XINPUT_RIGHT)) {
+		if (pendulumDirection_ != 1) {
+			pendulumDirection_ = 1;
+		}
+	}
+#else
+	// Nキー（向きの変更）
+	if (IM.GetKeyTrigger(VK_N)) {
+		if (SPM->GetPendulumDirection() != -1) {
+			SPM->SetPendulumDirection(-1);
+		}
+		else {
+			SPM->SetPendulumDirection(1);
 		}
 	}
 #endif
