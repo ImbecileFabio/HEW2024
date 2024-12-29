@@ -16,7 +16,6 @@
 #include "GameManager.h"
 #include "ColliderManager.h"
 #include "Renderer.h"
-#include "AudioManager.h"
 #include "ImGuiManager.h"
 #include "PemdulumManager.h"
 
@@ -31,9 +30,6 @@ GameManager::GameManager()
 	// レンダラー初期化
 	renderer_ = new Renderer();
 	renderer_->Init();
-
-	// オーディオマネージャー初期化
-	//audio_manager_ = new AudioManager();
 
 	// コライダーマネージャー初期化
 	collider_manager_ = ColliderManager::Create();
@@ -55,9 +51,7 @@ GameManager::~GameManager(void)
 
 	delete current_scene_;
 	delete renderer_;
-	delete audio_manager_;
 	delete collider_manager_;
-
 }
 
 //-----------------------------------------------------------------

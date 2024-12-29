@@ -16,6 +16,8 @@ Item::Item(GameManager* _gameManager)
 	auto f = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, this, std::placeholders::_1));
 	event_base_component_->AddEvent(f);
 	this->InitGameObject();
+
+	sound_.Init();
 }
 //--------------------------------------------------
 // @brief デストラクタ
@@ -54,6 +56,9 @@ void Item::OnCollisionEnter(GameObject* _other)
 		this->event_base_component_->RemoveEvent();
 		this->sprite_component_->SetState(SpriteComponent::State::notDraw);
 		this->state_ = GameObject::State::ColliderOut;
+
+		// サウンド再生
+		sound_.Play(SoundLabel_ItemGet);
 		break;
 	default:
 		break;
