@@ -188,15 +188,11 @@ void PendulumManager::PendulumDirectionChange() {
 #ifdef ControllerPlay
 	// 十字左（左向き）
 	if (IM.GetButtonTrigger(XINPUT_LEFT)) {
-		if (pendulumDirection_ != -1) {
-			pendulumDirection_ = -1;
-		}
+			SPM->SetPendulumDirection(-1);
 	}
 	// 十字右（右向き）
 	if (IM.GetButtonTrigger(XINPUT_RIGHT)) {
-		if (pendulumDirection_ != 1) {
-			pendulumDirection_ = 1;
-		}
+			SPM->SetPendulumDirection(1);
 	}
 #else
 	// Nキー（向きの変更）
