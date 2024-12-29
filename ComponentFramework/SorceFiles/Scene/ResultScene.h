@@ -9,7 +9,9 @@
 
 /*----- インクルード -----*/
 #include "SceneBase.h"
-
+#include <array>
+/*----- 前方宣言 -----*/
+class Revolution;
 //--------------------------------------------------
 // リザルトシーンクラス
 //--------------------------------------------------
@@ -25,8 +27,8 @@ public:
 	void Update() override;
 private:
 	class Camera*	  camera_{};	// カメラ
-	class Revolution* result_{};	// リザルト画面
-	std::array<Revolution*, 2>			 select_buttons_{};
+	Revolution* result_{};	// リザルト画面
+	std::array<Revolution*, 2>			 select_buttons_;
 	std::array<std::function<void()>, 2> select_button_functions_;
 	int select_button_ = 0;
 

@@ -156,6 +156,7 @@ void GameManager::ChangeScene(SceneName _scene)
 		pendulum_manager_->Uninit();
 		current_scene_ = new ResultScene(this);
 		current_scene_->SetOldSceneName(old_scene_name);
+		current_scene_->Init();
 		break;
 	default:
 		std::cout << std::format("[GameManager] -> ChangeScene SError\n");

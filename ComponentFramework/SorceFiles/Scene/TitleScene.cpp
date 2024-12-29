@@ -9,7 +9,6 @@
 #include "TitleScene.h"
 
 #include "../GameManager.h"
-#include "../AudioManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
 
@@ -27,10 +26,22 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	select_rough_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
 	title_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/6.JPG");
 	title_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
+	title_buttons_[0] = new Revolution(game_manager_, TEXTURE_PATH_"hoge.png");
+	title_buttons_[1] = new Revolution(game_manager_, TEXTURE_PATH_"hoge.png");
+	title_buttons_[2] = new Revolution(game_manager_, TEXTURE_PATH_"hoge.png");
+	title_buttons_[0]->GetComponent<TransformComponent>()->SetSize(400.0f, 200.0f);
+	title_buttons_[1]->GetComponent<TransformComponent>()->SetSize(400.0f, 200.0f);
+	title_buttons_[2]->GetComponent<TransformComponent>()->SetSize(400.0f, 200.0f);
+	title_buttons_[0]->GetComponent<TransformComponent>()->SetPosition(-400.0f, -300.0f);
+	title_buttons_[1]->GetComponent<TransformComponent>()->SetPosition(   0.0f, -300.0f);
+	title_buttons_[2]->GetComponent<TransformComponent>()->SetPosition( 400.0f, -300.0f);
+
 	create_count++;
 	if (create_count > 1)
 	{
 		title_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+		for (auto& title_button : title_buttons_)
+			title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 		state_ = State::select;
 	}
 	this->Init();
@@ -49,7 +60,6 @@ TitleScene::~TitleScene()
 //--------------------------------------------------
 void TitleScene::Init()
 {
-	//select_stages_[0][0] = game_manager_->ChangeScene(SceneName::Stage1_1);
 	select_stages_[0][0] = [this](){
 		game_manager_->ChangeScene(SceneName::Stage1_1);
 		};
@@ -75,6 +85,10 @@ void TitleScene::Uninit()
 	delete camera_;
 	delete title_;
 	delete select_rough_;
+	for (auto& title_button : title_buttons_)
+	{
+		title_button->Uninit();
+	}
 }
 
 //--------------------------------------------------
@@ -83,14 +97,50 @@ void TitleScene::Uninit()
 void TitleScene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	//game_manager_->GetAudioManager()->Play(SoundLabel_TitleBGM);
 	switch (state_)
 	{
 	case TitleScene::State::title:
-		title_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-		if (input.GetKeyTrigger(VK_RETURN))// セレクトに移動
+		title_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// タイトルを表示
+		for (auto& title_button : title_buttons_)	// ボタンを表示
+			title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+		if (input.GetKeyTrigger(VK_RIGHT))			// 左右移動
+			title_select_button_++;
+		if (input.GetKeyTrigger(VK_LEFT))
+			title_select_button_--;
+		if (title_select_button_ > 2)				// 折り返し処理
+			title_select_button_ = 0;
+		if (title_select_button_ < 0)
+			title_select_button_ = 2;
+		// 全ボタンの色を更新
+		for (int i = 0; i < title_buttons_.size(); ++i)
 		{
-			state_ = State::select;
+			if (i == title_select_button_)
+			{
+				// 選択中のボタンの色を変更
+				title_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 0.5f, 0.5f, 1.0f, 1.0f });
+			}
+			else
+			{
+				// 未選択のボタンの色を元に戻す
+				title_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+			}
+		}
+
+		if (input.GetKeyTrigger(VK_RETURN))	// 決定
+		{
+			switch (title_select_button_)
+			{
+			case 0:
+				state_ = State::select;		// セレクトに移動
+				for (auto& title_button : title_buttons_)	// ボタンを非表示に
+					title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+				break;
+			case 1:
+				state_ = State::end;
+				break;
+			default:
+				break;
+			}
 		}
 		break;
 	case TitleScene::State::select:
@@ -99,13 +149,15 @@ void TitleScene::Update()
 		if (input.GetKeyTrigger(VK_RETURN))	// ゲームスタート
 		{
 			StageSelect();
-			//game_manager_->GetAudioManager()->Stop(SoundLabel_TitleBGM);
 		}
 		if (input.GetKeyTrigger(VK_X))	// タイトル戻る
 			state_ = State::title;
 		break;
 	case TitleScene::State::option:
 		// ここにオプション
+		break;
+	case TitleScene::State::end:
+		game_manager_->SetEndFlag(true);
 		break;
 	default:
 		break;

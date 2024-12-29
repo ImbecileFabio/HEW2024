@@ -21,7 +21,7 @@
 #include "Component/CameraComponent.h"
 #include "Component/RenderComponent.h"
 #include "Component/RenderComponent/SpriteComponent.h"
-
+#include "../sound.h"
 
 /*----- 構造体定義 -----*/
 
@@ -154,6 +154,8 @@ protected:
 	// オブジェクトごとに定まるID
 	static int next_object_id_;	// 生成されたときに加算される
 	int		   object_id_{};
+
+	Sound sound_;
 };
 
 #endif	// GAMEOBJECT_H_

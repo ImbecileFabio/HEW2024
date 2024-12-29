@@ -26,6 +26,7 @@ public:
 		title,
 		select,
 		option,
+		end,	// ゲーム終了
 		max,
 	};
 	TitleScene(GameManager* _gameManager);
@@ -41,6 +42,10 @@ private:
 	Revolution* select_rough_{};	// ひとまず確認のためのセレクト画面ラフ
 
 	static int create_count;	// タイトルシーンが生成されたかどうかのカウント
+
+	// タイトル周りのオブジェクトと変数
+	std::array<Revolution*, 3> title_buttons_;	// タイトルのボタン
+	int title_select_button_ = 0;	// タイトルのボタンの添え字
 
 	int chapter_ = 0;	// 章
 	int stage_	 = 0;	// ステージ

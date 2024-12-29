@@ -11,6 +11,7 @@
 #include "../GameManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
+#include "../GameObjects/Component/RenderComponent/SpriteComponent.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -21,7 +22,13 @@ ResultScene::ResultScene(GameManager* _gameManager)
 	result_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/result/v01/10.JPG");
 	result_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
 	result_->GetComponent<TransformComponent>()->SetPosition(0.0f, 0.0f);
-	this->Init();
+	select_buttons_[0] = new Revolution(game_manager_, TEXTURE_PATH_"hoge.png");
+	select_buttons_[0]->GetTransformComponent()->SetSize(400.0f, 200.0f);
+	select_buttons_[0]->GetTransformComponent()->SetPosition(-400.0f, -300.0f);
+	select_buttons_[1] = new Revolution(game_manager_, TEXTURE_PATH_"hoge.png");
+	select_buttons_[1]->GetTransformComponent()->SetSize(400.0f, 200.0f);
+	select_buttons_[1]->GetTransformComponent()->SetPosition(400.0f, -300.0f);
+	//this->Init();
 }
 
 //--------------------------------------------------
@@ -29,10 +36,12 @@ ResultScene::ResultScene(GameManager* _gameManager)
 //--------------------------------------------------
 ResultScene::~ResultScene()
 {
-	game_manager_->RemoveGameObject(result_);
-	game_manager_->RemoveGameObject(camera_);
 	delete camera_;
 	delete result_;
+	for (auto& select_button : select_buttons_)
+	{
+		select_button->Uninit();
+	}
 }
 //--------------------------------------------------
 // 初期化処理
@@ -67,7 +76,7 @@ void ResultScene::Init()
 	select_button_functions_[0] = [this]() {
 		game_manager_->ChangeScene(SceneName::Title);
 		};
-	select_button_functions_[1] = [this, func]() {
+	select_button_functions_[1] = [func]() {
 		func();
 		};
 }
@@ -78,6 +87,10 @@ void ResultScene::Uninit()
 {
 	delete camera_;
 	delete result_;
+	for (auto& select_button : select_buttons_)
+	{
+		select_button->Uninit();
+	}
 }
 
 //--------------------------------------------------
@@ -94,9 +107,22 @@ void ResultScene::Update()
 		select_button_ = 0;
 	if (select_button_ < 0)
 		select_button_ = 1;
-	
+	// 全ボタンの色を更新
+	for (int i = 0; i < select_buttons_.size(); ++i)
+	{
+		if (i == select_button_)
+		{
+			// 選択中のボタンの色を変更
+			select_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 0.5f, 0.5f, 1.0f, 1.0f });
+		}
+		else
+		{
+			// 未選択のボタンの色を元に戻す
+			select_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+		}
+	}
 	if (input.GetKeyTrigger(VK_RETURN))
 	{
-		select_button_functions_[select_button_]();
+		select_button_functions_[select_button_]();	// ボタンの関数を実行
 	}
 }
