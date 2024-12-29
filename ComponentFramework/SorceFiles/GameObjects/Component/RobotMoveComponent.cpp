@@ -114,7 +114,6 @@ std::optional<float> RobotMoveComponent::CheckStepHeight(const TransformComponen
 		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
 		if(auto boxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider))
 		{
-
 			auto hitbox = boxCollider->GetWorldHitBox();
 			// 足元のスキャンラインがAABBに重なっているか確認
 			if (scanStart.x >= hitbox.min_.x && scanStart.x <= hitbox.max_.x) {

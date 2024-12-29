@@ -109,21 +109,7 @@ void Stage1_1Scene::Init()
 //--------------------------------------------------
 void Stage1_1Scene::Uninit()
 {
-	delete camera_;
-	delete back_ground_;
-	delete pendulum_;
-	delete pendulum_2_;
-	delete pendulum_3_;
-	delete tile_;
-	delete tile_2_;
-	delete tile_3_;
-	delete robot_;
-	delete lift_;
-	items_[0]->GetComponent<EventBaseComponent>()->ResetID();
-	for (auto& item : items_)
-	{
-		delete item;
-	}
+
 }
 
 //--------------------------------------------------

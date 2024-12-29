@@ -29,10 +29,7 @@ ResultScene::ResultScene(GameManager* _gameManager)
 //--------------------------------------------------
 ResultScene::~ResultScene()
 {
-	game_manager_->RemoveGameObject(result_);
-	game_manager_->RemoveGameObject(camera_);
-	delete camera_;
-	delete result_;
+
 }
 //--------------------------------------------------
 // ‰Šú‰»ˆ—
@@ -46,8 +43,7 @@ void ResultScene::Init()
 //--------------------------------------------------
 void ResultScene::Uninit()
 {
-	delete camera_;
-	delete result_;
+
 }
 
 //--------------------------------------------------

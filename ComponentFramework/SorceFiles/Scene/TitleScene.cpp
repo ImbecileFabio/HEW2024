@@ -50,9 +50,6 @@ void TitleScene::Init()
 void TitleScene::Uninit()
 {
 
-	delete camera_;
-	delete title_;
-	delete select_rough_;
 }
 
 //--------------------------------------------------

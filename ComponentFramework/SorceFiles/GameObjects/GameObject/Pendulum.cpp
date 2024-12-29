@@ -57,7 +57,6 @@ Pendulum::~Pendulum(void)
 	delete sprite_component_;
 	delete collider_component_;
 	delete pendulum_component_;
-	delete time_zone_;
 	delete children_component_;
 	delete collider_event_component_;
 }

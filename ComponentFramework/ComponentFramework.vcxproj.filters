@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="Shader\drawColliderPS.hlsl" />
     <FxCompile Include="Shader\unlitTexturePS.hlsl" />
     <FxCompile Include="Shader\unlitTextureVS.hlsl" />
-    <FxCompile Include="Shader\drawColliderVS.hlsl" />
     <FxCompile Include="Shader\drawColliderGS.hlsl" />
+    <FxCompile Include="Shader\drawColliderPS.hlsl" />
+    <FxCompile Include="Shader\drawColliderVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
@@ -20,7 +20,6 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Lift.cpp" />
@@ -63,6 +62,10 @@
     <ClCompile Include="SorceFiles\Renderer.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\stb_image.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
+    <ClCompile Include="SorceFiles\TileMapManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -78,7 +81,6 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent\TimeZoneComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Lift.h" />
@@ -125,6 +127,10 @@
     <ClInclude Include="SorceFiles\SubSystem\Texture.h" />
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
     <ClInclude Include="SorceFiles\SubSystem\Material.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\StageView.h" />
+    <ClInclude Include="SorceFiles\TileMapManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />
