@@ -39,7 +39,37 @@ ResultScene::~ResultScene()
 //--------------------------------------------------
 void ResultScene::Init()
 {
-
+	std::function<void()> func = []() {};	// èâä˙âª
+	if (old_scene_name_ == "Stage1_1")
+	{
+		func = [this]() {
+			game_manager_->ChangeScene(SceneName::Stage1_2);
+			};
+	}
+	if (old_scene_name_ == "Stage1_2")
+	{
+		func = [this]() {
+			game_manager_->ChangeScene(SceneName::Stage1_3);
+			};
+	}
+	if (old_scene_name_ == "Stage1_3")
+	{
+		func = [this]() {
+			game_manager_->ChangeScene(SceneName::Stage1_4);
+			};
+	}
+	if (old_scene_name_ == "Stage1_4")
+	{
+		func = [this]() {
+			game_manager_->ChangeScene(SceneName::Stage1_5);
+			};
+	}
+	select_button_functions_[0] = [this]() {
+		game_manager_->ChangeScene(SceneName::Title);
+		};
+	select_button_functions_[1] = [this, func]() {
+		func();
+		};
 }
 //--------------------------------------------------
 // èIóπèàóù
@@ -55,8 +85,18 @@ void ResultScene::Uninit()
 //--------------------------------------------------
 void ResultScene::Update()
 {
-	if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))
+	auto& input = InputManager::GetInstance();
+	if (input.GetKeyTrigger(VK_RIGHT))
+		select_button_++;
+	if (input.GetKeyTrigger(VK_LEFT))
+		select_button_--;
+	if (select_button_ > 1)	// ê‹ÇËï‘Çµèàóù
+		select_button_ = 0;
+	if (select_button_ < 0)
+		select_button_ = 1;
+	
+	if (input.GetKeyTrigger(VK_RETURN))
 	{
-		game_manager_->ChangeScene(SceneName::Title);
+		select_button_functions_[select_button_]();
 	}
 }

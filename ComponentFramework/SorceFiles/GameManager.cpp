@@ -126,11 +126,11 @@ void GameManager::GenerateOutputAll(void)
 void GameManager::ChangeScene(SceneName _scene)
 {
 	std::cout << std::format("\n[GameManager] -> ChangeScene\n");
-
+	// 前のシーン名を保存しておく
+	std::string old_scene_name = current_scene_->GetSceneName();
 	// 現在のシーンの終了処理
 	current_scene_->Uninit();
 	current_scene_ = nullptr;
-
 	switch (_scene)
 	{
 	case Title:
@@ -138,12 +138,30 @@ void GameManager::ChangeScene(SceneName _scene)
 		break;
 	case Stage1_1:
 		current_scene_ = new Stage1_1Scene(this);
+		current_scene_->SetOldSceneName(old_scene_name);
+		break;
+	case Stage1_2:
+		current_scene_ = new Stage1_2Scene(this);
+		current_scene_->SetOldSceneName(old_scene_name);
+		break;
+	case Stage1_3:
+		current_scene_ = new Stage1_3Scene(this);
+		current_scene_->SetOldSceneName(old_scene_name);
+		break;
+	case Stage1_4:
+		current_scene_ = new Stage1_4Scene(this);
+		current_scene_->SetOldSceneName(old_scene_name);
+		break;
+	case Stage1_5:
+		current_scene_ = new Stage1_5Scene(this);
+		current_scene_->SetOldSceneName(old_scene_name);
 		break;
 	case Result:
 		itemCount = 0;
 		collider_manager_->UninitAll();
 		pendulum_manager_->Uninit();
 		current_scene_ = new ResultScene(this);
+		current_scene_->SetOldSceneName(old_scene_name);
 		break;
 	default:
 		std::cout << std::format("[GameManager] -> ChangeScene SError\n");

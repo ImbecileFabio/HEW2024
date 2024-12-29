@@ -20,6 +20,15 @@ public:
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
+
+	enum STATE {
+		Game,
+		Result,
+		Pouse,
+		Rewind
+	};
+private:
+	STATE state_;
 };
 
 #endif // STAGE1_4SCENE_H_

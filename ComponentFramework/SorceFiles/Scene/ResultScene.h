@@ -26,6 +26,10 @@ public:
 private:
 	class Camera*	  camera_{};	// ƒJƒƒ‰
 	class Revolution* result_{};	// ƒŠƒUƒ‹ƒg‰æ–Ê
+	std::array<Revolution*, 2>			 select_buttons_{};
+	std::array<std::function<void()>, 2> select_button_functions_;
+	int select_button_ = 0;
+
 };
 
 #endif  // RESULT_SCENE_H_

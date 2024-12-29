@@ -15,12 +15,19 @@
 #include "Scene/TitleScene.h"
 #include "Scene/ResultScene.h"
 #include "Scene/Stage1_1Scene.h"
-
+#include "Scene/Stage1_2Scene.h"
+#include "Scene/Stage1_3Scene.h"
+#include "Scene/Stage1_4Scene.h"
+#include "Scene/Stage1_5Scene.h"
 /*----- 構造体定義 -----*/
 // シーン名	
 enum SceneName {
 	Title,
 	Stage1_1,
+	Stage1_2,
+	Stage1_3,
+	Stage1_4,
+	Stage1_5,
 	Result,
 };
 
