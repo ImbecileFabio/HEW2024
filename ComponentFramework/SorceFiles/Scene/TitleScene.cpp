@@ -59,7 +59,6 @@ void TitleScene::Uninit()
 //--------------------------------------------------
 void TitleScene::Update()
 {
-	//game_manager_->GetAudioManager()->Play(SoundLabel_TitleBGM);
 	switch (state_)
 	{
 	case TitleScene::State::title:
