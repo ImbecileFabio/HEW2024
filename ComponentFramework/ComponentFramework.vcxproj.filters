@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="Shader\drawColliderPS.hlsl" />
     <FxCompile Include="Shader\unlitTexturePS.hlsl" />
     <FxCompile Include="Shader\unlitTextureVS.hlsl" />
-    <FxCompile Include="Shader\drawColliderVS.hlsl" />
     <FxCompile Include="Shader\drawColliderGS.hlsl" />
+    <FxCompile Include="Shader\drawColliderPS.hlsl" />
+    <FxCompile Include="Shader\drawColliderVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
@@ -17,6 +17,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp" />
+    <ClCompile Include="SorceFiles\AudioManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
@@ -47,6 +49,7 @@
     <ClCompile Include="SorceFiles\PemdulumManager.cpp" />
     <ClCompile Include="SorceFiles\Scene\ResultScene.cpp" />
     <ClCompile Include="SorceFiles\Scene\SceneBase.cpp" />
+    <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\TitleScene.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
@@ -62,14 +65,8 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
-    <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
-    <ClCompile Include="SorceFiles\SerializeManager.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
-    <ClCompile Include="SorceFiles\Scene\Stage1_2Scene.cpp" />
-    <ClCompile Include="SorceFiles\Scene\Stage1_3Scene.cpp" />
-    <ClCompile Include="SorceFiles\Scene\Stage1_4Scene.cpp" />
-    <ClCompile Include="SorceFiles\Scene\Stage1_5Scene.cpp" />
-    <ClCompile Include="SorceFiles\sound.cpp" />
+    <ClCompile Include="SorceFiles\TileMapManager.cpp" />
+    <ClCompile Include="SorceFiles\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -82,6 +79,7 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\EventDebugComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h" />
@@ -92,6 +90,7 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h" />
+    <ClInclude Include="SorceFiles\AudioManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
@@ -113,6 +112,7 @@
     <ClInclude Include="SorceFiles\PemdulumManager.h" />
     <ClInclude Include="SorceFiles\Scene\ResultScene.h" />
     <ClInclude Include="SorceFiles\Scene\SceneBase.h" />
+    <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
     <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
@@ -131,15 +131,8 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\StageView.h" />
-    <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
-    <ClInclude Include="SorceFiles\SerializeManager.h" />
-    <ClInclude Include="SorceFiles\SubSystem\csv.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
-    <ClInclude Include="SorceFiles\Scene\Stage1_2Scene.h" />
-    <ClInclude Include="SorceFiles\Scene\Stage1_3Scene.h" />
-    <ClInclude Include="SorceFiles\Scene\Stage1_4Scene.h" />
-    <ClInclude Include="SorceFiles\Scene\Stage1_5Scene.h" />
-    <ClInclude Include="SorceFiles\sound.h" />
+    <ClInclude Include="SorceFiles\TileMapManager.h" />
+    <ClInclude Include="SorceFiles\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />

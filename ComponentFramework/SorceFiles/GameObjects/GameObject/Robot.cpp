@@ -33,7 +33,7 @@
 Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
 {
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"/robot_still_01.png");
+	sprite_component_ = new SpriteComponent(this, "robot_still");
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	velocity_component_ = new VelocityComponent(this);	// 速度
@@ -70,7 +70,7 @@ Robot::~Robot(void)
 void Robot::InitGameObject(void)
 {
 	transform_component_->SetSize(150, 150);
-
+	collider_component_->SetSize(150, 150);
 	velocity_component_->SetUseGravity(true);
 }
 

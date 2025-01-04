@@ -25,7 +25,6 @@ RobotMoveComponent::RobotMoveComponent(GameObject* _owner, int _updateOrder)
 	, step_scan_distance_(1.0f)
 {
 	
-
 	this->Init();
 }
 
@@ -96,7 +95,7 @@ void RobotMoveComponent::Update()
 }
 
 
-// たぶんばぐってます
+// ばぐってます
 //--------------------------------------------------
 // @param _transform 自身のトランスフォーム, _gameObjects オブジェクトリスト
 // @brief 段差の高さを調べる
@@ -115,7 +114,6 @@ std::optional<float> RobotMoveComponent::CheckStepHeight(const TransformComponen
 		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
 		if(auto boxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider))
 		{
-
 			auto hitbox = boxCollider->GetWorldHitBox();
 			// 足元のスキャンラインがAABBに重なっているか確認
 			if (scanStart.x >= hitbox.min_.x && scanStart.x <= hitbox.max_.x) {

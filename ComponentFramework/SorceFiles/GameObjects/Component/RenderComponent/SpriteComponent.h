@@ -37,7 +37,7 @@ public:
 	void Draw();
 
 	// テクスチャを変更
-	//void SetTexture(const std::string _imgname);
+	void SetTexture(const std::string _imgname);
 
 	// UV座標を指定（とりあえずおいてます）
 	//void SetUV(const float& nu, const float& nv, const float& sx, const float& sy);
@@ -49,6 +49,6 @@ public:
 	TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 
 private:
-	Texture texture_;	// テクスチャ
+	std::shared_ptr<Texture> texture_;	// テクスチャ
 };
 #endif	// SPRITE_COMPONENT_H_

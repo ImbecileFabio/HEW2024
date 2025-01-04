@@ -8,9 +8,12 @@
 #define SCENE_BASE_H_
 
 /*----- インクルード -----*/
+#include <memory>
 #include <vector>
 #include "../GameObjects/GameObject.h"
 
+/*----- 前方宣言 -----*/
+class TileMapManager;
 class GameManager;
 //--------------------------------------------------
 // シーンベースクラス
@@ -19,7 +22,7 @@ class SceneBase
 {
 public:
 	SceneBase(GameManager* _gameManager, std::string _sceneName);
-	virtual ~SceneBase() {};
+	virtual ~SceneBase();
 
 	virtual void Init() = 0;
 	virtual void Uninit() = 0;
@@ -29,6 +32,7 @@ public:
 	void SetOldSceneName(std::string _oldSceneName) { old_scene_name_ = _oldSceneName; }	// 前のシーン名を設定
 protected:
 	 GameManager* game_manager_{};
+	 std::unique_ptr<TileMapManager> tile_map_manager_;
 
 	 std::string scene_name_{};
 	 std::string old_scene_name_{};	// 前のシーン名を保存

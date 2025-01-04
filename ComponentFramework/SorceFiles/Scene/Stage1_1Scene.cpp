@@ -16,7 +16,6 @@
 #include "../GameObjects/Component/EventComponent/ColliderEventComponent.h"
 #include "../GameObjects/Component/PendulumMovementComponent.h"
 #include "../GameObjects/Component/ChildrenComponent.h"
-#include "../GameObjects/Component/LiftComponent.h"
 
 #include "../GameObjects/GameObject.h"
 #include "../GameObjects/GameObject/BackGround.h"
@@ -61,7 +60,9 @@ void Stage1_1Scene::Init()
 
 	pendulum_ = new Pendulum(game_manager_, Vector3(260.0f, -60, 0), false, 30.f);
 	auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumFulcrum();
-	lift_ = new Lift(pendulum_, LiftComponent::MoveState::length, {0.0f, 200.0f, 0.0f}, {0.0f, -200.0f, 0.0f}, game_manager_);
+	pendulum_3_		= new Pendulum(game_manager_, Vector3(0, 0, 0), false, 30.f);
+	lift_ = new Lift(Lift::MoveState::length, { 0.0f, 60.0f, 0.0f }, { 0.0f, -100.0f, 0.0f }, game_manager_);
+	lift_->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
 	lift_->GetTransformComponent()->SetPosition(pos.x, pos.y);
 
 	items_.resize(1);
@@ -108,21 +109,7 @@ void Stage1_1Scene::Init()
 //--------------------------------------------------
 void Stage1_1Scene::Uninit()
 {
-	delete camera_;
-	delete back_ground_;
-	delete pendulum_;
-	delete pendulum_2_;
-	delete pendulum_3_;
-	delete tile_;
-	delete tile_2_;
-	delete tile_3_;
-	delete robot_;
-	delete lift_;
-	items_[0]->GetComponent<EventBaseComponent>()->ResetID();
-	for (auto& item : items_)
-	{
-		delete item;
-	}
+
 }
 
 //--------------------------------------------------

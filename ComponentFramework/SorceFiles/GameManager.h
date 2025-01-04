@@ -68,6 +68,9 @@ public:
 	void itemCountUp() { itemCount++; }
 	int GetItemCount() { return itemCount; }
 
+
+	// オブジェクトをすべてクリア
+	void ClearAllObjects(void);
 	// シーン切り替え
 	void ChangeScene(SceneName _scene);
 

@@ -56,9 +56,9 @@ GameObject::GameObject(GameManager* _gameManager, std::string _objectName)
 //--------------------------------------------------
 GameObject::~GameObject(void)
 {
-	std::cout << std::format("[{}] -> Destructor\n", object_name_);
 	// ゲームオブジェクトの終了処理
 	this->Uninit();
+	std::cout << std::format("[{}] -> Destructor End\n\n", object_name_);
 }
 
 //--------------------------------------------------
@@ -66,7 +66,9 @@ GameObject::~GameObject(void)
 //--------------------------------------------------
 void GameObject::Init(void)
 {
-	std::cout << std::format("[{}] -> Init\n", object_name_);
+	std::cout << std::format("[{}] -> Init Start\n", object_name_);
+	// コンポーネントの初期化
+	this->InitComponent();
 }
 
 //--------------------------------------------------
@@ -99,6 +101,17 @@ void GameObject::Update(void)
 }
 
 //--------------------------------------------------
+// コンポーネントの初期化処理
+//--------------------------------------------------
+void GameObject::InitComponent(void)
+{
+	for (auto& com : components_)
+	{
+		com->Init();
+	}
+}
+
+//--------------------------------------------------
 // コンポーネントの更新処理
 //--------------------------------------------------
 void GameObject::UpdateComponents(void)
@@ -107,10 +120,6 @@ void GameObject::UpdateComponents(void)
 	{
 		com->Update();
 	}
-}
-
-void GameObject::InitGameObject(void)
-{
 }
 
 //--------------------------------------------------

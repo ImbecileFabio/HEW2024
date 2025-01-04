@@ -77,10 +77,13 @@ public:
 	void Init(void);
 	void Uninit(void);
 	void Update(void);
+
+	void InitComponent(void);
 	void UpdateComponents(void);
 
-	virtual void InitGameObject(void);	// オーバーライド用
+	virtual void InitGameObject(void) = 0;	// オーバーライド用
 	virtual void UpdateGameObject(void) = 0;	// オーバーライド用
+
 
 	// 姿勢情報の更新
 	void ComputeWorldTransform();
