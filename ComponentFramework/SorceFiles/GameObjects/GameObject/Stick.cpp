@@ -22,7 +22,7 @@ Stick::~Stick()
 //--------------------------------------------------
 void Stick::InitGameObject(void)
 {
-	sprite_component_	= new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/stick_01.png");
+	sprite_component_	= new SpriteComponent(this, "stick");
 	transform_component_->SetSize(100.0f, 300.0f);
 }
 //--------------------------------------------------

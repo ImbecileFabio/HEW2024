@@ -9,7 +9,7 @@
 Item::Item(GameManager* _gameManager)
 	: GameObject(_gameManager, "Item")
 {
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"UI/gear/ver1/gear_01.png");
+	sprite_component_ = new SpriteComponent(this,"gear");
 	collider_base_component_ = new BoxColliderComponent(this);
 	event_base_component_ = new ColliderEventComponent(this);
 	state_ = State::Active;

@@ -19,6 +19,7 @@
 #include "AudioManager.h"
 #include "ImGuiManager.h"
 #include "PemdulumManager.h"
+#include "TextureManager.h"
 
 
 //-----------------------------------------------------------------
@@ -67,7 +68,8 @@ void GameManager::InitAll(void)
 {
 	std::cout << std::format("[GameManager] -> InitAll Start\n");
 
-
+	// テクスチャのロード
+	TextureManager::GetInstance().Init();
 
 	// オブジェクトリストの初期化
 	game_objects_.clear();

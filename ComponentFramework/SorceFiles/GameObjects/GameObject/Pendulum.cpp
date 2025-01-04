@@ -28,7 +28,7 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	:GameObject(_gameManager, "Pendulum")
 {
 	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"huriko/v02/ball_01.png");
+	sprite_component_ = new SpriteComponent(this, "ball");
 	// 当たり判定コンポーネント
 	collider_component_ = new CircleColliderComponent(this);
 	// 振り子コンポーネント

@@ -13,6 +13,7 @@
 
 #include "SpriteComponent.h"
 #include "../../../GameManager.h"
+#include "../../../TextureManager.h"
 #include "../../../SubSystem/dx11helper.h"
 #include "../../GameObject.h"
 #include "../TransformComponent.h"
@@ -27,10 +28,9 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	: RenderComponent(_owner, _drawOrder)
 {
 	std::cout << std::format("＜SpriteComponent＞ -> Constructor\n");
-
-	// テクスチャ読み込み
-	bool sts = texture_.Load(_imgname);
-	assert(sts == true);
+	
+	// テクスチャ取得
+	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
 
 	// バッファ初期化
 	this->InitBuffers();
@@ -123,13 +123,20 @@ void SpriteComponent::Draw()
 	vertex_buffer_.SetGPU();
 	index_buffer_.SetGPU();
 
-	texture_.SetGPU();
+	texture_->SetGPU();
 	material_->SetGPU();
 
 	devicecontext->DrawIndexed(
 		4,							// 描画するインデックス数（四角形なんで４）
 		0,							// 最初のインデックスバッファの位置
 		0);
+}
+
+
+void SpriteComponent::SetTexture(const std::string _imgname)
+{
+	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
+
 }
 
 //--------------------------------------------------

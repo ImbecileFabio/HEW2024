@@ -12,6 +12,7 @@
 #include "../AudioManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
+#include "../GameObjects/GameObject/Robot.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -20,10 +21,11 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	, state_(State::title)
 {
 	camera_ = new Camera(game_manager_);
-	title_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/6.JPG");
+	title_ = new Revolution(game_manager_, "title_menu");
 	title_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
-	select_rough_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/7.JPG");
+	select_rough_ = new Revolution(game_manager_, "title_select");
 	select_rough_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
+
 
 	this->Init();
 }

@@ -83,6 +83,7 @@
     <ClCompile Include="SorceFiles\SubSystem\Texture.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
     <ClCompile Include="SorceFiles\TileMapManager.cpp" />
+    <ClCompile Include="SorceFiles\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
@@ -156,6 +157,7 @@
     <ClInclude Include="SorceFiles\SubSystem\VertexBuffer.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\StageView.h" />
     <ClInclude Include="SorceFiles\TileMapManager.h" />
+    <ClInclude Include="SorceFiles\TextureManager.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\drawColliderGS.hlsl">
