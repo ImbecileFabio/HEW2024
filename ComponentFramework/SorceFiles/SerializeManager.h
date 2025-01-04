@@ -26,11 +26,10 @@ public:
 	SerializeManager(const SerializeManager&) = delete;
 	SerializeManager& operator=(const SerializeManager&) = delete;
 
-	static std::string SerializeGameObject  (const GameObject* _gameObject);
+	static std::string SerializeGameObject(const GameObject* _gameObject);	// ゲームオブジェクトをシリアライズする関数
 	static GameObject* DeserializeGameObject(const std::string& _data);
 
-	// その他のコンポーネントも同様にシリアライズ/デシリアライズ用の関数を追加
-	static std::string SerializeComponent  (const Component* _component);
+	static std::string SerializeComponent(const Component* _component);	// コンポーネントをシリアライズする関数
 	static Component*  DeserializeComponent(const std::string& _data);
 private:
 	SerializeManager();	 //コンストラクタ

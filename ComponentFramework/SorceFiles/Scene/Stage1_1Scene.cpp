@@ -61,7 +61,6 @@ void Stage1_1Scene::Init()
 
 	pendulum_ = new Pendulum(game_manager_, Vector3(260.0f, -60, 0), false, 30.f);
 	auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumFulcrum();
-	pendulum_3_		= new Pendulum(game_manager_, Vector3(0, 0, 0), false, 30.f);
 	lift_ = new Lift(pendulum_, LiftComponent::MoveState::length, {0.0f, 200.0f, 0.0f}, {0.0f, -200.0f, 0.0f}, game_manager_);
 	lift_->GetTransformComponent()->SetPosition(pos.x, pos.y);
 

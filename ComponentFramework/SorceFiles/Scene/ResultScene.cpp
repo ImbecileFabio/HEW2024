@@ -49,7 +49,7 @@ ResultScene::~ResultScene()
 void ResultScene::Init()
 {
 	std::function<void()> func = []() {};	// 初期化
-	if (old_scene_name_ == "Stage1_1")
+	if (old_scene_name_ == "Stage1_1")	// リザルトの前のシーンによって次のシーンを変更
 	{
 		func = [this]() {
 			game_manager_->ChangeScene(SceneName::Stage1_2);
@@ -73,10 +73,10 @@ void ResultScene::Init()
 			game_manager_->ChangeScene(SceneName::Stage1_5);
 			};
 	}
-	select_button_functions_[0] = [this]() {
+	select_button_functions_[0] = [this]() {	// ボタンに関数を登録
 		game_manager_->ChangeScene(SceneName::Title);
 		};
-	select_button_functions_[1] = [func]() {
+	select_button_functions_[1] = [func]() {	// ifの結果を代入
 		func();
 		};
 }

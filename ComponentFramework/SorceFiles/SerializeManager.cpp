@@ -73,6 +73,10 @@ std::string SerializeManager::SerializeComponent(const Component* _component)
 		   << transform->GetSize().z; 
    }
    break;
+   case Component::TypeID::SpriteComponent:
+   {
+	   const SpriteComponent* sprite = dynamic_cast<const SpriteComponent*>(_component);
+   }
    default:
        break;
    }
