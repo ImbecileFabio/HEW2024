@@ -6,11 +6,13 @@
 //==================================================
 
 /*----- インクルード -----*/
+#include <memory>
 #include "SceneBase.h"
 
 #include "../GameManager.h"
+#include "../TileMapManager.h"
 //--------------------------------------------------
-// @param	シーンの所有者, シーン名
+// @param	_gameManager シーンの所有者, _sceneName シーン名
 // @brief	コンストラクタ
 //--------------------------------------------------
 SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
@@ -18,5 +20,15 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 	, scene_name_(_sceneName)		// シーン名
 {
 	std::cout << std::format("\n[{}] -> Constructor\n", scene_name_);
+	tile_map_manager_ = std::make_unique<TileMapManager>();
+}
+
+SceneBase::~SceneBase()
+{
+	std::cout << std::format("[{}] -> Destructor\n", scene_name_);
+
+
+
+
 }
 

@@ -9,8 +9,10 @@
 #include "TitleScene.h"
 
 #include "../GameManager.h"
+#include "../AudioManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
+#include "../GameObjects/GameObject/Robot.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -19,10 +21,10 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	, state_(State::title)
 {
 	camera_ = new Camera(game_manager_);
-	select_rough_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/7.JPG");
-	select_rough_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
-	title_ = new Revolution(game_manager_, TEXTURE_PATH_"scene/title/v01/6.JPG");
+	title_ = new Revolution(game_manager_, "title_menu");
 	title_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
+	select_rough_ = new Revolution(game_manager_, "title_select");
+	select_rough_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
 
 
 	this->Init();
@@ -49,9 +51,7 @@ void TitleScene::Init()
 //--------------------------------------------------
 void TitleScene::Uninit()
 {
-	delete camera_;
-	delete title_;
-	delete select_rough_;
+
 }
 
 //--------------------------------------------------
@@ -59,6 +59,7 @@ void TitleScene::Uninit()
 //--------------------------------------------------
 void TitleScene::Update()
 {
+	//game_manager_->GetAudioManager()->Play(SoundLabel_TitleBGM);
 	switch (state_)
 	{
 	case TitleScene::State::title:
@@ -73,14 +74,12 @@ void TitleScene::Update()
 		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))// ゲームスタート
 		{
 			game_manager_->ChangeScene(SceneName::Stage1_1);
+			//game_manager_->GetAudioManager()->Stop(SoundLabel_TitleBGM);
 		}
 		if (InputManager::GetInstance().GetKeyTrigger(VK_X))	// タイトル戻る
 		{
 			state_ = State::title;
 		}
-		break;
-	case TitleScene::State::option:
-		// ここにオプション
 		break;
 	default:
 		break;

@@ -25,7 +25,7 @@ Player::Player(GameManager* _gameManager)
 	:GameObject(_gameManager, "Playaer")
 {
 	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"icon.png");
+	//sprite_component_ = new SpriteComponent(this,"icon");
 	// 速度コンポーネント
 	velocity_component_ = new VelocityComponent(this);
 	collider_component_ = new BoxColliderComponent(this);
