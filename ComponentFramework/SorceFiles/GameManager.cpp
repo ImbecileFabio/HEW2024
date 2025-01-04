@@ -18,6 +18,7 @@
 #include "Renderer.h"
 #include "ImGuiManager.h"
 #include "PemdulumManager.h"
+#include "TextureManager.h"
 
 
 //-----------------------------------------------------------------
@@ -61,7 +62,8 @@ void GameManager::InitAll(void)
 {
 	std::cout << std::format("[GameManager] -> InitAll Start\n");
 
-
+	// テクスチャのロード
+	TextureManager::GetInstance().Init();
 
 	// オブジェクトリストの初期化
 	game_objects_.clear();
@@ -82,6 +84,7 @@ void GameManager::UninitAll(void)
 	std::cout << std::format("[GameManager] -> UninitAll Start\n");
 
 	// ゲームオブジェクトの破棄
+	this->ClearAllObjects();
 }
 
 //-----------------------------------------------------------------
@@ -115,37 +118,92 @@ void GameManager::GenerateOutputAll(void)
 }
 
 //-----------------------------------------------------------------
+// @biref オブジェクトをすべてクリア
+//	一度deadgameobjectsに移動させてから消去することでイテレータがバグるのを防いでます
+// （gameobjectはデストラクタでgameobjectsから勝手に出ていくのでずれる）
+//-----------------------------------------------------------------
+void GameManager::ClearAllObjects(void)
+{
+	std::cout << "クリアオールオブジェクト\n";
+
+	// 振り子マネージャとコライダーマネージャの初期化
+	pendulum_manager_->Uninit();
+	collider_manager_->UninitAll();
+
+	// 削除対象リストを作成
+	std::vector<GameObject*> dead_game_objects;
+
+	// 稼働中のゲームオブジェクトを削除対象リストに追加
+	for (auto& obj : game_objects_) {
+		dead_game_objects.push_back(obj);
+	}
+	// 待機中のゲームオブジェクトを削除対象リストに追加
+	for (auto& obj : pending_game_objects_){
+		dead_game_objects.push_back(obj);
+	}
+
+	// 削除対象リスト内のオブジェクトを安全に削除
+	for (auto& obj : dead_game_objects) {
+		std::cout << std::format("\n[{}] -> delete\n", obj->GetObjectName());
+		delete obj;
+	}
+
+	// ゲームオブジェクトリストをクリア
+	game_objects_.clear();
+}
+
+
+//-----------------------------------------------------------------
 // シーン切り替え処理
 //-----------------------------------------------------------------
-void GameManager::ChangeScene(SceneName _scene)
-{
-	std::cout << std::format("\n[GameManager] -> ChangeScene\n");
+void GameManager::ChangeScene(SceneName _scene) {
+	std::cout << "\n[GameManager] -> ChangeScene\n";
 
 	// 現在のシーンの終了処理
-	current_scene_->Uninit();
-	current_scene_ = nullptr;
+	if (current_scene_) {
+		try {
+			current_scene_->Uninit();
+			delete current_scene_;
+		}
+		catch (const std::exception& e) {
+			std::cerr << "[ChangeScene] -> 例外 : " << e.what() << std::endl;
+		}
+		current_scene_ = nullptr;
+	}
 
-	switch (_scene)
-	{
-	case Title:
-		current_scene_ = new TitleScene(this);
-		break;
-	case Stage1_1:
-		current_scene_ = new Stage1_1Scene(this);
-		break;
-	case Result:
-		itemCount = 0;
-		collider_manager_->UninitAll();
-		pendulum_manager_->Uninit();
-		current_scene_ = new ResultScene(this);
-		break;
-	default:
-		std::cout << std::format("[GameManager] -> ChangeScene SError\n");
-		break;
+	// ゲームオブジェクトの全削除
+	try {
+		ClearAllObjects();
+	}
+	catch (const std::exception& e) {
+		std::cerr << "[ClearAllObjects] -> 例外 : " << e.what() << std::endl;
+	}
+
+	// 新しいシーンの初期化
+	try {
+		switch (_scene) {
+		case Title:
+			current_scene_ = new TitleScene(this);
+			break;
+		case Stage1_1:
+			current_scene_ = new Stage1_1Scene(this);
+			break;
+		case Result:
+			itemCount = 0;
+			current_scene_ = new ResultScene(this);
+			break;
+		default:
+			std::cout << std::format("[GameManager] -> ChangeScene Error\n");
+			break;
+		}
+	}
+	catch (const std::exception& e) {
+		std::cerr << "[ChangeScene] -> 例外 : " << e.what() << std::endl;
 	}
 
 	ImGuiManager::staticPointer->ResetSelectObject();
 }
+
 
 //-----------------------------------------------------------------
 // ゲームオブジェクトの追加処理

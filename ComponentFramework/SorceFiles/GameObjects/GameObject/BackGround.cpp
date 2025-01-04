@@ -3,7 +3,7 @@
 BackGround::BackGround(GameManager* _gameManager)
 	:GameObject(_gameManager, "BackGround")
 {
-		sprite_component_ = new SpriteComponent(this, TEXTURE_PATH_"backdrop_02.png", 1);
+		sprite_component_ = new SpriteComponent(this, "backdrop_02", 0);
 		this->InitGameObject();
 }
 

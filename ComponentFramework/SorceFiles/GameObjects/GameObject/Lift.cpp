@@ -24,7 +24,7 @@ Lift::Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::
 	:GameObject(_gameManager, "Lift")
 	,moveState_(_moveState), maxPos_(_maxPos), minPos_(_minPos), switchFg_(false)
 {
-	spriteComponent_ = new SpriteComponent(this, TEXTURE_PATH_"gimmick/lift/v01/lift_LR_01.png");
+	spriteComponent_ = new SpriteComponent(this,"lift_floor_center");
 	collider_base_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocityComponent_ = new VelocityComponent(this);
