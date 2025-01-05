@@ -18,6 +18,7 @@
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
 std::vector<GameObject*>* ImGuiBase::objectList_ = {};
 GameObject* ImGuiBase::selectObject_ = {};
+constexpr float dragSpeed = 1.0f;
 //--------------------------------------------------
 // @param _hWnd GameProcessで使っているウィンドハンドル
 // @brief ImGuiのWin32APIを初期化
@@ -135,19 +136,19 @@ void ObjectStatesGUI::ShowWindow()
 			auto rotation = transform->GetRotation();
 			auto size = transform->GetSize();
 			auto scale = transform->GetScale();
-            if (ImGui::SliderFloat3("position", &position.x, -1000.0f, 1000.0f, "%.3f"))
+            if (ImGui::DragFloat3("position", &position.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
             {
 				transform->SetPosition(position);
             }
-            if (ImGui::SliderFloat3("rotation", &rotation.x, -1000.0f, 1000.0f, "%.3f"))
+            if (ImGui::DragFloat3("rotation", &rotation.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
             {
                 transform->SetRotation(rotation);
             }
-            if (ImGui::SliderFloat3("size", &size.x, -1000.0f, 1000.0f, "%.3f"))
+            if (ImGui::DragFloat3("size", &size.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
             {
                 transform->SetSize(size);
             }
-            if (ImGui::SliderFloat3("scale", &scale.x, -1000.0f, 1000.0f, "%.3f"))
+            if (ImGui::DragFloat3("scale", &scale.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
             {
                 transform->SetScale(scale);
             }
@@ -177,7 +178,7 @@ void ObjectStatesGUI::ShowWindow()
                     auto boxCollider = dynamic_cast<BoxColliderComponent*>(component);
 					auto boxSize = boxCollider->GetSize();
 					int updateOrder = boxCollider->GetUpdateOrder();
-                    if (ImGui::SliderFloat3("BoxSize", &boxSize.x, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("BoxSize", &boxSize.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
                     }
                     ImGui::Text("UpdateOrder : %d", updateOrder);
@@ -190,7 +191,7 @@ void ObjectStatesGUI::ShowWindow()
                     auto circleSize = circleCollider->GetCircleSize();
 					int updateOrder = circleCollider->GetUpdateOrder();		
                     ImGui::Text("UpdateOrder : %d", updateOrder);
-					if (ImGui::SliderFloat3("CircleSize", &circleSize.position.x, -1000.0f, 1000.0f, "%.3f"))
+					if (ImGui::DragFloat3("CircleSize", &circleSize.position.x, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
 					{
 					}
                     ImGui::Separator(); // 区切り線
@@ -204,13 +205,13 @@ void ObjectStatesGUI::ShowWindow()
                     auto speedRate = velocityComponent->GetSpeedRate();
 					int updateOrder = velocityComponent->GetUpdateOrder();
                     ImGui::Text("UpdateOrder : %d", updateOrder);
-                    if (ImGui::SliderFloat3("Acceleration", &acceleration.x, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("Acceleration", &acceleration.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
                     }
-                    if (ImGui::SliderFloat3("Velocity", &velocity.x, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("Velocity", &velocity.x, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
                     {
                     }
-                    if (ImGui::SliderFloat("SpeedRate", &speedRate, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat("SpeedRate", &speedRate, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
                     }
                     ImGui::Separator(); // 区切り線
@@ -226,23 +227,23 @@ void ObjectStatesGUI::ShowWindow()
                     auto length       = pendulumMovement->GetPendulumLength();
 					int updateOrder = pendulumMovement->GetUpdateOrder();
 					ImGui::Text("UpdateOrder : %d", updateOrder);
-					if (ImGui::SliderFloat3("Angle", &velocity, -1000.0f, 1000.0f, "%.3f"))
+					if (ImGui::DragFloat3("Angle", &velocity, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
 					{
 						pendulumMovement->SetPendulumVelocity(velocity);
 					}
-                    if (ImGui::SliderFloat3("Fulcrum", &fulcrum.x,-1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("Fulcrum", &fulcrum.x, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
                     {
                         pendulumMovement->SetPendulumFulcrum(fulcrum);
                     }
-					if (ImGui::SliderFloat3("Speed", &angle, -1000.0f, 1000.0f, "%.3f"))
+					if (ImGui::DragFloat3("Speed", &angle, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
 					{
                         pendulumMovement->SetPendulumAngle(angle);
 					}
-                    if (ImGui::SliderFloat3("Acceleration", &acceleration, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("Acceleration", &acceleration, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
 						pendulumMovement->SetPendulumAcceleration(acceleration);
                     }
-					if (ImGui::SliderFloat("Length", &length,-1000.0f, 1000.0f, "%.3f"))
+					if (ImGui::DragFloat("Length", &length, dragSpeed,-1000.0f, 1000.0f, "%.3f"))
 					{
 						pendulumMovement->SetPendulumLength(length);
 					}
@@ -259,19 +260,6 @@ void ObjectStatesGUI::ShowWindow()
                     ImGui::Separator(); // 区切り線
                 }
 					break;
-				case Component::TypeID::LiftComponent:
-                {
-					auto liftComponent = dynamic_cast<LiftComponent*>(component);
-					auto maxPos = liftComponent->GetMaxPos();
-					auto minPos = liftComponent->GetMinPos();
-					int updateOrder = liftComponent->GetUpdateOrder();
-					ImGui::Text("UpdateOrder : %d", updateOrder);
-					if (ImGui::SliderFloat3("MaxPos", &maxPos.x, -1000.0f, 1000.0f, "%.3f"))
-                    { }
-					if (ImGui::SliderFloat3("MinPos", &minPos.x, -1000.0f, 1000.0f, "%.3f"))
-                    { }
-                }
-                    break;
                 default:
                     break;
                 }

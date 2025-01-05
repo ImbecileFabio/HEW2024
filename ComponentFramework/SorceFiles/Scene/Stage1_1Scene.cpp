@@ -57,13 +57,13 @@ void Stage1_1Scene::Init()
 	tile_3_->GetTransformComponent()->SetPosition(-100.0f, 50.0f);
 	robot_ = new Robot(game_manager_);
 	robot_->GetTransformComponent()->SetPosition(500.0f, 150.0f);
-
-	pendulum_ = new Pendulum(game_manager_, Vector3(260.0f, -60, 0), false, 30.f);
-	auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumFulcrum();
-	pendulum_3_		= new Pendulum(game_manager_, Vector3(0, 0, 0), false, 30.f);
-	lift_ = new Lift(Lift::MoveState::length, { 0.0f, 60.0f, 0.0f }, { 0.0f, -100.0f, 0.0f }, game_manager_);
-	lift_->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
-	lift_->GetTransformComponent()->SetPosition(pos.x, pos.y);
+	pendulum_ = new Pendulum(game_manager_, Vector3(270.0f, -60.0f, 0.0f), true, 60.0f);
+	lift_ = new Lift(game_manager_);
+	lift_->GetTransformComponent()->SetPosition(270.0f, -60.0f);
+	lift_->SetMaxPos({ 0.0f, 60.0f, 0.0f });
+	lift_->SetMinPos({ 0.0f, -100.0f, 0.0f });
+	lift_->SetMoveState(Lift::MoveState::length);
+	lift_->SetPendulum(pendulum_);
 
 	items_.resize(1);
 	items_[0] = new Item(game_manager_);
@@ -96,6 +96,19 @@ void Stage1_1Scene::Init()
 	}
 
 	for (auto& pendulumObject : game_manager_->GetGameObjects()) {
+		auto childrenComponent = pendulumObject->GetComponent<ChildrenComponent>();
+		if (childrenComponent)
+		{
+			auto& childrenObjects = childrenComponent->GetChildren();
+			for (auto& children : childrenObjects)
+			{
+				// ペンデュラムオブジェクトをコライダーマネージャーに登録
+				if (children->GetComponent<PendulumMovementComponent>())
+				{
+					game_manager_->GetPendulumManager()->AddGameObject(children);
+				}
+			}
+		}
 		if (pendulumObject->GetComponent<PendulumMovementComponent>()) {
 			game_manager_->GetPendulumManager()->AddGameObject(pendulumObject);
 		}
@@ -109,7 +122,6 @@ void Stage1_1Scene::Init()
 //--------------------------------------------------
 void Stage1_1Scene::Uninit()
 {
-
 }
 
 //--------------------------------------------------

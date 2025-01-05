@@ -158,7 +158,8 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("pause_button", UI_PATH"v02/pause_button_01.png");
 	// ステージUI
 	RegisterTexture("stageUI", UI_PATH"v02/stage_ui_01.png");
-
+	// テスト用ボタン
+	RegisterTexture("hoge", UI_PATH"hoge.png");
 	/*--------------- SCENE ---------------*/
 	// オプション
 	RegisterTexture("option_menu", SCENE_PATH"option/v01/9.JPG");

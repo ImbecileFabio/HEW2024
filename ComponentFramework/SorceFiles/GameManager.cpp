@@ -156,9 +156,11 @@ void GameManager::ClearAllObjects(void)
 //-----------------------------------------------------------------
 // シーン切り替え処理
 //-----------------------------------------------------------------
-void GameManager::ChangeScene(SceneName _scene) {
+void GameManager::ChangeScene(SceneName _scene) 
+{
 	std::cout << "\n[GameManager] -> ChangeScene\n";
-
+	// 前のシーン名を保存しておく
+	std::string old_scene_name = current_scene_->GetSceneName();
 	// 現在のシーンの終了処理
 	if (current_scene_) {
 		try {
@@ -184,13 +186,33 @@ void GameManager::ChangeScene(SceneName _scene) {
 		switch (_scene) {
 		case Title:
 			current_scene_ = new TitleScene(this);
+			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage1_1:
 			current_scene_ = new Stage1_1Scene(this);
+			current_scene_->SetOldSceneName(old_scene_name);
+			break;
+		case Stage1_2:
+			current_scene_ = new Stage1_2Scene(this);
+			current_scene_->SetOldSceneName(old_scene_name);
+			break;
+		case Stage1_3:
+			current_scene_ = new Stage1_3Scene(this);
+			current_scene_->SetOldSceneName(old_scene_name);
+			break;
+		case Stage1_4:
+			current_scene_ = new Stage1_4Scene(this);
+			current_scene_->SetOldSceneName(old_scene_name);
+			break;
+		case Stage1_5:
+			current_scene_ = new Stage1_5Scene(this);
+			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Result:
 			itemCount = 0;
 			current_scene_ = new ResultScene(this);
+			current_scene_->SetOldSceneName(old_scene_name);
+			current_scene_->Init();
 			break;
 		default:
 			std::cout << std::format("[GameManager] -> ChangeScene Error\n");

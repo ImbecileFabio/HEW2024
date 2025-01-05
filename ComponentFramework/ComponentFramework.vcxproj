@@ -19,39 +19,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RobotMoveComponent.cpp" />
-    <ClCompile Include="SorceFiles\ColliderManager.cpp" />
-    <ClCompile Include="SorceFiles\FileManager.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ChildrenComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RobotMoveComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
+    <ClCompile Include="SorceFiles\ColliderManager.cpp" />
+    <ClCompile Include="SorceFiles\FileManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\BackGround.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Item.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Lift.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Robot.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp" />
-    <ClCompile Include="SorceFiles\AudioManager.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Stick.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Tile.cpp" />
@@ -69,7 +61,12 @@
     <ClCompile Include="SorceFiles\Scene\ResultScene.cpp" />
     <ClCompile Include="SorceFiles\Scene\SceneBase.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage1_1Scene.cpp" />
+    <ClCompile Include="SorceFiles\Scene\Stage1_2Scene.cpp" />
+    <ClCompile Include="SorceFiles\Scene\Stage1_3Scene.cpp" />
+    <ClCompile Include="SorceFiles\Scene\Stage1_4Scene.cpp" />
+    <ClCompile Include="SorceFiles\Scene\Stage1_5Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\TitleScene.cpp" />
+    <ClCompile Include="SorceFiles\sound.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
@@ -86,40 +83,32 @@
     <ClCompile Include="SorceFiles\TextureManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RobotMoveComponent.h" />
-    <ClInclude Include="SorceFiles\ColliderManager.h" />
-    <ClInclude Include="SorceFiles\FileManager.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ChildrenComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ColliderBaseComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\EventDebugComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\ColliderEventComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\EventComponent\EventBaseComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PendulumMovementComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
+    <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent\VelocityComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RobotMoveComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
+    <ClInclude Include="SorceFiles\ColliderManager.h" />
+    <ClInclude Include="SorceFiles\FileManager.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\DebugComponent\EventDebugComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\BackGround.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Item.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Lift.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Robot.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\CircleColliderComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\BoxColliderComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h" />
-    <ClInclude Include="SorceFiles\AudioManager.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Stick.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Tile.h" />
@@ -138,7 +127,12 @@
     <ClInclude Include="SorceFiles\Scene\ResultScene.h" />
     <ClInclude Include="SorceFiles\Scene\SceneBase.h" />
     <ClInclude Include="SorceFiles\Scene\Stage1_1Scene.h" />
+    <ClInclude Include="SorceFiles\Scene\Stage1_2Scene.h" />
+    <ClInclude Include="SorceFiles\Scene\Stage1_3Scene.h" />
+    <ClInclude Include="SorceFiles\Scene\Stage1_4Scene.h" />
+    <ClInclude Include="SorceFiles\Scene\Stage1_5Scene.h" />
     <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
+    <ClInclude Include="SorceFiles\sound.h" />
     <ClInclude Include="SorceFiles\SubSystem\Material.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />

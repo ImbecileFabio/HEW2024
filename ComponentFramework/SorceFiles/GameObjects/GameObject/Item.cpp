@@ -24,6 +24,7 @@ Item::Item(GameManager* _gameManager)
 //--------------------------------------------------
 Item::~Item()
 {
+	event_base_component_->ResetID();
 	delete sprite_component_;
 	delete collider_base_component_;
 	delete event_base_component_;

@@ -47,19 +47,6 @@ RenderComponent::~RenderComponent(void)
 
 }
 //--------------------------------------------------
-// UV座標の変更
-//--------------------------------------------------
-void RenderComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
-{
-	vertices_[0].uv = _uv;
-	vertices_[1].uv = Vector2(_uv.x , _uv.y);
-	vertices_[2].uv = Vector2(_uv.x, _uv.y + 1);
-	vertices_[3].uv = Vector2(_uv.x + 1, _uv.y + 1);
-
-	vertex_buffer_.Modify(vertices_);
-}
-
-//--------------------------------------------------
 // バッファ初期化
 //--------------------------------------------------
 void RenderComponent::InitBuffers()
