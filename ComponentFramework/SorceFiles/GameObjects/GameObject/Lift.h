@@ -25,6 +25,7 @@ public:
 	};
 	Lift(GameManager* _gameManager);
 	Lift(Lift::MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::SimpleMath::Vector3 _minPos,GameManager* _gameManager);
+
 	~Lift(void);
 
 	void InitGameObject(void)   override;
