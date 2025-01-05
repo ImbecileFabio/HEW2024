@@ -128,25 +128,25 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	}
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
-		//// リフトの終点を探す
-		//Vector2 endPos;
-		//for (int y = 0; y < map_data_.size(); ++y)
-		//{
-		//	for (int x = 0; x < map_data_[y].size(); ++x)
-		//	{
-		//		for (int tileID : map_data_[y][x])
-		//		{
-		//			if (tileID == _tileID + 10) // 自分のID+10がリフトの終点
-		//			{
-		//				endPos = { x * TILE_SIZE_X, y * TILE_SIZE_Y};
-		//			}
-		//		}
-		//	}
-		//}
-		//obj = new Lift(Lift::MoveState::side, { objPos.x, objPos.y, 0.0f }, { endPos.x, endPos.y , 0.0f }, game_manager_);
-		//auto lift = dynamic_cast<Lift*>(obj);
-		//auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
-		//lift->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
+		// リフトの終点を探す
+		Vector2 endPos;
+		for (int y = 0; y < map_data_.size(); ++y)
+		{
+			for (int x = 0; x < map_data_[y].size(); ++x)
+			{
+				for (int tileID : map_data_[y][x])
+				{
+					if (tileID == _tileID + 10) // 自分のID+10がリフトの終点
+					{
+						endPos = { x * TILE_SIZE_X, y * TILE_SIZE_Y};
+					}
+				}
+			}
+		}
+		obj = new Lift(Lift::MoveState::side, 100.0f, game_manager_);
+		auto lift = dynamic_cast<Lift*>(obj);
+		auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
+		lift->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
 		
 		
 	}
