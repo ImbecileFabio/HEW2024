@@ -24,7 +24,7 @@ public:
 		diagonal,	// ŽÎ‚ßˆÚ“®
 	};
 
-	Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::SimpleMath::Vector3 _minPos,GameManager* _gameManager);
+	Lift(MoveState _moveState, DirectX::SimpleMath::Vector3 _maxPos, DirectX::SimpleMath::Vector3 _minPos, GameManager* _gameManager);
 	~Lift(void);
 
 	void InitGameObject(void)   override;

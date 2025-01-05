@@ -3,6 +3,11 @@
 #include	"stb_image.h"
 #include	"../Renderer.h"
 
+Texture::Texture(bool loopFlg)
+	: loop_flg_(loopFlg)
+{
+}
+
 // テクスチャをロード
 bool Texture::Load(const std::string& filename)
 {

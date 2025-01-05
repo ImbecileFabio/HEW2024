@@ -69,8 +69,6 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetSize(150, 150);
-	collider_component_->SetSize(150, 150);
 	velocity_component_->SetUseGravity(true);
 }
 

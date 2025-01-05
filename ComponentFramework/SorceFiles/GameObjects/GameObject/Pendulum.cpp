@@ -66,8 +66,7 @@ Pendulum::~Pendulum(void)
 //--------------------------------------------------
 void Pendulum::InitGameObject(void)
 {
-	// トランスフォームコンポーネント
-	transform_component_->SetSize(100.0f, 100.0f);
+
 }
 
 //--------------------------------------------------

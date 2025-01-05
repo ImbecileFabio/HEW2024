@@ -20,7 +20,7 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 	, scene_name_(_sceneName)		// ÉVÅ[Éìñº
 {
 	std::cout << std::format("\n[{}] -> Constructor\n", scene_name_);
-	tile_map_manager_ = std::make_unique<TileMapManager>();
+	tile_map_manager_ = std::make_unique<TileMapManager>(game_manager_);
 }
 
 SceneBase::~SceneBase()

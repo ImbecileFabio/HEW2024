@@ -12,6 +12,8 @@
 #include "../ColliderManager.h"
 #include "../PemdulumManager.h"
 #include "../InputManager.h"
+#include "../TileMapManager.h"
+
 #include "../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
 #include "../GameObjects/Component/EventComponent/ColliderEventComponent.h"
 #include "../GameObjects/Component/PendulumMovementComponent.h"
@@ -49,28 +51,32 @@ void Stage1_1Scene::Init()
 {
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
-	tile_ = new Tile(game_manager_);
-	tile_->GetTransformComponent()->SetPosition(600.0f, 50.0f);
-	tile_2_ = new Tile(game_manager_);
-	tile_2_->GetTransformComponent()->SetPosition(-200.0f, 50.0f);
-	tile_3_ = new Tile(game_manager_);
-	tile_3_->GetTransformComponent()->SetPosition(-100.0f, 50.0f);
-	robot_ = new Robot(game_manager_);
-	robot_->GetTransformComponent()->SetPosition(500.0f, 150.0f);
 
-	pendulum_ = new Pendulum(game_manager_, Vector3(260.0f, -60, 0), false, 30.f);
-	auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumFulcrum();
-	pendulum_3_		= new Pendulum(game_manager_, Vector3(0, 0, 0), false, 30.f);
-	lift_ = new Lift(Lift::MoveState::length, { 0.0f, 60.0f, 0.0f }, { 0.0f, -100.0f, 0.0f }, game_manager_);
-	lift_->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
-	lift_->GetTransformComponent()->SetPosition(pos.x, pos.y);
+	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
+	tile_map_manager_->LoadTileMap(mapData);
 
-	items_.resize(1);
-	items_[0] = new Item(game_manager_);
-	items_[0]->GetTransformComponent()->SetPosition(-200.0f, 140.0f);
-	items_[0]->GetTransformComponent()->SetSize(100.0f, 100.0f);
+	//tile_ = new Tile(game_manager_);
+	//tile_->GetTransformComponent()->SetPosition(600.0f, 50.0f);
+	//tile_2_ = new Tile(game_manager_);
+	//tile_2_->GetTransformComponent()->SetPosition(-200.0f, 50.0f);
+	//tile_3_ = new Tile(game_manager_);
+	//tile_3_->GetTransformComponent()->SetPosition(-100.0f, 50.0f);
+	//robot_ = new Robot(game_manager_);
+	//robot_->GetTransformComponent()->SetPosition(500.0f, 150.0f);
 
-	State = Game;
+	//pendulum_ = new Pendulum(game_manager_, Vector3(260.0f, -60, 0), false, 30.f);
+	//auto pos = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumFulcrum();
+	//pendulum_3_		= new Pendulum(game_manager_, Vector3(0, 0, 0), false, 30.f);
+	//lift_ = new Lift(Lift::MoveState::length, { 0.0f, 60.0f, 0.0f }, { 0.0f, -100.0f, 0.0f }, game_manager_);
+	//lift_->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
+	//lift_->GetTransformComponent()->SetPosition(pos.x, pos.y);
+
+	//items_.resize(1);
+	//items_[0] = new Item(game_manager_);
+	//items_[0]->GetTransformComponent()->SetPosition(-200.0f, 140.0f);
+	//items_[0]->GetTransformComponent()->SetSize(100.0f, 100.0f);
+
+	//State = Game;
 
 	//// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
