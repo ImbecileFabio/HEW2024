@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
@@ -85,8 +87,12 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
     <ClCompile Include="SorceFiles\TileMapManager.cpp" />
     <ClCompile Include="SorceFiles\TextureManager.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Steelpillar.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloor.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -160,6 +166,8 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\StageView.h" />
     <ClInclude Include="SorceFiles\TileMapManager.h" />
     <ClInclude Include="SorceFiles\TextureManager.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Steelpillar.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloor.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\drawColliderGS.hlsl">
