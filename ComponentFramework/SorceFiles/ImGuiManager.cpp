@@ -226,19 +226,19 @@ void ObjectStatesGUI::ShowWindow()
                     auto length       = pendulumMovement->GetPendulumLength();
 					int updateOrder = pendulumMovement->GetUpdateOrder();
 					ImGui::Text("UpdateOrder : %d", updateOrder);
-					if (ImGui::DragFloat3("Angle", &velocity, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
-					{
-						pendulumMovement->SetPendulumVelocity(velocity);
-					}
                     if (ImGui::DragFloat3("Fulcrum", &fulcrum.x, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
                     {
                         pendulumMovement->SetPendulumFulcrum(fulcrum);
                     }
-					if (ImGui::DragFloat3("Speed", &angle, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
+                    if (ImGui::DragFloat("Angle", &velocity, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                        pendulumMovement->SetPendulumVelocity(velocity);
+                    }
+					if (ImGui::DragFloat("Speed", &angle, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
 					{
                         pendulumMovement->SetPendulumAngle(angle);
 					}
-                    if (ImGui::DragFloat3("Acceleration", &acceleration, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat("Acceleration", &acceleration, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
 						pendulumMovement->SetPendulumAcceleration(acceleration);
                     }
@@ -272,31 +272,38 @@ void ObjectStatesGUI::ShowWindow()
 //--------------------------------------------------
 void SystemGUI::ShowWindow()
 {
-    // タブを管理するタブバー
-    if (ImGui::BeginTabBar("DebugWindow"), &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar)
-    {   // システム情報を表示
-        if (ImGui::BeginTabItem("System"))
+    if (showFg)
+    {
+        if (ImGui::Begin("System", &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar))
         {
-            float fps = ImGui::GetIO().Framerate;
-            ImGui::Text("FPS : %f", fps);  // FPSが出た
-            if (fps < 30.0f) // FPSが30下回ったときの警告文
-            {   // TODO 下回ったときの状態を保存できたら嬉しい
-                ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: FPS < 30.0f");
+            // タブを管理するタブバー
+            if (ImGui::BeginTabBar("DebugWindow"))
+            {   // システム情報を表示
+                if (ImGui::BeginTabItem("System"))
+                {
+                    float fps = ImGui::GetIO().Framerate;
+                    ImGui::Text("FPS : %f", fps);  // FPSが出た
+                    if (fps < 30.0f) // FPSが30下回ったときの警告文
+                    {   // TODO 下回ったときの状態を保存できたら嬉しい
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: FPS < 30.0f");
+                    }
+                    if (ImGui::Button("Reset"))
+                    {
+                        // ステージ状態を初期化する処理
+                    }
+                    ImGui::EndTabItem();
+                }
+                // デバッグ情報を表示
+                if (ImGui::BeginTabItem("Debug Log"))
+                {
+                    ImGui::Text("ERROR!!!");
+                    ImGui::EndTabItem();
+                }
             }
-            if (ImGui::Button("Reset"))
-            {
-                // ステージ状態を初期化する処理
-            }
-            ImGui::EndTabItem();
+            ImGui::EndTabBar(); // 終了
         }
-        // デバッグ情報を表示
-        if (ImGui::BeginTabItem("Debug Log"))
-        {
-            ImGui::Text("ERROR!!!");
-            ImGui::EndTabItem();
-        }
+		ImGui::End();
     }
-    ImGui::EndTabBar(); // 終了
 }
 //--------------------------------------------------
 // @brief ObjectとComponentを親子形式で表示するツリー形式ウィンドウ
@@ -327,7 +334,7 @@ void TreeGUI::ShowWindow()
         }
         if (objectList_->empty())
         {
-			selectObject_ = nullptr;
+            selectObject_ = nullptr;
         }
         ImGui::End();
     }
