@@ -24,7 +24,6 @@ public:
     TypeID GetType(void) override { return TypeID::Stick; }
 private:
     class RenderComponent*           sprite_component_{};
-	class PendulumMovementComponent* pendulum_component_{};
 };
 
 #endif // STICK_H_

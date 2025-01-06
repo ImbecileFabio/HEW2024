@@ -15,15 +15,14 @@ Stick::Stick(GameManager* _gameManager)
 Stick::~Stick()
 {
 	delete sprite_component_;
-	delete pendulum_component_;
 }
 //--------------------------------------------------
 // @brief 振り子の棒の初期化処理
 //--------------------------------------------------
 void Stick::InitGameObject(void)
 {
-	sprite_component_	= new SpriteComponent(this, "stick");
-	transform_component_->SetSize(100.0f, 300.0f);
+	sprite_component_	= new SpriteComponent(this, "stick", 9);
+	transform_component_->SetSize(50.0f, 200.0f);
 }
 //--------------------------------------------------
 // @brief 振り子の棒の更新処理

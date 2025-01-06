@@ -218,7 +218,7 @@ void Lift::UpdateGameObject(void)
 			break;
 		}
 		// ƒŠƒtƒg‚ÌÀ•W‚ðŽx“_‚Æ‚µ‚Ä“n‚µ‘±‚¯‚é
-		velocity_component_->SetVelocity(Vector3(direction_.x , direction_.y, 0.0f));
+		velocity_component_->SetVelocity(Vector3(direction_.x, direction_.y, 0.0f));
 		pendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(liftPos);
 	}
 	else
