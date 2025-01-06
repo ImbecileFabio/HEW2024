@@ -13,7 +13,6 @@
 #include "GameObjects/Component/RigidbodyComponent/VelocityComponent.h"
 #include "GameObjects/Component/PendulumMovementComponent.h"
 #include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
-#include "GameObjects/Component/LiftComponent.h"
 /*----staticïœêî------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
 std::vector<GameObject*>* ImGuiBase::objectList_ = {};
