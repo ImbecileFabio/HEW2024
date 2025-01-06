@@ -52,8 +52,11 @@ public:
 		, TimeZoneComponent
 		// 振り子の動き
 		, PendulumMovementComponent
-		// リフト
-		, LiftComponent
+		// ギミック
+		, PulleyComponent		// 滑車ギミック
+		, WeakFloorComponent	// 脆い床ギミック
+		, SteePillarComponent	// 鉄柱ギミック
+		, SmokeComponent		// 煙ギミック
 		// カメラ
 		, CameraComponent
 		// 子オブジェクト

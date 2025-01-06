@@ -1,16 +1,15 @@
 //==================================================
-// [HOGEComponent.cpp] HOGEコンポーネント
+// [PulleyComponent.cpp] 滑車ギミックコンポーネントソース
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：HOGEコンポーネントの定義
+// 説明：滑車ギミックコンポーネントの定義
 //==================================================
 /*----- インクルード -----*/
-#include "hogehoge.h"
-
+#include "PulleyComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
-HogeComponent::HogeComponent(GameObject* _owner, int _updateOrder)
+PulleyComponent::PulleyComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
 
@@ -21,7 +20,7 @@ HogeComponent::HogeComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 // @brief デストラクタ
 //--------------------------------------------------
-HogeComponent::~HogeComponent()
+PulleyComponent::~PulleyComponent()
 {
 	this->Uninit();
 }
@@ -29,19 +28,19 @@ HogeComponent::~HogeComponent()
 //--------------------------------------------------
 // @brief 初期化処理
 //--------------------------------------------------
-void HogeComponent::Init()
+void PulleyComponent::Init()
 {
 }
 //--------------------------------------------------
 // @brief 終了処理
 //--------------------------------------------------
-void HogeComponent::Uninit()
+void PulleyComponent::Uninit()
 {
 
 }
 //--------------------------------------------------
 // @brief 更新処理
 //--------------------------------------------------
-void HogeComponent::Update()
+void PulleyComponent::Update()
 {
 }

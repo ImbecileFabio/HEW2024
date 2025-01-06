@@ -51,7 +51,11 @@ public:
 		, Lift
 		, Item
 		, TimeZone
-		, Stick	// 振り子の棒
+		, Stick			// 振り子の棒
+		, WeakFloor		// 脆い床
+		, SteePillar	// 鉄柱
+		, Smoke			// 煙
+		, Pulley		// 滑車ギミック
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};

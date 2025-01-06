@@ -1,28 +1,28 @@
 //=================================================================
-// [Smoke.h] 煙ギミックのヘッダ
+// [SteePillar.h] 鉄柱のオブジェクトヘッダ
 // 著者：有馬啓太
 //-----------------------------------------------------------------
-// 説明：煙ギミックの定義
+// 説明：鉄柱のオブジェクトの宣言
 //=================================================================
-#ifndef SMOKE_H_
-#define SMOKE_H_
+#ifndef STEE_PILLAR_H_
+#define STEE_PILLAR_H_
 /*----- インクルード -----*/
 #include "../../GameObject.h"
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
-// Smokeオブジェクト
+// SteePillarオブジェクト
 //--------------------------------------------------
-class Smoke : public GameObject
+class SteePillar : public GameObject
 {
 public:
-	Smoke(GameManager* _gameManager);
-	~Smoke(void);
+	SteePillar(GameManager* _gameManager);
+	~SteePillar(void);
 
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
-	TypeID GetType(void) override { return TypeID::Smoke; }
+	TypeID GetType(void) override { return TypeID::SteePillar; }
 private:
 
 };
-#endif // SMOKE_H_
+#endif // STEE_PILLAR_H_

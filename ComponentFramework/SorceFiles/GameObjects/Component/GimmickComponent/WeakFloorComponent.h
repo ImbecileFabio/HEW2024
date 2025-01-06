@@ -1,27 +1,26 @@
 //==================================================
-// [HogeComponent.h] Hogeコンポーネント
+// [WeakFloorComponent.h] 脆い床ギミックコンポーネントヘッダ
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：Hogeコンポーネント
+// 説明：脆い床ギミックコンポーネントの定義
 //==================================================
-#ifndef HOGE_COMPONENT_H_
-#define HOGE_COMPONENT_H_
+#ifndef WEAK_FLOOR_COMPONENT_H_
+#define WEAK_FLOOR_COMPONENT_H_
 /*----- インクルード -----*/
 #include "../../Component.h"
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
-// HOGEコンポーネント
+// 脆い床コンポーネント
 //--------------------------------------------------
-class hogeComponent : public Component
+class WeakFloorComponent : public Component
 {
-    hogeComponent(GameObject* _owner, int _updateOrder = 50);
-    ~hogeComponent();
+    WeakFloorComponent(GameObject* _owner, int _updateOrder = 50);
+    ~WeakFloorComponent();
 
     void Init() override;
     void Uninit() override;
     void Update() override;
 
-    TypeID GetComponentType(void) const override { return TypeID::HogeComponent; }
-
+    TypeID GetComponentType(void) const override { return TypeID::WeakFloorComponent; }
 };
-#endif // HOGE_COMPONENT_H_
+#endif // WEAK_FLOOR_COMPONENT_H_

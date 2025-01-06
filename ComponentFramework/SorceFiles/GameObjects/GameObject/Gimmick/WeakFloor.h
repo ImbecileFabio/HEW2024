@@ -20,6 +20,7 @@ public:
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
+	TypeID GetType(void) override { return TypeID::WeakFloor; }
 private:
 };
 

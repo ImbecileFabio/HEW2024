@@ -1,16 +1,15 @@
 //==================================================
-// [HOGEComponent.cpp] HOGEコンポーネント
+// [SteePillarComponent.cpp] 鉄柱ギミックコンポーネントソース
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：HOGEコンポーネントの定義
+// 説明：鉄柱ギミックコンポーネントの定義
 //==================================================
 /*----- インクルード -----*/
-#include "hogehoge.h"
-
+#include "SteePillarComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
-HogeComponent::HogeComponent(GameObject* _owner, int _updateOrder)
+SteePillarComponent::SteePillarComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
 
@@ -21,7 +20,7 @@ HogeComponent::HogeComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 // @brief デストラクタ
 //--------------------------------------------------
-HogeComponent::~HogeComponent()
+SteePillarComponent::~SteePillarComponent()
 {
 	this->Uninit();
 }
@@ -29,19 +28,19 @@ HogeComponent::~HogeComponent()
 //--------------------------------------------------
 // @brief 初期化処理
 //--------------------------------------------------
-void HogeComponent::Init()
+void SteePillarComponent::Init()
 {
 }
 //--------------------------------------------------
 // @brief 終了処理
 //--------------------------------------------------
-void HogeComponent::Uninit()
+void SteePillarComponent::Uninit()
 {
 
 }
 //--------------------------------------------------
 // @brief 更新処理
 //--------------------------------------------------
-void HogeComponent::Update()
+void SteePillarComponent::Update()
 {
 }

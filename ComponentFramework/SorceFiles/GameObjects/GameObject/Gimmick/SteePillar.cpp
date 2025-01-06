@@ -1,36 +1,36 @@
 //=================================================================
-// [WeakFloor.cpp] 脆い床オブジェクトの定義
+// [SteePillar.cpp] 鉄柱オブジェクトのCPP
 // 著者：有馬啓太
 //-----------------------------------------------------------------
-// 説明：脆い床オブジェクトの定義
+// 説明：鉄柱オブジェクトの実装
 //=================================================================
 /*----- インクルード -----*/
-#include "WeakFloor.h"
+#include "SteePillar.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
-WeakFloor::WeakFloor(GameManager* _gameManager)
-	:GameObject(_gameManager, "WeakFloor")
+SteePillar::SteePillar(GameManager* _gameManager)
+	:GameObject(_gameManager, "SteePillar")
 {
 	this->InitGameObject();
 }
 //--------------------------------------------------
 // brief デストラクタ
 //--------------------------------------------------
-WeakFloor::~WeakFloor(void)
+SteePillar::~SteePillar(void)
 {
 }
 //--------------------------------------------------
 // @brief 初期化処理
 //--------------------------------------------------
-void WeakFloor::InitGameObject(void)
+void SteePillar::InitGameObject(void)
 {
 }
 
 //--------------------------------------------------
 // @brief 更新処理
 //--------------------------------------------------
-void WeakFloor::UpdateGameObject(void)
+void SteePillar::UpdateGameObject(void)
 {
 
 }

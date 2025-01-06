@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
@@ -87,10 +89,14 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\StageView.cpp" />
     <ClCompile Include="SorceFiles\TileMapManager.cpp" />
     <ClCompile Include="SorceFiles\TextureManager.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Steelpillar.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillar.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloor.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillarComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\WeakFloorComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
@@ -166,8 +172,10 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\StageView.h" />
     <ClInclude Include="SorceFiles\TileMapManager.h" />
     <ClInclude Include="SorceFiles\TextureManager.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Steelpillar.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillar.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloor.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillarComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\WeakFloorComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\drawColliderGS.hlsl">
