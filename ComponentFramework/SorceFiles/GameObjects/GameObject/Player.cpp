@@ -25,7 +25,7 @@ Player::Player(GameManager* _gameManager)
 	:GameObject(_gameManager, "Playaer")
 {
 	// スプライトコンポーネント
-	//sprite_component_ = new SpriteComponent(this,"icon");
+	sprite_component_ = new SpriteComponent(this,"hoge");
 	// 速度コンポーネント
 	velocity_component_ = new VelocityComponent(this);
 	collider_component_ = new BoxColliderComponent(this);
@@ -49,7 +49,6 @@ Player::~Player(void)
 //--------------------------------------------------
 void Player::InitGameObject(void)
 {
-	transform_component_->SetSize(50, 50);
 
 	velocity_component_->SetVelocity(Vector3(0, 10, 0));
 

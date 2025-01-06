@@ -37,7 +37,7 @@ Robot::Robot(GameManager* _gameManager)
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	velocity_component_ = new VelocityComponent(this);	// 速度
-	// robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
+	//robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this);	// 押し出し
 
 	debug_collider_draw_component_ = new DebugColliderDrawComponent(this);

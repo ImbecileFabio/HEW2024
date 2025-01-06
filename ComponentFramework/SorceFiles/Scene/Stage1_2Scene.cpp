@@ -1,5 +1,10 @@
 #include "Stage1_2Scene.h"
 #include "../GameManager.h"
+
+#include "../GameObjects/GameObject.h"
+#include "../GameObjects/GameObject/Player.h"
+
+#include "../GameObjects/Component/TransformComponent.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -20,6 +25,9 @@ Stage1_2Scene::~Stage1_2Scene()
 //--------------------------------------------------
 void Stage1_2Scene::Init()
 {
+	auto obj = new Player(game_manager_);
+	obj->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
+
 	state_ = Game;
 }
 //--------------------------------------------------
