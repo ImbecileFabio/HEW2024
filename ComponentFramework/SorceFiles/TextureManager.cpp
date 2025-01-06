@@ -52,7 +52,7 @@ void TextureManager::RegisterTexture(const std::string& _imgName, const std::str
 	if (it != texture_cache_.end())
 	{
 		// すでに読み込まれている
-		std::cout << std::format("＜TextureManager＞ -> {} is already loaded\n", _imgName);
+		std::cout << std::format("\n＜TextureManager＞ -> {} is already loaded\n\n", _imgName);
 		return;
 	}
 
@@ -92,6 +92,10 @@ std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _imgName)
 void TextureManager::RegisterAllTextures()
 {
 		//名前が適当なもの多いので調整しつつお願いします
+
+	// Hogehoge
+	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
+
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/

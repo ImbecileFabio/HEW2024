@@ -50,6 +50,7 @@ void TileMapManager::LoadTileMap(const std::vector<std::vector<std::vector<int>>
 //-----------------------------------------------------------------
 // @param _fileName ファイル名
 // @brief CSVファイルを読み込む
+// @return マップデータ map、失敗すると空のmapを返す
 //-----------------------------------------------------------------
 std::vector<std::vector<std::vector<int>>> TileMapManager::LoadCSV(const std::string& _fileName)
 {
@@ -73,7 +74,7 @@ std::vector<std::vector<std::vector<int>>> TileMapManager::LoadCSV(const std::st
 			std::vector<int> objects;
 			std::stringstream cellStream(cell);
 			std::string obj;
-			while (std::getline(cellStream, obj, '|'))
+			while (std::getline(cellStream, obj, '|'))	// オブジェクトが複数ある場合
 			{
 				objects.push_back(std::stoi(obj));
 			}
@@ -111,7 +112,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 {
 	GameObject* obj = nullptr;
 	Vector2 p = { _x - MAP_SIZE_X / 2 , _y - MAP_SIZE_Y / 2 };	// 座標の調整
-	Vector2 objPos = { p.x * TILE_SIZE_X, -(p.y * TILE_SIZE_Y) };	// オブジェクトの生成する位置
+	Vector2 objPos = { (p.x * TILE_SIZE_X) + (TILE_SIZE_X / 2), -((p.y * TILE_SIZE_Y) + (TILE_SIZE_Y / 2)) };	// オブジェクトの生成する位置 gorioshi
 
 	if (_tileID == 1)	// タイル
 	{
