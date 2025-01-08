@@ -11,6 +11,7 @@
 
 #include "Pendulum.h"
 #include "TimeZone.h"
+#include "Stick.h"
 #include "../../GameManager.h"
 #include "../../PemdulumManager.h"
 #include "../Component.h"
@@ -35,10 +36,12 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	pendulum_component_ = new PendulumMovementComponent(this);
 	// 子タイムゾーン
 	time_zone_ = new TimeZone(game_manager_);
+	// 子スティック
+	stick_ = new Stick(game_manager_);
 	// 子オブジェクト管理コンポーネント
 	children_component_ = new ChildrenComponent(this, this);
 	children_component_->AddChild(time_zone_);
-
+	children_component_->AddChild(stick_);
 	// イベント追加処理
 	collider_event_component_ = new ColliderEventComponent(this);
 	auto f = std::function<void(GameObject*)>(std::bind(&Pendulum::OnCollisionEnter, this, std::placeholders::_1));
@@ -66,8 +69,7 @@ Pendulum::~Pendulum(void)
 //--------------------------------------------------
 void Pendulum::InitGameObject(void)
 {
-	// トランスフォームコンポーネント
-	transform_component_->SetSize(100.0f, 100.0f);
+
 }
 
 //--------------------------------------------------
@@ -77,6 +79,7 @@ void Pendulum::UpdateGameObject(void)
 {
 	auto pos = pendulum_component_->GetPendulumFulcrum();
 	time_zone_->GetTransformComponent()->SetPosition(pos.x, pos.y);
+	stick_->GetTransformComponent()->SetPosition(pos.x, pos.y);
 }
 //--------------------------------------------------
 // 当たり判定の実行処理

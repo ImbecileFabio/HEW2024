@@ -4,10 +4,12 @@
 //--------------------------------------------------
 // 説明：四角の当たり判定のコンポーネント
 //==================================================
+
+#include "../../../TileMapManager.h"
+#include "../../GameObject.h"
+#include "../TransformComponent.h"
 #include "BoxColliderComponent.h"
 #include "CircleColliderComponent.h"
-#include "../TransformComponent.h"
-#include "../../GameObject.h"
 
 //--------------------------------------------------
 // @brief コンストラクタ
@@ -29,7 +31,7 @@ BoxColliderComponent::~BoxColliderComponent()
 //--------------------------------------------------
 void BoxColliderComponent::Init(void)
 {
-
+	SetSize(TILE_SIZE_X, TILE_SIZE_Y);
 }
 //--------------------------------------------------
 // @brief 四角形の当たり判定の終了処理
@@ -87,7 +89,7 @@ bool BoxColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
 		return false;
 	}
 	// y方向
-	if(myHitbox.max_.y < otherHitbox.min_.y || myHitbox.min_.y > myHitbox.max_.y){
+	if(myHitbox.max_.y < otherHitbox.min_.y || myHitbox.min_.y > otherHitbox.max_.y){
 		this->hitFg_ = false;
 		return false;
 	}

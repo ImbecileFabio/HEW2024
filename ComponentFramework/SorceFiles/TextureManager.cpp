@@ -44,28 +44,29 @@ void TextureManager::Uninit()
 //-----------------------------------------------------------------
 // @param  _imgName 画像名, _fileName ファイルパス
 // @brief  テクスチャの登録
-// @return すでに読み込まれていたら true, 存在していなければ生成してから true, 失敗したらnullptr
 //-----------------------------------------------------------------
-bool TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg)
 {
 	// すでに読み込まれているか確認
 	auto it = texture_cache_.find(_imgName);
 	if (it != texture_cache_.end())
 	{
-		// 存在しているのでそのまま返す
-		return true;
+		// すでに読み込まれている
+		std::cout << std::format("\n＜TextureManager＞ -> {} is already loaded\n\n", _imgName);
+		return;
 	}
 
-	// 存在していないので生成して返す
-	auto texture = std::make_shared<Texture>();
+	// 存在していないので生成する
+	auto texture = std::make_shared<Texture>(_loopFlg);
 	if (texture->Load(_fileName)) {
 		texture_cache_[_imgName] = texture;
-		return true;
+		std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Success\n", _imgName);
+		return;
 	}
 	
 	// 失敗
 	std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Error\n", _imgName);
-	return false;
+	return;
 }
 
 //-----------------------------------------------------------------
@@ -91,6 +92,10 @@ std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _imgName)
 void TextureManager::RegisterAllTextures()
 {
 		//名前が適当なもの多いので調整しつつお願いします
+
+	// Hogehoge
+	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
+
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
@@ -158,7 +163,8 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("pause_button", UI_PATH"v02/pause_button_01.png");
 	// ステージUI
 	RegisterTexture("stageUI", UI_PATH"v02/stage_ui_01.png");
-
+	// テスト用ボタン
+	RegisterTexture("hoge", UI_PATH"hoge.png");
 	/*--------------- SCENE ---------------*/
 	// オプション
 	RegisterTexture("option_menu", SCENE_PATH"option/v01/9.JPG");

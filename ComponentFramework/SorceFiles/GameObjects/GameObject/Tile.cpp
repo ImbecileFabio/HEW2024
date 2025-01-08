@@ -25,7 +25,7 @@
 Tile::Tile(GameManager* _gameManager)
 	:GameObject(_gameManager, "Tile")
 {
-	sprite_component_ = new SpriteComponent(this, "tile_center");
+	sprite_component_ = new SpriteComponent(this, "hoge");
 	collider_event_component_ = new ColliderEventComponent(this);
 	collider_component_ = new BoxColliderComponent(this);
 
@@ -56,7 +56,6 @@ Tile::~Tile(void)
 //--------------------------------------------------
 void Tile::InitGameObject(void)
 {
-	transform_component_->SetSize(512, 64);
 	
 }
  

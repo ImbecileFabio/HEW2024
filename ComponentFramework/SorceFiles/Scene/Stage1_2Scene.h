@@ -13,6 +13,7 @@
 //--------------------------------------------------
 class Stage1_2Scene :  public SceneBase
 {
+public:
 	Stage1_2Scene(GameManager* _gameManager);
 	~Stage1_2Scene();
 
@@ -29,7 +30,7 @@ private:
 		Pouse,
 		Rewind
 	};
-	STATE State;
+	STATE state_;
 
 
 };

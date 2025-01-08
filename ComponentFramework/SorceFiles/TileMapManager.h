@@ -3,12 +3,26 @@
 // 著者：有馬啓太
 //-----------------------------------------------------------------
 // 説明：オブジェクトをマス目状に配置するためのマネージャ
+// タイルのサイズの変更はここ
+// 現状CSVの読み込みの処理も自分で持つ
 //=================================================================
 #ifndef TILEMAP_MANAGER_H_
 #define TILEMAP_MANAGER_H_
 /*----- インクルード -----*/
 #include <vector>
+#include <string>
+#include "GameProcess.h"
 #include "GameManager.h"
+#include "TextureManager.h"
+
+/*----- 定数定義 -----*/
+// タイルのサイズ
+constexpr float TILE_SIZE_X = 60.0f;
+constexpr float TILE_SIZE_Y = 60.0f;
+
+// スクリーンに入るタイルの数
+constexpr float MAP_SIZE_X = 32.0f;// ( 1920pixel / タイルのサイズ)
+constexpr float MAP_SIZE_Y = 18.0f;// ( 1080pixel / タイルのサイズ)
 
 /*----- 構造体定義 -----*/
 
@@ -20,8 +34,10 @@
 class TileMapManager
 {
 public:
-	TileMapManager();
-	void LoadTileMap(const std::vector<std::vector<int>>& _mapData);
+	TileMapManager(GameManager* _gameManager);
+	void LoadTileMap(const std::vector<std::vector<std::vector<int>>>& _mapData);
+
+	std::vector<std::vector<std::vector<int>>> LoadCSV(const std::string& _fileName);
 
 private:
 	void GenerateGameObjects();
@@ -30,8 +46,7 @@ private:
 
 private:
 	GameManager* game_manager_{};
-	std::vector<std::vector<int>> map_data_;
-	float tileSize_ = 64.0f;
+	std::vector<std::vector<std::vector<int>>> map_data_;
 };
 
 

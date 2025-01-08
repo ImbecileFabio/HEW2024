@@ -10,7 +10,7 @@
 /*----- インクルード -----*/
 #include "SceneBase.h"
 
-constexpr int gearCounter = 4;
+constexpr int gearCounter = 1;
 
 //--------------------------------------------------
 // ステージ1-1シーンクラス
@@ -40,9 +40,7 @@ private:
 	// 作ったオブジェクトをここに記述
 	class BackGround* back_ground_{};	// 背景
 	class Camera* camera_{};			// カメラ
-	class Pendulum* pendulum_{};		// 振り子
-	class Pendulum* pendulum_2_{};
-	class Pendulum* pendulum_3_{};
+	class Pendulum* pendulum_{};			// 振り子
 	class Tile* tile_{};				// タイル
 	class Tile* tile_2_{};				// タイル
 	class Tile* tile_3_{};				// タイル

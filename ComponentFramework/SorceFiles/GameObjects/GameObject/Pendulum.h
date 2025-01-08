@@ -34,6 +34,7 @@ public:
 private:
 	// 子オブジェクト
 	class TimeZone* time_zone_{};
+	class Stick*		stick_{};
 	// 所有するコンポーネント
 	class RenderComponent*			 sprite_component_	 {};
 	class ColliderBaseComponent*	 collider_component_ {};

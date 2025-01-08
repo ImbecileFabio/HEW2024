@@ -17,6 +17,7 @@
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
 std::vector<GameObject*>* ImGuiBase::objectList_ = {};
 GameObject* ImGuiBase::selectObject_ = {};
+constexpr float dragSpeed = 1.0f;
 //--------------------------------------------------
 // @param _hWnd GameProcessで使っているウィンドハンドル
 // @brief ImGuiのWin32APIを初期化
@@ -134,19 +135,19 @@ void ObjectStatesGUI::ShowWindow()
 			auto rotation = transform->GetRotation();
 			auto size = transform->GetSize();
 			auto scale = transform->GetScale();
-            if (ImGui::DragFloat3("position", &position.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            if (ImGui::DragFloat3("position", &position.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
             {
 				transform->SetPosition(position);
             }
-            if (ImGui::DragFloat3("rotation", &rotation.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            if (ImGui::DragFloat3("rotation", &rotation.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
             {
                 transform->SetRotation(rotation);
             }
-            if (ImGui::DragFloat3("size", &size.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            if (ImGui::DragFloat3("size", &size.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
             {
                 transform->SetSize(size);
             }
-            if (ImGui::DragFloat3("scale", &scale.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+            if (ImGui::DragFloat3("scale", &scale.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
             {
                 transform->SetScale(scale);
             }
@@ -155,7 +156,7 @@ void ObjectStatesGUI::ShowWindow()
 			for (auto& component : selectObject_->GetComponents())
 			{
                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 1.0f, 0.1f, 1.0f)); // 緑色
-                ImGui::Text(component->ComponentTypeNames[static_cast<int>(component->GetComponentType())]);
+                ImGui::Text(component->GetComponentName().c_str());
 				ImGui::PopStyleColor();
                 switch (component->GetComponentType())
                 {
@@ -164,7 +165,7 @@ void ObjectStatesGUI::ShowWindow()
                     auto sprite = dynamic_cast<SpriteComponent*>(component);
 					int drawOrder = sprite->GetDrawOrder();
 					int updateOrder = sprite->GetUpdateOrder();
-                    if (ImGui::DragInt("DrawOrder", &drawOrder, 1, -1000, 1000, "%d"))
+                    if (ImGui::SliderInt("DrawOrder", &drawOrder, -1000, 1000, "%d"))
                     {
                     }
                     ImGui::Text("UpdateOrder : %d", updateOrder);
@@ -176,7 +177,7 @@ void ObjectStatesGUI::ShowWindow()
                     auto boxCollider = dynamic_cast<BoxColliderComponent*>(component);
 					auto boxSize = boxCollider->GetSize();
 					int updateOrder = boxCollider->GetUpdateOrder();
-                    if (ImGui::DragFloat4("BoxSize", &boxSize.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("BoxSize", &boxSize.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
                     }
                     ImGui::Text("UpdateOrder : %d", updateOrder);
@@ -189,7 +190,7 @@ void ObjectStatesGUI::ShowWindow()
                     auto circleSize = circleCollider->GetCircleSize();
 					int updateOrder = circleCollider->GetUpdateOrder();		
                     ImGui::Text("UpdateOrder : %d", updateOrder);
-					if (ImGui::DragFloat4("CircleSize", &circleSize.position.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					if (ImGui::DragFloat3("CircleSize", &circleSize.position.x, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
 					{
 					}
                     ImGui::Separator(); // 区切り線
@@ -203,13 +204,13 @@ void ObjectStatesGUI::ShowWindow()
                     auto speedRate = velocityComponent->GetSpeedRate();
 					int updateOrder = velocityComponent->GetUpdateOrder();
                     ImGui::Text("UpdateOrder : %d", updateOrder);
-                    if (ImGui::DragFloat3("Acceleration", &acceleration.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("Acceleration", &acceleration.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
                     }
-                    if (ImGui::DragFloat3("Velocity", &velocity.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("Velocity", &velocity.x, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
                     {
                     }
-                    if (ImGui::DragFloat("SpeedRate", &speedRate, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat("SpeedRate", &speedRate, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
                     }
                     ImGui::Separator(); // 区切り線
@@ -225,23 +226,23 @@ void ObjectStatesGUI::ShowWindow()
                     auto length       = pendulumMovement->GetPendulumLength();
 					int updateOrder = pendulumMovement->GetUpdateOrder();
 					ImGui::Text("UpdateOrder : %d", updateOrder);
-					if (ImGui::DragFloat3("Angle", &velocity, 1.0f, -1000.0f, 1000.0f, "%.3f"))
-					{
-						pendulumMovement->SetPendulumVelocity(velocity);
-					}
-                    if (ImGui::DragFloat3("Fulcrum", &fulcrum.x, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat3("Fulcrum", &fulcrum.x, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
                     {
                         pendulumMovement->SetPendulumFulcrum(fulcrum);
                     }
-					if (ImGui::DragFloat("Speed", &angle, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat("Angle", &velocity, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
+                    {
+                        pendulumMovement->SetPendulumVelocity(velocity);
+                    }
+					if (ImGui::DragFloat("Speed", &angle, dragSpeed, -1000.0f, 1000.0f,"%.3f"))
 					{
                         pendulumMovement->SetPendulumAngle(angle);
 					}
-                    if (ImGui::DragFloat("Acceleration", &acceleration, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+                    if (ImGui::DragFloat("Acceleration", &acceleration, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
                     {
 						pendulumMovement->SetPendulumAcceleration(acceleration);
                     }
-					if (ImGui::DragFloat("Length", &length, 1.0f, -1000.0f, 1000.0f, "%.3f"))
+					if (ImGui::DragFloat("Length", &length, dragSpeed,-1000.0f, 1000.0f, "%.3f"))
 					{
 						pendulumMovement->SetPendulumLength(length);
 					}
@@ -271,31 +272,38 @@ void ObjectStatesGUI::ShowWindow()
 //--------------------------------------------------
 void SystemGUI::ShowWindow()
 {
-    // タブを管理するタブバー
-    if (ImGui::BeginTabBar("DebugWindow"), &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar)
-    {   // システム情報を表示
-        if (ImGui::BeginTabItem("System"))
+    if (showFg)
+    {
+        if (ImGui::Begin("System", &showFg, ImGuiWindowFlags_AlwaysVerticalScrollbar))
         {
-            float fps = ImGui::GetIO().Framerate;
-            ImGui::Text("FPS : %f", fps);  // FPSが出た
-            if (fps < 30.0f) // FPSが30下回ったときの警告文
-            {   // TODO 下回ったときの状態を保存できたら嬉しい
-                ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: FPS < 30.0f");
+            // タブを管理するタブバー
+            if (ImGui::BeginTabBar("DebugWindow"))
+            {   // システム情報を表示
+                if (ImGui::BeginTabItem("System"))
+                {
+                    float fps = ImGui::GetIO().Framerate;
+                    ImGui::Text("FPS : %f", fps);  // FPSが出た
+                    if (fps < 30.0f) // FPSが30下回ったときの警告文
+                    {   // TODO 下回ったときの状態を保存できたら嬉しい
+                        ImGui::TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), "Warning: FPS < 30.0f");
+                    }
+                    if (ImGui::Button("Reset"))
+                    {
+                        // ステージ状態を初期化する処理
+                    }
+                    ImGui::EndTabItem();
+                }
+                // デバッグ情報を表示
+                if (ImGui::BeginTabItem("Debug Log"))
+                {
+                    ImGui::Text("ERROR!!!");
+                    ImGui::EndTabItem();
+                }
             }
-            if (ImGui::Button("Reset"))
-            {
-                // ステージ状態を初期化する処理
-            }
-            ImGui::EndTabItem();
+            ImGui::EndTabBar(); // 終了
         }
-        // デバッグ情報を表示
-        if (ImGui::BeginTabItem("Debug Log"))
-        {
-            ImGui::Text("ERROR!!!");
-            ImGui::EndTabItem();
-        }
+		ImGui::End();
     }
-    ImGui::EndTabBar(); // 終了
 }
 //--------------------------------------------------
 // @brief ObjectとComponentを親子形式で表示するツリー形式ウィンドウ
@@ -326,7 +334,7 @@ void TreeGUI::ShowWindow()
         }
         if (objectList_->empty())
         {
-			selectObject_ = nullptr;
+            selectObject_ = nullptr;
         }
         ImGui::End();
     }

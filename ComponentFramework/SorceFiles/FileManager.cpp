@@ -66,6 +66,12 @@ size_t FileManager::GetFileSize(const std::string& _fileName)
 	return static_cast<size_t>(file.tellg());   // ファイルサイズを取得
 }
 //--------------------------------------------------
+// デストラクタ
+//--------------------------------------------------
+FileManager::~FileManager()
+{
+}
+//--------------------------------------------------
 // ストリームが成功したかどうかを確認するヘルパー関数
 //--------------------------------------------------
 bool FileManager::IsFileStreamValid(const std::ifstream& _ifstream)

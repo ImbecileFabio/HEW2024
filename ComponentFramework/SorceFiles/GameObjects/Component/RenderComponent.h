@@ -51,9 +51,6 @@ public:
 
 	virtual TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 
-	// UVÀ•W‚Ì•ÏX
-	void SetUV(const DirectX::SimpleMath::Vector2& _uv);
-
 	void SetState(State _state) { state_ = _state; }
 	State GetState() { return state_; }
 protected:

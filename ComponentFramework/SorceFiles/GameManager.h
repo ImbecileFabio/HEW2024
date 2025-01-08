@@ -15,12 +15,19 @@
 #include "Scene/TitleScene.h"
 #include "Scene/ResultScene.h"
 #include "Scene/Stage1_1Scene.h"
-
+#include "Scene/Stage1_2Scene.h"
+#include "Scene/Stage1_3Scene.h"
+#include "Scene/Stage1_4Scene.h"
+#include "Scene/Stage1_5Scene.h"
 /*----- 構造体定義 -----*/
 // シーン名	
 enum SceneName {
 	Title,
 	Stage1_1,
+	Stage1_2,
+	Stage1_3,
+	Stage1_4,
+	Stage1_5,
 	Result,
 };
 
@@ -55,6 +62,9 @@ public:
 	auto& GetGameObjects() const { return game_objects_; }
 	auto& GetPendingGameObjects() const { return pending_game_objects_; }
 	
+	// ゲームの終了フラグ
+	void SetEndFlag(bool _endFg) { endFg = _endFg; }
+	bool GetEndFlag() { return endFg; }
 	void itemCountUp() { itemCount++; }
 	int GetItemCount() { return itemCount; }
 
@@ -69,6 +79,9 @@ public:
 	// ゲームオブジェクトの削除
 	void RemoveGameObject(GameObject* _gameObject);
 private:
+	// ゲームの終了フラグ
+	bool endFg = false;
+
 	int itemCount = 0;
 	// 更新処理
 	void UpdateGameObjects(void);

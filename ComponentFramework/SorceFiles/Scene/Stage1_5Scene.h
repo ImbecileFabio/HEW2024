@@ -4,8 +4,8 @@
 //--------------------------------------------------
 // 説明：ステージ1-5を管理をするクラス
 //==================================================
-#ifndef STAGE1_2SCENE_H_
-#define STAGE1_2SCENE_H_
+#ifndef STAGE1_5SCENE_H_
+#define STAGE1_5SCENE_H_
 /*----- インクルード -----*/
 #include "SceneBase.h"
 //--------------------------------------------------
@@ -20,5 +20,14 @@ public:
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
+
+	enum STATE {
+		Game,
+		Result,
+		Pouse,
+		Rewind
+	};
+private:
+	STATE state_;
 };
 #endif // STAGE1_5SCENE_H_

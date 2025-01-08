@@ -91,24 +91,31 @@ void PendulumMovementComponent::Update() {
 // U‚èq‚ÌÀ•W‚ğŒvZ
 //--------------------------------------------------
 void PendulumMovementComponent::PendulumPosition(DirectX::SimpleMath::Vector3 _fulcrum, float _length) {
-	if (isPendulumAngle_ > 0) {		// -Šp“x‚ª³‚Ìê‡
-		ConversionRadian(isPendulumAngle_);
-		pendulumPosition_.x = _fulcrum.x + _length * cos(pendulumRadian_);
-		pendulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
 
-	}
-	else if (isPendulumAngle_ < 0) {	// -Šp“x‚ª•‰‚Ìê‡
-		ConversionRadian(-isPendulumAngle_);
-		pendulumPosition_.x = _fulcrum.x - _length * cos(pendulumRadian_);
-		pendulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
-	}
-	else {					// -Šp“x‚ª0‚Ìê‡
-		pendulumPosition_.x = _fulcrum.x;
-		pendulumPosition_.y = _fulcrum.y - _length;
-	}
+	//if (isPendulumAngle_ > 0) {		// -Šp“x‚ª³‚Ìê‡
+	//	pendulumPosition_.x = _fulcrum.x + _length * cos(pendulumRadian_);
+	//	pendulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
+	//}
+	//else if (isPendulumAngle_ < 0) {	// -Šp“x‚ª•‰‚Ìê‡
+	//	pendulumPosition_.x = _fulcrum.x + _length * cos(pendulumRadian_);
+	//	pendulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
+	//}
+	//else {					// -Šp“x‚ª0‚Ìê‡
+	//	pendulumPosition_.x = _fulcrum.x;
+	//	pendulumPosition_.y = _fulcrum.y - _length;
+	//}
+
+	// U‚èq‚ÌŠp“x‚ÌŒvZ‚ğC³‚µ‚Ä‚İ‚Ü‚µ‚½ by arima
+	// –â‘è‚ª‚È‚¯‚ê‚Îã‚ÌƒR[ƒh‚ğÁ‚µ‚Æ‚¢‚Ä‚­‚¾‚³‚¢B
+	// Šp“x‚ª0“x•t‹ß‚Ì‚ÉuƒKƒNƒbv‚Á‚Æ‚·‚éŠ´G‚ª‚ ‚é‚Ì‚Å—vC³‚©‚àB
+
+	ConversionRadian(isPendulumAngle_);
+
+	pendulumPosition_.x = _fulcrum.x + _length * cos(pendulumRadian_);
+	pendulumPosition_.y = _fulcrum.y - _length * sin(pendulumRadian_);
 	
 	this->owner_->GetTransformComponent()->SetPosition(pendulumPosition_);
-	this->owner_->GetTransformComponent()->SetRotation(-isPendulumAngle_);
+	this->owner_->GetTransformComponent()->SetRotation(-pendulumRadian_);
 }
 
 //--------------------------------------------------

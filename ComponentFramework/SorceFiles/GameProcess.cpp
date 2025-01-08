@@ -127,6 +127,8 @@ void GameProcess::Run(void)
 				fpsCounter++;
 				prevCount = currCount;
 
+				if (game_manager_->GetEndFlag())	// ゲームマネージャーから終了フラグが立ったら
+					break;
 				//std::cout << std::format("[ GameLoop_End ]\n");
 			}
 			// 毎秒FPSをウィンドウタイトルに反映

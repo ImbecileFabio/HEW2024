@@ -9,7 +9,6 @@ TimeZone::TimeZone(GameManager* _gameManager)
 	: GameObject(_gameManager, "TimeZone")
 {
 	std::cout << std::format("ƒTimeZone„ -> Constructor\n");
-	// ‰f‚ç‚È‚¢@‚Ç‚¤‚µ‚Ä
 	sprite_component_		 = new SpriteComponent(this, "timezone");
 	collider_base_component_ = new CircleColliderComponent(this);
 	event_base_component_ = new ColliderEventComponent(this);

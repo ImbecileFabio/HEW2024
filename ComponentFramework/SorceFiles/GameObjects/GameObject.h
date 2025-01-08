@@ -15,14 +15,13 @@
 #include <format>
 #include <typeinfo>
 
-#include "../sound.h"
 #include "../InputManager.h"
 #include "Component.h"
 #include "Component/TransformComponent.h"
 #include "Component/CameraComponent.h"
 #include "Component/RenderComponent.h"
 #include "Component/RenderComponent/SpriteComponent.h"
-
+#include "../sound.h"
 
 /*----- 構造体定義 -----*/
 
@@ -52,7 +51,11 @@ public:
 		, Lift
 		, Item
 		, TimeZone
-		, Stick	// 振り子の棒
+		, Stick			// 振り子の棒
+		, WeakFloor		// 脆い床
+		, SteePillar	// 鉄柱
+		, Smoke			// 煙
+		, Pulley		// 滑車ギミック
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};
@@ -155,7 +158,10 @@ protected:
 	// 姿勢制御コンポーネント
 	TransformComponent* transform_component_{};
 
-	// サウンド管理
+	// オブジェクトごとに定まるID
+	static int next_object_id_;	// 生成されたときに加算される
+	int		   object_id_{};
+
 	Sound sound_;
 };
 

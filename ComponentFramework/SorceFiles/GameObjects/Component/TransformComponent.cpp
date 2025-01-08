@@ -8,6 +8,7 @@
 /*----- インクルード -----*/
 #include <iostream>
 #include <format>
+#include "../../TileMapManager.h"
 
 #include "TransformComponent.h"
 #include "../GameObject.h"
@@ -20,6 +21,7 @@ TransformComponent::TransformComponent(GameObject* _owner, int _updateOrder)
 {
 	std::cout << std::format("＜TransformComponent＞ -> Constructor\n");
 
+	this->Init();
 }
 
 //--------------------------------------------------
@@ -36,6 +38,7 @@ TransformComponent::~TransformComponent()
 //--------------------------------------------------
 void TransformComponent::Init(void)
 {
+	this->SetSize(TILE_SIZE_X, TILE_SIZE_Y);
 }
 
 //--------------------------------------------------

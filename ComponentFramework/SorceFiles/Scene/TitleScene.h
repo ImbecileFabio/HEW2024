@@ -10,6 +10,9 @@
 /*----- インクルード -----*/
 #include "SceneBase.h"
 #include <array>
+/*----- 定数 ------*/
+constexpr int CHAPTER_MAX = 1;
+constexpr int STAGE_MAX = 5;
 //--------------------------------------------------
 // タイトルシーンクラス
 //--------------------------------------------------
@@ -23,6 +26,7 @@ public:
 		title,
 		select,
 		option,
+		end,	// ゲーム終了
 		max,
 	};
 	TitleScene(GameManager* _gameManager);
@@ -37,7 +41,18 @@ private:
 	class Revolution* title_{};
 	Revolution* select_rough_{};	// ひとまず確認のためのセレクト画面ラフ
 
-	std::array<std::array<int, 5>, 5> select_stages_;	// 5*5つ分のステージリスト
+	static int create_count;	// タイトルシーンが生成されたかどうかのカウント
+
+	// タイトル周りのオブジェクトと変数
+	std::array<Revolution*, 3> title_buttons_;	// タイトルのボタン
+	int title_select_button_ = 0;	// タイトルのボタンの添え字
+
+	int chapter_ = 0;	// 章
+	int stage_	 = 0;	// ステージ
+	std::array<std::array<std::function<void()>, STAGE_MAX>, CHAPTER_MAX> select_stages_;	// 5*5つ分のステージ用添え字配列
+
+	void StageSelect();
+	void MoveSelect();
 };
 
 #endif  // TITLE_SCENE_H_
