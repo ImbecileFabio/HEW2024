@@ -73,7 +73,6 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-	velocity_component_->SetUseGravity(false);
 
 }
 //--------------------------------------------------

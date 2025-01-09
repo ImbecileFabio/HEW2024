@@ -28,7 +28,7 @@ class RobotMoveComponent :
     public Component
 {
 public:
-    RobotMoveComponent(GameObject* _owner, int _updateOrder = 50);
+    RobotMoveComponent(GameObject* _owner, int _updateOrder = 2);
     ~RobotMoveComponent();
 
     void Init() override;
@@ -38,14 +38,35 @@ public:
     virtual TypeID GetComponentType(void) const override { return TypeID::RobotMoveComponent; }
 
 private:
-    // 段差の高さを調べる
-    std::optional<float> CheckStepHeight(const TransformComponent& _transform, const Vector3& _size, const std::vector<GameObject*> _environmentObjects);
+	void UpdateWallScanCollider();	// ウォールスキャンコライダーの更新
+	void UpdateStepScanCollider();	// ステップアップ用スキャンコライダーの更新
+	void UpdateGroundScanCollider();	// 地面スキャンコライダーの更新
 
-	float speed_;                    // 移動速度
-	float max_step_height_;	         // 上り下りできる段差の高さ
-	float step_scan_distance_;	     // 段差を探す距離
-	// 移動方向 ( 右:1,0 / 左:-1,0 / 上:0,1 / 下:0,-1)
-    Vector2 direction_;
+	bool CheckWallCollision();  // 壁との当たり判定
+	bool CheckStepUp(); 		 // 段差の上り判定
+	bool CheckGround();		 // 地面の判定
+
+private:
+    // ownerのコンポーネントをキャッシュ
+	class TransformComponent* owner_transform_;
+	class VelocityComponent* owner_velocity_;
+	class BoxColliderComponent* owner_collider_;
+	class GravityComponent* owner_gravity_;
+
+private:// コンポーネント内にゲームオブジェクトとはこれ如何に...ゆるして, いつかコンポーネント化するべき
+	class GameObject* wall_scan_object_;                 // スキャン用オブジェクト
+	class ScanColliderComponent* wall_scan_collider_;    // スキャン用コライダー
+	class GameObject* step_scan_object_;                 // ステップアップ用オブジェクト
+	class ScanColliderComponent* step_scan_collider_;    // ステップアップ用コライダー
+	class GameObject* ground_scan_object_;               // 地面スキャン用オブジェクト
+	class ScanColliderComponent* ground_scan_collider_;  // 地面スキャン用コライダー
+
+private:
+
+    float speed_;				    // 移動速度
+    Vector2 direction_;         	// 移動方向 ( 右:1,0 / 左:-1,0 / 上:0,1 / 下:0,-1)
+	float scan_distance_;           // レイキャストの距離
+	float step_up_height_;          // 登れる段差の高さ
 };
 
 #endif // ROBOT_MOVE_COMPONENT_H_

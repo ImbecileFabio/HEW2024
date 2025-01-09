@@ -53,6 +53,7 @@ GameManager::~GameManager(void)
 	delete current_scene_;
 	delete renderer_;
 	delete collider_manager_;
+	delete pendulum_manager_;
 }
 
 //-----------------------------------------------------------------

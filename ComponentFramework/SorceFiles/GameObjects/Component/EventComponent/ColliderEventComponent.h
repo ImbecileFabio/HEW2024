@@ -17,7 +17,7 @@ class ColliderEventComponent :
     public EventBaseComponent
 {
 public:
-	ColliderEventComponent(GameObject* _owner, int _updateOrder = 50);
+	ColliderEventComponent(GameObject* _owner, int _updateOrder = 6);
 	~ColliderEventComponent();
 
 	void Init(void)override;

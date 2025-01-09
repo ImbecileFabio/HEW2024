@@ -20,11 +20,9 @@
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
+#include "../Component/GravityComponent.h"
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
-
-//	デバッグ
-#include "../Component/RenderComponent/DebugColliderDrawComponent.h"
 
 
 //--------------------------------------------------
@@ -37,10 +35,9 @@ Robot::Robot(GameManager* _gameManager)
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	velocity_component_ = new VelocityComponent(this);	// 速度
-	//robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
+	gravity_component_ = new GravityComponent(this);	// 重力
+	robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this);	// 押し出し
-
-	debug_collider_draw_component_ = new DebugColliderDrawComponent(this);
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -59,9 +56,9 @@ Robot::~Robot(void)
 	delete collider_component_;
 	delete collider_event_component_;
 	delete velocity_component_;
+	delete gravity_component_;
 	delete robot_move_component_;
 	delete push_out_component_;
-	delete debug_collider_draw_component_;
 }
 
 //--------------------------------------------------
@@ -69,7 +66,8 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	velocity_component_->SetUseGravity(true);
+	auto size = collider_component_->GetSize();
+	collider_component_->SetSize(size.x * 0.7, size.y);	// 当たり判定サイズ
 }
 
 //--------------------------------------------------
@@ -81,20 +79,20 @@ void Robot::UpdateGameObject(void)
 	// 入力処理
 	InputManager& input = InputManager::GetInstance();
 
-	// デバッグ用、ロボを操作できる
-	// 移動処理
-	if (input.GetKeyPress(VK_A))
-	{
-		velocity_component_->SetVelocity(Vector3(-10, 0, 0));
-	}
-	else if (input.GetKeyPress(VK_D))
-	{
-		velocity_component_->SetVelocity(Vector3(10, 0, 0));
-	}
-	else
-	{
-		velocity_component_->SetVelocity(Vector3(0, 0, 0));
-	}
+	//// デバッグ用、ロボを操作できる
+	//// 移動処理
+	//if (input.GetKeyPress(VK_A))
+	//{
+	//	velocity_component_->SetVelocity(Vector3(-10, 0, 0));
+	//}
+	//else if (input.GetKeyPress(VK_D))
+	//{
+	//	velocity_component_->SetVelocity(Vector3(10, 0, 0));
+	//}
+	//else
+	//{
+	//	velocity_component_->SetVelocity(Vector3(0, 0, 0));
+	//}
 
 	// マウスクリックで移動
 	if (input.GetMouseButtonPress(0)) {
@@ -103,10 +101,6 @@ void Robot::UpdateGameObject(void)
 			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
 			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
 	}
-
-
-	// 重力を適用、
-	velocity_component_->SetUseGravity(true);
 
 }
 

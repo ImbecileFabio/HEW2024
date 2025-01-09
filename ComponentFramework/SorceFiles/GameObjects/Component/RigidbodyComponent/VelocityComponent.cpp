@@ -35,11 +35,9 @@ void VelocityComponent::Init() {
 	// 使用フラグがtrueなら作用する
 	use_acceleration_	= true;
 	use_velocity_		= true;
-	use_gravity_		= true;
 
 	acceleration_	= { 0.0f, 0.0f, 0.0f };
 	velocity_		= { 0.0f, 0.0f, 0.0f };
-	gravity_		= { 0.0f,-1.0f, 0.0f };	// 一応固定
 	speed_rate_ = 1.0f;
 }
 
@@ -61,10 +59,6 @@ void VelocityComponent::Update() {
 		// 加速度を適用
 		if (use_acceleration_) {
 			velocity_ += acceleration_;
-		}
-		// 重力を適用
-		if (use_gravity_) {
-			velocity_ += gravity_;
 		}
 		position_ += (velocity_ * speed_rate_);
 	}
@@ -121,16 +115,4 @@ void	VelocityComponent::SetUseVelocity(const bool _use_velocity) {
 }
 bool	VelocityComponent::GetUseVelocity() const {
 	return use_velocity_;
-}
-
-
-//--------------------------------------------------
-// 重力
-//--------------------------------------------------
-// -使用フラグ
-void	VelocityComponent::SetUseGravity(const bool _use_gravity) {
-	use_gravity_ = _use_gravity;
-}
-bool	VelocityComponent::GetUseGravity() const {
-	return use_gravity_;
 }
