@@ -3,8 +3,8 @@
 #include	"stb_image.h"
 #include	"../Renderer.h"
 
-Texture::Texture(bool loopFlg)
-	: loop_flg_(loopFlg)
+Texture::Texture(bool loopFlg, int _texU, int _texV, int _anmSpeed)
+	: loop_flg_(loopFlg), m_texU(_texU), m_texV(_texV), m_anmSpeed(_anmSpeed)
 {
 }
 

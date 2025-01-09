@@ -9,6 +9,7 @@ AnimationComponent::AnimationComponent(RenderComponent* _spriteComponent, GameOb
 	: Component(_owner)
 	, sprite_component_(_spriteComponent)
 {
+	sprite_component_
 }
 //--------------------------------------------------
 // デストラクタ
@@ -22,17 +23,19 @@ AnimationComponent::~AnimationComponent()
 //--------------------------------------------------
 void AnimationComponent::Init(void)
 {
+
 }
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------
 void AnimationComponent::Uninit(void)
 {
+
 }
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
 void AnimationComponent::Update(void)
 {
-	//sprite_component_->SetUV(Vector2(5.0f, 5.0f));
+	
 }

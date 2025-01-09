@@ -51,7 +51,7 @@ public:
 	void Uninit();
 
 	// テクスチャの登録
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _roopFlg = false);
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _roopFlg = false, int _texU = 0, int _texV = 0, int _anmSpeed = 1);
 	// テクスチャの取得
 	std::shared_ptr<Texture> GetTexture(const std::string& _imgName);
 
