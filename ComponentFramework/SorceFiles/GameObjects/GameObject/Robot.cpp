@@ -66,6 +66,7 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
+
 	auto size = collider_component_->GetSize();
 	collider_component_->SetSize(size.x * 0.7, size.y);	// “–‚½‚è”»’èƒTƒCƒY
 }

@@ -5,8 +5,9 @@
 // 説明：ロボットの挙動を制御するコンポーネントの定義
 // 自動で横に歩く
 // 壁に当たったら反転する
+// 地面がない場合は反転する
 // 
-// 既存の処理を用いずとにかく書き込んでます、コンポーネント指向とは
+// 既存の処理を用いずとにかく書き込んでます、コンポーネント指向とはいったい
 // ぐちゃぐちゃコードでごめんなさい
 //==================================================
 
@@ -146,9 +147,11 @@ void RobotMoveComponent::Update()
 	owner_velocity_->SetVelocity({ speed_ * direction_.x, owner_velocity_->GetVelocity().y, 0.0f});
 }
 
+//--------------------------------------------------
+// ウォールスキャン用ヒットボックスの更新
+//--------------------------------------------------
 void RobotMoveComponent::UpdateWallScanCollider()
 {
-	// ウォールスキャン用ヒットボックスの更新
 	auto robotPos = owner_transform_->GetPosition();
 	auto robotSize = owner_collider_->GetSize();
 
@@ -166,9 +169,11 @@ void RobotMoveComponent::UpdateWallScanCollider()
 	wall_scan_object_->GetTransformComponent()->SetPosition(robotPos + offset);
 }
 
+//--------------------------------------------------
+// 段差スキャン用のヒットボックスの更新
+//--------------------------------------------------
 void RobotMoveComponent::UpdateStepScanCollider()
 {
-	// 段差スキャン用のヒットボックスの更新
 	auto robotPos = owner_transform_->GetPosition();
 	auto robotSize = owner_collider_->GetSize();
 
@@ -185,10 +190,11 @@ void RobotMoveComponent::UpdateStepScanCollider()
 
 	step_scan_object_->GetTransformComponent()->SetPosition(robotPos+offset);
 }
-
+//--------------------------------------------------
+// 地面スキャン用のヒットボックスの更新
+//--------------------------------------------------
 void RobotMoveComponent::UpdateGroundScanCollider()
 {
-	// 地面スキャン用のヒットボックスの更新
 	auto robotPos = owner_transform_->GetPosition();
 	auto robotSize = owner_collider_->GetSize();
 
@@ -210,6 +216,7 @@ void RobotMoveComponent::UpdateGroundScanCollider()
 
 //--------------------------------------------------
 // @brief 壁との衝突検知
+// @return 衝突している: true, していない: false
 //--------------------------------------------------
 bool RobotMoveComponent::CheckWallCollision()
 {
@@ -237,6 +244,10 @@ bool RobotMoveComponent::CheckWallCollision()
 	return false;
 }
 
+//--------------------------------------------------
+// @brief 段差検知
+// @return 段差がある: true, ない: false
+//--------------------------------------------------
 bool RobotMoveComponent::CheckStepUp()
 {
 	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
@@ -256,6 +267,10 @@ bool RobotMoveComponent::CheckStepUp()
 	return false;
 }
 
+//--------------------------------------------------
+// @brief 地面検知
+// @return 地面がある: true, ない: false
+//--------------------------------------------------
 bool RobotMoveComponent::CheckGround()
 {
 	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
@@ -268,12 +283,9 @@ bool RobotMoveComponent::CheckGround()
 			// 段差検出 (範囲内に他オブジェクトがある場合)
 			if (groundHitbox.max_.x > otherHitbox.min_.x && groundHitbox.min_.x < otherHitbox.max_.x &&
 				groundHitbox.max_.y > otherHitbox.min_.y && groundHitbox.min_.y < otherHitbox.max_.y) {
-				std::cout << "true\n";
 				return true;
 			}
 		}
 	}
-	std::cout << "false\n";
-	return false;
 	return false;
 }
