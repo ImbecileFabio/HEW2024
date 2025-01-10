@@ -4,14 +4,20 @@
 //-----------------------------------------------------------------
 // 説明：オブジェクトをマス目状に配置するためのマネージャ
 // とはいっても動くものはシーン内で生成しないと動きに差を作れないかもどうしよう
+//-----------------------------------------------------------------
+// 998. 歯車
 // 999. ロボット
 // 1. タイル
-// 2. 歯車
+// 2. 脆いタイル
 // 3. 振り子
 // 4. 
 // 
 // 100~109. リフトの始点
 // 110~119. リフトの終点
+// 
+// 200. けむりの始点 / 201. けむりの終点
+// 
+// 滑車、鉄柱、
 //=================================================================
 
 /*----- インクルード -----*/
@@ -24,12 +30,17 @@
 #include "TileMapManager.h"
 
 #include "GameObjects/GameObject/Tile.h"
-#include "GameObjects/GameObject/Item.h"
-#include "GameObjects/GameObject/Lift.h"
-#include "GameObjects/GameObject/Robot.h"
+#include "GameObjects/GameObject/Gimmick/WeakFloor.h"
 #include "GameObjects/GameObject/Pendulum.h"
 
+#include "GameObjects/GameObject/Gimmick/Smoke.h"
+#include "GameObjects/GameObject/Gimmick/SteePillar.h"
+#include "GameObjects/GameObject/Gimmick/Pulley.h"
 
+#include "GameObjects/GameObject/Lift.h"
+
+#include "GameObjects/GameObject/Item.h"
+#include "GameObjects/GameObject/Robot.h"
 //-----------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------
@@ -118,11 +129,10 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	{
 		obj = new Tile(game_manager_);
 	}
-	else if (_tileID == 2)	// アイテム
+	else if (_tileID == 2)	// 脆いタイル
 	{
-		obj = new Item(game_manager_);
 	}
-	else if (_tileID == 3)
+	else if (_tileID == 3)	// 振り子
 	{
 		obj = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0), false, 30.f);
 
@@ -150,6 +160,14 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		lift->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
 		
 		
+	}
+	else if (_tileID == 200)	// けむり
+	{
+
+	}
+	else if (_tileID == 998)	// 歯車
+	{
+		obj = new Item(game_manager_);
 	}
 	else if (_tileID == 999)	// ロボット
 	{

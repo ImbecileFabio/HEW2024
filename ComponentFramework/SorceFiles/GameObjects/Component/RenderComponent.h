@@ -36,7 +36,7 @@ public:
 		draw,
 		notDraw,
 	};
-	RenderComponent(GameObject* _owner, int _drawOrder = 50);
+	RenderComponent(GameObject* _owner, int _drawOrder = 100);
 	~RenderComponent();
 
 	void Init(void) override {};

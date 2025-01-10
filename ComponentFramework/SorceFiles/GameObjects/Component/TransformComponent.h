@@ -27,7 +27,7 @@ using namespace DirectX::SimpleMath;
 class TransformComponent : public Component
 {
 public:
-	TransformComponent(GameObject* _owner, int updateOrder = 1);
+	TransformComponent(GameObject* _owner, int updateOrder = 0);
 	~TransformComponent();
 
 	void Init(void) override;

@@ -19,9 +19,6 @@
 //		GetVelocity() const;					速度の取得
 //		SetUseVelocity(true　or false);		速度の使用フラグ
 //		GetUseVelocity() const;				速度の使用フラグの取得
-//	・重力
-//		SetUseGravity(true　or false);			重力の使用フラグ
-//		GetUseGravity() const;				重力の使用フラグの取得
 //==================================================
 
 #pragma once
@@ -35,13 +32,11 @@ private:
 	bool	use_acceleration_;
 	DirectX::SimpleMath::Vector3 velocity_;
 	bool	use_velocity_;
-	DirectX::SimpleMath::Vector3 gravity_;
-	bool	use_gravity_;
 
 	float speed_rate_;	// 速度倍率
 
 public:
-	VelocityComponent(GameObject* _owner, int _updateOrder = 50);
+	VelocityComponent(GameObject* _owner, int _updateOrder = 3);
 	~VelocityComponent();
 
 	void Init();
@@ -62,10 +57,6 @@ public:
 	DirectX::SimpleMath::Vector3	GetVelocity() const;
 	void	SetUseVelocity(const bool _use_velocity);
 	bool	GetUseVelocity() const;
-
-	// 重力
-	void	SetUseGravity(const bool _use_gravity);
-	bool	GetUseGravity() const;
 
 	virtual TypeID GetComponentType() const override { return TypeID::VelocityComponent; }
 };

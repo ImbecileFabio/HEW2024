@@ -15,6 +15,11 @@
 
 using namespace DirectX::SimpleMath;
 /*----- 構造体宣言 -----*/
+struct AABB {
+	Vector2 min_;		// 矩形の左下
+	Vector2 max_;		// 矩形の右上
+};
+
 /*----- 前方宣言 -----*/
 class CircleColliderComponent;
 class BoxColliderComponent;

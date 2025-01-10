@@ -37,10 +37,9 @@ private:
 	class ColliderBaseComponent* collider_component_{};	// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
 	class VelocityComponent* velocity_component_{};		// 速度
+	class GravityComponent* gravity_component_{};		// 重力
 	class RobotMoveComponent* robot_move_component_{};	// ロボットの移動
 	class PushOutComponent* push_out_component_{};	// 押し出し
 
-	//
-	class DebugColliderDrawComponent* debug_collider_draw_component_{};
 };
 #endif	// ROBOT_H_
