@@ -42,6 +42,8 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "TimeZoneComponent"
 	// 振り子
 	, "PendulumMovementComponent"
+	// 振り子の棒の動き
+	, "StickMoveComponent"	// 振り子の棒の動き
 	// ギミック
 	, "PulleyComponent"		// 滑車ギミック
 	, "WeakFloorComponent"	// 脆い床ギミック

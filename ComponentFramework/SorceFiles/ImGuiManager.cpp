@@ -13,6 +13,7 @@
 #include "GameObjects/Component/RigidbodyComponent/VelocityComponent.h"
 #include "GameObjects/Component/PendulumMovementComponent.h"
 #include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
+#include "GameObjects/Component/StickMoveComponent.h"
 /*----static•Ï”------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
 std::vector<GameObject*>* ImGuiBase::objectList_ = {};
@@ -259,6 +260,40 @@ void ObjectStatesGUI::ShowWindow()
                     ImGui::Separator(); // ‹æØ‚èü
                 }
 					break;
+				case Component::TypeID::StickMoveComponent:
+				{
+                    auto stickMove    = dynamic_cast<StickMoveComponent*>(component);
+					auto stickAngle   = stickMove->GetStickAngle();
+                    auto velocity     = stickMove->GetStickVelocity();
+                    auto angle        = stickMove->GetStickAngle();
+                    auto acceleration = stickMove->GetStickAcceleration();
+                    auto fulcrum      = stickMove->GetStickFulcrum();
+                    auto length       = stickMove->GetStickLength();
+					int updateOrder   = stickMove->GetUpdateOrder();
+					ImGui::Text("UpdateOrder : %d", updateOrder);
+					if (ImGui::DragFloat("Angle", &stickAngle, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
+					{
+						stickMove->SetStickAngle(stickAngle);
+					}
+					if (ImGui::DragFloat3("Speed", &velocity, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
+					{
+						stickMove->SetStickVelocity(velocity);
+					}
+					if (ImGui::DragFloat("Acceleration", &acceleration, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
+					{
+						stickMove->SetStickAcceleration(acceleration);
+					}
+					if (ImGui::DragFloat("Length", &length, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
+					{
+						stickMove->SetStickLength(length);
+					}
+					if (ImGui::DragFloat3("Fulcrum", &fulcrum.x, dragSpeed, -1000.0f, 1000.0f, "%.3f"))
+					{
+						stickMove->SetStickFulcrum(fulcrum);
+					}
+				}
+                    ImGui::Separator(); // ‹æØ‚èü
+                    break;
                 default:
                     break;
                 }

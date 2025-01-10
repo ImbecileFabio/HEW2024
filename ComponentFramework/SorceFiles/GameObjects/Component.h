@@ -52,6 +52,8 @@ public:
 		, TimeZoneComponent
 		// 振り子の動き
 		, PendulumMovementComponent
+		// 振り子の棒の動き
+		, StickMoveComponent		// 振り子の棒の動き
 		// ギミック
 		, PulleyComponent		// 滑車ギミック
 		, WeakFloorComponent	// 脆い床ギミック

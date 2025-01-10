@@ -14,6 +14,7 @@
 //--------------------------------------------------
 class PulleyComponent : public Component
 {
+public:
     PulleyComponent(GameObject* _owner, int _updateOrder = 50);
     ~PulleyComponent();
 
@@ -22,6 +23,7 @@ class PulleyComponent : public Component
     void Update() override;
 
     virtual TypeID GetComponentType(void) const override { return TypeID::PulleyComponent; }
+private:
 
 };
 #endif // PULLEY_COMPONENT_H_

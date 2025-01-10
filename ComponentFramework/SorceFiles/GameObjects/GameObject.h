@@ -45,12 +45,12 @@ public:
 		// ここに追加したゲームオブジェクトを追加していく
 		, Player
 		, Camera
-		, Pendulum
 		, Tile
 		, Robot
 		, Lift
 		, Item
 		, TimeZone
+		, Pendulum		// 振り子
 		, Stick			// 振り子の棒
 		, WeakFloor		// 脆い床
 		, SteePillar	// 鉄柱

@@ -14,6 +14,7 @@
 //--------------------------------------------------
 class WeakFloorComponent : public Component
 {
+public:
     WeakFloorComponent(GameObject* _owner, int _updateOrder = 50);
     ~WeakFloorComponent();
 
@@ -22,5 +23,6 @@ class WeakFloorComponent : public Component
     void Update() override;
 
     TypeID GetComponentType(void) const override { return TypeID::WeakFloorComponent; }
+private:
 };
 #endif // WEAK_FLOOR_COMPONENT_H_
