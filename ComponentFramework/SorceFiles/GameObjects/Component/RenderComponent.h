@@ -56,7 +56,7 @@ public:
 protected:
 	int draw_order_;	// 更新順位
 
-	void InitBuffers();	// バッファの初期化
+	void InitBuffers(int _cutU = 1, int _cutV = 1);	// バッファの初期化
 
 	// バッファ
 	VertexBuffer<VERTEX_3D> vertex_buffer_;

@@ -22,17 +22,26 @@ class Texture
 	int m_height; // 高さ
 	int m_bpp; // BPP
 
-	int m_texU; // テクスチャU
-	int m_texV; // テクスチャV
+	int m_cutU; // 横分割数
+	int m_cutV; // 縦分割数
+	int m_numU;	// 横描画位置
+	int m_numV;	// 縦描画位置
 	int m_anmSpeed; // アニメーションスピード
 public:
-	Texture(bool loopFlg = false, int _texU = 0, int _texV = 0, int _anmSpeed = 1);
+	Texture(bool loopFlg = false, int _cutU = 0, int _cutV = 0, int _anmSpeed = 1);
 
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
 
 	auto GetWidth() const { return m_width; }
 	auto GetHeight() const { return m_height; }
+	auto GetCutU() const { return m_cutU; }
+	auto GetCutV() const { return m_cutV; }
+
+	auto GetNumU() const { return m_numU; }
+	void SetNumU(int _numU) { m_numU = _numU; }
+	auto GetNumV() const { return m_numV; }
+	void SetNumV(int _numV) { m_numV = _numV; }
 
 	void SetGPU();
 };

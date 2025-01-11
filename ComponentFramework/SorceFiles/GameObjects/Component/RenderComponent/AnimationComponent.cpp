@@ -9,13 +9,14 @@ AnimationComponent::AnimationComponent(RenderComponent* _spriteComponent, GameOb
 	: Component(_owner)
 	, sprite_component_(_spriteComponent)
 {
-	sprite_component_
+	Init();
 }
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
 AnimationComponent::~AnimationComponent()
 {
+	Uninit();
 	delete sprite_component_;
 }
 //--------------------------------------------------

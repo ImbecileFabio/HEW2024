@@ -45,7 +45,7 @@ void TextureManager::Uninit()
 // @param  _imgName 画像名, _fileName ファイルパス
 // @brief  テクスチャの登録
 //-----------------------------------------------------------------
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, int _texU, int _texV, int _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, int _cutU, int _cutV, int _anmSpeed)
 {
 	// すでに読み込まれているか確認
 	auto it = texture_cache_.find(_imgName);
@@ -57,7 +57,7 @@ void TextureManager::RegisterTexture(const std::string& _imgName, const std::str
 	}
 
 	// 存在していないので生成する
-	auto texture = std::make_shared<Texture>(_loopFlg, _texU, _texV, _anmSpeed);
+	auto texture = std::make_shared<Texture>(_loopFlg, _cutU, _cutV, _anmSpeed);
 	if (texture->Load(_fileName)) {
 		texture_cache_[_imgName] = texture;
 		std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Success\n", _imgName);

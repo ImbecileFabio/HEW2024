@@ -3,9 +3,11 @@
 #include	"stb_image.h"
 #include	"../Renderer.h"
 
-Texture::Texture(bool loopFlg, int _texU, int _texV, int _anmSpeed)
-	: loop_flg_(loopFlg), m_texU(_texU), m_texV(_texV), m_anmSpeed(_anmSpeed)
+Texture::Texture(bool loopFlg, int _cutU, int _cutV, int _anmSpeed)
+	: loop_flg_(loopFlg), m_cutU(_cutU), m_cutV(_cutV), m_anmSpeed(_anmSpeed)
 {
+	m_numU = 1;
+	m_numV = 1;
 }
 
 // テクスチャをロード

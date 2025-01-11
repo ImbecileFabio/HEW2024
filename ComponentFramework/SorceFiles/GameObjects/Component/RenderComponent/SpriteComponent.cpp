@@ -33,7 +33,7 @@ SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname, 
 	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
 
 	// バッファ初期化
-	this->InitBuffers();
+	this->InitBuffers(texture_->GetCutU(), texture_->GetCutV());	// 画像の分割数を渡す
 
 	this->Init();
 }
@@ -58,7 +58,6 @@ void SpriteComponent::Init()
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------
-
 void SpriteComponent::Uninit()
 {
 }
@@ -136,7 +135,12 @@ void SpriteComponent::Draw()
 void SpriteComponent::SetTexture(const std::string _imgname)
 {
 	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
+}
 
+void SpriteComponent::SetUV(const float& sx, const float& sy)
+{
+	texture_->SetNumU(sx);
+	texture_->SetNumV(sx);
 }
 
 //--------------------------------------------------
