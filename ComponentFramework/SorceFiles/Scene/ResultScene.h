@@ -27,8 +27,9 @@ public:
 	void Update() override;
 private:
 	class Camera*	  camera_{};	// カメラ
-	Revolution* result_{};	// リザルト画面
-	std::array<Revolution*, 2>			 select_buttons_;
+	Revolution*		backdrop_{};	// リザルトの背景
+	Revolution* result_ribbon_{};	// リザルトのリボン
+	std::array<Revolution*, 2> result_buttons_{};
 	std::array<std::function<void()>, 2> select_button_functions_;
 	int select_button_ = 0;
 
