@@ -84,6 +84,8 @@ void RobotMoveComponent::Init()
 	owner_gravity_ = owner_->GetComponent<GravityComponent>();
 
 
+
+
 }
 
 //--------------------------------------------------

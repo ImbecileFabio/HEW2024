@@ -122,8 +122,8 @@ void TileMapManager::GenerateGameObjects()
 void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 {
 	GameObject* obj = nullptr;
-	Vector2 p = { _x - MAP_SIZE_X / 2 , _y - MAP_SIZE_Y / 2 };	// 座標の調整
-	Vector2 objPos = { (p.x * TILE_SIZE_X) + (TILE_SIZE_X / 2), -((p.y * TILE_SIZE_Y) + (TILE_SIZE_Y / 2)) };	// オブジェクトの生成する位置 gorioshi
+	Vector2 op = { _x - MAP_SIZE_X / 2 , _y - MAP_SIZE_Y / 2 };	// 中心が0になるように
+	Vector2 objPos = { (op.x * TILE_SIZE_X) + (TILE_SIZE_X / 2), -((op.y * TILE_SIZE_Y) + (TILE_SIZE_Y / 2)) };	// オブジェクトの生成する位置を調整（ごり押し）
 
 	if (_tileID == 1)	// タイル
 	{
@@ -149,13 +149,41 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				{
 					if (tileID == _tileID + 10) // 自分のID+10がリフトの終点
 					{
-						endPos = { x * TILE_SIZE_X, y * TILE_SIZE_Y};
+						Vector2 ep = {x - MAP_SIZE_X / 2 , y - MAP_SIZE_Y / 2 };	// 座標の調整
+						endPos = { (ep.x * TILE_SIZE_X) + (TILE_SIZE_X / 2), -((ep.y * TILE_SIZE_Y) + (TILE_SIZE_Y / 2)) };
+						break;
 					}
 				}
 			}
 		}
-		obj = new Lift(Lift::MoveState::side, 50.0f, game_manager_);
+
+		float dx = endPos.x - objPos.x;
+		float dy = endPos.y - objPos.y;
+
+		Lift::MoveState direction{};
+
+		// 移動方向を設定
+		if (dy == 0 && dx != 0) {	// 左右
+			direction = Lift::MoveState::side;
+		}
+		else if (dx == 0 && dy != 0) {	// 上下
+			direction = Lift::MoveState::length;
+		}
+		else if (dx > 0 && dy > 0) {	// 斜め(右)
+			direction = Lift::MoveState::diagonalRight;
+		}
+		else if (dx < 0 && dy > 0) {	// 斜め(左)
+			direction = Lift::MoveState::diagonalLeft;
+		}
+
+		// 移動距離を計算
+		float distance = std::sqrt(dx * dx + dy * dy);
+
+		// リフト生成
+		obj = new Lift(direction, distance, game_manager_);
 		auto lift = dynamic_cast<Lift*>(obj);
+		lift->GetTransformComponent()->SetPosition(objPos.x, objPos.y);
+
 		auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
 		lift->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
 		

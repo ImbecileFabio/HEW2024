@@ -22,6 +22,8 @@ Lift::Lift(GameManager* _gameManager)
 	, maxMoveDistance_(0.0f)
 	, direction_(0.0f, 0.0f)
 	, switchFg_(false)
+	, turn_count_(0)
+	, lift_state_(Lift::LiftState::Move)
 {
 	sprite_component_ = new SpriteComponent(this, "lift_floor_center");
 	collider_base_component_ = new BoxColliderComponent(this);
@@ -45,6 +47,8 @@ Lift::Lift(MoveState _moveState, float _moveDistance, GameManager* _gameManager)
 	, maxMoveDistance_(_moveDistance)
 	, direction_(0.0f, 0.0f)
 	, switchFg_(false)
+	, turn_count_(0)
+	, lift_state_(Lift::LiftState::Move)
 {
 	sprite_component_ = new SpriteComponent(this,"lift_floor_center");
 	collider_base_component_ = new BoxColliderComponent(this);
@@ -81,148 +85,195 @@ void Lift::InitGameObject(void)
 void Lift::UpdateGameObject(void)
 {
 	if (!pendulum_) return;
-	bool moveFg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
-	if (moveFg)
+
+	// Ø‚è‘Ö‚¦Žžˆê’èŽžŠÔ’âŽ~‚·‚é
+	switch (lift_state_)
 	{
-		DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
-		switch (moveState_)
-		{
-		case Lift::MoveState::length:	// cˆÚ“®
-			if (!switchFg_) 
-			{
-				// ã‚ÉˆÚ“®
-				direction_ = { 0.0f, 1.0f };
-				// ˆÚ“®‹——£‚ð—ÝÏ
-				traveledDistance_.y += std::abs(direction_.y);
-				// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
-				if (traveledDistance_.y >= maxMoveDistance_)
-				{
-					// ‹t•ûŒü‚ÉˆÚ“®
-					direction_ = { 0.0f, -1.0f };
-					traveledDistance_.y = 0.0f;
-					switchFg_ = true;
-				}
-			}
-			else 
-			{
-				// ‰º‚ÉˆÚ“®
-				direction_ = { 0.0f, -1.0f };
-				// ˆÚ“®‹——£‚ð—ÝÏ
-				traveledDistance_.y += std::abs(direction_.y);
-				// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
-				if (traveledDistance_.y >= maxMoveDistance_) 
-				{
-					// ‹t•ûŒü‚ÉˆÚ“®
-					direction_ = { 0.0f, 1.0f };
-					traveledDistance_.y = 0.0f;
-					switchFg_ = false;
-				}
-			}
-			break;
-		case Lift::MoveState::side:		// ‰¡ˆÚ“®
-			if (!switchFg_) 
-			{
-				// ‰E‚ÉˆÚ“®
-				direction_ = { 1.0f, 0.0f };
-				// ˆÚ“®‹——£‚ð—ÝÏ
-				traveledDistance_.x += std::abs(direction_.x);
-				// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
-				if (traveledDistance_.x >= maxMoveDistance_)
-				{
-					direction_ = { -1.0f, 0.0f };	// ‹t•ûŒü‚ÉˆÚ“®
-					traveledDistance_.x = 0.0f;
-					switchFg_ = true;
-				}
-			}
-			else 
-			{
-				// ¶‚ÉˆÚ“®
-				direction_ = { -1.0f, 0.0f };
-				// ˆÚ“®‹——£‚ð—ÝÏ
-				traveledDistance_.x += std::abs(direction_.x);
-				// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
-				if (traveledDistance_.x >= maxMoveDistance_)
-				{
-					direction_ = { 1.0f, 0.0f };	// ‹t•ûŒü‚ÉˆÚ“®
-					traveledDistance_.x = 0.0f;
-					switchFg_ = false;
-				}
-			}
-			break;
-		case Lift::MoveState::diagonalRight:	// ŽÎ‚ßˆÚ“®i‰Ej
-			if (!switchFg_)
-			{
-				// ‰Eã‚ÉˆÚ“®
-				direction_ = { 1.0f, 1.0f };
-				// ˆÚ“®‹——£‚ð—ÝÏ
-				traveledDistance_.x += std::abs(direction_.x);
-				traveledDistance_.y += std::abs(direction_.y);
-				// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
-				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
-				{
-					traveledDistance_ = { 0.0f, 0.0f };
-					direction_ = { -1.0f, -1.0f };
-					switchFg_ = true;
-				}
-			}
-			else
-			{
-				// ¶‰º‚ÉˆÚ“®
-				direction_ = { -1.0f, -1.0f };
-				// ˆÚ“®‹——£‚ð—ÝÏ
-				traveledDistance_.x += std::abs(direction_.x);
-				traveledDistance_.y += std::abs(direction_.y);
-				// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
-				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
-				{
-					traveledDistance_ = { 0.0f, 0.0f };
-					direction_ = { 1.0f, 1.0f };
-					switchFg_ = false;
-				}
-			}
-			break;
-		case Lift::MoveState::diagonalLeft:	// ŽÎ‚ßˆÚ“®i¶j
-			if (!switchFg_)
-			{
-				// ¶ã‚ÉˆÚ“®
-				direction_ = { -1.0f, 1.0f };
-				// ˆÚ“®‹——£‚ð—ÝÏ
-				traveledDistance_.x += std::abs(direction_.x);
-				traveledDistance_.y += std::abs(direction_.y);
-				// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
-				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
-				{
-					traveledDistance_ = { 0.0f, 0.0f };
-					direction_ = { 1.0f, -1.0f };
-					switchFg_ = true;
-				}
-			}
-			else
-			{
-				// ‰E‰º‚ÉˆÚ“®
-				direction_ = { 1.0f, -1.0f };
-				// ˆÚ“®‹——£‚ð—ÝÏ
-				traveledDistance_.x += std::abs(direction_.x);
-				traveledDistance_.y += std::abs(direction_.y);
-				// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
-				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
-				{
-					traveledDistance_ = { 0.0f, 0.0f };
-					direction_ = { -1.0f, 1.0f };
-					switchFg_ = false;
-				}
-			}
-			break;
-		default:
-			break;
-		}
-		// ƒŠƒtƒg‚ÌÀ•W‚ðŽx“_‚Æ‚µ‚Ä“n‚µ‘±‚¯‚é
-		velocity_component_->SetVelocity(Vector3(direction_.x, direction_.y, 0.0f));
-		pendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(liftPos);
-	}
-	else
+	case Lift::LiftState::Stop:
 	{
 		velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
+		++turn_count_;
+		if (turn_count_ >= 180) {
+			lift_state_ = Lift::LiftState::Move;
+			turn_count_ = 0;
+		}
+		return;
+		break;
+	}
+	case Lift::LiftState::Move:
+	{
+		bool moveFg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
+		if (moveFg)
+		{
+			DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
+			switch (moveState_)
+			{
+			case Lift::MoveState::length:	// cˆÚ“®
+				if (!switchFg_)
+				{
+					// ã‚ÉˆÚ“®
+					direction_ = { 0.0f, 1.0f };
+					// ˆÚ“®‹——£‚ð—ÝÏ
+					traveledDistance_.y += std::abs(direction_.y);
+					// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
+					if (traveledDistance_.y >= maxMoveDistance_)
+					{
+						// ‹t•ûŒü‚ÉˆÚ“®
+						direction_ = { 0.0f, -1.0f };
+						traveledDistance_.y = 0.0f;
+						switchFg_ = true;
+						lift_state_ = Lift::LiftState::Stop;
+					}
+				}
+				else
+				{
+					// ‰º‚ÉˆÚ“®
+					direction_ = { 0.0f, -1.0f };
+					// ˆÚ“®‹——£‚ð—ÝÏ
+					traveledDistance_.y += std::abs(direction_.y);
+					// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
+					if (traveledDistance_.y >= maxMoveDistance_)
+					{
+						// ‹t•ûŒü‚ÉˆÚ“®
+						direction_ = { 0.0f, 1.0f };
+						traveledDistance_.y = 0.0f;
+						switchFg_ = false;
+						lift_state_ = Lift::LiftState::Stop;
+					}
+				}
+				break;
+			case Lift::MoveState::side:		// ‰¡ˆÚ“®
+				if (!switchFg_)
+				{
+					// ‰E‚ÉˆÚ“®
+					direction_ = { 1.0f, 0.0f };
+					// ˆÚ“®‹——£‚ð—ÝÏ
+					traveledDistance_.x += std::abs(direction_.x);
+					// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
+					if (traveledDistance_.x >= maxMoveDistance_)
+					{
+						direction_ = { -1.0f, 0.0f };	// ‹t•ûŒü‚ÉˆÚ“®
+						traveledDistance_.x = 0.0f;
+						switchFg_ = true;
+						lift_state_ = Lift::LiftState::Stop;
+					}
+				}
+				else
+				{
+					// ¶‚ÉˆÚ“®
+					direction_ = { -1.0f, 0.0f };
+					// ˆÚ“®‹——£‚ð—ÝÏ
+					traveledDistance_.x += std::abs(direction_.x);
+					// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
+					if (traveledDistance_.x >= maxMoveDistance_)
+					{
+						direction_ = { 1.0f, 0.0f };	// ‹t•ûŒü‚ÉˆÚ“®
+						traveledDistance_.x = 0.0f;
+						switchFg_ = false;
+						lift_state_ = Lift::LiftState::Stop;
+					}
+				}
+				break;
+			case Lift::MoveState::diagonalRight:	// ŽÎ‚ßˆÚ“®i‰Ej
+				if (!switchFg_)
+				{
+					// ‰Eã‚ÉˆÚ“®
+					direction_ = { 1.0f, 1.0f };
+					// ˆÚ“®‹——£‚ð—ÝÏ
+					Vector2 normalizedDirection = {
+						direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
+						direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
+					};
+					traveledDistance_.x += std::abs(normalizedDirection.x);
+					traveledDistance_.y += std::abs(normalizedDirection.y);
+					// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
+					if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
+					{
+						traveledDistance_ = { 0.0f, 0.0f };
+						direction_ = { -1.0f, -1.0f };
+						switchFg_ = true;
+						lift_state_ = Lift::LiftState::Stop;
+					}
+				}
+				else
+				{
+					// ¶‰º‚ÉˆÚ“®
+					direction_ = { -1.0f, -1.0f };
+					// ˆÚ“®‹——£‚ð—ÝÏ
+					Vector2 normalizedDirection = {
+						direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
+						direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
+					};
+					traveledDistance_.x += std::abs(normalizedDirection.x);
+					traveledDistance_.y += std::abs(normalizedDirection.y);
+
+					// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
+					if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
+					{
+						traveledDistance_ = { 0.0f, 0.0f };
+						direction_ = { 1.0f, 1.0f };
+						switchFg_ = false;
+						lift_state_ = Lift::LiftState::Stop;
+					}
+				}
+				break;
+			case Lift::MoveState::diagonalLeft:	// ŽÎ‚ßˆÚ“®i¶j
+				if (!switchFg_)
+				{
+					// ¶ã‚ÉˆÚ“®
+					direction_ = { -1.0f, 1.0f };
+					// ˆÚ“®‹——£‚ð—ÝÏ
+					Vector2 normalizedDirection = {
+						direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
+						direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
+					};
+					traveledDistance_.x += std::abs(normalizedDirection.x);
+					traveledDistance_.y += std::abs(normalizedDirection.y);
+
+					// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
+					if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
+					{
+						traveledDistance_ = { 0.0f, 0.0f };
+						direction_ = { 1.0f, -1.0f };
+						switchFg_ = true;
+						lift_state_ = Lift::LiftState::Stop;
+					}
+				}
+				else
+				{
+					// ‰E‰º‚ÉˆÚ“®
+					direction_ = { 1.0f, -1.0f };
+					// ˆÚ“®‹——£‚ð—ÝÏ
+					Vector2 normalizedDirection = {
+						direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
+						direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
+					};
+					traveledDistance_.x += std::abs(normalizedDirection.x);
+					traveledDistance_.y += std::abs(normalizedDirection.y);
+
+					// ˆÚ“®‹——£‚ªÅ‘åˆÚ“®‹——£‚ð’´‚¦‚½‚ç
+					if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
+					{
+						traveledDistance_ = { 0.0f, 0.0f };
+						direction_ = { -1.0f, 1.0f };
+						switchFg_ = false;
+						lift_state_ = Lift::LiftState::Stop;
+					}
+				}
+				break;
+			default:
+				break;
+			}
+			// ƒŠƒtƒg‚ÌÀ•W‚ðŽx“_‚Æ‚µ‚Ä“n‚µ‘±‚¯‚é
+			velocity_component_->SetVelocity(Vector3(direction_.x, direction_.y, 0.0f));
+			pendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(liftPos);
+		}
+		else
+		{
+			velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
+		}
+		break;
+	}
 	}
 }
 //--------------------------------------------------

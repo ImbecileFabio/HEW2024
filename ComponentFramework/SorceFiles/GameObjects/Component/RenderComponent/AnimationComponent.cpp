@@ -9,6 +9,9 @@ AnimationComponent::AnimationComponent(RenderComponent* _spriteComponent, GameOb
 	: Component(_owner)
 	, sprite_component_(_spriteComponent)
 {
+
+
+
 }
 //--------------------------------------------------
 // デストラクタ

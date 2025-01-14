@@ -52,6 +52,8 @@ void Stage1_1Scene::Init()
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
 
+	
+
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
@@ -123,6 +125,35 @@ void Stage1_1Scene::Update()
 		{
 		 	State = Result;
 		}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		break;
 	case Stage1_1Scene::Result:
 		game_manager_->ChangeScene(SceneName::Result);

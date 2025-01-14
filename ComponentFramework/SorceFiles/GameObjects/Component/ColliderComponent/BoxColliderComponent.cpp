@@ -44,8 +44,9 @@ void BoxColliderComponent::Uninit(void)
 //--------------------------------------------------
 void BoxColliderComponent::Update(void)
 {
-	auto pos = this->owner_->GetTransformComponent()->GetPosition();// ˆÊ’u‚ðŽæ“¾
-	this->SetWorldHitBox(pos);
+	auto transform = this->owner_->GetTransformComponent();// ˆÊ’u‚ðŽæ“¾
+	this->SetSize(transform->GetSize() * transform->GetScale());
+	this->SetWorldHitBox(transform->GetPosition());
 }
 
 bool BoxColliderComponent::CheckCollisionCollider(ColliderBaseComponent* _other)

@@ -17,6 +17,11 @@ class Pendulum;
 class Lift : public GameObject
 {
 public:
+	enum class LiftState {
+		Move,
+		Stop
+	};
+
 	enum class MoveState
 	{
 		length,		// 縦移動
@@ -47,6 +52,9 @@ private:
 	DirectX::SimpleMath::Vector2 traveledDistance_;		// 累積移動距離
 	DirectX::SimpleMath::Vector2 direction_;			// 移動方向
 	DirectX::SimpleMath::Vector3 startPos_;				// 開始位置
+
+	LiftState lift_state_;
+	int turn_count_;									// 切り返しまでの時間
 
 	Pendulum* pendulum_;					// 連動させたい振り子
 	bool switchFg_;							// スイッチフラグ
