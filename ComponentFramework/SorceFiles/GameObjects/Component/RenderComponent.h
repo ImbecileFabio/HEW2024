@@ -53,6 +53,10 @@ public:
 
 	void SetState(State _state) { state_ = _state; }
 	State GetState() { return state_; }
+
+	// 頂点データの取得
+	std::vector<VERTEX_3D>& GetVertices() { return vertices_; }
+
 protected:
 	int draw_order_;	// 更新順位
 

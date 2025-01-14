@@ -6,8 +6,8 @@
 Texture::Texture(bool loopFlg, int _cutU, int _cutV, int _anmSpeed)
 	: loop_flg_(loopFlg), m_cutU(_cutU), m_cutV(_cutV), m_anmSpeed(_anmSpeed)
 {
-	m_numU = 1;
-	m_numV = 1;
+	m_numU = 0;
+	m_numV = 0;
 }
 
 // テクスチャをロード

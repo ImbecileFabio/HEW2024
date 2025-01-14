@@ -137,12 +137,6 @@ void SpriteComponent::SetTexture(const std::string _imgname)
 	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
 }
 
-void SpriteComponent::SetUV(const float& sx, const float& sy)
-{
-	texture_->SetNumU(sx);
-	texture_->SetNumV(sx);
-}
-
 //--------------------------------------------------
 // F•ÏX
 //--------------------------------------------------

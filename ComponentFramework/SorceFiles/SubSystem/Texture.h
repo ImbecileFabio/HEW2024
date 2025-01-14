@@ -28,10 +28,12 @@ class Texture
 	int m_numV;	// 縦描画位置
 	int m_anmSpeed; // アニメーションスピード
 public:
-	Texture(bool loopFlg = false, int _cutU = 0, int _cutV = 0, int _anmSpeed = 1);
+	Texture(bool loopFlg = false, int _cutU = 1, int _cutV = 1, int _anmSpeed = 1);
 
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
+
+	auto GetLoopFlg() const { return loop_flg_; }
 
 	auto GetWidth() const { return m_width; }
 	auto GetHeight() const { return m_height; }
