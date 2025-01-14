@@ -23,7 +23,7 @@ struct CIRCLE
 class CircleColliderComponent :public ColliderBaseComponent
 {
 public:
-	CircleColliderComponent(GameObject* _owner, int _updateOrder = 50);
+	CircleColliderComponent(GameObject* _owner, int _updateOrder = 5);
 	~CircleColliderComponent();
 
 	void Init(void) override;

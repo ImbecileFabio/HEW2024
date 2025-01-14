@@ -52,22 +52,6 @@ void Stage1_1Scene::Init()
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
 
-	//tile_ = new Tile(game_manager_);
-	//tile_->GetTransformComponent()->SetPosition(600.0f, 50.0f);
-	//tile_2_ = new Tile(game_manager_);
-	//tile_2_->GetTransformComponent()->SetPosition(-200.0f, 50.0f);
-	//tile_3_ = new Tile(game_manager_);
-	//tile_3_->GetTransformComponent()->SetPosition(-100.0f, 50.0f);
-	//robot_ = new Robot(game_manager_);
-	//robot_->GetTransformComponent()->SetPosition(500.0f, 150.0f);
-	//pendulum_ = new Pendulum(game_manager_, Vector3(270.0f, -60.0f, 0.0f), true, 60.0f);
-	//lift_ = new Lift(game_manager_);
-	//lift_->GetTransformComponent()->SetPosition(270.0f, -60.0f);
-	//lift_->SetMaxPos({ 0.0f, 60.0f, 0.0f });
-	//lift_->SetMinPos({ 0.0f, -100.0f, 0.0f });
-	//lift_->SetMoveState(Lift::MoveState::length);
-	//lift_->SetPendulum(pendulum_);
-
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 

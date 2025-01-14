@@ -31,6 +31,9 @@ public:
 	// ゲームオブジェクトの削除
 	void RemoveGameObject(GameObject* _gameObject);
 
+	// 当たり判定のあるオブジェクトリストを取得
+	auto GetColliderGameObjects() const { return collider_game_objects_; }
+
 private:
 	//更新処理
 	void UpdateGameObjects(void);

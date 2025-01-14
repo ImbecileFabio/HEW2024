@@ -16,10 +16,6 @@
 using namespace DirectX::SimpleMath;
 
 /*----- 構造体定義 -----*/
-struct AABB {
-	Vector2 min_;		// 矩形の左下
-	Vector2 max_;		// 矩形の右上
-};
 
 /*----- 前方宣言 -----*/
 class TransformComponent;
@@ -30,7 +26,7 @@ class TransformComponent;
 class BoxColliderComponent :public ColliderBaseComponent
 {
 public:
-	BoxColliderComponent(GameObject* _owner, int _updateOrder = 50);
+	BoxColliderComponent(GameObject* _owner, int _updateOrder = 5);
 	~BoxColliderComponent();
 
 	void Init(void) override;
@@ -44,12 +40,16 @@ public:
 
 	TypeID GetComponentType(void) const override { return TypeID::BoxColliderComponent; }
 
+	void SetAABB(const AABB& _hitbox) { hit_box_ = _hitbox; }
+
 	// 当たり判定の位置を決定したり
 	void SetWorldHitBox(Vector3 _position);
+	void SetWorldHitBox(const AABB& _worldHitbox) { hit_box_ = _worldHitbox; }
 	auto GetWorldHitBox(void) const { return hit_box_; }
 	
 
 private:
+	
 	AABB hit_box_{};	// 当たり判定の矩形
 };
 
