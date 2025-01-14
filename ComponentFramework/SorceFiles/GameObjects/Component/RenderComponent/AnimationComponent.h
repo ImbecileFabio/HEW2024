@@ -7,10 +7,16 @@
 #ifndef ANIMATION_COMPONENT_H_
 #define ANIMATION_COMPONENT_H_
 #include "../../Component.h"
+
+#define FPS 60
+
+class RenderComponent;
+class SpriteComponent;
+
 class AnimationComponent : public Component
 {
 public:
-	AnimationComponent(class RenderComponent* _spriteComponent, GameObject* _owner);
+	AnimationComponent(RenderComponent* _spriteComponent, GameObject* _owner);
 	~AnimationComponent();
 	void Init(void)   override;
 	void Uninit(void) override;
@@ -18,6 +24,11 @@ public:
 	TypeID GetComponentType(void) const override { return TypeID::AnimationComponent; }
 private:
 	RenderComponent* sprite_component_{};	// アニメーションをするスプライトの参照を持つ
+	SpriteComponent* Sprite_Component_{};	// ダイナミックキャスト用
+
+	int fpsCounter;	// FPSカウンタ
+	int anmFlame;	// アニメーションフレーム
+	bool Loop;		// ループフラグ
 };
 
 #endif // ANIMATION_COMPONENT_H_

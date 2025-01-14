@@ -45,6 +45,7 @@ void PendulumMovementComponent::Init() {
 	langthState_= LangthState::normalLangth;
 	pendulumMovement_ = false;
 	pendulumSelected_ = false;
+	pendulumDirection_ = 1;
 
 	sound_.Init();
 }
@@ -206,36 +207,6 @@ float PendulumMovementComponent::GetPendulumVelocity() {
 }
 
 //--------------------------------------------------
-// 振り子の角加速度のセッターゲッター
-//--------------------------------------------------
-void PendulumMovementComponent::SetPendulumAcceleration(float _pendulumAcceleration) {
-	pendulumAcceleration_ = _pendulumAcceleration;
-}
-float PendulumMovementComponent::GetPendulumAcceleration() {
-	return pendulumAcceleration_;
-}
-
-//--------------------------------------------------
-// 支点の座標のセッターゲッター
-//--------------------------------------------------
-void PendulumMovementComponent::SetPendulumFulcrum(DirectX::SimpleMath::Vector3 _fulcrumPosition) {
-	fulcrumPosition_ = _fulcrumPosition;
-}
-DirectX::SimpleMath::Vector3 PendulumMovementComponent::GetPendulumFulcrum() {
-	return fulcrumPosition_;
-}
-
-//--------------------------------------------------
-// 支柱の長さのセッターゲッター
-//--------------------------------------------------
-void PendulumMovementComponent::SetPendulumLength(float _pendulumLength) {
-	pendulumLength_ = _pendulumLength;
-}
-float PendulumMovementComponent::GetPendulumLength() {
-	return pendulumLength_;
-}
-
-//--------------------------------------------------
 // 振り子の停止、始動
 //--------------------------------------------------
 void PendulumMovementComponent::StartPendulumMovement() {
@@ -244,7 +215,7 @@ void PendulumMovementComponent::StartPendulumMovement() {
 	for (int i = 1;;i++) {
 		maxPendulumVelocity_ += pendulumAcceleration * i;
 		if (maxPendulumVelocity_ >= maxPendulumAngle_) {
-			SetPendulumVelocity(pendulumAcceleration * i);
+			SetPendulumVelocity((pendulumAcceleration * i) * pendulumDirection_);
 			break;
 		}
 	}

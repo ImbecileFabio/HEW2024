@@ -46,7 +46,7 @@ void TextureManager::Uninit()
 // @param  _imgName 画像名, _fileName ファイルパス
 // @brief  テクスチャの登録
 //-----------------------------------------------------------------
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed)
 {
 	// すでに読み込まれているか確認
 	auto it = texture_cache_.find(_imgName);
@@ -58,7 +58,7 @@ void TextureManager::RegisterTexture(const std::string& _imgName, const std::str
 	}
 
 	// 存在していないので生成する
-	auto texture = std::make_shared<Texture>(_loopFlg);
+	auto texture = std::make_shared<Texture>(_loopFlg, _cutU, _cutV, _anmSpeed);
 	if (texture->Load(_fileName)) {
 		texture_cache_[_imgName] = texture;
 		std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Success\n", _imgName);
@@ -100,9 +100,9 @@ void TextureManager::RegisterAllTextures()
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
-	RegisterTexture("robot_drop", TEXTURE_PATH"robot/v03/robot_dorp_01.png");	// 落下
+	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png");	// 落下
 	RegisterTexture("robot_still", TEXTURE_PATH"robot/v03/robot_still_01.png");	// 静止
-	RegisterTexture("robot_walk", TEXTURE_PATH"robot/v03/robot_walk_01.png");	// 歩行
+	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png");	// 歩行
 
 	/*--------------- 振り子 ---------------*/
 	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png");		// ボール

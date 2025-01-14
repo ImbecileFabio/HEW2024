@@ -71,14 +71,14 @@ public:
 	void  SetPendulumVelocity(float _angularVelocity);
 	float GetPendulumVelocity();
 	// äpâ¡ë¨ìx
-	void  SetPendulumAcceleration(float _pendulumAcceleration);
-	float GetPendulumAcceleration();
+	void  SetPendulumAcceleration(float _pendulumAcceleration) { pendulumAcceleration_ = _pendulumAcceleration; }
+	float GetPendulumAcceleration() { return pendulumAcceleration_; }
 	// éxì_ÇÃç¿ïW
-	void  SetPendulumFulcrum(DirectX::SimpleMath::Vector3 _fulcrumPosition);
-	DirectX::SimpleMath::Vector3 GetPendulumFulcrum();
+	void  SetPendulumFulcrum(DirectX::SimpleMath::Vector3 _fulcrumPosition) { fulcrumPosition_ = _fulcrumPosition; }
+	DirectX::SimpleMath::Vector3 GetPendulumFulcrum() { return fulcrumPosition_; }
 	// éxíåÇÃí∑Ç≥
-	void  SetPendulumLength(float _pendulumLength);
-	float GetPendulumLength();
+	void  SetPendulumLength(float _pendulumLength) { pendulumLength_ = _pendulumLength; }
+	float GetPendulumLength() { return pendulumLength_; }
 
 	// êUÇËéqÇÃí‚é~ÅAénìÆ
 	void StartPendulumMovement();
@@ -93,6 +93,8 @@ public:
 	bool GetPendulumMovement() { return pendulumMovement_; }
 	void SetPendulumSelected(bool _pemdulumSelected) { pendulumSelected_ = _pemdulumSelected; }
 	bool GetPendulumSelected() { return pendulumSelected_; }
+	void SetPendulumDirection(int _pendulumDirection) { pendulumDirection_ = _pendulumDirection; }
+	int GetPendulumDirection() { return pendulumDirection_; }
 
 private:
 	DirectX::SimpleMath::Vector3 pendulumPosition_;	// -à íu
@@ -112,4 +114,5 @@ private:
 	LangthState langthState_;
 	bool pendulumMovement_;
 	bool pendulumSelected_;
+	int pendulumDirection_;
 };

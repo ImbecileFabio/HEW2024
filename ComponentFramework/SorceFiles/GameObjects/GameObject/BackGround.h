@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../GameObject.h"
+#include "../Component/RenderComponent/AnimationComponent.h"
 class BackGround :
     public GameObject
 {
@@ -16,6 +17,5 @@ class BackGround :
 	private:
 		// 所有するコンポーネント
 		class RenderComponent* sprite_component_{};
-
 };
 
