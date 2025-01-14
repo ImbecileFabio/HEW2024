@@ -60,6 +60,6 @@ protected:
 	Revolution* pauseWindow_{};						// ポーズ画面のウィンドウ
 	Revolution* pause_instruction_{};				// 操作説明画像
 	std::array<Revolution*, 5>	 pauseButtons_{};	// ポーズ画面のボタン
-	// ここに変化する画像を置く？
+
 };
 #endif  // SCENE_BASE_H_

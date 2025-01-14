@@ -161,6 +161,7 @@ void Stage1_1Scene::Update()
 		PauseWindow();
 		break;
 	case Stage1_1Scene::Rewind:
+		game_manager_->ResetItemCount();
 		game_manager_->ChangeScene(SceneName::Stage1_1);
 		break;
 	default:

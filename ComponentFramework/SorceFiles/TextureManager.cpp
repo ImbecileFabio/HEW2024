@@ -159,7 +159,7 @@ void TextureManager::RegisterAllTextures()
 	// ギア
 	RegisterTexture("gear", UI_PATH"v02/gear_01.png");
 	// 数字
-	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png");
+	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4.0f, 3.0f);
 	// ポーズボタン
 	RegisterTexture("pause_button", UI_PATH"v02/pause_button_01.png");
 	// ステージUI
@@ -189,14 +189,11 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("pose_option", SCENE_PATH"pose/v01/option_button_01.png");
 
 	// リザルト
-	RegisterTexture("result_menu", SCENE_PATH"result/v01/10.JPG");
 	RegisterTexture("result_backdrop", SCENE_PATH"result/v01/backdrop_result_01.png");
 	RegisterTexture("result_front_ribbon", SCENE_PATH"result/v01/front_ribbon_01.png");
 	RegisterTexture("result_select", SCENE_PATH"result/v01/select_button_01.png");
 	RegisterTexture("result_next", SCENE_PATH"result/v01/next_button_01.png");
 	// タイトル
-	RegisterTexture("title_menu", SCENE_PATH"title/v01/6.JPG");
-	RegisterTexture("title_select", SCENE_PATH"title/v01/7.JPG");
 	RegisterTexture("title_ribbon", SCENE_PATH"title/v01/ribbon_title_01.png");
 	RegisterTexture("title_logo", SCENE_PATH"title/v01/titlelogo_01.png");
 	RegisterTexture("title_start", SCENE_PATH"title/v01/start_button_01.png");
