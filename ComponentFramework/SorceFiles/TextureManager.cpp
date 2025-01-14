@@ -149,8 +149,8 @@ void TextureManager::RegisterAllTextures()
 
 	// その他の背景、UIなど
 	/*--------------- バックドロップ ---------------*/
-	RegisterTexture("backdrop_01", TEXTURE_PATH"backdrop/v02/backdrop_01.png", true, 6, 6, 20);
-	RegisterTexture("backdrop_02", TEXTURE_PATH"backdrop/v02/backdrop_02.png", false, 6, 6, 20);
+	RegisterTexture("backdrop_01", TEXTURE_PATH"backdrop/v02/backdrop_01.png");
+	RegisterTexture("backdrop_02", TEXTURE_PATH"backdrop/v02/backdrop_02.png");
 
 	/*--------------- UI ---------------*/
 	// ハンマー
