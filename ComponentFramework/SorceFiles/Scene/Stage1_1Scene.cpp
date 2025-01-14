@@ -27,6 +27,7 @@
 #include "../GameObjects/GameObject/Robot.h"
 #include "../GameObjects/GameObject/Lift.h"
 #include "../GameObjects/GameObject/Item.h"
+#include "../GameObjects/GameObject/Revolution.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -51,12 +52,11 @@ void Stage1_1Scene::Init()
 {
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
-
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
 
-	State = Game;
+	stageState_ = Game;
 
 	// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
@@ -116,20 +116,52 @@ void Stage1_1Scene::Uninit()
 void Stage1_1Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	switch (State)
+	switch (stageState_)
 	{
 	case Stage1_1Scene::Game:
 		if(game_manager_->GetItemCount() == gearCounter) 
 		{
-		 	State = Result;
+		 	stageState_ = Result;
+		}
+		// ポーズ画面に移動
+		if (input.GetKeyTrigger(VK_P))
+		{
+			for (auto& it : game_manager_->GetGameObjects())
+			{
+				it->SetState(GameObject::State::Paused);	// 稼働コンテナのオブジェクトを全てポーズ状態に
+			}
+			for (auto& it : pauseButtons_)
+			{
+				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+			}
+			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+			//pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+			stageState_ = Pouse;
 		}
 		break;
 	case Stage1_1Scene::Result:
 		game_manager_->ChangeScene(SceneName::Result);
 		break;
 	case Stage1_1Scene::Pouse:
+		// ここにポーズ画面での操作を
+		if (input.GetKeyTrigger(VK_P))
+		{
+			for (auto& it : game_manager_->GetGameObjects())
+			{
+				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全てポーズ状態に
+			}
+			for (auto& it : pauseButtons_)
+			{
+				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+			}
+			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+			stageState_ = Game;
+		}
+		PauseWindow();
 		break;
 	case Stage1_1Scene::Rewind:
+		game_manager_->ChangeScene(SceneName::Stage1_1);
 		break;
 	default:
 		break;

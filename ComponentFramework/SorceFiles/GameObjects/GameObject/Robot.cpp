@@ -102,11 +102,15 @@ void Robot::UpdateGameObject(void)
 			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
 			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
 	}
-
+	if (!collider_component_->GetHitFg())
+	{
+		robot_move_component_->SetSpeed(2.0f);
+	}
 }
 
 void Robot::OnCollisionEnter(GameObject* _other)
 {
+	if (state_ == State::Paused) return;
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Tile:

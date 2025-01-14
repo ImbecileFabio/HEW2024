@@ -25,11 +25,11 @@ class TitleScene :
 public:
 	enum class State
 	{
-		none = -1, 
+		none = -1,
 		title,
-		select,
 		option,
-		end,	// ƒQ[ƒ€I—¹
+		select,
+		end,
 		max,
 	};
 	TitleScene(GameManager* _gameManager);

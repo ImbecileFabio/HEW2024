@@ -154,7 +154,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				}
 			}
 		}
-		obj = new Lift(Lift::MoveState::side, 50.0f, game_manager_);
+		obj = new Lift(Lift::MoveState::diagonalLeft, 100.0f, game_manager_);
 		auto lift = dynamic_cast<Lift*>(obj);
 		auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
 		lift->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット

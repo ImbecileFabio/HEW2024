@@ -10,6 +10,7 @@
 #include "GameObjects/Component/ColliderComponent/CircleColliderComponent.h"
 #include "GameObjects/Component/ColliderComponent/BoxColliderComponent.h"
 #include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
+#include "GameObjects/Component/RobotMoveComponent.h"
 #include "GameObjects/Component/RigidbodyComponent/VelocityComponent.h"
 #include "ImGuiManager.h"
 //----------------------------------------------------------------
@@ -97,14 +98,16 @@ void ColliderManager::UpdateGameObjects(void)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-	for (auto it1 = collider_game_objects_.begin(); it1 != collider_game_objects_.end(); ++it1) {
+	for (auto it1 = collider_game_objects_.begin(); it1 != collider_game_objects_.end(); ++it1) 
+	{
 		auto collider1 = (*it1)->GetComponent<ColliderBaseComponent>();
 		auto event1 = (*it1)->GetComponent<EventBaseComponent>();
 
 		// collider1 または event1 が nullptr の場合はスキップ
 		if (collider1 == nullptr || event1 == nullptr) continue;
 
-		for (auto it2 = collider_game_objects_.begin(); it2 != collider_game_objects_.end(); ++it2) {
+		for (auto it2 = collider_game_objects_.begin(); it2 != collider_game_objects_.end(); ++it2)
+		{
 			// 自己判定をスキップ
 			if (it1 == it2) continue;
 
@@ -120,15 +123,6 @@ void ColliderManager::UpdateGameObjects(void)
 			}
 			else
 			{
-				// 衝突してないときの処理　あとで絶対修正します
-				switch ((*it1)->GetType())
-				{
-					case GameObject::TypeID::Robot:
-							(*it1)->GetComponent<VelocityComponent>()->SetSpeedRate(1.0f);
-							break;
-				default:
-					break;
-				}
 			}
 		}
 	}

@@ -80,9 +80,11 @@ void Pendulum::InitGameObject(void)
 void Pendulum::UpdateGameObject(void)
 {
 	DirectX::SimpleMath::Vector3 fulcrumPos = pendulum_component_->GetPendulumFulcrum();	// 振り子の支点座標を取得
+	float length = pendulum_component_->GetPendulumLength();								// 振り子の長さを取得
 	StickMoveComponent* stickMoveComponent = stick_->GetComponent<StickMoveComponent>();
 	// タイムゾーンの座標を振り子の支点に合わせる
 	time_zone_->GetTransformComponent()->SetPosition(fulcrumPos.x, fulcrumPos.y);
+	time_zone_->GetTransformComponent()->SetSize( length, length);
 	// 振り子の棒の動きを反映
 	stickMoveComponent->SetStickFulcrum({ fulcrumPos.x, fulcrumPos.y, 0.0f });
 	// 振り子の状態で棒が動くかどうかを設定

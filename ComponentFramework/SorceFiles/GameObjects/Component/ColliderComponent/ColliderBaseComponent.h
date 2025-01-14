@@ -41,7 +41,10 @@ public:
 	virtual bool CheckCollisionCollider(BoxColliderComponent* _other) = 0;
 
 	bool GetHitFg(void) { return hitFg_; }
-
+	void SetHitFg(bool _hitFg) { hitFg_ = _hitFg; }
+	bool GetIsColliding() { return isColliding_; }
+	void SetIsColliding(bool _isColliding) { isColliding_ = _isColliding; }
+	
 	// ほぼ矩形用
 	void SetSize(const float& _x, const float& _y) { SetSize(Vector3(_x, _y, 1.0f)); }
 	void SetSize(const Vector3& _size) { size_ = _size; }
@@ -54,6 +57,7 @@ public:
 	TypeID GetComponentType(void) const override { return TypeID::ColliderBaseComponent; }
 protected:
 	bool hitFg_ = false;	// 当たっているかどうか
+	bool isColliding_ = false;	// 現在の衝突状態を追跡するフラグ
 	Vector3 size_{ 100.0f, 100.0f, 0.0f };		// サイズ
 	Vector3 offset_{0.0f, 0.0f, 0.0f};		// オフセット
 };

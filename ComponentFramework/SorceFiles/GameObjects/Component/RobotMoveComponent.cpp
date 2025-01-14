@@ -146,7 +146,17 @@ void RobotMoveComponent::Update()
 	if(owner_gravity_->GetIsGround())
 	owner_velocity_->SetVelocity({ speed_ * direction_.x, owner_velocity_->GetVelocity().y, 0.0f});
 }
-
+//--------------------------------------------------
+// ロボットの速度を変更
+//--------------------------------------------------
+void RobotMoveComponent::SetSpeed(float _speed)
+{
+	speed_ = _speed;
+}
+float RobotMoveComponent::GetSpeed(void)
+{
+	return speed_;
+}
 //--------------------------------------------------
 // ウォールスキャン用ヒットボックスの更新
 //--------------------------------------------------

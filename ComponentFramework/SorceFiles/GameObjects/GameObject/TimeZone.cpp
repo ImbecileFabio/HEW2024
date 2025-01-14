@@ -2,6 +2,7 @@
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
+#include "../Component/RobotMoveComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -48,7 +49,7 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Robot:
-		_other->GetComponent<VelocityComponent>()->SetSpeedRate(0.5f);
+		_other->GetComponent<RobotMoveComponent>()->SetSpeed(0.5f);
 		break;
 	case GameObject::TypeID::Lift:
 		_other->GetComponent<VelocityComponent>()->SetSpeedRate(0.5f);

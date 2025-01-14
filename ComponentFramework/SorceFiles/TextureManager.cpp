@@ -164,11 +164,9 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("pause_button", UI_PATH"v02/pause_button_01.png");
 	// ステージUI
 	RegisterTexture("stageUI", UI_PATH"v02/stage_ui_01.png");
-	// テスト用ボタン
-	RegisterTexture("hoge", UI_PATH"hoge.png");
 	/*--------------- SCENE ---------------*/
 	// 操作説明画像
-	//RegisterTexture("instruction_window", SCENE_PATH"instruction/v02/window_instruction_01.png");
+	RegisterTexture("instruction_window", SCENE_PATH"instruction/v02/window_instruction_01.png");
 	// チームロゴ
 	//RegisterTexture("introduction_backdrop", SCENE_PATH"introduction/v01/backdrop_introduction_01.png");
 	//RegisterTexture("introduction_teamlogo", SCENE_PATH"introduction/v01/teamlogo_01.png");
@@ -183,12 +181,12 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("option_arrow_right", SCENE_PATH"option/v01/arrow_right_01.png");
 	RegisterTexture("option_arrow_left", SCENE_PATH"option/v01/arrow_left_01.png");
 	// ポーズ
-	//RegisterTexture("pose_window", SCENE_PATH"pose/v01/window_pose_01.png");
-	//RegisterTexture("pose_return_game", SCENE_PATH"pose/v01/return_game_button_01.png");
-	//RegisterTexture("pose_restart", SCENE_PATH"pose/v01/restart_button_01.png");
-	//RegisterTexture("pose_select", SCENE_PATH"pose/v01/stage_select_button_01.png");
-	//RegisterTexture("pose_instruction", SCENE_PATH"pose/v01/instruction_button_01.png");
-	//RegisterTexture("pose_option", SCENE_PATH"pose/v01/option_button_01.png");
+	RegisterTexture("pose_window", SCENE_PATH"pose/v01/window_pose_01.png");
+	RegisterTexture("pose_return_game", SCENE_PATH"pose/v01/return_game_button_01.png");
+	RegisterTexture("pose_restart", SCENE_PATH"pose/v01/restart_button_01.png");
+	RegisterTexture("pose_select", SCENE_PATH"pose/v01/stage_select_button_01.png");
+	RegisterTexture("pose_instruction", SCENE_PATH"pose/v01/instruction_button_01.png");
+	RegisterTexture("pose_option", SCENE_PATH"pose/v01/option_button_01.png");
 
 	// リザルト
 	RegisterTexture("result_menu", SCENE_PATH"result/v01/10.JPG");

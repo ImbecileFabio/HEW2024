@@ -35,6 +35,9 @@ public:
     void Uninit() override;
     void Update() override;
 
+	void  SetSpeed(float _speed);
+	float GetSpeed(void);
+
     virtual TypeID GetComponentType(void) const override { return TypeID::RobotMoveComponent; }
 
 private:

@@ -14,6 +14,7 @@
 #include "GameObjects/Component/PendulumMovementComponent.h"
 #include "GameObjects/Component/EventComponent/ColliderEventComponent.h"
 #include "GameObjects/Component/StickMoveComponent.h"
+#include "GameObjects/Component/RobotMoveComponent.h"
 /*----staticïœêî------*/
 ImGuiManager* ImGuiManager::staticPointer = nullptr;
 std::vector<GameObject*>* ImGuiBase::objectList_ = {};
@@ -185,6 +186,15 @@ void ObjectStatesGUI::ShowWindow()
                     ImGui::Separator(); // ãÊêÿÇËê¸
 				}
 				    break;
+                case Component::TypeID::RobotMoveComponent:
+                {
+                    auto robotMove = dynamic_cast<RobotMoveComponent*>(component);
+                    float speed = robotMove->GetSpeed();
+                    int updateOrder = robotMove->GetUpdateOrder();
+                    ImGui::Text("Speed : %f", speed);
+                    ImGui::Text("UpdateOrder : %d", updateOrder);
+                }
+                break;
                 case Component::TypeID::CircleColliderComponent:
                 {
 					auto circleCollider = dynamic_cast<CircleColliderComponent*>(component);
