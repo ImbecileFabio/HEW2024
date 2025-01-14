@@ -49,7 +49,7 @@ RenderComponent::~RenderComponent(void)
 //--------------------------------------------------
 // バッファ初期化
 //--------------------------------------------------
-void RenderComponent::InitBuffers()
+void RenderComponent::InitBuffers(float _cutU, float _cutV)
 {
 	// 頂点データ
 
@@ -65,10 +65,10 @@ void RenderComponent::InitBuffers()
 	vertices_[2].color = Color(1, 1, 1, 1);
 	vertices_[3].color = Color(1, 1, 1, 1);
 
-	vertices_[0].uv = Vector2(0, 0);
-	vertices_[1].uv = Vector2(1, 0);
-	vertices_[2].uv = Vector2(0, 1);
-	vertices_[3].uv = Vector2(1, 1);
+	vertices_[0].uv = Vector2(0.0f,         0.0f        );
+	vertices_[1].uv = Vector2(1.0f / _cutU, 0.0f        );
+	vertices_[2].uv = Vector2(0.0f,         1.0f / _cutV);
+	vertices_[3].uv = Vector2(1.0f / _cutU, 1.0f / _cutV);
 
 	// 頂点バッファ生成
 	vertex_buffer_.Create(vertices_);
@@ -98,3 +98,9 @@ void RenderComponent::InitBuffers()
 
 }
 
+
+void  RenderComponent::SetVertexBuffer(std::vector<VERTEX_3D> _vertices)
+{
+	vertices_ = _vertices; 
+	vertex_buffer_.Modify(vertices_);
+}

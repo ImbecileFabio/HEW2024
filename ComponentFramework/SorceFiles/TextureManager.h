@@ -50,8 +50,8 @@ public:
 	void Init();
 	void Uninit();
 
-	// テクスチャの登録
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _roopFlg = false);
+	// テクスチャの登録( 画像名, ファイルパス, ループフラグ = false, 横分割数 = 1, 縦分割数 = 1, アニメーションのFPS = 1 )
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _roopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, int _anmSpeed = 1);
 	// テクスチャの取得
 	std::shared_ptr<Texture> GetTexture(const std::string& _imgName);
 
