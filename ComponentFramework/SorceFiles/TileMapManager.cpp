@@ -128,6 +128,29 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	if (_tileID == 1)	// タイル
 	{
 		obj = new Tile(game_manager_);
+		if (auto sprite = obj->GetComponent<SpriteComponent>())
+		{
+			// 周囲のタイルを取得
+			bool up = GetAdjacentTile(_tileID, _x, _y, 0, 1);
+			bool down = GetAdjacentTile(_tileID, _x, _y, 0, -1);
+			bool left = GetAdjacentTile(_tileID, _x, _y, -1, 0);
+			bool right = GetAdjacentTile(_tileID, _x, _y, 1, 0);
+
+			// テクスチャを設定
+			if (left) {// 左にタイルがある
+				if (right) {// 右にタイルがある
+					sprite->SetTexture("tile_center");	// 中央
+				}
+				else {
+					sprite->SetTexture("tile_right");	// 右
+				}
+			}
+			// 左にタイルがない
+			else if (right) {// 右にタイルがある
+				sprite->SetTexture("tile_left");	// 左
+			}
+		}
+
 	}
 	else if (_tileID == 2)	// 脆いタイル
 	{
@@ -214,4 +237,21 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		// オブジェクトの位置を設定
 		obj->GetComponent<TransformComponent>()->SetPosition(objPos.x , objPos.y);
 	}
+}
+
+bool TileMapManager::GetAdjacentTile(int _tyleID ,int _x, int _y, int _dx, int _dy)
+{
+	// 範囲内かチェック
+	if (_x + _dx >= 0 && _x + _dx < map_data_.size() && _y + _dy >= 0 && _y + _dy < map_data_[0].size()) {
+		// 範囲内なら
+		for (auto& map : map_data_[_x + _dx][_y + _dy])
+		{
+			if (map == _tyleID)
+			{
+				return true;
+			}
+		}
+	}
+	// 範囲外なら
+	return false;
 }

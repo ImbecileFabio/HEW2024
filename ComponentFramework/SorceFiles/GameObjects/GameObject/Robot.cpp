@@ -25,8 +25,6 @@
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
 
-#include "../Component/RenderComponent/DebugColliderDrawComponent.h"
-
 
 //--------------------------------------------------
 // コンストラクタ
@@ -70,8 +68,7 @@ Robot::~Robot(void)
 void Robot::InitGameObject(void)
 {
 	transform_component_->SetSize(TILE_SIZE_X * 1.5, TILE_SIZE_Y * 1.5);
-	collider_component_->SetSize(transform_component_->GetSize().x * 0.7, transform_component_->GetSize().y);
-	auto debag = new DebugColliderDrawComponent(this);
+	collider_component_->SetSize(transform_component_->GetSize().x * 0.7, transform_component_->GetSize().y * 0.95);
 }
 
 //--------------------------------------------------

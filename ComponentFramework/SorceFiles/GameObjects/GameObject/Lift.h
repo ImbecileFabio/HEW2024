@@ -43,7 +43,7 @@ public:
 	void SetPendulum(Pendulum* _pendulum);
 	void SetMoveState(Lift::MoveState _moveState);
 private:
-	class ColliderBaseComponent* collider_base_component_ = {};
+	class ColliderBaseComponent* collider_component_ = {};
 	class EventBaseComponent*	collider_event_component_ = {};
 	class RenderComponent*		sprite_component_		  = {};	// ‰æ‘œ•\Ž¦
 	class VelocityComponent*	velocity_component_		  = {};

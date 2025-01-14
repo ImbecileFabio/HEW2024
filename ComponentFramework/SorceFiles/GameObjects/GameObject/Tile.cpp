@@ -11,6 +11,7 @@
 
 #include "Tile.h"
 #include "../../GameManager.h"
+#include "../../TileMapManager.h"
 #include "../Component.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
@@ -56,7 +57,8 @@ Tile::~Tile(void)
 //--------------------------------------------------
 void Tile::InitGameObject(void)
 {
-	
+	// ƒTƒCƒYÝ’è
+	transform_component_->SetSize(TILE_SIZE_X, TILE_SIZE_Y);
 }
  
 //--------------------------------------------------

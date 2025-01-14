@@ -26,7 +26,7 @@ Lift::Lift(GameManager* _gameManager)
 	, lift_state_(Lift::LiftState::Move)
 {
 	sprite_component_ = new SpriteComponent(this, "lift_floor_center");
-	collider_base_component_ = new BoxColliderComponent(this);
+	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocity_component_ = new VelocityComponent(this);
 	// イベント追加処理
@@ -51,7 +51,7 @@ Lift::Lift(MoveState _moveState, float _moveDistance, GameManager* _gameManager)
 	, lift_state_(Lift::LiftState::Move)
 {
 	sprite_component_ = new SpriteComponent(this,"lift_floor_center");
-	collider_base_component_ = new BoxColliderComponent(this);
+	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocity_component_ = new VelocityComponent(this);
 	// イベント追加処理
@@ -67,7 +67,7 @@ Lift::Lift(MoveState _moveState, float _moveDistance, GameManager* _gameManager)
 //--------------------------------------------------
 Lift::~Lift()
 {
-	delete collider_base_component_;
+	delete collider_component_;
 	delete collider_event_component_;
 	delete sprite_component_;
 	delete velocity_component_;
@@ -77,7 +77,6 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-
 }
 //--------------------------------------------------
 // @brief 更新処理
