@@ -27,6 +27,8 @@ private:
 	SpriteComponent* Sprite_Component_{};	// ダイナミックキャスト用
 
 	int fpsCounter;	// FPSカウンタ
+	int anmFlame;	// アニメーションフレーム
+	bool Loop;		// ループフラグ
 };
 
 #endif // ANIMATION_COMPONENT_H_
