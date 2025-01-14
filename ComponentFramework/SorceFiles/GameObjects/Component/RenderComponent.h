@@ -56,11 +56,12 @@ public:
 
 	// 頂点データの取得
 	std::vector<VERTEX_3D>& GetVertices() { return vertices_; }
+	void SetVertexBuffer(std::vector<VERTEX_3D> _vertices);
 
 protected:
 	int draw_order_;	// 更新順位
 
-	void InitBuffers(int _cutU = 1, int _cutV = 1);	// バッファの初期化
+	void InitBuffers(float _cutU = 1, float _cutV = 1);	// バッファの初期化
 
 	// バッファ
 	VertexBuffer<VERTEX_3D> vertex_buffer_;

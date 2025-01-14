@@ -45,7 +45,7 @@ void TextureManager::Uninit()
 // @param  _imgName 画像名, _fileName ファイルパス
 // @brief  テクスチャの登録
 //-----------------------------------------------------------------
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, int _cutU, int _cutV, int _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed)
 {
 	// すでに読み込まれているか確認
 	auto it = texture_cache_.find(_imgName);
@@ -150,7 +150,7 @@ void TextureManager::RegisterAllTextures()
 	// その他の背景、UIなど
 	/*--------------- バックドロップ ---------------*/
 	RegisterTexture("backdrop_01", TEXTURE_PATH"backdrop/v02/backdrop_01.png");
-	RegisterTexture("backdrop_02", TEXTURE_PATH"backdrop/v02/backdrop_02.png");
+	RegisterTexture("backdrop_02", TEXTURE_PATH"backdrop/v02/backdrop_02.png", true, 2, 2, 5);
 
 	/*--------------- UI ---------------*/
 	// ハンマー
