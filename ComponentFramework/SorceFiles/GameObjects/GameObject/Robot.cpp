@@ -68,7 +68,7 @@ void Robot::InitGameObject(void)
 {
 
 	auto size = collider_component_->GetSize();
-	collider_component_->SetSize(size.x * 0.7, size.y);	// 当たり判定サイズ
+	collider_component_->SetSize(size.x * 0.7f, size.y);	// 当たり判定サイズ
 }
 
 //--------------------------------------------------
