@@ -239,6 +239,13 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	}
 }
 
+/*-----------------------------------------------------------------
+// @param _tyleID タイルID, _x X座標, _y Y座標, _dx X方向, _dy Y方向
+// @brief 座標位置にあるタイルが指定したタイルかどうかを取得
+// @return 指定したタイルがある: true, ない: false
+// 現状trueが返されないので要修正
+-----------------------------------------------------------------*/
+
 bool TileMapManager::GetAdjacentTile(int _tyleID ,int _x, int _y, int _dx, int _dy)
 {
 	// 範囲内かチェック

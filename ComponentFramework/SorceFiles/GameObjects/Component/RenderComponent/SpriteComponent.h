@@ -39,9 +39,6 @@ public:
 	// テクスチャを変更
 	void SetTexture(const std::string _imgname);
 
-	// UV座標を指定（とりあえずおいてます）
-	//void SetUV(const float& nu, const float& nv, const float& sx, const float& sy);
-
 	// 色を変える
 	void SetColor(const DirectX::SimpleMath::Vector4& _color);
 

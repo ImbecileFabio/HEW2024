@@ -31,6 +31,7 @@
 //--------------------------------------------------
 Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
+	, robot_state_(RobotState::Idle)
 {
 	sprite_component_ = new SpriteComponent(this, "robot_still");
 	velocity_component_ = new VelocityComponent(this);	// ‘¬“x
@@ -103,6 +104,31 @@ void Robot::UpdateGameObject(void)
 			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
 	}
 
+
+	switch (robot_state_)
+	{
+	case RobotState::Idle:
+	{
+
+		break;
+	}
+	case RobotState::Move:
+	{
+
+		break;
+	}
+	case RobotState::Fall:
+	{
+
+		break;
+	}
+	case RobotState::OnLift:
+	{
+
+		break;
+	}
+	}
+
 }
 
 void Robot::OnCollisionEnter(GameObject* _other)
@@ -131,7 +157,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		auto liftVelocity = _other->GetComponent<VelocityComponent>()->GetVelocity();
 		velocity_component_->SetVelocity(liftVelocity);
 
-
+		robot_state_ = RobotState::OnLift;
 		break;
 	}
 	default:
