@@ -17,7 +17,7 @@
 //--------------------------------------------------
 GravityComponent::GravityComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
-	, gravity_(-1.0f)	// d—Í
+	, gravity_(-3.0f)	// d—Í
 {
 	this->Init();
 }

@@ -172,7 +172,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				{
 					if (tileID == _tileID + 10) // 自分のID+10がリフトの終点
 					{
-						Vector2 ep = {x - MAP_SIZE_X / 2 , y - MAP_SIZE_Y / 2 };	// 座標の調整
+						Vector2 ep = { x - MAP_SIZE_X / 2 , y - MAP_SIZE_Y / 2 };	// 座標の調整
 						endPos = { (ep.x * TILE_SIZE_X) + (TILE_SIZE_X / 2), -((ep.y * TILE_SIZE_Y) + (TILE_SIZE_Y / 2)) };
 						break;
 					}
@@ -209,8 +209,8 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 
 		auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
 		lift->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
-		
-		
+
+
 	}
 	else if (_tileID == 200)	// けむり
 	{
@@ -235,7 +235,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	if (obj != nullptr)
 	{
 		// オブジェクトの位置を設定
-		obj->GetComponent<TransformComponent>()->SetPosition(objPos.x , objPos.y);
+		obj->GetComponent<TransformComponent>()->SetPosition(objPos.x, objPos.y);
 	}
 }
 
@@ -246,19 +246,22 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 // 現状trueが返されないので要修正
 -----------------------------------------------------------------*/
 
-bool TileMapManager::GetAdjacentTile(int _tyleID ,int _x, int _y, int _dx, int _dy)
+bool TileMapManager::GetAdjacentTile(int _tyleID, int _x, int _y, int _dx, int _dy)
 {
+	int nx = _x + _dx;
+	int ny = _y + _dy;
+
 	// 範囲内かチェック
-	if (_x + _dx >= 0 && _x + _dx < map_data_.size() && _y + _dy >= 0 && _y + _dy < map_data_[0].size()) {
-		// 範囲内なら
-		for (auto& map : map_data_[_x + _dx][_y + _dy])
+	if (nx >= 0 && nx < map_data_[0].size() && ny >= 0 && ny < map_data_.size())
+	{
+		for (auto& id : map_data_[ny][nx]) // 順序を確認（行: y, 列: x）
 		{
-			if (map == _tyleID)
+			if (id == _tyleID)
 			{
 				return true;
 			}
 		}
 	}
-	// 範囲外なら
+
 	return false;
 }

@@ -42,6 +42,8 @@ public:
 
 	void SetPendulum(Pendulum* _pendulum);
 	void SetMoveState(Lift::MoveState _moveState);
+
+	auto GetLiftState() { return lift_state_; }
 private:
 	class ColliderBaseComponent* collider_component_ = {};
 	class EventBaseComponent*	collider_event_component_ = {};

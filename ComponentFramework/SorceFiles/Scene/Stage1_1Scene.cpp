@@ -54,6 +54,7 @@ void Stage1_1Scene::Init()
 
 	
 
+
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
@@ -125,34 +126,6 @@ void Stage1_1Scene::Update()
 		{
 		 	State = Result;
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		break;
 	case Stage1_1Scene::Result:

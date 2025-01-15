@@ -14,6 +14,8 @@
 #include "../../GameProcess.h"	// windowサイズとるためだけ
 #include "../../GameManager.h"
 #include "../../TileMapManager.h"
+#include "Lift.h"
+
 #include "../Component.h"
 
 #include "../Component/TransformComponent.h"
@@ -109,17 +111,23 @@ void Robot::UpdateGameObject(void)
 	{
 	case RobotState::Idle:
 	{
-
+		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN)) {
+			robot_state_ = RobotState::Move;
+		}
 		break;
 	}
 	case RobotState::Move:
 	{
-
+		if (!gravity_component_->GetIsGround()) {
+			robot_state_ = RobotState::Fall;
+		}
 		break;
 	}
 	case RobotState::Fall:
 	{
-
+		if (gravity_component_->GetIsGround()) {
+			robot_state_ = RobotState::Move;
+		}
 		break;
 	}
 	case RobotState::OnLift:
@@ -128,6 +136,9 @@ void Robot::UpdateGameObject(void)
 		break;
 	}
 	}
+
+	// 
+	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
 
 }
 
@@ -148,16 +159,24 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Lift:
 	{
 		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		
+		auto lift = dynamic_cast<Lift*>(_other);
+
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
 		}
 
-		// リフトのベロシティをロボットに渡す。
-		auto liftVelocity = _other->GetComponent<VelocityComponent>()->GetVelocity();
-		velocity_component_->SetVelocity(liftVelocity);
+		// リフトが動いているなら
+		if (lift->GetLiftState() == Lift::LiftState::Move)
+		{
+			robot_state_ = Robot::RobotState::OnLift;
+			velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
+		}
+		else {
+			robot_state_ = Robot::RobotState::Move;
+		}
 
-		robot_state_ = RobotState::OnLift;
 		break;
 	}
 	default:

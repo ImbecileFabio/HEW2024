@@ -49,7 +49,6 @@ Tile::~Tile(void)
 	delete collider_component_;
 	delete collider_event_component_;
 
-	delete debug_collider_draw_component_;
 }
 
 //--------------------------------------------------
@@ -57,8 +56,8 @@ Tile::~Tile(void)
 //--------------------------------------------------
 void Tile::InitGameObject(void)
 {
-	// ƒTƒCƒYÝ’è
-	transform_component_->SetSize(TILE_SIZE_X, TILE_SIZE_Y);
+
+
 }
  
 //--------------------------------------------------

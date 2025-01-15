@@ -10,7 +10,7 @@
 /*----- インクルード -----*/
 #include "SceneBase.h"
 
-constexpr int gearCounter = 2;
+constexpr int gearCounter = 1;
 
 //--------------------------------------------------
 // ステージ1-1シーンクラス

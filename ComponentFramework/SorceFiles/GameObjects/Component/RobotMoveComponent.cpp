@@ -39,6 +39,7 @@ RobotMoveComponent::RobotMoveComponent(GameObject* _owner, int _updateOrder)
 	, direction_(Vector2(1.0f, 0.0f))
 	, scan_distance_(1.0f)
 	, step_up_height_(TILE_SIZE_Y)
+	, move_state_(RobotMoveState::Idle)
 {
 	
 	this->Init();
@@ -116,37 +117,56 @@ void RobotMoveComponent::Update()
 		return;
 	}
 
+	switch (move_state_) {
+	case RobotMoveState::Idle:
+	{
+		// 止まる
+		owner_velocity_->SetVelocity({0.0f, 0.0f, 0.0f });
 
-	// 当たり判定の更新
-	this->UpdateWallScanCollider();
-	this->UpdateStepScanCollider();
-	this->UpdateGroundScanCollider();
+		break;
+	}
+	case RobotMoveState::Move:
+	{
+		// 当たり判定の更新
+		this->UpdateWallScanCollider();
+		this->UpdateStepScanCollider();
+		this->UpdateGroundScanCollider();
 
-	// 壁の衝突判定
+		// 壁の衝突判定
 	if (CheckWallCollision())	// 壁に当たっている
 	{
 		// ステップアップ判定
 		if (!CheckStepUp())	// 登れる段差
 		{
-			// 上る
-			owner_transform_->SetPosition(owner_transform_->GetPosition() + Vector3(0.0f, step_up_height_, 0.0f));
-		}
+				// 上る
+			owner_transform_->SetPosition(owner_transform_->GetPosition() + Vector3(speed_ * direction_.x, step_up_height_, 0.0f));
+			}
 		else				// 登れない段差
 		{
 			direction_ = { -direction_.x, direction_.y };	// 移動方向を反転
 			owner_velocity_->SetVelocity({ 0.0f, owner_velocity_->GetVelocity().y, 0.0f });	// 横の速度をリセット
+			}
 		}
-	}
-	// 床の衝突判定
-	else if (!CheckGround())	//進行方向に地面がない
-	{
-		direction_ = { -direction_.x, direction_.y };	// 移動方向を反転
-		owner_velocity_->SetVelocity({ 0.0f, owner_velocity_->GetVelocity().y, 0.0f });	// 横の速度をリセット
-	}
+		// 床の衝突判定
+		else if (!CheckGround()) { // 進行方向に地面がない
+			direction_ = { -direction_.x, direction_.y }; // 移動方向を反転
+			owner_velocity_->SetVelocity({ 0.0f, owner_velocity_->GetVelocity().y, 0.0f }); // 横の速度をリセット
+		}
 
-	// 空中でなければ移動
-	if(owner_gravity_->GetIsGround())
-	owner_velocity_->SetVelocity({ speed_ * direction_.x, owner_velocity_->GetVelocity().y, 0.0f});
+		owner_velocity_->SetVelocity({ speed_ * direction_.x, owner_velocity_->GetVelocity().y, 0.0f });
+		break;
+	}
+	case RobotMoveState::Fall:
+	{
+
+		break;
+	}
+	case RobotMoveState::OnLift:
+	{
+		// onCollisionEnterのほうに記述してます
+		break;
+	}
+	}
 }
 
 //--------------------------------------------------
@@ -179,7 +199,7 @@ void RobotMoveComponent::UpdateStepScanCollider()
 	auto robotPos = owner_transform_->GetPosition();
 	auto robotSize = owner_collider_->GetSize();
 
-	step_scan_object_->GetTransformComponent()->SetSize(owner_collider_->GetSize().x + scan_distance_, owner_transform_->GetSize().y);
+	step_scan_object_->GetTransformComponent()->SetSize(owner_collider_->GetSize().x + scan_distance_, owner_transform_->GetSize().y - 0.1f);
 	step_scan_collider_->SetSize(step_scan_object_->GetTransformComponent()->GetSize());
 
 	Vector3 offset = { 0.0f, 0.0f, 0.0f };
@@ -290,4 +310,31 @@ bool RobotMoveComponent::CheckGround()
 		}
 	}
 	return false;
+}
+
+
+/*--------------------------------------------------
+// @brief 段差を調べる
+// @return 段差の高さ: float
+--------------------------------------------------*/
+float RobotMoveComponent::GetStepHeight() {
+	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
+	auto stepHitbox = step_scan_collider_->GetWorldHitBox();
+
+	for (const auto& obj : objects) {
+		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
+		if (auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider)) {
+			auto otherHitbox = otherBoxCollider->GetWorldHitBox();
+
+			// 段差の検出と高さの計算
+			if (stepHitbox.max_.x > otherHitbox.min_.x && stepHitbox.min_.x < otherHitbox.max_.x &&
+				stepHitbox.max_.y > otherHitbox.min_.y && stepHitbox.min_.y < otherHitbox.max_.y) {
+				// 段差の高さを計算 (ロボットの足元から段差の上端までの距離)
+				float stepHeight = otherHitbox.max_.y - stepHitbox.min_.y;
+				return stepHeight > 0 ? stepHeight : 0.0f; // 有効な高さのみ返す
+			}
+		}
+	}
+
+	return 0.0f; // 段差がない場合
 }

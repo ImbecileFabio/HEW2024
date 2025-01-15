@@ -26,7 +26,8 @@ public:
 
     TypeID GetComponentType(void) const override { return TypeID::GravityComponent; }
 
-	bool GetIsGround() const { return is_ground_; }
+	void SetUseGravityFlg(bool _flg) { use_gravity_ = _flg; }	// 重力使用フラグセッター
+	bool GetIsGround() const { return is_ground_; }		// 
 
 private:
 	bool CheckGroundCollishion();
