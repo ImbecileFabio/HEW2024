@@ -20,21 +20,30 @@ WeakFloor::WeakFloor(GameManager* _gameManager, int MaxFloor)
 	:GameObject(_gameManager, "WeakFloor")
 	, max_floor_(MaxFloor)
 {
-	if (max_floor_ <= 2) { max_floor_ = 3; }
-	class RenderComponent* sprite_component_{};
-	class ColliderBaseComponent* collider_component_{};
-	class ColliderEventComponent* collider_event_component_{};
+	if (max_floor_ <= 2) { max_floor_ = 3; }	// Å’Z‚Rƒ}ƒX
+
+	// Floor–ˆ‚ÌComponent‚ðWeakFloorComponentList‚É“Z‚ß‚ÄAWeakFloorList‚É“ü‚ê‚é
 
 	// ¶’[
-	sprite_component_ = new SpriteComponent(this, "tile_center");
-	collider_event_component_ = new ColliderEventComponent(this);
-	collider_component_ = new BoxColliderComponent(this);
+	WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_left"));
+	WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
+	WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
+	WeakFloorList.emplace_back(WeakFloorComponentList);
+	WeakFloorComponentList.clear();
 	// ’†‰›
 	for (int i = 0; i < (max_floor_ - 2); i++) {
-
+		WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_cnter"));
+		WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
+		WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
+		WeakFloorList.emplace_back(WeakFloorComponentList);
+		WeakFloorComponentList.clear();
 	}
 	// ‰E’[
-
+	WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_right"));
+	WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
+	WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
+	WeakFloorList.emplace_back(WeakFloorComponentList);
+	WeakFloorComponentList.clear();
 
 	this->InitGameObject();
 }
@@ -56,6 +65,4 @@ void WeakFloor::InitGameObject(void)
 //--------------------------------------------------
 void WeakFloor::UpdateGameObject(void)
 {
-
 }
-

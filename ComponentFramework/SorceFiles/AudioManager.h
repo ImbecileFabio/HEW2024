@@ -1,3 +1,10 @@
+//==================================================
+// [AudioManager.h] オーディオマネージャー
+// 著者：中谷凌也
+//--------------------------------------------------
+// 説明：サウンドの管理
+//==================================================
+
 #pragma once
 #include <xaudio2.h>
 
@@ -13,7 +20,7 @@ typedef enum
 	SoundLabel_MAX,
 } SOUND_LABEL;
 
-class Sound {
+class AudioManager {
 private:
 	// パラメータ構造体
 	typedef struct
@@ -24,9 +31,6 @@ private:
 
 	PARAM m_param[SoundLabel_MAX] =
 	{
-		//{"asset/BGM/○○○.wav", true },		// サンプルBGM（ループさせるのでtrue設定）
-		//{"asset/SE /○○○.wav", false},		// サンプルSE（ループしないのでfalse設定）
-
 		{ "Asset/Sound/BGM/Title_BGM.wav"		  , true  },	// タイトルBGM
 		{ "Asset/Sound/BGM/StageBGM.wav"		  , true  },	// ステージBGM
 		{ "Asset/Sound/SE/叩く音1 下げ&短く.wav"  , false },	// 叩くSE
@@ -45,18 +49,13 @@ private:
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);
 
 public:
-	// ゲームループ開始前に呼び出すサウンドの初期化処理
-	HRESULT Init(void);
+	AudioManager();
+	~AudioManager();
 
-	// ゲームループ終了後に呼び出すサウンドの解放処理
+	HRESULT Init(void);
 	void Uninit(void);
 
-	// 引数で指定したサウンドを再生する
 	void Play(SOUND_LABEL label);
-
-	// 引数で指定したサウンドを停止する
 	void Stop(SOUND_LABEL label);
-
-	// 引数で指定したサウンドの再生を再開する
 	void Resume(SOUND_LABEL label);
 };

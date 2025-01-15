@@ -22,9 +22,10 @@ public:
 
 	TypeID GetType(void) override { return TypeID::WeakFloor; }
 private:
-
-
 	int max_floor_;
+
+	std::list<std::shared_ptr<Component>> WeakFloorComponentList;	// 各Floorが保持するコンポーネントを入れるリスト
+	std::list<std::shared_ptr<Component>> WeakFloorList;			// 各Floorを入れるリスト
 };
 
 #endif  // WEAK_FLOOR_H_
