@@ -26,7 +26,7 @@ void AnimationComponent::Init(void)
 	Sprite_Component_ = dynamic_cast<SpriteComponent*>(sprite_component_);
 	fpsCounter = 0;
 	anmFlame = 0;
-	Loop = true;
+	LoopEnd = false;
 }
 //--------------------------------------------------
 // I—¹ˆ—
@@ -43,7 +43,7 @@ void AnimationComponent::Update(void)
 	auto texture = Sprite_Component_->GetTexture();
 	auto vertices = sprite_component_->GetVertices();
 
-	if (Loop) {
+	if (!LoopEnd) {
 		fpsCounter++;
 
 		if (fpsCounter >= FPS / texture->GetAnmSpeed()) {
@@ -69,7 +69,7 @@ void AnimationComponent::Update(void)
 			if (!(texture->GetLoopFlg())) {
 				anmFlame++;
 				if (anmFlame >= (texture->GetCutU() * texture->GetCutV()) - 1) {
-					Loop = false;
+					LoopEnd = true;
 				}
 			}
 

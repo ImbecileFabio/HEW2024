@@ -22,13 +22,16 @@ public:
 	void Uninit(void) override;
 	void Update(void) override;
 	TypeID GetComponentType(void) const override { return TypeID::AnimationComponent; }
+
+	auto GetLoopEnd() { return LoopEnd; }
 private:
 	RenderComponent* sprite_component_{};	// アニメーションをするスプライトの参照を持つ
 	SpriteComponent* Sprite_Component_{};	// ダイナミックキャスト用
 
 	int fpsCounter;	// FPSカウンタ
 	int anmFlame;	// アニメーションフレーム
-	bool Loop;		// ループフラグ
+	bool LoopEnd;	// ループ終了フラグ
+	
 };
 
 #endif // ANIMATION_COMPONENT_H_
