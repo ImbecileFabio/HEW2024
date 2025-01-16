@@ -59,6 +59,16 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	select_left_button_->GetTransformComponent()->SetPosition(-783.0f, 444.0f);
 	select_left_button_->GetTransformComponent()->SetSize(256.0f, 256.0f);
 	select_right_button_->GetTransformComponent()->SetSize(256.0f, 256.0f);
+	// セレクト画面のチャプターナンバー画像
+	select_chapter_left = new Revolution(game_manager_, "stageselect_chapter");
+	select_chapter_right = new Revolution(game_manager_, "stageselect_chapter");
+	select_chapter_center = new Revolution(game_manager_, "stageselect_chapter");
+	select_chapter_left->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+	select_chapter_right->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+	select_chapter_center->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+	select_chapter_left->GetTransformComponent()->SetSize(512.0f, 512.0f);
+	select_chapter_right->GetTransformComponent()->SetSize(512.0f, 512.0f);
+	select_chapter_center->GetTransformComponent()->SetSize(512.0f, 512.0f);
 	// オプションボタン・戻るボタン
 	select_option_button_ = new Revolution(game_manager_, "stageselect_option");
 	select_return_button_ = new Revolution(game_manager_, "stageselect_return");
@@ -130,6 +140,9 @@ TitleScene::TitleScene(GameManager* _gameManager)
 		title_ribbon_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 		title_logo_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 		title_cursor_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+		select_chapter_left->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+		select_chapter_right->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+		select_chapter_center->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 		select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
 		select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// 戻るボタンを表示
 		select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// LBボタンを表示

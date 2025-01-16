@@ -56,6 +56,8 @@ public:
 		, SteePillar	// 鉄柱
 		, Smoke			// 煙
 		, Pulley		// 滑車ギミック
+		// タイルを一括で管理するグループクラス
+		, WeakFloorGroup// 脆い床
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};

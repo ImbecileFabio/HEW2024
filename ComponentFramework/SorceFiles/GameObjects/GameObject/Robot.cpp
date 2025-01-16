@@ -132,6 +132,15 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		}
 		break;
 	}
+	case GameObject::TypeID::WeakFloor:
+	{
+		std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
+		if (push_out_component_)
+		{
+			push_out_component_->ResolveCollision(_other);	// ‰Ÿ‚µo‚µˆ—
+		}
+		break;
+	}
 	default:
 		break;
 	}

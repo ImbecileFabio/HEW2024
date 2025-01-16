@@ -48,6 +48,7 @@ public:
 	// XV‡ˆÊ‚ğ•Ô‚·
 	int& GetDrawOrder(void) { return draw_order_; }
 
+	virtual void SetUV(const DirectX::SimpleMath::Vector2& _uv) {};
 
 	virtual TypeID GetComponentType(void) const override { return TypeID::RenderComponent; }
 

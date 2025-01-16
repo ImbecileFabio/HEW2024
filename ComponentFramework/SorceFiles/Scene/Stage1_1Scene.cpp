@@ -54,7 +54,11 @@ void Stage1_1Scene::Init()
 	back_ground_ = new BackGround(game_manager_);
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
+	gearMaxCount_ = gearCounter;	// ’è”‚ð‘ã“ü
 
+	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 
 	stageState_ = Game;
 
@@ -119,6 +123,8 @@ void Stage1_1Scene::Update()
 	switch (stageState_)
 	{
 	case Stage1_1Scene::Game:
+		NumberChange();
+		
 		if(game_manager_->GetItemCount() == gearCounter) 
 		{
 		 	stageState_ = Result;
@@ -135,7 +141,6 @@ void Stage1_1Scene::Update()
 				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-			//pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 			stageState_ = Pouse;
 		}
 		break;

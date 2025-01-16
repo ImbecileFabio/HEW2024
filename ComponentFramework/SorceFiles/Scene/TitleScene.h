@@ -54,6 +54,9 @@ private:
 	Revolution* select_right_button_;			// RBボタン
 	Revolution* select_option_button_;			// オプションボタン
 	Revolution* select_return_button_;			// 戻るボタン
+	Revolution* select_chapter_left;			// LBボタンに表示されるチャプターナンバー
+	Revolution* select_chapter_right;			// RBボタンに表示されるチャプターナンバー
+	Revolution* select_chapter_center;			// 現在の選択チャプター（中央）に表示されるチャプターナンバー
 	int chapter_ = 0;							// 章
 	int stage_	 = 0;							// ステージ
 	std::array<std::array<std::function<void()>, STAGE_MAX>, CHAPTER_MAX> select_stages_;	// 5*5つ分のステージ用添え字配列

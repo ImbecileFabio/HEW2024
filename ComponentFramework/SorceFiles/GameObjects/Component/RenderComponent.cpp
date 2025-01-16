@@ -98,7 +98,6 @@ void RenderComponent::InitBuffers(float _cutU, float _cutV)
 
 }
 
-
 void  RenderComponent::SetVertexBuffer(std::vector<VERTEX_3D> _vertices)
 {
 	vertices_ = _vertices; 

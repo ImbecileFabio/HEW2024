@@ -45,6 +45,7 @@ protected:
 
 	void PauseWindow();	// ポーズ画面の表示・操作関数
 	void OptionWindow();
+	void NumberChange();	// 数字を変化させる
 
 	GameManager* game_manager_{};
 	std::unique_ptr<TileMapManager> tile_map_manager_;
@@ -53,13 +54,17 @@ protected:
 	std::string old_scene_name_{};	// 前のシーン名を保存
 
 	// ステージUI関連
+	int gearMaxCount_ = 0;	// 最大ギア獲得数の定数を代入
+	int hammerMaxCount_ = 0;
 	std::array<class Revolution*, 2> stageUIs_{};	// 動かないステージUI
+	Revolution* gearMax_{};							// ステージごとのギアの最大数
+	Revolution* gearGet_{};							// ステージごとにゲットしたギアの数
+	Revolution* hammerNum_{};						// ステージごとに設定された叩ける回数
 	// ポーズ画面関連
 	bool isWindowOpen = false;						// 操作説明やオプションの最中にボタン操作を行わないようにする
 	int pause_select_button_ = 0;					// ポーズ画面のボタンの添え字
 	Revolution* pauseWindow_{};						// ポーズ画面のウィンドウ
 	Revolution* pause_instruction_{};				// 操作説明画像
 	std::array<Revolution*, 5>	 pauseButtons_{};	// ポーズ画面のボタン
-
 };
 #endif  // SCENE_BASE_H_

@@ -80,6 +80,8 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GravityComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\StickMoveComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloorGroup.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -159,6 +161,8 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GravityComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\StickMoveComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloorGroup.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />

@@ -31,6 +31,19 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 	stageUIs_[1]->GetTransformComponent()->SetSize(128.0f, 128.0f);
 	stageUIs_[1]->GetTransformComponent()->SetPosition(861.0f, 445.0f);
 
+	gearMax_ = new Revolution(game_manager_, "numbers");
+	gearMax_->GetTransformComponent()->SetSize(100.0f, 100.0f);
+	gearMax_->GetTransformComponent()->SetPosition(-551.0f, 412.0f);
+	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+	gearGet_ = new Revolution(game_manager_, "numbers");
+	gearGet_->GetTransformComponent()->SetSize(100.0f, 100.0f);
+	gearGet_->GetTransformComponent()->SetPosition(-677.0f, 454.0f);
+	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+	hammerNum_ = new Revolution(game_manager_, "numbers");
+	hammerNum_->GetTransformComponent()->SetPosition(-596.0f, 290.0f);
+	hammerNum_->GetTransformComponent()->SetSize(100.0f, 100.0f);
+	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+
 	pauseWindow_ = new Revolution(game_manager_, "pose_window");
 	pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	pauseWindow_->GetTransformComponent()->SetSize(1980.0f, 1080.0f);
@@ -152,6 +165,82 @@ void SceneBase::PauseWindow()
 
 void SceneBase::OptionWindow()
 {
+
+}
+
+void SceneBase::NumberChange()
+{
+	// ƒMƒA‚ÌMAXŒÂ”‚ð•\Ž¦
+	auto gearSpriteComponent = gearMax_->GetComponent<SpriteComponent>();
+	// ƒMƒA‚ÌŽæ“¾ó‘Ô‚ð•\Ž¦
+	auto gearGetSpriteComponent = gearGet_->GetComponent<SpriteComponent>();
+	// ƒMƒA‚ÌMAXŒÂ”‚É‚æ‚Á‚ÄUV‚ð•ÏX
+	switch (gearMaxCount_)
+	{
+	case 1:
+	{
+		gearSpriteComponent->SetUV({ 1.0f, 0.0f });
+	}
+		break;
+	case 2:
+	{
+		gearSpriteComponent->SetUV({ 2.0f, 0.0f });
+	}
+		break;
+	case 3:
+	{
+		gearSpriteComponent->SetUV({ 3.0f, 0.0f });
+	}
+		break;
+	case 4:
+	{
+		gearSpriteComponent->SetUV({ 4.0f, 0.0f });
+	}
+		break;
+	case 5:
+	{
+		gearSpriteComponent->SetUV({ 5.0f, 0.0f });
+	}
+		break;
+	default:
+		break;
+	}
+	// ƒMƒA‚ÌŽæ“¾ó‘Ô‚É‚æ‚Á‚ÄUV‚ð•ÏX
+	switch (game_manager_->GetItemCount())
+	{
+	case 0:
+	{
+		gearGetSpriteComponent->SetUV({ 0.0f, 0.0f });
+	}
+	break;
+	case 1:
+	{
+		gearGetSpriteComponent->SetUV({ 1.0f, 0.0f });
+	}
+	break;
+	case 2:
+	{
+		gearGetSpriteComponent->SetUV({ 2.0f, 0.0f });
+	}
+	break;
+	case 3:
+	{
+		gearGetSpriteComponent->SetUV({ 3.0f, 0.0f });
+	}
+	break;
+	case 4:
+	{
+		gearGetSpriteComponent->SetUV({ 4.0f, 0.0f });
+	}
+	break;
+	case 5:
+	{
+		gearGetSpriteComponent->SetUV({ 5.0f, 0.0f });
+	}
+	break;
+	default:
+		break;
+	}
 
 }
 
