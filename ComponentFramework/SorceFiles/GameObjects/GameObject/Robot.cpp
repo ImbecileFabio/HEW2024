@@ -139,11 +139,10 @@ void Robot::UpdateGameObject(void)
 	{
 		robot_move_component_->SetSpeed(2.0f);
 	}
-}
+
 
 	// ロボットの動きを切り替える
 	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
-
 }
 
 
@@ -187,7 +186,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::WeakFloor:
 	{
-		std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
+		//std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理

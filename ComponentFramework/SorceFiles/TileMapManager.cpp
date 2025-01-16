@@ -178,24 +178,24 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			else if (right) {// 右にタイルがある
 				sprite->SetTexture("weakfloor_left");	// 左
 			}
-			// 既存のグループを探す
-			WeakFloorGroup* group = nullptr;
-			if (IsTileInGroup(_x - 1, _y, group) || IsTileInGroup(_x + 1, _y, group) ||
-				IsTileInGroup(_x, _y - 1, group) || IsTileInGroup(_x, _y + 1, group))
-			{
-				// 隣接グループが見つかった場合、そのグループに追加
-				group->AddWeakFlootTile(obj);
-			}
-			else
-			{
-				// 新しいグループを作成
-				group = new WeakFloorGroup(game_manager_);
-				group->AddWeakFlootTile(obj);
-				weak_floor_groups_.push_back(group); // グループリストに追加
-			}
+			//// 既存のグループを探す
+			//WeakFloorGroup* group = nullptr;
+			//if (IsTileInGroup(_x - 1, _y, group) || IsTileInGroup(_x + 1, _y, group) ||
+			//	IsTileInGroup(_x, _y - 1, group) || IsTileInGroup(_x, _y + 1, group))
+			//{
+			//	// 隣接グループが見つかった場合、そのグループに追加
+			//	group->AddWeakFlootTile(obj);
+			//}
+			//else
+			//{
+			//	// 新しいグループを作成
+			//	group = new WeakFloorGroup(game_manager_);
+			//	group->AddWeakFlootTile(obj);
+			//	weak_floor_groups_.push_back(group); // グループリストに追加
+			//}
 
 			// タイルの位置とグループを関連付ける
-			tile_to_group_[{_x, _y}] = group;
+			//tile_to_group_[{_x, _y}] = group;
 		}
 	}
 	else if (_tileID == 3)	// 振り子
