@@ -243,7 +243,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		}
 
 		// ˆÚ“®‹——£‚ðŒvŽZ
-		float distance = std::sqrt(dx * dx + dy * dy);
+		double distance = std::sqrt(dx * dx + dy * dy);
 
 		// ƒŠƒtƒg¶¬
 		obj = new Lift(direction, distance, game_manager_);
@@ -306,17 +306,5 @@ bool TileMapManager::GetAdjacentTile(int _tyleID, int _x, int _y, int _dx, int _
 		}
 	}
 
-	return false;
-}
-
-bool TileMapManager::IsTileInGroup(int x, int y, WeakFloorGroup*& group)
-{
-	auto it = tile_to_group_.find({ x, y });
-	if (it != tile_to_group_.end())
-	{
-		group = it->second;
-		return true;
-	}
-	group = nullptr;
 	return false;
 }

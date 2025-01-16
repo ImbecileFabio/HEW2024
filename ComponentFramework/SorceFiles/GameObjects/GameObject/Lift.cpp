@@ -14,6 +14,7 @@
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/PendulumMovementComponent.h"
+
 Lift::Lift(GameManager* _gameManager)
 	:GameObject(_gameManager, "Lift")
 	, moveState_(MoveState::length)
@@ -22,11 +23,15 @@ Lift::Lift(GameManager* _gameManager)
 	, maxMoveDistance_(0.0f)
 	, direction_(0.0f, 0.0f)
 	, switchFg_(false)
+	, turn_count_(0)
+	, lift_state_(Lift::LiftState::Stop)
 {
 	sprite_component_ = new SpriteComponent(this, "lift_floor_center");
-	collider_base_component_ = new BoxColliderComponent(this);
+	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocity_component_ = new VelocityComponent(this);
+
+
 	// イベント追加処理
 	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -45,9 +50,11 @@ Lift::Lift(MoveState _moveState, float _moveDistance, GameManager* _gameManager)
 	, maxMoveDistance_(_moveDistance)
 	, direction_(0.0f, 0.0f)
 	, switchFg_(false)
+	, turn_count_(0)
+	, lift_state_(Lift::LiftState::Stop)
 {
 	sprite_component_ = new SpriteComponent(this,"lift_floor_center");
-	collider_base_component_ = new BoxColliderComponent(this);
+	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocity_component_ = new VelocityComponent(this);
 	// イベント追加処理
@@ -63,7 +70,7 @@ Lift::Lift(MoveState _moveState, float _moveDistance, GameManager* _gameManager)
 //--------------------------------------------------
 Lift::~Lift()
 {
-	delete collider_base_component_;
+	delete collider_component_;
 	delete collider_event_component_;
 	delete sprite_component_;
 	delete velocity_component_;
@@ -73,7 +80,6 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
-
 }
 //--------------------------------------------------
 // @brief 更新処理
@@ -81,14 +87,43 @@ void Lift::InitGameObject(void)
 void Lift::UpdateGameObject(void)
 {
 	if (!pendulum_) return;
-	bool moveFg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
-	if (moveFg)
+
+	// 切り替え時一定時間停止する
+	switch (lift_state_)
 	{
+	case Lift::LiftState::Stop:
+	{
+		velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
+
+		if (turn_count_ >= 180) {
+			if (pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement())
+			{
+				lift_state_ = Lift::LiftState::Move;
+				turn_count_ = 0;
+			}
+		}
+		else {
+			++turn_count_;
+		}
+
+		return;
+		break;
+	}
+	case Lift::LiftState::Move:
+	{
+		if (!pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement())
+		{
+			lift_state_ = Lift::LiftState::Stop;
+			velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
+			turn_count_ = 180;
+			return;
+		}
+
 		DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
 		switch (moveState_)
 		{
 		case Lift::MoveState::length:	// 縦移動
-			if (!switchFg_) 
+			if (!switchFg_)
 			{
 				// 上に移動
 				direction_ = { 0.0f, 1.0f };
@@ -101,26 +136,28 @@ void Lift::UpdateGameObject(void)
 					direction_ = { 0.0f, -1.0f };
 					traveledDistance_.y = 0.0f;
 					switchFg_ = true;
+					lift_state_ = Lift::LiftState::Stop;
 				}
 			}
-			else 
+			else
 			{
 				// 下に移動
 				direction_ = { 0.0f, -1.0f };
 				// 移動距離を累積
 				traveledDistance_.y += std::abs(direction_.y);
 				// 移動距離が最大移動距離を超えたら
-				if (traveledDistance_.y >= maxMoveDistance_) 
+				if (traveledDistance_.y >= maxMoveDistance_)
 				{
 					// 逆方向に移動
 					direction_ = { 0.0f, 1.0f };
 					traveledDistance_.y = 0.0f;
 					switchFg_ = false;
+					lift_state_ = Lift::LiftState::Stop;
 				}
 			}
 			break;
 		case Lift::MoveState::side:		// 横移動
-			if (!switchFg_) 
+			if (!switchFg_)
 			{
 				// 右に移動
 				direction_ = { 1.0f, 0.0f };
@@ -132,9 +169,10 @@ void Lift::UpdateGameObject(void)
 					direction_ = { -1.0f, 0.0f };	// 逆方向に移動
 					traveledDistance_.x = 0.0f;
 					switchFg_ = true;
+					lift_state_ = Lift::LiftState::Stop;
 				}
 			}
-			else 
+			else
 			{
 				// 左に移動
 				direction_ = { -1.0f, 0.0f };
@@ -146,6 +184,7 @@ void Lift::UpdateGameObject(void)
 					direction_ = { 1.0f, 0.0f };	// 逆方向に移動
 					traveledDistance_.x = 0.0f;
 					switchFg_ = false;
+					lift_state_ = Lift::LiftState::Stop;
 				}
 			}
 			break;
@@ -155,14 +194,19 @@ void Lift::UpdateGameObject(void)
 				// 右上に移動
 				direction_ = { 1.0f, 1.0f };
 				// 移動距離を累積
-				traveledDistance_.x += std::abs(direction_.x);
-				traveledDistance_.y += std::abs(direction_.y);
+				Vector2 normalizedDirection = {
+					direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
+					direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
+				};
+				traveledDistance_.x += std::abs(normalizedDirection.x);
+				traveledDistance_.y += std::abs(normalizedDirection.y);
 				// 移動距離が最大移動距離を超えたら
 				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
 				{
 					traveledDistance_ = { 0.0f, 0.0f };
 					direction_ = { -1.0f, -1.0f };
 					switchFg_ = true;
+					lift_state_ = Lift::LiftState::Stop;
 				}
 			}
 			else
@@ -170,14 +214,20 @@ void Lift::UpdateGameObject(void)
 				// 左下に移動
 				direction_ = { -1.0f, -1.0f };
 				// 移動距離を累積
-				traveledDistance_.x += std::abs(direction_.x);
-				traveledDistance_.y += std::abs(direction_.y);
+				Vector2 normalizedDirection = {
+					direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
+					direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
+				};
+				traveledDistance_.x += std::abs(normalizedDirection.x);
+				traveledDistance_.y += std::abs(normalizedDirection.y);
+
 				// 移動距離が最大移動距離を超えたら
 				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
 				{
 					traveledDistance_ = { 0.0f, 0.0f };
 					direction_ = { 1.0f, 1.0f };
 					switchFg_ = false;
+					lift_state_ = Lift::LiftState::Stop;
 				}
 			}
 			break;
@@ -187,14 +237,20 @@ void Lift::UpdateGameObject(void)
 				// 左上に移動
 				direction_ = { -1.0f, 1.0f };
 				// 移動距離を累積
-				traveledDistance_.x += std::abs(direction_.x);
-				traveledDistance_.y += std::abs(direction_.y);
+				Vector2 normalizedDirection = {
+					direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
+					direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
+				};
+				traveledDistance_.x += std::abs(normalizedDirection.x);
+				traveledDistance_.y += std::abs(normalizedDirection.y);
+
 				// 移動距離が最大移動距離を超えたら
 				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
 				{
 					traveledDistance_ = { 0.0f, 0.0f };
 					direction_ = { 1.0f, -1.0f };
 					switchFg_ = true;
+					lift_state_ = Lift::LiftState::Stop;
 				}
 			}
 			else
@@ -202,14 +258,20 @@ void Lift::UpdateGameObject(void)
 				// 右下に移動
 				direction_ = { 1.0f, -1.0f };
 				// 移動距離を累積
-				traveledDistance_.x += std::abs(direction_.x);
-				traveledDistance_.y += std::abs(direction_.y);
+				Vector2 normalizedDirection = {
+					direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
+					direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
+				};
+				traveledDistance_.x += std::abs(normalizedDirection.x);
+				traveledDistance_.y += std::abs(normalizedDirection.y);
+
 				// 移動距離が最大移動距離を超えたら
 				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
 				{
 					traveledDistance_ = { 0.0f, 0.0f };
 					direction_ = { -1.0f, 1.0f };
 					switchFg_ = false;
+					lift_state_ = Lift::LiftState::Stop;
 				}
 			}
 			break;
@@ -220,9 +282,6 @@ void Lift::UpdateGameObject(void)
 		velocity_component_->SetVelocity(Vector3(direction_.x, direction_.y, 0.0f));
 		pendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(liftPos);
 	}
-	else
-	{
-		velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
 	}
 }
 //--------------------------------------------------
@@ -251,7 +310,7 @@ void Lift::SetPendulum(Pendulum* _pendulum)
 //--------------------------------------------------
 // @brief リフトの移動状態を設定
 //--------------------------------------------------
-void Lift::SetMoveState(Lift::MoveState _moveState)
+void Lift::SetMoveState(Lift::MoveState _state)
 {
-	moveState_ = _moveState;
+	moveState_ = _state;
 }

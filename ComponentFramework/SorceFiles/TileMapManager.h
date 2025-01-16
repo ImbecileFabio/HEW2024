@@ -46,6 +46,7 @@ private:
 
 	bool GetAdjacentTile(int _typeID, int _x, int _y, int _dx, int _dy);
 
+
 	bool IsTileInGroup(int x, int y, WeakFloorGroup*& group);
 private:
 	GameManager* game_manager_{};

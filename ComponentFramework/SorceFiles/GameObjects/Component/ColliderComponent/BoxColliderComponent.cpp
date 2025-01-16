@@ -31,6 +31,7 @@ BoxColliderComponent::~BoxColliderComponent()
 //--------------------------------------------------
 void BoxColliderComponent::Init(void)
 {
+	// サイズを設定
 	SetSize(TILE_SIZE_X, TILE_SIZE_Y);
 }
 //--------------------------------------------------
@@ -44,8 +45,8 @@ void BoxColliderComponent::Uninit(void)
 //--------------------------------------------------
 void BoxColliderComponent::Update(void)
 {
-	auto pos = this->owner_->GetTransformComponent()->GetPosition();// 位置を取得
-	this->SetWorldHitBox(pos);
+	auto transform = this->owner_->GetTransformComponent();// 位置を取得
+	this->SetWorldHitBox(transform->GetPosition());
 }
 
 bool BoxColliderComponent::CheckCollisionCollider(ColliderBaseComponent* _other)

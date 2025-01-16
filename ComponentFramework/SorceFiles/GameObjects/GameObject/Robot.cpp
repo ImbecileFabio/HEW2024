@@ -11,8 +11,10 @@
 
 #include "Robot.h"
 
-#include "../../GameProcess.h"	// windowサイズとるためだけ
 #include "../../GameManager.h"
+#include "../../TileMapManager.h"
+#include "Lift.h"
+
 #include "../Component.h"
 
 #include "../Component/TransformComponent.h"
@@ -30,12 +32,13 @@
 //--------------------------------------------------
 Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
+	, robot_state_(RobotState::Idle)
 {
 	sprite_component_ = new SpriteComponent(this, "robot_still");
-	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
-	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
+	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
+	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this);	// 押し出し
 
@@ -66,9 +69,8 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-
-	auto size = collider_component_->GetSize();
-	collider_component_->SetSize(size.x * 0.7, size.y);	// 当たり判定サイズ
+	transform_component_->SetSize(TILE_SIZE_X * 1.5, TILE_SIZE_Y * 1.5);
+	collider_component_->SetSize(transform_component_->GetSize().x * 0.7, transform_component_->GetSize().y * 0.95);
 }
 
 //--------------------------------------------------
@@ -95,18 +97,55 @@ void Robot::UpdateGameObject(void)
 	//	velocity_component_->SetVelocity(Vector3(0, 0, 0));
 	//}
 
-	// マウスクリックで移動
-	if (input.GetMouseButtonPress(0)) {
-		auto mousePos = input.GetMousePosition();
-		transform_component_->SetPosition(
-			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
-			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
+	//// マウスクリックで移動
+	//if (input.GetMouseButtonPress(0)) {
+	//	auto mousePos = input.GetMousePosition();
+	//	transform_component_->SetPosition(
+	//		  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
+	//		-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
+	//}
+
+
+	switch (robot_state_)
+	{
+	case RobotState::Idle:	// 待機状態
+	{
+		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN)) {
+			robot_state_ = RobotState::Move;
+		}
+		break;
+	}
+	case RobotState::Move:	// 移動状態
+	{
+		if (!gravity_component_->GetIsGround()) {
+			robot_state_ = RobotState::Fall;
+		}
+		break;
+	}
+	case RobotState::Fall:	// 落下状態
+	{
+		if (gravity_component_->GetIsGround()) {
+			robot_state_ = RobotState::Move;
+		}
+		break;
+	}
+	case RobotState::OnLift:	// リフトに乗っている状態
+	{
+
+		break;
+	}
 	}
 	if (!collider_component_->GetHitFg())
 	{
 		robot_move_component_->SetSpeed(2.0f);
 	}
 }
+
+	// ロボットの動きを切り替える
+	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
+
+}
+
 
 void Robot::OnCollisionEnter(GameObject* _other)
 {
@@ -115,7 +154,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Tile:
 	{
-		std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
+		//std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
@@ -125,11 +164,25 @@ void Robot::OnCollisionEnter(GameObject* _other)
 
 	case GameObject::TypeID::Lift:
 	{
-		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		
+		auto lift = dynamic_cast<Lift*>(_other);
+
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
 		}
+
+		// リフトが動いているなら
+		if (lift->GetLiftState() == Lift::LiftState::Move)
+		{
+			robot_state_ = Robot::RobotState::OnLift;
+		}
+		else {
+			robot_state_ = Robot::RobotState::Move;
+		}
+
+		velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
 		break;
 	}
 	case GameObject::TypeID::WeakFloor:
