@@ -29,10 +29,8 @@
 // コンストラクタ/デストラクタ
 //--------------------------------------------------
 AudioManager::AudioManager() {
-	Init();
 }
 AudioManager::~AudioManager() {
-	Uninit();
 }
 
 
