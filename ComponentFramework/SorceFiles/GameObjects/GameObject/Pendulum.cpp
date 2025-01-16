@@ -88,12 +88,12 @@ void Pendulum::UpdateGameObject(void)
 	// U‚èŽq‚Ì–_‚Ì“®‚«‚ð”½‰f
 	stickMoveComponent->SetStickFulcrum({ fulcrumPos.x, fulcrumPos.y, 0.0f });
 	// U‚èŽq‚Ìó‘Ô‚Å–_‚ª“®‚­‚©‚Ç‚¤‚©‚ðÝ’è
-	bool pendulumMoveFg = pendulum_component_->GetPendulumMovement();
-	stickMoveComponent->SetStickMovement(pendulumMoveFg);
+	//bool pendulumMoveFg = pendulum_component_->GetPendulumMovement();
+	//stickMoveComponent->SetStickMovement(pendulumMoveFg);
 
 	float pendulumAngle = pendulum_component_->GetPendulumAngle();
 	stickMoveComponent->SetStickAngle(pendulumAngle);
-	// U‚èŽq‚Ì–_‚ÌÀ•W‚ðŒvŽZ
+	//// U‚èŽq‚Ì–_‚ÌÀ•W‚ðŒvŽZ
 	stickMoveComponent->StickPosition(fulcrumPos, stickMoveComponent->GetStickLength());
 }
 //--------------------------------------------------

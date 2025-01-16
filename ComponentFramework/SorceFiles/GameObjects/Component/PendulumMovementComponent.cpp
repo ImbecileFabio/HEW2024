@@ -77,7 +77,8 @@ void PendulumMovementComponent::Update() {
 		break;
 	}
 
-	if (pendulumMovement_ && GetPendulumAngle() == 0) { 
+	if (pendulumMovement_ && GetPendulumAngle() == 0.0f) 
+	{ 
 		StartPendulumMovement();
 		PendulumVelocity();
 	}
