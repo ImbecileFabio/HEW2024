@@ -21,7 +21,7 @@
 #include "Component/CameraComponent.h"
 #include "Component/RenderComponent.h"
 #include "Component/RenderComponent/SpriteComponent.h"
-#include "../sound.h"
+#include "../AudioManager.h"
 
 /*----- 構造体定義 -----*/
 
@@ -162,7 +162,8 @@ protected:
 	static int next_object_id_;	// 生成されたときに加算される
 	int		   object_id_{};
 
-	Sound sound_;
+	// サウンド処理
+	AudioManager audio_manager_;
 };
 
 #endif	// GAMEOBJECT_H_

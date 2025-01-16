@@ -47,14 +47,14 @@ void PendulumMovementComponent::Init() {
 	pendulumSelected_ = false;
 	pendulumDirection_ = 1;
 
-	sound_.Init();
+	audio_manager_.Init();
 }
 
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------
 void PendulumMovementComponent::Uninit() {
-	sound_.Uninit();
+	audio_manager_.Uninit();
 }
 
 //--------------------------------------------------
@@ -210,7 +210,7 @@ float PendulumMovementComponent::GetPendulumVelocity() {
 // 振り子の停止、始動
 //--------------------------------------------------
 void PendulumMovementComponent::StartPendulumMovement() {
-	sound_.Play(SOUND_LABEL::SoundLabel_HitSE);
+	audio_manager_.Play(SOUND_LABEL::SoundLabel_HitSE);
 	maxPendulumVelocity_ = 0;
 	for (int i = 1;;i++) {
 		maxPendulumVelocity_ += pendulumAcceleration * i;

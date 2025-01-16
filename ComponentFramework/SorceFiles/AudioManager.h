@@ -49,9 +49,6 @@ private:
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);
 
 public:
-	AudioManager();
-	~AudioManager();
-
 	HRESULT Init(void);
 	void Uninit(void);
 

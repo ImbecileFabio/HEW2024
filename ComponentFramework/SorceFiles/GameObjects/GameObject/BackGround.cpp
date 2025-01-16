@@ -9,8 +9,8 @@ BackGround::BackGround(GameManager* _gameManager)
 
 BackGround::~BackGround(void)
 {
-	sound_.Stop(SoundLabel_StageBGM);
-	sound_.Uninit();
+	audio_manager_.Stop(SoundLabel_StageBGM);
+	audio_manager_.Uninit();
 
 	delete sprite_component_;
 }
@@ -22,8 +22,8 @@ void BackGround::InitGameObject(void)
 {
 	transform_component_->SetSize(2880, 1080);
 
-	sound_.Init();
-	sound_.Play(SoundLabel_StageBGM);
+	audio_manager_.Init();
+	audio_manager_.Play(SoundLabel_StageBGM);
 }
 
 void BackGround::UpdateGameObject(void)

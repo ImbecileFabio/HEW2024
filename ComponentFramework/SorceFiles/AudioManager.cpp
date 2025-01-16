@@ -26,15 +26,6 @@
 #endif
 
 //--------------------------------------------------
-// コンストラクタ/デストラクタ
-//--------------------------------------------------
-AudioManager::AudioManager() {
-}
-AudioManager::~AudioManager() {
-}
-
-
-//--------------------------------------------------
 // 初期化/開放処理
 //--------------------------------------------------
 HRESULT AudioManager::Init()
@@ -145,7 +136,6 @@ void AudioManager::Play(SOUND_LABEL label)
 	pSV->Start(0);
 
 }
-
 void AudioManager::Stop(SOUND_LABEL label)
 {
 	if (m_pSourceVoice[(int)label] == NULL) return;
@@ -157,7 +147,6 @@ void AudioManager::Stop(SOUND_LABEL label)
 		m_pSourceVoice[(int)label]->Stop(0);
 	}
 }
-
 void AudioManager::Resume(SOUND_LABEL label)
 {
 	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)label];

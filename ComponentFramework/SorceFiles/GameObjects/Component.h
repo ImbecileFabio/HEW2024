@@ -10,7 +10,7 @@
 /*----- インクルード -----*/
 #include <memory>
 #include <string>
-#include "../sound.h"
+#include "../AudioManager.h"
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
@@ -98,7 +98,7 @@ protected:
 	GameObject* owner_;				// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
 
-	Sound sound_;
+	AudioManager audio_manager_;
 };
 
 
