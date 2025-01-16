@@ -82,12 +82,12 @@ void GameObject::Uninit(void)
 	// 削除対象リストを作成
 	std::vector<Component*> deadComponents;
 
-	// 稼働中のゲームオブジェクトを削除対象リストに追加
+	// コンポーネントを削除対象リストに追加
 	for (auto& com : components_) {
 		deadComponents.push_back(com);
 	}
 
-	// 削除対象リスト内のオブジェクトを安全に削除
+	// 削除対象リスト内のコンポーネントを安全に削除
 	for (auto& com : deadComponents) {
 		delete com;
 	}
