@@ -24,26 +24,27 @@ WeakFloor::WeakFloor(GameManager* _gameManager, int MaxFloor)
 
 	// Floor毎のComponentをWeakFloorComponentListに纏めて、WeakFloorListに入れる
 
-	// 左端
-	WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_left"));
-	WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
-	WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
-	WeakFloorList.emplace_back(WeakFloorComponentList);
-	WeakFloorComponentList.clear();
-	// 中央
-	for (int i = 0; i < (max_floor_ - 2); i++) {
-		WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_cnter"));
-		WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
-		WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
-		WeakFloorList.emplace_back(WeakFloorComponentList);
-		WeakFloorComponentList.clear();
-	}
-	// 右端
-	WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_right"));
-	WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
-	WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
-	WeakFloorList.emplace_back(WeakFloorComponentList);
-	WeakFloorComponentList.clear();
+	//// 左端
+	//WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_left"));
+	//WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
+	//WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
+	//WeakFloorList.emplace_back(WeakFloorComponentList);
+	//for(auto List:)
+	//WeakFloorComponentList.clear();
+	//// 中央
+	//for (int i = 0; i < (max_floor_ - 2); i++) {
+	//	WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_cnter"));
+	//	WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
+	//	WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
+	//	WeakFloorList.emplace_back(WeakFloorComponentList);
+	//	WeakFloorComponentList.clear();
+	//}
+	//// 右端
+	//WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_right"));
+	//WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
+	//WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
+	//WeakFloorList.emplace_back(WeakFloorComponentList);
+	//WeakFloorComponentList.clear();
 
 	this->InitGameObject();
 }
