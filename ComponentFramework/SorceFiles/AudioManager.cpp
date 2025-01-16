@@ -61,24 +61,18 @@ HRESULT AudioManager::Init()
 		memset(&m_wfx[i], 0, sizeof(WAVEFORMATEXTENSIBLE));
 		memset(&m_buffer[i], 0, sizeof(XAUDIO2_BUFFER));
 
-		hFile = CreateFileA(m_param[i].filename, GENERIC_READ, FILE_SHARE_READ, NULL,
-			OPEN_EXISTING, 0, NULL);
-		if (hFile == INVALID_HANDLE_VALUE) {
-			return HRESULT_FROM_WIN32(GetLastError());
-		}
-		if (SetFilePointer(hFile, 0, NULL, FILE_BEGIN) == INVALID_SET_FILE_POINTER) {
-			return HRESULT_FROM_WIN32(GetLastError());
-		}
+		hFile = CreateFileA(m_param[i].filename, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, 0, NULL);
+		if (hFile == INVALID_HANDLE_VALUE)											return HRESULT_FROM_WIN32(GetLastError());
+		if (SetFilePointer(hFile, 0, NULL, FILE_BEGIN) == INVALID_SET_FILE_POINTER)	return HRESULT_FROM_WIN32(GetLastError());
 
-		//check the file type, should be fourccWAVE or 'XWMA'
+		// ファイル形式とオーディオフォーマット情報の読み込み
 		FindChunk(hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
 		ReadChunkData(hFile, &filetype, sizeof(DWORD), dwChunkPosition);
 		if (filetype != fourccWAVE)		return S_FALSE;
-
 		FindChunk(hFile, fourccFMT, dwChunkSize, dwChunkPosition);
 		ReadChunkData(hFile, &m_wfx[i], dwChunkSize, dwChunkPosition);
 
-		//fill out the audio data buffer with the contents of the fourccDATA chunk
+		// オーディオデータの読み込み
 		FindChunk(hFile, fourccDATA, dwChunkSize, dwChunkPosition);
 		m_DataBuffer[i] = new BYTE[dwChunkSize];
 		ReadChunkData(hFile, m_DataBuffer[i], dwChunkSize, dwChunkPosition);
@@ -89,17 +83,15 @@ HRESULT AudioManager::Init()
 		m_buffer[i].AudioBytes = dwChunkSize;
 		m_buffer[i].pAudioData = m_DataBuffer[i];
 		m_buffer[i].Flags = XAUDIO2_END_OF_STREAM;
-		if (m_param[i].bLoop)
-			m_buffer[i].LoopCount = XAUDIO2_LOOP_INFINITE;
-		else
-			m_buffer[i].LoopCount = 0;
+		if (m_param[i].bLoop) m_buffer[i].LoopCount = XAUDIO2_LOOP_INFINITE;
+		else m_buffer[i].LoopCount = 0;
 
+		// ソースボイスの作成
 		m_pXAudio2->CreateSourceVoice(&m_pSourceVoice[i], &(m_wfx[i].Format));
 	}
 
 	return hr;
 }
-
 void AudioManager::Uninit(void){
 	for (int i = 0; i < SoundLabel_MAX; i++){
 		if (m_pSourceVoice[i]){
@@ -122,8 +114,7 @@ void AudioManager::Play(SOUND_LABEL label)
 {
 	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)label];
 
-	if (pSV != nullptr)
-	{
+	if (pSV != nullptr){
 		pSV->DestroyVoice();
 		pSV = nullptr;
 	}
@@ -199,7 +190,6 @@ HRESULT AudioManager::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, 
 	}
 	return S_OK;
 }
-
 HRESULT AudioManager::ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
 {
 	HRESULT hr = S_OK;
