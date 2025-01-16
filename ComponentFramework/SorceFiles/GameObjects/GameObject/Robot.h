@@ -22,6 +22,13 @@ class Robot
 	: public GameObject
 {
 public:
+	enum class RobotState {
+		Idle,
+		Move,
+		Fall,
+		OnLift
+	};
+
 	Robot(GameManager* _gameManager);
 	~Robot(void);
 
@@ -30,8 +37,13 @@ public:
 
 	TypeID GetType(void) override { return TypeID::Robot; }
 
+	void SetState(RobotState _state) { robot_state_ = _state; }
+
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
+	RobotState robot_state_;
+
+
 	// 所有するコンポーネント
 	class RenderComponent* sprite_component_{};
 	class ColliderBaseComponent* collider_component_{};	// 当たり判定

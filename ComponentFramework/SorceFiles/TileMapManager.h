@@ -43,6 +43,8 @@ private:
 	void GenerateGameObjects();
 	void CreateGameObject(int _x, int _y, int tileID);
 
+	bool GetAdjacentTile(int _typeID, int _x, int _y, int _dx, int _dy);
+
 
 private:
 	GameManager* game_manager_{};

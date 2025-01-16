@@ -28,12 +28,21 @@ class RobotMoveComponent :
     public Component
 {
 public:
+	enum class RobotMoveState {
+		Idle,
+		Move,
+		Fall,
+		OnLift
+	};
+
     RobotMoveComponent(GameObject* _owner, int _updateOrder = 2);
     ~RobotMoveComponent();
 
     void Init() override;
     void Uninit() override;
     void Update() override;
+
+	void SetState(RobotMoveState _state) { move_state_ = _state; }
 
     virtual TypeID GetComponentType(void) const override { return TypeID::RobotMoveComponent; }
 
@@ -45,6 +54,8 @@ private:
 	bool CheckWallCollision();  // 壁との当たり判定
 	bool CheckStepUp(); 		 // 段差の上り判定
 	bool CheckGround();		 // 地面の判定
+
+	float GetStepHeight();	// 段差の高さを調べる
 
 private:
     // ownerのコンポーネントをキャッシュ
@@ -62,11 +73,12 @@ private:// コンポーネント内にゲームオブジェクトとはこれ如何に...ゆるして, いつか
 	class ScanColliderComponent* ground_scan_collider_;  // 地面スキャン用コライダー
 
 private:
+	RobotMoveState move_state_;
 
     float speed_;				    // 移動速度
     Vector2 direction_;         	// 移動方向 ( 右:1,0 / 左:-1,0 / 上:0,1 / 下:0,-1)
 	float scan_distance_;           // レイキャストの距離
-	float step_up_height_;          // 登れる段差の高さ
+	float max_step_height_;          // 登れる段差の高さ
 };
 
 #endif // ROBOT_MOVE_COMPONENT_H_

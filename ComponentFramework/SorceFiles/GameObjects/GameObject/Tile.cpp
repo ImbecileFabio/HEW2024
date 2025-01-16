@@ -11,6 +11,7 @@
 
 #include "Tile.h"
 #include "../../GameManager.h"
+#include "../../TileMapManager.h"
 #include "../Component.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
@@ -48,7 +49,6 @@ Tile::~Tile(void)
 	delete collider_component_;
 	delete collider_event_component_;
 
-	delete debug_collider_draw_component_;
 }
 
 //--------------------------------------------------
@@ -56,7 +56,8 @@ Tile::~Tile(void)
 //--------------------------------------------------
 void Tile::InitGameObject(void)
 {
-	
+
+
 }
  
 //--------------------------------------------------
