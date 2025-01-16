@@ -107,12 +107,8 @@ void GameObject::Update(void)
 {
 	if (state_ == State::Active)
 	{
-		if (re_compute_transform_)
-		{
-			ComputeWorldTransform();
-		}
-		UpdateComponents();		// コンポーネントの更新
 		UpdateGameObject();		// オブジェクトの更新
+		UpdateComponents();		// コンポーネントの更新
 	}
 }
 

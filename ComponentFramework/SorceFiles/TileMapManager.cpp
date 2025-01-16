@@ -200,7 +200,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		}
 
 		// ˆÚ“®‹——£‚ğŒvZ
-		float distance = std::sqrt(dx * dx + dy * dy);
+		double distance = std::sqrt(dx * dx + dy * dy);
 
 		// ƒŠƒtƒg¶¬
 		obj = new Lift(direction, distance, game_manager_);

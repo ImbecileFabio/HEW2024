@@ -28,8 +28,6 @@
 #include "GravityComponent.h"
 
 
-#include "RenderComponent/SpriteComponent.h"
-
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -37,11 +35,27 @@ RobotMoveComponent::RobotMoveComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 	, speed_(2.0f)
 	, direction_(Vector2(1.0f, 0.0f))
-	, scan_distance_(1.0f)
-	, step_up_height_(TILE_SIZE_Y)
+	, scan_distance_(2.0f)
+	, max_step_height_(TILE_SIZE_Y)
 	, move_state_(RobotMoveState::Idle)
 {
 	
+	// スキャン用オブジェクトを生成
+	wall_scan_object_ = new GameObject(owner_->GetGameManager(), "WallScanObject");
+	wall_scan_collider_ = new ScanColliderComponent(wall_scan_object_);
+	// ステップアップ用オブジェクトを生成
+	step_scan_object_ = new GameObject(owner_->GetGameManager(), "StepScanObject");
+	step_scan_collider_ = new ScanColliderComponent(step_scan_object_);
+	// 地面スキャン用オブジェクトを生成
+	ground_scan_object_ = new GameObject(owner_->GetGameManager(), "GroundScanObject");
+	ground_scan_collider_ = new ScanColliderComponent(ground_scan_object_);
+
+	owner_transform_ = owner_->GetTransformComponent();
+	owner_velocity_ = owner_->GetComponent<VelocityComponent>();
+	owner_collider_ = owner_->GetComponent<BoxColliderComponent>();
+	owner_gravity_ = owner_->GetComponent<GravityComponent>();
+
+
 	this->Init();
 }
 
@@ -61,32 +75,6 @@ void RobotMoveComponent::Init()
 {
 	direction_ = Vector2(1.0f, 0.0f);
 
-	if (!wall_scan_object_) {
-		// スキャン用オブジェクトを生成
-		wall_scan_object_ = new GameObject(owner_->GetGameManager(), "WallScanObject");
-		wall_scan_collider_ = new ScanColliderComponent(wall_scan_object_);
-	}
-	if (!step_scan_object_)
-	{
-		// ステップアップ用オブジェクトを生成
-		step_scan_object_ = new GameObject(owner_->GetGameManager(), "StepScanObject");
-		step_scan_collider_ = new ScanColliderComponent(step_scan_object_);
-
-	}
-	if (!ground_scan_object_)
-	{
-		// 地面スキャン用オブジェクトを生成
-		ground_scan_object_ = new GameObject(owner_->GetGameManager(), "GroundScanObject");
-		ground_scan_collider_ = new ScanColliderComponent(ground_scan_object_);
-	}
-	owner_transform_ = owner_->GetTransformComponent();
-	owner_velocity_ = owner_->GetComponent<VelocityComponent>();
-	owner_collider_ = owner_->GetComponent<BoxColliderComponent>();
-	owner_gravity_ = owner_->GetComponent<GravityComponent>();
-
-
-
-
 }
 
 //--------------------------------------------------
@@ -102,21 +90,6 @@ void RobotMoveComponent::Uninit()
 //--------------------------------------------------
 void RobotMoveComponent::Update()
 {
-	if (!owner_transform_ || !owner_velocity_ || !owner_collider_ || !owner_gravity_)	//	一度だけ取得
-	{
-		owner_transform_ = owner_->GetTransformComponent();
-		owner_velocity_ = owner_->GetComponent<VelocityComponent>();
-		owner_collider_ = owner_->GetComponent<BoxColliderComponent>();
-		owner_gravity_ = owner_->GetComponent<GravityComponent>();
-
-	}
-
-	if (!owner_transform_ || !owner_velocity_ || !owner_collider_ || !owner_gravity_)
-	{
-		std::cout << std::format("＜RobotMoveComponent＞ -> Update Error\n");
-		return;
-	}
-
 	switch (move_state_) {
 	case RobotMoveState::Idle:
 	{
@@ -133,27 +106,43 @@ void RobotMoveComponent::Update()
 		this->UpdateGroundScanCollider();
 
 		// 壁の衝突判定
-	if (CheckWallCollision())	// 壁に当たっている
-	{
-		// ステップアップ判定
-		if (!CheckStepUp())	// 登れる段差
+		if (CheckWallCollision())	// 壁に当たっている
 		{
-				// 上る
-			owner_transform_->SetPosition(owner_transform_->GetPosition() + Vector3(speed_ * direction_.x, step_up_height_, 0.0f));
+			if (!CheckStepUp()) { // 登れる段差
+				float stepHeight = GetStepHeight();
+				if (stepHeight > 0 && stepHeight < max_step_height_) {
+					// 上る処理
+					Vector3 currentPosition = owner_transform_->GetPosition();
+					Vector3 stepUpPosition = currentPosition + Vector3(speed_ * direction_.x, max_step_height_, 0.0f);
+
+					// スムーズに上るための線形補間
+					Vector3 newPosition = Vector3::Lerp(currentPosition, stepUpPosition, 0.2f); // 適宜補間率を調整
+					owner_transform_->SetPosition(newPosition);
+
+					// 上る際に速度をリセット（必要なら）
+					owner_velocity_->SetVelocity({ speed_ * direction_.x, 0.0f, 0.0f });
+				}
+				else { // 登れない段差
+					direction_ = { -direction_.x, direction_.y }; // 移動方向を反転
+					owner_velocity_->SetVelocity({ 0.0f, owner_velocity_->GetVelocity().y, 0.0f }); // 横の速度をリセット
+				}
 			}
-		else				// 登れない段差
-		{
-			direction_ = { -direction_.x, direction_.y };	// 移動方向を反転
-			owner_velocity_->SetVelocity({ 0.0f, owner_velocity_->GetVelocity().y, 0.0f });	// 横の速度をリセット
+			else				// 登れない段差
+			{
+				direction_ = { -direction_.x, direction_.y };	// 移動方向を反転
+				owner_velocity_->SetVelocity({ 0.0f, owner_velocity_->GetVelocity().y, 0.0f });	// 横の速度をリセット
 			}
 		}
+
 		// 床の衝突判定
-		else if (!CheckGround()) { // 進行方向に地面がない
+		else if (!CheckGround()) // 進行方向に地面がない
+		{
 			direction_ = { -direction_.x, direction_.y }; // 移動方向を反転
 			owner_velocity_->SetVelocity({ 0.0f, owner_velocity_->GetVelocity().y, 0.0f }); // 横の速度をリセット
 		}
 
-		owner_velocity_->SetVelocity({ speed_ * direction_.x, owner_velocity_->GetVelocity().y, 0.0f });
+		// 移動
+		owner_velocity_->SetVelocity({ speed_ * direction_.x, 0.0f, 0.0f });
 		break;
 	}
 	case RobotMoveState::Fall:
@@ -177,7 +166,7 @@ void RobotMoveComponent::UpdateWallScanCollider()
 	auto robotPos = owner_transform_->GetPosition();
 	auto robotSize = owner_collider_->GetSize();
 
-	wall_scan_object_->GetTransformComponent()->SetSize(scan_distance_, owner_transform_->GetSize().y - 5.0f);
+	wall_scan_object_->GetTransformComponent()->SetSize(scan_distance_, owner_transform_->GetSize().y - 10.0f);
 	wall_scan_collider_->SetSize(wall_scan_object_->GetTransformComponent()->GetSize());
 
 	Vector3 offset = { 0.0f, 0.0f, 0.0f };
@@ -199,7 +188,7 @@ void RobotMoveComponent::UpdateStepScanCollider()
 	auto robotPos = owner_transform_->GetPosition();
 	auto robotSize = owner_collider_->GetSize();
 
-	step_scan_object_->GetTransformComponent()->SetSize(owner_collider_->GetSize().x + scan_distance_, owner_transform_->GetSize().y - 0.1f);
+	step_scan_object_->GetTransformComponent()->SetSize(owner_collider_->GetSize().x + scan_distance_, owner_transform_->GetSize().y);
 	step_scan_collider_->SetSize(step_scan_object_->GetTransformComponent()->GetSize());
 
 	Vector3 offset = { 0.0f, 0.0f, 0.0f };
@@ -220,7 +209,7 @@ void RobotMoveComponent::UpdateGroundScanCollider()
 	auto robotPos = owner_transform_->GetPosition();
 	auto robotSize = owner_collider_->GetSize();
 
-	ground_scan_object_->GetTransformComponent()->SetSize(owner_collider_->GetSize().x + scan_distance_, owner_transform_->GetSize().y + 5.0f);
+	ground_scan_object_->GetTransformComponent()->SetSize(owner_collider_->GetSize().x + scan_distance_, owner_transform_->GetSize().y + 1.0f);
 	ground_scan_collider_->SetSize(step_scan_object_->GetTransformComponent()->GetSize());
 
 	Vector3 offset = { 0.0f, 0.0f, 0.0f };
@@ -247,6 +236,7 @@ bool RobotMoveComponent::CheckWallCollision()
 
 	// 衝突判定
 	for (const auto& obj : objects) {
+		if (obj == owner_) continue;	// オーナーとは比べない
 		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
 		if (auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider)) {
 			auto otherHitbox = otherBoxCollider->GetWorldHitBox();
@@ -275,6 +265,7 @@ bool RobotMoveComponent::CheckStepUp()
 	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
 	auto stepHitbox = step_scan_collider_->GetWorldHitBox();
 	for (const auto& obj : objects) {
+		if (obj == owner_) continue;	// オーナーとは比べない
 		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
 		if (auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider)) {
 			auto otherHitbox = otherBoxCollider->GetWorldHitBox();
@@ -298,6 +289,7 @@ bool RobotMoveComponent::CheckGround()
 	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
 	auto groundHitbox = ground_scan_collider_->GetWorldHitBox();
 	for (const auto& obj : objects) {
+		if (obj == owner_) continue;	// オーナーとは比べない
 		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
 		if (auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider)) {
 			auto otherHitbox = otherBoxCollider->GetWorldHitBox();

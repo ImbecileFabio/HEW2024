@@ -24,18 +24,16 @@ public:
     void Uninit() override;
     void Update() override;
 
-    TypeID GetComponentType(void) const override { return TypeID::GravityComponent; }
+	// 足元に地面があるかどうかの確認
+	bool CheckGroundCollision();
 
 	void SetUseGravityFlg(bool _flg) { use_gravity_ = _flg; }	// 重力使用フラグセッター
 	bool GetIsGround() const { return is_ground_; }		// 
 
+    TypeID GetComponentType(void) const override { return TypeID::GravityComponent; }
 private:
-	bool CheckGroundCollishion();
 
 	// ownerのコンポーネントをキャッシュ
-	class VelocityComponent* velocity_;
-	class BoxColliderComponent* collider_;
-
 	bool is_ground_; // 地面に接地しているか
 	bool use_gravity_; // 重力の使用
 

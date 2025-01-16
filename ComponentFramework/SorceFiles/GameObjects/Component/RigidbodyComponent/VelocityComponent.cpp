@@ -65,6 +65,8 @@ void VelocityComponent::Update() {
 
 	this->owner_->GetTransformComponent()->SetPosition(position_);
 
+	std::cout << std::format("＜VelocityComponent＞ ->[{}] x : {}, y : {}\n", owner_->GetObjectName(), velocity_.x, velocity_.y);
+
 	// 速度をリセット
 	speed_rate_ = 1.0f;
 }

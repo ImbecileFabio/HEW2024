@@ -94,6 +94,7 @@ void Lift::UpdateGameObject(void)
 	case Lift::LiftState::Stop:
 	{
 		velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
+
 		if (turn_count_ >= 180) {
 			if (pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement())
 			{
@@ -110,6 +111,14 @@ void Lift::UpdateGameObject(void)
 	}
 	case Lift::LiftState::Move:
 	{
+		if (!pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement())
+		{
+			lift_state_ = Lift::LiftState::Stop;
+			velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
+			turn_count_ = 180;
+			return;
+		}
+
 		DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
 		switch (moveState_)
 		{

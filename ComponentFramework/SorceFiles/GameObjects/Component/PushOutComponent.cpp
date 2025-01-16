@@ -17,7 +17,7 @@
 //-----------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------
-PushOutComponent::PushOutComponent(GameObject* _owner, int _updateOrder) :
+PushOutComponent::PushOutComponent(GameObject* _owner, int _updateOrder):
 	Component(_owner, _updateOrder)
 {
     this->Init();

@@ -78,7 +78,7 @@ private:
     float speed_;				    // 移動速度
     Vector2 direction_;         	// 移動方向 ( 右:1,0 / 左:-1,0 / 上:0,1 / 下:0,-1)
 	float scan_distance_;           // レイキャストの距離
-	float step_up_height_;          // 登れる段差の高さ
+	float max_step_height_;          // 登れる段差の高さ
 };
 
 #endif // ROBOT_MOVE_COMPONENT_H_

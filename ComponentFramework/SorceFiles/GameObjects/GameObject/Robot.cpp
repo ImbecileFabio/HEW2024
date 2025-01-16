@@ -11,7 +11,6 @@
 
 #include "Robot.h"
 
-#include "../../GameProcess.h"	// windowサイズとるためだけ
 #include "../../GameManager.h"
 #include "../../TileMapManager.h"
 #include "Lift.h"
@@ -98,46 +97,46 @@ void Robot::UpdateGameObject(void)
 	//	velocity_component_->SetVelocity(Vector3(0, 0, 0));
 	//}
 
-	// マウスクリックで移動
-	if (input.GetMouseButtonPress(0)) {
-		auto mousePos = input.GetMousePosition();
-		transform_component_->SetPosition(
-			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
-			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
-	}
+	//// マウスクリックで移動
+	//if (input.GetMouseButtonPress(0)) {
+	//	auto mousePos = input.GetMousePosition();
+	//	transform_component_->SetPosition(
+	//		  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
+	//		-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
+	//}
 
 
 	switch (robot_state_)
 	{
-	case RobotState::Idle:
+	case RobotState::Idle:	// 待機状態
 	{
 		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN)) {
 			robot_state_ = RobotState::Move;
 		}
 		break;
 	}
-	case RobotState::Move:
+	case RobotState::Move:	// 移動状態
 	{
 		if (!gravity_component_->GetIsGround()) {
 			robot_state_ = RobotState::Fall;
 		}
 		break;
 	}
-	case RobotState::Fall:
+	case RobotState::Fall:	// 落下状態
 	{
 		if (gravity_component_->GetIsGround()) {
 			robot_state_ = RobotState::Move;
 		}
 		break;
 	}
-	case RobotState::OnLift:
+	case RobotState::OnLift:	// リフトに乗っている状態
 	{
 
 		break;
 	}
 	}
 
-	// 
+	// ロボットの動きを切り替える
 	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
 
 }
@@ -148,7 +147,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Tile:
 	{
-		std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
+		//std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
@@ -158,7 +157,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 
 	case GameObject::TypeID::Lift:
 	{
-		std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
 		
 		auto lift = dynamic_cast<Lift*>(_other);
 
@@ -171,12 +170,12 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		if (lift->GetLiftState() == Lift::LiftState::Move)
 		{
 			robot_state_ = Robot::RobotState::OnLift;
-			velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
 		}
 		else {
 			robot_state_ = Robot::RobotState::Move;
 		}
 
+		velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
 		break;
 	}
 	default:
