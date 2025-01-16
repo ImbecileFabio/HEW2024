@@ -15,7 +15,7 @@ class Revolution :
     public GameObject
 {
 public:
-	Revolution(GameManager* _gameManager, const std::string _imgName);
+	Revolution(GameManager* _gameManager, const std::string _imgName, int _drawOrder = 50);
 	~Revolution();
 
 	void InitGameObject  () override;

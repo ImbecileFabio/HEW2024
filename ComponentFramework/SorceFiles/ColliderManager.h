@@ -33,10 +33,10 @@ public:
 
 	// 当たり判定のあるオブジェクトリストを取得
 	auto GetColliderGameObjects() const { return collider_game_objects_; }
-
 private:
 	//更新処理
 	void UpdateGameObjects(void);
+	void OnColliderExit(GameObject* _gameObject);
 	// オブジェクトが更新中か確認
 	bool updating_game_objects_;
 	std::vector<GameObject*> collider_game_objects_{};	// 当たり判定用コンテナ

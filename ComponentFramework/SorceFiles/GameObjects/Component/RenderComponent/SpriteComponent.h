@@ -36,6 +36,8 @@ public:
 	void Uninit() override;
 	void Draw();
 
+	void SetUV(const DirectX::SimpleMath::Vector2& _uv) override;
+
 	// テクスチャを変更
 	void SetTexture(const std::string _imgname);
 

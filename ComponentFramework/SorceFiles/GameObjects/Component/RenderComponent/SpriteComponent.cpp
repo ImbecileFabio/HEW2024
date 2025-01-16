@@ -131,6 +131,20 @@ void SpriteComponent::Draw()
 		0);
 }
 
+void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
+{
+	float cutU = texture_.get()->GetCutU();
+	float cutV = texture_.get()->GetCutV();
+
+	vertices_[0].uv = Vector2(_uv.x / cutU, _uv.y / cutV);
+	vertices_[1].uv = Vector2((_uv.x + 1.0f) / cutU, _uv.y / cutV);
+	vertices_[2].uv = Vector2(_uv.x / cutU, (_uv.y + 1.0f) / cutV);
+	vertices_[3].uv = Vector2((_uv.x + 1.0f) / cutU, (_uv.y + 1.0f) / cutV);
+
+	vertex_buffer_.Modify(vertices_);
+
+}
+
 
 void SpriteComponent::SetTexture(const std::string _imgname)
 {

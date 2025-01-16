@@ -14,6 +14,7 @@
 //--------------------------------------------------
 class SmokeComponent : public Component
 {
+public:
     SmokeComponent(GameObject* _owner, int _updateOrder = 50);
     ~SmokeComponent();
 
@@ -22,6 +23,6 @@ class SmokeComponent : public Component
     void Update() override;
 
     TypeID GetComponentType(void) const override { return TypeID::SmokeComponent; }
-
+private:
 };
 #endif // SMOKE_COMPONENT_H_

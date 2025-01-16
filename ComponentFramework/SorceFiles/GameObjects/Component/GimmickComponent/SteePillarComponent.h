@@ -14,6 +14,7 @@
 //--------------------------------------------------
 class SteePillarComponent : public Component
 {
+public:
     SteePillarComponent(GameObject* _owner, int _updateOrder = 50);
     ~SteePillarComponent();
 
@@ -22,6 +23,6 @@ class SteePillarComponent : public Component
     void Update() override;
 
     TypeID GetComponentType(void) const override { return TypeID::SteePillarComponent; }
-
+private:
 };
 #endif // STEE_PILLAR_COMPONENT_H_

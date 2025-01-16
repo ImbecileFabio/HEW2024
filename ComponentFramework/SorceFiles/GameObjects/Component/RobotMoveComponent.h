@@ -44,6 +44,9 @@ public:
 
 	void SetState(RobotMoveState _state) { move_state_ = _state; }
 
+	void  SetSpeed(float _speed);
+	float GetSpeed(void);
+
     virtual TypeID GetComponentType(void) const override { return TypeID::RobotMoveComponent; }
 
 private:

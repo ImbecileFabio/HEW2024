@@ -21,7 +21,7 @@
 #include "../Component/PendulumMovementComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ChildrenComponent.h"
-
+#include "../Component/StickMoveComponent.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -38,6 +38,8 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	time_zone_ = new TimeZone(game_manager_);
 	// 子スティック
 	stick_ = new Stick(game_manager_);
+	stick_->GetComponent<StickMoveComponent>()->StickInit(_fulcrum, _movement, _pendulumAngle);
+	stick_->GetComponent<StickMoveComponent>()->SetPendulumTransform(transform_component_);
 	// 子オブジェクト管理コンポーネント
 	children_component_ = new ChildrenComponent(this, this);
 	children_component_->AddChild(time_zone_);
@@ -77,9 +79,22 @@ void Pendulum::InitGameObject(void)
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
 {
-	auto pos = pendulum_component_->GetPendulumFulcrum();
-	time_zone_->GetTransformComponent()->SetPosition(pos.x, pos.y);
-	stick_->GetTransformComponent()->SetPosition(pos.x, pos.y);
+	DirectX::SimpleMath::Vector3 fulcrumPos = pendulum_component_->GetPendulumFulcrum();	// 振り子の支点座標を取得
+	float length = pendulum_component_->GetPendulumLength();								// 振り子の長さを取得
+	StickMoveComponent* stickMoveComponent = stick_->GetComponent<StickMoveComponent>();
+	// タイムゾーンの座標を振り子の支点に合わせる
+	time_zone_->GetTransformComponent()->SetPosition(fulcrumPos.x, fulcrumPos.y);
+	time_zone_->GetTransformComponent()->SetSize( length, length);
+	// 振り子の棒の動きを反映
+	stickMoveComponent->SetStickFulcrum({ fulcrumPos.x, fulcrumPos.y, 0.0f });
+	// 振り子の状態で棒が動くかどうかを設定
+	//bool pendulumMoveFg = pendulum_component_->GetPendulumMovement();
+	//stickMoveComponent->SetStickMovement(pendulumMoveFg);
+
+	float pendulumAngle = pendulum_component_->GetPendulumAngle();
+	stickMoveComponent->SetStickAngle(pendulumAngle);
+	//// 振り子の棒の座標を計算
+	stickMoveComponent->StickPosition(fulcrumPos, stickMoveComponent->GetStickLength());
 }
 //--------------------------------------------------
 // 当たり判定の実行処理

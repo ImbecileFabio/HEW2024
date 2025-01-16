@@ -41,7 +41,7 @@ public:
 	virtual bool CheckCollisionCollider(BoxColliderComponent* _other) = 0;
 
 	bool GetHitFg(void) { return hitFg_; }
-
+	void SetHitFg(bool _hitFg) { hitFg_ = _hitFg; }
 	// ‚Ù‚Ú‹éŒ`—p
 	void SetSize(const float& _x, const float& _y) { SetSize(Vector3(_x, _y, 1.0f)); }
 	void SetSize(const Vector3& _size) { size_ = _size; }

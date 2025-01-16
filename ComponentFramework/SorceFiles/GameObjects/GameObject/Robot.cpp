@@ -135,14 +135,20 @@ void Robot::UpdateGameObject(void)
 		break;
 	}
 	}
+	if (!collider_component_->GetHitFg())
+	{
+		robot_move_component_->SetSpeed(2.0f);
+	}
+
 
 	// ロボットの動きを切り替える
 	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
-
 }
+
 
 void Robot::OnCollisionEnter(GameObject* _other)
 {
+	if (state_ == State::Paused) return;
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Tile:
@@ -176,6 +182,15 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		}
 
 		velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
+		break;
+	}
+	case GameObject::TypeID::WeakFloor:
+	{
+		//std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
+		if (push_out_component_)
+		{
+			push_out_component_->ResolveCollision(_other);	// 押し出し処理
+		}
 		break;
 	}
 	default:

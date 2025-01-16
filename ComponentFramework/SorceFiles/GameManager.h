@@ -66,6 +66,7 @@ public:
 	void SetEndFlag(bool _endFg) { endFg = _endFg; }
 	bool GetEndFlag() { return endFg; }
 	void itemCountUp() { itemCount++; }
+	void ResetItemCount() { itemCount = 0; }
 	int GetItemCount() { return itemCount; }
 
 

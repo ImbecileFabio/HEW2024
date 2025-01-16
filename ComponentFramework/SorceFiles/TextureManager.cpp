@@ -124,7 +124,7 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("lift_circle", GIMMICK_PATH"lift/v02/lift_circle_01.png");					// 留め具
 	RegisterTexture("lift_rail", GIMMICK_PATH"lift/v02/lift_rail_01.png");						// レール
 	// 脆い床 （氷だったもの）
-	RegisterTexture("weakfloor_cnter", GIMMICK_PATH"weakfloor/v01/weakfloor_center_01.png");	// 中央
+	RegisterTexture("weakfloor_center", GIMMICK_PATH"weakfloor/v01/weakfloor_center_01.png");	// 中央
 	RegisterTexture("weakfloor_left", GIMMICK_PATH"weakfloor/v01/weakfloor_left_01.png");		// 左
 	RegisterTexture("weakfloor_right", GIMMICK_PATH"weakfloor/v01/weakfloor_right_01.png");		// 右
 	// 鉄柱
@@ -159,25 +159,63 @@ void TextureManager::RegisterAllTextures()
 	// ギア
 	RegisterTexture("gear", UI_PATH"v02/gear_01.png");
 	// 数字
-	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png");
+	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4.0f, 3.0f);
 	// ポーズボタン
 	RegisterTexture("pause_button", UI_PATH"v02/pause_button_01.png");
 	// ステージUI
 	RegisterTexture("stageUI", UI_PATH"v02/stage_ui_01.png");
-	// テスト用ボタン
-	RegisterTexture("hoge", UI_PATH"hoge.png");
 	/*--------------- SCENE ---------------*/
+	// 操作説明画像
+	RegisterTexture("instruction_window", SCENE_PATH"instruction/v02/window_instruction_01.png");
+	// チームロゴ
+	//RegisterTexture("introduction_backdrop", SCENE_PATH"introduction/v01/backdrop_introduction_01.png");
+	//RegisterTexture("introduction_teamlogo", SCENE_PATH"introduction/v01/teamlogo_01.png");
 	// オプション
-	RegisterTexture("option_menu", SCENE_PATH"option/v01/9.JPG");
-	RegisterTexture("option_sound", SCENE_PATH"option/v01/11.JPG");
+	RegisterTexture("option_window", SCENE_PATH"option/v01/window_option_01.png");
+	RegisterTexture("option_return", SCENE_PATH"option/v01/return_option_01.png");
+	RegisterTexture("option_frame_slider", SCENE_PATH"option/v01/frame_slider_01.png");
+	RegisterTexture("option_stick_slider", SCENE_PATH"option/v01/color_stick_slider_01.png");
+	RegisterTexture("option_bgm_button", SCENE_PATH"option/v01/button_bgm_01.png");
+	RegisterTexture("option_se_button", SCENE_PATH"option/v01/button_se_01.png");
+	RegisterTexture("option_ball_slider", SCENE_PATH"option/v01/ball_slider_01.png");
+	RegisterTexture("option_arrow_right", SCENE_PATH"option/v01/arrow_right_01.png");
+	RegisterTexture("option_arrow_left", SCENE_PATH"option/v01/arrow_left_01.png");
+	// ポーズ
+	RegisterTexture("pose_window", SCENE_PATH"pose/v01/window_pose_01.png");
+	RegisterTexture("pose_return_game", SCENE_PATH"pose/v01/return_game_button_01.png");
+	RegisterTexture("pose_restart", SCENE_PATH"pose/v01/restart_button_01.png");
+	RegisterTexture("pose_select", SCENE_PATH"pose/v01/stage_select_button_01.png");
+	RegisterTexture("pose_instruction", SCENE_PATH"pose/v01/instruction_button_01.png");
+	RegisterTexture("pose_option", SCENE_PATH"pose/v01/option_button_01.png");
+
 	// リザルト
-	RegisterTexture("result_menu", SCENE_PATH"result/v01/10.JPG");
+	RegisterTexture("result_backdrop", SCENE_PATH"result/v01/backdrop_result_01.png");
+	RegisterTexture("result_front_ribbon", SCENE_PATH"result/v01/front_ribbon_01.png");
+	RegisterTexture("result_select", SCENE_PATH"result/v01/select_button_01.png");
+	RegisterTexture("result_next", SCENE_PATH"result/v01/next_button_01.png");
 	// タイトル
-	RegisterTexture("title_menu", SCENE_PATH"title/v01/6.JPG");
-	RegisterTexture("title_select", SCENE_PATH"title/v01/7.JPG");
+	RegisterTexture("title_ribbon", SCENE_PATH"title/v01/ribbon_title_01.png");
+	RegisterTexture("title_logo", SCENE_PATH"title/v01/titlelogo_01.png");
+	RegisterTexture("title_start", SCENE_PATH"title/v01/start_button_01.png");
+	RegisterTexture("title_end", SCENE_PATH"title/v01/end_button_01.png");
+	RegisterTexture("title_option", SCENE_PATH"title/v01/option_button_01.png");
+	RegisterTexture("title_cursor", SCENE_PATH"title/v01/cursor_01.png");
+	RegisterTexture("transition_01", SCENE_PATH"title/v01/transition_01.png");
+	//RegisterTexture("transition_02", SCENE_PATH"title/v01/transition_02.png");
+	
 	RegisterTexture("transition_01", SCENE_PATH"title/v01/transition_01.png");
 	RegisterTexture("transition_02", SCENE_PATH"title/v01/transition_02.png");
-
+	// ステージセレクト
+	RegisterTexture("stageselect_option", SCENE_PATH"stageselect/v01/option_select_button_01.png");
+	RegisterTexture("stageselect_return", SCENE_PATH"stageselect/v01/return_title_button_01.png");
+	RegisterTexture("stageselect_right", SCENE_PATH"stageselect/v01/right_button_01.png");
+	RegisterTexture("stageselect_left", SCENE_PATH"stageselect/v01/left_button_01.png");
+	RegisterTexture("stageselect_chapter", SCENE_PATH"stageselect/v01/chapter_numbers_01.png");
+	RegisterTexture("stageselect_gear_left", SCENE_PATH"stageselect/v01/gear_left_rotation_01.png");
+	RegisterTexture("stageselect_gear_right", SCENE_PATH"stageselect/v01/gear_right_rotation_01.png");
+	RegisterTexture("stageselect_stage_numbers_m", SCENE_PATH"stageselect/v01/stage_numbers_m_01.png");
+	RegisterTexture("stageselect_stage_numbers_s", SCENE_PATH"stageselect/v01/stage_numbers_s_01.png");
+	RegisterTexture("stageselect_stage_numbers_w", SCENE_PATH"stageselect/v01/stage_numbers_w_01.png");
 
 }
 

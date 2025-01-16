@@ -3,10 +3,10 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Revolution::Revolution(GameManager* _gameManager, const std::string _imgName)
+Revolution::Revolution(GameManager* _gameManager, const std::string _imgName, int _drawOrder)
 	: GameObject(_gameManager, "Revolution")
 {
-	sprite_component_ = new SpriteComponent(this, _imgName, 0);
+	sprite_component_ = new SpriteComponent(this, _imgName, _drawOrder);
 	sound_.Init();
 	//sound_.Play(SoundLabel_TitleBGM);
 	this->InitGameObject();
