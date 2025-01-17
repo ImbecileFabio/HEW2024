@@ -17,6 +17,7 @@ public:
 	WeakFloor(GameManager* _gameManager);
 	~WeakFloor(void);
 
+	void SetWeakFloorGroup(class WeakFloorGroup* _weak_floor_group);
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
@@ -24,6 +25,8 @@ public:
 
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
+	// タイルを所有するグループ
+	class WeakFloorGroup*				  weak_floor_group_{};	// 脆い床グループ
 	// 所有するコンポーネント
 	class RenderComponent*				  sprite_component_{};	// スプライト
 	class ColliderBaseComponent*		collider_component_{};	// 当たり判定

@@ -79,6 +79,8 @@ void Pendulum::InitGameObject(void)
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
 {
+	// ƒ^ƒCƒ€ƒ][ƒ“‚ÉU‚èq‚ª“®‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ğ“n‚·
+	time_zone_->SetPendulumMoveFg(pendulum_component_->GetPendulumMovement());
 	DirectX::SimpleMath::Vector3 fulcrumPos = pendulum_component_->GetPendulumFulcrum();	// U‚èq‚Ìx“_À•W‚ğæ“¾
 	float length = pendulum_component_->GetPendulumLength();								// U‚èq‚Ì’·‚³‚ğæ“¾
 	StickMoveComponent* stickMoveComponent = stick_->GetComponent<StickMoveComponent>();
@@ -87,10 +89,6 @@ void Pendulum::UpdateGameObject(void)
 	time_zone_->GetTransformComponent()->SetSize( length, length);
 	// U‚èq‚Ì–_‚Ì“®‚«‚ğ”½‰f
 	stickMoveComponent->SetStickFulcrum({ fulcrumPos.x, fulcrumPos.y, 0.0f });
-	// U‚èq‚Ìó‘Ô‚Å–_‚ª“®‚­‚©‚Ç‚¤‚©‚ğİ’è
-	//bool pendulumMoveFg = pendulum_component_->GetPendulumMovement();
-	//stickMoveComponent->SetStickMovement(pendulumMoveFg);
-
 	float pendulumAngle = pendulum_component_->GetPendulumAngle();
 	stickMoveComponent->SetStickAngle(pendulumAngle);
 	//// U‚èq‚Ì–_‚ÌÀ•W‚ğŒvZ

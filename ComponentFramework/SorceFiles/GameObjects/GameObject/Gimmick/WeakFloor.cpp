@@ -11,6 +11,7 @@
 #include "../../Component/EventComponent/ColliderEventComponent.h"
 #include "../../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../../Component/GimmickComponent/WeakFloorComponent.h"
+#include "../../GameObject/Gimmick/WeakFloorGroup.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -37,6 +38,14 @@ WeakFloor::~WeakFloor(void)
 	delete weak_floor_component_;
 }
 //--------------------------------------------------
+// @brief グループの参照を設定
+// @param _weak_floor_group[脆い床グループ]
+//--------------------------------------------------
+void WeakFloor::SetWeakFloorGroup(WeakFloorGroup* _weak_floor_group)
+{
+	weak_floor_group_ = _weak_floor_group;
+}
+//--------------------------------------------------
 // @brief 初期化処理
 //--------------------------------------------------
 void WeakFloor::InitGameObject(void)
@@ -58,6 +67,7 @@ void WeakFloor::OnCollisionEnter(GameObject* _other)
 	if (_other->GetType() == TypeID::Robot)	// タイルとロボットが接触したら
 	{
 		std::cout << std::format("WeakFloor -> Robot -> OnCollisionEnter\n");
+		weak_floor_group_->SetWeakFloorBreak(true);	// グループに通知
 	}
 }
 
