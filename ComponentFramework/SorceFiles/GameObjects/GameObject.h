@@ -58,6 +58,7 @@ public:
 		, Pulley		// 滑車ギミック
 		// タイルを一括で管理するグループクラス
 		, WeakFloorGroup// 脆い床
+		, LiftGroup		// リフト
 		// ゲームオブジェクトのIDの最大値
 		, MAX
 	};
@@ -72,7 +73,6 @@ public:
 		, Active		// Updateされる
 		, Paused		// Updateされない
 		, Dead			// GameObjectsリストから除外される(削除はされない)
-		, ColliderOut	// ColliderManagerから削除される
 		, MAX			// 状態の最大値
 	};
 
@@ -89,6 +89,9 @@ public:
 
 	virtual void InitGameObject(void) {};	// オーバーライド用
 	virtual void UpdateGameObject(void) {};	// オーバーライド用
+
+	void SetDeltaTime(float _deltaTime) { delta_time_ = _deltaTime; }	// デルタタイムの設定
+	auto GetDeltaTime(void) const { return delta_time_; }	// デルタタイムの取得
 
 
 	// 姿勢情報の更新
@@ -142,6 +145,9 @@ public:
 	virtual void OnCollisionStay(GameObject* _other) {};	// 接触し続けている
 	virtual void OnCollisionExit(GameObject* _other) {};	// 接触から抜けた時
 protected:
+	// デルタタイム
+	float delta_time_;
+
 	// GameObjectの所有者
 	 GameManager* game_manager_{};
 

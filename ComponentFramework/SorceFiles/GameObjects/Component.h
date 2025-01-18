@@ -85,6 +85,9 @@ public:
 	virtual void Uninit(void) = 0;
 	virtual void Update(void) = 0;
 
+	void SetDeltaTime(float _deltaTime) { delta_time_ = _deltaTime; }	// デルタタイムの設定
+	auto GetDeltaTime(void) const { return delta_time_; }	// デルタタイムの取得
+
 	// コンポーネントの姿勢制御の更新
 	virtual void OnUpdateWorldTransform() {}; 
 
@@ -99,7 +102,9 @@ public:
 
 	std::string GetComponentName(void);
 protected:
-	GameObject* owner_;				// 自分（コンポーネント）の所有者
+	float delta_time_{};			// デルタタイム
+
+	GameObject* owner_{};				// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
 
 	Sound sound_;

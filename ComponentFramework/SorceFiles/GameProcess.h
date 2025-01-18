@@ -51,6 +51,7 @@ private:
 	static uint32_t	 height_;	// ウィンドウの縦幅
 
 	GameManager* game_manager_{};	// ゲーム管理インスタンス
-};
 
+	float delta_time_ = 0.0f;
+};
 #endif // GAME_PROCESS_H_
