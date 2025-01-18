@@ -228,7 +228,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 
 		Lift::MoveState direction{};
 
-		// 移動方向を設定
+		// 移動方向を設定	もう少し厳密に判定して開始時の移動方向を決めてもいいかも
 		if (dy == 0 && dx != 0) {	// 左右
 			direction = Lift::MoveState::side;
 		}
@@ -243,15 +243,15 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		}
 
 		// 移動距離を計算
-		double distance = std::sqrt(dx * dx + dy * dy);
+		float distance = std::sqrt(dx * dx + dy * dy);
+
+		auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
 
 		// リフト生成
-		obj = new Lift(direction, distance, game_manager_);
+		obj = new Lift(game_manager_, direction, distance, pendulum_);
 		auto lift = dynamic_cast<Lift*>(obj);
 		lift->GetTransformComponent()->SetPosition(objPos.x, objPos.y);
 
-		auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
-		lift->SetPendulum(pendulum_);	// リフトと連動させたい振り子をセット
 
 
 	}

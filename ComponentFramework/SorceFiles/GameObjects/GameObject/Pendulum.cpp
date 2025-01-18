@@ -1,6 +1,6 @@
 //==================================================
 // [Pendulum.cpp] 振り子オブジェクト
-// 著者：有馬啓太
+// 著者：中谷凌也
 //--------------------------------------------------
 // 説明：振り子の処理を定義
 //==================================================
@@ -13,7 +13,9 @@
 #include "TimeZone.h"
 #include "Stick.h"
 #include "../../GameManager.h"
+#include "../../TileMapManager.h"
 #include "../../PemdulumManager.h"
+
 #include "../Component.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
@@ -35,11 +37,12 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	// 振り子コンポーネント
 	pendulum_component_ = new PendulumMovementComponent(this);
 	// 子タイムゾーン
-	time_zone_ = new TimeZone(game_manager_);
+	time_zone_ = new TimeZone(game_manager_, this);
 	// 子スティック
 	stick_ = new Stick(game_manager_);
 	stick_->GetComponent<StickMoveComponent>()->StickInit(_fulcrum, _movement, _pendulumAngle);
 	stick_->GetComponent<StickMoveComponent>()->SetPendulumTransform(transform_component_);
+
 	// 子オブジェクト管理コンポーネント
 	children_component_ = new ChildrenComponent(this, this);
 	children_component_->AddChild(time_zone_);
@@ -51,6 +54,8 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 
 	pendulum_component_->PendulumInit(_fulcrum, _movement, _pendulumAngle);
 	this->InitGameObject();
+
+	transform_component_->SetSize(TILE_SIZE_X * 1.3, TILE_SIZE_Y * 1.3);
 }
 
 //--------------------------------------------------
@@ -84,7 +89,9 @@ void Pendulum::UpdateGameObject(void)
 	StickMoveComponent* stickMoveComponent = stick_->GetComponent<StickMoveComponent>();
 	// タイムゾーンの座標を振り子の支点に合わせる
 	time_zone_->GetTransformComponent()->SetPosition(fulcrumPos.x, fulcrumPos.y);
-	time_zone_->GetTransformComponent()->SetSize( length, length);
+	time_zone_->GetTransformComponent()->SetSize((length + transform_component_->GetSize().x) * 2, (length + transform_component_->GetSize().y) * 2);	// 振り子の長さを半径としてタイムゾーンのサイズを変える
+
+	time_zone_->SetTimeZoneState(static_cast<TimeZone::TimeZoneState>(pendulum_component_->GetLangthState()));	// タイムゾーンの状態を設定
 	// 振り子の棒の動きを反映
 	stickMoveComponent->SetStickFulcrum({ fulcrumPos.x, fulcrumPos.y, 0.0f });
 	// 振り子の状態で棒が動くかどうかを設定

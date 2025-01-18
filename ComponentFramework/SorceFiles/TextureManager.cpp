@@ -201,10 +201,8 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("title_option", SCENE_PATH"title/v01/option_button_01.png");
 	RegisterTexture("title_cursor", SCENE_PATH"title/v01/cursor_01.png");
 	RegisterTexture("transition_01", SCENE_PATH"title/v01/transition_01.png");
-	//RegisterTexture("transition_02", SCENE_PATH"title/v01/transition_02.png");
-	
-	RegisterTexture("transition_01", SCENE_PATH"title/v01/transition_01.png");
 	RegisterTexture("transition_02", SCENE_PATH"title/v01/transition_02.png");
+
 	// ステージセレクト
 	RegisterTexture("stageselect_option", SCENE_PATH"stageselect/v01/option_select_button_01.png");
 	RegisterTexture("stageselect_return", SCENE_PATH"stageselect/v01/return_title_button_01.png");

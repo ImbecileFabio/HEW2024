@@ -71,6 +71,8 @@ void PushOutComponent::ResolveCollision(GameObject* _other) {
     auto myhitbox = myBoxCollider->GetWorldHitBox();
     auto otherhitbox = otherBoxCollider->GetWorldHitBox();
 
+
+
     // Õ“Ë‚µ‚Ä‚¢‚é‚©”»’è
         if (myhitbox.max_.x > otherhitbox.min_.x &&
             myhitbox.min_.x < otherhitbox.max_.x &&
