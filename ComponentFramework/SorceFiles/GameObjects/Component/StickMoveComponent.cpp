@@ -98,7 +98,7 @@ void StickMoveComponent::StickInit(DirectX::SimpleMath::Vector3 _fulcrum, bool _
 	fulcrumPosition_ = _fulcrum;
 	stickMovement_ = _movement;
 	maxStickAngle_ = _stickAngle;
-	SetStickAngle(_stickAngle);
+	SetStickAngle(0.0f);
 }
 //--------------------------------------------------
 // U‚èq‚ÌÀ•W‚ğŒvZ

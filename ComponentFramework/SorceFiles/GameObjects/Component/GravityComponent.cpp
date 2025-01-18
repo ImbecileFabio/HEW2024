@@ -76,7 +76,7 @@ bool GravityComponent::CheckGroundCollision()
 	AABB groundCheckHitbox = robotHitbox;
 
 	// 足元のスキャン範囲を設定（キャラクターサイズに応じて調整）
-	float groundCheckHeight = (robotHitbox.max_.y - robotHitbox.min_.y) * 0.2f;
+	float groundCheckHeight = (robotHitbox.max_.y - robotHitbox.min_.y) * 0.01f;
 	groundCheckHitbox.min_.y -= groundCheckHeight; // 足元少し下に範囲を作成
 	groundCheckHitbox.max_.y = robotHitbox.min_.y;
 	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();

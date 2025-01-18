@@ -71,25 +71,19 @@ void PushOutComponent::ResolveCollision(GameObject* _other) {
     auto myhitbox = myBoxCollider->GetWorldHitBox();
     auto otherhitbox = otherBoxCollider->GetWorldHitBox();
 
-    // ペネトレーション量
-    DirectX::SimpleMath::Vector3 penetration;
-
-    // 重なり量を計算
-    float overlapX = min(myhitbox.max_.x, otherhitbox.max_.x) - max(myhitbox.min_.x, otherhitbox.min_.x);
-    float overlapY = min(myhitbox.max_.y, otherhitbox.max_.y) - max(myhitbox.min_.y, otherhitbox.min_.y);
-
-    if (overlapX <= 0.0f || overlapY <= 0.0f) { return; }
 
 
-    // 最小の重なり量を押し出し方向として返す
-    if (overlapX < overlapY) {
-        penetration = { overlapX * (myhitbox.min_.x < otherhitbox.min_.x ? -1.0f : 1.0f), 0.0f, 0.0f };
-    }
-    else {
-        penetration = { 0.0f, overlapY * (myhitbox.min_.y < otherhitbox.min_.y ? -1.0f : 1.0f), 0.0f };
-    }
+    // 衝突しているか判定
+        if (myhitbox.max_.x > otherhitbox.min_.x &&
+            myhitbox.min_.x < otherhitbox.max_.x &&
+            myhitbox.max_.y > otherhitbox.min_.y &&
+            myhitbox.min_.y < otherhitbox.max_.y)
+        {
+            // ロボットのサイズを取得（高さのみを使用）
+            float robotHeight = myhitbox.max_.y - myhitbox.min_.y;
 
-
-    // 自分の位置を押し出し
-    myTransform->SetPosition(myPos + penetration);
+            // 新しい位置を計算 (現在位置の y をサイズの半分だけ上げる)
+            auto myPos = myTransform->GetPosition();
+            myTransform->SetPosition({ myPos.x, otherhitbox.max_.y + robotHeight / 2.0f, myPos.z });
+        }
 }

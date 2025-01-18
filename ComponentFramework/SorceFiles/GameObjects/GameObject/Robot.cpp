@@ -135,10 +135,6 @@ void Robot::UpdateGameObject(void)
 		break;
 	}
 	}
-	if (!collider_component_->GetHitFg())
-	{
-		robot_move_component_->SetSpeed(2.0f);
-	}
 
 
 	// ロボットの動きを切り替える
@@ -176,12 +172,13 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		if (lift->GetLiftState() == Lift::LiftState::Move)
 		{
 			robot_state_ = Robot::RobotState::OnLift;
+			// リフトの速度に合わせる
+			velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
 		}
 		else {
 			robot_state_ = Robot::RobotState::Move;
 		}
 
-		velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
 		break;
 	}
 	case GameObject::TypeID::WeakFloor:

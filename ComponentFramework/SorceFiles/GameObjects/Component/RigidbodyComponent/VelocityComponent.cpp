@@ -67,8 +67,6 @@ void VelocityComponent::Update() {
 
 	std::cout << std::format("＜VelocityComponent＞ ->[{}] x : {}, y : {}\n", owner_->GetObjectName(), velocity_.x, velocity_.y);
 
-	// 速度をリセット
-	speed_rate_ = 1.0f;
 }
 //--------------------------------------------------
 // 速度係数をセット

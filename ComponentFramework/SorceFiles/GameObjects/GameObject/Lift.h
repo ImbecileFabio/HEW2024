@@ -30,7 +30,7 @@ public:
 		diagonalLeft,	// 斜め移動(左)
 	};
 	Lift(GameManager* _gameManager);
-	Lift(Lift::MoveState _moveState, float _moveDistance, GameManager* _gameManager);
+	Lift(GameManager* _gameManager, Lift::MoveState _moveState, float _moveDistance, Pendulum* _pendulum);
 
 	~Lift(void);
 
@@ -49,17 +49,15 @@ private:
 	class EventBaseComponent*	collider_event_component_ = {};
 	class RenderComponent*		sprite_component_		  = {};	// 画像表示
 	class VelocityComponent*	velocity_component_		  = {};
+	class LiftComponent*		lift_component_ = {};
 
-	float maxMoveDistance_;								// 最大移動距離
-	DirectX::SimpleMath::Vector2 traveledDistance_;		// 累積移動距離
 	DirectX::SimpleMath::Vector2 direction_;			// 移動方向
 	DirectX::SimpleMath::Vector3 startPos_;				// 開始位置
 
 	LiftState lift_state_;
-	int turn_count_;									// 切り返しまでの時間
+	int turn_count_;			// 切り返しまでの時間 多分こいつもComponentに移動させるべき
 
 	Pendulum* pendulum_;					// 連動させたい振り子
-	bool switchFg_;							// スイッチフラグ
-	MoveState moveState_;					// 移動状態
+	MoveState move_state_;					// 移動状態
 };
 #endif // _LIFT_H_
