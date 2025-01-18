@@ -24,10 +24,13 @@ public:
     void Update() override;
 
     TypeID GetComponentType(void) const override { return TypeID::WeakFloorComponent; }
+
+    void NotSpriteDraw(void);   // 画像の描画をしない
 private:
     // ownerのコンポーネントをキャッシュ(COPY)
     class TransformComponent*    owner_transform_;
     class ColliderBaseComponent* owner_collider_;
+	class RenderComponent*     owner_sprite_;
 private:
     DirectX::SimpleMath::Vector2 direction_; // 移動方向 ( 右:1,0 / 左:-1,0 / 上:0,1 / 下:0,-1)
 };

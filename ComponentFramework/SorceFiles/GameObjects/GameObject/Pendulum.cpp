@@ -84,6 +84,7 @@ void Pendulum::InitGameObject(void)
 //--------------------------------------------------
 void Pendulum::UpdateGameObject(void)
 {
+	// ƒ^ƒCƒ€ƒ][ƒ“‚ÉU‚èŽq‚ª“®‚¢‚Ä‚¢‚é‚©‚Ç‚¤‚©‚ð“n‚·
 	DirectX::SimpleMath::Vector3 fulcrumPos = pendulum_component_->GetPendulumFulcrum();	// U‚èŽq‚ÌŽx“_À•W‚ðŽæ“¾
 	float length = pendulum_component_->GetPendulumLength();								// U‚èŽq‚Ì’·‚³‚ðŽæ“¾
 	StickMoveComponent* stickMoveComponent = stick_->GetComponent<StickMoveComponent>();
@@ -94,10 +95,6 @@ void Pendulum::UpdateGameObject(void)
 	time_zone_->SetTimeZoneState(static_cast<TimeZone::TimeZoneState>(pendulum_component_->GetLangthState()));	// ƒ^ƒCƒ€ƒ][ƒ“‚Ìó‘Ô‚ðÝ’è
 	// U‚èŽq‚Ì–_‚Ì“®‚«‚ð”½‰f
 	stickMoveComponent->SetStickFulcrum({ fulcrumPos.x, fulcrumPos.y, 0.0f });
-	// U‚èŽq‚Ìó‘Ô‚Å–_‚ª“®‚­‚©‚Ç‚¤‚©‚ðÝ’è
-	//bool pendulumMoveFg = pendulum_component_->GetPendulumMovement();
-	//stickMoveComponent->SetStickMovement(pendulumMoveFg);
-
 	float pendulumAngle = pendulum_component_->GetPendulumAngle();
 	stickMoveComponent->SetStickAngle(pendulumAngle);
 	//// U‚èŽq‚Ì–_‚ÌÀ•W‚ðŒvŽZ
@@ -124,4 +121,14 @@ void Pendulum::OnCollisionEnter(GameObject* _other)
 	default:
 		break;
 	}
+}
+//--------------------------------------------------
+// @brief U‚èŽq‚Ì•`‰æ‚ÆXVó‘Ô‚ðˆêŠ‡‚Å•ÏX
+//--------------------------------------------------
+void Pendulum::NotDrawAndStopPendulum(void)
+{
+	state_ = State::Paused;
+	sprite_component_->SetState(RenderComponent::State::notDraw);
+	time_zone_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+	stick_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 }

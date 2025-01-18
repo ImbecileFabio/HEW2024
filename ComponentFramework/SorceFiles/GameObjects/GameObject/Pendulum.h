@@ -31,6 +31,8 @@ public:
 	TypeID GetType(void) override { return TypeID::Pendulum; }
 
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
+
+	void NotDrawAndStopPendulum(void);
 private:
 	// 子オブジェクト
 	class TimeZone* time_zone_{};

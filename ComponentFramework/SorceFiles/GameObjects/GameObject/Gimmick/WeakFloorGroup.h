@@ -24,9 +24,20 @@ public:
 
 	TypeID GetType(void) override { return TypeID::WeakFloorGroup; }
 
-	void AddWeakFlootTile(GameObject* _tile);	// グループにタイルを追加
+	void SetWeakFloorBreak(bool _isBreak) { isWeakFloorBreak_ = _isBreak; }	// 脆い床が壊れたかどうかを設定
+
+	void AddWeakFloorTile (GameObject* _tile);					// グループにタイルを追加
+	void SetPendulumANDMovement(GameObject* _centerPendulum);	// グループに中心の振り子を設定
 private:
-	std::vector<GameObject*> weakFloorTiles_;	// グループが管理したいタイル
+	// グループ単体が管理しているもの
+	bool isWeakFloorBreak_		 = false;				// 脆い床が壊れたかどうか
+	bool isCenterMedian			 = false;				// 中心値を調べたかどうか
+	int tileCenterNum_			 = 0;					// タイルの中心の添え字
+	GameObject* centerPendulum_ = nullptr;				// 中心の振り子
+	std::vector<GameObject*> weakFloorTiles_;			// グループが管理したいタイル
+
+	// キャッシュしたコンポーネント
+	class PendulumMovementComponent* owner_pendulum_movement_{};	// 振り子の動き
 };
 #endif // WEAK_FLOOR_GROUP_H_
 

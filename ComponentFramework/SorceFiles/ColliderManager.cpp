@@ -130,7 +130,7 @@ void ColliderManager::UpdateGameObjects(void)
 	// 当たり判定を取らなくなったオブジェクトの移動
 	for (auto it = collider_game_objects_.begin(); it != collider_game_objects_.end(); ) 
 	{
-		if ((*it)->GetState() == GameObject::State::ColliderOut)
+		if ((*it)->GetState() == GameObject::State::Paused)
 		{
 			collider_out_objects_.emplace_back(std::move(*it));
 			it = collider_game_objects_.erase(it); // 要素を削除しつつ次の要素へ
