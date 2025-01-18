@@ -90,6 +90,9 @@ public:
 	virtual void InitGameObject(void) {};	// オーバーライド用
 	virtual void UpdateGameObject(void) {};	// オーバーライド用
 
+	void SetDeltaTime(float _deltaTime) { delta_time_ = _deltaTime; }	// デルタタイムの設定
+	auto GetDeltaTime(void) const { return delta_time_; }	// デルタタイムの取得
+
 
 	// 姿勢情報の更新
 	void ComputeWorldTransform();
@@ -142,6 +145,8 @@ public:
 	virtual void OnCollisionStay(GameObject* _other) {};	// 接触し続けている
 	virtual void OnCollisionExit(GameObject* _other) {};	// 接触から抜けた時
 protected:
+	float delta_time_{};	// デルタタイム
+
 	// GameObjectの所有者
 	 GameManager* game_manager_{};
 

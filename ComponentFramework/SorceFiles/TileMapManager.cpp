@@ -125,7 +125,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 {
 	GameObject* obj = nullptr;
 	Vector2 op = { _x - MAP_SIZE_X / 2 , _y - MAP_SIZE_Y / 2 };	// 中心が0になるように
-	Vector2 objPos = { (op.x * TILE_SIZE_X) + (TILE_SIZE_X / 2), -((op.y * TILE_SIZE_Y) + (TILE_SIZE_Y / 2)) };	// オブジェクトの生成する位置を調整（ごり押し）
+	Vector3 objPos = { (op.x * TILE_SIZE_X) + (TILE_SIZE_X / 2), -((op.y * TILE_SIZE_Y) + (TILE_SIZE_Y / 2)), 0.0f };	// オブジェクトの生成する位置を調整（ごり押し）
 
 	if (_tileID == 1)	// タイル
 	{
@@ -193,7 +193,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				group->AddWeakFloorTile(obj);
 				weak_floor_groups_.push_back(group); // グループリストに追加
 				// 振り子を生成 
-				auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
+				auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f);
 				auto weakFloorGroup = dynamic_cast<WeakFloorGroup*>(group);
 				// 振り子と連動させたい振り子をセット
 				weakFloorGroup->SetPendulumANDMovement(pendulum_);
@@ -205,13 +205,14 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	}
 	else if (_tileID == 3)	// 振り子
 	{
-		obj = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0), false, 30.f);
+		obj = new Pendulum(game_manager_, objPos, false, 30.f);
 
 	}
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
-		// リフトの終点を探す
-		Vector2 endPos;
+		// リフトの終点を探す	見つからなかったらとりあえず初期位置に
+		Vector3 endPos = objPos;
+		bool foundEndPos = false;
 		for (int y = 0; y < map_data_.size(); ++y)
 		{
 			for (int x = 0; x < map_data_[y].size(); ++x)
@@ -222,10 +223,13 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 					{
 						Vector2 ep = { x - MAP_SIZE_X / 2 , y - MAP_SIZE_Y / 2 };	// 座標の調整
 						endPos = { (ep.x * TILE_SIZE_X) + (TILE_SIZE_X / 2), -((ep.y * TILE_SIZE_Y) + (TILE_SIZE_Y / 2)) };
+						foundEndPos = true;
 						break;
 					}
 				}
+				if (foundEndPos) break;
 			}
+			if (foundEndPos) break;
 		}
 
 		float dx = endPos.x - objPos.x;
@@ -247,13 +251,10 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			direction = Lift::MoveState::diagonalLeft;
 		}
 
-		// 移動距離を計算
-		float distance = std::sqrt(dx * dx + dy * dy);
-
-		auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
+		auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f);
 
 		// リフト生成
-		obj = new Lift(game_manager_, direction, distance, pendulum_);
+		obj = new Lift(game_manager_, direction, objPos, endPos, pendulum_);
 		auto lift = dynamic_cast<Lift*>(obj);
 		lift->GetTransformComponent()->SetPosition(objPos.x, objPos.y);
 

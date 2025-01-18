@@ -30,7 +30,7 @@ public:
 		diagonalLeft,	// 斜め移動(左)
 	};
 	Lift(GameManager* _gameManager);
-	Lift(GameManager* _gameManager, Lift::MoveState _moveState, float _moveDistance, Pendulum* _pendulum);
+	Lift(GameManager* _gameManager, Lift::MoveState _moveState, Vector3 _startpos, Vector3 _endPos, Pendulum* _pendulum);
 
 	~Lift(void);
 
@@ -41,6 +41,7 @@ public:
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 
 	void SetPendulum(Pendulum* _pendulum);
+
 	void SetMoveState(Lift::MoveState _moveState);
 
 	auto GetLiftState() { return lift_state_; }
@@ -51,13 +52,10 @@ private:
 	class VelocityComponent*	velocity_component_		  = {};
 	class LiftComponent*		lift_component_ = {};
 
-	DirectX::SimpleMath::Vector2 direction_;			// 移動方向
-	DirectX::SimpleMath::Vector3 startPos_;				// 開始位置
-
-	LiftState lift_state_;
+	LiftState lift_state_;		// リフトの状態
+	MoveState move_state_;		// 移動方向
 	int turn_count_;			// 切り返しまでの時間 多分こいつもComponentに移動させるべき
 
 	Pendulum* pendulum_;					// 連動させたい振り子
-	MoveState move_state_;					// 移動状態
 };
 #endif // _LIFT_H_
