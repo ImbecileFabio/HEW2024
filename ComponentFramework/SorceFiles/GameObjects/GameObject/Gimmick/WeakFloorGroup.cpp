@@ -7,7 +7,9 @@
 /*----- インクルード -----*/
 #include "WeakFloorGroup.h"
 #include "WeakFloor.h"
+#include "../../GameObject/Pendulum.h"
 #include "../../Component/PendulumMovementComponent.h"
+#include "../../Component/EventComponent/ColliderEventComponent.h"
 #include "../../Component/ColliderComponent/BoxColliderComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
@@ -73,12 +75,16 @@ void WeakFloorGroup::UpdateGameObject(void)
 	// 脆い床が壊れたかどうかかつ、振り子が動いている場合
 	if (isWeakFloorBreak_ && owner_pendulum_movement_->GetPendulumMovement())
 	{
-		// グループの方で脆いタイルを一括で変更をかける
+		// グループの方で脆いタイルを一括で変更をかける この処理は一度だけ
 		for (auto& tile : weakFloorTiles_)
 		{
 			tile->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+			tile->GetComponent<EventBaseComponent>()->RemoveEvent();
+			tile->SetState(GameObject::State::Paused);
 		}
-	}
+		auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
+		pendulum->NotDrawAndStopPendulum();
+    }
 }
 //--------------------------------------------------
 // @brief 脆い床タイルを追加

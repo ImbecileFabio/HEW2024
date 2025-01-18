@@ -64,6 +64,7 @@ void WeakFloor::UpdateGameObject(void)
 //--------------------------------------------------
 void WeakFloor::OnCollisionEnter(GameObject* _other)
 {
+	if (state_ == State::Paused) return;
 	if (_other->GetType() == TypeID::Robot)	// タイルとロボットが接触したら
 	{
 		std::cout << std::format("WeakFloor -> Robot -> OnCollisionEnter\n");
