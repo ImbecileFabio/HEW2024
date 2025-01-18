@@ -102,6 +102,24 @@ void GameManager::UpdateAll(float _deltaTime)
 }
 
 //-----------------------------------------------------------------
+// 出力生成処理
+//-----------------------------------------------------------------
+void GameManager::GenerateOutputAll(void)
+{
+	if (renderer_)
+	{
+
+		renderer_->Begin();
+		renderer_->Draw();
+
+		ImGuiManager::staticPointer->ImGuiRender();
+
+		renderer_->End();
+
+	}
+}
+
+//-----------------------------------------------------------------
 // @biref オブジェクトをすべてクリア
 //	一度deadgameobjectsに移動させてから消去することでイテレータがバグるのを防いでます
 // （gameobjectはデストラクタでgameobjectsから勝手に出ていくのでずれる）
@@ -271,6 +289,7 @@ void GameManager::UpdateGameObjects(float _deltaTime)
 	// 待機リストのゲームオブジェクトの操作
 	for (auto& pendingGameObject : pending_game_objects_)
 	{
+		pendingGameObject->SetDeltaTime(_deltaTime);
 		pendingGameObject->Update();
 		game_objects_.emplace_back(pendingGameObject);
 	}
