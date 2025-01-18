@@ -73,6 +73,7 @@ public:
 		, Active		// Updateされる
 		, Paused		// Updateされない
 		, Dead			// GameObjectsリストから除外される(削除はされない)
+		, ColliderOut	// ColliderManagerから除外される
 		, MAX			// 状態の最大値
 	};
 
