@@ -56,8 +56,8 @@ void LiftGroup::UpdateGameObject(void)
 
         if (size % 2 == 0) // ãÙêî
         {
-            size_t leftIndex = (size / 2) - 1;
-            size_t rightIndex = size / 2;
+            int leftIndex = (size / 2) - 1;
+            int rightIndex = size / 2;
             tileCenterNum_ = leftIndex;
 
             DirectX::SimpleMath::Vector3 leftPos = initialPositions_[leftIndex];
@@ -71,7 +71,7 @@ void LiftGroup::UpdateGameObject(void)
         }
         else // äÔêî
         {
-            size_t centerIndex = size / 2;
+            int centerIndex = size / 2;
             tileCenterNum_ = centerIndex;
 
             centerPos = initialPositions_[centerIndex];
@@ -90,14 +90,8 @@ void LiftGroup::UpdateGameObject(void)
     for (size_t i = 0; i < liftTiles_.size(); ++i)
     {
         DirectX::SimpleMath::Vector3 initialPos = initialPositions_[i];
-		initialPos.x = std::abs(initialPos.x);
-		initialPos.y = std::abs(initialPos.y);
         DirectX::SimpleMath::Vector3 currentOffset = centerLiftPos - initialPositions_[tileCenterNum_];
-		currentOffset.x = std::abs(currentOffset.x);
-		currentOffset.y = std::abs(currentOffset.y);
         DirectX::SimpleMath::Vector3 newPosition = initialPos + currentOffset;
-		newPosition.x = std::abs(newPosition.x);
-		newPosition.y = std::abs(newPosition.y);
 
         liftTiles_[i]->GetTransformComponent()->SetPosition(newPosition);
     }
