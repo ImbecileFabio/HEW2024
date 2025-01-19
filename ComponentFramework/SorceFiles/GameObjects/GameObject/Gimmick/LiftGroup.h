@@ -22,7 +22,20 @@ public:
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::LiftGroup; }
+
+	void AddLiftTile(GameObject* _tile);					// グループにタイルを追加
+	void SetPendulumANDMovement(GameObject* _centerPendulum);	// グループに中心の振り子を設定
+
 private:
+	// グループ単体が管理しているもの
+	bool isCenterMedian = false;						// 中心値を調べたかどうか
+	int tileCenterNum_ = 0;								// タイルの中心の添え字
+	GameObject* centerPendulum_ = nullptr;				// 中心の振り子
+	std::vector<GameObject*> liftTiles_;				// グループが管理したいタイル
+
+	// キャッシュしたコンポーネント
+	class PendulumMovementComponent* owner_pendulum_movement_{};	// 振り子の動き
+	std::vector<class LiftComponent*>  owner_lift_components_{};	// リフトコンポーネント
 
 };
 #endif // LIFT_GROUP_H_

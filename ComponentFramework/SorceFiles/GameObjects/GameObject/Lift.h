@@ -11,6 +11,7 @@
 #include <SimpleMath.h>
 /*----- 前方宣言 -----*/
 class Pendulum;
+class LiftGroup;
 //--------------------------------------------------
 // リフトオブジェクト
 //--------------------------------------------------
@@ -30,7 +31,7 @@ public:
 		diagonalLeft,	// 斜め移動(左)
 	};
 	Lift(GameManager* _gameManager);
-	Lift(GameManager* _gameManager, Lift::MoveState _moveState, float _moveDistance, Pendulum* _pendulum);
+	Lift(GameManager* _gameManager, Lift::MoveState _moveState, float _moveDistance, Pendulum* _pendulum = nullptr);
 
 	~Lift(void);
 
@@ -44,6 +45,7 @@ public:
 	void SetMoveState(Lift::MoveState _moveState);
 
 	auto GetLiftState() { return lift_state_; }
+	void SetLiftGroup(LiftGroup* _group) { lift_group_ = _group; }
 private:
 	class ColliderBaseComponent* collider_component_ = {};
 	class EventBaseComponent*	collider_event_component_ = {};
@@ -59,5 +61,6 @@ private:
 
 	Pendulum* pendulum_;					// 連動させたい振り子
 	MoveState move_state_;					// 移動状態
+	LiftGroup* lift_group_{};					// リフトをまとめるグループ
 };
 #endif // _LIFT_H_

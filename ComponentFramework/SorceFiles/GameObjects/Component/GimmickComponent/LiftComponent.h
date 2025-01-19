@@ -63,6 +63,7 @@ public:
 	void SetStartPos(DirectX::SimpleMath::Vector3 _pos) { start_pos_ = _pos; }
 	auto GetStartPos(void) { return start_pos_; }
 
+	void SetPendulum(Pendulum* _pendulum) { pendulum_ = _pendulum; }
 private:
 	bool CheckLengthSideTraveled();	// 縦横移動の移動距離のチェック
 	bool CheckDiagonalTraveled();	// 斜め移動の移動距離のチェック

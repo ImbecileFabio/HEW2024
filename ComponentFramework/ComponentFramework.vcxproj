@@ -24,6 +24,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\GravityComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\LiftGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\GravityComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\LiftGroup.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />

@@ -38,6 +38,7 @@ public:
 	void SetSize(const Vector3 _size)				{ size_ = _size; }
 
 	void SetPosition(const float _x, const float _y, const float _z = 0.0f)	{ SetPosition(Vector3(_x, _y, _z)); }
+	void SetPositionY(const float _y)										{ SetPosition(Vector3(position_.x, _y, position_.z)); }
 	void SetPosition(const Vector3 _position)								{ position_ = _position; }
 
 	void SetRotation(const float _z)			{ SetRotation(Vector3(0.0f, 0.0f, _z)); }

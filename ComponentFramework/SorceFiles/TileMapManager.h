@@ -29,6 +29,7 @@ constexpr float MAP_SIZE_Y = 18.0f;// ( 1080pixel / タイルのサイズ)
 
 /*----- 前方宣言 -----*/
 class WeakFloorGroup;
+class LiftGroup;
 //-----------------------------------------------------------------
 // タイルマップマネージャ
 //-----------------------------------------------------------------
@@ -48,11 +49,14 @@ private:
 
 
 	bool IsTileInGroup(int x, int y, WeakFloorGroup*& group);
+	bool IsTileInGroup(int x, int y, LiftGroup*& group);
 private:
 	GameManager* game_manager_{};
 	std::vector<std::vector<std::vector<int>>> map_data_;
-	std::map<std::pair<int, int>, WeakFloorGroup*> tile_to_group_; // タイル座標とグループの対応
-	std::vector<WeakFloorGroup*> weak_floor_groups_;               // グループ一覧
+	std::map<std::pair<int, int>, WeakFloorGroup*> weak_tile_to_group_; // タイル座標とグループの対応
+	std::map<std::pair<int, int>, LiftGroup*> lift_tile_to_group_;		// タイル座標とグループの対応
+	std::vector<WeakFloorGroup*> weak_floor_groups_;					// 脆い床グループ一覧
+	std::vector<LiftGroup*> lift_groups_;								// リフトグループ一覧
 };
 
 
