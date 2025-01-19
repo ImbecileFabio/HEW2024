@@ -91,27 +91,28 @@ void GameManager::UninitAll(void)
 //-----------------------------------------------------------------
 // 更新処理
 //-----------------------------------------------------------------
-void GameManager::UpdateAll()
+void GameManager::UpdateAll(float _deltaTime)
 {
 	// ゲームオブジェクトの更新
 	this->current_scene_->Update();
-	this->UpdateGameObjects();
+	this->UpdateGameObjects(_deltaTime);
 	this->collider_manager_->UpdateAll();
 	this->pendulum_manager_->Update();
 	ImGuiManager::staticPointer->ImGuiShowWindow();
 }
+
 //-----------------------------------------------------------------
 // 出力生成処理
 //-----------------------------------------------------------------
 void GameManager::GenerateOutputAll(void)
 {
-	if(renderer_)
+	if (renderer_)
 	{
 
 		renderer_->Begin();
 		renderer_->Draw();
 
-		ImGuiManager::staticPointer->ImGuiRender();	// ImGuiのウィンドウを描画
+		ImGuiManager::staticPointer->ImGuiRender();
 
 		renderer_->End();
 
@@ -273,13 +274,14 @@ void GameManager::RemoveGameObject(GameObject* _gameObject) {
 //-----------------------------------------------------------------
 // ゲームオブジェクトの総更新処理
 //-----------------------------------------------------------------
-void GameManager::UpdateGameObjects(void)
+void GameManager::UpdateGameObjects(float _deltaTime)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
 
 	for (auto& gameObject : game_objects_)
 	{
+		gameObject->SetDeltaTime(_deltaTime);	// デルタタイムの設定
 		gameObject->Update();		// 更新処理
 	}
 	updating_game_objects_ = false;
@@ -287,6 +289,7 @@ void GameManager::UpdateGameObjects(void)
 	// 待機リストのゲームオブジェクトの操作
 	for (auto& pendingGameObject : pending_game_objects_)
 	{
+		pendingGameObject->SetDeltaTime(_deltaTime);
 		pendingGameObject->Update();
 		game_objects_.emplace_back(pendingGameObject);
 	}

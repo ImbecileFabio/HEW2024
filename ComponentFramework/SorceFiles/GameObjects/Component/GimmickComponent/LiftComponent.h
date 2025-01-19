@@ -34,7 +34,7 @@ public:
 		diagonalLeft,	// 斜め移動(左)
 	};
 
-	LiftComponent(GameObject* _owner, Pendulum* _pendulum, LiftComMoveState _moveState, int _updateOrder = 50);
+	LiftComponent(GameObject* _owner, LiftComMoveState _moveState, Vector3 _startPos, Vector3 _endPpos, Pendulum* _pendulum, int _updateOrder = 50);
 	~LiftComponent();
 
 	void Init() override;
@@ -80,8 +80,12 @@ private:
 
 	float max_move_distance_;								// 最大移動距離
 	DirectX::SimpleMath::Vector2 traveled_distance_;		// 累積移動距離
-	DirectX::SimpleMath::Vector2 direction_;			// 移動方向
+	DirectX::SimpleMath::Vector2 direction_;				// 移動方向
 	DirectX::SimpleMath::Vector3 start_pos_;				// 開始位置
+	DirectX::SimpleMath::Vector3 end_pos_;					// 終了位置
+
+	bool turn_flg_;	// 開始位置にいるか終了位置にいるか
+
 };
 
 #endif // LIFT_COMPONENT_H_

@@ -18,10 +18,9 @@
 
 Lift::Lift(GameManager* _gameManager)
 	:GameObject(_gameManager, "Lift")
-	, move_state_(MoveState::length)
-	, startPos_(0.0f, 0.0f, 0.0f)
-	, turn_count_(0)
 	, lift_state_(Lift::LiftState::Stop)
+	, move_state_(MoveState::length)
+	, turn_count_(0)
 {
 	sprite_component_ = new SpriteComponent(this, "lift_floor_center");
 	collider_component_ = new BoxColliderComponent(this);
@@ -37,14 +36,13 @@ Lift::Lift(GameManager* _gameManager)
 //--------------------------------------------------
 // @brief コンストラクタ
 // @param _moveState 移動状態
-// @param _moveDistance 最大移動距離
+// @param _endPos 切り返し地点
 // @param _gameManager オブジェクトを所持しているマネージャー
 //--------------------------------------------------
-Lift::Lift(GameManager* _gameManager, MoveState _moveState, float _moveDistance, Pendulum* _pendulum)
+Lift::Lift(GameManager* _gameManager, MoveState _moveState, Vector3 _startPos, Vector3 _endPos, Pendulum* _pendulum)
 	:GameObject(_gameManager, "Lift")
 	, pendulum_(_pendulum)
-	, direction_(0.0f, 0.0f)
-	, turn_count_(180)
+	, turn_count_(0)
 	, lift_state_(Lift::LiftState::Stop)
 	, move_state_(_moveState)
 {
@@ -52,15 +50,10 @@ Lift::Lift(GameManager* _gameManager, MoveState _moveState, float _moveDistance,
 	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocity_component_ = new VelocityComponent(this);
-	lift_component_ = new LiftComponent(this, pendulum_, static_cast<LiftComponent::LiftComMoveState>(move_state_));
+	lift_component_ = new LiftComponent(this, static_cast<LiftComponent::LiftComMoveState>(move_state_), _startPos, _endPos, pendulum_);
 	// イベント追加処理
 	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
-
-
-	// リフトの初期化
-	lift_component_->SetStartPos(transform_component_->GetPosition());
-	lift_component_->SetMaxMoveDistance(_moveDistance);
 
 	this->InitGameObject();
 }
@@ -79,6 +72,8 @@ Lift::~Lift()
 //--------------------------------------------------
 void Lift::InitGameObject(void)
 {
+	lift_state_ = Lift::LiftState::Stop;
+	turn_count_ = 0;
 }
 
 
@@ -96,15 +91,16 @@ void Lift::UpdateGameObject(void)
 	{
 	case Lift::LiftState::Stop:
 	{
-		if (turn_count_ >= 180) {
+		// カウントが0になったら次の状態に遷移
+		if (turn_count_  <= 0) {
 			if (pendulumMoveFlg)
 			{
 				lift_state_ = Lift::LiftState::Move;
-				turn_count_ = 0;
+				turn_count_ = 180;
 			}
 		}
 		else {
-			++turn_count_;
+			--turn_count_;
 		}
 		break;
 	}
@@ -113,7 +109,7 @@ void Lift::UpdateGameObject(void)
 		if (!pendulumMoveFlg)
 		{
 			lift_state_ = Lift::LiftState::Stop;
-			turn_count_ = 180;	// 移動中に止まったら次動くときはすぐ動かせるように
+			turn_count_ = 0;	// 移動中に止まったら次動くときはすぐ動かせるように
 		}
 
 		// リフトの移動距離が最大距離を超えたら切り返す
