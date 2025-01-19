@@ -35,7 +35,6 @@ void LiftGroup::InitGameObject(void)
 //--------------------------------------------------
 void LiftGroup::UpdateGameObject(void)
 {
-    // 振り子を中心に調整する処理
     if (!isCenterMedian)
     {
         size_t size = liftTiles_.size();
@@ -45,9 +44,11 @@ void LiftGroup::UpdateGameObject(void)
             return;
         }
 
-        // リフトを一括で変更するためのキャッシュ
+        // 初期位置をキャッシュ
+        initialPositions_.clear();
         for (auto& tile : liftTiles_)
         {
+            initialPositions_.push_back(tile->GetTransformComponent()->GetPosition());
             owner_lift_components_.push_back(tile->GetComponent<LiftComponent>());
         }
 
@@ -55,58 +56,51 @@ void LiftGroup::UpdateGameObject(void)
 
         if (size % 2 == 0) // 偶数
         {
-            // 中心2つのタイルのインデックスを計算
             size_t leftIndex = (size / 2) - 1;
             size_t rightIndex = size / 2;
-            // 添え字を保存
             tileCenterNum_ = leftIndex;
-            // 中心2つのタイルの位置を取得し、平均を計算
-            DirectX::SimpleMath::Vector3 leftPos = liftTiles_[leftIndex] ->GetTransformComponent()->GetPosition();
-            DirectX::SimpleMath::Vector3 rightPos = liftTiles_[rightIndex]->GetTransformComponent()->GetPosition();
+
+            DirectX::SimpleMath::Vector3 leftPos = initialPositions_[leftIndex];
+            DirectX::SimpleMath::Vector3 rightPos = initialPositions_[rightIndex];
             centerPos = (leftPos + rightPos) / 2.0f;
-            // 中心リフトとコンポーネントだけに振り子を設定
+
             auto lift = dynamic_cast<Lift*>(liftTiles_[leftIndex]);
-			auto liftComponent = lift->GetComponent<LiftComponent>();
             auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
             lift->SetPendulum(pendulum);
-            liftComponent->SetPendulum(pendulum);
+            lift->GetComponent<LiftComponent>()->SetPendulum(pendulum);
         }
         else // 奇数
         {
-            // 中心のタイルのインデックスを計算
             size_t centerIndex = size / 2;
-            // 添え字を保存
-			tileCenterNum_ = centerIndex;
-            // 中心のタイルの位置を取得
-            centerPos = liftTiles_[centerIndex]->GetTransformComponent()->GetPosition();
-			// 中心リフトとコンポーネントだけに振り子を設定
+            tileCenterNum_ = centerIndex;
+
+            centerPos = initialPositions_[centerIndex];
+
             auto lift = dynamic_cast<Lift*>(liftTiles_[centerIndex]);
-            auto liftComponent = lift->GetComponent<LiftComponent>();
             auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
             lift->SetPendulum(pendulum);
-            liftComponent->SetPendulum(pendulum);
+            lift->GetComponent<LiftComponent>()->SetPendulum(pendulum);
         }
-        // 振り子の中心を設定
+
         centerPendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(centerPos);
         isCenterMedian = true;
     }
-    // 振り子が動いている場合
-    if (owner_pendulum_movement_->GetPendulumMovement())
-    {
-		DirectX::SimpleMath::Vector3 centerLiftPos = liftTiles_[tileCenterNum_]->GetTransformComponent()->GetPosition();
-        // 各タイルのオフセットを計算して一括で移動
-        for (auto& tile : liftTiles_)
-        {
-            DirectX::SimpleMath::Vector3 currentPos = tile->GetTransformComponent()->GetPosition();
-            float yOffset = centerLiftPos.y - currentPos.y; // 中心位置とのオフセットを計算
-            float xOffset = centerLiftPos.x - currentPos.x; // 中心位置とのオフセットを計算
-            tile->GetTransformComponent()->SetPosition(currentPos.x + xOffset, currentPos.y + yOffset);
-        }
-        // 振り子の中心点も更新
-        DirectX::SimpleMath::Vector3 newPendulumPos = centerLiftPos;
-        centerPendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(newPendulumPos);
-    }
+    DirectX::SimpleMath::Vector3 centerLiftPos = liftTiles_[tileCenterNum_]->GetTransformComponent()->GetPosition();
 
+    for (size_t i = 0; i < liftTiles_.size(); ++i)
+    {
+        DirectX::SimpleMath::Vector3 initialPos = initialPositions_[i];
+		initialPos.x = std::abs(initialPos.x);
+		initialPos.y = std::abs(initialPos.y);
+        DirectX::SimpleMath::Vector3 currentOffset = centerLiftPos - initialPositions_[tileCenterNum_];
+		currentOffset.x = std::abs(currentOffset.x);
+		currentOffset.y = std::abs(currentOffset.y);
+        DirectX::SimpleMath::Vector3 newPosition = initialPos + currentOffset;
+		newPosition.x = std::abs(newPosition.x);
+		newPosition.y = std::abs(newPosition.y);
+
+        liftTiles_[i]->GetTransformComponent()->SetPosition(newPosition);
+    }
 }
 //--------------------------------------------------
 // @brief リフトタイルを追加

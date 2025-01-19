@@ -59,7 +59,6 @@ private:
 	int turn_count_;			// 切り返しまでの時間 多分こいつもComponentに移動させるべき
 
 	Pendulum* pendulum_;					// 連動させたい振り子
-	MoveState move_state_;					// 移動状態
 	LiftGroup* lift_group_{};					// リフトをまとめるグループ
 };
 #endif // _LIFT_H_

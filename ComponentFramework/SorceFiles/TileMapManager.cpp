@@ -43,6 +43,7 @@
 #include "GameObjects/GameObject/Robot.h"
 
 #include "GameObjects/GameObject/Gimmick/WeakFloorGroup.h"
+#include "GameObjects/GameObject/Gimmick/LiftGroup.h"
 //-----------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------
@@ -200,7 +201,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			}
 
 			// タイルの位置とグループを関連付ける
-			tile_to_group_[{_x, _y}] = group;
+			weak_tile_to_group_[{_x, _y}] = group;
 		}
 	}
 	else if (_tileID == 3)	// 振り子
@@ -250,14 +251,57 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		else if (dx < 0 && dy > 0) {	// 斜め(左)
 			direction = Lift::MoveState::diagonalLeft;
 		}
-
-		auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f);
-
 		// リフト生成
-		obj = new Lift(game_manager_, direction, objPos, endPos, pendulum_);
+		obj = new Lift(game_manager_, direction, objPos, endPos);
 		auto lift = dynamic_cast<Lift*>(obj);
 		lift->GetTransformComponent()->SetPosition(objPos.x, objPos.y);
 
+		if (auto sprite = obj->GetComponent<SpriteComponent>())
+		{
+			// 周囲のタイルを取得
+			bool up = GetAdjacentTile(_tileID, _x, _y, 0, 1);
+			bool down = GetAdjacentTile(_tileID, _x, _y, 0, -1);
+			bool left = GetAdjacentTile(_tileID, _x, _y, -1, 0);
+			bool right = GetAdjacentTile(_tileID, _x, _y, 1, 0);
+
+			// テクスチャを設定
+			if (left) {// 左にタイルがある
+				if (right) {// 右にタイルがある
+					sprite->SetTexture("lift_floor_center");	// 中央
+				}
+				else {
+					sprite->SetTexture("lift_floor_right");	// 右
+				}
+			}
+			// 左にタイルがない
+			else if (right) {// 右にタイルがある
+				sprite->SetTexture("lift_floor_left");	// 左
+			}
+
+			// 既存のグループを探す
+			LiftGroup* group = nullptr;
+			if (IsTileInGroup(_x - 1, _y, group) || IsTileInGroup(_x + 1, _y, group) ||
+				IsTileInGroup(_x, _y - 1, group) || IsTileInGroup(_x, _y + 1, group))
+			{
+				// 隣接グループが見つかった場合、そのグループに追加
+				group->AddLiftTile(obj);
+			}
+			else
+			{
+				// 新しいグループを作成
+				group = new LiftGroup(game_manager_);
+				group->AddLiftTile(obj);
+				lift_groups_.push_back(group); // グループリストに追加
+				// 振り子を生成 
+				auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
+				auto liftGroup = dynamic_cast<LiftGroup*>(group);
+				// 振り子と連動させたい振り子をセット
+				liftGroup->SetPendulumANDMovement(pendulum_);
+			}
+
+			// タイルの位置とグループを関連付ける
+			lift_tile_to_group_[{_x, _y}] = group;
+		}
 
 
 	}
@@ -314,14 +358,26 @@ bool TileMapManager::GetAdjacentTile(int _tyleID, int _x, int _y, int _dx, int _
 	return false;
 }
 
-bool TileMapManager::IsTileInGroup(int x, int y, WeakFloorGroup*& group)
+bool TileMapManager::IsTileInGroup(int x, int y, WeakFloorGroup*& _group)
 {
-	auto it = tile_to_group_.find({ x, y });
-	if (it != tile_to_group_.end())
+	auto it = weak_tile_to_group_.find({ x, y });
+	if (it != weak_tile_to_group_.end())
 	{
-		group = it->second;
+		_group = it->second;
 		return true;
 	}
-	group = nullptr;
+	_group = nullptr;
 	return false;
-};
+}
+bool TileMapManager::IsTileInGroup(int x, int y, LiftGroup*& _group)
+{
+	auto it = lift_tile_to_group_.find({ x, y });
+	if (it != lift_tile_to_group_.end())
+	{
+		_group = it->second;
+		return true;
+	}
+	_group = nullptr;
+	return false;
+}
+;

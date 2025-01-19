@@ -48,8 +48,8 @@ private:
 	bool GetAdjacentTile(int _typeID, int _x, int _y, int _dx, int _dy);
 
 
-	bool IsTileInGroup(int x, int y, WeakFloorGroup*& group);
-	bool IsTileInGroup(int x, int y, LiftGroup*& group);
+	bool IsTileInGroup(int x, int y, WeakFloorGroup*& _group);
+	bool IsTileInGroup(int x, int y, LiftGroup*& _group);
 private:
 	GameManager* game_manager_{};
 	std::vector<std::vector<std::vector<int>>> map_data_;

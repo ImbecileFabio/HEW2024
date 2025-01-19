@@ -32,6 +32,7 @@ private:
 	int tileCenterNum_ = 0;								// タイルの中心の添え字
 	GameObject* centerPendulum_ = nullptr;				// 中心の振り子
 	std::vector<GameObject*> liftTiles_;				// グループが管理したいタイル
+	std::vector<DirectX::SimpleMath::Vector3> initialPositions_; // 各リフトタイルの初期位置
 
 	// キャッシュしたコンポーネント
 	class PendulumMovementComponent* owner_pendulum_movement_{};	// 振り子の動き
