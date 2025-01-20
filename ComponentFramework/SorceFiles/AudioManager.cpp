@@ -121,6 +121,7 @@ void AudioManager::Play(SOUND_LABEL label)
 
 	// ソースボイス作成
 	m_pXAudio2->CreateSourceVoice(&pSV, &(m_wfx[(int)label].Format));
+	pSV->SetVolume(m_volume[label]);
 	pSV->SubmitSourceBuffer(&(m_buffer[(int)label]));	// ボイスキューに新しいオーディオバッファーを追加
 
 	// 再生
@@ -142,6 +143,15 @@ void AudioManager::Resume(SOUND_LABEL label)
 {
 	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)label];
 	pSV->Start();
+}
+
+
+//--------------------------------------------------
+// 音量設定
+//--------------------------------------------------
+void AudioManager::SetVolume(SOUND_LABEL label, float volume)
+{
+	m_volume[label] = volume;
 }
 
 

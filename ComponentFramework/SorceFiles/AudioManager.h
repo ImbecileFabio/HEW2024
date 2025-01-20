@@ -52,6 +52,8 @@ private:
 	XAUDIO2_BUFFER m_buffer[SoundLabel_MAX];
 	BYTE* m_DataBuffer[SoundLabel_MAX];
 
+	float m_volume[SoundLabel_MAX];
+
 	HRESULT FindChunk(HANDLE, DWORD, DWORD&, DWORD&);
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);
 
@@ -62,4 +64,6 @@ public:
 	void Play(SOUND_LABEL label);
 	void Stop(SOUND_LABEL label);
 	void Resume(SOUND_LABEL label);
+
+	void SetVolume(SOUND_LABEL label, float volume);
 };
