@@ -11,11 +11,18 @@
 #include "../../Component/PendulumMovementComponent.h"
 #include "../../Component/EventComponent/ColliderEventComponent.h"
 #include "../../Component/ColliderComponent/BoxColliderComponent.h"
+#include "../../Component/TimerComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
 WeakFloorGroup::WeakFloorGroup(GameManager* _gameManager)
 	:GameObject(_gameManager, "WeakFloorGroup")
+	, isWeakFloorBreak_(false)
+	, isCenterMedian(false)
+	, tileCenterNum_(0)
+	, centerPendulum_(nullptr)
+	, owner_pendulum_movement_(nullptr)
+	, timer_component_(nullptr)
 {
 	this->InitGameObject();
 }
@@ -24,12 +31,14 @@ WeakFloorGroup::WeakFloorGroup(GameManager* _gameManager)
 //--------------------------------------------------
 WeakFloorGroup::~WeakFloorGroup(void)
 {
+	delete timer_component_;
 }
 //--------------------------------------------------
 // @brief 初期化処理
 //--------------------------------------------------
 void WeakFloorGroup::InitGameObject(void)
 {
+	timer_component_ = new TimerComponent(this, 5.0f);
 }
 //--------------------------------------------------
 // @brief 更新処理
@@ -75,16 +84,26 @@ void WeakFloorGroup::UpdateGameObject(void)
 	// 脆い床が壊れたかどうかかつ、振り子が動いている場合
 	if (isWeakFloorBreak_ && owner_pendulum_movement_->GetPendulumMovement())
 	{
-		// グループの方で脆いタイルを一括で変更をかける この処理は一度だけ
-		for (auto& tile : weakFloorTiles_)
+		// タイマーを開始
+		if (!timer_component_->GetIsActive())
 		{
-			tile->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			tile->GetComponent<EventBaseComponent>()->RemoveEvent();
-			tile->SetState(GameObject::State::Paused);
+			timer_component_->StartTimer();
 		}
-		auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
-		pendulum->NotDrawAndStopPendulum();
-    }
+		// タイマーが経過して、トリガーが発生した場合
+		if (timer_component_->GetIsTriggered())
+		{
+			timer_component_->StopTimer();
+			// グループの方で脆いタイルを一括で変更をかける この処理は一度だけ
+			for (auto& tile : weakFloorTiles_)
+			{
+				tile->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+				tile->GetComponent<EventBaseComponent>()->RemoveEvent();
+				tile->SetState(GameObject::State::Paused);
+			}
+			auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
+			pendulum->NotDrawAndStopPendulum();
+		}
+	}
 }
 //--------------------------------------------------
 // @brief 脆い床タイルを追加

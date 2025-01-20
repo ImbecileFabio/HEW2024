@@ -100,6 +100,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\WeakFloorComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\StickMoveComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\TimerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\WeakFloorComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\StickMoveComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\TimerComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\drawColliderGS.hlsl">

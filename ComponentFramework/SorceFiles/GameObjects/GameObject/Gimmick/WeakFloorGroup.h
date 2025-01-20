@@ -29,6 +29,7 @@ public:
 	void AddWeakFloorTile (GameObject* _tile);					// グループにタイルを追加
 	void SetPendulumANDMovement(GameObject* _centerPendulum);	// グループに中心の振り子を設定
 private:
+	class TimerComponent* timer_component_;			// タイマーコンポーネント
 	// グループ単体が管理しているもの
 	bool isWeakFloorBreak_		 = false;				// 脆い床が壊れたかどうか
 	bool isCenterMedian			 = false;				// 中心値を調べたかどうか

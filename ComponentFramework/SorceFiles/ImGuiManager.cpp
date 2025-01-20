@@ -154,12 +154,16 @@ void ObjectStatesGUI::ShowWindow()
                 transform->SetScale(scale);
             }
             ImGui::Separator(); // ‹æØ‚èü
+			ImGui::Text("Object-DeltaTime : %f", selectObject_->GetDeltaTime());
+            ImGui::Separator(); // ‹æØ‚èü
             ImGui::Text("ComponentList");
 			for (auto& component : selectObject_->GetComponents())
 			{
                 ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.4f, 1.0f, 0.1f, 1.0f)); // —ÎF
                 ImGui::Text(component->GetComponentName().c_str());
 				ImGui::PopStyleColor();
+                ImGui::Separator(); // ‹æØ‚èü
+                ImGui::Text("Component-DeltaTime : %f", component->GetDeltaTime());
                 switch (component->GetComponentType())
                 {
                 case Component::TypeID::SpriteComponent:

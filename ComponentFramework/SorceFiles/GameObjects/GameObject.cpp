@@ -130,6 +130,7 @@ void GameObject::UpdateComponents(void)
 {
 	for (auto& com : components_)
 	{
+		com->SetDeltaTime(delta_time_);
 		com->Update();
 	}
 }

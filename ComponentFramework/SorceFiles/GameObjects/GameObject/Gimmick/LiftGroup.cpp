@@ -81,18 +81,20 @@ void LiftGroup::UpdateGameObject(void)
             lift->SetPendulum(pendulum);
             lift->GetComponent<LiftComponent>()->SetPendulum(pendulum);
         }
-
-        centerPendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(centerPos);
         isCenterMedian = true;
     }
-    DirectX::SimpleMath::Vector3 centerLiftPos = liftTiles_[tileCenterNum_]->GetTransformComponent()->GetPosition();
 
+    // 現在の中心タイル位置
+    DirectX::SimpleMath::Vector3 centerLiftPos = liftTiles_[tileCenterNum_]->GetTransformComponent()->GetPosition();
+    DirectX::SimpleMath::Vector3 centerInitialPos = initialPositions_[tileCenterNum_];
+    DirectX::SimpleMath::Vector3 currentOffset = centerLiftPos - centerInitialPos;
+
+    // 各タイルの位置を更新
     for (size_t i = 0; i < liftTiles_.size(); ++i)
     {
-        DirectX::SimpleMath::Vector3 initialPos = initialPositions_[i];
-        DirectX::SimpleMath::Vector3 currentOffset = centerLiftPos - initialPositions_[tileCenterNum_];
-        DirectX::SimpleMath::Vector3 newPosition = initialPos + currentOffset;
+        if (i == tileCenterNum_) continue; // 中心タイルは更新しない
 
+        DirectX::SimpleMath::Vector3 newPosition = initialPositions_[i] + currentOffset;
         liftTiles_[i]->GetTransformComponent()->SetPosition(newPosition);
     }
 }
