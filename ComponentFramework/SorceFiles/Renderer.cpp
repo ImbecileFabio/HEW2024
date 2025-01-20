@@ -206,7 +206,8 @@ void Renderer::Init()
 
 	// サンプラーステート設定
 	D3D11_SAMPLER_DESC samplerDesc{};
-	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+	//samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;	// テクスチャの拡大縮小方法、テクスチャのoffset設定時バグったので変更、問題があれば戻す
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;

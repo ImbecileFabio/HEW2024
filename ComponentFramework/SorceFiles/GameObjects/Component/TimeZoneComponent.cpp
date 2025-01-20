@@ -55,7 +55,6 @@ void TimeZoneComponent::Uninit()
 void TimeZoneComponent::Update()
 {
 	// タイムゾーンの倍率高いほうを使いたいのですがどうすればいいのか考えたくないので誰かに託します。
-	time_rate_ = 0.0f;
 
 	is_active_flg_ = owner_pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
 	// 振り子が動いていれば
@@ -75,6 +74,10 @@ void TimeZoneComponent::Update()
 		time_rate_ = 2.0f;
 		break;
 	}
+	}
+	else
+	{
+		time_rate_ = 0.0f;
 	}
 
 }

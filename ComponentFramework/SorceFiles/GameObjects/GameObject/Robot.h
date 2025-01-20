@@ -37,7 +37,8 @@ public:
 
 	TypeID GetType(void) override { return TypeID::Robot; }
 
-	void SetState(RobotState _state) { robot_state_ = _state; }
+	void SetRobotState(RobotState _state) { robot_state_ = _state; }
+	auto GetRobotState(void) { return robot_state_; }
 
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
