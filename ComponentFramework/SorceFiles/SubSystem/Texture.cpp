@@ -3,11 +3,14 @@
 #include	"stb_image.h"
 #include	"../Renderer.h"
 
-Texture::Texture(bool loopFlg, float _cutU, float _cutV, int _anmSpeed)
-	: loop_flg_(loopFlg), m_cutU(_cutU), m_cutV(_cutV), m_anmSpeed(_anmSpeed)
+Texture::Texture(const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed)
+	: offset_pos_(_offsetPos)
+	, offset_size_(_offsetSize)
+	, loop_flg_(_loopFlg)
+	, m_cutU(_cutU)
+	, m_cutV(_cutV)
+	, m_anmSpeed(_anmSpeed)
 {
-	m_numU = 0.0f;
-	m_numV = 0.0f;
 }
 
 // テクスチャをロード

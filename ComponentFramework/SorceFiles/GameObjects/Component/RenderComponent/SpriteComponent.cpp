@@ -24,7 +24,7 @@ using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname,  int _drawOrder)
+SpriteComponent::SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder)
 	: RenderComponent(_owner, _drawOrder)
 {
 	std::cout << std::format("＜SpriteComponent＞ -> Constructor\n");
@@ -87,11 +87,15 @@ void SpriteComponent::Draw()
 		auto r  = transform->GetRotation();
 		auto sc = transform->GetScale();
 
-		auto finalSize = Vector3(si * sc);	// 最終的なサイズ
+		auto offsetPos = texture_->GetOffsetPos();	// オフセットポジション
+		auto offsetSize = texture_->GetOffsetSize();	// オフセットサイズ
+
+		Vector3 finalPos  = { t.x + offsetPos.x, t.y + offsetPos.y, t.z };	// 最終的な位置
+		Vector3 finalSize = { (si.x * offsetSize.x) * sc.x,  (si.y * offsetSize.y) * sc.y, si.z * si.z};								// 最終的なサイズ
 
 
 		rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
-		pos = Matrix::CreateTranslation(t);
+		pos = Matrix::CreateTranslation(finalPos);
 		scale = Matrix::CreateScale(finalSize);
 	}
 	else 
