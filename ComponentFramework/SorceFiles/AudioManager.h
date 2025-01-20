@@ -55,6 +55,7 @@ private:
 	BYTE* m_DataBuffer[SoundLabel_MAX];
 
 	float m_volume[SoundLabel_MAX];
+	float m_speed[SoundLabel_MAX];
 
 	HRESULT FindChunk(HANDLE, DWORD, DWORD&, DWORD&);
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);

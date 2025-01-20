@@ -91,6 +91,7 @@ HRESULT AudioManager::Init()
 	}
 
 	std::fill(std::begin(m_volume), std::end(m_volume), 1.0f);
+	std::fill(std::begin(m_speed), std::end(m_speed), 1.0f);
 
 	return hr;
 }
@@ -122,7 +123,7 @@ void AudioManager::Play(SOUND_LABEL label)
 	}
 
 	// 再生速度の調整
-
+	// SoundTouchの処理とか！
 
 	// ソースボイス作成
 	m_pXAudio2->CreateSourceVoice(&pSV, &(m_wfx[(int)label].Format));
