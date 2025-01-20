@@ -34,6 +34,7 @@ private:
 	bool	use_velocity_;
 
 	float speed_rate_;	// 速度倍率
+	bool is_change_speed_rate_flg_ = false;	// このフレームで速度倍率が変更されたかどうか
 
 public:
 	VelocityComponent(GameObject* _owner, int _updateOrder = 3);
@@ -45,6 +46,11 @@ public:
 	// 速度係数
 	void    SetSpeedRate   (const float _speed_rate);
 	float   GetSpeedRate   (void);
+
+	void SetChangeSpeedRateFlg(bool _flg) { is_change_speed_rate_flg_ = _flg; }
+	auto GetChangeSpeedRateFlg(void) { return is_change_speed_rate_flg_; }
+
+
 	// 加速度
 	void	SetAcceleration(const DirectX::SimpleMath::Vector3 _acceleration);
 	DirectX::SimpleMath::Vector3 GetAcceleration() const;

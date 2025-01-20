@@ -50,21 +50,24 @@ public:
 	void Init();
 	void Uninit();
 
-	// テクスチャの登録( 画像名, ファイルパス, ループフラグ = false, 横分割数 = 1, 縦分割数 = 1, アニメーションのFPS = 1 )
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _roopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, int _anmSpeed = 1);
+
 	// テクスチャの取得
 	std::shared_ptr<Texture> GetTexture(const std::string& _imgName);
-
 
 private:
 	// シングルトンなのでprivateに
 	TextureManager();
 	~TextureManager();
 
-	// テクスチャの全登録
+		// テクスチャの登録
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, int _anmSpeed = 1);	// すべて
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, int _anmSpeed = 1);// オフセットなし
+
+// テクスチャの全登録
 	void RegisterAllTextures();
 	// 解放処理
 	void ClearCache(void);
+
 
 	// テクスチャキャッシュ
 	std::unordered_map<std::string, std::shared_ptr<Texture>> texture_cache_;
