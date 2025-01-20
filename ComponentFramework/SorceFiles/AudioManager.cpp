@@ -90,6 +90,8 @@ HRESULT AudioManager::Init()
 		m_pXAudio2->CreateSourceVoice(&m_pSourceVoice[i], &(m_wfx[i].Format));
 	}
 
+	std::fill(std::begin(m_volume), std::end(m_volume), 1.0f);
+
 	return hr;
 }
 void AudioManager::Uninit(void){
@@ -118,6 +120,9 @@ void AudioManager::Play(SOUND_LABEL label)
 		pSV->DestroyVoice();
 		pSV = nullptr;
 	}
+
+	// 再生速度の調整
+
 
 	// ソースボイス作成
 	m_pXAudio2->CreateSourceVoice(&pSV, &(m_wfx[(int)label].Format));
