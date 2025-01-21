@@ -37,10 +37,11 @@ public:
 
 	void SetLengthState(LengthState _state) { length_state_ = _state; }
 
-	void ChangeStickLength();
 
 private:
 	Vector3 CalculateEndPoint(Vector3& _fulcrum, float _length, float _angle);
+
+	void ChangeStickLength();
 
 	class TransformComponent* owner_transform_;
 
