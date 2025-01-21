@@ -12,11 +12,10 @@
 /*----- 前方宣言 -----*/
 
 
+using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // 振り子の棒の動きコンポーネント
 //--------------------------------------------------
-
-
 class StickMoveComponent : public Component
 {
 public:
@@ -41,20 +40,20 @@ public:
 	void ChangeStickLength();
 
 private:
+	Vector3 CalculateEndPoint(Vector3& _fulcrum, float _length, float _angle);
+
 	class TransformComponent* owner_transform_;
 
 	class Pendulum*				owner_pendulum_;
 	class TransformComponent*	pendulum_transform_;
 
-	LengthState length_state_;
+	LengthState length_state_;	
 
 	float stick_length_;
 
 };
 
-
-
-
+#endif	// STICK_MOVE_COMPONENT_H_
 
 
 
@@ -157,5 +156,5 @@ private:
 //
 //	TransformComponent* pendulum_transform_component_;	// 振り子の座標を参照するコンポーネント
 //};
-
-#endif // STICK_MOVE_COMPONENT_H_
+//
+//#endif // STICK_MOVE_COMPONENT_H_

@@ -24,7 +24,7 @@ Stick::~Stick()
 //--------------------------------------------------
 void Stick::InitGameObject(void)
 {
-	stick_move_component_ = new StickMoveComponent(this);
+	stick_move_component_ = new StickMoveComponent(this, owner_pendulum_);
 	sprite_component_	= new SpriteComponent(this, "stick", 9);
 	stick_length_state_ = StickLengthState::Middle;
 }
@@ -33,17 +33,24 @@ void Stick::InitGameObject(void)
 //--------------------------------------------------
 void Stick::UpdateGameObject(void)
 {
+	
+	// U‚èŽq‚Ì‹…‚Ìó‘Ô‚É‚æ‚Á‚Ästate‚ª•Ï‚í‚é
 	switch (stick_length_state_)
 	{
 	case StickLengthState::Short:
-		transform_component_->SetSize(50.0f, 200.0f);
+
 		break;
 	case StickLengthState::Middle:
-		transform_component_->SetSize(50.0f, 250.0f);
+
 		break;
 	case StickLengthState::Long:
-		transform_component_->SetSize(50.0f, 300.0f);
+
 		break;
 	}
+
+
+	// –_‚Ìó‘Ô‚ðƒRƒ“ƒ|[ƒlƒ“ƒg‚É”½‰f‚·‚é
+	stick_move_component_->SetLengthState(static_cast<StickMoveComponent::LengthState>(stick_length_state_));
+
 
 }

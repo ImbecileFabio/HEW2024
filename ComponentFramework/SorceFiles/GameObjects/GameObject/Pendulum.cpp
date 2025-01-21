@@ -40,8 +40,11 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	time_zone_ = new TimeZone(game_manager_, this);
 	// 子スティック
 	stick_ = new Stick(game_manager_, this);
-	stick_->GetComponent<StickMoveComponent>()->StickInit(_fulcrum, _movement, _pendulumAngle);
-	stick_->GetComponent<StickMoveComponent>()->SetPendulumTransform(transform_component_);
+
+	//// 子スティック
+	//stick_ = new Stick(game_manager_, this);
+	//stick_->GetComponent<StickMoveComponent>()->StickInit(_fulcrum, _movement, _pendulumAngle);
+	//stick_->GetComponent<StickMoveComponent>()->SetPendulumTransform(transform_component_);
 
 	// 子オブジェクト管理コンポーネント
 	children_component_ = new ChildrenComponent(this, this);
@@ -92,13 +95,17 @@ void Pendulum::UpdateGameObject(void)
 	time_zone_->GetTransformComponent()->SetPosition(fulcrumPos.x, fulcrumPos.y);
 	time_zone_->GetTransformComponent()->SetSize((length + transform_component_->GetSize().x) * 2, (length + transform_component_->GetSize().y) * 2);	// 振り子の長さを半径としてタイムゾーンのサイズを変える
 
-	time_zone_->SetTimeZoneState(static_cast<TimeZone::TimeZoneState>(pendulum_component_->GetLangthState()));	// タイムゾーンの状態を設定
-	// 振り子の棒の動きを反映
-	stickMoveComponent->SetStickFulcrum({ fulcrumPos.x, fulcrumPos.y, 0.0f });
-	float pendulumAngle = pendulum_component_->GetPendulumAngle();
-	stickMoveComponent->SetStickAngle(pendulumAngle);
-	//// 振り子の棒の座標を計算
-	stickMoveComponent->StickPosition(fulcrumPos, stickMoveComponent->GetStickLength());
+	// タイムゾーンの状態を設定
+	time_zone_->SetTimeZoneState(static_cast<TimeZone::TimeZoneState>(pendulum_component_->GetLangthState()));	
+	// 棒の状態を設定
+	stick_->SetStickLengthState(static_cast<Stick::StickLengthState>(pendulum_component_->GetLangthState()));
+
+	//// 振り子の棒の動きを反映
+	//stickMoveComponent->SetStickFulcrum({ fulcrumPos.x, fulcrumPos.y, 0.0f });
+	//float pendulumAngle = pendulum_component_->GetPendulumAngle();
+	//stickMoveComponent->SetStickAngle(pendulumAngle);
+	////// 振り子の棒の座標を計算
+	//stickMoveComponent->StickPosition(fulcrumPos, stickMoveComponent->GetStickLength());
 }
 //--------------------------------------------------
 // 当たり判定の実行処理

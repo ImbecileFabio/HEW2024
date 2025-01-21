@@ -4,6 +4,7 @@
 //--------------------------------------------------
 // 説明：振り子の棒の動きコンポーネントの定義
 //==================================================
+
 /*----- インクルード -----*/
 #include <iostream>
 #include "StickMoveComponent.h"
@@ -16,11 +17,6 @@
 #include "../Component/PendulumMovementComponent.h"
 
 #define PI 3.14f
-
-constexpr float normalLangth = TILE_SIZE_Y * 4;
-constexpr float langthChange = TILE_SIZE_Y;
-constexpr float pendulumAcceleration = 0.1f;
-
 
 
 //--------------------------------------------------
@@ -39,27 +35,52 @@ StickMoveComponent::StickMoveComponent(GameObject* _owner, Pendulum* _pendulum, 
 	this->Init();
 }
 
+//--------------------------------------------------
+// @brief デストラクタ
+//--------------------------------------------------
 StickMoveComponent::~StickMoveComponent()
 {
 	std::cout << std::format("＜StickMoveComponent＞ -> Destructor\n");
 	this->Uninit();
 }
 
+//--------------------------------------------------
+// @brief 初期化処理
+//--------------------------------------------------
 void StickMoveComponent::Init()
 {
 
 }
 
+//--------------------------------------------------
+// @brief 終了処理
+//--------------------------------------------------
 void StickMoveComponent::Uninit()
 {
 }
 
+//--------------------------------------------------
+// @brief 更新処理
+//--------------------------------------------------
 void StickMoveComponent::Update()
 {
-	// 今編集中の場所はここですよ！！！！！！！！！！！！！！！！！！！！
+	// 支点の位置
 	auto startPos = owner_pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumFulcrum();
-
+	// 振り子の角度
 	float stickAngle = owner_pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumAngle();
+	// 終点を計算
+	auto endPos = CalculateEndPoint(startPos, stick_length_, stickAngle);
+
+	// 終点の計算
+	Vector3 stickPos = {
+		(startPos.x + endPos.x) / 2.0f,
+		(startPos.y + endPos.y) / 2.0f,
+		(startPos.z + endPos.z) / 2.0f
+	};
+
+	owner_transform_->SetPosition(stickPos);
+	owner_transform_->SetRotation(stickAngle);
+	owner_transform_->SetSize(TILE_SIZE_X, stick_length_);
 }
 
 void StickMoveComponent::ChangeStickLength()
@@ -76,6 +97,21 @@ void StickMoveComponent::ChangeStickLength()
 		stick_length_ = normalLangth + langthChange;
 		break;
 	}
+}
+
+
+//--------------------------------------------------
+// @param _sPos： 支点, _length： 棒の長さ, _angle： 棒の角度
+// @brief 描画する中心位置を計算する
+// @return Vector3: 計算された座標
+//--------------------------------------------------
+Vector3 StickMoveComponent::CalculateEndPoint(Vector3& _sPos, float _length, float _angle)
+{
+	return {
+		_sPos.x + _length * std::cos(_angle),
+		_sPos.y + _length * std::sin(_angle),
+		_sPos.z
+	};
 }
 
 
