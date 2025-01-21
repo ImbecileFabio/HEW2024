@@ -23,7 +23,8 @@ void BackGround::InitGameObject(void)
 	transform_component_->SetSize(2880, 1080);
 
 	audio_manager_.Init();
-	audio_manager_.SetVolume(SoundLabel_StageBGM, 0.1f);
+	audio_manager_.SetVolume(SoundLabel_StageBGM, 1.0f);
+	audio_manager_.SetCategoryVolume(BGM, 1.0f);
 	audio_manager_.Play(SoundLabel_StageBGM);
 }
 

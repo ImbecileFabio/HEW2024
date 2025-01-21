@@ -56,6 +56,25 @@ HRESULT AudioManager::Init() {
 		return -1;
 	}
 
+	//// サブミックスボイスの作成
+	//for (int i = 0; i < SoundTag_MAX; i++) {
+	//	for (int j = 0; j < SoundLabel_MAX; j++) {
+	//		if (m_param[j].soundCategory == i) {
+	//			hr = m_pXAudio2->CreateSubmixVoice(&m_pSubmixVoice[i], m_wfx[j].Format.nChannels, m_wfx[j].Format.nSamplesPerSec);
+	//			if (FAILED(hr)) {
+	//				std::cerr << "SubmixVoice Init FAILED\n";
+	//				Uninit();
+	//				return -1;
+	//			}
+	//			m_sendDescriptor[i].Flags = 0;
+	//			m_sendDescriptor[i].pOutputVoice = m_pSubmixVoice[i];
+	//			m_sendList[i].SendCount = 1;
+	//			m_sendList[i].pSends = &m_sendDescriptor[i];
+	//			break;
+	//		}
+	//	}
+	//}
+
 	/**** Initalize Sound ****/
 	for (int i = 0; i < SoundLabel_MAX; i++)
 	{
@@ -80,15 +99,34 @@ HRESULT AudioManager::Init() {
 
 		CloseHandle(hFile);
 
-		// 	サブミットボイスで利用するサブミットバッファの設定
+		// サブミットボイスで利用するサブミットバッファの設定
 		m_buffer[i].AudioBytes = dwChunkSize;
 		m_buffer[i].pAudioData = m_DataBuffer[i];
 		m_buffer[i].Flags = XAUDIO2_END_OF_STREAM;
 		if (m_param[i].bLoop) m_buffer[i].LoopCount = XAUDIO2_LOOP_INFINITE;
 		else m_buffer[i].LoopCount = 0;
 
+		// サブミックスボイスの作成
+		if (!(m_pSubmixVoice[m_param[i].soundCategory])) {
+			hr = m_pXAudio2->CreateSubmixVoice(&m_pSubmixVoice[m_param[i].soundCategory], m_wfx[i].Format.nChannels, m_wfx[i].Format.nSamplesPerSec);
+			if (FAILED(hr)) {
+				std::cerr << "SubmixVoice Init FAILED\n";
+				Uninit();
+				return -1;
+			}
+			m_sendDescriptor[m_param[i].soundCategory].Flags = 0;
+			m_sendDescriptor[m_param[i].soundCategory].pOutputVoice = m_pSubmixVoice[m_param[i].soundCategory];
+			m_sendList[m_param[i].soundCategory].SendCount = 1;
+			m_sendList[m_param[i].soundCategory].pSends = &m_sendDescriptor[m_param[i].soundCategory];
+		}
+
 		// ソースボイスの作成
-		m_pXAudio2->CreateSourceVoice(&m_pSourceVoice[i], &(m_wfx[i].Format));
+		hr = m_pXAudio2->CreateSourceVoice(&m_pSourceVoice[i], &(m_wfx[i].Format), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, &m_sendList[m_param[i].soundCategory]);
+		if (FAILED(hr)) {
+			std::cerr << "SourceVoice Init FAILED\n";
+			Uninit();
+			return -1;
+		}
 	}
 
 	return hr;
@@ -100,6 +138,11 @@ void AudioManager::Uninit(void) {
 			m_pSourceVoice[i]->FlushSourceBuffers();
 			m_pSourceVoice[i]->DestroyVoice();			// オーディオグラフからソースボイスを削除
 			delete[]  m_DataBuffer[i];
+		}
+	}
+	for (int i = 0; i < SoundTag_MAX; i++) {
+		if (m_pSubmixVoice[i]) {
+			m_pSubmixVoice[i]->DestroyVoice();
 		}
 	}
 	if(m_pMasteringVoice) m_pMasteringVoice->DestroyVoice();
@@ -140,6 +183,9 @@ void AudioManager::Resume(SOUND_LABEL _label) {
 //--------------------------------------------------
 void AudioManager::SetVolume(SOUND_LABEL _label, float _volume) {
 	m_pSourceVoice[(int)_label]->SetVolume(_volume);
+}
+void AudioManager::SetCategoryVolume(SOUND_CATEGORY _category, float _volume) {
+	m_pSubmixVoice[(int)_category]->SetVolume(_volume);
 }
 void AudioManager::SetSpeed(SOUND_LABEL _label, float _spped) {
 	// SoundTouch等の処理を書く！
