@@ -19,6 +19,7 @@
 
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
+#include "../Component/RenderComponent/AnimationComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
@@ -34,7 +35,8 @@ Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
 	, robot_state_(RobotState::Idle)
 {
-	sprite_component_ = new SpriteComponent(this, "robot_still");
+	sprite_component_ = new SpriteComponent(this, "robot_still");	// スプライト
+	animation_component_ = new AnimationComponent(sprite_component_, this);	// アニメーション
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
@@ -82,21 +84,6 @@ void Robot::UpdateGameObject(void)
 	// 入力処理
 	InputManager& input = InputManager::GetInstance();
 
-	//// デバッグ用、ロボを操作できる
-	//// 移動処理
-	//if (input.GetKeyPress(VK_A))
-	//{
-	//	velocity_component_->SetVelocity(Vector3(-10, 0, 0));
-	//}
-	//else if (input.GetKeyPress(VK_D))
-	//{
-	//	velocity_component_->SetVelocity(Vector3(10, 0, 0));
-	//}
-	//else
-	//{
-	//	velocity_component_->SetVelocity(Vector3(0, 0, 0));
-	//}
-
 	// マウスクリックで移動
 	if (input.GetMouseButtonPress(0)) {
 		auto mousePos = input.GetMousePosition();
@@ -112,20 +99,27 @@ void Robot::UpdateGameObject(void)
 	{
 		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN)) {
 			robot_state_ = RobotState::Move;
+			sprite_component_->SetTexture("robot_walk");
 		}
 		break;
 	}
 	case RobotState::Move:	// 移動状態
 	{
+		// 落ちていたら
 		if (!gravity_component_->GetIsGround()) {
+			// 落下状態に遷移
 			robot_state_ = RobotState::Fall;
+			sprite_component_->SetTexture("robot_drop");
 		}
 		break;
 	}
 	case RobotState::Fall:	// 落下状態
 	{
+		// 地面についたら
 		if (gravity_component_->GetIsGround()) {
+			// 移動状態に遷移
 			robot_state_ = RobotState::Move;
+			sprite_component_->SetTexture("robot_walk");
 		}
 		break;
 	}

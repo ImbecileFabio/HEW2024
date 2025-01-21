@@ -46,6 +46,9 @@ public:
 	// 色を変える
 	void SetColor(const DirectX::SimpleMath::Vector4& _color);
 
+	// 画像を反転する
+	void SetFlip(bool _xFlip, bool _yFlip);
+
 	// コンポーネントのIDを返す
 	TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 

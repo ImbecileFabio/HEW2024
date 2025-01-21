@@ -130,7 +130,7 @@ void TextureManager::RegisterAllTextures()
 
 	/*--------------- êUÇËéq ---------------*/
 	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png");		// É{Å[Éã
-	RegisterTexture("stick", TEXTURE_PATH"huriko/v03/stick_01.png", {0.0f, 0.0f}, { 0.5f, 1.0f});	// ñ_
+	RegisterTexture("stick", TEXTURE_PATH"huriko/v03/stick_01.png", {0.0f, 0.0f}, { 0.75f, 1.0f});	// ñ_
 
 	/*--------------- É^ÉCÉã ---------------*/
 	// è∞

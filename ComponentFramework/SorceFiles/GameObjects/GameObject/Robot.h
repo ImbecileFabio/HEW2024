@@ -46,7 +46,8 @@ private:
 
 
 	// 所有するコンポーネント
-	class RenderComponent* sprite_component_{};
+	class SpriteComponent* sprite_component_{};
+	class AnimationComponent* animation_component_{};	// アニメーション
 	class ColliderBaseComponent* collider_component_{};	// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
 	class VelocityComponent* velocity_component_{};		// 速度
