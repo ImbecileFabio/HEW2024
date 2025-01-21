@@ -19,9 +19,9 @@ class StickMoveComponent : public Component
 public:
 	enum class LengthState
 	{
-		shortLength,
-		normalLength,
-		longLength
+		Short,
+		Middle,
+		Long
 	};
 
     StickMoveComponent(GameObject* _owner, int _updateOrder = 50);

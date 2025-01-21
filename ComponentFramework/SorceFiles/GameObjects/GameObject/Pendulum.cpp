@@ -39,7 +39,7 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	// 子タイムゾーン
 	time_zone_ = new TimeZone(game_manager_, this);
 	// 子スティック
-	stick_ = new Stick(game_manager_);
+	stick_ = new Stick(game_manager_, this);
 	stick_->GetComponent<StickMoveComponent>()->StickInit(_fulcrum, _movement, _pendulumAngle);
 	stick_->GetComponent<StickMoveComponent>()->SetPendulumTransform(transform_component_);
 
