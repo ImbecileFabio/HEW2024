@@ -49,9 +49,6 @@ Stage1_1Scene::~Stage1_1Scene()
 //--------------------------------------------------
 void Stage1_1Scene::Init()
 {
-	camera_ = new Camera(game_manager_);
-	back_ground_ = new BackGround(game_manager_);
-
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
@@ -101,6 +98,9 @@ void Stage1_1Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
+
+	camera_ = new Camera(game_manager_);
+	back_ground_ = new BackGround(game_manager_);
 }
 
 //--------------------------------------------------

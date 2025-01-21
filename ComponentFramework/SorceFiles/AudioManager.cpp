@@ -28,8 +28,7 @@
 //--------------------------------------------------
 // 初期化/開放処理
 //--------------------------------------------------
-HRESULT AudioManager::Init()
-{
+HRESULT AudioManager::Init() {
 	HRESULT hr;
 
 	HANDLE hFile;
@@ -40,17 +39,19 @@ HRESULT AudioManager::Init()
 	// COM,Xaudio2,MasteringVoiceの初期化
 	hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	if (FAILED(hr)) {
-		std::cerr << "";
+		std::cerr << "COM Init FAILED\n";
 		Uninit();
 		return -1;
 	}
 	hr = XAudio2Create(&m_pXAudio2, 0);
 	if (FAILED(hr)) {
+		std::cerr << "Xaudio2 Init FAILED\n";
 		Uninit();
 		return -1;
 	}
 	hr = m_pXAudio2->CreateMasteringVoice(&m_pMasteringVoice);
 	if (FAILED(hr)) {
+		std::cerr << "MasteringVoice Init FAILED\n";
 		Uninit();
 		return -1;
 	}
@@ -90,12 +91,9 @@ HRESULT AudioManager::Init()
 		m_pXAudio2->CreateSourceVoice(&m_pSourceVoice[i], &(m_wfx[i].Format));
 	}
 
-	std::fill(std::begin(m_volume), std::end(m_volume), 1.0f);
-	std::fill(std::begin(m_speed), std::end(m_speed), 1.0f);
-
 	return hr;
 }
-void AudioManager::Uninit(void){
+void AudioManager::Uninit(void) {
 	for (int i = 0; i < SoundLabel_MAX; i++){
 		if (m_pSourceVoice[i]){
 			m_pSourceVoice[i]->Stop(0);
@@ -113,51 +111,39 @@ void AudioManager::Uninit(void){
 //--------------------------------------------------
 // 再生/停止/一時停止
 //--------------------------------------------------
-void AudioManager::Play(SOUND_LABEL label)
-{
-	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)label];
-
-	if (pSV != nullptr){
-		pSV->DestroyVoice();
-		pSV = nullptr;
-	}
-
-	// 再生速度の調整
-	// SoundTouchの処理とか！
-
-	// ソースボイス作成
-	m_pXAudio2->CreateSourceVoice(&pSV, &(m_wfx[(int)label].Format));
-	pSV->SetVolume(m_volume[label]);
-	pSV->SubmitSourceBuffer(&(m_buffer[(int)label]));	// ボイスキューに新しいオーディオバッファーを追加
+void AudioManager::Play(SOUND_LABEL _label) {
+	// ボイスキューに新しいオーディオバッファーを追加
+	m_pSourceVoice[(int)_label]->SubmitSourceBuffer(&(m_buffer[(int)_label]));
 
 	// 再生
-	pSV->Start(0);
+	m_pSourceVoice[(int)_label]->Start(0);
 
 }
-void AudioManager::Stop(SOUND_LABEL label)
-{
-	if (m_pSourceVoice[(int)label] == NULL) return;
+void AudioManager::Stop(SOUND_LABEL _label) {
+	if (m_pSourceVoice[(int)_label] == NULL) return;
 
 	XAUDIO2_VOICE_STATE xa2state;
-	m_pSourceVoice[(int)label]->GetState(&xa2state);
+	m_pSourceVoice[(int)_label]->GetState(&xa2state);
 	if (xa2state.BuffersQueued)
 	{
-		m_pSourceVoice[(int)label]->Stop(0);
+		m_pSourceVoice[(int)_label]->Stop(0);
 	}
 }
-void AudioManager::Resume(SOUND_LABEL label)
-{
-	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)label];
+void AudioManager::Resume(SOUND_LABEL _label) {
+	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)_label];
 	pSV->Start();
 }
 
 
 //--------------------------------------------------
-// 音量設定
+// 音量・再生速度設定
 //--------------------------------------------------
-void AudioManager::SetVolume(SOUND_LABEL label, float volume)
-{
-	m_volume[label] = volume;
+void AudioManager::SetVolume(SOUND_LABEL _label, float _volume) {
+	m_pSourceVoice[(int)_label]->SetVolume(_volume);
+}
+void AudioManager::SetSpeed(SOUND_LABEL _label, float _spped) {
+	// SoundTouch等の処理を書く！
+	// バッファをいじるっぽい
 }
 
 
