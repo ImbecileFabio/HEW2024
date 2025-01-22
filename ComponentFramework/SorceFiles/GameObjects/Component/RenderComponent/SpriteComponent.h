@@ -36,8 +36,12 @@ public:
 	void Uninit() override;
 	void Draw();
 
+	void SetUV(const DirectX::SimpleMath::Vector2& _uv) override;
+
 	// テクスチャを変更
 	void SetTexture(const std::string _imgname);
+	// テクスチャを取得
+	std::shared_ptr<Texture> GetTexture() { return texture_; }
 
 	// 色を変える
 	void SetColor(const DirectX::SimpleMath::Vector4& _color);
@@ -45,8 +49,6 @@ public:
 	// コンポーネントのIDを返す
 	TypeID GetComponentType(void) const override { return TypeID::SpriteComponent; }
 
-	// テクスチャを取得
-	std::shared_ptr<Texture> GetTexture() { return texture_; }
 
 private:
 	std::shared_ptr<Texture> texture_;	// テクスチャ

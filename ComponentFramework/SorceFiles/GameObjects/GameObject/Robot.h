@@ -1,8 +1,8 @@
 //==================================================
-// [Robot.h] タイルオブジェクト
+// [Robot.h] ロボットオブジェクトヘッダ
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：床や壁のタイルオブジェクト
+// 説明：ロボットオブジェクトです
 //==================================================
 #ifndef ROBOT_H_
 #define ROBOT_H_
@@ -22,6 +22,13 @@ class Robot
 	: public GameObject
 {
 public:
+	enum class RobotState {
+		Idle,
+		Move,
+		Fall,
+		OnLift
+	};
+
 	Robot(GameManager* _gameManager);
 	~Robot(void);
 
@@ -30,8 +37,14 @@ public:
 
 	TypeID GetType(void) override { return TypeID::Robot; }
 
+	void SetRobotState(RobotState _state) { robot_state_ = _state; }
+	auto GetRobotState(void) { return robot_state_; }
+
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
+	RobotState robot_state_;
+
+
 	// 所有するコンポーネント
 	class RenderComponent* sprite_component_{};
 	class ColliderBaseComponent* collider_component_{};	// 当たり判定

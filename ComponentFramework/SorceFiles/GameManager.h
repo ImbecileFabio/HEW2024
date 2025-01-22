@@ -52,7 +52,7 @@ public:
 
 	void InitAll(void);
 	void UninitAll(void);
-	void UpdateAll(void);
+	void UpdateAll(float _deltaTime);
 	void GenerateOutputAll(void);
 
 	auto& GetRenderer(void) const { return renderer_; }
@@ -66,6 +66,7 @@ public:
 	void SetEndFlag(bool _endFg) { endFg = _endFg; }
 	bool GetEndFlag() { return endFg; }
 	void itemCountUp() { itemCount++; }
+	void ResetItemCount() { itemCount = 0; }
 	int GetItemCount() { return itemCount; }
 
 
@@ -84,7 +85,7 @@ private:
 
 	int itemCount = 0;
 	// 更新処理
-	void UpdateGameObjects(void);
+	void UpdateGameObjects(float _deltaTime);
 	// シーン
 	SceneBase* current_scene_{};
 

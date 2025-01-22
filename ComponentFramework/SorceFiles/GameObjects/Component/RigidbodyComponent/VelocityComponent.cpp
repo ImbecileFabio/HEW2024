@@ -39,6 +39,8 @@ void VelocityComponent::Init() {
 	acceleration_	= { 0.0f, 0.0f, 0.0f };
 	velocity_		= { 0.0f, 0.0f, 0.0f };
 	speed_rate_ = 1.0f;
+
+	is_change_speed_rate_flg_ = false;
 }
 
 //--------------------------------------------------
@@ -65,8 +67,15 @@ void VelocityComponent::Update() {
 
 	this->owner_->GetTransformComponent()->SetPosition(position_);
 
-	// 速度をリセット
-	speed_rate_ = 1.0f;
+	std::cout << std::format("＜VelocityComponent＞ ->[{}] x : {}, y : {}\n", owner_->GetObjectName(), velocity_.x, velocity_.y);
+
+	// 速度係数が変更されていたらリセットする
+	if (is_change_speed_rate_flg_)
+	{
+		speed_rate_ = 1.0f;
+		is_change_speed_rate_flg_ = false;
+	}
+
 }
 //--------------------------------------------------
 // 速度係数をセット

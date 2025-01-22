@@ -1,6 +1,6 @@
 //==================================================
 // [Pendulum.h] 振り子オブジェクトヘッダ
-// 著者：有馬啓太
+// 著者：中谷凌也
 //--------------------------------------------------
 // 説明：振り子の制御を行うクラス
 //==================================================
@@ -31,6 +31,8 @@ public:
 	TypeID GetType(void) override { return TypeID::Pendulum; }
 
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
+
+	void NotDrawAndStopPendulum(void);
 private:
 	// 子オブジェクト
 	class TimeZone* time_zone_{};

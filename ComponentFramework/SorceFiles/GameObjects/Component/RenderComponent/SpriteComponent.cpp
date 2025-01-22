@@ -24,7 +24,7 @@ using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-SpriteComponent::SpriteComponent(GameObject* _owner,const std::string _imgname,  int _drawOrder)
+SpriteComponent::SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder)
 	: RenderComponent(_owner, _drawOrder)
 {
 	std::cout << std::format("＜SpriteComponent＞ -> Constructor\n");
@@ -87,11 +87,15 @@ void SpriteComponent::Draw()
 		auto r  = transform->GetRotation();
 		auto sc = transform->GetScale();
 
-		auto finalSize = Vector3(si * sc);	// 最終的なサイズ
+		auto offsetPos = texture_->GetOffsetPos();	// オフセットポジション
+		auto offsetSize = texture_->GetOffsetSize();	// オフセットサイズ
+
+		Vector3 finalPos  = { t.x + offsetPos.x, t.y + offsetPos.y, t.z };	// 最終的な位置
+		Vector3 finalSize = { (si.x * offsetSize.x) * sc.x,  (si.y * offsetSize.y) * sc.y, si.z * si.z};								// 最終的なサイズ
 
 
 		rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
-		pos = Matrix::CreateTranslation(t);
+		pos = Matrix::CreateTranslation(finalPos);
 		scale = Matrix::CreateScale(finalSize);
 	}
 	else 
@@ -129,6 +133,20 @@ void SpriteComponent::Draw()
 		4,							// 描画するインデックス数（四角形なんで４）
 		0,							// 最初のインデックスバッファの位置
 		0);
+}
+
+void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
+{
+	float cutU = texture_.get()->GetCutU();
+	float cutV = texture_.get()->GetCutV();
+
+	vertices_[0].uv = Vector2(_uv.x / cutU, _uv.y / cutV);
+	vertices_[1].uv = Vector2((_uv.x + 1.0f) / cutU, _uv.y / cutV);
+	vertices_[2].uv = Vector2(_uv.x / cutU, (_uv.y + 1.0f) / cutV);
+	vertices_[3].uv = Vector2((_uv.x + 1.0f) / cutU, (_uv.y + 1.0f) / cutV);
+
+	vertex_buffer_.Modify(vertices_);
+
 }
 
 

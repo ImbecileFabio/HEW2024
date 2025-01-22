@@ -1,5 +1,5 @@
 //==================================================
-// [Revolution.cpp] 画像を描画するためのオブジェクト
+// [Revolution.h] 画像を描画するためのオブジェクト
 // 著者：有馬啓太
 //--------------------------------------------------
 // 説明：画像を描画するためのオブジェクト
@@ -15,7 +15,7 @@ class Revolution :
     public GameObject
 {
 public:
-	Revolution(GameManager* _gameManager, const std::string _imgName);
+	Revolution(GameManager* _gameManager, const std::string _imgName, int _drawOrder = 50);
 	~Revolution();
 
 	void InitGameObject  () override;

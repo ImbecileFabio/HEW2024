@@ -55,7 +55,7 @@ void Item::OnCollisionEnter(GameObject* _other)
 		this->GetGameManager()->itemCountUp();
 		this->event_base_component_->RemoveEvent();
 		this->sprite_component_->SetState(SpriteComponent::State::notDraw);
-		this->state_ = GameObject::State::ColliderOut;
+		this->state_ = GameObject::State::Paused;
 
 		// ƒTƒEƒ“ƒhÄ¶
 		audio_manager_.Play(SoundLabel_ItemGet);

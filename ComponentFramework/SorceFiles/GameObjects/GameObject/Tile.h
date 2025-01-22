@@ -22,7 +22,7 @@ public:
 	Tile(GameManager* _gameManager);
 	~Tile(void);
 
-	void InitGameObject(void) override;
+	void InitGameObject	 (void) override;
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::Tile; }

@@ -10,7 +10,8 @@
 /*----- インクルード -----*/
 #include "SceneBase.h"
 
-constexpr int gearCounter = 2;
+constexpr int gearCounter = 1;
+#include <array>
 
 //--------------------------------------------------
 // ステージ1-1シーンクラス
@@ -28,24 +29,10 @@ public:
 
 
 private:
-	// ゲームの状態
-	enum STATE {
-		Game,
-		Result,
-		Pouse,
-		Rewind
-	};
-	STATE State;
-
 	// 作ったオブジェクトをここに記述
 	class BackGround* back_ground_{};	// 背景
 	class Camera* camera_{};			// カメラ
-	class Pendulum* pendulum_{};			// 振り子
-	class Tile* tile_{};				// タイル
-	class Tile* tile_2_{};				// タイル
-	class Tile* tile_3_{};				// タイル
-	class Robot* robot_{};				// ロボット
-	class Lift*	 lift_{};				// リフト
 	std::vector<class Item*> items_;	// アイテムリスト
+	std::array<class Revolution*, 2> stageUIs_;	// 動きのないステージUI
 };
 #endif  // STAGE1_1SCENE_H_

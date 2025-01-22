@@ -11,12 +11,18 @@
 #include <SimpleMath.h>
 /*----- 前方宣言 -----*/
 class Pendulum;
+class LiftGroup;
 //--------------------------------------------------
 // リフトオブジェクト
 //--------------------------------------------------
 class Lift : public GameObject
 {
 public:
+	enum class LiftState {
+		Move,
+		Stop
+	};
+
 	enum class MoveState
 	{
 		length,		// 縦移動
@@ -25,7 +31,7 @@ public:
 		diagonalLeft,	// 斜め移動(左)
 	};
 	Lift(GameManager* _gameManager);
-	Lift(Lift::MoveState _moveState, float _moveDistance, GameManager* _gameManager);
+	Lift(GameManager* _gameManager, Lift::MoveState _moveState, Vector3 _startpos, Vector3 _endPos, Pendulum* _pendulum = nullptr);
 
 	~Lift(void);
 
@@ -36,20 +42,23 @@ public:
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 
 	void SetPendulum(Pendulum* _pendulum);
+
 	void SetMoveState(Lift::MoveState _moveState);
+
+	auto GetLiftState() { return lift_state_; }
+	void SetLiftGroup(LiftGroup* _group) { lift_group_ = _group; }
 private:
-	class ColliderBaseComponent* collider_base_component_ = {};
+	class ColliderBaseComponent* collider_component_ = {};
 	class EventBaseComponent*	collider_event_component_ = {};
 	class RenderComponent*		sprite_component_		  = {};	// 画像表示
 	class VelocityComponent*	velocity_component_		  = {};
+	class LiftComponent*		lift_component_ = {};
 
-	float maxMoveDistance_;								// 最大移動距離
-	DirectX::SimpleMath::Vector2 traveledDistance_;		// 累積移動距離
-	DirectX::SimpleMath::Vector2 direction_;			// 移動方向
-	DirectX::SimpleMath::Vector3 startPos_;				// 開始位置
+	LiftState lift_state_;		// リフトの状態
+	MoveState move_state_;		// 移動方向
+	int turn_count_;			// 切り返しまでの時間 多分こいつもComponentに移動させるべき
 
 	Pendulum* pendulum_;					// 連動させたい振り子
-	bool switchFg_;							// スイッチフラグ
-	MoveState moveState_;					// 移動状態
+	LiftGroup* lift_group_{};					// リフトをまとめるグループ
 };
 #endif // _LIFT_H_

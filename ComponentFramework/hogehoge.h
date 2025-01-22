@@ -10,10 +10,11 @@
 #include "../../Component.h"
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
-// HOGEコンポーネント
+// Hogeコンポーネント
 //--------------------------------------------------
 class hogeComponent : public Component
 {
+public:
     hogeComponent(GameObject* _owner, int _updateOrder = 50);
     ~hogeComponent();
 
@@ -22,6 +23,6 @@ class hogeComponent : public Component
     void Update() override;
 
     TypeID GetComponentType(void) const override { return TypeID::HogeComponent; }
-
+private:
 };
 #endif // HOGE_COMPONENT_H_

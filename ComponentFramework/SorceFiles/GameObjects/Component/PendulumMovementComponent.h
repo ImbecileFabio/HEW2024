@@ -28,6 +28,7 @@
 //	U‚èq‚ğÃ~‚©‚ç“®‚©‚µn‚ß‚½‚ÌŠp‰Á‘¬“x‚Í0‹‚Ì‚ÉƒQƒbƒ^[‚Åæ“¾‚·‚é
 //==================================================
 
+#include "../../TileMapManager.h"
 #include "../Component.h"
 #include "../GameObject.h"
 #include <iostream>
@@ -36,8 +37,8 @@
 
 #define PI 3.14f
 
-constexpr float normalLangth = 250.0f;
-constexpr float langthChange = 50.0f;
+constexpr float normalLangth = TILE_SIZE_Y * 4;
+constexpr float langthChange = TILE_SIZE_Y;
 constexpr float pendulumAcceleration = 0.1f;
 
 enum class LangthState
@@ -50,7 +51,7 @@ enum class LangthState
 class PendulumMovementComponent : public Component
 {
 public:
-	PendulumMovementComponent(GameObject* _owner, int _updateOrder = 50);
+	PendulumMovementComponent(GameObject* _owner, int _updateOrder = 49);
 	~PendulumMovementComponent();
 
 	void Init();

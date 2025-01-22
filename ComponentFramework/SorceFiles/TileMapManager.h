@@ -11,6 +11,7 @@
 /*----- インクルード -----*/
 #include <vector>
 #include <string>
+#include <map>
 #include "GameProcess.h"
 #include "GameManager.h"
 #include "TextureManager.h"
@@ -27,7 +28,8 @@ constexpr float MAP_SIZE_Y = 18.0f;// ( 1080pixel / タイルのサイズ)
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
-
+class WeakFloorGroup;
+class LiftGroup;
 //-----------------------------------------------------------------
 // タイルマップマネージャ
 //-----------------------------------------------------------------
@@ -43,10 +45,18 @@ private:
 	void GenerateGameObjects();
 	void CreateGameObject(int _x, int _y, int tileID);
 
+	bool GetAdjacentTile(int _typeID, int _x, int _y, int _dx, int _dy);
 
+
+	bool IsTileInGroup(int x, int y, WeakFloorGroup*& _group);
+	bool IsTileInGroup(int x, int y, LiftGroup*& _group);
 private:
 	GameManager* game_manager_{};
 	std::vector<std::vector<std::vector<int>>> map_data_;
+	std::map<std::pair<int, int>, WeakFloorGroup*> weak_tile_to_group_; // タイル座標とグループの対応
+	std::map<std::pair<int, int>, LiftGroup*> lift_tile_to_group_;		// タイル座標とグループの対応
+	std::vector<WeakFloorGroup*> weak_floor_groups_;					// 脆い床グループ一覧
+	std::vector<LiftGroup*> lift_groups_;								// リフトグループ一覧
 };
 
 

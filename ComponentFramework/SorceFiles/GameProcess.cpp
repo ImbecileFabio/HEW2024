@@ -24,8 +24,8 @@
 #include "ImGuiManager.h"
 #endif
 // ウィンドウクラス、ウィンドウ名の設定
-const auto ClassName = TEXT("2024 framework ひな形");
-const auto WindowName = TEXT("2024 framework ひな形(フィールド描画)");
+const auto ClassName = TEXT("Chrono Pendulum");
+const auto WindowName = TEXT("Chrono Pendulum");
 
 // ↓fullscreen設定	コメントを外すとフルスクリーンになる
 // #define FULLSCREEN_MODE_
@@ -111,6 +111,9 @@ void GameProcess::Run(void)
 		{
 			LARGE_INTEGER currCount;
 			QueryPerformanceCounter(&currCount);	// 現在時間を取得
+
+			// デルタタイムの計算(秒単位)
+			delta_time_ = static_cast<float>(currCount.QuadPart - prevCount.QuadPart) / frequency.QuadPart;
 			// 1/60	秒が経過したか?
 			if (currCount.QuadPart >= prevCount.QuadPart + frequency.QuadPart / 60)
 			{
@@ -305,7 +308,7 @@ void GameProcess::UninitWnd(void)
 void GameProcess::Update(void)
 {
 	// ゲームオブジェクトの更新
-	game_manager_->UpdateAll();
+	game_manager_->UpdateAll(delta_time_);
 }
 
 //--------------------------------------------------

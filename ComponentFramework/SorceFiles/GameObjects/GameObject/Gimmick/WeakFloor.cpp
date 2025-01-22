@@ -6,45 +6,23 @@
 //=================================================================
 /*----- インクルード -----*/
 #include "WeakFloor.h"
-#include "../../../GameManager.h"
-
+#include "../../Component/TransformComponent.h"
 #include "../../Component/RenderComponent/SpriteComponent.h"
 #include "../../Component/EventComponent/ColliderEventComponent.h"
 #include "../../Component/ColliderComponent/BoxColliderComponent.h"
-#include "../../Component/PushOutComponent.h"
-
+#include "../../Component/GimmickComponent/WeakFloorComponent.h"
+#include "../../GameObject/Gimmick/WeakFloorGroup.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
-WeakFloor::WeakFloor(GameManager* _gameManager, int MaxFloor)
+WeakFloor::WeakFloor(GameManager* _gameManager)
 	:GameObject(_gameManager, "WeakFloor")
-	, max_floor_(MaxFloor)
 {
-	if (max_floor_ <= 2) { max_floor_ = 3; }	// 最短３マス
-
-	// Floor毎のComponentをWeakFloorComponentListに纏めて、WeakFloorListに入れる
-
-	//// 左端
-	//WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_left"));
-	//WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
-	//WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
-	//WeakFloorList.emplace_back(WeakFloorComponentList);
-	//for(auto List:)
-	//WeakFloorComponentList.clear();
-	//// 中央
-	//for (int i = 0; i < (max_floor_ - 2); i++) {
-	//	WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_cnter"));
-	//	WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
-	//	WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
-	//	WeakFloorList.emplace_back(WeakFloorComponentList);
-	//	WeakFloorComponentList.clear();
-	//}
-	//// 右端
-	//WeakFloorComponentList.push_back(std::make_shared<SpriteComponent>(this, "weakfloor_right"));
-	//WeakFloorComponentList.push_back(std::make_shared<ColliderEventComponent>(this));
-	//WeakFloorComponentList.push_back(std::make_shared<BoxColliderComponent>(this));
-	//WeakFloorList.emplace_back(WeakFloorComponentList);
-	//WeakFloorComponentList.clear();
+	sprite_component_		  = new SpriteComponent(this, "weakfloor_center");
+	collider_component_		  = new BoxColliderComponent(this);			// 当たり判定
+	collider_event_component_ = new ColliderEventComponent(this);		// 当たり判定イベント
+	auto f = std::function<void(GameObject*)>(std::bind(&WeakFloor::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(f);
 
 	this->InitGameObject();
 }
@@ -53,6 +31,19 @@ WeakFloor::WeakFloor(GameManager* _gameManager, int MaxFloor)
 //--------------------------------------------------
 WeakFloor::~WeakFloor(void)
 {
+	// ここでコンポーネントを削除
+	delete sprite_component_;
+	delete collider_component_;
+	delete collider_event_component_;
+	delete weak_floor_component_;
+}
+//--------------------------------------------------
+// @brief グループの参照を設定
+// @param _weak_floor_group[脆い床グループ]
+//--------------------------------------------------
+void WeakFloor::SetWeakFloorGroup(WeakFloorGroup* _weak_floor_group)
+{
+	weak_floor_group_ = _weak_floor_group;
 }
 //--------------------------------------------------
 // @brief 初期化処理
@@ -66,4 +57,18 @@ void WeakFloor::InitGameObject(void)
 //--------------------------------------------------
 void WeakFloor::UpdateGameObject(void)
 {
+
 }
+//--------------------------------------------------
+// @brief 当たり判定実行処理
+//--------------------------------------------------
+void WeakFloor::OnCollisionEnter(GameObject* _other)
+{
+	if (state_ == State::Paused) return;
+	if (_other->GetType() == TypeID::Robot)	// タイルとロボットが接触したら
+	{
+		std::cout << std::format("WeakFloor -> Robot -> OnCollisionEnter\n");
+		weak_floor_group_->SetWeakFloorBreak(true);	// グループに通知
+	}
+}
+

@@ -4,6 +4,7 @@
 #include	<string>
 #include	<wrl/client.h> // ComPtrの定義を含むヘッダファイル
 #include	<filesystem>
+#include	<SimpleMath.h>
 
 
 using Microsoft::WRL::ComPtr;
@@ -15,6 +16,9 @@ class Texture
 {
 	std::string m_texname{}; // ファイル名
 	ComPtr<ID3D11ShaderResourceView> m_srv{}; // シェーダーリソースビュー
+
+	DirectX::SimpleMath::Vector2 offset_pos_; // オフセットポジション
+	DirectX::SimpleMath::Vector2 offset_size_; // オフセットサイズ
 
 	bool loop_flg_; // ループフラグ
 
@@ -28,10 +32,13 @@ class Texture
 	float m_numV;	// 縦描画位置
 	int m_anmSpeed; // アニメーションスピード
 public:
-	Texture(bool loopFlg, float _cutU, float _cutV, int _anmSpeed);
+	Texture(const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed);
 
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
+
+	auto GetOffsetPos() const { return offset_pos_; }
+	auto GetOffsetSize() const { return offset_size_; }
 
 	auto GetLoopFlg() const { return loop_flg_; }
 

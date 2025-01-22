@@ -18,15 +18,16 @@ ResultScene::ResultScene(GameManager* _gameManager)
 	: SceneBase(_gameManager, "ResultScene")
 {
 	camera_ = new Camera(game_manager_);
-	result_ = new Revolution(game_manager_, "result_menu");
-	result_->GetComponent<TransformComponent>()->SetSize(1920.0f, 1080.0f);
-	result_->GetComponent<TransformComponent>()->SetPosition(0.0f, 0.0f);
-	select_buttons_[0] = new Revolution(game_manager_, "hoge");
-	select_buttons_[0]->GetTransformComponent()->SetSize(400.0f, 200.0f);
-	select_buttons_[0]->GetTransformComponent()->SetPosition(-400.0f, -300.0f);
-	select_buttons_[1] = new Revolution(game_manager_, "hoge");
-	select_buttons_[1]->GetTransformComponent()->SetSize(400.0f, 200.0f);
-	select_buttons_[1]->GetTransformComponent()->SetPosition(400.0f, -300.0f);
+	backdrop_ = new Revolution(game_manager_, "result_backdrop");
+	backdrop_->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
+	result_ribbon_ = new Revolution(game_manager_, "result_front_ribbon");
+	result_ribbon_->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
+	result_buttons_[0] = new Revolution(game_manager_, "result_select");
+	result_buttons_[0]->GetTransformComponent()->SetSize(512.0f, 512.0f);
+	result_buttons_[0]->GetTransformComponent()->SetPosition(-443.0f, -300.0f);
+	result_buttons_[1] = new Revolution(game_manager_, "result_next");
+	result_buttons_[1]->GetTransformComponent()->SetSize(512.0f, 512.0f);
+	result_buttons_[1]->GetTransformComponent()->SetPosition(464.0f, -300.0f);
 
 	this->Init();
 }
@@ -98,17 +99,17 @@ void ResultScene::Update()
 	if (select_button_ < 0)
 		select_button_ = 1;
 	// 全ボタンの色を更新
-	for (int i = 0; i < select_buttons_.size(); ++i)
+	for (int i = 0; i < result_buttons_.size(); ++i)
 	{
 		if (i == select_button_)
 		{
 			// 選択中のボタンの色を変更
-			select_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 0.5f, 0.5f, 1.0f, 1.0f });
+			result_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 0.5f, 0.5f, 1.0f, 1.0f });
 		}
 		else
 		{
 			// 未選択のボタンの色を元に戻す
-			select_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
+			result_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 		}
 	}
 	if (input.GetKeyTrigger(VK_RETURN))

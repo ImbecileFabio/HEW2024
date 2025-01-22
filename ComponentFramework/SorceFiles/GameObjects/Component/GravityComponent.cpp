@@ -17,7 +17,9 @@
 //--------------------------------------------------
 GravityComponent::GravityComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
-	, gravity_(-1.0f)	// 重力
+	, is_ground_(false)	// 地面に接地しているか
+	, use_gravity_(true)	// 重力の使用
+	, gravity_(-3.0f)	// 重力
 {
 	this->Init();
 }
@@ -36,8 +38,6 @@ GravityComponent::~GravityComponent()
 //--------------------------------------------------
 void GravityComponent::Init()
 {
-	velocity_ = nullptr;
-	collider_ = nullptr;
 	is_ground_ = false;
 	use_gravity_ = true;
 }
@@ -53,23 +53,15 @@ void GravityComponent::Uninit()
 //--------------------------------------------------
 void GravityComponent::Update()
 {
-	if (!velocity_ || !collider_)	//	一度だけ取得
-	{
-	velocity_ = this->owner_->GetComponent<VelocityComponent>();
-	collider_ = this->owner_->GetComponent<BoxColliderComponent>();
-	}
 
-	// 地上に居てるか
-	is_ground_ = CheckGroundCollishion();
+	is_ground_ = CheckGroundCollision();
 
-	use_gravity_ = !is_ground_;
 
 	// 重力適用
-	if (use_gravity_)	
+	if (use_gravity_ && !is_ground_)	
 	{
-		velocity_->SetVelocity(Vector3(0.0f, gravity_, 0.0f));
+		owner_->GetComponent<VelocityComponent>()->SetVelocity(Vector3(0.0f, gravity_, 0.0f));
 	}
-
 }
 
 
@@ -78,20 +70,22 @@ void GravityComponent::Update()
 // @brief 地面との当たり判定
 // @return 地面に接している: true, 地面に接していない: false
 //--------------------------------------------------
-bool GravityComponent::CheckGroundCollishion()
+bool GravityComponent::CheckGroundCollision()
 {
-	auto robotHitbox = collider_->GetWorldHitBox();
+	auto robotHitbox = owner_->GetComponent<BoxColliderComponent>()->GetWorldHitBox();
 	AABB groundCheckHitbox = robotHitbox;
 
-	// 足元にチェック判定を作成
-	groundCheckHitbox.min_.y -= 1.0f;
+	// 足元のスキャン範囲を設定（キャラクターサイズに応じて調整）
+	float groundCheckHeight = (robotHitbox.max_.y - robotHitbox.min_.y) * 0.01f;
+	groundCheckHitbox.min_.y -= groundCheckHeight; // 足元少し下に範囲を作成
 	groundCheckHitbox.max_.y = robotHitbox.min_.y;
-
 	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
 
 	// 地面との当たり判定
 	for (const auto& obj : objects)
 	{
+		if (obj == owner_) continue; // 自分自身との判定はスキップ
+
 		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
 		if (auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider))
 		{
