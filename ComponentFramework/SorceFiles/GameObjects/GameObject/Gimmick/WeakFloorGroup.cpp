@@ -78,7 +78,7 @@ void WeakFloorGroup::UpdateGameObject(void)
         }
 
         // U‚èŽq‚Ì’†S‚ðÝ’è
-        centerPendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(centerPos);
+		owner_pendulum_movement_->SetPendulumFulcrum(centerPos);
         isCenterMedian = true;
     }
 	// Æ‚¢°‚ª‰ó‚ê‚½‚©‚Ç‚¤‚©‚©‚ÂAU‚èŽq‚ª“®‚¢‚Ä‚¢‚éê‡
@@ -98,7 +98,7 @@ void WeakFloorGroup::UpdateGameObject(void)
 			{
 				tile->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 				tile->GetComponent<EventBaseComponent>()->RemoveEvent();
-				tile->SetState(GameObject::State::Paused);
+				tile->SetState(GameObject::State::Dead);
 			}
 			auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
 			pendulum->NotDrawAndStopPendulum();

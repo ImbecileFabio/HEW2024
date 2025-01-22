@@ -56,6 +56,7 @@ public:
 		, SteePillar	// 鉄柱
 		, Smoke			// 煙
 		, Pulley		// 滑車ギミック
+		, HammerCursor	// ハンマーカーソル
 		// タイルを一括で管理するグループクラス
 		, WeakFloorGroup// 脆い床
 		, LiftGroup		// リフト

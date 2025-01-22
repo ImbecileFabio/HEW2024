@@ -9,6 +9,7 @@
 #include "GameManager.h"
 #include "InputManager.h"
 #include "GameObjects/GameObject.h"
+#include "GameObjects/GameObject/HammerCursor.h"
 #include "GameObjects/Component/PendulumMovementComponent.h"
 
 //#define ControllerPlay
@@ -92,6 +93,7 @@ void PendulumManager::PendulumSelect() {
 #else
 	pNextPendulum = nullptr;
 	if (IM.GetKeyTrigger(VK_L)) {
+		isCursorRetry = false;
 		for (auto& pemdulum : pendulum_list_) {
 			if (pSelectedPendulum != pemdulum &&
 				pSelectedPendulum->GetTransformComponent()->GetPosition().x <
@@ -108,6 +110,7 @@ void PendulumManager::PendulumSelect() {
 	}
 	if (IM.GetKeyTrigger(VK_J)) {
 		for (auto& pemdulum : pendulum_list_) {
+			isCursorRetry = false;
 			if (pSelectedPendulum != pemdulum &&
 				pSelectedPendulum->GetTransformComponent()->GetPosition().x >
 				pemdulum->GetTransformComponent()->GetPosition().x) {
@@ -121,9 +124,12 @@ void PendulumManager::PendulumSelect() {
 			}
 		}
 	}
-	if (pNextPendulum != nullptr) {
+	if (pNextPendulum != nullptr) 
+	{
+		pHammerCursor_->SetIsUiDraw(true);
 		pSelectedPendulum = pNextPendulum;
 		pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
 	}
 #endif
 }
@@ -132,7 +138,7 @@ void PendulumManager::PendulumSelect() {
 // 振り子の状態変異
 //--------------------------------------------------
 void PendulumManager::PendulumMovementChange() {
-PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovementComponent>();
+	PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovementComponent>();
 #ifdef ControllerPlay
 	// Aボタン（動作の変更）
 	if (IM.GetButtonTrigger(XINPUT_A)) {
@@ -140,11 +146,18 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 	}
 #else
 	// Mキー（動作の変更）
-	if (IM.GetKeyTrigger(VK_M)) {
-		SPM->SetPendulumMovement(!SPM->GetPendulumMovement());
+	if (GM->GetIsHammerMax()) return;	// 叩ける回数がなくなったら
+	if (IM.GetKeyTrigger(VK_M))
+	{
+		bool isPendulumMove = SPM->GetPendulumMovement();
+		SPM->SetPendulumMovement(!isPendulumMove);
+		if (!isPendulumMove)
+		{
+			GM->HammerCountDown();
+		}
 	}
-#endif
 }
+#endif
 
 //--------------------------------------------------
 // 長さの変更

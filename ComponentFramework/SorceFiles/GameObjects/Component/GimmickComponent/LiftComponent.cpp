@@ -10,13 +10,13 @@
 #include "../../GameObject.h"
 #include "../../GameObject/Pendulum.h"
 
-
+#include "../../GameObject/Lift.h"
 
 #include "LiftComponent.h"
 #include "../TransformComponent.h"
 #include "../RigidbodyComponent/VelocityComponent.h"
 #include "../PendulumMovementComponent.h"
-
+#include "../../GameObject/Gimmick/LiftGroup.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -60,8 +60,7 @@ LiftComponent::~LiftComponent()
 void LiftComponent::Init()
 {
 	traveled_distance_ = { 0.0f, 0.0f };
-	lift_com_state_ = LiftComState::Stop;
-	
+	lift_com_state_ = LiftComState::Stop;																															
 }
 //--------------------------------------------------
 // @brief 終了処理

@@ -11,6 +11,7 @@
 #include "SceneBase.h"
 
 constexpr int gearCounter = 1;
+constexpr int hammerCounter = 3;	// 叩ける上限
 #include <array>
 
 //--------------------------------------------------
@@ -32,6 +33,7 @@ private:
 	// 作ったオブジェクトをここに記述
 	class BackGround* back_ground_{};	// 背景
 	class Camera* camera_{};			// カメラ
+	class HammerCursor* hammerCursor_{};	// ハンマーカーソル
 	std::vector<class Item*> items_;	// アイテムリスト
 	std::array<class Revolution*, 2> stageUIs_;	// 動きのないステージUI
 };

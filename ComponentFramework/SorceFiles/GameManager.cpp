@@ -37,7 +37,7 @@ GameManager::GameManager()
 
 	// 振り子マネージャー初期化
 	pendulum_manager_ = PendulumManager::GetInstance();
-
+	pendulum_manager_->SetGM(this);
 	this->InitAll();
 }
 
@@ -278,7 +278,6 @@ void GameManager::UpdateGameObjects(float _deltaTime)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-
 	for (auto& gameObject : game_objects_)
 	{
 		gameObject->SetDeltaTime(_deltaTime);	// デルタタイムの設定

@@ -26,10 +26,14 @@ public:
 	void AddLiftTile(GameObject* _tile);					// グループにタイルを追加
 	void SetPendulumANDMovement(GameObject* _centerPendulum);	// グループに中心の振り子を設定
 
+
+	void UpdateLiftTilePositions(); // 仮の関数
 private:
 	// グループ単体が管理しているもの
 	bool isCenterMedian = false;						// 中心値を調べたかどうか
 	int tileCenterNum_ = 0;								// タイルの中心の添え字
+	int leftIndex_	   = 0;
+	int rightIndex_	   = 0;
 	GameObject* centerPendulum_ = nullptr;				// 中心の振り子
 	std::vector<GameObject*> liftTiles_;				// グループが管理したいタイル
 	std::vector<DirectX::SimpleMath::Vector3> initialPositions_; // 各リフトタイルの初期位置

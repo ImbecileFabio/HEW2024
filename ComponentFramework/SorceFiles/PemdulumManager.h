@@ -20,6 +20,8 @@ constexpr float InnerProductLimit = 0.7f;
 class PendulumManager
 {
 private:
+	bool isCursorRetry = false;
+	class HammerCursor* pHammerCursor_{};
 	GameObject* pSelectedPendulum;
 	GameObject* pNextPendulum;
 
@@ -47,6 +49,7 @@ public:
 	void Uninit();
 	void Update();
 
+	void SetGM(GameManager* _GM) { GM = _GM; }
 	// ゲームオブジェクトの追加
 	void AddGameObject(GameObject* _gameObject);
 	// ゲームオブジェクトの削除
@@ -72,4 +75,5 @@ public:
 	 void SetSelectedPendulum(GameObject* _pSelectedPendulum);
 	 GameObject* GetSelectedPendulum() { return pSelectedPendulum; }
 	 std::list<GameObject*> GetPendulumList() { return pendulum_list_; }
+	 void SetHammerCursor(HammerCursor* _hammerCursor) { pHammerCursor_ = _hammerCursor; }
 };

@@ -15,6 +15,7 @@
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/PendulumMovementComponent.h"
 #include "../Component/GimmickComponent/LiftComponent.h"
+#include "Gimmick/LiftGroup.h"
 
 Lift::Lift(GameManager* _gameManager)
 	:GameObject(_gameManager, "Lift")
@@ -119,10 +120,10 @@ void Lift::UpdateGameObject(void)
 		break;
 	}
 	}
-
 	// stateをセット
 	lift_component_->SetLiftComState(static_cast<LiftComponent::LiftComState>(lift_state_));
-
+	// グループのタイルを揃える処理
+	lift_group_->UpdateLiftTilePositions();
 }
 
 // まだテスト段階なのでコメントアウトをしておきます, by arima

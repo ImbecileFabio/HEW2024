@@ -47,7 +47,7 @@ private:
 	Revolution* title_ribbon_;					// ボタンの背景リボン
 	Revolution* title_cursor_;					// タイトルのカーソル
 	std::array<Revolution*, 3> title_buttons_;	// タイトルのボタン
-	int title_select_button_ = 0;				// タイトルのボタンの添え字
+	int title_select_button_ = 1;				// タイトルのボタンの添え字
 	static int create_count;					// タイトルシーンが生成されたかどうかのカウント
 	// セレクト画面周りのオブジェクトと変数
 	Revolution* select_left_button_;			// LBボタン
@@ -62,10 +62,10 @@ private:
 	std::array<std::array<std::function<void()>, STAGE_MAX>, CHAPTER_MAX> select_stages_;	// 5*5つ分のステージ用添え字配列
 	// オプションボタン周りのオブジェクトと変数
 	std::array<Revolution*, 10> option_images_;	// オプション画面の動きがなさそうなもの
-	Revolution* option_ball_slider_bgm_;			// BGMボールスライダー
-	Revolution* option_ball_slider_se_;				// SEボールスライダー
-	Revolution* option_stick_slider_bgm_;			// BGMスティックスライダー
-	Revolution* option_stick_slider_se_;			// SEスティックスライダー
+	Revolution* option_ball_slider_bgm_;		// BGMボールスライダー
+	Revolution* option_ball_slider_se_;			// SEボールスライダー
+	Revolution* option_stick_slider_bgm_;		// BGMスティックスライダー
+	Revolution* option_stick_slider_se_;		// SEスティックスライダー
 	void StageSelect();
 	void MoveSelect();
 };

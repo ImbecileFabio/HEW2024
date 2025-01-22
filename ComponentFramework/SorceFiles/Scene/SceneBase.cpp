@@ -13,6 +13,7 @@
 #include "../GameManager.h"
 #include "../TileMapManager.h"
 #include "../InputManager.h"
+#include "../PemdulumManager.h"
 //--------------------------------------------------
 // @param	_gameManager シーンの所有者, _sceneName シーン名
 // @brief	コンストラクタ
@@ -134,7 +135,7 @@ void SceneBase::PauseWindow()
 			stageState_ = StageState::Game;
 			for (auto& it : game_manager_->GetGameObjects())
 			{
-				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全てポーズ状態に
+				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全で稼働状態に
 			}
 			for (auto& it : pauseButtons_)
 			{
@@ -174,6 +175,8 @@ void SceneBase::NumberChange()
 	auto gearSpriteComponent = gearMax_->GetComponent<SpriteComponent>();
 	// ギアの取得状態を表示
 	auto gearGetSpriteComponent = gearGet_->GetComponent<SpriteComponent>();
+	// ハンマーの叩ける回数を表示
+	auto hammerSpriteComponent = hammerNum_->GetComponent<SpriteComponent>();
 	// ギアのMAX個数によってUVを変更
 	switch (gearMaxCount_)
 	{
@@ -241,6 +244,31 @@ void SceneBase::NumberChange()
 	default:
 		break;
 	}
-
+	// ハンマーの叩ける回数によってUVを変更
+	switch (hammerMaxCount_)
+	{
+	case 0:
+		hammerSpriteComponent->SetUV({ 0.0f, 0.0f });
+		break;
+	case 1:
+		hammerSpriteComponent->SetUV({ 1.0f, 0.0f });
+		break;
+	case 2:
+		hammerSpriteComponent->SetUV({ 2.0f, 0.0f });
+		break;
+	case 3:
+		hammerSpriteComponent->SetUV({ 3.0f, 0.0f });
+		break;
+	case 4:
+		hammerSpriteComponent->SetUV({ 4.0f, 0.0f });
+		break;
+	case 5:
+		hammerSpriteComponent->SetUV({ 5.0f, 0.0f });
+		break;
+	}
+	if (hammerMaxCount_ == 0)
+	{
+		isHammerMax_ = true;
+	}
 }
 

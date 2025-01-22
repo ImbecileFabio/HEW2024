@@ -28,6 +28,7 @@
 #include "../GameObjects/GameObject/Lift.h"
 #include "../GameObjects/GameObject/Item.h"
 #include "../GameObjects/GameObject/Revolution.h"
+#include "../GameObjects/GameObject/HammerCursor.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -52,9 +53,12 @@ void Stage1_1Scene::Init()
 {
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
+	hammerCursor_ = new HammerCursor(game_manager_);
+
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 	gearMaxCount_ = gearCounter;	// 定数を代入
+	hammerMaxCount_ = hammerCounter;
 
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
@@ -85,6 +89,8 @@ void Stage1_1Scene::Init()
 		}
 	}
 
+	game_manager_->GetPendulumManager()->SetHammerCursor(hammerCursor_);
+	
 	for (auto& pendulumObject : game_manager_->GetGameObjects()) {
 		auto childrenComponent = pendulumObject->GetComponent<ChildrenComponent>();
 		if (childrenComponent)

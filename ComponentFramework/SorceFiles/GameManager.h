@@ -68,8 +68,8 @@ public:
 	void itemCountUp() { itemCount++; }
 	void ResetItemCount() { itemCount = 0; }
 	int GetItemCount() { return itemCount; }
-
-
+	void HammerCountDown() {current_scene_->HammerCountDown(); }
+	bool GetIsHammerMax() { return current_scene_->GetIsHammerMax(); }
 	// オブジェクトをすべてクリア
 	void ClearAllObjects(void);
 	// シーン切り替え

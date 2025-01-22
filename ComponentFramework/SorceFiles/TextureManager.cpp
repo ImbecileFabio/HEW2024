@@ -180,6 +180,8 @@ void TextureManager::RegisterAllTextures()
 	/*--------------- UI ---------------*/
 	// ハンマー
 	RegisterTexture("hammer", UI_PATH"v01/hammer_01.png");
+	// ヒットエフェクト
+	RegisterTexture("hammer_hit_effect", UI_PATH"v01/hit_effect_01.png", false, 4.0f, 2.0f);
 	// ギア
 	RegisterTexture("gear", UI_PATH"v02/gear_01.png");
 	// 数字
