@@ -56,25 +56,6 @@ HRESULT AudioManager::Init() {
 		return -1;
 	}
 
-	//// サブミックスボイスの作成
-	//for (int i = 0; i < SoundTag_MAX; i++) {
-	//	for (int j = 0; j < SoundLabel_MAX; j++) {
-	//		if (m_param[j].soundCategory == i) {
-	//			hr = m_pXAudio2->CreateSubmixVoice(&m_pSubmixVoice[i], m_wfx[j].Format.nChannels, m_wfx[j].Format.nSamplesPerSec);
-	//			if (FAILED(hr)) {
-	//				std::cerr << "SubmixVoice Init FAILED\n";
-	//				Uninit();
-	//				return -1;
-	//			}
-	//			m_sendDescriptor[i].Flags = 0;
-	//			m_sendDescriptor[i].pOutputVoice = m_pSubmixVoice[i];
-	//			m_sendList[i].SendCount = 1;
-	//			m_sendList[i].pSends = &m_sendDescriptor[i];
-	//			break;
-	//		}
-	//	}
-	//}
-
 	/**** Initalize Sound ****/
 	for (int i = 0; i < SoundLabel_MAX; i++)
 	{
