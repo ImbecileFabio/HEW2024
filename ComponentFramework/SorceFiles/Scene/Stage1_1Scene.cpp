@@ -116,12 +116,12 @@ void Stage1_1Scene::Uninit()
 void Stage1_1Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	switch (State)
+	switch (stageState_)
 	{
 	case Stage1_1Scene::Game:
 		if(game_manager_->GetItemCount() == gearCounter) 
 		{
-		 	State = Result;
+			stageState_ = Result;
 		}
 		break;
 	case Stage1_1Scene::Result:

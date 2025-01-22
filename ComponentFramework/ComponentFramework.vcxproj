@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\AudioManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GravityComponent.cpp" />
@@ -103,6 +104,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\TimerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\AudioManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GravityComponent.h" />

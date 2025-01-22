@@ -37,7 +37,6 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	// イベント
 	, "EventBaseComponent"
 	, "ColliderEventComponent"
-
 	// ロボット
 	, "RobotMoveComponent"
 	// タイムゾーン
