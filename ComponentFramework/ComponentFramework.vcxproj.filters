@@ -86,6 +86,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\LiftGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\TimerComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\FlipComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -171,6 +172,7 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\LiftGroup.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\TimerComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\FlipComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />

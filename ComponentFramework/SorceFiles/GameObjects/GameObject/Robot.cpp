@@ -33,10 +33,10 @@
 //--------------------------------------------------
 Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
-	, robot_state_(RobotState::Idle)
+	, robot_state_(RobotState::Move)
 {
 	sprite_component_ = new SpriteComponent(this, "robot_still");	// スプライト
-	animation_component_ = new AnimationComponent(sprite_component_, this);	// アニメーション
+	//animation_component_ = new AnimationComponent(sprite_component_, this);	// アニメーション
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
@@ -128,6 +128,14 @@ void Robot::UpdateGameObject(void)
 
 		break;
 	}
+	}
+
+	// 進行方向に合わせて画像を反転する
+	if (velocity_component_->GetVelocity().x > 0 ) {	// 右向き
+		sprite_component_->SetFlip(false, false);
+	}
+	else {												// 左向き
+		sprite_component_->SetFlip(true, false);
 	}
 
 

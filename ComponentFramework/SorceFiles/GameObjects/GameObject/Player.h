@@ -32,9 +32,8 @@ public:
 
 private:
 	// 所有するコンポーネント
-	class RenderComponent* sprite_component_{};
-	class ColliderBaseComponent* collider_component_{};
-	class VelocityComponent* velocity_component_{};
+	class SpriteComponent* sprite_component_{};
+	class AnimationComponent* animation_component_{};
 	
 };
 #endif	// PLAYER_H_

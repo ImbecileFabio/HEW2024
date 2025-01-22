@@ -120,13 +120,14 @@ void TextureManager::RegisterAllTextures()
 
 	// Hogehoge
 	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
+	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 12.0, 8.0f, 12);
 
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
-	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png");	// 落下
+	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3.0f, 1.0f);	// 落下
 	RegisterTexture("robot_still", TEXTURE_PATH"robot/v03/robot_still_01.png");	// 静止
-	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png");	// 歩行
+	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2.0f, 1.0f, 4);	// 歩行
 
 	/*--------------- 振り子 ---------------*/
 	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png");		// ボール

@@ -14,21 +14,16 @@
 #include "../Component.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
-#include "../Component/ColliderComponent/ColliderBaseComponent.h"
-#include "../Component/ColliderComponent/BoxColliderComponent.h"
-#include "../Component/RigidbodyComponent/VelocityComponent.h"
-
+#include "../Component/RenderComponent/AnimationComponent.h"
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
 Player::Player(GameManager* _gameManager)
-	:GameObject(_gameManager, "Playaer")
+	:GameObject(_gameManager, "Player")
 {
 	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this,"hoge");
-	// 速度コンポーネント
-	velocity_component_ = new VelocityComponent(this);
-	collider_component_ = new BoxColliderComponent(this);
+	sprite_component_ = new SpriteComponent(this,"piyo");
+	animation_component_ = new AnimationComponent(sprite_component_, this);
 
 	this->InitGameObject();
 }
@@ -40,8 +35,6 @@ Player::~Player(void)
 {
 	// ここでコンポーネントを削除
 	delete sprite_component_;
-	delete collider_component_;
-	delete velocity_component_;
 }
 
 //--------------------------------------------------
@@ -50,7 +43,6 @@ Player::~Player(void)
 void Player::InitGameObject(void)
 {
 
-	velocity_component_->SetVelocity(Vector3(0, 10, 0));
 
 }
 

@@ -179,7 +179,6 @@ void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4& _color)
 //--------------------------------------------------
 void SpriteComponent::SetFlip(bool _xFlip, bool _yFlip)
 {
-	// 
 	if (_xFlip)
 	{
 		vertices_[0].uv = Vector2(1.0f, 0.0f);
