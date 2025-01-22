@@ -32,7 +32,7 @@ typedef enum {
 	BGM = 0,
 	SE,
 
-	SoundTag_MAX
+	SoundCategory_MAX
 }SOUND_CATEGORY;
 
 class AudioManager {
@@ -47,22 +47,22 @@ private:
 
 	PARAM m_param[SoundLabel_MAX] =
 	{
-		{ "Asset/Sound/BGM/Title_BGM.wav",	true,  BGM },	// タイトルBGM
-		{ "Asset/Sound/BGM/StageBGM.wav",	true,  BGM },	// ステージBGM
-		{ "Asset/Sound/SE/叩く音.wav",		false, SE },	// 叩くSE
-		{ "Asset/Sound/SE/着地1.wav",		false, SE },	// 着地SE
-		{ "Asset/Sound/SE/ギア獲得.wav",	false, SE }		// アイテム取得SE
+		{ "Asset/Sound/BGM/Title_BGM.wav",		true,  BGM },	// タイトルBGM
+		{ "Asset/Sound/BGM/StageBGM1.1.wav",	true,  BGM },	// ステージBGM
+		{ "Asset/Sound/SE/叩く音.wav",			false, SE },	// 叩くSE
+		{ "Asset/Sound/SE/着地1.wav",			false, SE },	// 着地SE
+		{ "Asset/Sound/SE/ギア獲得.wav",		false, SE }		// アイテム取得SE
 	};
 
 	IXAudio2* m_pXAudio2 = nullptr;
 	IXAudio2MasteringVoice* m_pMasteringVoice = nullptr;
-	IXAudio2SubmixVoice* m_pSubmixVoice[SoundTag_MAX];
+	IXAudio2SubmixVoice* m_pSubmixVoice[SoundCategory_MAX];
 	IXAudio2SourceVoice* m_pSourceVoice[SoundLabel_MAX];
 	WAVEFORMATEXTENSIBLE m_wfx[SoundLabel_MAX]; // WAVフォーマット
 	XAUDIO2_BUFFER m_buffer[SoundLabel_MAX];
 	BYTE* m_DataBuffer[SoundLabel_MAX];
-	XAUDIO2_SEND_DESCRIPTOR m_sendDescriptor[SoundTag_MAX];
-	XAUDIO2_VOICE_SENDS m_sendList[SoundTag_MAX];
+	XAUDIO2_SEND_DESCRIPTOR m_sendDescriptor[SoundCategory_MAX];
+	XAUDIO2_VOICE_SENDS m_sendList[SoundCategory_MAX];
 
 	HRESULT FindChunk(HANDLE, DWORD, DWORD&, DWORD&);
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);
@@ -77,5 +77,4 @@ public:
 
 	void SetVolume(SOUND_LABEL _label, float _volume);
 	void SetCategoryVolume(SOUND_CATEGORY _category, float _volume);
-	void SetSpeed(SOUND_LABEL _label, float _spped);
 };

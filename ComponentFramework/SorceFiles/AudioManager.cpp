@@ -121,7 +121,7 @@ void AudioManager::Uninit(void) {
 			delete[]  m_DataBuffer[i];
 		}
 	}
-	for (int i = 0; i < SoundTag_MAX; i++) {
+	for (int i = 0; i < SoundCategory_MAX; i++) {
 		if (m_pSubmixVoice[i]) {
 			m_pSubmixVoice[i]->DestroyVoice();
 		}
@@ -167,10 +167,6 @@ void AudioManager::SetVolume(SOUND_LABEL _label, float _volume) {
 }
 void AudioManager::SetCategoryVolume(SOUND_CATEGORY _category, float _volume) {
 	m_pSubmixVoice[(int)_category]->SetVolume(_volume);
-}
-void AudioManager::SetSpeed(SOUND_LABEL _label, float _spped) {
-	// SoundTouch等の処理を書く！
-	// バッファをいじるっぽい
 }
 
 
