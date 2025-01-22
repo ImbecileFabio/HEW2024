@@ -15,7 +15,7 @@ Item::Item(GameManager* _gameManager)
 	state_ = State::Active;
 	auto f = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, this, std::placeholders::_1));
 	event_base_component_->AddEvent(f);
-	audio_manager_.Init();
+	audio_manager_ = std::make_unique<AudioManager>();
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -58,7 +58,7 @@ void Item::OnCollisionEnter(GameObject* _other)
 		this->state_ = GameObject::State::Paused;
 
 		// ƒTƒEƒ“ƒhÄ¶
-		audio_manager_.Play(SoundLabel_ItemGet);
+		audio_manager_->Play(SoundLabel_ItemGet);
 		break;
 	default:
 		break;

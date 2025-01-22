@@ -74,10 +74,6 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 SceneBase::~SceneBase()
 {
 	std::cout << std::format("[{}] -> Destructor\n", scene_name_);
-
-
-
-
 }
 
 void SceneBase::PauseWindow()

@@ -50,7 +50,7 @@ protected:
 
 	GameManager* game_manager_{};
 	std::unique_ptr<TileMapManager> tile_map_manager_;
-	AudioManager* audio_manager_{};
+	std::unique_ptr<AudioManager> audio_manager_;
 
 	std::string scene_name_{};
 	std::string old_scene_name_{};	// ‘O‚ÌƒV[ƒ“–¼‚ğ•Û‘¶

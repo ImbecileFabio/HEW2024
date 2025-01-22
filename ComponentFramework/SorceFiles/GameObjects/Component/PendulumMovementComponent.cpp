@@ -47,14 +47,13 @@ void PendulumMovementComponent::Init() {
 	pendulumSelected_ = false;
 	pendulumDirection_ = 1;
 
-	audio_manager_.Init();
+	audio_manager_ = std::make_unique<AudioManager>();
 }
 
 //--------------------------------------------------
 // I—¹ˆ—
 //--------------------------------------------------
 void PendulumMovementComponent::Uninit() {
-	audio_manager_.Uninit();
 }
 
 //--------------------------------------------------
@@ -211,7 +210,7 @@ float PendulumMovementComponent::GetPendulumVelocity() {
 // U‚èŽq‚Ì’âŽ~AŽn“®
 //--------------------------------------------------
 void PendulumMovementComponent::StartPendulumMovement() {
-	audio_manager_.Play(SOUND_LABEL::SoundLabel_HitSE);
+	audio_manager_->Play(SoundLabel_HitSE);
 	maxPendulumVelocity_ = 0;
 	for (int i = 1;;i++) {
 		maxPendulumVelocity_ += pendulumAcceleration * i;

@@ -170,7 +170,7 @@ protected:
 	int		   object_id_{};
 
 	// ƒTƒEƒ“ƒhˆ—
-	AudioManager audio_manager_;
+	std::unique_ptr<AudioManager> audio_manager_;
 };
 
 #endif	// GAMEOBJECT_H_
