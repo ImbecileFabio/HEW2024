@@ -15,8 +15,6 @@ Revolution::Revolution(GameManager* _gameManager, const std::string _imgName, in
 Revolution::~Revolution()
 {
 	delete sprite_component_;
-	//sound_.Stop(SoundLabel_TitleBGM);
-	sound_.Uninit();
 }
 //--------------------------------------------------
 // ‰Šú‰»ˆ—

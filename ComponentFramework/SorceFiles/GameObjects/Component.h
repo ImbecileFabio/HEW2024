@@ -62,6 +62,8 @@ public:
 		, WeakFloorComponent	// 脆い床ギミック
 		, SteePillarComponent	// 鉄柱ギミック
 		, SmokeComponent		// 煙ギミック
+		// デルタタイム関連
+		, TimerComponent
 		// カメラ
 		, CameraComponent
 		// 子オブジェクト

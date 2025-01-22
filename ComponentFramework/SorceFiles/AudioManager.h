@@ -56,13 +56,13 @@ private:
 
 	IXAudio2* m_pXAudio2 = nullptr;
 	IXAudio2MasteringVoice* m_pMasteringVoice = nullptr;
-	IXAudio2SubmixVoice* m_pSubmixVoice[SoundCategory_MAX];
-	IXAudio2SourceVoice* m_pSourceVoice[SoundLabel_MAX];
-	WAVEFORMATEXTENSIBLE m_wfx[SoundLabel_MAX]; // WAVフォーマット
-	XAUDIO2_BUFFER m_buffer[SoundLabel_MAX];
-	BYTE* m_DataBuffer[SoundLabel_MAX];
-	XAUDIO2_SEND_DESCRIPTOR m_sendDescriptor[SoundCategory_MAX];
-	XAUDIO2_VOICE_SENDS m_sendList[SoundCategory_MAX];
+	IXAudio2SubmixVoice* m_pSubmixVoice[SoundCategory_MAX] = { nullptr };
+	IXAudio2SourceVoice* m_pSourceVoice[SoundLabel_MAX] = { nullptr };
+	WAVEFORMATEXTENSIBLE m_wfx[SoundLabel_MAX] = {}; // WAVフォーマット
+	XAUDIO2_BUFFER m_buffer[SoundLabel_MAX] = {};
+	BYTE* m_DataBuffer[SoundLabel_MAX] = { nullptr };
+	XAUDIO2_SEND_DESCRIPTOR m_sendDescriptor[SoundCategory_MAX] = {};
+	XAUDIO2_VOICE_SENDS m_sendList[SoundCategory_MAX] = {};
 
 	HRESULT FindChunk(HANDLE, DWORD, DWORD&, DWORD&);
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);

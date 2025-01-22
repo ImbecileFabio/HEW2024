@@ -52,8 +52,10 @@ void Stage1_1Scene::Init()
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
+	camera_ = new Camera(game_manager_);
+	back_ground_ = new BackGround(game_manager_);
 
-	State = Game;
+	stageState_ = Game;
 
 	// GameManager‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
@@ -98,9 +100,8 @@ void Stage1_1Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
-
-	camera_ = new Camera(game_manager_);
-	back_ground_ = new BackGround(game_manager_);
+	audio_manager_->Init();
+	audio_manager_->Play(SoundLabel_StageBGM);
 }
 
 //--------------------------------------------------
@@ -122,6 +123,7 @@ void Stage1_1Scene::Update()
 		if(game_manager_->GetItemCount() == gearCounter) 
 		{
 			stageState_ = Result;
+			audio_manager_->Stop(SoundLabel_StageBGM);
 		}
 		break;
 	case Stage1_1Scene::Result:

@@ -80,7 +80,6 @@
     <ClCompile Include="SorceFiles\Scene\Stage1_4Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage1_5Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\TitleScene.cpp" />
-    <ClCompile Include="SorceFiles\sound.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
@@ -167,7 +166,6 @@
     <ClInclude Include="SorceFiles\Scene\Stage1_4Scene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage1_5Scene.h" />
     <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
-    <ClInclude Include="SorceFiles\sound.h" />
     <ClInclude Include="SorceFiles\SubSystem\Material.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
