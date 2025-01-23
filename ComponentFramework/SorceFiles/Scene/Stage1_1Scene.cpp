@@ -100,7 +100,7 @@ void Stage1_1Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
-	audio_manager_ = std::make_unique<AudioManager>();
+	audio_manager_ = AudioManager::GetInstance();
 	audio_manager_->Play(SoundLabel_StageBGM);
 }
 

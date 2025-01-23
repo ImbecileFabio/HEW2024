@@ -235,3 +235,6 @@ HRESULT AudioManager::ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize
 		hr = HRESULT_FROM_WIN32(GetLastError());
 	return hr;
 }
+
+// Ã“Iƒƒ“ƒo•Ï”‚Ì’è‹`
+std::shared_ptr<AudioManager> AudioManager::m_instance = nullptr;

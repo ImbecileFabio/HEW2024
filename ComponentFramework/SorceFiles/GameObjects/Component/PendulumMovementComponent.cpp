@@ -42,12 +42,12 @@ void PendulumMovementComponent::Init() {
 	pendulumRadian_ = 0;		// -振り子の角度（ラジアン）
 	turnPendulum_ = true;		// -振り子の往復で処理を切り替えるためのフラグ　true：右から左　false：左から右
 
-	langthState_= LangthState::normalLangth;
+	langthState_ = LangthState::normalLangth;
 	pendulumMovement_ = false;
 	pendulumSelected_ = false;
 	pendulumDirection_ = 1;
 
-	audio_manager_ = std::make_unique<AudioManager>();
+	audio_manager_ = AudioManager::GetInstance();
 }
 
 //--------------------------------------------------

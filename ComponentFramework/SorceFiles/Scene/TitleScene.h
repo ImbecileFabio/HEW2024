@@ -47,7 +47,7 @@ private:
 	Revolution* title_ribbon_;					// ボタンの背景リボン
 	Revolution* title_cursor_;					// タイトルのカーソル
 	std::array<Revolution*, 3> title_buttons_;	// タイトルのボタン
-	int title_select_button_ = 0;				// タイトルのボタンの添え字
+	int title_select_button_ = 1;				// タイトルのボタンの添え字
 	static int create_count;					// タイトルシーンが生成されたかどうかのカウント
 	// セレクト画面周りのオブジェクトと変数
 	Revolution* select_left_button_;			// LBボタン

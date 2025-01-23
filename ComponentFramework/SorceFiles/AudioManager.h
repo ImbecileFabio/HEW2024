@@ -17,6 +17,8 @@
 
 #pragma once
 #include <xaudio2.h>
+#include <iostream>
+#include <memory>
 
 // サウンドファイル
 typedef enum {
@@ -67,9 +69,24 @@ private:
 	HRESULT FindChunk(HANDLE, DWORD, DWORD&, DWORD&);
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);
 
-public:
+	static std::shared_ptr<AudioManager> m_instance;
+
 	AudioManager();
 	~AudioManager();
+
+	struct Deleter {
+		void operator()(AudioManager* ptr) const {
+			delete ptr;
+		}
+	};
+public:
+	static std::shared_ptr<AudioManager> GetInstance() {
+		if (!m_instance) m_instance = std::shared_ptr<AudioManager>(new AudioManager(), Deleter());
+		return m_instance;
+	}
+
+	AudioManager(const AudioManager&) = delete;
+	AudioManager& operator=(const AudioManager&) = delete;
 
 	HRESULT Init(void);
 	void Uninit(void);

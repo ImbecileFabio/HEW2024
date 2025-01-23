@@ -183,7 +183,7 @@ void TitleScene::Init()
 		game_manager_->ChangeScene(SceneName::Stage1_5);
 		};
 
-	audio_manager_ = std::make_unique<AudioManager>();
+	audio_manager_ = AudioManager::GetInstance();
 	audio_manager_->Play(SoundLabel_TitleBGM);
 }
 
