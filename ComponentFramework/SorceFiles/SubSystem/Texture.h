@@ -19,20 +19,22 @@ class Texture
 
 	DirectX::SimpleMath::Vector2 offset_pos_; // オフセットポジション
 	DirectX::SimpleMath::Vector2 offset_size_; // オフセットサイズ
+	DirectX::SimpleMath::Vector2 frame_size_;	// 1フレームのサイズ
 
-	bool loop_flg_; // ループフラグ
+	bool loop_flg_{}; // ループフラグ
 
-	int m_width;	// 幅
-	int m_height;	// 高さ
-	int m_bpp;		// BPP
+	int m_width{};	// 幅
+	int m_height{};	// 高さ
+	int m_bpp{};		// BPP
 
-	float m_cutU;	// 横分割数
-	float m_cutV;	// 縦分割数
-	float m_numU;	// 横描画位置
-	float m_numV;	// 縦描画位置
-	int m_anmSpeed; // アニメーションスピード
+
+	float m_cutU{};	// 横分割数
+	float m_cutV{};	// 縦分割数
+	float m_numU{};	// 横描画位置
+	float m_numV{};	// 縦描画位置
+	float m_anmSpeed{}; // アニメーションスピード
 public:
-	Texture(const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed);
+	Texture(const DirectX::SimpleMath::Vector2& _offsetPos = {0.0f, 0.0f}, const DirectX::SimpleMath::Vector2& _offsetSize = {0.0f, 0.0f}, bool _loopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, float _anmSpeed = 0.1f);
 
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
@@ -47,6 +49,9 @@ public:
 	auto GetCutU() const { return m_cutU; }
 	auto GetCutV() const { return m_cutV; }
 	auto GetAnmSpeed() const { return m_anmSpeed; }
+	// アニメーション画像の一マスのサイズを取得
+	auto GetFrameSize() { return frame_size_; }
+
 
 	auto GetNumU() const { return m_numU; }
 	void SetNumU(float _numU) { m_numU = _numU; }

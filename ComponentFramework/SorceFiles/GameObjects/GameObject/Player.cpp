@@ -23,7 +23,7 @@ Player::Player(GameManager* _gameManager)
 {
 	// スプライトコンポーネント
 	sprite_component_ = new SpriteComponent(this,"piyo");
-	animation_component_ = new AnimationComponent(sprite_component_, this);
+	animation_component_ = new AnimationComponent(this, sprite_component_);
 
 	this->InitGameObject();
 }

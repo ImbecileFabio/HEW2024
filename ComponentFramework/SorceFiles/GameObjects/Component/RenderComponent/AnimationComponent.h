@@ -1,6 +1,6 @@
 //==================================================
 // [AnimationComponent.h] アニメーションコンポーネント
-// 著者：尾上莉奈
+// 著者：
 //--------------------------------------------------
 // 説明：アニメーションコンポーネントの宣言
 //==================================================
@@ -10,25 +10,41 @@
 
 #define FPS 60
 
-class RenderComponent;
 class SpriteComponent;
+class Texture;
 
 class AnimationComponent : public Component
 {
 public:
-	AnimationComponent(RenderComponent* _spriteComponent, GameObject* _owner);
+	AnimationComponent(GameObject* _owner, SpriteComponent* _spriteComponent);
 	~AnimationComponent();
 	void Init(void)   override;
 	void Uninit(void) override;
 	void Update(void) override;
 	TypeID GetComponentType(void) const override { return TypeID::AnimationComponent; }
-private:
-	RenderComponent* sprite_component_{};	// アニメーションをするスプライトの参照を持つ
-	SpriteComponent* Sprite_Component_{};	// ダイナミックキャスト用
 
-	int fpsCounter;	// FPSカウンタ
-	int anmFlame;	// アニメーションフレーム
-	bool Loop;		// ループフラグ
+	void PlayAnimation();
+	void StopAnimation();
+
+private:
+	void UpdateUV();
+	void ResetAnimation();
+
+
+	SpriteComponent* sprite_component_{};	// アニメーションをするスプライトの参照を持つ
+	std::shared_ptr<Texture> texture_{};	// テクスチャ
+
+	int frame_count_x_;	// 横分割数
+	int frame_count_y_;	// 縦分割数
+
+	int total_frame_;	// 総フレーム数
+
+	int current_frame_;		// 現在のフレーム
+	float elapsed_time_;	// 経過時間
+	float frame_duration_;	// 1フレームの時間
+	bool loop_;				// ループするかどうか
+	bool is_playing_;		// アニメーションを再生中かどうか
+
 };
 
 #endif // ANIMATION_COMPONENT_H_

@@ -1,14 +1,31 @@
-#include "AnimationComponent.h"
-#include "../RenderComponent/SpriteComponent.h"
+//==================================================
+// [AnimationComponent.cpp] アニメーションコンポーネント
+// 著者：
+//--------------------------------------------------
+// 説明：UV座標を計算するコンポーネント
+//==================================================
 #include <SimpleMath.h>
+#include <iostream>
+
+#include "AnimationComponent.h"
+#include "SpriteComponent.h"
 using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-AnimationComponent::AnimationComponent(RenderComponent* _spriteComponent, GameObject* _owner)
+AnimationComponent::AnimationComponent(GameObject* _owner, SpriteComponent* _spriteComponent)
 	: Component(_owner)
 	, sprite_component_(_spriteComponent)
+	, frame_count_x_(0)
+	, frame_count_y_(0)
+	, total_frame_(0)
+	, current_frame_(0)
+	, elapsed_time_(0.0f)
+	, frame_duration_(0.5f)
+	, loop_(true)
+	, is_playing_(true)
 {
+	
 	Init();
 }
 //--------------------------------------------------
@@ -23,10 +40,14 @@ AnimationComponent::~AnimationComponent()
 //--------------------------------------------------
 void AnimationComponent::Init(void)
 {
-	Sprite_Component_ = dynamic_cast<SpriteComponent*>(sprite_component_);
-	fpsCounter = 0;
-	anmFlame = 0;
-	Loop = true;
+	texture_ = sprite_component_->GetTexture();
+	frame_count_x_ = texture_->GetCutU();
+	frame_count_y_ = texture_->GetCutV();
+	frame_duration_ = texture_->GetAnmSpeed();
+
+	total_frame_ = frame_count_x_ * frame_count_y_;
+	current_frame_ = 0;
+	
 }
 //--------------------------------------------------
 // 終了処理
@@ -40,40 +61,71 @@ void AnimationComponent::Uninit(void)
 //--------------------------------------------------
 void AnimationComponent::Update(void)
 {
-	auto texture = Sprite_Component_->GetTexture();
-	auto vertices = sprite_component_->GetVertices();
+    if (!is_playing_) return;
 
-	if (Loop) {
-		fpsCounter++;
+	elapsed_time_ += delta_time_;
 
-		if (fpsCounter >= FPS / texture->GetAnmSpeed()) {
-			// UV座標を更新
-			texture->SetNumU(texture->GetNumU() + 1);
-			if (texture->GetNumU() >= texture->GetCutU()) {
-				texture->SetNumU(0);
-				texture->SetNumV(texture->GetNumV() + 1);
-				if (texture->GetNumV() >= texture->GetCutV()) {
-					texture->SetNumV(0);
-				}
+	// 経過時間が超えたら
+	if (elapsed_time_ >= frame_duration_) {
+		elapsed_time_ -= frame_duration_;
+
+		++current_frame_;
+		// 総フレーム数を超えたら
+		if (current_frame_ >= total_frame_) {
+			if (loop_) {
+				// ループする
+				current_frame_ = 0;	
 			}
-
-			// UV座標をセット
-			vertices[0].uv = Vector2(texture->GetNumU() / texture->GetCutU(), texture->GetNumV() / texture->GetCutV());
-			vertices[1].uv = Vector2((texture->GetNumU() + 1.0f) / texture->GetCutU(), texture->GetNumV() / texture->GetCutV());
-			vertices[2].uv = Vector2(texture->GetNumU() / texture->GetCutU(), (texture->GetNumV() + 1.0f) / texture->GetCutV());
-			vertices[3].uv = Vector2((texture->GetNumU() + 1.0f) / texture->GetCutU(), (texture->GetNumV() + 1.0f) / texture->GetCutV());
-			// バッファを書き換え
-			sprite_component_->SetVertexBuffer(vertices);
-
-			// ループ判定
-			if (!(texture->GetLoopFlg())) {
-				anmFlame++;
-				if (anmFlame >= (texture->GetCutU() * texture->GetCutV()) - 1) {
-					Loop = false;
-				}
+			else {
+				// 停止状態を維持する
+				current_frame_ = total_frame_ - 1;
+				is_playing_ = false;
 			}
-
-			fpsCounter = 0;
 		}
+
+		// UV座標を計算
+		UpdateUV();
+
 	}
+
+
+}
+//--------------------------------------------------
+// @brief アニメーション再生
+//--------------------------------------------------
+void AnimationComponent::PlayAnimation()
+{
+	is_playing_ = true;
+	ResetAnimation();
+}
+//--------------------------------------------------
+// @brief アニメーション停止
+//--------------------------------------------------
+void AnimationComponent::StopAnimation()
+{
+	is_playing_ = false;
+}
+
+//--------------------------------------------------
+// @brief UV座標を更新
+//--------------------------------------------------
+void AnimationComponent::UpdateUV()
+{
+	int frameX = current_frame_ % frame_count_x_;
+	int frameY = current_frame_ / frame_count_y_;
+
+	Vector2 uv;
+	uv.x = static_cast<float>(frameX) / frame_count_x_;
+	uv.y = static_cast<float>(frameY) / frame_count_y_;
+
+	std::cout << "UV: (" << uv.x << ", " << uv.y << ")\n";
+
+	sprite_component_->SetUV(uv);
+}
+
+void AnimationComponent::ResetAnimation()
+{
+	current_frame_ = 0;
+	elapsed_time_ = 0.0f;
+	UpdateUV();
 }

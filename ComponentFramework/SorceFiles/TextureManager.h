@@ -60,8 +60,8 @@ private:
 	~TextureManager();
 
 		// テクスチャの登録
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, int _anmSpeed = 1);	// すべて
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, int _anmSpeed = 1);// オフセットなし
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, float _anmSpeed = 0.1f);	// すべて
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, float _anmSpeed = 0.1f);// オフセットなし
 
 // テクスチャの全登録
 	void RegisterAllTextures();

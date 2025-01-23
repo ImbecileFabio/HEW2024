@@ -36,7 +36,7 @@ Robot::Robot(GameManager* _gameManager)
 	, robot_state_(RobotState::Move)
 {
 	sprite_component_ = new SpriteComponent(this, "robot_still");	// スプライト
-	//animation_component_ = new AnimationComponent(sprite_component_, this);	// アニメーション
+	animation_component_ = new AnimationComponent( this, sprite_component_);	// アニメーション
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
@@ -93,6 +93,8 @@ void Robot::UpdateGameObject(void)
 	}
 
 
+
+
 	switch (robot_state_)
 	{
 	case RobotState::Idle:	// 待機状態
@@ -130,17 +132,20 @@ void Robot::UpdateGameObject(void)
 	}
 	}
 
-	// 進行方向に合わせて画像を反転する
-	if (velocity_component_->GetVelocity().x > 0 ) {	// 右向き
-		sprite_component_->SetFlip(false, false);
-	}
-	else {												// 左向き
-		sprite_component_->SetFlip(true, false);
-	}
 
 
 	// ロボットの動きを切り替える
 	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
+
+
+	// 進行方向に合わせて画像を反転する
+	if (velocity_component_->GetVelocity().x >= 0 ) {	// 右向き
+		sprite_component_->SetFlip(true, false);
+	}
+	else {												// 左向き
+		sprite_component_->SetFlip(false, false);
+	}
+
 }
 
 
@@ -174,11 +179,13 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		if (lift->GetLiftState() == Lift::LiftState::Move)
 		{
 			robot_state_ = Robot::RobotState::OnLift;
-			// リフトの速度に合わせる
-			velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
+			// ぶつかっているリフトの情報を保持
+			collision_lift_ = dynamic_cast<Lift*>(_other);
 		}
 		else {
 			robot_state_ = Robot::RobotState::Move;
+			// リフトの情報を解除
+			collision_lift_ = nullptr;
 		}
 
 		break;

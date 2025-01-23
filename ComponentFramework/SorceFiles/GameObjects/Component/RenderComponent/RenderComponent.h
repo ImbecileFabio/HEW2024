@@ -10,11 +10,11 @@
 /*----- インクルード -----*/
 #include <memory>
 
-#include "../Component.h"
-#include "../../SubSystem/VertexBuffer.h"
-#include "../../SubSystem/IndexBuffer.h"
-#include "../../SubSystem/Shader.h"
-#include "../../SubSystem/Material.h"
+#include "../../Component.h"
+#include "../../../SubSystem/VertexBuffer.h"
+#include "../../../SubSystem/IndexBuffer.h"
+#include "../../../SubSystem/Shader.h"
+#include "../../../SubSystem/Material.h"
 
 
 /*----- 構造体宣言 -----*/
@@ -75,6 +75,9 @@ protected:
 	std::vector<VERTEX_3D> vertices_;	// 頂点データ
 
 	State state_ = State::draw;	// 描画するかしないか
+
+	bool x_flip_ = false;	// X軸反転
+	bool y_flip_ = false;	// Y軸反転
 };
 
 #endif	// RENDER_COMPONENT_H_

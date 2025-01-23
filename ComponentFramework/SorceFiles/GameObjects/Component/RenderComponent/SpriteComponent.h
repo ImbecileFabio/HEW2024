@@ -11,7 +11,7 @@
 #include <memory>
 #include <string>
 
-#include "../RenderComponent.h"
+#include "RenderComponent.h"
 #include "../../../SubSystem/Texture.h"
 
 
@@ -45,7 +45,6 @@ public:
 
 	// F‚ğ•Ï‚¦‚é
 	void SetColor(const DirectX::SimpleMath::Vector4& _color);
-
 	// ‰æ‘œ‚ğ”½“]‚·‚é
 	void SetFlip(bool _xFlip, bool _yFlip);
 

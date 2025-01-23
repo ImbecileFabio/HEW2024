@@ -35,7 +35,6 @@ public:
 		, SpriteComponent
 		// アニメーション
 		, AnimationComponent
-		, FlipComponent
 		// 姿勢制御
 		, TransformComponent
 		// リジッドボディ

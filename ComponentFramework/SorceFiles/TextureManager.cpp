@@ -49,12 +49,12 @@ void TextureManager::Uninit()
 // @brief  テクスチャの登録
 //-----------------------------------------------------------------
 // アニメーション付き
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, float _cutU, float _cutV, float _anmSpeed)
 {
 	RegisterTexture(_imgName, _fileName, DirectX::SimpleMath::Vector2(0.0f, 0.0f), DirectX::SimpleMath::Vector2(1.0f, 1.0f), _loopFlg, _cutU, _cutV, _anmSpeed);
 }
 // すべて
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, float _anmSpeed)
 {
 	// すでに読み込まれているか確認
 	auto it = texture_cache_.find(_imgName);
@@ -120,14 +120,14 @@ void TextureManager::RegisterAllTextures()
 
 	// Hogehoge
 	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
-	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 12.0, 8.0f, 12);
+	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8.0, 12.0f, 0.1f);
 
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
-	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3.0f, 1.0f);	// 落下
+	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3.0f, 1.0f, 0.1);	// 落下
 	RegisterTexture("robot_still", TEXTURE_PATH"robot/v03/robot_still_01.png");	// 静止
-	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2.0f, 1.0f, 4);	// 歩行
+	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2.0f, 1.0f, 0.3f);	// 歩行
 
 	/*--------------- 振り子 ---------------*/
 	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png");		// ボール

@@ -138,13 +138,18 @@ void SpriteComponent::Draw()
 
 void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
 {
-	float cutU = texture_.get()->GetCutU();
-	float cutV = texture_.get()->GetCutV();
+	float cutU = texture_->GetCutU();
+	float cutV = texture_->GetCutV();
 
-	vertices_[0].uv = Vector2(_uv.x / cutU, _uv.y / cutV);
-	vertices_[1].uv = Vector2((_uv.x + 1.0f) / cutU, _uv.y / cutV);
-	vertices_[2].uv = Vector2(_uv.x / cutU, (_uv.y + 1.0f) / cutV);
-	vertices_[3].uv = Vector2((_uv.x + 1.0f) / cutU, (_uv.y + 1.0f) / cutV);
+	auto frameSize = texture_->GetFrameSize();
+	
+	Vector2 uvMin = { _uv.x / cutU, _uv.y / cutV};
+	Vector2 uvMax = { (_uv.x + 1.0f) / cutU, (_uv.y + 1.0f) / cutV};
+
+	vertices_[0].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMax.y : uvMin.y)};
+	vertices_[1].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMax.y : uvMin.y)};
+	vertices_[2].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMin.y : uvMax.y)};
+	vertices_[3].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMin.y : uvMax.y)};
 
 	vertex_buffer_.Modify(vertices_);
 
@@ -157,6 +162,7 @@ void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
 void SpriteComponent::SetTexture(const std::string _imgname)
 {
 	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
+	this->InitBuffers(texture_->GetCutU(), texture_->GetCutV());	// ‰æ‘œ‚Ì•ªŠ„”‚ğ“n‚·
 }
 
 //--------------------------------------------------
@@ -179,22 +185,11 @@ void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4& _color)
 //--------------------------------------------------
 void SpriteComponent::SetFlip(bool _xFlip, bool _yFlip)
 {
-	if (_xFlip)
-	{
-		vertices_[0].uv = Vector2(1.0f, 0.0f);
-		vertices_[1].uv = Vector2(0.0f, 0.0f);
-		vertices_[2].uv = Vector2(1.0f, 1.0f);
-		vertices_[3].uv = Vector2(0.0f, 1.0f);
-	}
-	if (_yFlip)
-	{
-		vertices_[0].uv = Vector2(0.0f, 1.0f);
-		vertices_[1].uv = Vector2(1.0f, 1.0f);
-		vertices_[2].uv = Vector2(0.0f, 0.0f);
-		vertices_[3].uv = Vector2(1.0f, 0.0f);
-	}
+	x_flip_ = _xFlip;
+	y_flip_ = _yFlip;
 
-	vertex_buffer_.Modify(vertices_);
+	SetUV({ 0, 0 });
+
 }
 
 
