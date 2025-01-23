@@ -71,8 +71,8 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetSize(TILE_SIZE_X * 1.5, TILE_SIZE_Y * 1.5);
-	collider_component_->SetSize(transform_component_->GetSize().x * 0.7, transform_component_->GetSize().y * 0.95);
+	transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+	collider_component_->SetSize(transform_component_->GetSize().x * 0.7f, transform_component_->GetSize().y * 0.95f);
 }
 
 //--------------------------------------------------
@@ -99,9 +99,13 @@ void Robot::UpdateGameObject(void)
 	{
 	case RobotState::Idle:	// 待機状態
 	{
-		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN)) {
-			robot_state_ = RobotState::Move;
-			sprite_component_->SetTexture("robot_walk");
+		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))
+		{
+			if (robot_state_ != RobotState::Move)
+			{
+				robot_state_ = RobotState::Move;
+				sprite_component_->SetTexture("robot_walk");
+			}
 		}
 		break;
 	}
@@ -109,9 +113,11 @@ void Robot::UpdateGameObject(void)
 	{
 		// 落ちていたら
 		if (!gravity_component_->GetIsGround()) {
-			// 落下状態に遷移
-			robot_state_ = RobotState::Fall;
-			sprite_component_->SetTexture("robot_drop");
+			if (robot_state_ != RobotState::Fall)
+			{
+				robot_state_ = RobotState::Fall;
+				sprite_component_->SetTexture("robot_drop");
+			}
 		}
 		break;
 	}
@@ -120,8 +126,11 @@ void Robot::UpdateGameObject(void)
 		// 地面についたら
 		if (gravity_component_->GetIsGround()) {
 			// 移動状態に遷移
-			robot_state_ = RobotState::Move;
-			sprite_component_->SetTexture("robot_walk");
+			if (robot_state_ != RobotState::Move)
+			{
+				robot_state_ = RobotState::Move;
+				sprite_component_->SetTexture("robot_walk");
+			}
 		}
 		break;
 	}
@@ -130,8 +139,9 @@ void Robot::UpdateGameObject(void)
 
 		break;
 	}
-	}
 
+
+	}
 
 
 	// ロボットの動きを切り替える

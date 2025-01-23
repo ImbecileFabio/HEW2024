@@ -15,8 +15,11 @@
 #include "../../../GameManager.h"
 #include "../../../TextureManager.h"
 #include "../../../SubSystem/dx11helper.h"
-#include "../../GameObject.h"
+
 #include "../TransformComponent.h"
+#include "AnimationComponent.h"
+
+#include "../../GameObject.h"
 
 #include <wrl/client.h>
 using namespace DirectX::SimpleMath;
@@ -143,8 +146,8 @@ void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
 
 	auto frameSize = texture_->GetFrameSize();
 	
-	Vector2 uvMin = { _uv.x / cutU, _uv.y / cutV};
-	Vector2 uvMax = { (_uv.x + 1.0f) / cutU, (_uv.y + 1.0f) / cutV};
+	Vector2 uvMin = { _uv.x, _uv.y };
+	Vector2 uvMax = { _uv.x + frameSize.x, _uv.y + frameSize.y };
 
 	vertices_[0].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMax.y : uvMin.y)};
 	vertices_[1].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMax.y : uvMin.y)};
@@ -161,8 +164,24 @@ void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
 //--------------------------------------------------
 void SpriteComponent::SetTexture(const std::string _imgname)
 {
-	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
-	this->InitBuffers(texture_->GetCutU(), texture_->GetCutV());	// 画像の分割数を渡す
+	auto newTexture = TextureManager::GetInstance().GetTexture(_imgname);
+
+	// 同じテクスチャなら何もしない
+	if (texture_ == newTexture) return;
+
+	// 分割数が違う時だけバッファを再初期化
+	if (texture_->GetCutU() != newTexture->GetCutU() || texture_->GetCutU() != newTexture->GetCutV())
+	{
+		this->InitBuffers(newTexture->GetCutU(), newTexture->GetCutV());	// 画像の分割数を渡す
+	}
+	// テクスチャを変更
+	texture_ = newTexture;
+
+	// オーナーがアニメーションコンポーネントを持っているなら
+	if (auto anmComp = owner_->GetComponent<AnimationComponent>())
+	{
+		anmComp->ResetAnimation();	// アニメーションをリセット
+	}
 }
 
 //--------------------------------------------------

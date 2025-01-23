@@ -28,13 +28,13 @@ class Texture
 	int m_bpp{};		// BPP
 
 
-	float m_cutU{};	// 横分割数
-	float m_cutV{};	// 縦分割数
+	int m_cutU{};	// 横分割数
+	int m_cutV{};	// 縦分割数
 	float m_numU{};	// 横描画位置
 	float m_numV{};	// 縦描画位置
 	float m_anmSpeed{}; // アニメーションスピード
 public:
-	Texture(const DirectX::SimpleMath::Vector2& _offsetPos = {0.0f, 0.0f}, const DirectX::SimpleMath::Vector2& _offsetSize = {0.0f, 0.0f}, bool _loopFlg = false, float _cutU = 1.0f, float _cutV = 1.0f, float _anmSpeed = 0.1f);
+	Texture(const DirectX::SimpleMath::Vector2& _offsetPos = {0.0f, 0.0f}, const DirectX::SimpleMath::Vector2& _offsetSize = {0.0f, 0.0f}, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f);
 
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);

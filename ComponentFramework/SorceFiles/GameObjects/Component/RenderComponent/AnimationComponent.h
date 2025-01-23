@@ -26,16 +26,13 @@ public:
 	void PlayAnimation();
 	void StopAnimation();
 
+	void ResetAnimation();
 private:
 	void UpdateUV();
-	void ResetAnimation();
 
 
 	SpriteComponent* sprite_component_{};	// アニメーションをするスプライトの参照を持つ
 	std::shared_ptr<Texture> texture_{};	// テクスチャ
-
-	int frame_count_x_;	// 横分割数
-	int frame_count_y_;	// 縦分割数
 
 	int total_frame_;	// 総フレーム数
 

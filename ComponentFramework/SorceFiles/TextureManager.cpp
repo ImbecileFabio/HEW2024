@@ -27,6 +27,11 @@ TextureManager::~TextureManager()
 	this->ClearCache();
 }
 
+void TextureManager::RegisterTextureInfo(const std::string& _textureName, const TextureInfo& _textureInfo)
+{
+	texture_info_[_textureName] = _textureInfo;
+}
+
 //-----------------------------------------------------------------
 // 初期化処理
 //-----------------------------------------------------------------
@@ -49,52 +54,46 @@ void TextureManager::Uninit()
 // @brief  テクスチャの登録
 //-----------------------------------------------------------------
 // アニメーション付き
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, float _cutU, float _cutV, float _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed)
 {
 	RegisterTexture(_imgName, _fileName, DirectX::SimpleMath::Vector2(0.0f, 0.0f), DirectX::SimpleMath::Vector2(1.0f, 1.0f), _loopFlg, _cutU, _cutV, _anmSpeed);
 }
 // すべて
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, float _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _textureName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed)
 {
-	// すでに読み込まれているか確認
-	auto it = texture_cache_.find(_imgName);
-	if (it != texture_cache_.end())
-	{
-		// すでに読み込まれている
-		std::cout << std::format("\n＜TextureManager＞ -> {} is already loaded\n\n", _imgName);
-		return;
-	}
-
-
-	// 存在していないので生成する
-	auto texture = std::make_shared<Texture>(_offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed);
-	if (texture->Load(_fileName)) {
-		texture_cache_[_imgName] = texture;
-		std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Success\n", _imgName);
-		return;
-	}
-
-	// 失敗
-	std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Error\n", _imgName);
-	return;
-
+	texture_info_[_textureName] = { _fileName, _offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed };
 }
 
 //-----------------------------------------------------------------
 // @param  _imgName 画像名
 // @brief  読み込んだテクスチャの取得
-// @return 存在していればit, なければnullptr
+// @return 存在していればit->second, なければ生成してtexture, 生成できなければnullptr
 //-----------------------------------------------------------------
-std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _imgName)
+std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _texrureName)
 {
-	auto it = texture_cache_.find(_imgName);
+	// すでに読み込まれているか確認
+	auto it = texture_cache_.find(_texrureName);
 	if (it != texture_cache_.end())
 	{
+		// すでに読み込まれている
+		std::cout << std::format("\n＜TextureManager＞ -> {} is already loaded\n\n", _texrureName);
 		return it->second;
 	}
 
-	std::cout << std::format("＜TextureManager＞ -> {} GetTexture Error\n", _imgName);
+	// 存在していないので生成する
+	auto texInfo = texture_info_[_texrureName];
+	auto texture = std::make_shared<Texture>(texInfo.offsetPos, texInfo.offsetSize, texInfo.loop, texInfo.cutU, texInfo.cutV, texInfo.animationSpeed);
+	if (texture->Load(texInfo.filePath)) {
+		// キャッシュに登録
+		texture_cache_[_texrureName] = texture;
+		std::cout << std::format("＜TextureManager＞ -> {} GetTexture Success\n", _texrureName);
+		return texture;
+	}
+
+	// 失敗
+	std::cout << std::format("＜TextureManager＞ -> {} GetTexture Error\n", _texrureName);
 	return nullptr;
+
 }
 
 //-----------------------------------------------------------------
@@ -120,14 +119,14 @@ void TextureManager::RegisterAllTextures()
 
 	// Hogehoge
 	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
-	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8.0, 12.0f, 0.1f);
+	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8.0, 12.0f, 0.05f);
 
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
-	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3.0f, 1.0f, 0.1);	// 落下
+	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3, 1, 0.1f);	// 落下
 	RegisterTexture("robot_still", TEXTURE_PATH"robot/v03/robot_still_01.png");	// 静止
-	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2.0f, 1.0f, 0.3f);	// 歩行
+	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.1f);	// 歩行
 
 	/*--------------- 振り子 ---------------*/
 	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png");		// ボール
@@ -184,7 +183,7 @@ void TextureManager::RegisterAllTextures()
 	// ギア
 	RegisterTexture("gear", UI_PATH"v02/gear_01.png");
 	// 数字
-	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4.0f, 3.0f);
+	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4, 3);
 	// ポーズボタン
 	RegisterTexture("pause_button", UI_PATH"v02/pause_button_01.png");
 	// ステージUI

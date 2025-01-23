@@ -16,8 +16,6 @@ using namespace DirectX::SimpleMath;
 AnimationComponent::AnimationComponent(GameObject* _owner, SpriteComponent* _spriteComponent)
 	: Component(_owner)
 	, sprite_component_(_spriteComponent)
-	, frame_count_x_(0)
-	, frame_count_y_(0)
 	, total_frame_(0)
 	, current_frame_(0)
 	, elapsed_time_(0.0f)
@@ -41,11 +39,10 @@ AnimationComponent::~AnimationComponent()
 void AnimationComponent::Init(void)
 {
 	texture_ = sprite_component_->GetTexture();
-	frame_count_x_ = texture_->GetCutU();
-	frame_count_y_ = texture_->GetCutV();
 	frame_duration_ = texture_->GetAnmSpeed();
 
-	total_frame_ = frame_count_x_ * frame_count_y_;
+	// 分割数から総フレーム数を計算 (最後のフレームが何もなかったりすると透明になる)
+	total_frame_ = texture_->GetCutU() * texture_->GetCutV();
 	current_frame_ = 0;
 	
 }
@@ -111,15 +108,14 @@ void AnimationComponent::StopAnimation()
 //--------------------------------------------------
 void AnimationComponent::UpdateUV()
 {
-	int frameX = current_frame_ % frame_count_x_;
-	int frameY = current_frame_ / frame_count_y_;
+	int frameX = current_frame_ % texture_->GetCutU();	// 横の分割数で割ったあまり
+	int frameY = current_frame_ / texture_->GetCutU();	// 横の分割数で割った商
 
-	Vector2 uv;
-	uv.x = static_cast<float>(frameX) / frame_count_x_;
-	uv.y = static_cast<float>(frameY) / frame_count_y_;
+	Vector2 frameSize = texture_->GetFrameSize();
 
-	std::cout << "UV: (" << uv.x << ", " << uv.y << ")\n";
+	Vector2 uv = { frameX * frameSize.x, frameY * frameSize.y };
 
+	std::cout << "UV : " << uv.x << ",  " << uv.y << std::endl;
 	sprite_component_->SetUV(uv);
 }
 

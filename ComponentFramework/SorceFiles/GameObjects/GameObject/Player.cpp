@@ -10,6 +10,7 @@
 #include <format>
 
 #include "Player.h"
+#include "../../GameProcess.h"
 #include "../../GameManager.h"
 #include "../Component.h"
 #include "../Component/TransformComponent.h"
@@ -51,5 +52,19 @@ void Player::InitGameObject(void)
 //--------------------------------------------------
 void Player::UpdateGameObject(void)
 {
+	// 入力処理
+	InputManager& input = InputManager::GetInstance();
+
+	// マウスクリックで移動
+	if (input.GetMouseButtonPress(0)) {
+		auto mousePos = input.GetMousePosition();
+		transform_component_->SetPosition(
+			static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
+			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
+	}
+	// 右クリックするとでかくなる！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+	if (input.GetMouseButtonTrigger(1)) {
+		transform_component_->SetScale(transform_component_->GetScale() *= {1.1f, 1.1f, 1.0f});
+	}
 
 }

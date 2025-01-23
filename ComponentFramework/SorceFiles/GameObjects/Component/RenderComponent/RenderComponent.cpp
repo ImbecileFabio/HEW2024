@@ -66,9 +66,9 @@ void RenderComponent::InitBuffers(float _cutU, float _cutV)
 	vertices_[3].color = Color(1, 1, 1, 1);
 
 	vertices_[0].uv = Vector2(0.0f,         0.0f        );
-	vertices_[1].uv = Vector2(1.0f, 0.0f        );
-	vertices_[2].uv = Vector2(0.0f,         1.0f);
-	vertices_[3].uv = Vector2(1.0f, 1.0f);
+	vertices_[1].uv = Vector2(1.0f / _cutU, 0.0f        );
+	vertices_[2].uv = Vector2(0.0f,         1.0f / _cutV);
+	vertices_[3].uv = Vector2(1.0f / _cutU, 1.0f / _cutV);
 
 	// 頂点バッファ生成
 	vertex_buffer_.Create(vertices_);
