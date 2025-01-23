@@ -9,13 +9,13 @@
 #include <iostream>
 #include <format>
 
-#include "../../GameManager.h"
-#include "../../Renderer.h"
-#include "../GameObject.h"
+#include "../../../GameManager.h"
+#include "../../../Renderer.h"
+#include "../../GameObject.h"
 #include "RenderComponent.h"
-#include "ColliderComponent/BoxColliderComponent.h"
+#include "../ColliderComponent/BoxColliderComponent.h"
 
-#include "../Component.h"
+#include "../../Component.h"
 
 using namespace DirectX::SimpleMath;
 

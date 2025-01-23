@@ -19,7 +19,7 @@
 #include "Component.h"
 #include "Component/TransformComponent.h"
 #include "Component/CameraComponent.h"
-#include "Component/RenderComponent.h"
+#include "Component/RenderComponent/RenderComponent.h"
 #include "Component/RenderComponent/SpriteComponent.h"
 #include "../AudioManager.h"
 

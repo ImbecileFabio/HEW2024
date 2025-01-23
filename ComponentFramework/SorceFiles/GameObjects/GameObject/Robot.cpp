@@ -19,6 +19,7 @@
 
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
+#include "../Component/RenderComponent/AnimationComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
@@ -32,9 +33,10 @@
 //--------------------------------------------------
 Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
-	, robot_state_(RobotState::Idle)
+	, robot_state_(RobotState::Move)
 {
-	sprite_component_ = new SpriteComponent(this, "robot_still");
+	sprite_component_ = new SpriteComponent(this, "robot_still");	// スプライト
+	animation_component_ = new AnimationComponent( this, sprite_component_);	// アニメーション
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
@@ -69,8 +71,8 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetSize(TILE_SIZE_X * 1.5, TILE_SIZE_Y * 1.5);
-	collider_component_->SetSize(transform_component_->GetSize().x * 0.7, transform_component_->GetSize().y * 0.95);
+	transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+	collider_component_->SetSize(transform_component_->GetSize().x * 0.7f, transform_component_->GetSize().y * 0.95f);
 }
 
 //--------------------------------------------------
@@ -82,21 +84,6 @@ void Robot::UpdateGameObject(void)
 	// 入力処理
 	InputManager& input = InputManager::GetInstance();
 
-	//// デバッグ用、ロボを操作できる
-	//// 移動処理
-	//if (input.GetKeyPress(VK_A))
-	//{
-	//	velocity_component_->SetVelocity(Vector3(-10, 0, 0));
-	//}
-	//else if (input.GetKeyPress(VK_D))
-	//{
-	//	velocity_component_->SetVelocity(Vector3(10, 0, 0));
-	//}
-	//else
-	//{
-	//	velocity_component_->SetVelocity(Vector3(0, 0, 0));
-	//}
-
 	// マウスクリックで移動
 	if (input.GetMouseButtonPress(0)) {
 		auto mousePos = input.GetMousePosition();
@@ -106,26 +93,44 @@ void Robot::UpdateGameObject(void)
 	}
 
 
+
+
 	switch (robot_state_)
 	{
 	case RobotState::Idle:	// 待機状態
 	{
-		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN)) {
-			robot_state_ = RobotState::Move;
+		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))
+		{
+			if (robot_state_ != RobotState::Move)
+			{
+				robot_state_ = RobotState::Move;
+				sprite_component_->SetTexture("robot_walk");
+			}
 		}
 		break;
 	}
 	case RobotState::Move:	// 移動状態
 	{
+		// 落ちていたら
 		if (!gravity_component_->GetIsGround()) {
-			robot_state_ = RobotState::Fall;
+			if (robot_state_ != RobotState::Fall)
+			{
+				robot_state_ = RobotState::Fall;
+				sprite_component_->SetTexture("robot_drop");
+			}
 		}
 		break;
 	}
 	case RobotState::Fall:	// 落下状態
 	{
+		// 地面についたら
 		if (gravity_component_->GetIsGround()) {
-			robot_state_ = RobotState::Move;
+			// 移動状態に遷移
+			if (robot_state_ != RobotState::Move)
+			{
+				robot_state_ = RobotState::Move;
+				sprite_component_->SetTexture("robot_walk");
+			}
 		}
 		break;
 	}
@@ -134,11 +139,23 @@ void Robot::UpdateGameObject(void)
 
 		break;
 	}
+
+
 	}
 
 
 	// ロボットの動きを切り替える
 	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
+
+
+	// 進行方向に合わせて画像を反転する
+	if (velocity_component_->GetVelocity().x >= 0 ) {	// 右向き
+		sprite_component_->SetFlip(true, false);
+	}
+	else {												// 左向き
+		sprite_component_->SetFlip(false, false);
+	}
+
 }
 
 
@@ -172,11 +189,13 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		if (lift->GetLiftState() == Lift::LiftState::Move)
 		{
 			robot_state_ = Robot::RobotState::OnLift;
-			// リフトの速度に合わせる
-			velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
+			// ぶつかっているリフトの情報を保持
+			collision_lift_ = dynamic_cast<Lift*>(_other);
 		}
 		else {
 			robot_state_ = Robot::RobotState::Move;
+			// リフトの情報を解除
+			collision_lift_ = nullptr;
 		}
 
 		break;

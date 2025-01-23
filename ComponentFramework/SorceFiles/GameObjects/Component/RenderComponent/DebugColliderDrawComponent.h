@@ -10,7 +10,7 @@
 /*----- インクルード -----*/
 #include <string>
 
-#include "../RenderComponent.h"
+#include "RenderComponent.h"
 #include "../../../SubSystem/Shader.h"
 
 

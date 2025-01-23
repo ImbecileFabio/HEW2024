@@ -33,7 +33,6 @@ public:
     TypeID GetComponentType(void) const override { return TypeID::GravityComponent; }
 private:
 
-	// ownerのコンポーネントをキャッシュ
 	bool is_ground_; // 地面に接地しているか
 	bool use_gravity_; // 重力の使用
 
