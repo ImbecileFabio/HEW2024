@@ -8,6 +8,8 @@
 #define SMOKE_H_
 /*----- インクルード -----*/
 #include "../../GameObject.h"
+
+constexpr float BRAKE_DEFAULT_TIME = 5.0f;
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
 // Smokeオブジェクト
@@ -23,6 +25,12 @@ public:
 
 	TypeID GetType(void) override { return TypeID::Smoke; }
 private:
+	int fpsCounter_ = 0;	// 時間計測用
+	bool brakeFlg_ = false;	// 破壊状態フラグ
 
+	class RenderComponent* sprite_component_{};					// スプライト
+	class ColliderBaseComponent* collider_component_{};			// 当たり判定
+	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
+	class SmokeComponent* smoke_component_{};					// 煙ギミックコンポーネント
 };
 #endif // SMOKE_H_

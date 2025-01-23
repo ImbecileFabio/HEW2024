@@ -13,11 +13,8 @@
 SmokeComponent::SmokeComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
-
 	this->Init();
 }
-
-
 //--------------------------------------------------
 // @brief デストラクタ
 //--------------------------------------------------
@@ -31,17 +28,19 @@ SmokeComponent::~SmokeComponent()
 //--------------------------------------------------
 void SmokeComponent::Init()
 {
+
 }
 //--------------------------------------------------
 // @brief 終了処理
 //--------------------------------------------------
 void SmokeComponent::Uninit()
 {
-
 }
+
 //--------------------------------------------------
 // @brief 更新処理
 //--------------------------------------------------
 void SmokeComponent::Update()
 {
+
 }
