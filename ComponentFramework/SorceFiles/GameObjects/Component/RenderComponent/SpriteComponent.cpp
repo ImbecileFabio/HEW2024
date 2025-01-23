@@ -141,9 +141,6 @@ void SpriteComponent::Draw()
 
 void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
 {
-	float cutU = texture_->GetCutU();
-	float cutV = texture_->GetCutV();
-
 	auto frameSize = texture_->GetFrameSize();
 	
 	Vector2 uvMin = { _uv.x, _uv.y };

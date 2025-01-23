@@ -51,12 +51,13 @@ Stage1_1Scene::~Stage1_1Scene()
 //--------------------------------------------------
 void Stage1_1Scene::Init()
 {
+	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
+	tile_map_manager_->LoadTileMap(mapData);
+
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
 	hammerCursor_ = new HammerCursor(game_manager_);
 
-	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1_1.csv");
-	tile_map_manager_->LoadTileMap(mapData);
 	gearMaxCount_ = gearCounter;	// ’è”‚ğ‘ã“ü
 	hammerMaxCount_ = hammerCounter;
 
@@ -111,6 +112,8 @@ void Stage1_1Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
+	audio_manager_ = AudioManager::GetInstance();
+	audio_manager_->Play(SoundLabel_StageBGM);
 }
 
 //--------------------------------------------------
@@ -130,10 +133,10 @@ void Stage1_1Scene::Update()
 	{
 	case Stage1_1Scene::Game:
 		NumberChange();
-		
 		if(game_manager_->GetItemCount() == gearCounter) 
 		{
 		 	stageState_ = Result;
+			audio_manager_->Stop(SoundLabel_StageBGM);
 		}
 		// ƒ|[ƒY‰æ–Ê‚ÉˆÚ“®
 		if (input.GetKeyTrigger(VK_P))

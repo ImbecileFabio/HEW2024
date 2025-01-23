@@ -174,92 +174,29 @@ void SceneBase::NumberChange()
 	// ハンマーの叩ける回数を表示
 	auto hammerSpriteComponent = hammerNum_->GetComponent<SpriteComponent>();
 	// ギアのMAX個数によってUVを変更
-	switch (gearMaxCount_)
-	{
-	case 1:
-	{
-		gearSpriteComponent->SetUV({ 1.0f, 0.0f });
-	}
-		break;
-	case 2:
-	{
-		gearSpriteComponent->SetUV({ 2.0f, 0.0f });
-	}
-		break;
-	case 3:
-	{
-		gearSpriteComponent->SetUV({ 3.0f, 0.0f });
-	}
-		break;
-	case 4:
-	{
-		gearSpriteComponent->SetUV({ 4.0f, 0.0f });
-	}
-		break;
-	case 5:
-	{
-		gearSpriteComponent->SetUV({ 5.0f, 0.0f });
-	}
-		break;
-	default:
-		break;
-	}
-	// ギアの取得状態によってUVを変更
-	switch (game_manager_->GetItemCount())
-	{
-	case 0:
-	{
-		gearGetSpriteComponent->SetUV({ 0.0f, 0.0f });
-	}
-	break;
-	case 1:
-	{
-		gearGetSpriteComponent->SetUV({ 1.0f, 0.0f });
-	}
-	break;
-	case 2:
-	{
-		gearGetSpriteComponent->SetUV({ 2.0f, 0.0f });
-	}
-	break;
-	case 3:
-	{
-		gearGetSpriteComponent->SetUV({ 3.0f, 0.0f });
-	}
-	break;
-	case 4:
-	{
-		gearGetSpriteComponent->SetUV({ 4.0f, 0.0f });
-	}
-	break;
-	case 5:
-	{
-		gearGetSpriteComponent->SetUV({ 5.0f, 0.0f });
-	}
-	break;
-	default:
-		break;
-	}
+	DirectX::SimpleMath::Vector2 frameSize = gearSpriteComponent->GetTexture().get()->GetFrameSize();
+	gearSpriteComponent->SetUV({ gearMaxCount_ * frameSize.x, 0.0f * frameSize.y });
+	gearGetSpriteComponent->SetUV({ game_manager_->GetItemCount() * frameSize.x, 0.0f * frameSize.y });
 	// ハンマーの叩ける回数によってUVを変更
 	switch (hammerMaxCount_)
 	{
 	case 0:
-		hammerSpriteComponent->SetUV({ 0.0f, 0.0f });
+		hammerSpriteComponent->SetUV({ 0.0f * frameSize.x, 0.0f * frameSize.y});
 		break;
 	case 1:
-		hammerSpriteComponent->SetUV({ 1.0f, 0.0f });
+		hammerSpriteComponent->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y});
 		break;
 	case 2:
-		hammerSpriteComponent->SetUV({ 2.0f, 0.0f });
+		hammerSpriteComponent->SetUV({ 2.0f * frameSize.x, 0.0f * frameSize.y});
 		break;
 	case 3:
-		hammerSpriteComponent->SetUV({ 3.0f, 0.0f });
+		hammerSpriteComponent->SetUV({ 3.0f * frameSize.x, 0.0f * frameSize.y});
 		break;
 	case 4:
-		hammerSpriteComponent->SetUV({ 4.0f, 0.0f });
+		hammerSpriteComponent->SetUV({ 4.0f * frameSize.x, 0.0f * frameSize.y});
 		break;
 	case 5:
-		hammerSpriteComponent->SetUV({ 5.0f, 0.0f });
+		hammerSpriteComponent->SetUV({ 5.0f * frameSize.x, 0.0f * frameSize.y});
 		break;
 	}
 	if (hammerMaxCount_ == 0)

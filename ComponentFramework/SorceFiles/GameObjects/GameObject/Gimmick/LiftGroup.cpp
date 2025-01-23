@@ -56,8 +56,7 @@ void LiftGroup::UpdateGameObject(void)
 
         if (size % 2 == 0) // 偶数の場合
         {
-            leftIndex_ = (size / 2) - 1;
-            rightIndex_ = size / 2;
+			isLeftRight_ = false;
             tileCenterNum_ = static_cast<int>(rightIndex_);
 
             centerPos = (initialPositions_[leftIndex_] + initialPositions_[rightIndex_]) / 2.0f;
@@ -73,12 +72,13 @@ void LiftGroup::UpdateGameObject(void)
         }
         else // 奇数の場合
         {
-            int centerIndex = size / 2;
-            tileCenterNum_ = static_cast<int>(centerIndex);
+            isLeftRight_ = true;
+            centerIndex_ = size / 2;
+            tileCenterNum_ = static_cast<int>(centerIndex_);
 
-            centerPos = initialPositions_[centerIndex];
+            centerPos = initialPositions_[centerIndex_];
 
-            auto lift = dynamic_cast<Lift*>(liftTiles_[centerIndex]);
+            auto lift = dynamic_cast<Lift*>(liftTiles_[centerIndex_]);
             auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
             if (lift && pendulum)
             {
@@ -88,8 +88,16 @@ void LiftGroup::UpdateGameObject(void)
         }
         isCenterMedian = true;
     }
-   DirectX::SimpleMath::Vector3 centerPos = (liftTiles_[leftIndex_]->GetTransformComponent()->GetPosition() + liftTiles_[rightIndex_]->GetTransformComponent()->GetPosition()) / 2.0f;
-   owner_pendulum_movement_->SetPendulumFulcrum(centerPos);
+	if (isLeftRight_)
+	{
+        DirectX::SimpleMath::Vector3 centerPos = liftTiles_[centerIndex_]->GetTransformComponent()->GetPosition();
+        owner_pendulum_movement_->SetPendulumFulcrum(centerPos);
+    }
+    else
+    {
+        DirectX::SimpleMath::Vector3 centerPos = (liftTiles_[leftIndex_]->GetTransformComponent()->GetPosition() + liftTiles_[rightIndex_]->GetTransformComponent()->GetPosition()) / 2.0f;
+        owner_pendulum_movement_->SetPendulumFulcrum(centerPos);
+    }
 }
 //--------------------------------------------------
 // @brief リフトタイルを追加

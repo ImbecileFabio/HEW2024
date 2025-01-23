@@ -30,6 +30,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloorGroup.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\HammerCursor.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Revolution.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\PushOutComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\AnimationComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloorGroup.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\HammerCursor.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Revolution.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\DebugColliderDrawComponent.h" />
