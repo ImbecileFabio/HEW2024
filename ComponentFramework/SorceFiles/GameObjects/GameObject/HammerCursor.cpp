@@ -15,6 +15,7 @@ HammerCursor::HammerCursor(GameManager* _gameManager)
 	, sprite_component_		(nullptr)
 	, hit_effect_component_	(nullptr)
 	, animation_component_	(nullptr)
+	, direction_(1)
 {
 	this->InitGameObject();
 }
@@ -30,8 +31,12 @@ HammerCursor::~HammerCursor(void)
 //--------------------------------------------------
 void HammerCursor::InitGameObject(void)
 {
+	isUiDraw_ = true;
 	sprite_component_	  = new SpriteComponent(this, "hammer");
-	transform_component_->SetSize(100.0f, 100.0f);
+	transform_component_->SetSize(50.0f, 50.0f);
+	transform_component_->SetRotation(-13.0f);
+	transform_component_->SetPosition(-2000.0f, 0.0f);
+	offset_ = { 45.0f, -10.0f };
 }
 
 //--------------------------------------------------
@@ -40,21 +45,24 @@ void HammerCursor::InitGameObject(void)
 void HammerCursor::UpdateGameObject(void)
 {
 	// 描画切り替え
-	if (isUiDraw)
+	if (isUiDraw_)
 		sprite_component_->SetState(RenderComponent::State::draw);
 	else
 		sprite_component_->SetState(RenderComponent::State::notDraw);
 
-	//origin_pos_.x = origin_pos_.x;
+}
+void HammerCursor::HammerCursorMove()
+{
+	if (direction_ == -1)
+	{
+		transform_component_->SetRotation(-13.0f);
+		origin_pos_ += offset_;
+	}
+	else if (direction_ == 1)
+	{
+		transform_component_->SetRotation(-12.0f);
+		origin_pos_.x -= offset_.x;
+		origin_pos_.y += offset_.y;
+	}
 	transform_component_->SetPosition(origin_pos_);
-	//if (!isUiDraw)						// UIが非表示
-	//{
-	//	isUiDraw = true;
-	//	isCursorMove = false;	// カーソルは動かさない
-	//	sprite_component_->SetState(RenderComponent::State::notDraw);
-	//}
-	//else if (isUiDraw && !isCursorMove)	// UIが表示されている場合
-	//{
-	//	isCursorMove = true;
-	//}
 }

@@ -127,7 +127,8 @@ void Pendulum::OnCollisionEnter(GameObject* _other)
 //--------------------------------------------------
 void Pendulum::NotDrawAndStopPendulum(void)
 {
-	state_ = State::Paused;
+	game_manager_->GetPendulumManager()->RemoveGameObject(this);
+	state_ = State::Dead;
 	sprite_component_->SetState(RenderComponent::State::notDraw);
 	time_zone_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	stick_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);

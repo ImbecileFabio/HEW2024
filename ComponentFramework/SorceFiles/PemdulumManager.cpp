@@ -93,7 +93,6 @@ void PendulumManager::PendulumSelect() {
 #else
 	pNextPendulum = nullptr;
 	if (IM.GetKeyTrigger(VK_L)) {
-		isCursorRetry = false;
 		for (auto& pemdulum : pendulum_list_) {
 			if (pSelectedPendulum != pemdulum &&
 				pSelectedPendulum->GetTransformComponent()->GetPosition().x <
@@ -110,7 +109,6 @@ void PendulumManager::PendulumSelect() {
 	}
 	if (IM.GetKeyTrigger(VK_J)) {
 		for (auto& pemdulum : pendulum_list_) {
-			isCursorRetry = false;
 			if (pSelectedPendulum != pemdulum &&
 				pSelectedPendulum->GetTransformComponent()->GetPosition().x >
 				pemdulum->GetTransformComponent()->GetPosition().x) {
@@ -129,8 +127,9 @@ void PendulumManager::PendulumSelect() {
 		pHammerCursor_->SetIsUiDraw(true);
 		pSelectedPendulum = pNextPendulum;
 		pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
-		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
 	}
+	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
+	pHammerCursor_->HammerCursorMove();
 #endif
 }
 
@@ -145,8 +144,8 @@ void PendulumManager::PendulumMovementChange() {
 		PM->SetPendulumMovement(!PM->GetPendulumMovement());
 	}
 #else
+	//if (GM->GetIsHammerMax()) return;
 	// Mキー（動作の変更）
-	if (GM->GetIsHammerMax()) return;	// 叩ける回数がなくなったら
 	if (IM.GetKeyTrigger(VK_M))
 	{
 		bool isPendulumMove = SPM->GetPendulumMovement();
@@ -208,15 +207,20 @@ void PendulumManager::PendulumDirectionChange() {
 			SPM->SetPendulumDirection(1);
 	}
 #else
+	pHammerCursor_->SetDirection(SPM->GetPendulumDirection());
 	// Nキー（向きの変更）
 	if (IM.GetKeyTrigger(VK_N)) {
 		if (SPM->GetPendulumDirection() != -1) {
 			SPM->SetPendulumDirection(-1);
+			pHammerCursor_->SetDirection(-1);
 		}
 		else {
 			SPM->SetPendulumDirection(1);
+			pHammerCursor_->SetDirection(1);
 		}
 	}
+	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
+	pHammerCursor_->HammerCursorMove();
 #endif
 }
 

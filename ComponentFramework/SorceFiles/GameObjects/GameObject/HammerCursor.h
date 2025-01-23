@@ -10,7 +10,7 @@
 #include "../GameObject.h"
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
-// HOGEオブジェクト
+// ハンマーカーソルオブジェクト
 //--------------------------------------------------
 class HammerCursor : public GameObject
 {
@@ -22,14 +22,19 @@ public:
 	void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::HammerCursor; }
-
-	void SetIsUiDraw(bool _isUiDraw) { isUiDraw = _isUiDraw; }
+	void HammerCursorMove();
+	void SetIsUiDraw(bool _isUiDraw) { isUiDraw_ = _isUiDraw; }
 	void SetOriginPos(DirectX::SimpleMath::Vector3 _pos) { origin_pos_ = _pos; }
+	void SetDirection(int _direction) { direction_ = _direction; }
 private:
 	class SpriteComponent* sprite_component_;
 	class SpriteComponent* hit_effect_component_;
 	class AnimationComponent* animation_component_;
+	
+	// キャッシュ
 	DirectX::SimpleMath::Vector3 origin_pos_;	// カーソルの基準となる座標を保存
-	bool isUiDraw = false;		// UIの表示状態
-};
-#endif // HOGE_H_
+	DirectX::SimpleMath::Vector3 offset_;		// カーソルのオフセット	
+	bool isUiDraw_ = false;						// UIの表示状態
+	int direction_;		
+	};
+#endif // HAMMER_CURSOR_H_
