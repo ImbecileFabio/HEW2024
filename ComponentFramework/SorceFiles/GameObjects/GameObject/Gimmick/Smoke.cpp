@@ -54,7 +54,7 @@ void Smoke::UpdateGameObject(void)
 	if (brakeFlg_) {
 
 	}
-	else {
+	else {	// [BRAKE_DEFAULT_TIME]•bŒã‚É”j‰ói‘Ò‹@ó‘Ô‚ð”²‚¯‚éj
 		fpsCounter_++;
 		if (fpsCounter_ >= 60 * BRAKE_DEFAULT_TIME) brakeFlg_ = true;
 	}
