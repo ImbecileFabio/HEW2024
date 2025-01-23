@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\HammerCursor.cpp" />
+    <ClCompile Include="SorceFiles\AudioManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GravityComponent.cpp" />
@@ -55,7 +55,7 @@
     </ClCompile>
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
@@ -80,7 +80,6 @@
     <ClCompile Include="SorceFiles\Scene\Stage1_4Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage1_5Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\TitleScene.cpp" />
-    <ClCompile Include="SorceFiles\sound.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\Shader.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Player.cpp" />
     <ClCompile Include="SorceFiles\SubSystem\dx11helper.cpp" />
@@ -104,7 +103,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\TimerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\HammerCursor.h" />
+    <ClInclude Include="SorceFiles\AudioManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GravityComponent.h" />
@@ -141,7 +140,7 @@
     </ClInclude>
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />
@@ -167,7 +166,6 @@
     <ClInclude Include="SorceFiles\Scene\Stage1_4Scene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage1_5Scene.h" />
     <ClInclude Include="SorceFiles\Scene\TitleScene.h" />
-    <ClInclude Include="SorceFiles\sound.h" />
     <ClInclude Include="SorceFiles\SubSystem\Material.h" />
     <ClInclude Include="SorceFiles\SubSystem\Shader.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Player.h" />
@@ -325,7 +323,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

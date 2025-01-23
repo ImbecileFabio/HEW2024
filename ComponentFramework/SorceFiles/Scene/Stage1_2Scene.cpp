@@ -26,7 +26,7 @@ Stage1_2Scene::~Stage1_2Scene()
 void Stage1_2Scene::Init()
 {
 	auto obj = new Player(game_manager_);
-	obj->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
+	obj->GetTransformComponent()->SetSize(100.0f, 100.0f);
 
 	state_ = Game;
 }

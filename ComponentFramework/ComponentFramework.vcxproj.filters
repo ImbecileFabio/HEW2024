@@ -28,7 +28,7 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\RigidbodyComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Pendulum.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\CameraComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\RenderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\TransformComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Camera.cpp" />
@@ -110,7 +110,7 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\RigidbodyComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Pendulum.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\CameraComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\RenderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\RenderComponent\SpriteComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\TransformComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Camera.h" />

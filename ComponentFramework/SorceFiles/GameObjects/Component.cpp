@@ -37,7 +37,6 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	// イベント
 	, "EventBaseComponent"
 	, "ColliderEventComponent"
-
 	// ロボット
 	, "RobotMoveComponent"
 	// タイムゾーン
@@ -52,6 +51,8 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "WeakFloorComponent"	// 脆い床ギミック
 	, "SteePillarComponent"	// 鉄柱ギミック
 	, "SmokeComponent"		// 煙ギミック
+	// デルタタイム関連
+	, "TimerComponent"
 	// カメラ
 	, "CameraComponent"
 	// 子オブジェクト管理

@@ -42,19 +42,18 @@ void PendulumMovementComponent::Init() {
 	pendulumRadian_ = 0;		// -振り子の角度（ラジアン）
 	turnPendulum_ = true;		// -振り子の往復で処理を切り替えるためのフラグ　true：右から左　false：左から右
 
-	langthState_= LangthState::normalLangth;
+	langthState_ = LangthState::normalLangth;
 	pendulumMovement_ = false;
 	pendulumSelected_ = false;
 	pendulumDirection_ = 1;
 
-	sound_.Init();
+	audio_manager_ = AudioManager::GetInstance();
 }
 
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------
 void PendulumMovementComponent::Uninit() {
-	sound_.Uninit();
 }
 
 //--------------------------------------------------
@@ -211,7 +210,7 @@ float PendulumMovementComponent::GetPendulumVelocity() {
 // 振り子の停止、始動
 //--------------------------------------------------
 void PendulumMovementComponent::StartPendulumMovement() {
-	sound_.Play(SOUND_LABEL::SoundLabel_HitSE);
+	audio_manager_->Play(SoundLabel_HitSE);
 	maxPendulumVelocity_ = 0;
 	for (int i = 1;;i++) {
 		maxPendulumVelocity_ += pendulumAcceleration * i;

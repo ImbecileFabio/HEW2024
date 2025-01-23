@@ -339,6 +339,7 @@ void Lift::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Robot:
+		_other->GetComponent<VelocityComponent>()->SetVelocity(this->velocity_component_->GetVelocity());
 		break;
 	case GameObject::TypeID::Tile:
 		break;

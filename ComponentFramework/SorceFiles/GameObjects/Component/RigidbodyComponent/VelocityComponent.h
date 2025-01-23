@@ -59,6 +59,7 @@ public:
 
 	// ‘¬“x
 	void	SetVelocity(const DirectX::SimpleMath::Vector3 _velocity);
+	void	AddVelocity(Vector3 _velocity) { velocity_ += _velocity; }	// ‰Á‘¬“x’Ç‰Á
 	//void	UpdateVelocity();
 	DirectX::SimpleMath::Vector3	GetVelocity() const;
 	void	SetUseVelocity(const bool _use_velocity);

@@ -47,6 +47,8 @@ public:
 	void  SetSpeed(float _speed);
 	float GetSpeed(void);
 
+	auto GetDirection() const { return direction_; }
+
     virtual TypeID GetComponentType(void) const override { return TypeID::RobotMoveComponent; }
 
 private:

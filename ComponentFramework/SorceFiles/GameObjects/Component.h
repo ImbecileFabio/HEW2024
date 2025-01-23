@@ -10,8 +10,7 @@
 /*----- インクルード -----*/
 #include <memory>
 #include <string>
-#include "../sound.h"
-
+#include "../AudioManager.h"
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
@@ -56,7 +55,7 @@ public:
 		// 振り子の動き
 		, PendulumMovementComponent
 		// 振り子の棒の動き
-		, StickMoveComponent		// 振り子の棒の動き
+		, StickMoveComponent	// 振り子の棒の動き
 		// ギミック
 		, LiftComponent			// リフトギミック
 		, PulleyComponent		// 滑車ギミック
@@ -106,10 +105,10 @@ public:
 protected:
 	float delta_time_{};			// デルタタイム
 
-	GameObject* owner_{};				// 自分（コンポーネント）の所有者
+	GameObject* owner_;				// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
 
-	Sound sound_;
+	std::shared_ptr<AudioManager> audio_manager_;
 };
 
 

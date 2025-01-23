@@ -7,8 +7,6 @@ Revolution::Revolution(GameManager* _gameManager, const std::string _imgName, in
 	: GameObject(_gameManager, "Revolution")
 {
 	sprite_component_ = new SpriteComponent(this, _imgName, _drawOrder);
-	sound_.Init();
-	//sound_.Play(SoundLabel_TitleBGM);
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -17,8 +15,6 @@ Revolution::Revolution(GameManager* _gameManager, const std::string _imgName, in
 Revolution::~Revolution()
 {
 	delete sprite_component_;
-	//sound_.Stop(SoundLabel_TitleBGM);
-	sound_.Uninit();
 }
 //--------------------------------------------------
 // ‰Šú‰»ˆ—

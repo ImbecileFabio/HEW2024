@@ -15,14 +15,17 @@
 #include "../../../GameManager.h"
 #include "../../../TextureManager.h"
 #include "../../../SubSystem/dx11helper.h"
-#include "../../GameObject.h"
+
 #include "../TransformComponent.h"
+#include "AnimationComponent.h"
+
+#include "../../GameObject.h"
 
 #include <wrl/client.h>
 using namespace DirectX::SimpleMath;
 
 //--------------------------------------------------
-// コンストラクタ
+// @brief コンストラクタ
 //--------------------------------------------------
 SpriteComponent::SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder)
 	: RenderComponent(_owner, _drawOrder)
@@ -38,7 +41,7 @@ SpriteComponent::SpriteComponent(GameObject* _owner, const std::string _imgname,
 	this->Init();
 }
 //--------------------------------------------------
-// デストラクタ
+// @brief デストラクタ
 //--------------------------------------------------
 SpriteComponent::~SpriteComponent()
 {
@@ -48,7 +51,7 @@ SpriteComponent::~SpriteComponent()
 }
 
 //--------------------------------------------------
-// 初期化処理
+// @brief 初期化処理
 //--------------------------------------------------
 void SpriteComponent::Init()
 {
@@ -56,7 +59,7 @@ void SpriteComponent::Init()
 }
 
 //--------------------------------------------------
-// 終了処理
+// @brief 終了処理
 //--------------------------------------------------
 void SpriteComponent::Uninit()
 {
@@ -64,14 +67,14 @@ void SpriteComponent::Uninit()
 
 
 //--------------------------------------------------
-// 更新処理
+// @brief 更新処理
 //--------------------------------------------------
 void SpriteComponent::Update()
 {
 }
 
 //--------------------------------------------------
-// 描画処理
+// @brief 描画処理
 //--------------------------------------------------
 void SpriteComponent::Draw()
 {
@@ -91,7 +94,7 @@ void SpriteComponent::Draw()
 		auto offsetSize = texture_->GetOffsetSize();	// オフセットサイズ
 
 		Vector3 finalPos  = { t.x + offsetPos.x, t.y + offsetPos.y, t.z };	// 最終的な位置
-		Vector3 finalSize = { (si.x * offsetSize.x) * sc.x,  (si.y * offsetSize.y) * sc.y, si.z * si.z};								// 最終的なサイズ
+		Vector3 finalSize = { (si.x * offsetSize.x) * sc.x,  (si.y * offsetSize.y) * sc.y, si.z * si.z};	// 最終的なサイズ
 
 
 		rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
@@ -105,7 +108,6 @@ void SpriteComponent::Draw()
 		pos = Matrix::CreateTranslation(0.0f, 0.0f, 0.0f);
 		scale = Matrix::CreateScale(100.0f, 100.0f, 100.0f);
 	}
-
 
 
 	Matrix worldmtx;
@@ -135,28 +137,55 @@ void SpriteComponent::Draw()
 		0);
 }
 
+
+
 void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
 {
-	float cutU = texture_.get()->GetCutU();
-	float cutV = texture_.get()->GetCutV();
+	float cutU = texture_->GetCutU();
+	float cutV = texture_->GetCutV();
 
-	vertices_[0].uv = Vector2(_uv.x / cutU, _uv.y / cutV);
-	vertices_[1].uv = Vector2((_uv.x + 1.0f) / cutU, _uv.y / cutV);
-	vertices_[2].uv = Vector2(_uv.x / cutU, (_uv.y + 1.0f) / cutV);
-	vertices_[3].uv = Vector2((_uv.x + 1.0f) / cutU, (_uv.y + 1.0f) / cutV);
+	auto frameSize = texture_->GetFrameSize();
+	
+	Vector2 uvMin = { _uv.x, _uv.y };
+	Vector2 uvMax = { _uv.x + frameSize.x, _uv.y + frameSize.y };
+
+	vertices_[0].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMax.y : uvMin.y)};
+	vertices_[1].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMax.y : uvMin.y)};
+	vertices_[2].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMin.y : uvMax.y)};
+	vertices_[3].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMin.y : uvMax.y)};
 
 	vertex_buffer_.Modify(vertices_);
 
 }
 
 
+//--------------------------------------------------
+// @brief テクスチャ変更
+//--------------------------------------------------
 void SpriteComponent::SetTexture(const std::string _imgname)
 {
-	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
+	auto newTexture = TextureManager::GetInstance().GetTexture(_imgname);
+
+	// 同じテクスチャなら何もしない
+	if (texture_ == newTexture) return;
+
+	// 分割数が違う時だけバッファを再初期化
+	if (texture_->GetCutU() != newTexture->GetCutU() || texture_->GetCutU() != newTexture->GetCutV())
+	{
+		this->InitBuffers(newTexture->GetCutU(), newTexture->GetCutV());	// 画像の分割数を渡す
+	}
+	// テクスチャを変更
+	texture_ = newTexture;
+
+	// オーナーがアニメーションコンポーネントを持っているなら
+	if (auto anmComp = owner_->GetComponent<AnimationComponent>())
+	{
+		anmComp->ResetAnimation();	// アニメーションをリセット
+	}
 }
 
 //--------------------------------------------------
-// 色変更
+// @brief 色変更
 //--------------------------------------------------
 void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4& _color)
 {
@@ -166,6 +195,20 @@ void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4& _color)
 	}
 
 	vertex_buffer_.Modify(vertices_);	// バッファを書き換え
+}
+
+
+//--------------------------------------------------
+// @param _xFlip X軸反転, _yFlip Y軸反転
+// @brief 画像反転
+//--------------------------------------------------
+void SpriteComponent::SetFlip(bool _xFlip, bool _yFlip)
+{
+	x_flip_ = _xFlip;
+	y_flip_ = _yFlip;
+
+	SetUV({ 0, 0 });
+
 }
 
 
