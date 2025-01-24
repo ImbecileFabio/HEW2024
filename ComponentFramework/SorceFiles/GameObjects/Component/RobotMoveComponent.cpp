@@ -154,12 +154,7 @@ void RobotMoveComponent::Update()
 	}
 	case RobotMoveState::OnLift:
 	{
-		if (auto lift = dynamic_cast<Robot*>(owner_)->GetCollisionLift()) {
-			// リフトの移動速度を取得
-			auto liftVelocity = lift->GetComponent<VelocityComponent>()->GetVelocity();
-			// リフトの移動速度をロボットに反映
-			owner_velocity_->SetVelocity(liftVelocity);
-		}
+
 		break;
 	}
 	}

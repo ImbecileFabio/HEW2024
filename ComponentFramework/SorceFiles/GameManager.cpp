@@ -206,9 +206,9 @@ void GameManager::ChangeScene(SceneName _scene)
 			current_scene_ = new Stage1_4Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
-		case Stage1_5:
-			current_scene_ = new Stage1_5Scene(this);
-			current_scene_->SetOldSceneName(old_scene_name);
+		case Stage2_1:
+			//current_scene_ = new Stage2_1Scene(this);
+			//current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Result:
 			itemCount = 0;

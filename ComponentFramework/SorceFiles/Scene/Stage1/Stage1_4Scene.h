@@ -1,21 +1,23 @@
 //==================================================
-// [Stage1_5Scene.h] ステージ1-5シーン
+// [Stage1_4Scene.h] ステージ1-4シーン
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：ステージ1-5を管理をするクラス
+// 説明：ステージ1-4を管理をするクラス
 //==================================================
-#ifndef STAGE1_5SCENE_H_
-#define STAGE1_5SCENE_H_
+#ifndef STAGE1_4SCENE_H_
+#define STAGE1_4SCENE_H_
 /*----- インクルード -----*/
-#include "SceneBase.h"
+#include "../SceneBase.h"
+
+
 //--------------------------------------------------
-// ステージ1-5シーンクラス
+// ステージ1-4シーンクラス
 //--------------------------------------------------
-class Stage1_5Scene : public SceneBase
+class Stage1_4Scene : public SceneBase
 {
 public:
-	Stage1_5Scene(GameManager* _gameManager);
-	~Stage1_5Scene();
+	Stage1_4Scene(GameManager* _gameManager);
+	~Stage1_4Scene();
 
 	void Init() override;
 	void Uninit() override;
@@ -30,4 +32,5 @@ public:
 private:
 	STATE state_;
 };
-#endif // STAGE1_5SCENE_H_
+
+#endif // STAGE1_4SCENE_H_

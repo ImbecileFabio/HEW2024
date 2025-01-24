@@ -119,7 +119,7 @@ void TextureManager::RegisterAllTextures()
 
 	// Hogehoge
 	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
-	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8.0, 12.0f, 0.05f);
+	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8, 12, 0.05f);
 
 	
 	// インゲームのオブジェクト系
@@ -129,7 +129,7 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.1f);	// 歩行
 
 	/*--------------- 振り子 ---------------*/
-	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png");		// ボール
+	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png", {0.0f, 0.0f}, {1.25f, 1.25f});		// ボール
 	RegisterTexture("stick", TEXTURE_PATH"huriko/v03/stick_01.png", {0.0f, 0.0f}, { 0.75f, 1.0f});	// 棒
 
 	/*--------------- タイル ---------------*/

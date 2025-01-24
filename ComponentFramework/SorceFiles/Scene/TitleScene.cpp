@@ -179,9 +179,6 @@ void TitleScene::Init()
 	select_stages_[0][3] = [this]() {
 		game_manager_->ChangeScene(SceneName::Stage1_4);
 		};
-	select_stages_[0][4] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage1_5);
-		};
 
 	audio_manager_ = AudioManager::GetInstance();
 	audio_manager_->Play(SoundLabel_TitleBGM);

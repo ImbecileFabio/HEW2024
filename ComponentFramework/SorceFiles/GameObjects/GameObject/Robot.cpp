@@ -26,6 +26,7 @@
 #include "../Component/GravityComponent.h"
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
+#include "../Component/GimmickComponent/LiftInteractionComponent.h"
 
 
 //--------------------------------------------------
@@ -43,6 +44,7 @@ Robot::Robot(GameManager* _gameManager)
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this);	// 押し出し
+	lift_interaction_component_ = new LiftInteractionComponent(this);	// リフトとのやり取り
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -112,7 +114,7 @@ void Robot::UpdateGameObject(void)
 	case RobotState::Move:	// 移動状態
 	{
 		// 落ちていたら
-		if (!gravity_component_->GetIsGround()) {
+		if (!gravity_component_->CheckGroundCollision()) {
 			if (robot_state_ != RobotState::Fall)
 			{
 				robot_state_ = RobotState::Fall;
@@ -124,7 +126,7 @@ void Robot::UpdateGameObject(void)
 	case RobotState::Fall:	// 落下状態
 	{
 		// 地面についたら
-		if (gravity_component_->GetIsGround()) {
+		if (gravity_component_->CheckGroundCollision()) {
 			// 移動状態に遷移
 			if (robot_state_ != RobotState::Move)
 			{
@@ -136,11 +138,8 @@ void Robot::UpdateGameObject(void)
 	}
 	case RobotState::OnLift:	// リフトに乗っている状態
 	{
-
 		break;
 	}
-
-
 	}
 
 
@@ -149,10 +148,10 @@ void Robot::UpdateGameObject(void)
 
 
 	// 進行方向に合わせて画像を反転する
-	if (velocity_component_->GetVelocity().x >= 0 ) {	// 右向き
+	if (velocity_component_->GetVelocity().x > 0 ) {	// 右向き
 		sprite_component_->SetFlip(true, false);
 	}
-	else {												// 左向き
+	else if(velocity_component_->GetVelocity().x < 0) {												// 左向き
 		sprite_component_->SetFlip(false, false);
 	}
 
@@ -173,30 +172,9 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		}
 		break;
 	}
-
 	case GameObject::TypeID::Lift:
 	{
-		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
-		
-		auto lift = dynamic_cast<Lift*>(_other);
 
-		if (push_out_component_)
-		{
-			push_out_component_->ResolveCollision(_other);	// 押し出し処理
-		}
-
-		// リフトが動いているなら
-		if (lift->GetLiftState() == Lift::LiftState::Move)
-		{
-			robot_state_ = Robot::RobotState::OnLift;
-			// ぶつかっているリフトの情報を保持
-			collision_lift_ = dynamic_cast<Lift*>(_other);
-		}
-		else {
-			robot_state_ = Robot::RobotState::Move;
-			// リフトの情報を解除
-			collision_lift_ = nullptr;
-		}
 
 		break;
 	}

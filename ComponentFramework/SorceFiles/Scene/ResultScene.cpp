@@ -65,9 +65,9 @@ void ResultScene::Init()
 	}
 	if (old_scene_name_ == "Stage1_4")
 	{
-		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage1_5);
-			};
+		//func = [this]() {
+		//	game_manager_->ChangeScene(SceneName::Stage2_1);
+		//	};
 	}
 	select_button_functions_[0] = [this]() {	// ƒ{ƒ^ƒ“‚ÉŠÖ”‚ð“o˜^
 		game_manager_->ChangeScene(SceneName::Title);

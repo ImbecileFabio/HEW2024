@@ -35,7 +35,7 @@ public:
 		OnLift
 	};
 
-    RobotMoveComponent(GameObject* _owner, int _updateOrder = 2);
+    RobotMoveComponent(GameObject* _owner, int _updateOrder = 21);
     ~RobotMoveComponent();
 
     void Init() override;
