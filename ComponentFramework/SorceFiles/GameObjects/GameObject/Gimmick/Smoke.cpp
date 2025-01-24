@@ -49,7 +49,7 @@ void Smoke::InitGameObject(void)
 //--------------------------------------------------
 void Smoke::UpdateGameObject(void)
 {
-	// もう一段階外側に
+	// もう一段階外側にタイムゾーンに触れているかの判定
 
 	if (brakeFlg_) {
 
