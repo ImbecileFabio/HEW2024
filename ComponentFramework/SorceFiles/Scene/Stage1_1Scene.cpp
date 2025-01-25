@@ -27,6 +27,8 @@
 #include "../GameObjects/GameObject/Robot.h"
 #include "../GameObjects/GameObject/Lift.h"
 #include "../GameObjects/GameObject/Item.h"
+#include "../GameObjects/GameObject/Gimmick/SmokePipe.h"
+
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -102,6 +104,8 @@ void Stage1_1Scene::Init()
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 	audio_manager_ = AudioManager::GetInstance();
 	audio_manager_->Play(SoundLabel_StageBGM);
+
+	smoke_ = new SmokePipe(game_manager_);
 }
 
 //--------------------------------------------------

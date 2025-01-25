@@ -162,8 +162,9 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png");			// 柱, 通常
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png");			// 柱, 欠け
 	// 煙
+	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f,10.f }, { 1.0f,1.0f }, 4, 8, 10);	// 煙本体
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png");		// 柱の奥
-	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");		// 柱の手前
+	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");	// 柱の手前
 	// 滑車
 	//RegisterTexture("pulley", GIMMICK_PATH"pulley/v01/pulley_01.png");
 	// タイムゾーン

@@ -33,7 +33,7 @@
 #include "GameObjects/GameObject/Gimmick/WeakFloor.h"
 #include "GameObjects/GameObject/Pendulum.h"
 
-#include "GameObjects/GameObject/Gimmick/Smoke.h"
+#include "GameObjects/GameObject/Gimmick/SmokePipe.h"
 #include "GameObjects/GameObject/Gimmick/SteePillar.h"
 #include "GameObjects/GameObject/Gimmick/Pulley.h"
 

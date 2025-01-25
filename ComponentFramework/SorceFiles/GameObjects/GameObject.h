@@ -54,7 +54,7 @@ public:
 		, Stick			// 振り子の棒
 		, WeakFloor		// 脆い床
 		, SteePillar	// 鉄柱
-		, Smoke			// 煙
+		, SmokePipe			// 煙
 		, Pulley		// 滑車ギミック
 		// タイルを一括で管理するグループクラス
 		, WeakFloorGroup// 脆い床

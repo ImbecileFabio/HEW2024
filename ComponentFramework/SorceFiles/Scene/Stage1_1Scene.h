@@ -34,5 +34,6 @@ private:
 	class Camera* camera_{};			// カメラ
 	std::vector<class Item*> items_;	// アイテムリスト
 	std::array<class Revolution*, 2> stageUIs_;	// 動きのないステージUI
+	class SmokePipe* smoke_{};
 };
 #endif  // STAGE1_1SCENE_H_
