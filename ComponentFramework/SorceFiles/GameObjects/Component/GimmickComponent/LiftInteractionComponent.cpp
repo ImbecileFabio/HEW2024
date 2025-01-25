@@ -1,10 +1,12 @@
 //==================================================
-// [LiftInteractionComponent.cpp] HOGEコンポーネント
+// [LiftInteractionComponent.cpp]リフトインタラクションコンポーネント
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：HOGEコンポーネントの定義
+// 説明：リフトに触れるとコンポーネントの所有者に動きを伝える処理
 //==================================================
 /*----- インクルード -----*/
+#include <SimpleMath.h>
+
 #include "LiftInteractionComponent.h"
 
 #include "../../GameObject/Lift.h"

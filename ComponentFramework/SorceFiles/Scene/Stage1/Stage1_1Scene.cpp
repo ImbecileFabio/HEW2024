@@ -51,7 +51,7 @@ Stage1_1Scene::~Stage1_1Scene()
 //--------------------------------------------------
 void Stage1_1Scene::Init()
 {
-	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage/Stage1_1.csv");
+	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1/Stage1_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
 	camera_ = new Camera(game_manager_);

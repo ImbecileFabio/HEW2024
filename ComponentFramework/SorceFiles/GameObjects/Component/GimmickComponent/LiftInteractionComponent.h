@@ -1,5 +1,5 @@
 //==================================================
-// [LiftInteractionComponent.h] リフトインタラクトコンポーネント
+// [LiftInteractionComponent.h] リフトインタラクションコンポーネント
 // 著者：有馬 啓太
 //--------------------------------------------------
 // 説明：リフトに乗った際の挙動を実装するコンポーネント
@@ -12,12 +12,12 @@
 class Lift;
 
 //--------------------------------------------------
-// リフトインタラクトコンポーネント
+// リフトインタラクションコンポーネント
 //--------------------------------------------------
 class LiftInteractionComponent : public Component
 {
 public:
-    LiftInteractionComponent(GameObject* _owner, int _updateOrder = 27);
+    LiftInteractionComponent(class GameObject* _owner, int _updateOrder = 27);
     ~LiftInteractionComponent();
 
     void Init() override;
