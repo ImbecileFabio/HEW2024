@@ -19,12 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\FadeManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftInteractionComponent.cpp" />
     <ClCompile Include="SorceFiles\AudioManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GravityComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent\PulleyComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\LiftGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.cpp" />
@@ -110,12 +111,13 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarRightTop.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\FadeManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftInteractionComponent.h" />
     <ClInclude Include="SorceFiles\AudioManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GravityComponent.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent\PulleyComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\LiftGroup.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.h" />
@@ -208,13 +210,6 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarRightTop.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Shader\drawColliderGS.hlsl">
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">gs_main</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Geometry</ShaderType>
-      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">gs_main</EntryPointName>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Geometry</ShaderType>
-      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
-    </FxCompile>
     <FxCompile Include="Shader\drawColliderPS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -227,6 +222,15 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">vs_main</EntryPointName>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="Shader\FadePS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">ps_main</EntryPointName>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">ps_main</EntryPointName>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\unlitTexturePS.hlsl">

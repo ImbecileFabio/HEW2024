@@ -39,6 +39,8 @@ public:
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
 
+	auto GetSRV() const { return m_srv; }
+
 	auto GetOffsetPos() const { return offset_pos_; }
 	auto GetOffsetSize() const { return offset_size_; }
 

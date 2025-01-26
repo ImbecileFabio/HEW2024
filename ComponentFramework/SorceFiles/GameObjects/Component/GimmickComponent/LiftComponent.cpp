@@ -8,7 +8,7 @@
 
 
 #include "../../GameObject.h"
-#include "../../GameObject/Pendulum.h"
+#include "../..//GameObject/Pendulum.h"
 
 #include "../../GameObject/Lift.h"
 

@@ -15,11 +15,12 @@
 
 #include "GameManager.h"
 #include "ColliderManager.h"
-#include "Renderer.h"
 #include "ImGuiManager.h"
 #include "PemdulumManager.h"
 #include "TextureManager.h"
+#include "FadeManager.h"
 
+#include "Renderer.h"
 
 //-----------------------------------------------------------------
 // コンストラクタ
@@ -31,6 +32,9 @@ GameManager::GameManager()
 	// レンダラー初期化
 	renderer_ = new Renderer();
 	renderer_->Init();
+
+	// フェードマネージャ初期化
+	fade_manager_ = new FadeManager(this);
 
 	// コライダーマネージャー初期化
 	collider_manager_ = ColliderManager::Create();
@@ -54,6 +58,7 @@ GameManager::~GameManager(void)
 	delete renderer_;
 	delete collider_manager_;
 	delete pendulum_manager_;
+	delete fade_manager_;
 }
 
 //-----------------------------------------------------------------
@@ -93,6 +98,9 @@ void GameManager::UninitAll(void)
 //-----------------------------------------------------------------
 void GameManager::UpdateAll(float _deltaTime)
 {
+	// フェードマネージャの更新
+	fade_manager_->Update(_deltaTime);
+
 	// ゲームオブジェクトの更新
 	this->current_scene_->Update();
 	this->UpdateGameObjects(_deltaTime);
@@ -154,11 +162,35 @@ void GameManager::ClearAllObjects(void)
 	game_objects_.clear();
 }
 
+//-----------------------------------------------------------------
+// @param 次のシーン名
+// @breaf シーン切り替える時にフェードイン・アウトを行う
+//			フェードアウトが終わるとchangesceneを呼び出す
+//-----------------------------------------------------------------
+void GameManager::TransitionToScene(SceneName _nextScene)
+{
+	if (fade_manager_->GetIsFading()) {
+		return; // フェード中なら二重実行を防ぐ
+	}
+
+	// フェードアウト開始
+	fade_manager_->StartFadeOut(2.0f, [this, _nextScene]() {
+		// フェードアウト終了時にシーンを切り替え
+	
+
+		ChangeScene(_nextScene);
+
+		// シーン変更後にフェードインを開始
+		fade_manager_->StartFadeIn(2.0f);
+
+		});
+}
 
 //-----------------------------------------------------------------
-// シーン切り替え処理
+// @param 次のシーン名
+// @breaf シーン切り替え処理
 //-----------------------------------------------------------------
-void GameManager::ChangeScene(SceneName _scene) 
+void GameManager::ChangeScene(SceneName _nextScene) 
 {
 	std::cout << "\n[GameManager] -> ChangeScene\n";
 	// 前のシーン名を保存しておく
@@ -185,7 +217,7 @@ void GameManager::ChangeScene(SceneName _scene)
 
 	// 新しいシーンの初期化
 	try {
-		switch (_scene) {
+		switch (_nextScene) {
 		case Title:
 			current_scene_ = new TitleScene(this);
 			current_scene_->SetOldSceneName(old_scene_name);

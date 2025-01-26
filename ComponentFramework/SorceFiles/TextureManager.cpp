@@ -120,6 +120,7 @@ void TextureManager::RegisterAllTextures()
 	// Hogehoge
 	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
 	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8, 12, 0.05f);
+	RegisterTexture("fuga", TEXTURE_PATH"fadeout.png");
 
 	
 	// インゲームのオブジェクト系
@@ -193,6 +194,8 @@ void TextureManager::RegisterAllTextures()
 	/*--------------- SCENE ---------------*/
 	// 操作説明画像
 	RegisterTexture("instruction_window", SCENE_PATH"instruction/v02/window_instruction_01.png");
+	// ロード画面
+	RegisterTexture("load_backdrop", SCENE_PATH"title/v01/loading_startup_01.png");
 	// チームロゴ
 	//RegisterTexture("introduction_backdrop", SCENE_PATH"introduction/v01/backdrop_introduction_01.png");
 	//RegisterTexture("introduction_teamlogo", SCENE_PATH"introduction/v01/teamlogo_01.png");

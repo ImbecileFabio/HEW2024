@@ -189,7 +189,7 @@ void TitleScene::Init()
 {
 	// “ñŽŸŒ³”z—ñ‚ÉƒV[ƒ“î•ñ‚ð•Û‘¶‚µ‚Ä‚¨‚­
 	select_stages_[0][0] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage1_1);
+		game_manager_->TransitionToScene(SceneName::Stage1_1);
 		};
 	select_stages_[0][1] = [this]() {
 		game_manager_->ChangeScene(SceneName::Stage1_2);

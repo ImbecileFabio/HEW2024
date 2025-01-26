@@ -219,6 +219,9 @@ void SpriteComponent::SetFlip(bool _xFlip, bool _yFlip)
 {
 	x_flip_ = _xFlip;
 	y_flip_ = _yFlip;
+
+	// UVÀ•W‚ð•ÏX
+	this->SetUV();
 }
 
 

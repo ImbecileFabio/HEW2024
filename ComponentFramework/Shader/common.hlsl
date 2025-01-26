@@ -55,3 +55,11 @@ cbuffer MaterialBuffer : register(b4)
 {
     MATERIAL Material;
 }
+
+cbuffer FadeParams : register(b5)
+{
+    float fadeProgress; // フェード進行度 (0.0 ～ 1.0)
+    float2 center; // フェードの中心座標（0.5, 0.5 は画面中央）
+    float edgeWidth; // フェードの境界幅（スムーズな遷移に影響）
+    bool isFadeOut; // フェードアウトかフェードインか（true: フェードアウト、false: フェードイン）
+};

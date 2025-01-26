@@ -60,6 +60,7 @@ public:
 		// ギミック
 		, LiftComponent			// リフトギミック
 		, LiftInteractionComponent	// リフトとのやり取りコンポーネント
+		, RailComponent			// リフトのレール
 		, PulleyComponent		// 滑車ギミック
 		, WeakFloorComponent	// 脆い床ギミック
 		, SteePillarComponent	// 鉄柱ギミック
