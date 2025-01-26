@@ -97,7 +97,6 @@ void AnimationComponent::Update(void)
 void AnimationComponent::PlayAnimation()
 {
 	is_playing_ = true;
-	ResetAnimation();
 }
 //--------------------------------------------------
 // @brief アニメーション停止

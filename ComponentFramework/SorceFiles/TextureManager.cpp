@@ -124,9 +124,9 @@ void TextureManager::RegisterAllTextures()
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
-	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3, 1, 0.1f);	// 落下
+	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3, 1, 0.05f);	// 落下
 	RegisterTexture("robot_still", TEXTURE_PATH"robot/v03/robot_still_01.png");	// 静止
-	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.1f);	// 歩行
+	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.5f);	// 歩行
 
 	/*--------------- 振り子 ---------------*/
 	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png", {0.0f, 0.0f}, {1.25f, 1.25f});		// ボール

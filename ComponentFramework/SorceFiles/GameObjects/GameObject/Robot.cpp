@@ -138,6 +138,7 @@ void Robot::UpdateGameObject(void)
 	}
 	case RobotState::OnLift:	// リフトに乗っている状態
 	{
+		sprite_component_->SetTexture("robot_still");
 		break;
 	}
 	}
@@ -146,14 +147,21 @@ void Robot::UpdateGameObject(void)
 	// ロボットの動きを切り替える
 	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
 
-
 	// 進行方向に合わせて画像を反転する
-	if (velocity_component_->GetVelocity().x > 0 ) {	// 右向き
+	if (velocity_component_->GetVelocity().x > 0) {	// 右向き
 		sprite_component_->SetFlip(true, false);
 	}
-	else if(velocity_component_->GetVelocity().x < 0) {	// 左向き
+	else if (velocity_component_->GetVelocity().x < 0) {	// 左向き
 		sprite_component_->SetFlip(false, false);
 	}
+
+
+	// 止まっているならアニメーションを止める
+	if (velocity_component_->GetSpeedRate() == 0.0f)
+		animation_component_->StopAnimation();
+	else 
+		animation_component_->PlayAnimation();
+
 
 }
 
