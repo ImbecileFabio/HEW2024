@@ -13,6 +13,8 @@ Texture::Texture(const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::
 	, m_anmSpeed(_anmSpeed)
 	, m_anmRemain(_anmRemain)
 {
+	m_numU = 0;
+	m_numV = 0;
 }
 
 // テクスチャをロード
