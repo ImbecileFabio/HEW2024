@@ -54,8 +54,10 @@ void LiftInteractionComponent::Update()
 		// 動いている場合
 		if(current_lift_->GetLiftState() == Lift::LiftState::Move)
 		{
+			// リフトの速度と速度倍率を取得し、所有者に設定
 			auto liftVelocity = current_lift_->GetComponent<VelocityComponent>();
 			owner_->GetComponent<VelocityComponent>()->SetVelocity(liftVelocity->GetVelocity());
+			owner_->GetComponent<VelocityComponent>()->SetSpeedRate(liftVelocity->GetSpeedRate());
 		}
 		// 停止している場合
 		else if(current_lift_->GetLiftState() == Lift::LiftState::Stop) {

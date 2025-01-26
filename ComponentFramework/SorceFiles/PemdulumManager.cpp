@@ -12,7 +12,7 @@
 #include "GameObjects/GameObject/HammerCursor.h"
 #include "GameObjects/Component/PendulumMovementComponent.h"
 
-#define ControllerPlay
+//#define ControllerPlay
 
 PendulumManager* PendulumManager::instance_ = nullptr;
 

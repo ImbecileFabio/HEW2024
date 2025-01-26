@@ -36,7 +36,7 @@ Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
 	, robot_state_(RobotState::Move)
 {
-	sprite_component_ = new SpriteComponent(this, "robot_still");	// スプライト
+	sprite_component_ = new SpriteComponent(this, "robot_walk");	// スプライト
 	animation_component_ = new AnimationComponent( this, sprite_component_);	// アニメーション
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
@@ -151,7 +151,7 @@ void Robot::UpdateGameObject(void)
 	if (velocity_component_->GetVelocity().x > 0 ) {	// 右向き
 		sprite_component_->SetFlip(true, false);
 	}
-	else if(velocity_component_->GetVelocity().x < 0) {												// 左向き
+	else if(velocity_component_->GetVelocity().x < 0) {	// 左向き
 		sprite_component_->SetFlip(false, false);
 	}
 
@@ -173,6 +173,23 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		break;
 	}
 	case GameObject::TypeID::Lift:
+	{
+		if (push_out_component_)
+		{
+			push_out_component_->ResolveCollision(_other);	// 押し出し処理
+		}
+		break;
+		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		if (auto lift = dynamic_cast<Lift*>(_other))
+		{
+			// 乗っているリフトをセット
+			if (auto interaction = this->GetComponent<LiftInteractionComponent>())
+			{
+				interaction->SetLift(lift);
+			}
+		}
+		break;
+	}
 	{
 
 

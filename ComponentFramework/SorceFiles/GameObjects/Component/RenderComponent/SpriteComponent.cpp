@@ -34,7 +34,11 @@ SpriteComponent::SpriteComponent(GameObject* _owner, const std::string _imgname,
 	
 	// テクスチャ取得
 	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
-
+	if (!texture_)
+	{
+		std::cerr << std::format("＜SpriteComponent＞ -> Failed to get texture : {}\n", _imgname);
+		return;
+	}
 	// バッファ初期化
 	this->InitBuffers(texture_->GetCutU(), texture_->GetCutV());	// 画像の分割数を渡す
 
@@ -177,6 +181,7 @@ void SpriteComponent::SetTexture(const std::string _imgname)
 	// オーナーがアニメーションコンポーネントを持っているなら
 	if (auto anmComp = owner_->GetComponent<AnimationComponent>())
 	{
+		
 		anmComp->ResetAnimation();	// アニメーションをリセット
 	}
 }

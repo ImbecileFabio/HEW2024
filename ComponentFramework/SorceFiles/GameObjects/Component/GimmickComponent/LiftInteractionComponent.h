@@ -25,6 +25,7 @@ public:
     void Update() override;
 
     void SetLift(Lift* _lift) { current_lift_ = _lift; } // 現在乗っているリフトを設定
+	Lift* GetLift(void) { return current_lift_; } // 現在乗っているリフトを取得
 
     TypeID GetComponentType(void) const override { return TypeID::LiftInteractionComponent; }
 private:
