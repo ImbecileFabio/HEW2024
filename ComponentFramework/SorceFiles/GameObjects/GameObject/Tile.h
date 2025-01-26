@@ -35,7 +35,5 @@ private:
 	class ColliderEventComponent* collider_event_component_{};
 
 
-	// デバッグ用
-	class DebugColliderDrawComponent* debug_collider_draw_component_{};
 };
 #endif	// TILE_H_

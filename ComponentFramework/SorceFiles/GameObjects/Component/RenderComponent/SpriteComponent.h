@@ -36,6 +36,7 @@ public:
 	void Uninit() override;
 	void Draw();
 
+	void SetUV();
 	void SetUV(const DirectX::SimpleMath::Vector2& _uv) override;
 
 	// テクスチャを変更
@@ -54,5 +55,7 @@ public:
 
 private:
 	std::shared_ptr<Texture> texture_;	// テクスチャ
+
+	Vector2 current_uv_;
 };
 #endif	// SPRITE_COMPONENT_H_

@@ -30,15 +30,15 @@ public:
 	void UpdateUV();
 
 
+private:
 	SpriteComponent* sprite_component_{};	// アニメーションをするスプライトの参照を持つ
-	std::shared_ptr<Texture> texture_{};	// テクスチャ
 
 	int total_frame_;	// 総フレーム数
 
 	int current_frame_;		// 現在のフレーム
 	float elapsed_time_;	// 経過時間
 	float frame_duration_;	// 1フレームの時間
-	bool loop_;				// ループするかどうか
+	bool is_loop_;				// ループするかどうか
 	bool is_playing_;		// アニメーションを再生中かどうか
 
 };

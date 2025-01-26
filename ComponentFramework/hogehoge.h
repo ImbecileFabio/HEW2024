@@ -12,11 +12,11 @@
 //--------------------------------------------------
 // Hogeコンポーネント
 //--------------------------------------------------
-class hogeComponent : public Component
+class HogeComponent : public Component
 {
 public:
-    hogeComponent(GameObject* _owner, int _updateOrder = 50);
-    ~hogeComponent();
+    HogeComponent(GameObject* _owner, int _updateOrder = 50);
+    ~HogeComponent();
 
     void Init() override;
     void Uninit() override;

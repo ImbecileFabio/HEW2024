@@ -40,15 +40,9 @@ public:
 	void SetRobotState(RobotState _state) { robot_state_ = _state; }
 	auto GetRobotState(void) { return robot_state_; }
 
-	auto GetCollisionLift() { return collision_lift_; }
-
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
 	RobotState robot_state_;
-
-	// 触れているリフト
-	class Lift* collision_lift_ = nullptr;
-
 
 	// 所有するコンポーネント
 	class SpriteComponent* sprite_component_{};
@@ -60,6 +54,7 @@ private:
 	class GravityComponent* gravity_component_{};		// 重力
 	class RobotMoveComponent* robot_move_component_{};	// ロボットの移動
 	class PushOutComponent* push_out_component_{};	// 押し出し
+	class LiftInteractionComponent* lift_interaction_component_{};	// リフトとのやり取り
 
 };
 #endif	// ROBOT_H_

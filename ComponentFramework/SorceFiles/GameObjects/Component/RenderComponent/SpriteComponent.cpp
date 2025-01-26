@@ -34,7 +34,11 @@ SpriteComponent::SpriteComponent(GameObject* _owner, const std::string _imgname,
 	
 	// テクスチャ取得
 	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
-
+	if (!texture_)
+	{
+		std::cerr << std::format("＜SpriteComponent＞ -> Failed to get texture : {}\n", _imgname);
+		return;
+	}
 	// バッファ初期化
 	this->InitBuffers(texture_->GetCutU(), texture_->GetCutV());	// 画像の分割数を渡す
 
@@ -124,7 +128,9 @@ void SpriteComponent::Draw()
 
 
 
+	// 情報をGPUにセット
 	shader_.SetGPU();
+	vertex_buffer_.Modify(vertices_);	// バッファの更新
 	vertex_buffer_.SetGPU();
 	index_buffer_.SetGPU();
 
@@ -143,17 +149,29 @@ void SpriteComponent::SetUV(const DirectX::SimpleMath::Vector2& _uv)
 {
 	auto frameSize = texture_->GetFrameSize();
 	
-	Vector2 uvMin = { _uv.x, _uv.y };
-	Vector2 uvMax = { _uv.x + frameSize.x, _uv.y + frameSize.y };
+	current_uv_ = _uv;
+	Vector2 uvMin = { current_uv_.x, current_uv_.y };
+	Vector2 uvMax = { current_uv_.x + frameSize.x, current_uv_.y + frameSize.y };
+
 
 	vertices_[0].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMax.y : uvMin.y)};
 	vertices_[1].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMax.y : uvMin.y)};
 	vertices_[2].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMin.y : uvMax.y)};
 	vertices_[3].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMin.y : uvMax.y)};
-
-	vertex_buffer_.Modify(vertices_);
-
 }
+void SpriteComponent::SetUV()
+{
+	auto frameSize = texture_->GetFrameSize();
+
+	Vector2 uvMin = current_uv_;
+	Vector2 uvMax = { current_uv_.x + frameSize.x, current_uv_.y + frameSize.y };
+
+	vertices_[0].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMax.y : uvMin.y) };
+	vertices_[1].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMax.y : uvMin.y) };
+	vertices_[2].uv = { (x_flip_ ? uvMax.x : uvMin.x), (y_flip_ ? uvMin.y : uvMax.y) };
+	vertices_[3].uv = { (x_flip_ ? uvMin.x : uvMax.x), (y_flip_ ? uvMin.y : uvMax.y) };
+}
+
 
 
 //--------------------------------------------------
@@ -190,8 +208,6 @@ void SpriteComponent::SetColor(const DirectX::SimpleMath::Vector4& _color)
 	{
 		vertex.color = _color;		// 色を変更
 	}
-
-	vertex_buffer_.Modify(vertices_);	// バッファを書き換え
 }
 
 
@@ -203,9 +219,6 @@ void SpriteComponent::SetFlip(bool _xFlip, bool _yFlip)
 {
 	x_flip_ = _xFlip;
 	y_flip_ = _yFlip;
-
-	SetUV({ 0, 0 });
-
 }
 
 

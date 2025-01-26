@@ -90,4 +90,3 @@ void CameraComponent::Update()
 
 	Renderer::SetProjectionMatrix(&projectionMatrix);
 }
-

@@ -1,12 +1,14 @@
 #include "TimeZone.h"
 
 #include "../GameObject/Robot.h"
+#include "../GameObject/Lift.h"
 
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/TimeZoneComponent.h"
+#include "../Component/GimmickComponent/LiftInteractionComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -60,17 +62,9 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 	{
 		auto robot = dynamic_cast<Robot*>(_other);
 
-		// ロボットがリフトに乗っているなら1倍に
-		if (robot->GetRobotState() == Robot::RobotState::OnLift)
-		{
-			robot->GetComponent<VelocityComponent>()->SetSpeedRate(time_zone_component_->GetTimeRate());
-			break;
-		}
-
-
-
 		auto robotVelocity = robot->GetComponent<VelocityComponent>();
 		// 速度がまだ変更されていないなら
+
 		if (!robotVelocity->GetChangeSpeedRateFlg()) 
 		{
 			// そのまま速度を変更

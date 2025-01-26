@@ -79,11 +79,11 @@ void PushOutComponent::ResolveCollision(GameObject* _other) {
             myhitbox.max_.y > otherhitbox.min_.y &&
             myhitbox.min_.y < otherhitbox.max_.y)
         {
-            // ロボットのサイズを取得（高さのみを使用）
-            float robotHeight = myhitbox.max_.y - myhitbox.min_.y;
+            // ownerのサイズを取得（高さのみを使用）
+            float ownerHeight = myhitbox.max_.y - myhitbox.min_.y;
 
             // 新しい位置を計算 (現在位置の y をサイズの半分だけ上げる)
             auto myPos = myTransform->GetPosition();
-            myTransform->SetPosition({ myPos.x, otherhitbox.max_.y + robotHeight / 2.0f, myPos.z });
+            myTransform->SetPosition({ myPos.x, otherhitbox.max_.y + ownerHeight / 2.0f, myPos.z });
         }
 }

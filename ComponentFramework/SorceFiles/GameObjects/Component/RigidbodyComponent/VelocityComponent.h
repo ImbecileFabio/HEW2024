@@ -37,7 +37,7 @@ private:
 	bool is_change_speed_rate_flg_ = false;	// このフレームで速度倍率が変更されたかどうか
 
 public:
-	VelocityComponent(GameObject* _owner, int _updateOrder = 3);
+	VelocityComponent(GameObject* _owner, int _updateOrder = 28);
 	~VelocityComponent();
 
 	void Init();

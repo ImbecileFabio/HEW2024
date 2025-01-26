@@ -47,6 +47,7 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "StickMoveComponent"	// 振り子の棒の動き
 	// ギミック
 	, "LiftComponent"		// リフトギミック
+	, "LiftInteractionComponent"	// リフトとのやり取りコンポーネント
 	, "PulleyComponent"		// 滑車ギミック
 	, "WeakFloorComponent"	// 脆い床ギミック
 	, "SteePillarComponent"	// 鉄柱ギミック

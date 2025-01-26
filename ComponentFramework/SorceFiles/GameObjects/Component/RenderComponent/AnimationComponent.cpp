@@ -20,7 +20,7 @@ AnimationComponent::AnimationComponent(GameObject* _owner, SpriteComponent* _spr
 	, current_frame_(0)
 	, elapsed_time_(0.0f)
 	, frame_duration_(0.5f)
-	, loop_(true)
+	, is_loop_(true)
 	, is_playing_(true)
 {
 	
@@ -38,12 +38,17 @@ AnimationComponent::~AnimationComponent()
 //--------------------------------------------------
 void AnimationComponent::Init(void)
 {
-	texture_ = sprite_component_->GetTexture();
-	frame_duration_ = texture_->GetAnmSpeed();
-
-	// 分割数から総フレーム数を計算 (最後のフレームが何もなかったりすると透明になる)
-	total_frame_ = texture_->GetCutU() * texture_->GetCutV();
+	is_playing_ = true;
 	current_frame_ = 0;
+	elapsed_time_ = 0.0f;
+
+	// テクスチャから情報を取得
+	auto texture = sprite_component_->GetTexture();
+	frame_duration_ = texture->GetAnmSpeed();
+	is_loop_ = texture->GetLoopFlg();
+	// 分割数から総フレーム数を計算 (最後のフレームが何もなかったりすると透明になるかも)
+	total_frame_ = texture->GetCutU() * texture->GetCutV();
+
 }
 //--------------------------------------------------
 // 終了処理
@@ -68,7 +73,7 @@ void AnimationComponent::Update(void)
 		++current_frame_;
 		// 総フレーム数を超えたら
 		if (current_frame_ >= total_frame_) {
-			if (loop_) {
+			if (is_loop_) {
 				// ループする
 				current_frame_ = 0;	
 			}
@@ -92,7 +97,6 @@ void AnimationComponent::Update(void)
 void AnimationComponent::PlayAnimation()
 {
 	is_playing_ = true;
-	ResetAnimation();
 }
 //--------------------------------------------------
 // @brief アニメーション停止
@@ -107,10 +111,11 @@ void AnimationComponent::StopAnimation()
 //--------------------------------------------------
 void AnimationComponent::UpdateUV()
 {
-	int frameX = current_frame_ % texture_->GetCutU();	// 横の分割数で割ったあまり
-	int frameY = current_frame_ / texture_->GetCutU();	// 横の分割数で割った商
+	auto texture = sprite_component_->GetTexture();
+	int frameX = current_frame_ % texture->GetCutU();	// 横の分割数で割ったあまり
+	int frameY = current_frame_ / texture->GetCutU();	// 横の分割数で割った商
 
-	Vector2 frameSize = texture_->GetFrameSize();
+	Vector2 frameSize = texture->GetFrameSize();
 
 	Vector2 uv = { frameX * frameSize.x, frameY * frameSize.y };
 
@@ -120,7 +125,6 @@ void AnimationComponent::UpdateUV()
 
 void AnimationComponent::ResetAnimation()
 {
-	current_frame_ = 0;
-	elapsed_time_ = 0.0f;
+	this->Init();
 	UpdateUV();
 }

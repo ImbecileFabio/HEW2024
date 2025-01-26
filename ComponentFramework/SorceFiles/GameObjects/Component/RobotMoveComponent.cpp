@@ -39,7 +39,7 @@ RobotMoveComponent::RobotMoveComponent(GameObject* _owner, int _updateOrder)
 	, direction_(Vector2(1.0f, 0.0f))
 	, scan_distance_(2.0f)
 	, max_step_height_(TILE_SIZE_Y)
-	, move_state_(RobotMoveState::Idle)
+	, move_state_(RobotMoveState::Move)
 {
 	
 	// スキャン用オブジェクトを生成
@@ -154,12 +154,7 @@ void RobotMoveComponent::Update()
 	}
 	case RobotMoveState::OnLift:
 	{
-		if (auto lift = dynamic_cast<Robot*>(owner_)->GetCollisionLift()) {
-			// リフトの移動速度を取得
-			auto liftVelocity = lift->GetComponent<VelocityComponent>()->GetVelocity();
-			// リフトの移動速度をロボットに反映
-			owner_velocity_->SetVelocity(liftVelocity);
-		}
+
 		break;
 	}
 	}

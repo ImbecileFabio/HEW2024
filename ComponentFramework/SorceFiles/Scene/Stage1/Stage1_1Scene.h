@@ -8,10 +8,11 @@
 #define STAGE1_1SCENE_H_
 
 /*----- インクルード -----*/
-#include "SceneBase.h"
+#include "../SceneBase.h"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
 constexpr int gearCounter = 1;
 constexpr int hammerCounter = 3;	// 叩ける上限
+
 #include <array>
 
 //--------------------------------------------------

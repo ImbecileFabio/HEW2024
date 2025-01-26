@@ -18,8 +18,6 @@
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/PushOutComponent.h"
 
-#include "../Component/RenderComponent/DebugColliderDrawComponent.h"
-
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -29,9 +27,6 @@ Tile::Tile(GameManager* _gameManager)
 	sprite_component_ = new SpriteComponent(this, "tile_center");
 	collider_event_component_ = new ColliderEventComponent(this);
 	collider_component_ = new BoxColliderComponent(this);
-
-	// デバッグ
-	debug_collider_draw_component_ = new DebugColliderDrawComponent(this);
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Tile::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);

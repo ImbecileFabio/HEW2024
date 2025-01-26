@@ -55,7 +55,7 @@ void GravityComponent::Update()
 {
 	if (auto ownerVelocityCom = owner_->GetComponent<VelocityComponent>())
 	{
-		is_ground_ = CheckGroundCollision();
+		CheckGroundCollision();
 		// 重力適用
 		if (use_gravity_ && !is_ground_)
 		{
@@ -84,7 +84,7 @@ bool GravityComponent::CheckGroundCollision()
 	AABB groundCheckHitbox = robotHitbox;
 
 	// 足元のスキャン範囲を設定（キャラクターサイズに応じて調整）
-	float groundCheckHeight = (robotHitbox.max_.y - robotHitbox.min_.y) * 0.02f;
+	float groundCheckHeight = (robotHitbox.max_.y - robotHitbox.min_.y) * 0.02;
 	groundCheckHitbox.min_.y -= groundCheckHeight; // 足元少し下に範囲を作成
 	groundCheckHitbox.max_.y = robotHitbox.min_.y;
 	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
@@ -101,10 +101,12 @@ bool GravityComponent::CheckGroundCollision()
 
 			if (groundCheckHitbox.max_.x > otherHitbox.min_.x && groundCheckHitbox.min_.x < otherHitbox.max_.x &&
 				groundCheckHitbox.max_.y > otherHitbox.min_.y && groundCheckHitbox.min_.y < otherHitbox.max_.y) {
+				is_ground_ = true; // 地面に接している
 				return true; // 地面に接している
 			}
 		}
 	}
 
+	is_ground_ = false; // 地面に接していない
 	return false; // 地面に接していない
 }
