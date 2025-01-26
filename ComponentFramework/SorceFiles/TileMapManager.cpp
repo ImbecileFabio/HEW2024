@@ -257,11 +257,13 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	{
 		obj = new SteePillarLeft(game_manager_);
 		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);	// ¶‘¤‚¾‚¯”½“]
+		obj->GetComponent<SpriteComponent>()->SetUV();
 	}
 	else if (_tileID == 7)	// “S’Œ‚Ìˆê”Ôã’Œi¶j
 	{
 		obj = new SteePillarLeftTop(game_manager_);
 		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);	// ¶‘¤‚¾‚¯”½“]
+		obj->GetComponent<SpriteComponent>()->SetUV();
 	}
 	else if (_tileID == 8)	// “S’Œ‚Ìˆê”Ôã’Œi‰Ej
 	{

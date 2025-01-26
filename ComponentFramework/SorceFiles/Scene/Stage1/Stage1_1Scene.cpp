@@ -58,8 +58,8 @@ void Stage1_1Scene::Init()
 	back_ground_ = new BackGround(game_manager_);
 	hammerCursor_ = new HammerCursor(game_manager_);
 
-	gearMaxCount_ = gearCounter;	// ’è”‚ð‘ã“ü
-	hammerMaxCount_ = hammerCounter;
+	gearMaxCount_ = gearCounter_1_1;	// ’è”‚ð‘ã“ü
+	hammerMaxCount_ = hammerCounter_1_1;
 
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
@@ -133,7 +133,7 @@ void Stage1_1Scene::Update()
 	{
 	case Stage1_1Scene::Game:
 		NumberChange();
-		if(game_manager_->GetItemCount() == gearCounter) 
+		if(game_manager_->GetItemCount() == gearCounter_1_1) 
 		{
 		 	stageState_ = Result;
 			audio_manager_->Stop(SoundLabel_StageBGM);

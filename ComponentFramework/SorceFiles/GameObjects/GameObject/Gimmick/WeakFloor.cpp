@@ -50,6 +50,7 @@ void WeakFloor::SetWeakFloorGroup(WeakFloorGroup* _weak_floor_group)
 //--------------------------------------------------
 void WeakFloor::InitGameObject(void)
 {
+
 }
 
 //--------------------------------------------------

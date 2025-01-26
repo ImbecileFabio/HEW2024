@@ -25,7 +25,7 @@ public:
 private:
 	class SteePillarLeftGroup* stee_pillar_left_group_;
 
-	class RenderComponent* sprite_component_;
+	class SpriteComponent* sprite_component_;
 	bool offsetFg_ = false;
 	DirectX::SimpleMath::Vector2 offset_;
 };

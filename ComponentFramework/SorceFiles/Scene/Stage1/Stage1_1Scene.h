@@ -10,8 +10,8 @@
 /*----- インクルード -----*/
 #include "../SceneBase.h"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
-constexpr int gearCounter = 1;
-constexpr int hammerCounter = 3;	// 叩ける上限
+constexpr int gearCounter_1_1 = 1;
+constexpr int hammerCounter_1_1 = 3;	// 叩ける上限
 
 #include <array>
 

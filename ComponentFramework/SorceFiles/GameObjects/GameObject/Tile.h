@@ -30,7 +30,7 @@ public:
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
 	// 所有するコンポーネント
-	class RenderComponent* sprite_component_{};
+	class SpriteComponent* sprite_component_{};
 	class ColliderBaseComponent* collider_component_{};
 	class ColliderEventComponent* collider_event_component_{};
 
