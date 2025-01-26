@@ -17,4 +17,3 @@ class BackGround :
 		// 所有するコンポーネント
 		class RenderComponent* sprite_component_{};
 };
-

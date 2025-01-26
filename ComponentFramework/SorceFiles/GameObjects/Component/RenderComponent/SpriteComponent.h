@@ -41,7 +41,7 @@ public:
 	// テクスチャを変更
 	void SetTexture(const std::string _imgname);
 	// テクスチャを取得
-	std::shared_ptr<Texture> GetTexture() { return texture_; }
+	std::shared_ptr<Texture> GetTexture() override { return texture_; }
 
 	// 色を変える
 	void SetColor(const DirectX::SimpleMath::Vector4& _color);

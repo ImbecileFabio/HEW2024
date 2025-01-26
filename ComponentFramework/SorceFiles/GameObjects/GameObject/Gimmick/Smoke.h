@@ -11,12 +11,14 @@
 class Smoke : public GameObject
 {
 public:
-	Smoke(GameManager* _gameManager);
+	Smoke(GameManager* _gameManager, float _gimmickSize);
 	~Smoke(void);
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 	TypeID GetType(void) override { return TypeID::Smoke; }
 private:
+	float m_gimmickSize;	// ギミックのサイズ
+
 	class RenderComponent* sprite_component_{};					// スプライト
 	class ColliderBaseComponent* collider_component_{};			// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント

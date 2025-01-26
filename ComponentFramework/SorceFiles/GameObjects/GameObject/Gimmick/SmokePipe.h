@@ -17,7 +17,8 @@ constexpr float BRAKE_DEFAULT_TIME = 5.0f;
 class SmokePipe : public GameObject
 {
 public:
-	SmokePipe(GameManager* _gameManager);
+	// コンストラクタ(_gimmickSize = 煙の縦の画像比(1.0~想定))
+	SmokePipe(GameManager* _gameManager, float _gimmickSize = 3.0f);
 	~SmokePipe(void);
 
 	void InitGameObject(void) override;

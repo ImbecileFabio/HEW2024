@@ -15,8 +15,9 @@
 //--------------------------------------------------
 // コンストラクタ/デストラクタ
 //--------------------------------------------------
-Smoke::Smoke(GameManager* _gameManager) 
+Smoke::Smoke(GameManager* _gameManager, float _gimmickSize)
 	:GameObject(_gameManager, "Smoke")
+	, m_gimmickSize(_gimmickSize)
 {
 	InitGameObject();
 }
@@ -35,6 +36,9 @@ void Smoke::InitGameObject() {
 	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	animation_component_ = new AnimationComponent(sprite_component_, this);
+
+	sprite_component_->GetTexture()->SetOffsetSize({ 1.0f,m_gimmickSize });
+	sprite_component_->GetTexture()->SetOffsetPos({ 0.0f,10.0f + (m_gimmickSize - 1.0f) * 28.0f });
 }
 
 //--------------------------------------------------

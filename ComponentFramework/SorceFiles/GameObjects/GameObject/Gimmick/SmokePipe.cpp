@@ -16,10 +16,12 @@
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
-SmokePipe::SmokePipe(GameManager* _gameManager)
+SmokePipe::SmokePipe(GameManager* _gameManager, float _gimmickSize)
 	:GameObject(_gameManager, "SmokePipe")
 {
-	smoke_ = new Smoke(_gameManager);
+	sprite_component_1_ = new SpriteComponent(this, "smoke01");
+	smoke_ = new Smoke(_gameManager, _gimmickSize);
+	sprite_component_2_ = new SpriteComponent(this, "smoke02");
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -39,8 +41,6 @@ SmokePipe::~SmokePipe(void)
 //--------------------------------------------------
 void SmokePipe::InitGameObject(void)
 {
-	sprite_component_1_ = new SpriteComponent(this, "smoke01");
-	sprite_component_2_ = new SpriteComponent(this, "smoke02");
 	collider_component_ = new BoxColliderComponent(this);			// 当たり判定
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	smoke_component_ = new SmokeComponent(this);

@@ -162,7 +162,7 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png");			// ’Œ, ’Êí
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png");			// ’Œ, Œ‡‚¯
 	// ‰Œ
-	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f,20.f }, { 1.0f,1.0f }, true, 4.0f, 8.0f, 10, 1);	// ‰Œ–{‘Ì
+	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", true, 4.0f, 8.0f, 20, 1);	// ‰Œ–{‘Ì
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png");		// ’Œ‚Ì‰œ
 	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");	// ’Œ‚Ìè‘O
 	// ŠŠÔ
