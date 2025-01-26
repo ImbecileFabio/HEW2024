@@ -11,7 +11,7 @@
 #include "../../Component/EventComponent/ColliderEventComponent.h"
 #include "../../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../../Component/GimmickComponent/WeakFloorComponent.h"
-#include "../../GameObject/Gimmick/WeakFloorGroup.h"
+#include "../../GameObject/Gimmick/Group/WeakFloorGroup.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------

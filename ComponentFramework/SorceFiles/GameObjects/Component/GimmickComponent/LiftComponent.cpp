@@ -16,7 +16,7 @@
 #include "../TransformComponent.h"
 #include "../RigidbodyComponent/VelocityComponent.h"
 #include "../PendulumMovementComponent.h"
-#include "../../GameObject/Gimmick/LiftGroup.h"
+#include "../../GameObject/Gimmick/Group/LiftGroup.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------

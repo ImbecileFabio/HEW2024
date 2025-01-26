@@ -6,12 +6,12 @@
 //=================================================================
 /*----- インクルード -----*/
 #include "WeakFloorGroup.h"
-#include "WeakFloor.h"
-#include "../../GameObject/Pendulum.h"
-#include "../../Component/PendulumMovementComponent.h"
-#include "../../Component/EventComponent/ColliderEventComponent.h"
-#include "../../Component/ColliderComponent/BoxColliderComponent.h"
-#include "../../Component/TimerComponent.h"
+#include "../WeakFloor.h"
+#include "../../../GameObject/Pendulum.h"
+#include "../../../Component/PendulumMovementComponent.h"
+#include "../../../Component/EventComponent/ColliderEventComponent.h"
+#include "../../../Component/ColliderComponent/BoxColliderComponent.h"
+#include "../../../Component/TimerComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------

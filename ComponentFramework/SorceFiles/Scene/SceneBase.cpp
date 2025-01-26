@@ -25,39 +25,39 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 	std::cout << std::format("\n[{}] -> Constructor\n", scene_name_);
 	tile_map_manager_ = std::make_unique<TileMapManager>(game_manager_);
 
-	stageUIs_[0] = new Revolution(game_manager_, "stageUI", 2);
+	stageUIs_[0] = new Revolution(game_manager_, "stageUI", "stageUI",2);
 	stageUIs_[0]->GetTransformComponent()->SetSize(512.0f, 512.0f);
 	stageUIs_[0]->GetTransformComponent()->SetPosition(-702.0f, 365.0f);
-	stageUIs_[1] = new Revolution(game_manager_, "pause_button", 2);
+	stageUIs_[1] = new Revolution(game_manager_, "pause_button", "pause_button", 2);
 	stageUIs_[1]->GetTransformComponent()->SetSize(128.0f, 128.0f);
 	stageUIs_[1]->GetTransformComponent()->SetPosition(861.0f, 445.0f);
 
-	gearMax_ = new Revolution(game_manager_, "numbers");
+	gearMax_ = new Revolution(game_manager_, "numbers", "gearMax");
 	gearMax_->GetTransformComponent()->SetSize(100.0f, 100.0f);
 	gearMax_->GetTransformComponent()->SetPosition(-551.0f, 412.0f);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-	gearGet_ = new Revolution(game_manager_, "numbers");
+	gearGet_ = new Revolution(game_manager_, "numbers", "gearGet");
 	gearGet_->GetTransformComponent()->SetSize(100.0f, 100.0f);
 	gearGet_->GetTransformComponent()->SetPosition(-677.0f, 454.0f);
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-	hammerNum_ = new Revolution(game_manager_, "numbers");
+	hammerNum_ = new Revolution(game_manager_, "numbers", "hammerNum");
 	hammerNum_->GetTransformComponent()->SetPosition(-596.0f, 290.0f);
 	hammerNum_->GetTransformComponent()->SetSize(100.0f, 100.0f);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 
-	pauseWindow_ = new Revolution(game_manager_, "pose_window");
+	pauseWindow_ = new Revolution(game_manager_, "pose_window", "pose_window");
 	pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	pauseWindow_->GetTransformComponent()->SetSize(1980.0f, 1080.0f);
 
-	pause_instruction_ = new Revolution(game_manager_, "instruction_window", 51);
+	pause_instruction_ = new Revolution(game_manager_, "instruction_window", "instruction_window", 51);
 	pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	pause_instruction_->GetTransformComponent()->SetSize(1980.0f, 1080.0f);
 
-	pauseButtons_[0] = new Revolution(game_manager_, "pose_return_game");
-	pauseButtons_[1] = new Revolution(game_manager_, "pose_restart");
-	pauseButtons_[2] = new Revolution(game_manager_, "pose_select");
-	pauseButtons_[3] = new Revolution(game_manager_, "pose_instruction");
-	pauseButtons_[4] = new Revolution(game_manager_, "pose_option");
+	pauseButtons_[0] = new Revolution(game_manager_, "pose_return_game","pose_return_game");
+	pauseButtons_[1] = new Revolution(game_manager_, "pose_restart", "pose_restart");
+	pauseButtons_[2] = new Revolution(game_manager_, "pose_select", "pose_select");
+	pauseButtons_[3] = new Revolution(game_manager_, "pose_instruction", "pose_instruction");
+	pauseButtons_[4] = new Revolution(game_manager_, "pose_option", "pose_option");
 	pauseButtons_[0]->GetTransformComponent()->SetSize(900.0f, 900.0f);
 	pauseButtons_[0]->GetTransformComponent()->SetPosition(0.0f, 365.0f);
 	pauseButtons_[1]->GetTransformComponent()->SetSize(900.0f, 900.0f);
@@ -144,6 +144,7 @@ void SceneBase::PauseWindow()
 			stageState_ = StageState::Rewind;
 			break;
 		case 2:	// セレクト画面に戻る
+			game_manager_->ResetItemCount();
 			game_manager_->ChangeScene(SceneName::Title);
 			break;
 		case 3:	// 操作説明を表示

@@ -7,7 +7,7 @@
 #ifndef LIFT_GROUP_H_
 #define LIFT_GROUP_H_
 /*----- インクルード -----*/
-#include "../../GameObject.h"
+#include "../../../GameObject.h"
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
 // リフトグループオブジェクト

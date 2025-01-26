@@ -6,10 +6,10 @@
 //=================================================================
 /*----- インクルード -----*/
 #include "LiftGroup.h"
-#include "../Lift.h"
-#include "../Pendulum.h"
-#include "../../Component/PendulumMovementComponent.h"
-#include "../../Component/GimmickComponent/LiftComponent.h"
+#include "../../Lift.h"
+#include "../../Pendulum.h"
+#include "../../../Component/PendulumMovementComponent.h"
+#include "../../../Component/GimmickComponent/LiftComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------

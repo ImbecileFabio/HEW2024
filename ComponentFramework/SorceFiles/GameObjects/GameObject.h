@@ -50,15 +50,22 @@ public:
 		, Lift
 		, Item
 		, TimeZone
-		, Pendulum		// 振り子
-		, Stick			// 振り子の棒
-		, WeakFloor		// 脆い床
-		, SteePillar	// 鉄柱
-		, Smoke			// 煙
-		, Pulley		// 滑車ギミック
-		, HammerCursor	// ハンマーカーソル
+		, Pendulum			// 振り子
+		, Stick				// 振り子の棒
+		, WeakFloor			// 脆い床
+		, SteePillarLeftTop	// 左鉄柱（上）
+		, SteePillarRightTop// 右鉄柱（上）
+		, SteePillarRight	// 鉄柱（右）
+		, SteePillarLeft	// 鉄柱（左）
+		, SteePillarFloor	// 鉄柱の足場
+		, Smoke				// 煙
+		, Pulley			// 滑車ギミック
+		, HammerCursor		// ハンマーカーソル
 		// タイルを一括で管理するグループクラス
 		, WeakFloorGroup// 脆い床
+		, SteePillarFloorGroup	// 鉄柱の床グループ
+		, SteePillarRightGroup	// 鉄柱の右グループ
+		, SteePillarLeftGroup	// 鉄柱の左グループ
 		, LiftGroup		// リフト
 		// ゲームオブジェクトのIDの最大値
 		, MAX

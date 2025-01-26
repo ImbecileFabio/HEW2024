@@ -18,14 +18,14 @@ ResultScene::ResultScene(GameManager* _gameManager)
 	: SceneBase(_gameManager, "ResultScene")
 {
 	camera_ = new Camera(game_manager_);
-	backdrop_ = new Revolution(game_manager_, "result_backdrop");
+	backdrop_ = new Revolution(game_manager_, "result_backdrop", "result_backdrop");
 	backdrop_->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
-	result_ribbon_ = new Revolution(game_manager_, "result_front_ribbon");
+	result_ribbon_ = new Revolution(game_manager_, "result_front_ribbon", "result_front_ribbon");
 	result_ribbon_->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
-	result_buttons_[0] = new Revolution(game_manager_, "result_select");
+	result_buttons_[0] = new Revolution(game_manager_, "result_select", "result_select");
 	result_buttons_[0]->GetTransformComponent()->SetSize(512.0f, 512.0f);
 	result_buttons_[0]->GetTransformComponent()->SetPosition(-443.0f, -300.0f);
-	result_buttons_[1] = new Revolution(game_manager_, "result_next");
+	result_buttons_[1] = new Revolution(game_manager_, "result_next", "result_next");
 	result_buttons_[1]->GetTransformComponent()->SetSize(512.0f, 512.0f);
 	result_buttons_[1]->GetTransformComponent()->SetPosition(464.0f, -300.0f);
 
@@ -61,12 +61,6 @@ void ResultScene::Init()
 	{
 		func = [this]() {
 			game_manager_->ChangeScene(SceneName::Stage1_4);
-			};
-	}
-	if (old_scene_name_ == "Stage1_4")
-	{
-		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage1_5);
 			};
 	}
 	select_button_functions_[0] = [this]() {	// ƒ{ƒ^ƒ“‚ÉŠÖ”‚ğ“o˜^

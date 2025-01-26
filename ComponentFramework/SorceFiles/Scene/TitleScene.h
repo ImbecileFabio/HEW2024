@@ -13,8 +13,8 @@
 /*----- 前方宣言 ------*/
 class Revolution;
 /*----- 定数 ------*/
-constexpr int CHAPTER_MAX = 1;
-constexpr int STAGE_MAX = 5;
+constexpr int CHAPTER_MAX = 3;
+constexpr int STAGE_MAX = 4;
 
 //--------------------------------------------------
 // タイトルシーンクラス
@@ -57,6 +57,11 @@ private:
 	Revolution* select_chapter_left;			// LBボタンに表示されるチャプターナンバー
 	Revolution* select_chapter_right;			// RBボタンに表示されるチャプターナンバー
 	Revolution* select_chapter_center;			// 現在の選択チャプター（中央）に表示されるチャプターナンバー
+	Revolution* select_numbers_s_;				// ステージナンバーのSサイズ
+	Revolution* select_numbers_m_left_;			// ステージナンバー（左）
+	Revolution* select_numbers_m_center_;		// ステージナンバー（中）
+	Revolution* select_numbers_m_right_;		// ステージナンバー（右）
+	Revolution* select_numbers_w_;				// ステージナンバーのLサイズ
 	int chapter_ = 0;							// 章
 	int stage_	 = 0;							// ステージ
 	std::array<std::array<std::function<void()>, STAGE_MAX>, CHAPTER_MAX> select_stages_;	// 5*5つ分のステージ用添え字配列
