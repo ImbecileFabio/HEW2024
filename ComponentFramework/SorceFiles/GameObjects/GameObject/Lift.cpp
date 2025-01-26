@@ -18,7 +18,7 @@
 #include "../Component/PendulumMovementComponent.h"
 #include "../Component/GimmickComponent/LiftComponent.h"
 #include "../Component/GimmickComponent/LiftInteractionComponent.h"
-#include "Gimmick/LiftGroup.h"
+#include "Gimmick/Group/LiftGroup.h"
 
 Lift::Lift(GameManager* _gameManager)
 	:GameObject(_gameManager, "Lift")
