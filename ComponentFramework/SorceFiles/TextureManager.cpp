@@ -49,12 +49,12 @@ void TextureManager::Uninit()
 // @brief  テクスチャの登録
 //-----------------------------------------------------------------
 // アニメーション付き
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed, int _anmRemain)
 {
-	RegisterTexture(_imgName, _fileName, DirectX::SimpleMath::Vector2(0.0f, 0.0f), DirectX::SimpleMath::Vector2(1.0f, 1.0f), _loopFlg, _cutU, _cutV, _anmSpeed);
+	RegisterTexture(_imgName, _fileName, DirectX::SimpleMath::Vector2(0.0f, 0.0f), DirectX::SimpleMath::Vector2(1.0f, 1.0f), _loopFlg, _cutU, _cutV, _anmSpeed, _anmRemain);
 }
 // すべて
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed, int _anmRemain)
 {
 	// すでに読み込まれているか確認
 	auto it = texture_cache_.find(_imgName);
@@ -67,7 +67,7 @@ void TextureManager::RegisterTexture(const std::string& _imgName, const std::str
 
 
 	// 存在していないので生成する
-	auto texture = std::make_shared<Texture>(_offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed);
+	auto texture = std::make_shared<Texture>(_offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed, _anmRemain);
 	if (texture->Load(_fileName)) {
 		texture_cache_[_imgName] = texture;
 		std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Success\n", _imgName);
@@ -162,7 +162,7 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png");			// 柱, 通常
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png");			// 柱, 欠け
 	// 煙
-	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f,10.f }, { 1.0f,1.0f }, 4, 8, 10);	// 煙本体
+	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f,20.f }, { 1.0f,1.0f }, true, 4.0f, 8.0f, 10, 1);	// 煙本体
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png");		// 柱の奥
 	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");	// 柱の手前
 	// 滑車

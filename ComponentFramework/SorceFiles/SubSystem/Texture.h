@@ -30,9 +30,11 @@ class Texture
 	float m_cutV;	// 縦分割数
 	float m_numU;	// 横描画位置
 	float m_numV;	// 縦描画位置
-	int m_anmSpeed; // アニメーションスピード
+	int m_anmSpeed;		// アニメーションスピード
+	int m_anmRemain;	// アニメーションのあまり(例：4*3の分割で10枚しかアニメーションがない場合　2)
 public:
-	Texture(const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed);
+	Texture(const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize,
+			bool _loopFlg, float _cutU, float _cutV, int _anmSpeed, int _anmRemain);
 
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
@@ -47,6 +49,7 @@ public:
 	auto GetCutU() const { return m_cutU; }
 	auto GetCutV() const { return m_cutV; }
 	auto GetAnmSpeed() const { return m_anmSpeed; }
+	auto GetAnmRemain() const { return m_anmRemain; }
 
 	auto GetNumU() const { return m_numU; }
 	void SetNumU(float _numU) { m_numU = _numU; }

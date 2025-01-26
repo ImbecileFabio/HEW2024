@@ -6,6 +6,7 @@
 //=================================================================
 /*----- インクルード -----*/
 #include "SmokePipe.h"
+#include "Smoke.h"
 #include "../../Component/TransformComponent.h"
 #include "../../Component/RenderComponent/SpriteComponent.h"
 #include "../../Component/EventComponent/ColliderEventComponent.h"
@@ -18,6 +19,7 @@
 SmokePipe::SmokePipe(GameManager* _gameManager)
 	:GameObject(_gameManager, "SmokePipe")
 {
+	smoke_ = new Smoke(_gameManager);
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -60,8 +62,4 @@ void SmokePipe::UpdateGameObject(void)
 		fpsCounter_++;
 		if (fpsCounter_ >= 60 * BRAKE_DEFAULT_TIME) brakeFlg_ = true;
 	}
-}
-
-void SmokePipe::OnCollisionStay(GameObject* _other) {
-
 }

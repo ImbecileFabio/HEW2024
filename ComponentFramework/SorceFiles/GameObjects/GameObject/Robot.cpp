@@ -144,6 +144,8 @@ void Robot::UpdateGameObject(void)
 
 void Robot::OnCollisionEnter(GameObject* _other)
 {
+	auto v = velocity_component_->GetVelocity();
+
 	if (state_ == State::Paused) return;
 	switch (_other->GetType())
 	{
@@ -160,7 +162,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Lift:
 	{
 		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
-		
 		auto lift = dynamic_cast<Lift*>(_other);
 
 		if (push_out_component_)
@@ -190,7 +191,26 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		}
 		break;
 	}
+	case GameObject::TypeID::Smoke:
+	{
+		gravity_component_->SetUseGravityFlg(false);
+		velocity_component_->SetVelocity({ v.x,1.0f,v.z });
+		break;
+	}
 	default:
 		break;
 	}
 }
+
+//void Robot::OnCollisionStay(GameObject* _other) {
+//	auto v = velocity_component_->GetVelocity();
+//
+//	switch (_other->GetType())
+//	{
+//	case GameObject::TypeID::Smoke:
+//
+//		velocity_component_->SetVelocity({ v.x,1.0f,v.z });
+//	default:
+//		break;
+//	}
+//}

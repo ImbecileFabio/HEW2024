@@ -1,3 +1,10 @@
+//==================================================
+// [AnimationComponent.cpp] アニメーションコンポーネント
+// 著者：尾上莉奈		追記：中谷凌也
+//--------------------------------------------------
+// 説明：アニメーションコンポーネントの宣言
+//==================================================
+
 #include "AnimationComponent.h"
 #include "../RenderComponent/SpriteComponent.h"
 #include <SimpleMath.h>
@@ -49,12 +56,11 @@ void AnimationComponent::Update(void)
 		if (fpsCounter >= FPS / texture->GetAnmSpeed()) {
 			// UV座標を更新
 			texture->SetNumU(texture->GetNumU() + 1);
-			if (texture->GetNumU() >= texture->GetCutU()) {
+			if (texture->GetNumU() >= texture->GetCutU() || 
+			   (texture->GetNumV() == texture->GetCutV() - 1 && texture->GetNumU() >= texture->GetCutU() - texture->GetAnmRemain() - 1)) {
 				texture->SetNumU(0);
 				texture->SetNumV(texture->GetNumV() + 1);
-				if (texture->GetNumV() >= texture->GetCutV()) {
-					texture->SetNumV(0);
-				}
+				if (texture->GetNumV() >= texture->GetCutV()) texture->SetNumV(0);
 			}
 
 			// UV座標をセット
@@ -68,7 +74,7 @@ void AnimationComponent::Update(void)
 			// ループ判定
 			if (!(texture->GetLoopFlg())) {
 				anmFlame++;
-				if (anmFlame >= (texture->GetCutU() * texture->GetCutV()) - 1) {
+				if (anmFlame >= (texture->GetCutU() * texture->GetCutV()) - texture->GetAnmRemain() - 1) {
 					LoopEnd = true;
 				}
 			}

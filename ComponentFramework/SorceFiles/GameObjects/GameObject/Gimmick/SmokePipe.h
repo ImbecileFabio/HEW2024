@@ -28,12 +28,12 @@ private:
 	int fpsCounter_ = 0;	// 時間計測用
 	bool brakeFlg_ = false;	// 破壊状態フラグ
 
+	GameObject* smoke_;
+
 	class RenderComponent* sprite_component_1_{};					// スプライト
 	class RenderComponent* sprite_component_2_{};					// スプライト
 	class ColliderBaseComponent* collider_component_{};			// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
 	class SmokeComponent* smoke_component_{};					// 煙ギミックコンポーネント
-
-	void OnCollisionStay(GameObject* _other = nullptr);
 };
 #endif // SMOKE_H_
