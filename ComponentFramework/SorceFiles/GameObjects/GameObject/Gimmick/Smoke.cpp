@@ -12,6 +12,8 @@
 #include "../../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../../Component/RenderComponent/AnimationComponent.h"
 
+#include "../../Component/RenderComponent/DebugColliderDrawComponent.h"
+
 //--------------------------------------------------
 // コンストラクタ/デストラクタ
 //--------------------------------------------------
@@ -37,6 +39,11 @@ void Smoke::InitGameObject() {
 	collider_event_component_ = new ColliderEventComponent(this);
 	animation_component_ = new AnimationComponent(sprite_component_, this);
 
+	auto debug = new DebugColliderDrawComponent(this);
+
+	auto f = std::function<void(GameObject*)>(std::bind(&Smoke::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(f);
+
 	sprite_component_->GetTexture()->SetOffsetSize({ 1.0f,m_gimmickSize });
 	sprite_component_->GetTexture()->SetOffsetPos({ 0.0f,10.0f + (m_gimmickSize - 1.0f) * 28.0f });
 }
@@ -45,4 +52,8 @@ void Smoke::InitGameObject() {
 // 処理
 //--------------------------------------------------
 void Smoke::UpdateGameObject() {
+}
+
+
+void Smoke::OnCollisionEnter(GameObject* _other) {
 }

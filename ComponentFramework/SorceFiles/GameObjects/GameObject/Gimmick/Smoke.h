@@ -19,6 +19,8 @@ public:
 private:
 	float m_gimmickSize;	// ギミックのサイズ
 
+	void OnCollisionEnter(GameObject* _other);
+
 	class RenderComponent* sprite_component_{};					// スプライト
 	class ColliderBaseComponent* collider_component_{};			// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント

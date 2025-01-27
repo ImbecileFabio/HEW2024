@@ -193,8 +193,8 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Smoke:
 	{
-		gravity_component_->SetUseGravityFlg(false);
-		velocity_component_->SetVelocity({ v.x,1.0f,v.z });
+		//gravity_component_->SetUseGravityFlg(false);
+		//velocity_component_->SetVelocity({ v.x,1.0f,v.z });
 		break;
 	}
 	default:

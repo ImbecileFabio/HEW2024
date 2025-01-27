@@ -31,8 +31,8 @@ private:
 
 	GameObject* smoke_;
 
-	class RenderComponent* sprite_component_1_{};					// スプライト
-	class RenderComponent* sprite_component_2_{};					// スプライト
+	class RenderComponent* sprite_component_1_{};				// スプライト
+	class RenderComponent* sprite_component_2_{};				// スプライト
 	class ColliderBaseComponent* collider_component_{};			// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
 	class SmokeComponent* smoke_component_{};					// 煙ギミックコンポーネント

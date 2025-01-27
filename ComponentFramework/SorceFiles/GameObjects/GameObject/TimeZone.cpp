@@ -95,6 +95,8 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 		_other->GetComponent<VelocityComponent>()->SetSpeedRate(time_zone_component_->GetTimeRate());
 		break;
 	}
+	case GameObject::TypeID::SmokePipe:
+
 	default:
 		break;
 	}
