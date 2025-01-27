@@ -101,8 +101,8 @@ void Robot::UpdateGameObject(void)
 	if (input.GetMouseButtonPress(0)) {
 		auto mousePos = input.GetMousePosition();
 		transform_component_->SetPosition(
-			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
-			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
+			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 4),
+			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 4)));
 	}
 
 
@@ -184,7 +184,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::WeakFloor:
 	{
-		std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
+		//std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// ‰Ÿ‚µo‚µˆ—
@@ -193,11 +193,15 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Smoke:
 	{
-		//gravity_component_->SetUseGravityFlg(false);
-		//velocity_component_->SetVelocity({ v.x,1.0f,v.z });
+		auto pos = this->GetTransformComponent()->GetPosition();
+		auto robotMove = this->GetComponent<RobotMoveComponent>();
+
+		//std::cout << std::format("Robot -> Smoke -> OnCollisionEnter\n");
+		this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x),pos.y + 5.0f,pos.z });
 		break;
 	}
 	default:
+		//std::cout << std::format("Robot -> default -> OnCollisionEnter\n");
 		break;
 	}
 }

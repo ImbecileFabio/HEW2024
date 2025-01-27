@@ -17,8 +17,9 @@
 //--------------------------------------------------
 // コンストラクタ/デストラクタ
 //--------------------------------------------------
-Smoke::Smoke(GameManager* _gameManager, float _gimmickSize)
+Smoke::Smoke(GameManager* _gameManager,GameObject* _ownerObj, float _gimmickSize)
 	:GameObject(_gameManager, "Smoke")
+	,m_ownerObj(_ownerObj)
 	, m_gimmickSize(_gimmickSize)
 {
 	InitGameObject();
@@ -52,8 +53,10 @@ void Smoke::InitGameObject() {
 // 処理
 //--------------------------------------------------
 void Smoke::UpdateGameObject() {
+	this->GetTransformComponent()->SetPosition(m_ownerObj->GetTransformComponent()->GetPosition());
 }
 
 
 void Smoke::OnCollisionEnter(GameObject* _other) {
+
 }

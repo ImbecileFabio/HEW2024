@@ -58,6 +58,9 @@ void Stage1_1Scene::Init()
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
 
+	smoke_ = new SmokePipe(game_manager_);
+	smoke_->GetTransformComponent()->SetPosition(270.0f, 150.0f);
+
 	stageState_ = Game;
 
 	// GameManager‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é
