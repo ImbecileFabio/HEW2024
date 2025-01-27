@@ -9,6 +9,7 @@
 #include "TitleScene.h"
 
 #include "../GameManager.h"
+#include "../AudioManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
 #include "../GameObjects/GameObject/Robot.h"
@@ -183,8 +184,7 @@ void TitleScene::Init()
 		game_manager_->ChangeScene(SceneName::Stage1_5);
 		};
 
-	audio_manager_ = AudioManager::GetInstance();
-	audio_manager_->Play(SoundLabel_TitleBGM);
+	AudioManager::GetInstance()->Play(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------
@@ -192,7 +192,7 @@ void TitleScene::Init()
 //--------------------------------------------------
 void TitleScene::Uninit()
 {
-	audio_manager_->Stop(SoundLabel_TitleBGM);
+	AudioManager::GetInstance()->Stop(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------

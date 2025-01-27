@@ -12,7 +12,6 @@
 #include <vector>
 #include <array>
 #include "../GameObjects/GameObject.h"
-#include "../AudioManager.h"
 
 /*----- 前方宣言 -----*/
 class TileMapManager;
@@ -50,7 +49,6 @@ protected:
 
 	GameManager* game_manager_{};
 	std::unique_ptr<TileMapManager> tile_map_manager_;
-	std::shared_ptr<AudioManager> audio_manager_;
 
 	std::string scene_name_{};
 	std::string old_scene_name_{};	// 前のシーン名を保存

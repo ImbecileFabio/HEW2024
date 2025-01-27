@@ -68,24 +68,16 @@ private:
 	HRESULT FindChunk(HANDLE, DWORD, DWORD&, DWORD&);
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);
 
-	static std::shared_ptr<AudioManager> m_instance;
+	static std::unique_ptr<AudioManager> m_instance;
 
+public:
 	AudioManager();
 	~AudioManager();
 
-	struct Deleter {
-		void operator()(AudioManager* ptr) const {
-			delete ptr;
-		}
-	};
-public:
-	static std::shared_ptr<AudioManager> GetInstance() {
-		if (!m_instance) m_instance = std::shared_ptr<AudioManager>(new AudioManager(), Deleter());
+	static std::unique_ptr<AudioManager>& GetInstance() {
+		if (!m_instance) m_instance = std::make_unique<AudioManager>();
 		return m_instance;
 	}
-
-	AudioManager(const AudioManager&) = delete;
-	AudioManager& operator=(const AudioManager&) = delete;
 
 	HRESULT Init(void);
 	void Uninit(void);
