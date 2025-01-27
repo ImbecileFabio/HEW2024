@@ -1,6 +1,7 @@
 #include "Item.h"
 #include "../../GameManager.h"
 #include "../../ColliderManager.h"
+#include "../../AudioManager.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 //--------------------------------------------------
@@ -15,7 +16,6 @@ Item::Item(GameManager* _gameManager)
 	state_ = State::Active;
 	auto f = std::function<void(GameObject*)>(std::bind(&Item::OnCollisionEnter, this, std::placeholders::_1));
 	event_base_component_->AddEvent(f);
-	audio_manager_ = AudioManager::GetInstance();
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -58,7 +58,7 @@ void Item::OnCollisionEnter(GameObject* _other)
 		this->state_ = GameObject::State::Dead;
 
 		// ƒTƒEƒ“ƒhÄ¶
-		audio_manager_->Play(SoundLabel_ItemGet);
+		AudioManager::GetInstance()->Play(SoundLabel_ItemGet);
 		break;
 	default:
 		break;

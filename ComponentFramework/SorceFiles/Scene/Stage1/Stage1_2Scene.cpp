@@ -5,6 +5,7 @@
 #include "../../PemdulumManager.h"
 #include "../../InputManager.h"
 #include "../../TileMapManager.h"
+#include "../../AudioManager.h"
 
 #include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/Player.h"
@@ -111,8 +112,7 @@ void Stage1_2Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
-	audio_manager_ = AudioManager::GetInstance();
-	audio_manager_->Play(SoundLabel_StageBGM);
+	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
 
 }
 //--------------------------------------------------
@@ -128,7 +128,7 @@ void Stage1_2Scene::Update()
 		if (game_manager_->GetItemCount() == gearCounter_1_2)	// デバッグ用
 		{
 			state_ = Result;
-			audio_manager_->Stop(SoundLabel_StageBGM);
+			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
 		if (input.GetKeyTrigger(VK_P))

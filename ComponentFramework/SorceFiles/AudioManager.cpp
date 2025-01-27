@@ -237,4 +237,4 @@ HRESULT AudioManager::ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize
 }
 
 // Ã“Iƒƒ“ƒo•Ï”‚Ì’è‹`
-std::shared_ptr<AudioManager> AudioManager::m_instance = nullptr;
+std::unique_ptr<AudioManager> AudioManager::m_instance = nullptr;
