@@ -26,7 +26,7 @@ public:
 
 	TypeID GetType(void) override { return TypeID::SmokePipe; }
 private:
-	int fpsCounter_ = 0;	// 時間計測用
+	int fpsCounter_;		// 時間計測用
 	bool brakeFlg_ = false;	// 破壊状態フラグ
 
 	GameObject* smoke_;

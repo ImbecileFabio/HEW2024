@@ -13,8 +13,12 @@ class Smoke : public GameObject
 public:
 	Smoke(GameManager* _gameManager,GameObject* _ownerObj, float _gimmickSize);
 	~Smoke(void);
+
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
+	
+	float GetSize() { return m_gimmickSize; }
+
 	TypeID GetType(void) override { return TypeID::Smoke; }
 private:
 	GameObject* m_ownerObj;

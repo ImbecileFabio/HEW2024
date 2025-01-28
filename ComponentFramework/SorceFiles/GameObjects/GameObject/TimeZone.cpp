@@ -7,6 +7,7 @@
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/TimeZoneComponent.h"
+#include "../Component/GimmickComponent/SmokeComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -96,7 +97,16 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 		break;
 	}
 	case GameObject::TypeID::SmokePipe:
-
+	{
+		SmokeComponent* smoke = _other->GetComponent<SmokeComponent>();
+		if (time_zone_component_->GetActiveFlg()) {
+			smoke->SetTimeZoneFlg(true);
+		}
+		else {
+			smoke->SetTimeZoneFlg(false);
+		}
+		break;
+	}
 	default:
 		break;
 	}

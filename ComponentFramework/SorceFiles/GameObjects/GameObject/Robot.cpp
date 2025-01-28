@@ -25,6 +25,7 @@
 #include "../Component/GravityComponent.h"
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
+#include "../Component/GimmickComponent/SmokeComponent.h"
 
 
 //--------------------------------------------------
@@ -197,7 +198,9 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		auto robotMove = this->GetComponent<RobotMoveComponent>();
 
 		//std::cout << std::format("Robot -> Smoke -> OnCollisionEnter\n");
-		this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x),pos.y + 5.0f,pos.z });
+		this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x),
+														pos.y + 3.0f+ (robotMove->GetSpeed() * robotMove->GetDirection().x)*_other->GetSize(),
+														pos.z });
 		break;
 	}
 	default:

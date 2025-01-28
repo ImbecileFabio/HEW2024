@@ -59,7 +59,7 @@ void Stage1_1Scene::Init()
 	back_ground_ = new BackGround(game_manager_);
 
 	smoke_ = new SmokePipe(game_manager_);
-	smoke_->GetTransformComponent()->SetPosition(270.0f, 150.0f);
+	smoke_->GetTransformComponent()->SetPosition(400.0f, 150.0f);
 
 	stageState_ = Game;
 

@@ -22,7 +22,11 @@ public:
     void Uninit() override;
     void Update() override;
 
+    void SetTimeZoneFlg(bool _flg) { TimeZoneFlg_ = _flg; }
+    auto GetTimeZoneFlg() { return TimeZoneFlg_; }
+
     TypeID GetComponentType(void) const override { return TypeID::SmokeComponent; }
 private:
+    bool TimeZoneFlg_;
 };
 #endif // SMOKE_COMPONENT_H_
