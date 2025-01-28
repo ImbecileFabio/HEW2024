@@ -37,7 +37,7 @@ private:
 	bool is_change_speed_rate_flg_ = false;	// このフレームで速度倍率が変更されたかどうか
 
 public:
-	VelocityComponent(GameObject* _owner, int _updateOrder = 3);
+	VelocityComponent(GameObject* _owner, int _updateOrder = 28);
 	~VelocityComponent();
 
 	void Init();
@@ -59,6 +59,7 @@ public:
 
 	// 速度
 	void	SetVelocity(const DirectX::SimpleMath::Vector3 _velocity);
+	void	AddVelocity(Vector3 _velocity) { velocity_ += _velocity; }	// 加速度追加
 	//void	UpdateVelocity();
 	DirectX::SimpleMath::Vector3	GetVelocity() const;
 	void	SetUseVelocity(const bool _use_velocity);

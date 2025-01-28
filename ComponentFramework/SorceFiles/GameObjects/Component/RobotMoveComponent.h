@@ -35,7 +35,7 @@ public:
 		OnLift
 	};
 
-    RobotMoveComponent(GameObject* _owner, int _updateOrder = 2);
+    RobotMoveComponent(GameObject* _owner, int _updateOrder = 21);
     ~RobotMoveComponent();
 
     void Init() override;
@@ -47,6 +47,8 @@ public:
 	void  SetSpeed(float _speed);
 	float GetSpeed(void);
 	auto GetDirection() { return direction_; }
+
+	auto GetDirection() const { return direction_; }
 
     virtual TypeID GetComponentType(void) const override { return TypeID::RobotMoveComponent; }
 

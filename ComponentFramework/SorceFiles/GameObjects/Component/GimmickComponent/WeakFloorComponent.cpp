@@ -10,7 +10,7 @@
 #include "../ColliderComponent/BoxColliderComponent.h"
 #include "../RigidbodyComponent/VelocityComponent.h"
 #include "../RenderComponent/SpriteComponent.h"
-#include "../RenderComponent.h"
+#include "../RenderComponent/RenderComponent.h"
 #include "../GravityComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ

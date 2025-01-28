@@ -18,8 +18,9 @@
 GravityComponent::GravityComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 	, is_ground_(false)	// 地面に接地しているか
+	, is_robot_ (true)	// ロボットかどうか
 	, use_gravity_(true)	// 重力の使用
-	, gravity_(-3.0f)	// 重力
+	, gravity_(-1.0f)	// 重力
 {
 	this->Init();
 }
@@ -53,14 +54,35 @@ void GravityComponent::Uninit()
 //--------------------------------------------------
 void GravityComponent::Update()
 {
-
-	is_ground_ = CheckGroundCollision();
-
-
-	// 重力適用
-	if (use_gravity_ && !is_ground_)	
+	if (auto ownerVelocityCom = owner_->GetComponent<VelocityComponent>())
 	{
-		owner_->GetComponent<VelocityComponent>()->SetVelocity(Vector3(0.0f, gravity_, 0.0f));
+		if (!is_robot_ && use_gravity_)
+		{
+			// 速度が一定以上にならないように制限
+			if (ownerVelocityCom->GetVelocity().y < -10.0f)
+			{
+				ownerVelocityCom->SetVelocity({ 0.0f, -10.0f, 0.0f });
+			}
+			else
+			{
+				ownerVelocityCom->SetVelocity({ 0.0f, ownerVelocityCom->GetVelocity().y + gravity_, 0.0f });
+			}
+			return;
+		}
+		CheckGroundCollision();
+		// 重力適用
+		if (use_gravity_ && !is_ground_ && is_robot_)
+		{
+			// 速度が一定以上にならないように制限
+			if (ownerVelocityCom->GetVelocity().y < -10.0f)
+			{
+				ownerVelocityCom->SetVelocity({ 0.0f, -10.0f, 0.0f });
+			}
+			else
+			{
+				ownerVelocityCom->SetVelocity({ 0.0f, ownerVelocityCom->GetVelocity().y + gravity_, 0.0f });
+			}
+		}
 	}
 }
 
@@ -76,7 +98,7 @@ bool GravityComponent::CheckGroundCollision()
 	AABB groundCheckHitbox = robotHitbox;
 
 	// 足元のスキャン範囲を設定（キャラクターサイズに応じて調整）
-	float groundCheckHeight = (robotHitbox.max_.y - robotHitbox.min_.y) * 0.01f;
+	float groundCheckHeight = (robotHitbox.max_.y - robotHitbox.min_.y) * 0.02;
 	groundCheckHitbox.min_.y -= groundCheckHeight; // 足元少し下に範囲を作成
 	groundCheckHitbox.max_.y = robotHitbox.min_.y;
 	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
@@ -96,10 +118,12 @@ bool GravityComponent::CheckGroundCollision()
 
 			if (groundCheckHitbox.max_.x > otherHitbox.min_.x && groundCheckHitbox.min_.x < otherHitbox.max_.x &&
 				groundCheckHitbox.max_.y > otherHitbox.min_.y && groundCheckHitbox.min_.y < otherHitbox.max_.y) {
+				is_ground_ = true; // 地面に接している
 				return true; // 地面に接している
 			}
 		}
 	}
 
+	is_ground_ = false; // 地面に接していない
 	return false; // 地面に接していない
 }

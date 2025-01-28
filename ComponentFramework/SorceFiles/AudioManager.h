@@ -4,7 +4,7 @@
 //--------------------------------------------------
 // 説明：サウンドの管理
 // 
-// 機能：GetInstance()		shared_ptrの取得	
+// 機能：GetInstance()			インスタンスの取得	
 // 		
 //		Play(サウンドラベル)	サウンドの再生
 //		Stop(サウンドラベル)	サウンドの停止
@@ -69,7 +69,6 @@ private:
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);
 
 	static std::unique_ptr<AudioManager> m_instance;
-
 public:
 	AudioManager();
 	~AudioManager();

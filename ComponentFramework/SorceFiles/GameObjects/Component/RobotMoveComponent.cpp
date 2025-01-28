@@ -21,6 +21,8 @@
 #include "../../ColliderManager.h"
 
 #include "../GameObject.h"
+#include "../GameObject/Robot.h"
+#include "../GameObject/Lift.h"
 
 #include "RigidbodyComponent/VelocityComponent.h"
 #include "ColliderComponent/BoxColliderComponent.h"
@@ -37,7 +39,7 @@ RobotMoveComponent::RobotMoveComponent(GameObject* _owner, int _updateOrder)
 	, direction_(Vector2(1.0f, 0.0f))
 	, scan_distance_(2.0f)
 	, max_step_height_(TILE_SIZE_Y)
-	, move_state_(RobotMoveState::Idle)
+	, move_state_(RobotMoveState::Move)
 {
 	
 	// スキャン用オブジェクトを生成
@@ -152,7 +154,7 @@ void RobotMoveComponent::Update()
 	}
 	case RobotMoveState::OnLift:
 	{
-		// onCollisionEnterのほうに記述してます
+
 		break;
 	}
 	}

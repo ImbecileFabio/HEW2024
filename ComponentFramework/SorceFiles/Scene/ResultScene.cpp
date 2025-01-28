@@ -65,9 +65,9 @@ void ResultScene::Init()
 	}
 	if (old_scene_name_ == "Stage1_4")
 	{
-		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage1_5);
-			};
+		//func = [this]() {
+		//	game_manager_->ChangeScene(SceneName::Stage2_1);
+		//	};
 	}
 	select_button_functions_[0] = [this]() {	// ボタンに関数を登録
 		game_manager_->ChangeScene(SceneName::Title);
@@ -90,9 +90,9 @@ void ResultScene::Uninit()
 void ResultScene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_RIGHT))
+	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT))
 		select_button_++;
-	if (input.GetKeyTrigger(VK_LEFT))
+	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT))
 		select_button_--;
 	if (select_button_ > 1)	// 折り返し処理
 		select_button_ = 0;
@@ -112,9 +112,8 @@ void ResultScene::Update()
 			result_buttons_[i]->GetComponent<SpriteComponent>()->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 		}
 	}
-	if (input.GetKeyTrigger(VK_RETURN))
+	if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))
 	{
 		select_button_functions_[select_button_]();	// ボタンの関数を実行
 	}
-
 }

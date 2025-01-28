@@ -10,6 +10,7 @@
 /*----- インクルード -----*/
 #include <memory>
 #include <string>
+#include <SimpleMath.h>
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
@@ -57,6 +58,7 @@ public:
 		, StickMoveComponent	// 振り子の棒の動き
 		// ギミック
 		, LiftComponent			// リフトギミック
+		, LiftInteractionComponent	// リフトとのやり取りコンポーネント
 		, PulleyComponent		// 滑車ギミック
 		, WeakFloorComponent	// 脆い床ギミック
 		, SteePillarComponent	// 鉄柱ギミック

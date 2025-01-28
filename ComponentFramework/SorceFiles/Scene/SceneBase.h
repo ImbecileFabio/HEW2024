@@ -38,6 +38,9 @@ public:
 	virtual void Uninit() = 0;
 	virtual void Update() = 0;	// シーン切り替えの条件とかをSceneのUpdateに書く感じだとおもいます
 
+	void HammerCountDown() { hammerMaxCount_--; }
+	bool GetIsHammerMax() { return isHammerMax_; }
+
 	std::string GetSceneName() const { return scene_name_; }								// 現在のシーン名を取得
 	void SetOldSceneName(std::string _oldSceneName) { old_scene_name_ = _oldSceneName; }	// 前のシーン名を設定
 protected:
@@ -56,6 +59,7 @@ protected:
 	// ステージUI関連
 	int gearMaxCount_ = 0;	// 最大ギア獲得数の定数を代入
 	int hammerMaxCount_ = 0;
+	bool isHammerMax_ = false;
 	std::array<class Revolution*, 2> stageUIs_{};	// 動かないステージUI
 	Revolution* gearMax_{};							// ステージごとのギアの最大数
 	Revolution* gearGet_{};							// ステージごとにゲットしたギアの数

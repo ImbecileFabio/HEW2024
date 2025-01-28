@@ -19,6 +19,7 @@
 
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
+#include "../Component/RenderComponent/AnimationComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
@@ -26,6 +27,7 @@
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
 #include "../Component/GimmickComponent/SmokeComponent.h"
+#include "../Component/GimmickComponent/LiftInteractionComponent.h"
 
 
 //--------------------------------------------------
@@ -33,15 +35,17 @@
 //--------------------------------------------------
 Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
-	, robot_state_(RobotState::Idle)
+	, robot_state_(RobotState::Move)
 {
-	sprite_component_ = new SpriteComponent(this, "robot_still");
+	sprite_component_ = new SpriteComponent(this, "robot_walk");	// スプライト
+	animation_component_ = new AnimationComponent( this, sprite_component_);	// アニメーション
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
 	collider_component_ = new BoxColliderComponent(this);	// 当たり判定
 	collider_event_component_ = new ColliderEventComponent(this);	// 当たり判定イベント
 	robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this);	// 押し出し
+	lift_interaction_component_ = new LiftInteractionComponent(this);	// リフトとのやり取り
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -70,8 +74,8 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetSize(TILE_SIZE_X * 1.5, TILE_SIZE_Y * 1.5);
-	collider_component_->SetSize(transform_component_->GetSize().x * 0.7, transform_component_->GetSize().y * 0.95);
+	transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+	collider_component_->SetSize(transform_component_->GetSize().x * 0.7f, transform_component_->GetSize().y * 0.95f);
 }
 
 //--------------------------------------------------
@@ -83,21 +87,6 @@ void Robot::UpdateGameObject(void)
 	// 入力処理
 	InputManager& input = InputManager::GetInstance();
 
-	//// デバッグ用、ロボを操作できる
-	//// 移動処理
-	//if (input.GetKeyPress(VK_A))
-	//{
-	//	velocity_component_->SetVelocity(Vector3(-10, 0, 0));
-	//}
-	//else if (input.GetKeyPress(VK_D))
-	//{
-	//	velocity_component_->SetVelocity(Vector3(10, 0, 0));
-	//}
-	//else
-	//{
-	//	velocity_component_->SetVelocity(Vector3(0, 0, 0));
-	//}
-
 	// マウスクリックで移動
 	if (input.GetMouseButtonPress(0)) {
 		auto mousePos = input.GetMousePosition();
@@ -107,32 +96,50 @@ void Robot::UpdateGameObject(void)
 	}
 
 
+
+
 	switch (robot_state_)
 	{
 	case RobotState::Idle:	// 待機状態
 	{
-		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN)) {
-			robot_state_ = RobotState::Move;
+		if (InputManager::GetInstance().GetKeyTrigger(VK_RETURN))
+		{
+			if (robot_state_ != RobotState::Move)
+			{
+				robot_state_ = RobotState::Move;
+				sprite_component_->SetTexture("robot_walk");
+			}
 		}
 		break;
 	}
 	case RobotState::Move:	// 移動状態
 	{
-		if (!gravity_component_->GetIsGround()) {
-			robot_state_ = RobotState::Fall;
+		// 落ちていたら
+		if (!gravity_component_->CheckGroundCollision()) {
+			if (robot_state_ != RobotState::Fall)
+			{
+				robot_state_ = RobotState::Fall;
+				sprite_component_->SetTexture("robot_drop");
+			}
 		}
 		break;
 	}
 	case RobotState::Fall:	// 落下状態
 	{
-		if (gravity_component_->GetIsGround()) {
-			robot_state_ = RobotState::Move;
+		// 地面についたら
+		if (gravity_component_->CheckGroundCollision()) {
+			// 移動状態に遷移
+			if (robot_state_ != RobotState::Move)
+			{
+				robot_state_ = RobotState::Move;
+				sprite_component_->SetTexture("robot_walk");
+			}
 		}
 		break;
 	}
 	case RobotState::OnLift:	// リフトに乗っている状態
 	{
-
+		sprite_component_->SetTexture("robot_still");
 		break;
 	}
 	}
@@ -140,6 +147,23 @@ void Robot::UpdateGameObject(void)
 
 	// ロボットの動きを切り替える
 	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
+
+	// 進行方向に合わせて画像を反転する
+	if (velocity_component_->GetVelocity().x > 0) {	// 右向き
+		sprite_component_->SetFlip(true, false);
+	}
+	else if (velocity_component_->GetVelocity().x < 0) {	// 左向き
+		sprite_component_->SetFlip(false, false);
+	}
+
+
+	// 止まっているならアニメーションを止める
+	if (velocity_component_->GetSpeedRate() == 0.0f)
+		animation_component_->StopAnimation();
+	else 
+		animation_component_->PlayAnimation();
+
+
 }
 
 
@@ -159,7 +183,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		}
 		break;
 	}
-
 	case GameObject::TypeID::Lift:
 	{
 		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
@@ -169,17 +192,20 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
 		}
-
-		// リフトが動いているなら
-		if (lift->GetLiftState() == Lift::LiftState::Move)
+		break;
+		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		if (auto lift = dynamic_cast<Lift*>(_other))
 		{
-			robot_state_ = Robot::RobotState::OnLift;
-			// リフトの速度に合わせる
-			velocity_component_->SetVelocity(lift->GetComponent<VelocityComponent>()->GetVelocity());
+			// 乗っているリフトをセット
+			if (auto interaction = this->GetComponent<LiftInteractionComponent>())
+			{
+				interaction->SetLift(lift);
+			}
 		}
-		else {
-			robot_state_ = Robot::RobotState::Move;
-		}
+		break;
+	}
+	{
+
 
 		break;
 	}
@@ -199,8 +225,17 @@ void Robot::OnCollisionEnter(GameObject* _other)
 
 		//std::cout << std::format("Robot -> Smoke -> OnCollisionEnter\n");
 		this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x),
-														pos.y + 3.0f+ (robotMove->GetSpeed() * robotMove->GetDirection().x)*_other->GetSize(),
+														pos.y + 3.0f + (robotMove->GetSpeed() * robotMove->GetDirection().x) * _other->GetSize(),
 														pos.z });
+		break;
+	}
+	case GameObject::TypeID::SteePillarFloor:
+	{
+		std::cout << std::format("Robot -> SteePillarFloor -> OnCollisionEnter\n");
+		if (push_out_component_)
+		{
+			push_out_component_->ResolveCollision(_other);	// 押し出し処理
+		}
 		break;
 	}
 	default:

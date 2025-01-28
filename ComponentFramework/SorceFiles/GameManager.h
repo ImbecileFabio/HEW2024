@@ -14,20 +14,41 @@
 
 #include "Scene/TitleScene.h"
 #include "Scene/ResultScene.h"
-#include "Scene/Stage1_1Scene.h"
-#include "Scene/Stage1_2Scene.h"
-#include "Scene/Stage1_3Scene.h"
-#include "Scene/Stage1_4Scene.h"
-#include "Scene/Stage1_5Scene.h"
+#include "Scene/Stage1/Stage1_1Scene.h"
+#include "Scene/Stage1/Stage1_2Scene.h"
+#include "Scene/Stage1/Stage1_3Scene.h"
+#include "Scene/Stage1/Stage1_4Scene.h"
+
+//#include "Scene/Stage2/Stage2_1Scene.h"
+//#include "Scene/Stage2/Stage2_2Scene.h"
+//#include "Scene/Stage2/Stage2_3Scene.h"
+//#include "Scene/Stage2/Stage2_4Scene.h"
+//
+//#include "Scene/Stage3/Stage3_1Scene.h"
+//#include "Scene/Stage3/Stage3_2Scene.h"
+//#include "Scene/Stage3/Stage3_3Scene.h"
+//#include "Scene/Stage3/Stage3_4Scene.h"
+
 /*----- 構造体定義 -----*/
 // シーン名	
 enum SceneName {
 	Title,
+
 	Stage1_1,
 	Stage1_2,
 	Stage1_3,
 	Stage1_4,
-	Stage1_5,
+
+	Stage2_1,
+	Stage2_2,
+	Stage2_3,
+	Stage2_4,
+
+	Stage3_1,
+	Stage3_2,
+	Stage3_3,
+	Stage3_4,
+
 	Result,
 };
 
@@ -68,8 +89,8 @@ public:
 	void itemCountUp() { itemCount++; }
 	void ResetItemCount() { itemCount = 0; }
 	int GetItemCount() { return itemCount; }
-
-
+	void HammerCountDown() {current_scene_->HammerCountDown(); }
+	bool GetIsHammerMax() { return current_scene_->GetIsHammerMax(); }
 	// オブジェクトをすべてクリア
 	void ClearAllObjects(void);
 	// シーン切り替え

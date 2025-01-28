@@ -37,7 +37,7 @@ GameManager::GameManager()
 
 	// 振り子マネージャー初期化
 	pendulum_manager_ = PendulumManager::GetInstance();
-
+	pendulum_manager_->SetGM(this);
 	this->InitAll();
 }
 
@@ -206,9 +206,9 @@ void GameManager::ChangeScene(SceneName _scene)
 			current_scene_ = new Stage1_4Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
-		case Stage1_5:
-			current_scene_ = new Stage1_5Scene(this);
-			current_scene_->SetOldSceneName(old_scene_name);
+		case Stage2_1:
+			//current_scene_ = new Stage2_1Scene(this);
+			//current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Result:
 			itemCount = 0;
@@ -278,7 +278,6 @@ void GameManager::UpdateGameObjects(float _deltaTime)
 {
 	// すべてのゲームオブジェクトの更新
 	updating_game_objects_ = true;
-
 	for (auto& gameObject : game_objects_)
 	{
 		gameObject->SetDeltaTime(_deltaTime);	// デルタタイムの設定

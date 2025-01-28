@@ -27,6 +27,11 @@ TextureManager::~TextureManager()
 	this->ClearCache();
 }
 
+void TextureManager::RegisterTextureInfo(const std::string& _textureName, const TextureInfo& _textureInfo)
+{
+	texture_info_[_textureName] = _textureInfo;
+}
+
 //-----------------------------------------------------------------
 // 初期化処理
 //-----------------------------------------------------------------
@@ -49,52 +54,46 @@ void TextureManager::Uninit()
 // @brief  テクスチャの登録
 //-----------------------------------------------------------------
 // アニメーション付き
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed, int _anmRemain)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed)
 {
-	RegisterTexture(_imgName, _fileName, DirectX::SimpleMath::Vector2(0.0f, 0.0f), DirectX::SimpleMath::Vector2(1.0f, 1.0f), _loopFlg, _cutU, _cutV, _anmSpeed, _anmRemain);
+	RegisterTexture(_imgName, _fileName, DirectX::SimpleMath::Vector2(0.0f, 0.0f), DirectX::SimpleMath::Vector2(1.0f, 1.0f), _loopFlg, _cutU, _cutV, _anmSpeed);
 }
 // すべて
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, float _cutU, float _cutV, int _anmSpeed, int _anmRemain)
+void TextureManager::RegisterTexture(const std::string& _textureName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed)
 {
-	// すでに読み込まれているか確認
-	auto it = texture_cache_.find(_imgName);
-	if (it != texture_cache_.end())
-	{
-		// すでに読み込まれている
-		std::cout << std::format("\n＜TextureManager＞ -> {} is already loaded\n\n", _imgName);
-		return;
-	}
-
-
-	// 存在していないので生成する
-	auto texture = std::make_shared<Texture>(_offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed, _anmRemain);
-	if (texture->Load(_fileName)) {
-		texture_cache_[_imgName] = texture;
-		std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Success\n", _imgName);
-		return;
-	}
-
-	// 失敗
-	std::cout << std::format("＜TextureManager＞ -> {} LoadTexture Error\n", _imgName);
-	return;
-
+	texture_info_[_textureName] = { _fileName, _offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed };
 }
 
 //-----------------------------------------------------------------
 // @param  _imgName 画像名
 // @brief  読み込んだテクスチャの取得
-// @return 存在していればit, なければnullptr
+// @return 存在していればit->second, なければ生成してtexture, 生成できなければnullptr
 //-----------------------------------------------------------------
-std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _imgName)
+std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _texrureName)
 {
-	auto it = texture_cache_.find(_imgName);
+	// すでに読み込まれているか確認
+	auto it = texture_cache_.find(_texrureName);
 	if (it != texture_cache_.end())
 	{
+		// すでに読み込まれている
+		std::cout << std::format("\n＜TextureManager＞ -> {} is already loaded\n\n", _texrureName);
 		return it->second;
 	}
 
-	std::cout << std::format("＜TextureManager＞ -> {} GetTexture Error\n", _imgName);
+	// 存在していないので生成する
+	auto texInfo = texture_info_[_texrureName];
+	auto texture = std::make_shared<Texture>(texInfo.offsetPos, texInfo.offsetSize, texInfo.loop, texInfo.cutU, texInfo.cutV, texInfo.animationSpeed);
+	if (texture->Load(texInfo.filePath)) {
+		// キャッシュに登録
+		texture_cache_[_texrureName] = texture;
+		std::cout << std::format("＜TextureManager＞ -> {} GetTexture Success\n", _texrureName);
+		return texture;
+	}
+
+	// 失敗
+	std::cout << std::format("＜TextureManager＞ -> {} GetTexture Error\n", _texrureName);
 	return nullptr;
+
 }
 
 //-----------------------------------------------------------------
@@ -120,17 +119,18 @@ void TextureManager::RegisterAllTextures()
 
 	// Hogehoge
 	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
+	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8, 12, 0.05f);
 
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
-	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png");	// 落下
+	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3, 1, 0.05f);	// 落下
 	RegisterTexture("robot_still", TEXTURE_PATH"robot/v03/robot_still_01.png");	// 静止
-	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png");	// 歩行
+	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.5f);	// 歩行
 
 	/*--------------- 振り子 ---------------*/
-	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png");		// ボール
-	RegisterTexture("stick", TEXTURE_PATH"huriko/v03/stick_01.png", {0.0f, 0.0f}, { 0.5f, 1.0f});	// 棒
+	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png", {0.0f, 0.0f}, {1.25f, 1.25f});		// ボール
+	RegisterTexture("stick", TEXTURE_PATH"huriko/v03/stick_01.png", {0.0f, 0.0f}, { 0.75f, 1.0f});	// 棒
 
 	/*--------------- タイル ---------------*/
 	// 床
@@ -143,7 +143,7 @@ void TextureManager::RegisterAllTextures()
 	/*--------------- ギミック ---------------*/
 	// リフト
 	RegisterTexture("lift_floor_center", GIMMICK_PATH"lift/v02/lift_floor_center_01.png", { 0.0f, 8.0f }, { 1.0f, 1.25f });	// 中央
-	RegisterTexture("lift_floor_left", GIMMICK_PATH"lift/v02/lift_floor_left_01.png", { -8.0f, 8.0f }, { 1.25f, 1.25f });		// 左
+	RegisterTexture("lift_floor_left", GIMMICK_PATH"lift/v02/lift_floor_left_01.png", { -7.9f, 8.0f }, { 1.25f, 1.25f });		// 左
 	RegisterTexture("lift_floor_right", GIMMICK_PATH"lift/v02/lift_floor_right_01.png", {8.0f, 8.0f}, { 1.25f, 1.25f });	// 右
 	RegisterTexture("lift_circle", GIMMICK_PATH"lift/v02/lift_circle_01.png");					// 留め具
 	RegisterTexture("lift_rail", GIMMICK_PATH"lift/v02/lift_rail_01.png");						// レール
@@ -156,15 +156,14 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_floor_end_01", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_01.png");			// 床, 左
 	RegisterTexture("steelpillar_floor_end_02", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_02.png");			// 床, 右
 
-	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png");					// 柱, 上
-	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png");			// 柱, 下
-	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png");				// 柱, 壊れ
-	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png");			// 柱, 通常
-	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png");			// 柱, 欠け
+	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png",		 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 上
+	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 下
+	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 壊れ
+	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// 柱, 通常
+	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 欠け
 	// 煙
-	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", true, 4.0f, 8.0f, 20, 1);	// 煙本体
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png");		// 柱の奥
-	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");	// 柱の手前
+	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");		// 柱の手前
 	// 滑車
 	//RegisterTexture("pulley", GIMMICK_PATH"pulley/v01/pulley_01.png");
 	// タイムゾーン
@@ -181,10 +180,12 @@ void TextureManager::RegisterAllTextures()
 	/*--------------- UI ---------------*/
 	// ハンマー
 	RegisterTexture("hammer", UI_PATH"v01/hammer_01.png");
+	// ヒットエフェクト
+	RegisterTexture("hammer_hit_effect", UI_PATH"v01/hit_effect_01.png", false, 4, 2);
 	// ギア
 	RegisterTexture("gear", UI_PATH"v02/gear_01.png");
 	// 数字
-	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4.0f, 3.0f);
+	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4, 3);
 	// ポーズボタン
 	RegisterTexture("pause_button", UI_PATH"v02/pause_button_01.png");
 	// ステージUI
@@ -233,12 +234,12 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("stageselect_return", SCENE_PATH"stageselect/v01/return_title_button_01.png");
 	RegisterTexture("stageselect_right", SCENE_PATH"stageselect/v01/right_button_01.png");
 	RegisterTexture("stageselect_left", SCENE_PATH"stageselect/v01/left_button_01.png");
-	RegisterTexture("stageselect_chapter", SCENE_PATH"stageselect/v01/chapter_numbers_01.png");
+	RegisterTexture("stageselect_chapter", SCENE_PATH"stageselect/v01/chapter_numbers_01.png", false, 3, 1);
 	RegisterTexture("stageselect_gear_left", SCENE_PATH"stageselect/v01/gear_left_rotation_01.png");
 	RegisterTexture("stageselect_gear_right", SCENE_PATH"stageselect/v01/gear_right_rotation_01.png");
-	RegisterTexture("stageselect_stage_numbers_m", SCENE_PATH"stageselect/v01/stage_numbers_m_01.png");
-	RegisterTexture("stageselect_stage_numbers_s", SCENE_PATH"stageselect/v01/stage_numbers_s_01.png");
-	RegisterTexture("stageselect_stage_numbers_w", SCENE_PATH"stageselect/v01/stage_numbers_w_01.png");
+	RegisterTexture("stageselect_stage_numbers_s", SCENE_PATH"stageselect/v01/stage_numbers_s_01.png", false, 4, 4);
+	RegisterTexture("stageselect_stage_numbers_m", SCENE_PATH"stageselect/v01/stage_numbers_m_01.png", false, 4, 4);
+	RegisterTexture("stageselect_stage_numbers_w", SCENE_PATH"stageselect/v01/stage_numbers_w_01.png", false, 4, 4);
 
 }
 

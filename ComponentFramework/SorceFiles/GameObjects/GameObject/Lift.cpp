@@ -8,6 +8,8 @@
 #include <algorithm>
 #include "Lift.h"
 #include "Pendulum.h"
+#include "Robot.h"
+
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../Component/ColliderComponent/CircleColliderComponent.h"
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
@@ -15,6 +17,8 @@
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/PendulumMovementComponent.h"
 #include "../Component/GimmickComponent/LiftComponent.h"
+#include "../Component/GimmickComponent/LiftInteractionComponent.h"
+#include "Gimmick/Group/LiftGroup.h"
 
 Lift::Lift(GameManager* _gameManager)
 	:GameObject(_gameManager, "Lift")
@@ -119,216 +123,12 @@ void Lift::UpdateGameObject(void)
 		break;
 	}
 	}
-
 	// stateをセット
 	lift_component_->SetLiftComState(static_cast<LiftComponent::LiftComState>(lift_state_));
-
+	// グループのタイルを揃える処理
+	lift_group_->UpdateLiftTilePositions();
 }
 
-// まだテスト段階なのでコメントアウトをしておきます, by arima
-////--------------------------------------------------
-//// @brief 更新処理
-////--------------------------------------------------
-//void Lift::UpdateGameObject(void)
-//{
-//	if (!pendulum_) return;
-//
-//	// 切り替え時一定時間停止する
-//	switch (lift_state_)
-//	{
-//	case Lift::LiftState::Stop:
-//	{
-//		velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
-//
-//		if (turn_count_ >= 180) {
-//			if (pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement())
-//			{
-//				lift_state_ = Lift::LiftState::Move;
-//				turn_count_ = 0;
-//			}
-//		}
-//		else {
-//			++turn_count_;
-//		}
-//
-//		return;
-//		break;
-//	}
-//	case Lift::LiftState::Move:
-//	{
-//		if (!pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement())
-//		{
-//			lift_state_ = Lift::LiftState::Stop;
-//			velocity_component_->SetVelocity({ 0.0f, 0.0f, 0.0f });
-//			turn_count_ = 180;
-//			return;
-//		}
-//
-//		DirectX::SimpleMath::Vector3 liftPos = transform_component_->GetPosition();
-//		switch (moveState_)
-//		{
-//		case Lift::MoveState::length:	// 縦移動
-//			if (!switchFg_)
-//			{
-//				// 上に移動
-//				direction_ = { 0.0f, 1.0f };
-//				// 移動距離を累積
-//				traveledDistance_.y += std::abs(direction_.y) * velocity_component_->GetSpeedRate();
-//				// 移動距離が最大移動距離を超えたら
-//				if (traveledDistance_.y >= maxMoveDistance_)
-//				{
-//					// 逆方向に移動
-//					direction_ = { 0.0f, -1.0f };
-//					traveledDistance_.y = 0.0f;
-//					switchFg_ = true;
-//					lift_state_ = Lift::LiftState::Stop;
-//				}
-//			}
-//			else
-//			{
-//				// 下に移動
-//				direction_ = { 0.0f, -1.0f };
-//				// 移動距離を累積
-//				traveledDistance_.y += std::abs(direction_.y) * velocity_component_->GetSpeedRate();
-//				// 移動距離が最大移動距離を超えたら
-//				if (traveledDistance_.y >= maxMoveDistance_)
-//				{
-//					// 逆方向に移動
-//					direction_ = { 0.0f, 1.0f };
-//					traveledDistance_.y = 0.0f;
-//					switchFg_ = false;
-//					lift_state_ = Lift::LiftState::Stop;
-//				}
-//			}
-//			break;
-//		case Lift::MoveState::side:		// 横移動
-//			if (!switchFg_)
-//			{
-//				// 右に移動
-//				direction_ = { 1.0f, 0.0f };
-//				// 移動距離を累積
-//				traveledDistance_.x += std::abs(direction_.x) * velocity_component_->GetSpeedRate();
-//				// 移動距離が最大移動距離を超えたら
-//				if (traveledDistance_.x >= maxMoveDistance_)
-//				{
-//					direction_ = { -1.0f, 0.0f };	// 逆方向に移動
-//					traveledDistance_.x = 0.0f;
-//					switchFg_ = true;
-//					lift_state_ = Lift::LiftState::Stop;
-//				}
-//			}
-//			else
-//			{
-//				// 左に移動
-//				direction_ = { -1.0f, 0.0f };
-//				// 移動距離を累積
-//				traveledDistance_.x += std::abs(direction_.x) * velocity_component_->GetSpeedRate();
-//				// 移動距離が最大移動距離を超えたら
-//				if (traveledDistance_.x >= maxMoveDistance_)
-//				{
-//					direction_ = { 1.0f, 0.0f };	// 逆方向に移動
-//					traveledDistance_.x = 0.0f;
-//					switchFg_ = false;
-//					lift_state_ = Lift::LiftState::Stop;
-//				}
-//			}
-//			break;
-//		case Lift::MoveState::diagonalRight:	// 斜め移動（右）
-//			if (!switchFg_)
-//			{
-//				// 右上に移動
-//				direction_ = { 1.0f, 1.0f };
-//				// 移動距離を累積
-//				Vector2 normalizedDirection = {
-//					direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
-//					direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
-//				};
-//				traveledDistance_.x += std::abs(normalizedDirection.x) * velocity_component_->GetSpeedRate();
-//				traveledDistance_.y += std::abs(normalizedDirection.y) * velocity_component_->GetSpeedRate();
-//				// 移動距離が最大移動距離を超えたら
-//				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
-//				{
-//					traveledDistance_ = { 0.0f, 0.0f };
-//					direction_ = { -1.0f, -1.0f };
-//					switchFg_ = true;
-//					lift_state_ = Lift::LiftState::Stop;
-//				}
-//			}
-//			else
-//			{
-//				// 左下に移動
-//				direction_ = { -1.0f, -1.0f };
-//				// 移動距離を累積
-//				Vector2 normalizedDirection = {
-//					direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
-//					direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
-//				};
-//				traveledDistance_.x += std::abs(normalizedDirection.x) * velocity_component_->GetSpeedRate();
-//				traveledDistance_.y += std::abs(normalizedDirection.y) * velocity_component_->GetSpeedRate();
-//
-//				// 移動距離が最大移動距離を超えたら
-//				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
-//				{
-//					traveledDistance_ = { 0.0f, 0.0f };
-//					direction_ = { 1.0f, 1.0f };
-//					switchFg_ = false;
-//					lift_state_ = Lift::LiftState::Stop;
-//				}
-//			}
-//			break;
-//		case Lift::MoveState::diagonalLeft:	// 斜め移動（左）
-//			if (!switchFg_)
-//			{
-//				// 左上に移動
-//				direction_ = { -1.0f, 1.0f };
-//				// 移動距離を累積
-//				Vector2 normalizedDirection = {
-//					direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
-//					direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
-//				};
-//				traveledDistance_.x += std::abs(normalizedDirection.x) * velocity_component_->GetSpeedRate();
-//				traveledDistance_.y += std::abs(normalizedDirection.y) * velocity_component_->GetSpeedRate();
-//
-//				// 移動距離が最大移動距離を超えたら
-//				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
-//				{
-//					traveledDistance_ = { 0.0f, 0.0f };
-//					direction_ = { 1.0f, -1.0f };
-//					switchFg_ = true;
-//					lift_state_ = Lift::LiftState::Stop;
-//				}
-//			}
-//			else
-//			{
-//				// 右下に移動
-//				direction_ = { 1.0f, -1.0f };
-//				// 移動距離を累積
-//				Vector2 normalizedDirection = {
-//					direction_.x / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y),
-//					direction_.y / std::sqrt(direction_.x * direction_.x + direction_.y * direction_.y)
-//				};
-//				traveledDistance_.x += std::abs(normalizedDirection.x) * velocity_component_->GetSpeedRate();
-//				traveledDistance_.y += std::abs(normalizedDirection.y) * velocity_component_->GetSpeedRate();
-//
-//				// 移動距離が最大移動距離を超えたら
-//				if (traveledDistance_.x >= maxMoveDistance_ && traveledDistance_.y >= maxMoveDistance_)
-//				{
-//					traveledDistance_ = { 0.0f, 0.0f };
-//					direction_ = { -1.0f, 1.0f };
-//					switchFg_ = false;
-//					lift_state_ = Lift::LiftState::Stop;
-//				}
-//			}
-//			break;
-//		default:
-//			break;
-//		}
-//		// リフトの座標を支点として渡し続ける
-//		velocity_component_->SetVelocity(Vector3(direction_.x, direction_.y, 0.0f));
-//		pendulum_->GetComponent<PendulumMovementComponent>()->SetPendulumFulcrum(liftPos);
-//	}
-//	}
-//}
 
 //--------------------------------------------------
 // @brief リフトに任意のオブジェクトが当たった時の処理
@@ -338,6 +138,14 @@ void Lift::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Robot:
+		if (auto robot = dynamic_cast<Robot*>(_other))
+		{
+			if (auto interaction = robot->GetComponent<LiftInteractionComponent>())
+			{
+				// ロボットにリフトをセット
+				interaction->SetLift(this);
+			}
+		}
 		break;
 	case GameObject::TypeID::Tile:
 		break;

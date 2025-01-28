@@ -10,7 +10,11 @@
 // 1. タイル
 // 2. 脆いタイル
 // 3. 振り子
-// 4. 
+// 4. 鉄柱の足場
+// 5. 鉄柱の右柱
+// 6. 鉄柱の左柱
+// 7. 鉄柱の左一番上柱
+// 8. 鉄柱の右一番上柱
 // 
 // 100~109. リフトの始点
 // 110~119. リフトの終点
@@ -34,7 +38,11 @@
 #include "GameObjects/GameObject/Pendulum.h"
 
 #include "GameObjects/GameObject/Gimmick/SmokePipe.h"
-#include "GameObjects/GameObject/Gimmick/SteePillar.h"
+#include "GameObjects/GameObject/Gimmick/SteePillarLeft.h"
+#include "GameObjects/GameObject/Gimmick/SteePillarRight.h"
+#include "GameObjects/GameObject/Gimmick/SteePillarLeftTop.h"
+#include "GameObjects/GameObject/Gimmick/SteePillarRightTop.h"
+#include "GameObjects/GameObject/Gimmick/SteePillarFloor.h"
 #include "GameObjects/GameObject/Gimmick/Pulley.h"
 
 #include "GameObjects/GameObject/Lift.h"
@@ -42,8 +50,11 @@
 #include "GameObjects/GameObject/Item.h"
 #include "GameObjects/GameObject/Robot.h"
 
-#include "GameObjects/GameObject/Gimmick/WeakFloorGroup.h"
-#include "GameObjects/GameObject/Gimmick/LiftGroup.h"
+#include "GameObjects/GameObject/Gimmick/Group/WeakFloorGroup.h"
+#include "GameObjects/GameObject/Gimmick/Group/LiftGroup.h"
+#include "GameObjects/GameObject/Gimmick/Group/SteePillarFloorGroup.h"
+#include "GameObjects/GameObject/Gimmick/Group/SteePillarLeftGroup.h"
+#include "GameObjects/GameObject/Gimmick/Group/SteePillarRightGroup.h"
 //-----------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------
@@ -209,6 +220,54 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	{
 		obj = new Pendulum(game_manager_, objPos, false, 30.f);
 
+	}
+	else if (_tileID == 4)	// 鉄柱の足場
+	{
+		obj = new SteePillarFloor(game_manager_);
+		if (auto sprite = obj->GetComponent<SpriteComponent>())
+		{
+			// 周囲のタイルを取得
+			bool up = GetAdjacentTile(_tileID, _x, _y, 0, 1);
+			bool down = GetAdjacentTile(_tileID, _x, _y, 0, -1);
+			bool left = GetAdjacentTile(_tileID, _x, _y, -1, 0);
+			bool right = GetAdjacentTile(_tileID, _x, _y, 1, 0);
+
+			// テクスチャを設定
+			if (left) {// 左にタイルがある
+				if (right) {// 右にタイルがある
+					sprite->SetTexture("steelpillar_floor_center");	// 中央
+					sprite->SetFlip(true, false);
+				}
+				else {
+					sprite->SetTexture("steelpillar_floor_end_02");	// 右
+				}
+			}
+			// 左にタイルがない
+			else if (right) {// 右にタイルがある
+				sprite->SetTexture("steelpillar_floor_end_01");	// 左
+			}
+		}
+
+	}
+	else if (_tileID == 5)	// 鉄柱の右柱
+	{
+		obj = new SteePillarRight(game_manager_);
+	}
+	else if (_tileID == 6)	// 鉄柱の左柱
+	{
+		obj = new SteePillarLeft(game_manager_);
+		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);	// 左側だけ反転
+		obj->GetComponent<SpriteComponent>()->SetUV();
+	}
+	else if (_tileID == 7)	// 鉄柱の一番上柱（左）
+	{
+		obj = new SteePillarLeftTop(game_manager_);
+		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);	// 左側だけ反転
+		obj->GetComponent<SpriteComponent>()->SetUV();
+	}
+	else if (_tileID == 8)	// 鉄柱の一番上柱（右）
+	{
+		obj = new SteePillarRightTop(game_manager_);
 	}
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{

@@ -47,6 +47,7 @@ public:
 
 	auto GetLiftState() { return lift_state_; }
 	void SetLiftGroup(LiftGroup* _group) { lift_group_ = _group; }
+	LiftGroup* GetLiftGroup() { return lift_group_; }
 private:
 	class ColliderBaseComponent* collider_component_ = {};
 	class EventBaseComponent*	collider_event_component_ = {};

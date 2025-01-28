@@ -1,6 +1,6 @@
 //==================================================
 // [GravityComponent.h] 重力コンポーネント
-// 著者：
+// 著者：有馬啓太
 //--------------------------------------------------
 // 説明：重力の処理をおこなう
 //  それプラス、地面に接地しているかどうかの判定もとる
@@ -17,7 +17,7 @@
 class GravityComponent : public Component
 {
 public:
-    GravityComponent(GameObject* _owner, int _updateOrder = 1);
+    GravityComponent(GameObject* _owner, int _updateOrder = 20);
     ~GravityComponent();
 
     void Init() override;
@@ -28,14 +28,15 @@ public:
 	bool CheckGroundCollision();
 
 	void SetUseGravityFlg(bool _flg) { use_gravity_ = _flg; }	// 重力使用フラグセッター
-	bool GetIsGround() const { return is_ground_; }		// 
+	void SetIsRobot(bool _flg) { is_robot_ = _flg; }			// ロボットフラグセッター
+	bool GetIsGround() const { return is_ground_; }
 
     TypeID GetComponentType(void) const override { return TypeID::GravityComponent; }
 private:
 
-	// ownerのコンポーネントをキャッシュ
-	bool is_ground_; // 地面に接地しているか
-	bool use_gravity_; // 重力の使用
+	bool is_ground_;	// 地面に接地しているか
+	bool is_robot_;		// ロボットかどうか
+	bool use_gravity_;  // 重力の使用
 
 	float gravity_;     // 重力
 };

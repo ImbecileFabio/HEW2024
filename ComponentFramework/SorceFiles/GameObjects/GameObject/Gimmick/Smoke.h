@@ -26,7 +26,7 @@ private:
 
 	void OnCollisionEnter(GameObject* _other);
 
-	class RenderComponent* sprite_component_{};					// スプライト
+	class SpriteComponent* sprite_component_{};					// スプライト
 	class ColliderBaseComponent* collider_component_{};			// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
 	class AnimationComponent* animation_component_{};			// アニメーションコン
