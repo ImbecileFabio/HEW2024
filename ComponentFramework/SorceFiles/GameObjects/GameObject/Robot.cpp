@@ -29,8 +29,6 @@
 #include "../Component/GimmickComponent/SmokeComponent.h"
 #include "../Component/GimmickComponent/LiftInteractionComponent.h"
 
-#include "../Component/RenderComponent/DebugColliderDrawComponent.h"
-
 
 //--------------------------------------------------
 // コンストラクタ
@@ -48,8 +46,6 @@ Robot::Robot(GameManager* _gameManager)
 	robot_move_component_ = new RobotMoveComponent(this);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this);	// 押し出し
 	lift_interaction_component_ = new LiftInteractionComponent(this);	// リフトとのやり取り
-
-	auto debug_collider_draw_component = new DebugColliderDrawComponent(this);	// 当たり判定のデバッグ描画
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);

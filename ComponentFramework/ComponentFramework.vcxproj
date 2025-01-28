@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\FadeManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftInteractionComponent.cpp" />
     <ClCompile Include="SorceFiles\AudioManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\ColliderComponent\ScanColliderComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GravityComponent.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\LiftGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Pulley.cpp" />
@@ -109,6 +109,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarRightGroup.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\FadeManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftInteractionComponent.h" />
     <ClInclude Include="SorceFiles\AudioManager.h" />
