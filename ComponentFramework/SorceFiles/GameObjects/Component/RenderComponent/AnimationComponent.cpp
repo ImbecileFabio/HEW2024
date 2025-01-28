@@ -47,7 +47,7 @@ void AnimationComponent::Init(void)
 	frame_duration_ = texture->GetAnmSpeed();
 	is_loop_ = texture->GetLoopFlg();
 	// 分割数から総フレーム数を計算 (最後のフレームが何もなかったりすると透明になるかも)
-	total_frame_ = texture->GetCutU() * texture->GetCutV();
+	total_frame_ = texture->GetTotalFrame();
 
 }
 //--------------------------------------------------

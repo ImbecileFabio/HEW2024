@@ -54,14 +54,14 @@ void TextureManager::Uninit()
 // @brief  テクスチャの登録
 //-----------------------------------------------------------------
 // アニメーション付き
-void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed, int _totalFrame)
 {
-	RegisterTexture(_imgName, _fileName, DirectX::SimpleMath::Vector2(0.0f, 0.0f), DirectX::SimpleMath::Vector2(1.0f, 1.0f), _loopFlg, _cutU, _cutV, _anmSpeed);
+	RegisterTexture(_imgName, _fileName, DirectX::SimpleMath::Vector2(0.0f, 0.0f), DirectX::SimpleMath::Vector2(1.0f, 1.0f), _loopFlg, _cutU, _cutV, _anmSpeed, _totalFrame);
 }
 // すべて
-void TextureManager::RegisterTexture(const std::string& _textureName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed)
+void TextureManager::RegisterTexture(const std::string& _textureName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed, int _totalFrame)
 {
-	texture_info_[_textureName] = { _fileName, _offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed };
+	texture_info_[_textureName] = { _fileName, _offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed , _totalFrame};
 }
 
 //-----------------------------------------------------------------
@@ -84,7 +84,7 @@ std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _textureN
 
 	// 新規テクスチャの生成
 	auto texInfo = texture_info_[_textureName];
-	auto texture = std::make_shared<Texture>(texInfo.offsetPos, texInfo.offsetSize, texInfo.loop, texInfo.cutU, texInfo.cutV, texInfo.animationSpeed);
+	auto texture = std::make_shared<Texture>(texInfo.offsetPos, texInfo.offsetSize, texInfo.loop, texInfo.cutU, texInfo.cutV, texInfo.animationSpeed, texInfo.totalFrame);
 	if (texture->Load(texInfo.filePath)) {
 		// キャッシュサイズの確認
 		if (texture_cache_.size() >= max_cache_size_) {
@@ -138,9 +138,9 @@ void TextureManager::RegisterAllTextures()
 	
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
-	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3, 1, 0.05f);	// 落下
+	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3, 1, 0.05f, 3);	// 落下
 	RegisterTexture("robot_still", TEXTURE_PATH"robot/v03/robot_still_01.png");	// 静止
-	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.5f);	// 歩行
+	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.5f, 2);	// 歩行
 
 	/*--------------- 振り子 ---------------*/
 	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png", {0.0f, 0.0f}, {1.25f, 1.25f});		// ボール
@@ -172,15 +172,15 @@ void TextureManager::RegisterAllTextures()
 
 	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png",		 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 上
 	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 下
-	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f }, false, 4, 4, 1.0f);			// 柱, 壊れ
+	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f }, false, 4, 4, 1.0f, 15);			// 柱, 壊れ
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// 柱, 通常
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 欠け
 	// 煙
-	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", true, 4, 8, 0.05);	// 煙本体
+	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", true, 4, 8, 0.05f, 31);	// 煙本体
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png");		// 柱の奥
 	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");	// 柱の手前
 	// 滑車
-	//RegisterTexture("pulley", GIMMICK_PATH"pulley/v01/pulley_01.png");
+	RegisterTexture("pulley", GIMMICK_PATH"pulley/v01/pulley_01.png");
 	// タイムゾーン
 	RegisterTexture("timezone", TEXTURE_PATH"kouka/v02/pendulum_area_01.png");	// 青い円
 
@@ -196,11 +196,11 @@ void TextureManager::RegisterAllTextures()
 	// ハンマー
 	RegisterTexture("hammer", UI_PATH"v01/hammer_01.png");
 	// ヒットエフェクト
-	RegisterTexture("hammer_hit_effect", UI_PATH"v01/hit_effect_01.png", false, 4, 2);
+	RegisterTexture("hammer_hit_effect", UI_PATH"v02/hit_effect_01.png", false, 4, 4, 0.1f, 16);
 	// ギア
 	RegisterTexture("gear", UI_PATH"v02/gear_01.png");
 	// 数字
-	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4, 3);
+	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4, 3, 1.0f, 10);
 	// ポーズボタン
 	RegisterTexture("pause_button", UI_PATH"v02/pause_button_01.png");
 	// ステージUI
@@ -211,8 +211,8 @@ void TextureManager::RegisterAllTextures()
 	// ロード画面
 	RegisterTexture("loding_backdrop", SCENE_PATH"loading_startup_01.png");
 	// フェード...?
-	RegisterTexture("fade_out", SCENE_PATH"loding/v01/loading_result_01.png", false, 5, 6, 0.04f);
-	RegisterTexture("fade_in", SCENE_PATH"loding/v01/loading_result_02.png", false, 4, 5, 0.04f);
+	RegisterTexture("fade_out", SCENE_PATH"loding/v01/loading_result_01.png", false, 5, 6, 0.04f, 30);
+	RegisterTexture("fade_in", SCENE_PATH"loding/v01/loading_result_02.png", false, 4, 5, 0.04f, 20);
 	// 真っ黒画像
 	RegisterTexture("black_backdrop", SCENE_PATH"loding/v01/black_01.png");
 
@@ -250,19 +250,19 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("title_option", SCENE_PATH"title/v01/option_button_01.png");
 	RegisterTexture("title_cursor", SCENE_PATH"title/v01/cursor_01.png");
 	RegisterTexture("transition_01", SCENE_PATH"title/v01/transition_01.png");
-	RegisterTexture("transition_02", SCENE_PATH"title/v01/transition_02.png");
+	RegisterTexture("transition_02", SCENE_PATH"title/v01/transition_02.png", 10, 6, 0.05f, 60);
 
 	// ステージセレクト
 	RegisterTexture("stageselect_option", SCENE_PATH"stageselect/v01/option_select_button_01.png");
 	RegisterTexture("stageselect_return", SCENE_PATH"stageselect/v01/return_title_button_01.png");
 	RegisterTexture("stageselect_right", SCENE_PATH"stageselect/v01/right_button_01.png");
 	RegisterTexture("stageselect_left", SCENE_PATH"stageselect/v01/left_button_01.png");
-	RegisterTexture("stageselect_chapter", SCENE_PATH"stageselect/v01/chapter_numbers_01.png", false, 3, 1);
-	RegisterTexture("stageselect_gear_left", SCENE_PATH"stageselect/v01/gear_left_rotation_01.png");
-	RegisterTexture("stageselect_gear_right", SCENE_PATH"stageselect/v01/gear_right_rotation_01.png");
-	RegisterTexture("stageselect_stage_numbers_s", SCENE_PATH"stageselect/v01/stage_numbers_s_01.png", false, 4, 4);
-	RegisterTexture("stageselect_stage_numbers_m", SCENE_PATH"stageselect/v01/stage_numbers_m_01.png", false, 4, 4);
-	RegisterTexture("stageselect_stage_numbers_w", SCENE_PATH"stageselect/v01/stage_numbers_w_01.png", false, 4, 4);
+	RegisterTexture("stageselect_chapter", SCENE_PATH"stageselect/v01/chapter_numbers_01.png", false, 3, 1, 1.0f, 3);
+	RegisterTexture("stageselect_gear_left", SCENE_PATH"stageselect/v01/gear_left_rotation_01.png", true, 4, 4, 0.5f, 16);
+	RegisterTexture("stageselect_gear_right", SCENE_PATH"stageselect/v01/gear_right_rotation_01.png", true, 4, 4, 0.5f, 16);
+	RegisterTexture("stageselect_stage_numbers_s", SCENE_PATH"stageselect/v01/stage_numbers_s_01.png", false, 4, 4, 1.0f, 15);
+	RegisterTexture("stageselect_stage_numbers_m", SCENE_PATH"stageselect/v01/stage_numbers_m_01.png", false, 4, 4, 1.0f, 15);
+	RegisterTexture("stageselect_stage_numbers_w", SCENE_PATH"stageselect/v01/stage_numbers_w_01.png", false, 4, 4, 1.0f, 15);
 
 }
 

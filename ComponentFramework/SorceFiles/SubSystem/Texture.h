@@ -33,8 +33,10 @@ class Texture
 	float m_numU{};	// 横描画位置
 	float m_numV{};	// 縦描画位置
 	float m_anmSpeed{}; // アニメーションスピード
+	int m_totalFraem{}; // 総フレーム数
+
 public:
-	Texture(const DirectX::SimpleMath::Vector2& _offsetPos = {0.0f, 0.0f}, const DirectX::SimpleMath::Vector2& _offsetSize = {0.0f, 0.0f}, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f);
+	Texture(const DirectX::SimpleMath::Vector2& _offsetPos = {0.0f, 0.0f}, const DirectX::SimpleMath::Vector2& _offsetSize = {0.0f, 0.0f}, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f, int _totalFrame = 1);
 
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
@@ -53,6 +55,7 @@ public:
 	auto GetCutU() const { return m_cutU; }
 	auto GetCutV() const { return m_cutV; }
 	auto GetAnmSpeed() const { return m_anmSpeed; }
+	auto GetTotalFrame() const { return m_totalFraem; }
 	// アニメーション画像の一マスのサイズを取得
 	auto GetFrameSize() { return frame_size_; }
 

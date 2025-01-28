@@ -41,6 +41,7 @@ struct TextureInfo {
 	int cutU;				// 横分割数
 	int cutV;				// 縦分割数	
 	float animationSpeed;	// アニメーションスピード
+	int totalFrame;			// 総フレーム数
 };
 /*----- 前方宣言 -----*/
 
@@ -77,8 +78,8 @@ private:
 	void RegisterTextureInfo(const std::string& _textureName, const TextureInfo& _textureInfo);
 
 	// テクスチャの登録
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f);	// すべて
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f);// オフセットなし
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f, int _totalFrame = 1);	// すべて
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f, int _totalFrame = 1);// オフセットなし
 
 	// テクスチャの情報登録
 	void RegisterAllTextures();
