@@ -15,7 +15,24 @@
 //#define ControllerPlay
 
 PendulumManager* PendulumManager::instance_ = nullptr;
-
+//--------------------------------------------------
+// @brief 振り子の検索
+//--------------------------------------------------
+void PendulumManager::PendulumSearch()
+{
+		pSelectedPendulum = nullptr;
+		for (auto& pemdulum : pendulum_list_) 
+		{
+			if (pOldPendulum != pemdulum) 
+			{
+				pSelectedPendulum = pemdulum;
+				pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+				break;
+			}
+		}
+		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
+		pHammerCursor_->HammerCursorMove();
+}
 //--------------------------------------------------
 // コンストラクタ・デストラクタ
 //--------------------------------------------------
@@ -124,6 +141,7 @@ void PendulumManager::PendulumSelect() {
 	}
 	if (pNextPendulum != nullptr) 
 	{
+		pOldPendulum = pNextPendulum;
 		pHammerCursor_->SetIsUiDraw(true);
 		pSelectedPendulum = pNextPendulum;
 		pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);

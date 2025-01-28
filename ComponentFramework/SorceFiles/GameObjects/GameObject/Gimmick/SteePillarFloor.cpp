@@ -36,7 +36,7 @@ SteePillarFloor::~SteePillarFloor(void)
 //--------------------------------------------------
 void SteePillarFloor::InitGameObject(void)
 {
-	sprite_component_		= new SpriteComponent(this, "steelpillar_floor_center");
+	sprite_component_		= new SpriteComponent(this, "steelpillar_floor_center", 1);
 	gravity_component_		= new GravityComponent(this);
 	box_collider_component_ = new BoxColliderComponent(this);
 	velocity_component_		= new VelocityComponent(this);

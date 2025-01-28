@@ -20,9 +20,10 @@ constexpr float InnerProductLimit = 0.7f;
 class PendulumManager
 {
 private:
+	bool isDelete_ = false;	// 振り子が削除された
 	int hammerMaxCount_ = 0;
-	int oldDirection_ = 0;	// 選択する前の
 	class HammerCursor* pHammerCursor_{};
+	GameObject* pOldPendulum{};
 	GameObject* pSelectedPendulum;
 	GameObject* pNextPendulum;
 
@@ -43,6 +44,7 @@ private:
 	static PendulumManager* instance_;
 
 public:
+	void PendulumSearch();	// 振り子が消えた時に実行する検索関数
 	PendulumManager();
 	~PendulumManager();
 

@@ -84,7 +84,7 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 		owner_pendulum_movement_->SetPendulumFulcrum(centerPos);
 		isCenterMedian_ = true;
 	}
-	if (owner_pendulum_movement_->GetPendulumMovement())
+	if (owner_pendulum_movement_->GetPendulumMovement() && !isPendulumDelete_)
 	{
 		steePillarLeftGroup_->SetIsBreak(true);
 		steePillarLeftGroup_->SetIsBreakStop(false);
@@ -123,7 +123,6 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 	// “S’Œ‚Ì°‚ªƒ^ƒCƒ‹‚Æ“–‚½‚Á‚Ä‚¢‚½‚ç
 	if (isHitTile_ && !isPendulumDelete_)
 	{
-		owner_pendulum_movement_->SetPendulumMovement(false);
 		auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
 		pendulum->NotDrawAndStopPendulum();
 		isPendulumDelete_ = true;

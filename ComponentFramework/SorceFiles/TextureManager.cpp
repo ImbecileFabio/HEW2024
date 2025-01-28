@@ -172,7 +172,7 @@ void TextureManager::RegisterAllTextures()
 
 	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png",		 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// íå, è„
 	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });			// íå, â∫
-	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f }, false, 4, 4, 0.0001f);			// íå, âÛÇÍ
+	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f }, false, 4, 4, 0.001f);			// íå, âÛÇÍ
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// íå, í èÌ
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// íå, åáÇØ
 	// âå
