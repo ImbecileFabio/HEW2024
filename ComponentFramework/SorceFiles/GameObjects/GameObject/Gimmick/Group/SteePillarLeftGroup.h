@@ -29,7 +29,7 @@ public:
 	void SetIsDownStart(bool _fg) { isDownStart_ = _fg; }
 	bool GetIsAnimationEnd() { return isAnimationEnd_; }
 	bool GetIsBreakStop() { return isBreakStop_; }
-
+	void SetVelocityStop();
 	void AddSteePillarLeftTile(GameObject* _tile);	// グループにタイルを追加
 private:
 	// グループ単体が管理しているもの

@@ -37,6 +37,8 @@ public:
 	bool GetIsAnimationEnd() { return isAnimationEnd_; }
 	bool GetIsBreakStop()	 { return isBreakStop_; }
 
+	void SetVelocityStop();
+
 	void AddSteePillarRightTile(GameObject* _tile);					// グループにタイルを追加
 private:
 	// グループ単体が管理しているもの

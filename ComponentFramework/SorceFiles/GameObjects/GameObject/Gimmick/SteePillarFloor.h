@@ -38,5 +38,6 @@ private:
 	class EventBaseComponent* event_component_;
 
 	bool isDown_ = false;	// —‰º‚·‚é‚©‚Ç‚¤‚©
+	float offsetY_ = 8.0f;	// —‰º‚·‚é‚‚³
 };
 #endif // STEE_PILLAR_FLOOR_H_
