@@ -58,13 +58,13 @@ void SteePillarFloor::UpdateGameObject(void)
 	if (isDown_)
 	{
 		gravity_component_->SetUseGravityFlg(true);
-		// “S’Œ‚Ì°‚ð“¯Šú‚³‚¹‚éŠÖ”
-		stee_pillar_floor_group_->UpdateSteePillarFloorTilePositions();
 	}
 	else
 	{
 		gravity_component_->SetUseGravityFlg(false);
+		velocity_component_->ResetVelocity();
 	}
+	stee_pillar_floor_group_->UpdateSteePillarFloorTilePositions();
 }
 //--------------------------------------------------
 // @brief “–‚½‚è”»’èŽÀsˆ—
@@ -74,6 +74,8 @@ void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 	if (state_ == State::Paused) return;
 	if (_other->GetType() == TypeID::Tile)	// ƒ^ƒCƒ‹‚Æ“S’Œ°ƒ^ƒCƒ‹‚ªÚG‚µ‚½‚ç
 	{
+		float posY = transform_component_->GetPosition().y;
+		transform_component_->SetPositionY(posY + offsetY_);
 		stee_pillar_floor_group_->SetHitTile(true);
 	}
 }

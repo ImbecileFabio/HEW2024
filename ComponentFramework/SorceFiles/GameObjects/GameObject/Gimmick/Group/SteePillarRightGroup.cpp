@@ -2,6 +2,8 @@
 #include "../SteePillarRight.h"
 #include "../../../Component/TimerComponent.h"
 #include "../../../Component/RenderComponent/AnimationComponent.h"
+#include "../../../Component/RigidbodyComponent/VelocityComponent.h"
+#include "../../../Component/GravityComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -77,6 +79,17 @@ void SteePillarRightGroup::UpdateGameObject(void)
 		auto steePillarTile = dynamic_cast<SteePillarRight*>(steePillarRightTiles_[0]);
 		steePillarTile->GetComponent<SpriteComponent>()->SetTexture("steelpillar_pillar_top");
 		isDownStart_ = false;
+	}
+}
+//--------------------------------------------------
+// @brief タイルを停止させる処理
+//--------------------------------------------------
+void SteePillarRightGroup::SetVelocityStop()
+{
+	for (auto& tile : steePillarRightTiles_)
+	{
+		tile->GetComponent<GravityComponent>()->SetGravity(false);
+		tile->GetComponent<VelocityComponent>()->ResetVelocity();
 	}
 }
 //--------------------------------------------------
