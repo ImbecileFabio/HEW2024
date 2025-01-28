@@ -13,13 +13,14 @@
 // 4. 鉄柱の足場
 // 5. 鉄柱の右柱
 // 6. 鉄柱の左柱
+// 7. 排煙管
 // 
 // 100~109. リフトの始点
 // 110~119. リフトの終点
 // 
-// 200. けむりの始点 / 201. けむりの終点
+//
 // 
-// 滑車、鉄柱、
+// 滑車
 //=================================================================
 
 /*----- インクルード -----*/
@@ -313,6 +314,12 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		// タイルの位置とグループを関連付ける
 		stee_pillar_left_to_group_[{_x, _y}] = group;
 	}
+	else if (_tileID == 7)
+	{
+		obj = new SmokePipe(game_manager_);
+		
+
+	}
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
 		// リフトの終点を探す	見つからなかったらとりあえず初期位置に
@@ -408,10 +415,6 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		}
 
 
-	}
-	else if (_tileID == 200)	// けむり
-	{
-		obj = new SmokePipe(game_manager_);
 	}
 	else if (_tileID == 998)	// 歯車
 	{
