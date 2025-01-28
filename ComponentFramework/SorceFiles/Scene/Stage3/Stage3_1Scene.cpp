@@ -1,5 +1,4 @@
-#include "Stage1_2Scene.h"
-#include "../../GameManager.h"
+#include "Stage3_1Scene.h"
 #include "../../GameManager.h"
 #include "../../ColliderManager.h"
 #include "../../PemdulumManager.h"
@@ -8,6 +7,7 @@
 #include "../../AudioManager.h"
 
 #include "../../GameObjects/GameObject.h"
+#include "../../GameObjects/GameObject/Player.h"
 #include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
@@ -24,42 +24,46 @@
 #include "../../GameObjects/Component/PendulumMovementComponent.h"
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
-constexpr int gearCounter_1_2 = 1;		// ギアの獲得数
-constexpr int hammerCounter_1_2 = 3;	// 叩ける上限
+
+constexpr int gearCounter_3_1 = 1;		// ギアの獲得数
+constexpr int hammerCounter_3_1 = 3;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Stage1_2Scene::Stage1_2Scene(GameManager* _gameManager)
-	:SceneBase(_gameManager, "Stage1_2")
+Stage3_1Scene::Stage3_1Scene(GameManager* _gameManager)
+	:SceneBase(_gameManager, "Stage3_1")
 	, state_(Game)
 {
-	this->Init();
+	Init();
 }
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-Stage1_2Scene::~Stage1_2Scene()
+Stage3_1Scene::~Stage3_1Scene()
 {
 	Uninit();
 }
 //--------------------------------------------------
 // 初期化処理
 //--------------------------------------------------
-void Stage1_2Scene::Init()
+void Stage3_1Scene::Init()
 {
-	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1/Stage1_2.csv");
+	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage3/Stage3_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
-	camera_			 = new Camera(game_manager_);
-	back_ground_	 = new BackGround(game_manager_);
-	hammerCursor_	 = new HammerCursor(game_manager_);
+	camera_ = new Camera(game_manager_);
+	back_ground_ = new BackGround(game_manager_);
+	hammerCursor_ = new HammerCursor(game_manager_);
 
-	gearMaxCount_ = gearCounter_1_2;	// 定数を代入
-	hammerMaxCount_ = hammerCounter_1_2;
+	gearMaxCount_ = gearCounter_3_1;	// 定数を代入
+	hammerMaxCount_ = hammerCounter_3_1;
 
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+
+	auto obj = new Player(game_manager_);
+	obj->GetTransformComponent()->SetSize(100.0f, 100.0f);
 
 	state_ = Game;
 
@@ -110,18 +114,19 @@ void Stage1_2Scene::Init()
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
 
+
 }
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void Stage1_2Scene::Update()
+void Stage3_1Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
 	switch (state_)
 	{
-	case Stage1_2Scene::Game:
+	case Stage3_1Scene::Game:
 		NumberChange();
-		if (game_manager_->GetItemCount() == gearCounter_1_2)	// デバッグ用
+		if (game_manager_->GetItemCount() == gearCounter_3_1)
 		{
 			state_ = Result;
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
@@ -141,10 +146,10 @@ void Stage1_2Scene::Update()
 			state_ = Pouse;
 		}
 		break;
-	case Stage1_2Scene::Result:
+	case Stage3_1Scene::Result:
 		game_manager_->ChangeScene(SceneName::Result);
 		break;
-	case Stage1_2Scene::Pouse:
+	case Stage3_1Scene::Pouse:
 		// ここにポーズ画面での操作を
 		if (input.GetKeyTrigger(VK_P))
 		{
@@ -160,11 +165,10 @@ void Stage1_2Scene::Update()
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			state_ = Game;
 		}
-		PauseWindow();
 		break;
-	case Stage1_2Scene::Rewind:
+	case Stage3_1Scene::Rewind:
 		game_manager_->ResetItemCount();
-		game_manager_->ChangeScene(SceneName::Stage1_2);
+		game_manager_->ChangeScene(SceneName::Stage3_1);
 		break;
 	default:
 		break;
@@ -174,6 +178,6 @@ void Stage1_2Scene::Update()
 //--------------------------------------------------
 // 終了処理
 //--------------------------------------------------
-void Stage1_2Scene::Uninit()
+void Stage3_1Scene::Uninit()
 {
 }
