@@ -110,6 +110,9 @@ bool GravityComponent::CheckGroundCollision()
 	for (const auto& obj : objects)
 	{
 		if (obj == owner_) continue; // 自分自身との判定はスキップ
+		else if (obj->GetType() == GameObject::TypeID::Item) continue; // 歯車でも浮いちゃうので無視
+		else if (obj->GetType() == GameObject::TypeID::Smoke) continue; // 歯車でも浮いちゃうので無視
+		else if (obj->GetType() == GameObject::TypeID::SmokePipe) continue; // 歯車でも浮いちゃうので無視
 
 		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
 		if (auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider))

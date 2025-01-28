@@ -26,6 +26,7 @@
 #include "../Component/GravityComponent.h"
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/PushOutComponent.h"
+#include "../Component/GimmickComponent/SmokeComponent.h"
 #include "../Component/GimmickComponent/LiftInteractionComponent.h"
 
 
@@ -90,8 +91,8 @@ void Robot::UpdateGameObject(void)
 	if (input.GetMouseButtonPress(0)) {
 		auto mousePos = input.GetMousePosition();
 		transform_component_->SetPosition(
-			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
-			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
+			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 4),
+			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 4)));
 	}
 
 
@@ -168,6 +169,8 @@ void Robot::UpdateGameObject(void)
 
 void Robot::OnCollisionEnter(GameObject* _other)
 {
+	auto v = velocity_component_->GetVelocity();
+
 	if (state_ == State::Paused) return;
 	switch (_other->GetType())
 	{
@@ -182,6 +185,9 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Lift:
 	{
+		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
+		auto lift = dynamic_cast<Lift*>(_other);
+
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// âüÇµèoÇµèàóù
@@ -198,18 +204,24 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		}
 		break;
 	}
-	{
-
-
-		break;
-	}
 	case GameObject::TypeID::WeakFloor:
 	{
-		std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
+		//std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// âüÇµèoÇµèàóù
 		}
+		break;
+	}
+	case GameObject::TypeID::Smoke:
+	{
+		auto pos = this->GetTransformComponent()->GetPosition();
+		auto robotMove = this->GetComponent<RobotMoveComponent>();
+
+		//std::cout << std::format("Robot -> Smoke -> OnCollisionEnter\n");
+		this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x),
+														pos.y + 3.0f + (robotMove->GetSpeed() * robotMove->GetDirection().x) * _other->GetSize(),
+														pos.z });
 		break;
 	}
 	case GameObject::TypeID::SteePillarFloor:
@@ -222,6 +234,20 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		break;
 	}
 	default:
+		//std::cout << std::format("Robot -> default -> OnCollisionEnter\n");
 		break;
 	}
 }
+
+//void Robot::OnCollisionStay(GameObject* _other) {
+//	auto v = velocity_component_->GetVelocity();
+//
+//	switch (_other->GetType())
+//	{
+//	case GameObject::TypeID::Smoke:
+//
+//		velocity_component_->SetVelocity({ v.x,1.0f,v.z });
+//	default:
+//		break;
+//	}
+//}

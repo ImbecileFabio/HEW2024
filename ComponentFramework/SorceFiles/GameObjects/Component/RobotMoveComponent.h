@@ -46,6 +46,7 @@ public:
 
 	void  SetSpeed(float _speed);
 	float GetSpeed(void);
+	auto GetDirection() { return direction_; }
 
 	auto GetDirection() const { return direction_; }
 

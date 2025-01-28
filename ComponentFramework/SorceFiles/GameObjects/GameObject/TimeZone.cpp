@@ -8,6 +8,7 @@
 #include "../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../Component/RobotMoveComponent.h"
 #include "../Component/TimeZoneComponent.h"
+#include "../Component/GimmickComponent/SmokeComponent.h"
 #include "../Component/GimmickComponent/LiftInteractionComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
@@ -87,6 +88,17 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Lift:
 	{
 		_other->GetComponent<VelocityComponent>()->SetSpeedRate(time_zone_component_->GetTimeRate());
+		break;
+	}
+	case GameObject::TypeID::SmokePipe:
+	{
+		SmokeComponent* smoke = _other->GetComponent<SmokeComponent>();
+		if (time_zone_component_->GetActiveFlg()) {
+			smoke->SetTimeZoneFlg(true);
+		}
+		else {
+			smoke->SetTimeZoneFlg(false);
+		}
 		break;
 	}
 	default:

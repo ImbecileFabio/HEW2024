@@ -1,37 +1,61 @@
 //=================================================================
-// [Smoke.cpp] 煙ギミックのソースファイル
-// 著者：有馬啓太
+// [SmokePipe.cpp] 煙ギミックの煙本体のソースファイル
+// 著者：中谷凌也
 //-----------------------------------------------------------------
 // 説明：煙ギミックの定義
 //=================================================================
-/*----- インクルード -----*/
+
 #include "Smoke.h"
+#include "../../Component/TransformComponent.h"
+#include "../../Component/RenderComponent/SpriteComponent.h"
+#include "../../Component/EventComponent/ColliderEventComponent.h"
+#include "../../Component/ColliderComponent/BoxColliderComponent.h"
+#include "../../Component/RenderComponent/AnimationComponent.h"
+#include "../../Component/RenderComponent/DebugColliderDrawComponent.h"
+
 //--------------------------------------------------
-// @brief コンストラクタ
+// コンストラクタ/デストラクタ
 //--------------------------------------------------
-Smoke::Smoke(GameManager* _gameManager)
+Smoke::Smoke(GameManager* _gameManager,GameObject* _ownerObj, float _gimmickSize)
 	:GameObject(_gameManager, "Smoke")
+	,m_ownerObj(_ownerObj)
+	, m_gimmickSize(_gimmickSize)
 {
-	this->InitGameObject();
+	InitGameObject();
 }
-//--------------------------------------------------
-// brief デストラクタ
-//--------------------------------------------------
-Smoke::~Smoke(void)
-{
-}
-//--------------------------------------------------
-// @brief 初期化処理
-//--------------------------------------------------
-void Smoke::InitGameObject(void)
-{
+Smoke::~Smoke() {
+	delete sprite_component_;
+	delete collider_component_;
+	delete collider_event_component_;
+	delete animation_component_;
 }
 
 //--------------------------------------------------
-// @brief 更新処理
+// 初期化
 //--------------------------------------------------
-void Smoke::UpdateGameObject(void)
-{
+void Smoke::InitGameObject() {
+	sprite_component_ = new SpriteComponent(this,"smoke00");
+	collider_component_ = new BoxColliderComponent(this);
+	collider_event_component_ = new ColliderEventComponent(this);
+	animation_component_ = new AnimationComponent(this, sprite_component_);
 
+	auto debug = new DebugColliderDrawComponent(this);
+
+	auto f = std::function<void(GameObject*)>(std::bind(&Smoke::OnCollisionEnter, this, std::placeholders::_1));
+	collider_event_component_->AddEvent(f);
+
+	sprite_component_->GetTexture()->SetOffsetSize({ 1.0f,m_gimmickSize });
+	sprite_component_->GetTexture()->SetOffsetPos({ 0.0f,10.0f + (m_gimmickSize - 1.0f) * 28.0f });
 }
 
+//--------------------------------------------------
+// 処理
+//--------------------------------------------------
+void Smoke::UpdateGameObject() {
+	this->GetTransformComponent()->SetPosition(m_ownerObj->GetTransformComponent()->GetPosition());
+}
+
+
+void Smoke::OnCollisionEnter(GameObject* _other) {
+
+}

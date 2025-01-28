@@ -59,6 +59,8 @@ public:
 	std::vector<VERTEX_3D>& GetVertices() { return vertices_; }
 	void SetVertexBuffer(std::vector<VERTEX_3D> _vertices);
 
+	virtual std::shared_ptr<class Texture> GetTexture() { return nullptr; }
+
 protected:
 	int draw_order_;	// XV‡ˆÊ
 

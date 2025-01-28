@@ -39,8 +39,12 @@ public:
 	bool Load(const std::string& filename);
 	bool LoadFromFemory(const unsigned char* data,int len);
 
+	auto GetSRV() const { return m_srv; }
+
 	auto GetOffsetPos() const { return offset_pos_; }
+	void SetOffsetPos(const DirectX::SimpleMath::Vector2& _offsetPos) { offset_pos_ = _offsetPos; }
 	auto GetOffsetSize() const { return offset_size_; }
+	void SetOffsetSize(const DirectX::SimpleMath::Vector2& _offsetSize) { offset_size_ = _offsetSize; }
 
 	auto GetLoopFlg() const { return loop_flg_; }
 

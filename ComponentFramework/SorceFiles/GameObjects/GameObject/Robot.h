@@ -41,6 +41,7 @@ public:
 	auto GetRobotState(void) { return robot_state_; }
 
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
+	//void OnCollisionStay(GameObject* _other = nullptr) override;
 private:
 	RobotState robot_state_;
 

@@ -69,30 +69,43 @@ void TextureManager::RegisterTexture(const std::string& _textureName, const std:
 // @brief  読み込んだテクスチャの取得
 // @return 存在していればit->second, なければ生成してtexture, 生成できなければnullptr
 //-----------------------------------------------------------------
-std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _texrureName)
+std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _textureName)
 {
-	// すでに読み込まれているか確認
-	auto it = texture_cache_.find(_texrureName);
-	if (it != texture_cache_.end())
-	{
-		// すでに読み込まれている
-		std::cout << std::format("\n＜TextureManager＞ -> {} is already loaded\n\n", _texrureName);
+
+	// キャッシュに存在する場合
+	auto it = texture_cache_.find(_textureName);
+	if (it != texture_cache_.end()) {
+		// LRUリストを更新
+		lru_list_.erase(lru_map_[_textureName]);
+		lru_list_.push_front(_textureName);
+		lru_map_[_textureName] = lru_list_.begin();
 		return it->second;
 	}
 
-	// 存在していないので生成する
-	auto texInfo = texture_info_[_texrureName];
+	// 新規テクスチャの生成
+	auto texInfo = texture_info_[_textureName];
 	auto texture = std::make_shared<Texture>(texInfo.offsetPos, texInfo.offsetSize, texInfo.loop, texInfo.cutU, texInfo.cutV, texInfo.animationSpeed);
 	if (texture->Load(texInfo.filePath)) {
-		// キャッシュに登録
-		texture_cache_[_texrureName] = texture;
-		std::cout << std::format("＜TextureManager＞ -> {} GetTexture Success\n", _texrureName);
+		// キャッシュサイズの確認
+		if (texture_cache_.size() >= max_cache_size_) {
+			// 最後に使用された要素を削除
+			std::string old_texture = lru_list_.back();
+			lru_list_.pop_back();
+			lru_map_.erase(old_texture);
+			texture_cache_.erase(old_texture);
+		}
+
+		// 新しいテクスチャをキャッシュに追加
+		texture_cache_[_textureName] = texture;
+		lru_list_.push_front(_textureName);
+		lru_map_[_textureName] = lru_list_.begin();
+
+		std::cout << std::format("＜TextureManager＞ -> {} GetTexture Success\n", _textureName);
 		return texture;
 	}
 
 	// 失敗
-	std::cout << std::format("＜TextureManager＞ -> {} GetTexture Error\n", _texrureName);
-	return nullptr;
+	std::cout << std::format("＜TextureManager＞ -> {} GetTexture Error\n", _textureName);
 
 }
 
@@ -120,6 +133,7 @@ void TextureManager::RegisterAllTextures()
 	// Hogehoge
 	RegisterTexture("hoge", TEXTURE_PATH"hogehoge.png");
 	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8, 12, 0.05f);
+	RegisterTexture("fade_out", TEXTURE_PATH"fadeout.png", false, 5, 5, 0.1f);
 
 	
 	// インゲームのオブジェクト系
@@ -162,8 +176,9 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// 柱, 通常
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 欠け
 	// 煙
+	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", true, 4, 8, 0.05);	// 煙本体
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png");		// 柱の奥
-	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");		// 柱の手前
+	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");	// 柱の手前
 	// 滑車
 	//RegisterTexture("pulley", GIMMICK_PATH"pulley/v01/pulley_01.png");
 	// タイムゾーン
@@ -193,6 +208,14 @@ void TextureManager::RegisterAllTextures()
 	/*--------------- SCENE ---------------*/
 	// 操作説明画像
 	RegisterTexture("instruction_window", SCENE_PATH"instruction/v02/window_instruction_01.png");
+	// ロード画面
+	RegisterTexture("loding_backdrop", SCENE_PATH"loading_startup_01.png");
+	// フェード...?
+	RegisterTexture("fade_out", SCENE_PATH"loding/v01/loading_result_01.png", false, 5, 6, 0.04f);
+	RegisterTexture("fade_in", SCENE_PATH"loding/v01/loading_result_02.png", false, 4, 5, 0.04f);
+	// 真っ黒画像
+	RegisterTexture("black_backdrop", SCENE_PATH"loding/v01/black_01.png");
+
 	// チームロゴ
 	//RegisterTexture("introduction_backdrop", SCENE_PATH"introduction/v01/backdrop_introduction_01.png");
 	//RegisterTexture("introduction_teamlogo", SCENE_PATH"introduction/v01/teamlogo_01.png");

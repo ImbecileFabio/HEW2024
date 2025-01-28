@@ -21,7 +21,6 @@
 #include "Component/CameraComponent.h"
 #include "Component/RenderComponent/RenderComponent.h"
 #include "Component/RenderComponent/SpriteComponent.h"
-#include "../AudioManager.h"
 
 /*----- 構造体定義 -----*/
 
@@ -59,6 +58,7 @@ public:
 		, SteePillarLeft	// 鉄柱（左）
 		, SteePillarFloor	// 鉄柱の足場
 		, Smoke				// 煙
+		, SmokePipe			// 煙管
 		, Pulley			// 滑車ギミック
 		, HammerCursor		// ハンマーカーソル
 		// タイルを一括で管理するグループクラス
@@ -152,6 +152,9 @@ public:
 	virtual void OnCollisionEnter(GameObject* _other) {};	// 接触した時
 	virtual void OnCollisionStay(GameObject* _other) {};	// 接触し続けている
 	virtual void OnCollisionExit(GameObject* _other) {};	// 接触から抜けた時
+
+	// 仮想関数
+	virtual float GetSize() { return 0.0f; }
 protected:
 	float delta_time_{};	// デルタタイム
 
@@ -176,9 +179,6 @@ protected:
 	// オブジェクトごとに定まるID
 	static int next_object_id_;	// 生成されたときに加算される
 	int		   object_id_{};
-
-	// サウンド処理
-	std::shared_ptr<AudioManager> audio_manager_;
 };
 
 #endif	// GAMEOBJECT_H_

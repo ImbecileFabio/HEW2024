@@ -86,31 +86,34 @@ void SpriteComponent::Draw()
 	Matrix pos;
 	Matrix scale;
 	
-	auto transform = owner_->GetTransformComponent();
-	if (transform)
+	if(owner_)
 	{
-		auto si = transform->GetSize();
-		auto t  = transform->GetPosition();
-		auto r  = transform->GetRotation();
-		auto sc = transform->GetScale();
+		auto transform = owner_->GetTransformComponent();
+		if (transform)
+		{
+			auto si = transform->GetSize();
+			auto t = transform->GetPosition();
+			auto r = transform->GetRotation();
+			auto sc = transform->GetScale();
 
-		auto offsetPos = texture_->GetOffsetPos();	// オフセットポジション
-		auto offsetSize = texture_->GetOffsetSize();	// オフセットサイズ
+			auto offsetPos = texture_->GetOffsetPos();	// オフセットポジション
+			auto offsetSize = texture_->GetOffsetSize();	// オフセットサイズ
 
-		Vector3 finalPos  = { t.x + offsetPos.x, t.y + offsetPos.y, t.z };	// 最終的な位置
-		Vector3 finalSize = { (si.x * offsetSize.x) * sc.x,  (si.y * offsetSize.y) * sc.y, si.z * si.z};	// 最終的なサイズ
+			Vector3 finalPos = { t.x + offsetPos.x, t.y + offsetPos.y, t.z };	// 最終的な位置
+			Vector3 finalSize = { (si.x * offsetSize.x) * sc.x,  (si.y * offsetSize.y) * sc.y, si.z * si.z };	// 最終的なサイズ
 
 
-		rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
-		pos = Matrix::CreateTranslation(finalPos);
-		scale = Matrix::CreateScale(finalSize);
+			rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
+			pos = Matrix::CreateTranslation(finalPos);
+			scale = Matrix::CreateScale(finalSize);
+		}
 	}
 	else 
 	{
 		std::cout << std::format("＜SpriteComponent＞ -> default position\n");
 		rot = Matrix::CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f);
 		pos = Matrix::CreateTranslation(0.0f, 0.0f, 0.0f);
-		scale = Matrix::CreateScale(100.0f, 100.0f, 100.0f);
+		scale = Matrix::CreateScale(1.0f, 1.0f, 1.0f);
 	}
 
 
@@ -219,6 +222,9 @@ void SpriteComponent::SetFlip(bool _xFlip, bool _yFlip)
 {
 	x_flip_ = _xFlip;
 	y_flip_ = _yFlip;
+
+	// UV座標を変更
+	this->SetUV();
 }
 
 

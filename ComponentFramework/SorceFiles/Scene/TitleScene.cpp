@@ -9,6 +9,7 @@
 #include "TitleScene.h"
 
 #include "../GameManager.h"
+#include "../AudioManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
 #include "../GameObjects/GameObject/Robot.h"
@@ -189,7 +190,7 @@ void TitleScene::Init()
 {
 	// “ñŽŸŒ³”z—ñ‚ÉƒV[ƒ“î•ñ‚ð•Û‘¶‚µ‚Ä‚¨‚­
 	select_stages_[0][0] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage1_1);
+		game_manager_->TransitionToScene(SceneName::Stage1_1);
 		};
 	select_stages_[0][1] = [this]() {
 		game_manager_->ChangeScene(SceneName::Stage1_2);
@@ -201,8 +202,7 @@ void TitleScene::Init()
 		game_manager_->ChangeScene(SceneName::Stage1_4);
 		};
 
-	audio_manager_ = AudioManager::GetInstance();
-	audio_manager_->Play(SoundLabel_TitleBGM);
+	AudioManager::GetInstance()->Play(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------
@@ -210,7 +210,7 @@ void TitleScene::Init()
 //--------------------------------------------------
 void TitleScene::Uninit()
 {
-	audio_manager_->Stop(SoundLabel_TitleBGM);
+	AudioManager::GetInstance()->Stop(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------

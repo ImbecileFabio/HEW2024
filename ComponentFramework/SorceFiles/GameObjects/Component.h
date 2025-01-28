@@ -11,7 +11,6 @@
 #include <memory>
 #include <string>
 #include <SimpleMath.h>
-#include "../AudioManager.h"
 /*----- 構造体定義 -----*/
 
 /*----- 前方宣言 -----*/
@@ -60,6 +59,7 @@ public:
 		// ギミック
 		, LiftComponent			// リフトギミック
 		, LiftInteractionComponent	// リフトとのやり取りコンポーネント
+		, RailComponent			// リフトのレール
 		, PulleyComponent		// 滑車ギミック
 		, WeakFloorComponent	// 脆い床ギミック
 		, SteePillarComponent	// 鉄柱ギミック
@@ -109,8 +109,6 @@ protected:
 
 	GameObject* owner_;				// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
-
-	std::shared_ptr<AudioManager> audio_manager_;
 };
 
 

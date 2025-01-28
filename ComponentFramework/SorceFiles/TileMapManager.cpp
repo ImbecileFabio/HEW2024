@@ -35,7 +35,7 @@
 #include "GameObjects/GameObject/Gimmick/WeakFloor.h"
 #include "GameObjects/GameObject/Pendulum.h"
 
-#include "GameObjects/GameObject/Gimmick/Smoke.h"
+#include "GameObjects/GameObject/Gimmick/SmokePipe.h"
 #include "GameObjects/GameObject/Gimmick/SteePillarLeft.h"
 #include "GameObjects/GameObject/Gimmick/SteePillarRight.h"
 #include "GameObjects/GameObject/Gimmick/SteePillarFloor.h"
@@ -411,7 +411,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	}
 	else if (_tileID == 200)	// ‚¯‚Þ‚è
 	{
-
+		obj = new SmokePipe(game_manager_);
 	}
 	else if (_tileID == 998)	// Ž•ŽÔ
 	{
