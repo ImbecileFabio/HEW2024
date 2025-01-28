@@ -7,6 +7,7 @@
 
 #include "PendulumMovementComponent.h"
 #include "../../PemdulumManager.h"
+#include "../../AudioManager.h"
 
 //--------------------------------------------------
 // コンストラクタ
@@ -46,8 +47,6 @@ void PendulumMovementComponent::Init() {
 	pendulumMovement_ = false;
 	pendulumSelected_ = false;
 	pendulumDirection_ = 1;
-
-	audio_manager_ = AudioManager::GetInstance();
 }
 
 //--------------------------------------------------
@@ -210,7 +209,7 @@ float PendulumMovementComponent::GetPendulumVelocity() {
 // 振り子の停止、始動
 //--------------------------------------------------
 void PendulumMovementComponent::StartPendulumMovement() {
-	audio_manager_->Play(SoundLabel_HitSE);
+	AudioManager::GetInstance()->Play(SoundLabel_HitSE);
 	maxPendulumVelocity_ = 0;
 	for (int i = 1;;i++) {
 		maxPendulumVelocity_ += pendulumAcceleration * i;

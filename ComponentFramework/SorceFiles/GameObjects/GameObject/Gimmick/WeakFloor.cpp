@@ -50,6 +50,7 @@ void WeakFloor::SetWeakFloorGroup(WeakFloorGroup* _weak_floor_group)
 //--------------------------------------------------
 void WeakFloor::InitGameObject(void)
 {
+
 }
 
 //--------------------------------------------------
@@ -67,7 +68,6 @@ void WeakFloor::OnCollisionEnter(GameObject* _other)
 	if (state_ == State::Paused) return;
 	if (_other->GetType() == TypeID::Robot)	// タイルとロボットが接触したら
 	{
-		std::cout << std::format("WeakFloor -> Robot -> OnCollisionEnter\n");
 		weak_floor_group_->SetWeakFloorBreak(true);	// グループに通知
 	}
 }

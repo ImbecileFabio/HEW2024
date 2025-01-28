@@ -32,6 +32,13 @@ private:
 		Rewind
 	};
 	State state_;
+
+	// 作ったオブジェクトをここに記述
+	class BackGround* back_ground_{};			// 背景
+	class Camera* camera_{};					// カメラ
+	class HammerCursor* hammerCursor_{};		// ハンマーカーソル
+	std::vector<class Item*> items_;			// アイテムリスト
+	std::array<class Revolution*, 2> stageUIs_;	// 動きのないステージUI
 };
 
 #endif // STAGE1_3SCENE_H_

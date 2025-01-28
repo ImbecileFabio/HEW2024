@@ -21,7 +21,6 @@ TimeZoneComponent::TimeZoneComponent(GameObject* _owner, GameObject* _ownerPendu
 	, time_rate_(1.0f)
 	, is_active_flg_(false)
 {
-
 	this->Init();
 }
 

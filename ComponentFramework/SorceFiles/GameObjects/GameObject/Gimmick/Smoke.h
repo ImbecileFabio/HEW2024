@@ -1,28 +1,33 @@
 //=================================================================
-// [Smoke.h] 煙ギミックのヘッダ
-// 著者：有馬啓太
+// [SmokePipe.h] 煙ギミックの煙本体のヘッダ
+// 著者：中谷凌也
 //-----------------------------------------------------------------
-// 説明：煙ギミックの定義
+// 説明：煙の定義
 //=================================================================
-#ifndef SMOKE_H_
-#define SMOKE_H_
-/*----- インクルード -----*/
+
+#pragma once
 #include "../../GameObject.h"
-/*----- 前方宣言 -----*/
-//--------------------------------------------------
-// Smokeオブジェクト
-//--------------------------------------------------
+
 class Smoke : public GameObject
 {
 public:
-	Smoke(GameManager* _gameManager);
+	Smoke(GameManager* _gameManager,GameObject* _ownerObj, float _gimmickSize);
 	~Smoke(void);
 
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
+	
+	float GetSize() { return m_gimmickSize; }
 
 	TypeID GetType(void) override { return TypeID::Smoke; }
 private:
+	GameObject* m_ownerObj;
+	float m_gimmickSize;	// ギミックのサイズ
 
+	void OnCollisionEnter(GameObject* _other);
+
+	class SpriteComponent* sprite_component_{};					// スプライト
+	class ColliderBaseComponent* collider_component_{};			// 当たり判定
+	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
+	class AnimationComponent* animation_component_{};			// アニメーションコン
 };
-#endif // SMOKE_H_

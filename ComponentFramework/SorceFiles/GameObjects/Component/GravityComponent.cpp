@@ -18,6 +18,7 @@
 GravityComponent::GravityComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 	, is_ground_(false)	// 地面に接地しているか
+	, is_robot_ (true)	// ロボットかどうか
 	, use_gravity_(true)	// 重力の使用
 	, gravity_(-1.0f)	// 重力
 {
@@ -55,9 +56,25 @@ void GravityComponent::Update()
 {
 	if (auto ownerVelocityCom = owner_->GetComponent<VelocityComponent>())
 	{
-		CheckGroundCollision();
+		if (!is_robot_ && use_gravity_)
+		{
+			// 速度が一定以上にならないように制限
+			if (ownerVelocityCom->GetVelocity().y < -10.0f)
+			{
+				ownerVelocityCom->SetVelocity({ 0.0f, -10.0f, 0.0f });
+			}
+			else
+			{
+				ownerVelocityCom->SetVelocity({ 0.0f, ownerVelocityCom->GetVelocity().y + gravity_, 0.0f });
+			}
+			return;
+		}
+		if (is_robot_)
+		{
+			CheckGroundCollision();
+		}
 		// 重力適用
-		if (use_gravity_ && !is_ground_)
+		if (use_gravity_ && !is_ground_ && is_robot_)
 		{
 			// 速度が一定以上にならないように制限
 			if (ownerVelocityCom->GetVelocity().y < -10.0f)
@@ -93,6 +110,9 @@ bool GravityComponent::CheckGroundCollision()
 	for (const auto& obj : objects)
 	{
 		if (obj == owner_) continue; // 自分自身との判定はスキップ
+		else if (obj->GetType() == GameObject::TypeID::Item) continue; // 歯車でも浮いちゃうので無視
+		else if (obj->GetType() == GameObject::TypeID::Smoke) continue; // 歯車でも浮いちゃうので無視
+		else if (obj->GetType() == GameObject::TypeID::SmokePipe) continue; // 歯車でも浮いちゃうので無視
 
 		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
 		if (auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider))

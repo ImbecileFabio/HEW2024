@@ -10,8 +10,8 @@
 /*----- インクルード -----*/
 #include "../SceneBase.h"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
-constexpr int gearCounter = 1;
-constexpr int hammerCounter = 3;	// 叩ける上限
+constexpr int gearCounter_1_1 = 1;
+constexpr int hammerCounter_1_1 = 3;	// 叩ける上限
 
 #include <array>
 
@@ -37,5 +37,6 @@ private:
 	class HammerCursor* hammerCursor_{};	// ハンマーカーソル
 	std::vector<class Item*> items_;	// アイテムリスト
 	std::array<class Revolution*, 2> stageUIs_;	// 動きのないステージUI
+	class SmokePipe* smoke_{};
 };
 #endif  // STAGE1_1SCENE_H_

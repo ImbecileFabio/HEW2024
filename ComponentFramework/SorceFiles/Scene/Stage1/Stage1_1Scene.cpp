@@ -13,6 +13,7 @@
 #include "../../PemdulumManager.h"
 #include "../../InputManager.h"
 #include "../../TileMapManager.h"
+#include "../../AudioManager.h"
 
 #include "../../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
 #include "../../GameObjects/Component/EventComponent/ColliderEventComponent.h"
@@ -58,8 +59,8 @@ void Stage1_1Scene::Init()
 	back_ground_ = new BackGround(game_manager_);
 	hammerCursor_ = new HammerCursor(game_manager_);
 
-	gearMaxCount_ = gearCounter;	// ’è”‚ğ‘ã“ü
-	hammerMaxCount_ = hammerCounter;
+	gearMaxCount_ = gearCounter_1_1;	// ’è”‚ğ‘ã“ü
+	hammerMaxCount_ = hammerCounter_1_1;
 
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
@@ -112,8 +113,7 @@ void Stage1_1Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
-	audio_manager_ = AudioManager::GetInstance();
-	audio_manager_->Play(SoundLabel_StageBGM);
+	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
 }
 
 //--------------------------------------------------
@@ -133,10 +133,10 @@ void Stage1_1Scene::Update()
 	{
 	case Stage1_1Scene::Game:
 		NumberChange();
-		if(game_manager_->GetItemCount() == gearCounter) 
+		if(game_manager_->GetItemCount() == gearCounter_1_1) 
 		{
 		 	stageState_ = Result;
-			audio_manager_->Stop(SoundLabel_StageBGM);
+			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ƒ|[ƒY‰æ–Ê‚ÉˆÚ“®
 		if (input.GetKeyTrigger(VK_P))

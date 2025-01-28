@@ -11,6 +11,7 @@
 #include "../../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../../Component/GravityComponent.h"
 #include "../../Component/RigidbodyComponent/VelocityComponent.h"
+#include "../../Component/EventComponent/ColliderEventComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -28,6 +29,7 @@ SteePillarFloor::~SteePillarFloor(void)
 	delete gravity_component_;
 	delete box_collider_component_;
 	delete velocity_component_;
+	delete event_component_;
 }
 //--------------------------------------------------
 // @brief 初期化処理
@@ -38,9 +40,14 @@ void SteePillarFloor::InitGameObject(void)
 	gravity_component_		= new GravityComponent(this);
 	box_collider_component_ = new BoxColliderComponent(this);
 	velocity_component_		= new VelocityComponent(this);
+	event_component_		= new ColliderEventComponent(this);
 	//transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+	gravity_component_->SetIsRobot(false);
+	gravity_component_->SetUseGravityFlg(false);
 	box_collider_component_->SetSize(transform_component_->GetSize().x, transform_component_->GetSize().y * 0.2f);
 
+	auto f = std::function<void(GameObject*)>(std::bind(&SteePillarFloor::OnCollisionEnter, this, std::placeholders::_1));
+	event_component_->AddEvent(f);
 }
 
 //--------------------------------------------------
@@ -48,6 +55,27 @@ void SteePillarFloor::InitGameObject(void)
 //--------------------------------------------------
 void SteePillarFloor::UpdateGameObject(void)
 {
+	if (isDown_)
+	{
+		gravity_component_->SetUseGravityFlg(true);
+		// 鉄柱の床を同期させる関数
+		stee_pillar_floor_group_->UpdateSteePillarFloorTilePositions();
+	}
+	else
+	{
+		gravity_component_->SetUseGravityFlg(false);
+	}
+}
+//--------------------------------------------------
+// @brief 当たり判定実行処理
+//--------------------------------------------------
+void SteePillarFloor::OnCollisionEnter(GameObject* _other)
+{
+	if (state_ == State::Paused) return;
+	if (_other->GetType() == TypeID::Tile)	// タイルと鉄柱床タイルが接触したら
+	{
+		stee_pillar_floor_group_->SetHitTile(true);
+	}
 }
 //--------------------------------------------------
 // @brief グループの参照を設定

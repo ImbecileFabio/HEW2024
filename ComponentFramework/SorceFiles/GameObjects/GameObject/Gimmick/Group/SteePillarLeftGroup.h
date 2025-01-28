@@ -24,11 +24,26 @@ public:
 
 	TypeID GetType(void) override { return TypeID::SteePillarLeftGroup; }
 
-	void AddSteePillarLeftTile(GameObject* _tile);					// グループにタイルを追加
+	void SetIsBreak	   (bool _fg) { isBreak_ = _fg; }
+	void SetIsBreakStop(bool _fg) { isBreakStop_ = _fg; }
+	void SetIsDownStart(bool _fg) { isDownStart_ = _fg; }
+	bool GetIsAnimationEnd() { return isAnimationEnd_; }
+	bool GetIsBreakStop() { return isBreakStop_; }
+
+	void AddSteePillarLeftTile(GameObject* _tile);	// グループにタイルを追加
 private:
-	class TimerComponent* timer_component_;				// タイマーコンポーネント
 	// グループ単体が管理しているもの
-	std::vector<GameObject*> steePillarLeftTiles_;			// グループが管理したいタイル
+	std::vector<GameObject*> steePillarLeftTiles_;	// グループが管理したいタイル
+
+	bool isStart_;			// 一回だけ実行したかどうか
+	bool isBreakStop_;		// 劣化を停止
+	bool isBreak_;			// 劣化状態になったかどうか
+	bool isBreakStart_;		// 劣化状態（始動）
+	bool isDownStart_;		// 落下	   （始動）
+	bool isAnimationEnd_;	// アニメーションが終わったら
+	// 柱の一番上のタイルをキャッシュ
+	class AnimationComponent* owner_top_animation_component_;
+	class SpriteComponent*	  owner_top_sprite_component_;
 };
 #endif // STEE_PILLAE_LEFT_GROUP_H_
 

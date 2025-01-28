@@ -30,6 +30,9 @@ constexpr float MAP_SIZE_Y = 18.0f;// ( 1080pixel / タイルのサイズ)
 /*----- 前方宣言 -----*/
 class WeakFloorGroup;
 class LiftGroup;
+class SteePillarFloorGroup;
+class SteePillarRightGroup;
+class SteePillarLeftGroup;
 //-----------------------------------------------------------------
 // タイルマップマネージャ
 //-----------------------------------------------------------------
@@ -50,13 +53,24 @@ private:
 
 	bool IsTileInGroup(int x, int y, WeakFloorGroup*& _group);
 	bool IsTileInGroup(int x, int y, LiftGroup*& _group);
+	bool IsTileInGroup(int x, int y, SteePillarFloorGroup*& _group);
+	bool IsTileInGroup(int x, int y, SteePillarRightGroup*& _group);
+	bool IsTileInGroup(int x, int y, SteePillarLeftGroup*& _group);
+
+	void hogehoge();
 private:
 	GameManager* game_manager_{};
 	std::vector<std::vector<std::vector<int>>> map_data_;
-	std::map<std::pair<int, int>, WeakFloorGroup*> weak_tile_to_group_; // タイル座標とグループの対応
-	std::map<std::pair<int, int>, LiftGroup*> lift_tile_to_group_;		// タイル座標とグループの対応
+	std::map<std::pair<int, int>, WeakFloorGroup*>		 weak_tile_to_group_;	 // タイル座標とグループの対応
+	std::map<std::pair<int, int>, LiftGroup*>			 lift_tile_to_group_;
+	std::map<std::pair<int, int>, SteePillarFloorGroup*> stee_pillar_to_group_;
+	std::map<std::pair<int, int>, SteePillarRightGroup*> stee_pillar_right_to_group_;
+	std::map<std::pair<int, int>, SteePillarLeftGroup*>  stee_pillar_left_to_group_;
 	std::vector<WeakFloorGroup*> weak_floor_groups_;					// 脆い床グループ一覧
 	std::vector<LiftGroup*> lift_groups_;								// リフトグループ一覧
+	std::vector<SteePillarFloorGroup*> stee_pillar_floor_groups_;		// 鉄柱床グループ一覧
+	std::vector<SteePillarRightGroup*> stee_pillar_right_groups_;		// 鉄柱床グループ一覧
+	std::vector<SteePillarLeftGroup*>  stee_pillar_left_groups_;		// 鉄柱床グループ一覧
 };
 
 

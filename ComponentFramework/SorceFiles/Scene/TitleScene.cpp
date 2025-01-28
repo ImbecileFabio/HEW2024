@@ -9,6 +9,7 @@
 #include "TitleScene.h"
 
 #include "../GameManager.h"
+#include "../AudioManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
 #include "../GameObjects/GameObject/Robot.h"
@@ -201,8 +202,7 @@ void TitleScene::Init()
 		game_manager_->ChangeScene(SceneName::Stage1_4);
 		};
 
-	audio_manager_ = AudioManager::GetInstance();
-	audio_manager_->Play(SoundLabel_TitleBGM);
+	AudioManager::GetInstance()->Play(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------
@@ -210,7 +210,7 @@ void TitleScene::Init()
 //--------------------------------------------------
 void TitleScene::Uninit()
 {
-	audio_manager_->Stop(SoundLabel_TitleBGM);
+	AudioManager::GetInstance()->Stop(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------
@@ -375,11 +375,6 @@ void TitleScene::MoveSelect()
 		stage_++;
 	if (input.GetKeyTrigger(VK_LEFT))	// ¶
 		stage_--;
-	// ”ÍˆÍŠO‚Ìˆ—
-	if (chapter_ > CHAPTER_MAX) chapter_ = 0;
-	if (chapter_ < 0) chapter_ = 3;
-	if (stage_ < 0) stage_ = 3;
-	if (stage_ > STAGE_MAX) stage_ = 0;
 
 	if (chapter_ == 0)
 	{
@@ -396,7 +391,7 @@ void TitleScene::MoveSelect()
 		case 1:
 			select_numbers_w_->GetComponent<SpriteComponent>()->SetUV({ 1.0f * numberFrameSize.x, 0.0f * numberFrameSize.y });
 			select_numbers_m_left_->GetComponent<SpriteComponent>()->SetUV({ 0.0f * numberFrameSize.x, 0.0f * numberFrameSize.y });
-			select_numbers_m_right_->GetComponent<SpriteComponent>()->SetUV({ 0.0f * numberFrameSize.x, 0.0f * numberFrameSize.y });
+			select_numbers_m_right_->GetComponent<SpriteComponent>()->SetUV({ 2.0f * numberFrameSize.x, 0.0f * numberFrameSize.y });
 			break;
 		case 2:
 			select_numbers_w_->GetComponent<SpriteComponent>()->SetUV({ 2.0f * numberFrameSize.x, 0.0f * numberFrameSize.y });
@@ -474,4 +469,9 @@ void TitleScene::MoveSelect()
 			break;
 		}
 	}
+	// ”ÍˆÍŠO‚Ìˆ—
+	if (chapter_ > CHAPTER_MAX) chapter_ = 0;
+	if (chapter_ < 0) chapter_ = 3;
+	if (stage_ < 0) stage_ = 3;
+	if (stage_ > STAGE_MAX) stage_ = 0;
 }
