@@ -24,6 +24,8 @@ public:
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
+	auto GetBrakeFlg() { return brakeFlg_; }
+
 	TypeID GetType(void) override { return TypeID::SmokePipe; }
 private:
 	int fpsCounter_;		// ŽžŠÔŒv‘ª—p

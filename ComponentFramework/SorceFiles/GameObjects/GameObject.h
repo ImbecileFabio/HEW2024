@@ -152,9 +152,6 @@ public:
 	virtual void OnCollisionEnter(GameObject* _other) {};	// 接触した時
 	virtual void OnCollisionStay(GameObject* _other) {};	// 接触し続けている
 	virtual void OnCollisionExit(GameObject* _other) {};	// 接触から抜けた時
-
-	// 仮想関数
-	virtual float GetSize() { return 0.0f; }
 protected:
 	float delta_time_{};	// デルタタイム
 

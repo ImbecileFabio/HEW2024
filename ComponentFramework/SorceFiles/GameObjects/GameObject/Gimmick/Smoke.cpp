@@ -44,7 +44,8 @@ void Smoke::InitGameObject() {
 	auto f = std::function<void(GameObject*)>(std::bind(&Smoke::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
 
-	sprite_component_->GetTexture()->SetOffsetSize({ 1.0f,m_gimmickSize });
+	auto transform = this->GetTransformComponent();
+	transform->SetSize(transform->GetSize().x, transform->GetSize().y * m_gimmickSize);
 	sprite_component_->GetTexture()->SetOffsetPos({ 0.0f,10.0f + (m_gimmickSize - 1.0f) * 28.0f });
 }
 
@@ -53,9 +54,5 @@ void Smoke::InitGameObject() {
 //--------------------------------------------------
 void Smoke::UpdateGameObject() {
 	this->GetTransformComponent()->SetPosition(m_ownerObj->GetTransformComponent()->GetPosition());
-}
-
-
-void Smoke::OnCollisionEnter(GameObject* _other) {
-
+	collider_component_->SetSize(this->GetTransformComponent()->GetSize());
 }
