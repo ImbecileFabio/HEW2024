@@ -37,7 +37,7 @@ void Smoke::InitGameObject() {
 	sprite_component_ = new SpriteComponent(this,"smoke00");
 	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
-	animation_component_ = new AnimationComponent(this,sprite_component_);
+	animation_component_ = new AnimationComponent(this, sprite_component_);
 
 	auto debug = new DebugColliderDrawComponent(this);
 

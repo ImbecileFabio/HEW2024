@@ -204,11 +204,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		}
 		break;
 	}
-	{
-
-
-		break;
-	}
 	case GameObject::TypeID::WeakFloor:
 	{
 		//std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");

@@ -367,7 +367,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	}
 	else if (_tileID == 200)	// ‚¯‚Þ‚è
 	{
-
+		obj = new SmokePipe(game_manager_);
 	}
 	else if (_tileID == 998)	// Ž•ŽÔ
 	{
