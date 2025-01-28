@@ -130,7 +130,7 @@ public:
 				return target;
 			}
 		}
-		std::cout << std::format("ƒGetComponent<{}>„ ->Component Not Found\n", typeid(T).name());
+		//std::cout << std::format("ƒGetComponent<{}>„ ->Component Not Found\n", typeid(T).name());
 		return nullptr;
 	}
 
