@@ -45,14 +45,16 @@ void Smoke::InitGameObject() {
 	collider_event_component_->AddEvent(f);
 
 	auto transform = this->GetTransformComponent();
+	m_smokeSize = transform->GetSize().y;
 	transform->SetSize(transform->GetSize().x, transform->GetSize().y * m_gimmickSize);
-	sprite_component_->GetTexture()->SetOffsetPos({ 0.0f,10.0f + (m_gimmickSize - 1.0f) * 28.0f });
 }
 
 //--------------------------------------------------
 // ˆ—
 //--------------------------------------------------
 void Smoke::UpdateGameObject() {
-	this->GetTransformComponent()->SetPosition(m_ownerObj->GetTransformComponent()->GetPosition());
+	auto transform = this->GetTransformComponent();
+	transform->SetPosition(m_ownerObj->GetTransformComponent()->GetPosition().x,
+		m_ownerObj->GetTransformComponent()->GetPosition().y + (m_smokeSize * (m_gimmickSize - 1) / 2));
 	collider_component_->SetSize(this->GetTransformComponent()->GetSize());
 }

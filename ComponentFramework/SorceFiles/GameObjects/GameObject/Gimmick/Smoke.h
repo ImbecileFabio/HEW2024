@@ -24,6 +24,7 @@ public:
 private:
 	GameObject* m_ownerObj;
 	float m_gimmickSize;	// ギミックのサイズ
+	float m_smokeSize;
 
 	class SpriteComponent* sprite_component_{};					// スプライト
 	class ColliderBaseComponent* collider_component_{};			// 当たり判定
