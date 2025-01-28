@@ -43,7 +43,7 @@ void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<voi
 	current_frame_ = 0;
 	elapsed_time_ = 0.0f;
 	frame_duration_ = fade_texture_->GetAnmSpeed();
-	total_frame_ = fade_texture_->GetCutU() * fade_texture_->GetCutV();
+	total_frame_ = fade_texture_->GetTotalFrame();
 
 	is_playing_ = true;
     on_complete_ = _onComplete;
@@ -62,7 +62,8 @@ void FadeManager::StartFadeIn(const std::string& _fadeInTex, std::function<void(
 	current_frame_ = 0;
 	elapsed_time_ = 0.0f;
 	frame_duration_ = fade_texture_->GetAnmSpeed();
-	total_frame_ = fade_texture_->GetCutU() * fade_texture_->GetCutV();
+	total_frame_  = fade_texture_->GetTotalFrame();
+	
 
 	is_playing_ = true;
     on_complete_ = _onComplete;

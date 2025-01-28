@@ -3,13 +3,14 @@
 #include	"stb_image.h"
 #include	"../Renderer.h"
 
-Texture::Texture(const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed)
+Texture::Texture(const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed, int _totalFrame)
 	: offset_pos_(_offsetPos)
 	, offset_size_(_offsetSize)
 	, loop_flg_(_loopFlg)
 	, m_cutU(_cutU)
 	, m_cutV(_cutV)
 	, m_anmSpeed(_anmSpeed)
+	, m_totalFraem(_totalFrame)
 {
 	frame_size_.x = 1.0f / m_cutU;
 	frame_size_.y = 1.0f / m_cutV;
