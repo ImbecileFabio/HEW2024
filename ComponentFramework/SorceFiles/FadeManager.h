@@ -9,12 +9,18 @@
 
 /*----- インクルード -----*/
 #include <wrl/client.h>
-#include <SimpleMath.h>
-
 #include <functional>
 #include <string>
+#include <memory>
+
+#include <SimpleMath.h>
 
 #include "SubSystem/Shader.h"
+#include "SubSystem/VertexBuffer.h"
+#include "SubSystem/IndexBuffer.h"
+#include "SubSystem/Texture.h"
+
+using namespace DirectX::SimpleMath;
 
 /*----- 列挙型 -----*/
 enum class FadeType
@@ -24,12 +30,7 @@ enum class FadeType
 };
 
 /*----- 構造体定義 -----*/
-struct FadeParams {
-   float fadeProgress;
-   DirectX::XMFLOAT2 center;
-   float edgeWidth;
-   BOOL isFadeOut;  
-};
+
 
 /*----- 前方宣言 -----*/
 class GameManager;
@@ -38,37 +39,42 @@ class GameManager;
 //-----------------------------------------------------------------
 class FadeManager {
 public:
-    FadeManager( GameManager* _gameManager);
+	FadeManager(GameManager* _gameManager);
+	~FadeManager();
 
-    void StartFadeOut(float duration, std::function<void()> on_complete = nullptr);
-    void StartFadeIn(float duration, std::function<void()> on_complete = nullptr);
+	// フェードアウト開始
+	void StartFadeOut(const std::string& _fadeOutTex, std::function<void()> on_complete = nullptr);
+	// フェードイン開始
+	void StartFadeIn(const std::string& _fadeInTex, std::function<void()> on_complete = nullptr);
 
-    void Update(float delta_time);
-    void Draw();
+	void Update(float delta_time);
+	void Draw();
 
-    void UpdateFadeParams(ID3D11DeviceContext* _context, const FadeParams& _params);
+	void UpdateUV();
 
-    void SetTextures(ID3D11DeviceContext* _context, ID3D11ShaderResourceView* _sceneTexture, ID3D11ShaderResourceView* _maskTexture);
-
-	bool GetIsFading() const { return is_fading_; } // フェード中かどうか
-    float GetFadeProgress() const;
-
-    void InitBuffer();
+	bool GetIsPlaying() const { return is_playing_; } // フェード中かどうか
 
 private:
+	void InitBuffers(float _cutU = 1, float _cutV = 1);	// バッファの初期化
+
+
+
 	GameManager* game_manager_;
+	std::function<void()> on_complete_; // フェード終了時に呼ばれるコールバック
 
-	FadeParams fade_params_; // フェードのパラメータ
+	// バッファ
+	VertexBuffer<VERTEX_3D> vertex_buffer_;
+	IndexBuffer index_buffer_;
+	std::vector<VERTEX_3D> vertices_;	// 頂点データ
+	Shader shader_;						// シェーダ
+	std::shared_ptr<Texture> fade_texture_;  // テクスチャ
+	Vector2 current_uv_;
 
-    std::function<void()> on_complete_; // フェード終了時に呼ばれるコールバック
-
-    FadeType fade_type_;        // "in" または "out"
-    float fade_duration_;          // フェードの全体時間
-    float elapsed_time_;           // 現在の経過時間
-    bool is_fading_;               // フェード中かどうか
-
-	Microsoft::WRL::ComPtr<ID3D11Buffer> fade_params_buffer_; // 頂点バッファ
-	Shader shader_;               // フェード用のシェーダ
+	int total_frame_;       // 総フレーム数 (フェード全体の再生時間をフレーム単位で表す)
+	int current_frame_;     // 現在の進行中のフレーム
+	float elapsed_time_;    // 累積経過時間 (秒単位)
+	float frame_duration_;  // 1フレームあたりの時間 (秒単位)	bool is_loop_;				// ループするかどうか
+	bool is_playing_;		// アニメーションを再生中かどうか
 };
 
 #endif // FADE_MANAGER_H_

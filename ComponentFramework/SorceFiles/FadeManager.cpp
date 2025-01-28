@@ -5,123 +5,208 @@
 // 説明：画面をフェードイン、アウトするクラス
 //=================================================================
 
-#include "FadeManager.h"
-#include <algorithm>
-#include <iostream>
+/*----- インクルード -----*/
+#include <format>
 
-#include "GameManager.h"
-#include "SubSystem/Shader.h"
+#include"FadeManager.h"
+
+#include"GameManager.h"
+#include"Renderer.h"
+#include"TextureManager.h"
 
 //-----------------------------------------------------------------
 // @brief コンストラクタ
 //-----------------------------------------------------------------
 FadeManager::FadeManager(GameManager* _gameManager)
-	: game_manager_(_gameManager)
-    , fade_duration_(0.0f)
-    , elapsed_time_(0.0f)
-    , is_fading_(false)
-    , fade_type_(FadeType::Out)
-    , on_complete_(nullptr)
+	:game_manager_(_gameManager)
+	, is_playing_ (false)
+	, current_frame_(0)
+	, elapsed_time_ (0.0f)
+	, frame_duration_(0.0f)
 {
-	InitBuffer();
+	InitBuffers();
+}
+
+FadeManager::~FadeManager()
+{
 }
 
 //-----------------------------------------------------------------
 // @brief フェードアウト開始
 //-----------------------------------------------------------------
-void FadeManager::StartFadeOut(float duration, std::function<void()> on_complete) {
-    fade_duration_ = duration;
-    elapsed_time_ = 0.0f;
-    is_fading_ = true;
-    fade_type_ = FadeType::Out;
-    on_complete_ = on_complete;
+void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<void()> _onComplete)
+{
+	std::cout << "<FadeManager> ------------ StartFadeOut ------------\n";
+	fade_texture_ = TextureManager::GetInstance().GetTexture(_fadeOutTex);
+
+	// 経過時間などなどをリセット
+	current_frame_ = 0;
+	elapsed_time_ = 0.0f;
+	frame_duration_ = fade_texture_->GetAnmSpeed();
+	total_frame_ = fade_texture_->GetCutU() * fade_texture_->GetCutV();
+
+	is_playing_ = true;
+    on_complete_ = _onComplete;
+
 }
 
 //-----------------------------------------------------------------
 // @brief フェードイン開始
 //-----------------------------------------------------------------
-void FadeManager::StartFadeIn(float duration, std::function<void()> on_complete) {
-    fade_duration_ = duration;
-    elapsed_time_ = 0.0f;
-    is_fading_ = true;
-    fade_type_ = FadeType::In;
-    on_complete_ = on_complete;
+void FadeManager::StartFadeIn(const std::string& _fadeInTex, std::function<void()> _onComplete)
+{
+	std::cout << "<FadeManager> ------------ StartFadeIn ------------\n";
+	fade_texture_ = TextureManager::GetInstance().GetTexture(_fadeInTex);
+
+	// 経過時間などなどをリセット
+	current_frame_ = 0;
+	elapsed_time_ = 0.0f;
+	frame_duration_ = fade_texture_->GetAnmSpeed();
+	total_frame_ = fade_texture_->GetCutU() * fade_texture_->GetCutV();
+
+	is_playing_ = true;
+    on_complete_ = _onComplete;
 }
 
 //-----------------------------------------------------------------
 // @brief 更新処理
 //-----------------------------------------------------------------
-void FadeManager::Update(float delta_time) {
-    if (!is_fading_) return;
+void FadeManager::Update(float _deltaTime)
+{
+	if (!is_playing_) return;
 
-    elapsed_time_ += delta_time;
-    if (elapsed_time_ >= fade_duration_) {
-        is_fading_ = false;
-        elapsed_time_ = fade_duration_;
-        if (on_complete_) {
-            on_complete_();
-        }
-    }
+	elapsed_time_ += _deltaTime;
+
+	// 経過時間が超えたら
+	if (elapsed_time_ >= frame_duration_) {
+		elapsed_time_ -= frame_duration_;
+
+		++current_frame_;
+		// 総フレーム数を超えたら
+		if (current_frame_ >= total_frame_) {
+			// 停止状態を維持する
+			current_frame_ = total_frame_ - 1;
+			is_playing_ = false;
+
+		}
+	}
+
+	// UV座標を計算
+	UpdateUV();
+
+	// フェード完了時のコールバックを呼び出し
+	if (!is_playing_)
+	{
+		if (on_complete_) { on_complete_(); }
+	}
 }
 
 //-----------------------------------------------------------------
 // @brief 描画処理
 //-----------------------------------------------------------------
-void FadeManager::Draw()
-{
-	if (!is_fading_) return;
-	float progress = GetFadeProgress();
-    float alpha = fade_type_ == FadeType::Out ? progress : (1.0f - progress);
+void FadeManager::Draw() {
+	// 描画中以外描画しない
+	if (!is_playing_) return;
+	Matrix rot;
+	Matrix pos;
+	Matrix scale;
 
-    
+
+	rot = Matrix::CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f);
+	pos = Matrix::CreateTranslation(0.0f, 0.0f, 0.0f);
+	scale = Matrix::CreateScale(1920.0f, 1080.0f, 1.0f);
+
+
+	Matrix worldmtx;
+	worldmtx = scale * rot * pos;
+	Renderer::SetWorldMatrix(&worldmtx); // GPUにセット
+
+	// 描画の処理
+	ID3D11DeviceContext* devicecontext;
+	devicecontext = Renderer::GetDeviceContext();
+	assert(devicecontext);
+
+
+	// トポロジーをセット（プリミティブタイプ）
+	devicecontext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+
+
+
+	// 情報をGPUにセット
+	vertex_buffer_.Modify(vertices_);	// バッファの更新
+	vertex_buffer_.SetGPU();
+	index_buffer_.SetGPU();
+
+	fade_texture_->SetGPU();
+
+	shader_.SetGPU();
+
+	devicecontext->DrawIndexed(
+		4,							// 描画するインデックス数（四角形なんで４）
+		0,							// 最初のインデックスバッファの位置
+		0);
+
 }
 
-//-----------------------------------------------------------------
-// @brief フェードパラメータの更新
-//-----------------------------------------------------------------
-void FadeManager::UpdateFadeParams(ID3D11DeviceContext* _context, const FadeParams& _params)
+//--------------------------------------------------
+// @brief UV座標を更新
+//--------------------------------------------------
+void FadeManager::UpdateUV()
 {
-    D3D11_MAPPED_SUBRESOURCE mappedResource = {};
-    _context->Map(fade_params_buffer_.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-    memcpy(mappedResource.pData, &_params, sizeof(FadeParams));
-    _context->Unmap(fade_params_buffer_.Get(), 0);
 
-    _context->PSSetConstantBuffers(0, 5, fade_params_buffer_.GetAddressOf());
+	int frameX = current_frame_ % fade_texture_->GetCutU();	// 横の分割数で割ったあまり
+	int frameY = current_frame_ / fade_texture_->GetCutU();	// 横の分割数で割った商
+
+	Vector2 frameSize = fade_texture_->GetFrameSize();
+
+	current_uv_ = { frameX * frameSize.x, frameY * frameSize.y };
+
+	Vector2 uvMin = current_uv_;
+	Vector2 uvMax = { current_uv_.x + frameSize.x, current_uv_.y + frameSize.y };
+
+	vertices_[0].uv = { uvMin.x, uvMin.y };
+	vertices_[1].uv = { uvMax.x, uvMin.y };
+	vertices_[2].uv = { uvMin.x, uvMax.y };
+	vertices_[3].uv = { uvMax.x, uvMax.y };
+
 }
 
-//-----------------------------------------------------------------
-// @brief テクスチャのセット
-//-----------------------------------------------------------------
-void FadeManager::SetTextures(ID3D11DeviceContext* _context, ID3D11ShaderResourceView* _sceneTexture, ID3D11ShaderResourceView* _maskTexture)
+void FadeManager::InitBuffers(float _cutU, float _cutV)
 {
-	ID3D11ShaderResourceView* textures[] = { _sceneTexture, _maskTexture };
-	_context->PSSetShaderResources(0, 2, textures);
-}
+	// 頂点データ
 
+	vertices_.resize(4);
 
-//-----------------------------------------------------------------
-// @brief フェードの進行度を取得
-//-----------------------------------------------------------------
-float FadeManager::GetFadeProgress() const {
-    if (!is_fading_ || fade_duration_ == 0.0f) return 0.0f;
-    return std::clamp(elapsed_time_ / fade_duration_, 0.0f, 1.0f);
-}
+	vertices_[0].position = Vector3(-0.5f, 0.5f, 0.0f);
+	vertices_[1].position = Vector3(0.5f, 0.5f, 0.0f);
+	vertices_[2].position = Vector3(-0.5f, -0.5f, 0.0f);
+	vertices_[3].position = Vector3(0.5f, -0.5f, 0.0f);
 
-//-----------------------------------------------------------------
-// @brief バッファなどの初期化
-//-----------------------------------------------------------------
-void FadeManager::InitBuffer()
-{
-	// バッファの生成
-    D3D11_BUFFER_DESC bufferDesc = {};
-    bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-    bufferDesc.ByteWidth = sizeof(FadeParams);
-    bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
-    bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	vertices_[0].color = Color(1, 1, 1, 1);
+	vertices_[1].color = Color(1, 1, 1, 1);
+	vertices_[2].color = Color(1, 1, 1, 1);
+	vertices_[3].color = Color(1, 1, 1, 1);
 
-	Renderer::GetDevice()->CreateBuffer(&bufferDesc, nullptr, &fade_params_buffer_);
+	vertices_[0].uv = Vector2(0.0f, 0.0f);
+	vertices_[1].uv = Vector2(1.0f, 0.0f);
+	vertices_[2].uv = Vector2(0.0f, 1.0f);
+	vertices_[3].uv = Vector2(1.0f, 1.0f);
 
-    // シェーダの生成
-    shader_.CreateFade("FadePS.hlsl");
+	// 頂点バッファ生成
+	vertex_buffer_.Create(vertices_);
 
+	// インデックスバッファ生成
+	std::vector<unsigned int> indices;
+	indices.resize(4);
+
+	indices[0] = 0;
+	indices[1] = 1;
+	indices[2] = 2;
+	indices[3] = 3;
+
+	// インデックスバッファ生成
+	index_buffer_.Create(indices);
+
+	// シェーダオブジェクト生成
+	shader_.Create("shader/unlitTextureVS.hlsl", "shader/unlitTexturePS.hlsl");
 }

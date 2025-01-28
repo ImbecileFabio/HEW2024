@@ -82,7 +82,6 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\HammerCursor.cpp" />
     <ClCompile Include="SorceFiles\AudioManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftInteractionComponent.cpp" />
-    <ClCompile Include="SorceFiles\FadeManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent\PulleyComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\LiftGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\WeakFloorGroup.cpp" />
@@ -94,6 +93,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarLeftGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarRightGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarRightTop.cpp" />
+    <ClCompile Include="SorceFiles\FadeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -175,7 +175,6 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\HammerCursor.h" />
     <ClInclude Include="SorceFiles\AudioManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftInteractionComponent.h" />
-    <ClInclude Include="SorceFiles\FadeManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\PulleyComponent\PulleyComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\LiftGroup.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\WeakFloorGroup.h" />
@@ -187,6 +186,7 @@
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarLeftGroup.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarRightGroup.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarRightTop.h" />
+    <ClInclude Include="SorceFiles\FadeManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />

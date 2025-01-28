@@ -75,7 +75,7 @@ Component::Component(GameObject* _owner, int _updateOrder)
 		std::cout << std::format("[Component]-> UpdateOrder ‚ª”ÍˆÍŠO‚ÅŽw’è‚³‚ê‚Ü‚µ‚½\n");
 		update_order_ = 0; 
 	}
-	owner_->AddComponent(this);
+	if (owner_) { owner_->AddComponent(this); }
 }
 
 //--------------------------------------------------
@@ -83,7 +83,7 @@ Component::Component(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 Component::~Component()
 {
-	owner_->RemoveComponent(this);
+	if (owner_) { owner_->RemoveComponent(this); }
 }
 
 

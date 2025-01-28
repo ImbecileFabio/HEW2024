@@ -33,6 +33,9 @@ GameManager::GameManager()
 	renderer_ = new Renderer();
 	renderer_->Init();
 
+	// テクスチャのロード
+	TextureManager::GetInstance().Init();
+
 	// フェードマネージャ初期化
 	fade_manager_ = new FadeManager(this);
 
@@ -67,9 +70,6 @@ GameManager::~GameManager(void)
 void GameManager::InitAll(void)
 {
 	std::cout << std::format("[GameManager] -> InitAll Start\n");
-
-	// テクスチャのロード
-	TextureManager::GetInstance().Init();
 
 	// オブジェクトリストの初期化
 	game_objects_.clear();
@@ -120,6 +120,8 @@ void GameManager::GenerateOutputAll(void)
 		renderer_->Begin();
 		renderer_->Draw();
 
+		fade_manager_->Draw();
+
 		ImGuiManager::staticPointer->ImGuiRender();
 
 		renderer_->End();
@@ -169,19 +171,19 @@ void GameManager::ClearAllObjects(void)
 //-----------------------------------------------------------------
 void GameManager::TransitionToScene(SceneName _nextScene)
 {
-	if (fade_manager_->GetIsFading()) {
+	if (fade_manager_->GetIsPlaying()) {
 		return; // フェード中なら二重実行を防ぐ
 	}
 
 	// フェードアウト開始
-	fade_manager_->StartFadeOut(2.0f, [this, _nextScene]() {
+	fade_manager_->StartFadeOut("fade_out", [this, _nextScene]() {
 		// フェードアウト終了時にシーンを切り替え
 	
 
 		ChangeScene(_nextScene);
 
 		// シーン変更後にフェードインを開始
-		fade_manager_->StartFadeIn(2.0f);
+		fade_manager_->StartFadeIn("fade_in");
 
 		});
 }

@@ -80,9 +80,7 @@ private:
 	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f);	// すべて
 	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f);// オフセットなし
 
-	// テクスチャの登録
-
-// テクスチャの全登録
+	// テクスチャの情報登録
 	void RegisterAllTextures();
 	// 解放処理
 	void ClearCache(void);
@@ -91,6 +89,11 @@ private:
 	std::unordered_map<std::string, TextureInfo> texture_info_;
 	// テクスチャキャッシュ
 	std::unordered_map<std::string, std::shared_ptr<Texture>> texture_cache_;	
+
+	// LRUキャッシュ管理用
+	std::list<std::string> lru_list_;
+	std::unordered_map<std::string, std::list<std::string>::iterator> lru_map_;
+	size_t max_cache_size_ = 10; // 最大キャッシュサイズ
 
 };
 
