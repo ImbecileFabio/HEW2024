@@ -121,14 +121,16 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 		owner_pendulum_movement_->SetPendulumFulcrum(steePillarFloorTiles_[tileCenterNum_]->GetTransformComponent()->GetPosition());
 	}
 	// “S’Œ‚Ì°‚ªƒ^ƒCƒ‹‚Æ“–‚½‚Á‚Ä‚¢‚½‚ç
-	//if (isHitTile_)
-	//{
-	//	for (auto& it : steePillarFloorTiles_)
-	//	{
-	//		auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);
-	//		steePillarFloor->SetIsDown(false);
-	//	}
-	//}
+	if (isHitTile_)
+	{
+		owner_pendulum_movement_->SetPendulumMovement(false);
+		for (auto& it : steePillarFloorTiles_)
+		{
+			auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);
+			steePillarFloor->SetIsDown(false);
+		}
+	}
+	// ‰æ–ÊŠOˆ—
 	if (steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition().y < -400.0f && !isPendulumDelete_)
 	{
 		auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
