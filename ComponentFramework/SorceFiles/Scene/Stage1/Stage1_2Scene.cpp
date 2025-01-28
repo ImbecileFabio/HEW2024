@@ -8,7 +8,6 @@
 #include "../../AudioManager.h"
 
 #include "../../GameObjects/GameObject.h"
-#include "../../GameObjects/GameObject/Player.h"
 #include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
@@ -61,9 +60,6 @@ void Stage1_2Scene::Init()
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-
-	auto obj = new Player(game_manager_);
-	obj->GetTransformComponent()->SetSize(100.0f, 100.0f);
 
 	state_ = Game;
 

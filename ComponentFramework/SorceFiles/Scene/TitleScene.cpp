@@ -201,6 +201,30 @@ void TitleScene::Init()
 	select_stages_[0][3] = [this]() {
 		game_manager_->ChangeScene(SceneName::Stage1_4);
 		};
+	select_stages_[1][0] = [this]() {
+		game_manager_->ChangeScene(SceneName::Stage2_1);
+		};
+	select_stages_[1][1] = [this]() {
+		game_manager_->ChangeScene(SceneName::Stage2_2);
+		};
+	select_stages_[1][2] = [this]() {
+		game_manager_->ChangeScene(SceneName::Stage2_3);
+		};
+	select_stages_[1][3] = [this]() {
+		game_manager_->ChangeScene(SceneName::Stage2_4);
+		};
+	select_stages_[2][0] = [this]() {
+		game_manager_->ChangeScene(SceneName::Stage3_1);
+		};
+	select_stages_[2][1] = [this]() {
+		game_manager_->ChangeScene(SceneName::Stage3_2);
+		};
+	select_stages_[2][2] = [this]() {
+		game_manager_->ChangeScene(SceneName::Stage3_3);
+		};
+	select_stages_[2][3] = [this]() {
+		game_manager_->ChangeScene(SceneName::Stage3_4);
+		};
 
 	AudioManager::GetInstance()->Play(SoundLabel_TitleBGM);
 }

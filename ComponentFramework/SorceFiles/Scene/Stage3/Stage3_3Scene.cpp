@@ -1,13 +1,4 @@
-//==================================================
-// [Stage1_1Scene.cpp] ステージ1-1シーン
-// 著者：有馬啓太
-//--------------------------------------------------
-// 説明：ステージ1-1を管理をするクラス
-//==================================================
-
-/*----- インクルード -----*/
-#include "Stage1_1Scene.h"
-
+#include "Stage3_3Scene.h"
 #include "../../GameManager.h"
 #include "../../ColliderManager.h"
 #include "../../PemdulumManager.h"
@@ -15,11 +6,8 @@
 #include "../../TileMapManager.h"
 #include "../../AudioManager.h"
 
-#include "../../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
-#include "../../GameObjects/Component/EventComponent/ColliderEventComponent.h"
-#include "../../GameObjects/Component/PendulumMovementComponent.h"
-#include "../../GameObjects/Component/ChildrenComponent.h"
-
+#include "../../GameObjects/GameObject.h"
+#include "../../GameObjects/GameObject/Player.h"
 #include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
@@ -30,43 +18,54 @@
 #include "../../GameObjects/GameObject/Item.h"
 #include "../../GameObjects/GameObject/Revolution.h"
 #include "../../GameObjects/GameObject/HammerCursor.h"
+
+#include "../../GameObjects/Component/ColliderComponent/ColliderBaseComponent.h"
+#include "../../GameObjects/Component/EventComponent/ColliderEventComponent.h"
+#include "../../GameObjects/Component/PendulumMovementComponent.h"
+#include "../../GameObjects/Component/ChildrenComponent.h"
+
+
+constexpr int gearCounter_3_3 = 1;		// ギアの獲得数
+constexpr int hammerCounter_3_3 = 3;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Stage1_1Scene::Stage1_1Scene(GameManager* _gameManager)
-	: SceneBase(_gameManager, "Stage1_1")
+Stage3_3Scene::Stage3_3Scene(GameManager* _gameManager)
+	:SceneBase(_gameManager, "Stage3_3")
+	, state_(Game)
 {
-	this->Init();
+	Init();
 }
-
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-Stage1_1Scene::~Stage1_1Scene()
+Stage3_3Scene::~Stage3_3Scene()
 {
-	this->Uninit();
+	Uninit();
 }
-
 //--------------------------------------------------
 // 初期化処理
 //--------------------------------------------------
-void Stage1_1Scene::Init()
+void Stage3_3Scene::Init()
 {
-	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1/Stage1_1.csv");
+	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage3/Stage3_1.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
 	hammerCursor_ = new HammerCursor(game_manager_);
 
-	gearMaxCount_ = gearCounter_1_1;	// 定数を代入
-	hammerMaxCount_ = hammerCounter_1_1;
+	gearMaxCount_ = gearCounter_3_3;	// 定数を代入
+	hammerMaxCount_ = hammerCounter_3_3;
 
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 
-	stageState_ = Game;
+	auto obj = new Player(game_manager_);
+	obj->GetTransformComponent()->SetSize(100.0f, 100.0f);
+
+	state_ = Game;
 
 	// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
@@ -92,7 +91,7 @@ void Stage1_1Scene::Init()
 	}
 
 	game_manager_->GetPendulumManager()->SetHammerCursor(hammerCursor_);
-	
+
 	for (auto& pendulumObject : game_manager_->GetGameObjects()) {
 		auto childrenComponent = pendulumObject->GetComponent<ChildrenComponent>();
 		if (childrenComponent)
@@ -114,28 +113,22 @@ void Stage1_1Scene::Init()
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
-}
 
-//--------------------------------------------------
-// 終了処理
-//--------------------------------------------------
-void Stage1_1Scene::Uninit()
-{
-}
 
+}
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void Stage1_1Scene::Update()
+void Stage3_3Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	switch (stageState_)
+	switch (state_)
 	{
-	case Stage1_1Scene::Game:
+	case Stage3_3Scene::Game:
 		NumberChange();
-		if(game_manager_->GetItemCount() == gearCounter_1_1) 
+		if (game_manager_->GetItemCount() == gearCounter_3_3)
 		{
-		 	stageState_ = Result;
+			state_ = Result;
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
@@ -150,20 +143,18 @@ void Stage1_1Scene::Update()
 				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-			stageState_ = Pouse;
+			state_ = Pouse;
 		}
-
 		break;
-	case Stage1_1Scene::Result:
+	case Stage3_3Scene::Result:
 		game_manager_->ChangeScene(SceneName::Result);
 		break;
-	case Stage1_1Scene::Pouse:
+	case Stage3_3Scene::Pouse:
 		// ここにポーズ画面での操作を
 		if (input.GetKeyTrigger(VK_P))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
-				isWindowOpen = false;	// ウィンドウが開いている時にポーズボタンを押すとウィンドウを閉じる
 				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全てポーズ状態に
 			}
 			for (auto& it : pauseButtons_)
@@ -172,15 +163,21 @@ void Stage1_1Scene::Update()
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			stageState_ = Game;
+			state_ = Game;
 		}
-		PauseWindow();
 		break;
-	case Stage1_1Scene::Rewind:
+	case Stage3_3Scene::Rewind:
 		game_manager_->ResetItemCount();
-		game_manager_->ChangeScene(SceneName::Stage1_1);
+		game_manager_->ChangeScene(SceneName::Stage3_3);
 		break;
 	default:
 		break;
 	}
+
+}
+//--------------------------------------------------
+// 終了処理
+//--------------------------------------------------
+void Stage3_3Scene::Uninit()
+{
 }

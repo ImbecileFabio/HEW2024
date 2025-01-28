@@ -19,15 +19,15 @@
 #include "Scene/Stage1/Stage1_3Scene.h"
 #include "Scene/Stage1/Stage1_4Scene.h"
 
-//#include "Scene/Stage2/Stage2_1Scene.h"
-//#include "Scene/Stage2/Stage2_2Scene.h"
-//#include "Scene/Stage2/Stage2_3Scene.h"
-//#include "Scene/Stage2/Stage2_4Scene.h"
-//
-//#include "Scene/Stage3/Stage3_1Scene.h"
-//#include "Scene/Stage3/Stage3_2Scene.h"
-//#include "Scene/Stage3/Stage3_3Scene.h"
-//#include "Scene/Stage3/Stage3_4Scene.h"
+#include "Scene/Stage2/Stage2_1Scene.h"
+#include "Scene/Stage2/Stage2_2Scene.h"
+#include "Scene/Stage2/Stage2_3Scene.h"
+#include "Scene/Stage2/Stage2_4Scene.h"
+
+#include "Scene/Stage3/Stage3_1Scene.h"
+#include "Scene/Stage3/Stage3_2Scene.h"
+#include "Scene/Stage3/Stage3_3Scene.h"
+#include "Scene/Stage3/Stage3_4Scene.h"
 
 /*----- 構造体定義 -----*/
 // シーン名	
