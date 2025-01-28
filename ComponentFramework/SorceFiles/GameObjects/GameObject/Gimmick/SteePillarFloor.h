@@ -23,7 +23,11 @@ public:
 
 	TypeID GetType(void) override { return TypeID::SteePillarFloor; }
 
+	void OnCollisionEnter(GameObject* _other = nullptr) override;
+
 	void SetSteePillarFloorGroup(class SteePillarFloorGroup* _stee_pillar_floor_group);
+
+	void SetIsDown(bool _isDown) { isDown_ = _isDown; }
 private:
 	class SteePillarFloorGroup* stee_pillar_floor_group_;	// ìSíåÇÃë´èÍÉOÉãÅ[Év
 
@@ -31,5 +35,8 @@ private:
 	class VelocityComponent* velocity_component_;
 	class GravityComponent* gravity_component_;
 	class ColliderBaseComponent* box_collider_component_;
+	class EventBaseComponent* event_component_;
+
+	bool isDown_ = false;	// óéâ∫Ç∑ÇÈÇ©Ç«Ç§Ç©
 };
 #endif // STEE_PILLAR_FLOOR_H_

@@ -104,11 +104,9 @@
     <ClCompile Include="SorceFiles\GameObjects\Component\TimerComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarRight.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarLeft.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarLeftTop.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarFloorGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarLeftGroup.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarRightGroup.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarRightTop.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.h" />
@@ -203,11 +201,9 @@
     <ClInclude Include="SorceFiles\GameObjects\Component\TimerComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarRight.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarLeft.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarLeftTop.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarFloorGroup.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarLeftGroup.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Group\SteePillarRightGroup.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarRightTop.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\drawColliderGS.hlsl">
