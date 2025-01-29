@@ -60,9 +60,8 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Robot:
 	{
-		auto robot = dynamic_cast<Robot*>(_other);
 
-		auto robotVelocity = robot->GetComponent<VelocityComponent>();
+		auto robotVelocity = _other->GetComponent<VelocityComponent>();
 		if (!robotVelocity) return;
 		// 速度がまだ変更されていないなら
 
@@ -87,7 +86,27 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Lift:
 	{
-		_other->GetComponent<VelocityComponent>()->SetSpeedRate(time_zone_component_->GetTimeRate());
+		auto velocity = _other->GetComponent<VelocityComponent>();
+		if (!velocity) return;
+		// 速度がまだ変更されていないなら
+
+		if (!velocity->GetChangeSpeedRateFlg())
+		{
+			// そのまま速度を変更
+			velocity->SetSpeedRate(time_zone_component_->GetTimeRate());
+			velocity->SetChangeSpeedRateFlg(true);
+			break;
+		}
+		// 変更されたことあるなら
+		else
+		{
+			// 倍率の高いほうをつかう
+			if (velocity->GetSpeedRate() < time_zone_component_->GetTimeRate())
+			{
+				velocity->SetSpeedRate(time_zone_component_->GetTimeRate());
+			}
+		}
+
 		break;
 	}
 	case GameObject::TypeID::SmokePipe:
