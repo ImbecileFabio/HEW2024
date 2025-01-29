@@ -14,9 +14,10 @@
 #include "../../GameManager.h"
 #include "../../TileMapManager.h"
 #include "Lift.h"
+#include "Gimmick/Smoke.h"
+#include "Gimmick/SmokePipe.h"
 
 #include "../Component.h"
-
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/RenderComponent/AnimationComponent.h"
@@ -37,7 +38,7 @@ Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
 	, robot_state_(RobotState::Move)
 {
-	sprite_component_ = new SpriteComponent(this, "robot_walk");	// スプライト
+	sprite_component_ = new SpriteComponent(this, "robot_walk",80);	// スプライト
 	animation_component_ = new AnimationComponent( this, sprite_component_);	// アニメーション
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
@@ -217,11 +218,16 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	{
 		auto pos = this->GetTransformComponent()->GetPosition();
 		auto robotMove = this->GetComponent<RobotMoveComponent>();
-
+		auto smoke = dynamic_cast<Smoke*>(_other);
+		auto smokepipe = dynamic_cast<SmokePipe*>(smoke->GetOwnerObj());
+		
 		//std::cout << std::format("Robot -> Smoke -> OnCollisionEnter\n");
-		this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x),
-														pos.y + 3.0f + (robotMove->GetSpeed() * robotMove->GetDirection().x) * _other->GetSize(),
+		if (smokepipe->GetBrakeFlg())
+			if (pos.y <= smoke->GetTransformComponent()->GetPosition().y + smoke->GetTransformComponent()->GetSize().y) {
+				this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x / smoke->GetSize()),
+														pos.y + fabs((robotMove->GetSpeed() * robotMove->GetDirection().x)) * smoke->GetSize(),
 														pos.z });
+			}
 		break;
 	}
 	case GameObject::TypeID::SteePillarFloor:
@@ -238,16 +244,3 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		break;
 	}
 }
-
-//void Robot::OnCollisionStay(GameObject* _other) {
-//	auto v = velocity_component_->GetVelocity();
-//
-//	switch (_other->GetType())
-//	{
-//	case GameObject::TypeID::Smoke:
-//
-//		velocity_component_->SetVelocity({ v.x,1.0f,v.z });
-//	default:
-//		break;
-//	}
-//}

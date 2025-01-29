@@ -14,6 +14,7 @@
 #include "../TileMapManager.h"
 #include "../InputManager.h"
 #include "../PemdulumManager.h"
+#include "../AudioManager.h"
 //--------------------------------------------------
 // @param	_gameManager シーンの所有者, _sceneName シーン名
 // @brief	コンストラクタ
@@ -146,6 +147,7 @@ void SceneBase::PauseWindow()
 		case 2:	// セレクト画面に戻る
 			game_manager_->ResetItemCount();
 			game_manager_->ChangeScene(SceneName::Title);
+			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 			break;
 		case 3:	// 操作説明を表示
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
