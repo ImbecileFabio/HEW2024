@@ -181,7 +181,6 @@ void PendulumMovementComponent::PendulumInit(DirectX::SimpleMath::Vector3 _fulcr
 	pendulumMovement_ = _movement;
 	maxPendulumAngle_ = _pendulumAngle;
 	SetPendulumAngle(0.0f);
-	//SetPendulumAngle(_pendulumAngle);
 }
 
 //--------------------------------------------------
