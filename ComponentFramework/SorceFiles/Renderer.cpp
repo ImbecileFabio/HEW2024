@@ -50,7 +50,7 @@ ID3D11BlendState* Renderer::m_BlendStateATC{}; // 特定のアルファテストとカバレッ
 //-----------------------------------------------------------------
 Renderer::Renderer()
 {
-	std::cout << std::format("[Renderer] -> Constructor\n");
+
 }
 
 //-----------------------------------------------------------------
@@ -58,7 +58,6 @@ Renderer::Renderer()
 //-----------------------------------------------------------------
 Renderer::~Renderer(void)
 {
-	std::cout << std::format("[Renderer] -> Destructor\n");
 	Uninit();
 }
 

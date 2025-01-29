@@ -34,8 +34,6 @@ GameObject::GameObject(GameManager* _gameManager, std::string _objectName)
 	, state_(State::Active)			// 状態
 	, re_compute_transform_(true)	// 姿勢情報の再計算
 {
-	std::cout << std::format("\n[{}] -> Constructor\n", object_name_);
-
 	// ゲームオブジェクトの登録
 	game_manager_->AddGameObject(this);
 	
@@ -58,7 +56,6 @@ GameObject::~GameObject(void)
 {
 	// ゲームオブジェクトの終了処理
 	this->Uninit();
-	std::cout << std::format("[{}] -> Destructor End\n\n", object_name_);
 }
 
 //--------------------------------------------------
@@ -66,7 +63,6 @@ GameObject::~GameObject(void)
 //--------------------------------------------------
 void GameObject::Init(void)
 {
-	std::cout << std::format("[{}] -> Init Start\n", object_name_);
 	// コンポーネントの初期化
 	this->InitComponent();
 }

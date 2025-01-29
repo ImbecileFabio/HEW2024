@@ -13,18 +13,16 @@
 // コンストラクタ
 //--------------------------------------------------
 VelocityComponent::VelocityComponent(GameObject* _owner, int _updateOrder)
-	:RigidbodyComponent(_owner, _updateOrder) {
-	std::cout << std::format("＜VelocityComponent＞ -> Constructor\n");
-
+	:RigidbodyComponent(_owner, _updateOrder)
+{
 	Init();
 }
 
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-VelocityComponent::~VelocityComponent() {
-	std::cout << std::format("＜VelocityComponent＞ -> Destructor\n");
-
+VelocityComponent::~VelocityComponent()
+{
 	Uninit();
 }
 
@@ -67,7 +65,6 @@ void VelocityComponent::Update() {
 
 	this->owner_->GetTransformComponent()->SetPosition(position_);
 
-//	std::cout << std::format("＜VelocityComponent＞ ->[{}] x : {}, y : {}\n", owner_->GetObjectName(), velocity_.x, velocity_.y);
 
 	// 速度係数が変更されていたらリセットする
 	if (is_change_speed_rate_flg_)

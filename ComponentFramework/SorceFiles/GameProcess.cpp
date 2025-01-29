@@ -60,8 +60,6 @@ GameProcess::~GameProcess(void)
 //--------------------------------------------------
 bool GameProcess::StartUp(void)
 {
-	std::cout << std::format("[GameProcess] -> StartUp\n\n");
-
 	return GameProcess::Init();
 }
 
@@ -120,7 +118,6 @@ void GameProcess::Run(void)
 #ifdef IMGUI_DEBUG
 				imGuiManager.ImGuiUpdate();
 #endif
-				//std::cout << std::format("\n[ GameLoop_Start ]\n");
 
 				InputManager::GetInstance().Update();	// InputManagerの更新
 
@@ -132,7 +129,6 @@ void GameProcess::Run(void)
 
 				if (game_manager_->GetEndFlag())	// ゲームマネージャーから終了フラグが立ったら
 					break;
-				//std::cout << std::format("[ GameLoop_End ]\n");
 			}
 			// 毎秒FPSをウィンドウタイトルに反映
 			DWORD currTime = static_cast<DWORD>(GetTickCount64());
@@ -160,8 +156,6 @@ void GameProcess::Run(void)
 //--------------------------------------------------
 void GameProcess::ShutDown(void)
 {
-	std::cout << std::format("[GameProcess] -> ShutDown\n");
-
 	GameProcess::Uninit();
 }
 
@@ -170,17 +164,13 @@ void GameProcess::ShutDown(void)
 //--------------------------------------------------
 bool GameProcess::Init(void)
 {
-	std::cout << std::format("[GameProcess] -> ◆Init Start◆\n");
 
-	{
-		// ウィンドウを生成
-		InitWnd();
+	// ウィンドウを生成
+	InitWnd();
 
-		// ゲームマネージャを生成
-		game_manager_ = game_manager_->Create();
-		assert(game_manager_);
-	}
-	std::cout << std::format("[GameProcess] -> ◇Init Finish◇\n");
+	// ゲームマネージャを生成
+	game_manager_ = game_manager_->Create();
+	assert(game_manager_);
 
 	return true;
 }
@@ -190,8 +180,6 @@ bool GameProcess::Init(void)
 //--------------------------------------------------
 void GameProcess::Uninit(void)
 {
-	std::cout << std::format("[GameProcess] -> ◆Uninit Start◆\n");
-
 	// ゲームマネージャの破棄
 	if (game_manager_ != nullptr)
 	{
@@ -200,8 +188,6 @@ void GameProcess::Uninit(void)
 	}
 
 	GameProcess::UninitWnd();
-	
-	std::cout << std::format("[GameProcess] -> ◇Uninit Finish◇\n\n");
 }
 
 //--------------------------------------------------
@@ -209,8 +195,6 @@ void GameProcess::Uninit(void)
 //--------------------------------------------------
 bool GameProcess::InitWnd(void)
 {
-	std::cout << std::format("[GameProcess] -> InitWnd Start\n");
-
 	// インスタンスハンドルを取得
 	auto hInst = GetModuleHandle(nullptr);
 	if (hInst == nullptr) { return false; }
@@ -276,8 +260,6 @@ bool GameProcess::InitWnd(void)
 	// ウィンドウにフォーカスを設定.
 	SetFocus(hWnd_);
 
-	std::cout << std::format("[GameProcess] -> InitWnd Finish\n");
-
 	// 正常終了.
 	return true;
 }
@@ -287,8 +269,6 @@ bool GameProcess::InitWnd(void)
 //--------------------------------------------------
 void GameProcess::UninitWnd(void)
 {
-	std::cout << std::format("[GameProcess] -> UninitWnd Start\n");
-
 	// ウィンドウの登録を解除
 	if(hInst_ != nullptr)
 	{
@@ -297,8 +277,6 @@ void GameProcess::UninitWnd(void)
 
 	hInst_ = nullptr;
 	hWnd_ = nullptr;
-
-	std::cout << std::format("[GameProcess] -> UninitWnd Finish\n\n");
 }
 
 

@@ -32,8 +32,6 @@ using namespace DirectX::SimpleMath;
 DebugColliderDrawComponent::DebugColliderDrawComponent(GameObject* _owner, int _drawOrder)
 	: RenderComponent(_owner, _drawOrder)
 {
-	std::cout << std::format("＜DebugColliderDrawComponent＞ -> Constructor\n");
-
 	// バッファ初期化
 	this->InitDebugBuffers();
 	this->Init();
@@ -44,7 +42,6 @@ DebugColliderDrawComponent::DebugColliderDrawComponent(GameObject* _owner, int _
 //--------------------------------------------------
 DebugColliderDrawComponent::~DebugColliderDrawComponent()
 {
-	std::cout << std::format("＜DebugColliderDrawComponent＞ -> Destructor\n");
 	Uninit();
 }
 
@@ -101,7 +98,6 @@ void DebugColliderDrawComponent::Draw()
 		}
 		else
 		{
-			std::cout << std::format("＜SpriteComponent＞ -> default position\n");
 			rot = Matrix::CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f);
 			pos = Matrix::CreateTranslation(0.0f, 0.0f, 0.0f);
 			scale = Matrix::CreateScale(100.0f, 100.0f, 100.0f);

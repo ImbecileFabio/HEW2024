@@ -177,7 +177,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Tile:
 	{
-		//std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
@@ -186,7 +185,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Lift:
 	{
-		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
 		auto lift = dynamic_cast<Lift*>(_other);
 
 		if (push_out_component_)
@@ -194,7 +192,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
 		}
 		break;
-		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
 		if (auto lift = dynamic_cast<Lift*>(_other))
 		{
 			// 乗っているリフトをセット
@@ -207,7 +204,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::WeakFloor:
 	{
-		//std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
@@ -217,22 +213,19 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Smoke:
 	{
 		auto pos = this->GetTransformComponent()->GetPosition();
-		auto robotMove = this->GetComponent<RobotMoveComponent>();
 		auto smoke = dynamic_cast<Smoke*>(_other);
 		auto smokepipe = dynamic_cast<SmokePipe*>(smoke->GetOwnerObj());
 		
-		//std::cout << std::format("Robot -> Smoke -> OnCollisionEnter\n");
 		if (smokepipe->GetBrakeFlg())
 			if (pos.y <= smoke->GetTransformComponent()->GetPosition().y + smoke->GetTransformComponent()->GetSize().y) {
-				this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x / smoke->GetSize()),
-														pos.y + fabs((robotMove->GetSpeed() * robotMove->GetDirection().x)) * smoke->GetSize(),
+				this->GetTransformComponent()->SetPosition({ pos.x,
+														pos.y + fabs((robot_move_component_->GetSpeed() * robot_move_component_->GetDirection().x)) * smoke->GetSize(),
 														pos.z });
 			}
 		break;
 	}
 	case GameObject::TypeID::SteePillarFloor:
 	{
-		std::cout << std::format("Robot -> SteePillarFloor -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
@@ -240,7 +233,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		break;
 	}
 	default:
-		//std::cout << std::format("Robot -> default -> OnCollisionEnter\n");
 		break;
 	}
 }

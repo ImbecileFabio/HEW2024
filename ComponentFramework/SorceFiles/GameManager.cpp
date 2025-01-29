@@ -28,7 +28,6 @@
 GameManager::GameManager()
 	:updating_game_objects_(false)
 {
-	std::cout << std::format("[GameManager] -> Constructor\n");
 	// レンダラー初期化
 	renderer_ = new Renderer();
 	renderer_->Init();
@@ -54,7 +53,6 @@ GameManager::GameManager()
 GameManager::~GameManager(void)
 {
 	// 解放処理
-	std::cout << std::format("[GameManager] -> Destructor\n");
 	this->UninitAll();
 
 	delete current_scene_;
@@ -69,8 +67,6 @@ GameManager::~GameManager(void)
 //-----------------------------------------------------------------
 void GameManager::InitAll(void)
 {
-	std::cout << std::format("[GameManager] -> InitAll Start\n");
-
 	// オブジェクトリストの初期化
 	game_objects_.clear();
 	pending_game_objects_.clear();
@@ -87,8 +83,6 @@ void GameManager::InitAll(void)
 //-----------------------------------------------------------------
 void GameManager::UninitAll(void)
 {
-	std::cout << std::format("[GameManager] -> UninitAll Start\n");
-
 	// ゲームオブジェクトの破棄
 	this->ClearAllObjects();
 }
@@ -136,8 +130,6 @@ void GameManager::GenerateOutputAll(void)
 //-----------------------------------------------------------------
 void GameManager::ClearAllObjects(void)
 {
-	std::cout << "クリアオールオブジェクト\n";
-
 	// 振り子マネージャとコライダーマネージャの初期化
 	pendulum_manager_->Uninit();
 	collider_manager_->UninitAll();
@@ -156,7 +148,6 @@ void GameManager::ClearAllObjects(void)
 
 	// 削除対象リスト内のオブジェクトを安全に削除
 	for (auto& obj : dead_game_objects) {
-		std::cout << std::format("\n[{}] -> delete\n", obj->GetObjectName());
 		delete obj;
 	}
 
@@ -178,10 +169,7 @@ void GameManager::TransitionToScene(SceneName _nextScene)
 	// フェードアウト開始
 	fade_manager_->StartFadeOut("fade_out", [this, _nextScene]() {
 		// フェードアウト終了時にシーンを切り替え
-	
-
 		ChangeScene(_nextScene);
-
 		// シーン変更後にフェードインを開始
 		fade_manager_->StartFadeIn("fade_in");
 
@@ -194,7 +182,6 @@ void GameManager::TransitionToScene(SceneName _nextScene)
 //-----------------------------------------------------------------
 void GameManager::ChangeScene(SceneName _nextScene) 
 {
-	std::cout << "\n[GameManager] -> ChangeScene\n";
 	// 前のシーン名を保存しておく
 	std::string old_scene_name = current_scene_->GetSceneName();
 	// 前のシーンのギア獲得数を保存

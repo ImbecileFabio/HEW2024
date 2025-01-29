@@ -100,7 +100,6 @@ std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _textureN
 		lru_list_.push_front(_textureName);
 		lru_map_[_textureName] = lru_list_.begin();
 
-		std::cout << std::format("＜TextureManager＞ -> {} GetTexture Success\n", _textureName);
 		return texture;
 	}
 
@@ -179,9 +178,9 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// 柱, 通常
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 欠け
 	// 煙
-	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f, 16.0f }, { 30.0f, 15.0f }, true, 4, 8, 0.05f, 31);	// 煙本体 512, 1024
-	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png", { 0.0f, 16.0f }, { 3.0f, 1.5f });		// 柱の奥
-	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png", { 0.0f, 16.0f }, { 3.0f, 1.5f });	// 柱の手前
+	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f, 0.0f }, { 2.25f, 1.5f }, true, 4, 8, 0.05f, 31);	// 煙本体 512, 1024
+	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png", { 0.0f, 6.0f }, { 2.0f, 1.25f });		// 柱の奥
+	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png", { 0.0f, 6.0f }, { 2.0f, 1.25f });	// 柱の手前
 	// 滑車
 	RegisterTexture("pulley", GIMMICK_PATH"pulley/v01/pulley_01.png");
 	// タイムゾーン

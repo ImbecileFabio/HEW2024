@@ -25,8 +25,6 @@ using namespace DirectX::SimpleMath;
 CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 {
-	std::cout << std::format("ƒCamelaComponent„ -> Constructor\n");
-
 	this->Init();
 }
 
@@ -35,8 +33,6 @@ CameraComponent::CameraComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 CameraComponent::~CameraComponent()
 {
-	std::cout << std::format("ƒCamelaComponent„ -> Destructor\n");
-
 	Uninit();
 }
 
@@ -73,7 +69,6 @@ void CameraComponent::Update()
 	}
 	else
 	{
-		std::cout << std::format("ƒCameraComponent„ -> Default Position\n");
 		view_matrix_ = DirectX::XMMatrixLookAtLH(Vector3(0, 0, -1), Vector3(0.f, 0.f, 1.f), up);
 	}
 
