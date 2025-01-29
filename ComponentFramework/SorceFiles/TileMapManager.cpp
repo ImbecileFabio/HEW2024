@@ -10,11 +10,15 @@
 // 1. タイル
 // 8. 壁
 // 2. 22. 222. 脆いタイル
+// 8. 右向き壁
+// 9, 左向き壁
+// 2. 脆いタイル
 // 3, 33, 333. 振り子
 // 4. 44, 444, 鉄柱の足場
 // 5. 鉄柱の右柱
 // 6. 鉄柱の左柱
-// 7. 排煙管
+// 7. 排煙管の始点
+// 10. 排煙管の終点
 // 
 // 100~109. リフトの始点(Short)
 // 110~119. リフトの終点
@@ -25,7 +29,7 @@
 // 300~309. リフトの始点(Long)
 // 310~319. リフトの終点
 // 
-//
+// 
 // 
 // 滑車
 //=================================================================
@@ -187,7 +191,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			if (left) {// 左にタイルがある
 				if (right) {// 右にタイルがある
 					sprite->SetTexture("weakfloor_center");	// 中央
-
+					
 				}
 				else {
 					sprite->SetTexture("weakfloor_right");	// 右
@@ -358,8 +362,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				}
 			}
 			// 左にタイルがない
-			else if (right) 
-			{// 右にタイルがある
+			else if (right) {// 右にタイルがある
 				sprite->SetTexture("steelpillar_floor_end_01");	// 左
 			}
 		}
@@ -532,23 +535,32 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		// タイルの位置とグループを関連付ける
 		stee_pillar_left_to_group_[{_x, _y}] = group;
 	}
-	else if (_tileID == 7)	// 排煙管
+	else if (_tileID == 7)	// 排煙管の始点
 	{
-		obj = new SmokePipe(game_manager_);
+		bool New = false;
+		// 煙の終点を探す
+		for (int i = 1; i < 10; i++) {
+			bool up = GetAdjacentTile(10, _x, _y, 0, -i);
+			if (up) {
+				obj = new SmokePipe(game_manager_, i + 1);
+				New = true;
+				break;
+			}
+		}
+		// 終点が見つからなかった場合、デフォルト（3マス）
+		if (!New) obj = new SmokePipe(game_manager_);
 	}
-	else if (_tileID == 8)	// 壁
-	{
-		obj = new Wall(game_manager_);
 
-		// 左に壁があるかどうか。
-		if (GetAdjacentTile(_tileID, _x, _y, -1, 0))
+		else if (_tileID == 8)	// 右向き壁
 		{
-			// あれば反転する
-			obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
+			obj = new Wall(game_manager_);
 		}
 
-	}
-
+		else if (_tileID == 9)	// 左向き壁
+		{
+			obj = new Wall(game_manager_);
+			obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
+		}
 
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
@@ -835,8 +847,6 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			// タイルの位置とグループを関連付ける
 			lift_tile_to_group_[{_x, _y}] = group;
 		}
-
-
 	}
 	else if (_tileID == 998)	// 歯車
 	{
