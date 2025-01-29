@@ -20,7 +20,6 @@
 #include "../../GameObjects/Component/PendulumMovementComponent.h"
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
-#include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
 #include "../../GameObjects/GameObject/Pendulum.h"
@@ -129,6 +128,8 @@ void Stage1_1Scene::Uninit()
 void Stage1_1Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
+	if (input.GetKeyTrigger(VK_R))
+		stageState_ = StageState::Rewind;
 	switch (stageState_)
 	{
 	case Stage1_1Scene::Game:

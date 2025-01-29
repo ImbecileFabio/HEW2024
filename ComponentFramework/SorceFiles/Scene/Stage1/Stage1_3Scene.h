@@ -24,15 +24,6 @@ public:
 	void Update() override;
 
 private:
-	enum State
-	{
-		Game,
-		Result,
-		Pouse,
-		Rewind
-	};
-	State state_;
-
 	// 作ったオブジェクトをここに記述
 	class BackGround* back_ground_{};			// 背景
 	class Camera* camera_{};					// カメラ

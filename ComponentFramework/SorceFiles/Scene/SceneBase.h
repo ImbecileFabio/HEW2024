@@ -39,6 +39,7 @@ public:
 	virtual void Update() = 0;	// シーン切り替えの条件とかをSceneのUpdateに書く感じだとおもいます
 
 	void HammerCountDown() { hammerMaxCount_--; }
+	int GetGearMaxCount() { return gearMaxCount_; }
 	bool GetIsHammerMax() { return isHammerMax_; }
 
 	std::string GetSceneName() const { return scene_name_; }								// 現在のシーン名を取得
