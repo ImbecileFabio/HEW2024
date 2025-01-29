@@ -58,7 +58,7 @@ void Stage1_4Scene::Init()
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 
-	stateStage_ = Game;
+	stageState_ = Game;
 
 	// GameManager‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
@@ -115,13 +115,13 @@ void Stage1_4Scene::Init()
 void Stage1_4Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	switch (stateStage_)
+	switch (stageState_)
 	{
 	case Stage1_4Scene::Game:
 		NumberChange();
 		if (game_manager_->GetItemCount() == gearCounter_1_4)
 		{
-			stateStage_ = Result;
+			stageState_ = Result;
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ƒ|[ƒY‰æ–Ê‚ÉˆÚ“®
@@ -136,7 +136,7 @@ void Stage1_4Scene::Update()
 				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-			stateStage_ = Pouse;
+			stageState_ = Pouse;
 		}
 		break;
 	case Stage1_4Scene::Result:
@@ -156,7 +156,7 @@ void Stage1_4Scene::Update()
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			stateStage_ = Game;
+			stageState_ = Game;
 		}
 		break;
 	case Stage1_4Scene::Rewind:
