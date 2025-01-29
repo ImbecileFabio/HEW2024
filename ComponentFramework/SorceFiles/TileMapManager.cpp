@@ -15,12 +15,12 @@
 // 4. 鉄柱の足場
 // 5. 鉄柱の右柱
 // 6. 鉄柱の左柱
-// 7. 排煙管
+// 7. 排煙管の始点
+// 10. 排煙管の終点
 // 
 // 100~109. リフトの始点
 // 110~119. リフトの終点
 // 
-//
 // 
 // 滑車00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 //=================================================================
@@ -127,7 +127,6 @@ void TileMapManager::GenerateGameObjects()
 			}
 		}
 	}
-	hogehoge();
 }
 
 //-----------------------------------------------------------------
@@ -182,7 +181,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			if (left) {// 左にタイルがある
 				if (right) {// 右にタイルがある
 					sprite->SetTexture("weakfloor_center");	// 中央
-
+					
 				}
 				else {
 					sprite->SetTexture("weakfloor_right");	// 右
@@ -247,15 +246,13 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				if (right) {// 右にタイルがある
 					sprite->SetTexture("steelpillar_floor_center");	// 中央
 					sprite->SetFlip(true, false);
-					sprite->SetUV();
 				}
 				else {
 					sprite->SetTexture("steelpillar_floor_end_02");	// 右
 				}
 			}
 			// 左にタイルがない
-			else if (right) 
-			{// 右にタイルがある
+			else if (right) {// 右にタイルがある
 				sprite->SetTexture("steelpillar_floor_end_01");	// 左
 			}
 		}
@@ -285,51 +282,29 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	else if (_tileID == 5)	// 鉄柱の右柱
 	{
 		obj = new SteePillarRight(game_manager_);
-		// 既存のグループを探す
-		SteePillarRightGroup* group = nullptr;
-		if (IsTileInGroup(_x - 1, _y, group) || IsTileInGroup(_x + 1, _y, group) ||
-			IsTileInGroup(_x, _y - 1, group) || IsTileInGroup(_x, _y + 1, group))
-		{
-			// 隣接グループが見つかった場合、そのグループに追加
-			group->AddSteePillarRightTile(obj);
-		}
-		else
-		{
-			// 新しいグループを作成
-			group = new SteePillarRightGroup(game_manager_);
-			group->AddSteePillarRightTile(obj);
-			stee_pillar_right_groups_.push_back(group); // グループリストに追加
-		}
-		// タイルの位置とグループを関連付ける
-		stee_pillar_right_to_group_[{_x, _y}] = group;
 	}
 	else if (_tileID == 6)	// 鉄柱の左柱
 	{
 		obj = new SteePillarLeft(game_manager_);
 		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);	// 左側だけ反転
 		obj->GetComponent<SpriteComponent>()->SetUV();
-		// 既存のグループを探す
-		SteePillarLeftGroup* group = nullptr;
-		if (IsTileInGroup(_x - 1, _y, group) || IsTileInGroup(_x + 1, _y, group) ||
-			IsTileInGroup(_x, _y - 1, group) || IsTileInGroup(_x, _y + 1, group))
-		{
-			// 隣接グループが見つかった場合、そのグループに追加
-			group->AddSteePillarLeftTile(obj);
-		}
-		else
-		{
-			// 新しいグループを作成
-			group = new SteePillarLeftGroup(game_manager_);
-			group->AddSteePillarLeftTile(obj);
-			stee_pillar_left_groups_.push_back(group); // グループリストに追加
-		}
-		// タイルの位置とグループを関連付ける
-		stee_pillar_left_to_group_[{_x, _y}] = group;
 	}
-	else if (_tileID == 7)	// 排煙管
+	else if (_tileID == 7)	// 排煙管の始点
 	{
-		obj = new SmokePipe(game_manager_);
+		bool New = false;
+		// 煙の終点を探す
+		for (int i = 1; i < 10; i++) {
+			bool up = GetAdjacentTile(10, _x, _y, 0, -i);
+			if (up) {
+				obj = new SmokePipe(game_manager_, i + 1);
+				New = true;
+				break;
+			}
+		}
+		// 終点が見つからなかった場合、デフォルト（3マス）
+		if (!New) obj = new SmokePipe(game_manager_);
 	}
+
 	else if (_tileID == 8)	// 右向き壁
 	{
 		obj = new Wall(game_manager_);
@@ -508,46 +483,4 @@ bool TileMapManager::IsTileInGroup(int x, int y, LiftGroup*& _group)
 	_group = nullptr;
 	return false;
 }
-bool TileMapManager::IsTileInGroup(int x, int y, SteePillarFloorGroup*& _group)
-{
-	auto it = stee_pillar_to_group_.find({ x, y });
-	if (it != stee_pillar_to_group_.end())
-	{
-		_group = it->second;
-		return true;
-	}
-	_group = nullptr;
-	return false;
-}
-bool TileMapManager::IsTileInGroup(int x, int y, SteePillarRightGroup*& _group)
-{
-	auto it = stee_pillar_right_to_group_.find({ x, y });
-	if (it != stee_pillar_right_to_group_.end())
-	{
-		_group = it->second;
-		return true;
-	}
-	_group = nullptr;
-	return false;
-}
-
-bool TileMapManager::IsTileInGroup(int x, int y, SteePillarLeftGroup*& _group)
-{
-	auto it = stee_pillar_left_to_group_.find({ x, y });
-	if (it != stee_pillar_left_to_group_.end())
-	{
-		_group = it->second;
-		return true;
-	}
-	_group = nullptr;
-	return false;
-}
-
-void TileMapManager::hogehoge()
-{
-	for (int i = 0; i < stee_pillar_floor_groups_.size(); i++)
-	{
-		stee_pillar_floor_groups_[i]->SetSteePillarLeftGroup(stee_pillar_left_groups_[i]);
-		stee_pillar_floor_groups_[i]->SetSteePillarRightGroup(stee_pillar_right_groups_[i]);
-	}
-}
+;

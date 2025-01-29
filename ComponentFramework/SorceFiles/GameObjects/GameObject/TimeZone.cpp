@@ -95,6 +95,20 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 		SmokeComponent* smoke = _other->GetComponent<SmokeComponent>();
 		if (time_zone_component_->GetActiveFlg()) {
 			smoke->SetTimeZoneFlg(true);
+			switch (state_)
+			{
+			case TimeZone::TimeZoneState::Slow:
+				smoke->SetTimeSpeed(0.5f);
+				break;
+			case TimeZone::TimeZoneState::Normal:
+				smoke->SetTimeSpeed(1.0f);
+				break;
+			case TimeZone::TimeZoneState::Fast:
+				smoke->SetTimeSpeed(1.5f);
+				break;
+			default:
+				break;
+			}
 		}
 		else {
 			smoke->SetTimeZoneFlg(false);
