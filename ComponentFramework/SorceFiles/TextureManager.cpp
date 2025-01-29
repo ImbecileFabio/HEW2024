@@ -154,7 +154,9 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("tile_left", TEXTURE_PATH"tile/v02/tile_left_01.png", { -6.0f, -3.0f }, { 1.2f, 1.5f });	// 左
 	RegisterTexture("tile_right", TEXTURE_PATH"tile/v02/tile_right_01.png", { 6.0f, -3.0f }, { 1.2f, 1.5f });	// 右
 	// 壁
-	RegisterTexture("tile_wall", TEXTURE_PATH"tile/v02/tile_wall_01.png", { 13.0f, 0.0f }, { 1.48f, 1.0f });		// 壁
+	RegisterTexture("wall_left", TEXTURE_PATH"tile/v02/tile_wall_01.png", { 9.0f, 0.0f }, { 1.2f, 1.0f });		// 壁（左向き）
+	RegisterTexture("wall_right", TEXTURE_PATH"tile/v02/tile_wall_01.png", { -9.0f, 0.0f }, { 1.2f, 1.0f });		// 壁（右向き）
+
 
 	/*--------------- ギミック ---------------*/
 	// リフト
