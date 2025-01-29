@@ -197,14 +197,14 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 #else
 	// Iキー（短くする）
 	if (IM.GetKeyTrigger(VK_I)) {
-		if (SPM->GetLangthState() != LangthState::shortLangth) {
-			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) - 1));
+		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::shortLangth) {
+			SPM->SetLangthState(static_cast<PendulumMovementComponent::LangthState>(static_cast<int>(SPM->GetLangthState()) - 1));
 		}
 	}
 	// Kキー（長くする）
 	if (IM.GetKeyTrigger(VK_K)) {
-		if (SPM->GetLangthState() != LangthState::longLangth) {
-			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) + 1));
+		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::longLangth) {
+			SPM->SetLangthState(static_cast<PendulumMovementComponent::LangthState>(static_cast<int>(SPM->GetLangthState()) + 1));
 		}
 	}
 #endif

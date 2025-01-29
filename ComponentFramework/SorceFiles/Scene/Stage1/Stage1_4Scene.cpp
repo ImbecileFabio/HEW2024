@@ -6,6 +6,9 @@
 #include "../../TileMapManager.h"
 #include "../../AudioManager.h"
 
+#include "../../GameObjects/GameObject.h"
+#include "../../GameObjects/GameObject/Player.h"
+#include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
 #include "../../GameObjects/GameObject/Pendulum.h"
@@ -22,13 +25,14 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 
-constexpr int gearCounter_1_4 = 1;		// ギアの獲得数
-constexpr int hammerCounter_1_4 = 3;	// 叩ける上限
+constexpr int gearCounter_1_4 = 2;		// ギアの獲得数
+constexpr int hammerCounter_1_4 = 2;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
 Stage1_4Scene::Stage1_4Scene(GameManager* _gameManager)
 	:SceneBase(_gameManager, "Stage1_4")
+	, state_(Game)
 {
 	Init();
 }
@@ -58,7 +62,7 @@ void Stage1_4Scene::Init()
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 
-	stageState_ = Game;
+	state_ = Game;
 
 	// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
@@ -115,13 +119,13 @@ void Stage1_4Scene::Init()
 void Stage1_4Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	switch (stageState_)
+	switch (state_)
 	{
 	case Stage1_4Scene::Game:
 		NumberChange();
 		if (game_manager_->GetItemCount() == gearCounter_1_4)
 		{
-			stageState_ = Result;
+			state_ = Result;
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
@@ -136,7 +140,7 @@ void Stage1_4Scene::Update()
 				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-			stageState_ = Pouse;
+			state_ = Pouse;
 		}
 		break;
 	case Stage1_4Scene::Result:
@@ -148,7 +152,6 @@ void Stage1_4Scene::Update()
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
-				isWindowOpen = false;
 				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全てポーズ状態に
 			}
 			for (auto& it : pauseButtons_)
@@ -157,9 +160,8 @@ void Stage1_4Scene::Update()
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			stageState_ = Game;
+			state_ = Game;
 		}
-		PauseWindow();
 		break;
 	case Stage1_4Scene::Rewind:
 		game_manager_->ResetItemCount();

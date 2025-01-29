@@ -22,8 +22,8 @@
 #include "../../GameObjects/Component/PendulumMovementComponent.h"
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
-constexpr int gearCounter_1_2 = 1;		// ƒMƒA‚ÌŠl“¾”
-constexpr int hammerCounter_1_2 = 3;	// ’@‚¯‚éãŒÀ
+constexpr int gearCounter_1_2 = 2;		// ƒMƒA‚ÌŠl“¾”
+constexpr int hammerCounter_1_2 = 2;	// ’@‚¯‚éãŒÀ
 //--------------------------------------------------
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //--------------------------------------------------

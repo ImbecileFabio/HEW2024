@@ -115,6 +115,7 @@
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_2Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_3Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_4Scene.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\FadeManager.h" />
@@ -221,6 +222,7 @@
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_2Scene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_3Scene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_4Scene.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\drawColliderGS.hlsl">

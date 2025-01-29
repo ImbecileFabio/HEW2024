@@ -8,18 +8,20 @@
 // 998. 歯車
 // 999. ロボット
 // 1. タイル
+// 8. 壁
 // 2. 脆いタイル
-// 3. 振り子
+// 3, 33, 333. 振り子
 // 4. 鉄柱の足場
 // 5. 鉄柱の右柱
 // 6. 鉄柱の左柱
+// 7. 排煙管
 // 
 // 100~109. リフトの始点
 // 110~119. リフトの終点
 // 
-// 200. けむりの始点 / 201. けむりの終点
+//
 // 
-// 滑車、鉄柱、
+// 滑車
 //=================================================================
 
 /*----- インクルード -----*/
@@ -32,6 +34,7 @@
 #include "TileMapManager.h"
 
 #include "GameObjects/GameObject/Tile.h"
+#include "GameObjects/GameObject/Wall.h"
 #include "GameObjects/GameObject/Gimmick/WeakFloor.h"
 #include "GameObjects/GameObject/Pendulum.h"
 
@@ -203,7 +206,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				group->AddWeakFloorTile(obj);
 				weak_floor_groups_.push_back(group); // グループリストに追加
 				// 振り子を生成 
-				auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f);
+				auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f, Pendulum::LangthState::Normal);
 				auto weakFloorGroup = dynamic_cast<WeakFloorGroup*>(group);
 				// 振り子と連動させたい振り子をセット
 				weakFloorGroup->SetPendulumANDMovement(pendulum_);
@@ -213,11 +216,20 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			weak_tile_to_group_[{_x, _y}] = group;
 		}
 	}
+
 	else if (_tileID == 3)	// 振り子
 	{
-		obj = new Pendulum(game_manager_, objPos, false, 30.f);
-
+		obj = new Pendulum(game_manager_, objPos, false, 30.0f, Pendulum::LangthState::Short);
 	}
+	else if (_tileID == 33)	
+	{
+		obj = new Pendulum(game_manager_, objPos, false, 30.0f, Pendulum::LangthState::Normal);
+	}
+	else if (_tileID == 333)
+	{
+		obj = new Pendulum(game_manager_, objPos, false, 30.0f, Pendulum::LangthState::Long);
+	}
+
 	else if (_tileID == 4)	// 鉄柱の足場
 	{
 		obj = new SteePillarFloor(game_manager_);
@@ -261,7 +273,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			group->AddSteePillarFloorTile(obj);
 			stee_pillar_floor_groups_.push_back(group); // グループリストに追加
 			// 振り子を生成 
-			auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f);
+			auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f, Pendulum::LangthState::Normal);
 			auto steePillarFloorGroup = dynamic_cast<SteePillarFloorGroup*>(group);
 			// 振り子と連動させたい振り子をセット
 			steePillarFloorGroup->SetPendulumANDMovement(pendulum_);
@@ -313,6 +325,24 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		// タイルの位置とグループを関連付ける
 		stee_pillar_left_to_group_[{_x, _y}] = group;
 	}
+	else if (_tileID == 7)	// 排煙管
+	{
+		obj = new SmokePipe(game_manager_);
+	}
+	else if (_tileID == 8)	// 壁
+	{
+		obj = new Wall(game_manager_);
+
+		// 左に壁があるかどうか。
+		if (GetAdjacentTile(_tileID, _x, _y, -1, 0))
+		{
+			// あれば反転する
+			obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
+		}
+
+	}
+
+
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
 		// リフトの終点を探す	見つからなかったらとりあえず初期位置に
@@ -397,7 +427,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				group->AddLiftTile(obj);
 				lift_groups_.push_back(group); // グループリストに追加
 				// 振り子を生成 
-				auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f);
+				auto pendulum_ = new Pendulum(game_manager_, Vector3(objPos.x, objPos.y, 0.0f), false, 30.f, Pendulum::LangthState::Normal);
 				auto liftGroup = dynamic_cast<LiftGroup*>(group);
 				// 振り子と連動させたい振り子をセット
 				liftGroup->SetPendulumANDMovement(pendulum_);
@@ -408,10 +438,6 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		}
 
 
-	}
-	else if (_tileID == 200)	// けむり
-	{
-		obj = new SmokePipe(game_manager_);
 	}
 	else if (_tileID == 998)	// 歯車
 	{
