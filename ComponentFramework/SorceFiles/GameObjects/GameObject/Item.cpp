@@ -36,7 +36,7 @@ Item::~Item()
 //--------------------------------------------------
 void Item::InitGameObject(void)
 {
-	transform_component_->SetSize(TILE_SIZE_X * 2, TILE_SIZE_Y * 2);
+	transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
 
 
 	sprite_component_->SetState(SpriteComponent::State::draw);
