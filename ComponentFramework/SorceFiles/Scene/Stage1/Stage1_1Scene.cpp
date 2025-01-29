@@ -163,6 +163,7 @@ void Stage1_1Scene::Update()
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
+				isWindowOpen = false;	// ウィンドウが開いている時にポーズボタンを押すとウィンドウを閉じる
 				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全てポーズ状態に
 			}
 			for (auto& it : pauseButtons_)

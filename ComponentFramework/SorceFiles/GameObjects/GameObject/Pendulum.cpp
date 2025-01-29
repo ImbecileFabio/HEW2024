@@ -134,8 +134,12 @@ void Pendulum::OnCollisionEnter(GameObject* _other)
 //--------------------------------------------------
 void Pendulum::NotDrawAndStopPendulum(void)
 {
-	game_manager_->GetPendulumManager()->RemoveGameObject(this);
+	game_manager_->GetPendulumManager()->RemoveGameObject(this);	// 振り子マネージャーから振り子を削除
+	game_manager_->GetPendulumManager()->PendulumSearch();
+
 	state_ = State::Dead;
+	time_zone_->SetState(State::Dead);
+	stick_->SetState(State::Dead);
 	sprite_component_->SetState(RenderComponent::State::notDraw);
 	time_zone_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	stick_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);

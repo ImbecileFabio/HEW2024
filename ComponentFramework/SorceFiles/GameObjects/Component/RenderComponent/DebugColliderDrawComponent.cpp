@@ -173,6 +173,5 @@ void DebugColliderDrawComponent::InitDebugBuffers()
 	// シェーダオブジェクト生成
 	shader_.Create(
 		"shader/drawColliderVS.hlsl",
-		"shader/drawColliderPS.hlsl",
-		"shader/drawColliderGS.hlsl");
+		"shader/drawColliderPS.hlsl");
 }

@@ -7,7 +7,7 @@
 #ifndef PULLEY_COMPONENT_H_
 #define PULLEY_COMPONENT_H_
 /*----- インクルード -----*/
-#include "../../Component.h"
+#include "../../../Component.h"
 /*----- 前方宣言 -----*/
 //--------------------------------------------------
 // 滑車ギミックコンポーネント

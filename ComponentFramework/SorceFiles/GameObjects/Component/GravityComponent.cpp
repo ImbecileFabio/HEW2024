@@ -69,7 +69,10 @@ void GravityComponent::Update()
 			}
 			return;
 		}
-		CheckGroundCollision();
+		if (is_robot_)
+		{
+			CheckGroundCollision();
+		}
 		// èdóÕìKóp
 		if (use_gravity_ && !is_ground_ && is_robot_)
 		{

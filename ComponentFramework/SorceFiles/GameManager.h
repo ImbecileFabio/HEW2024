@@ -19,15 +19,15 @@
 #include "Scene/Stage1/Stage1_3Scene.h"
 #include "Scene/Stage1/Stage1_4Scene.h"
 
-//#include "Scene/Stage2/Stage2_1Scene.h"
-//#include "Scene/Stage2/Stage2_2Scene.h"
-//#include "Scene/Stage2/Stage2_3Scene.h"
-//#include "Scene/Stage2/Stage2_4Scene.h"
-//
-//#include "Scene/Stage3/Stage3_1Scene.h"
-//#include "Scene/Stage3/Stage3_2Scene.h"
-//#include "Scene/Stage3/Stage3_3Scene.h"
-//#include "Scene/Stage3/Stage3_4Scene.h"
+#include "Scene/Stage2/Stage2_1Scene.h"
+#include "Scene/Stage2/Stage2_2Scene.h"
+#include "Scene/Stage2/Stage2_3Scene.h"
+#include "Scene/Stage2/Stage2_4Scene.h"
+
+#include "Scene/Stage3/Stage3_1Scene.h"
+#include "Scene/Stage3/Stage3_2Scene.h"
+#include "Scene/Stage3/Stage3_3Scene.h"
+#include "Scene/Stage3/Stage3_4Scene.h"
 
 /*----- 構造体定義 -----*/
 // シーン名	
@@ -79,6 +79,7 @@ public:
 	auto& GetRenderer(void) const { return renderer_; }
 	auto& GetColliderManager() const { return collider_manager_; }
 	auto& GetPendulumManager() const { return pendulum_manager_; }
+	auto& GetFadeManager() const { return fade_manager_; }
 	
 	auto& GetGameObjects() const { return game_objects_; }
 	auto& GetPendingGameObjects() const { return pending_game_objects_; }
@@ -93,8 +94,10 @@ public:
 	bool GetIsHammerMax() { return current_scene_->GetIsHammerMax(); }
 	// オブジェクトをすべてクリア
 	void ClearAllObjects(void);
+
+	void TransitionToScene(SceneName _nextScene);
 	// シーン切り替え
-	void ChangeScene(SceneName _scene);
+	void ChangeScene(SceneName _nextScene);
 
 	// ゲームオブジェクトの追加
 	void AddGameObject(GameObject* _gameObject);
@@ -109,17 +112,21 @@ private:
 	void UpdateGameObjects(float _deltaTime);
 	// シーン
 	SceneBase* current_scene_{};
+	bool is_transitioning_scene_{};	// シーン切り替え状態か
 
 	// オブジェクトが更新中か確認
 	bool updating_game_objects_;
 
 	class Renderer* renderer_{};	// レンダラー
+	class FadeManager* fade_manager_{};	// フェードマネージャ
+
 	class ColliderManager* collider_manager_{};				// コライダーマネージャー
 	class PendulumManager* pendulum_manager_{};				// 振り子マネージャー
 
 	// ゲームオブジェクト
 	std::vector<GameObject*> game_objects_{};			// ゲームオブジェクトコンテナ
 	std::vector<GameObject*> pending_game_objects_{};	// 待機コンテナ
+
 };
 
 

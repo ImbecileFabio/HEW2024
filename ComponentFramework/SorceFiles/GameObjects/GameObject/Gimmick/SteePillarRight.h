@@ -22,8 +22,16 @@ public:
 	TypeID GetType(void) override { return TypeID::SteePillarRight; }
 
 	void SetPillarRightGroup(class SteePillarRightGroup* _group);
+
+	void SetIsDown(bool _fg) { isDown_ = _fg; }
+	bool GetIsDown() { return isDown_; }
 private:
 	class SteePillarRightGroup* stee_pillar_right_group_;
-	class RenderComponent* sprite_component_;
+	class SpriteComponent*			   sprite_component_;
+	class AnimationComponent*		animation_component_;
+	class VelocityComponent*		 velocity_component_;
+	class GravityComponent*			  gravity_component_;
+
+	bool isDown_   = false;
 };
 #endif // STEE_PILLAR_H_

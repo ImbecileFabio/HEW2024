@@ -41,6 +41,7 @@ struct TextureInfo {
 	int cutU;				// 横分割数
 	int cutV;				// 縦分割数	
 	float animationSpeed;	// アニメーションスピード
+	int totalFrame;			// 総フレーム数
 };
 /*----- 前方宣言 -----*/
 
@@ -76,13 +77,11 @@ private:
 	// テクスチャの情報を保持
 	void RegisterTextureInfo(const std::string& _textureName, const TextureInfo& _textureInfo);
 
-		// テクスチャの登録
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f);	// すべて
-	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f);// オフセットなし
-
 	// テクスチャの登録
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f, int _totalFrame = 1);	// すべて
+	void RegisterTexture(const std::string& _imgName, const std::string& _fileName, bool _loopFlg = false, int _cutU = 1, int _cutV = 1, float _anmSpeed = 0.1f, int _totalFrame = 1);// オフセットなし
 
-// テクスチャの全登録
+	// テクスチャの情報登録
 	void RegisterAllTextures();
 	// 解放処理
 	void ClearCache(void);
@@ -90,7 +89,12 @@ private:
 	// テクスチャ情報
 	std::unordered_map<std::string, TextureInfo> texture_info_;
 	// テクスチャキャッシュ
-	std::unordered_map<std::string, std::shared_ptr<Texture>> texture_cache_;	
+	std::unordered_map<std::string, std::shared_ptr<Texture>> texture_cache_;
+
+	// LRUキャッシュ管理用
+	std::list<std::string> lru_list_;
+	std::unordered_map<std::string, std::list<std::string>::iterator> lru_map_;
+	size_t max_cache_size_ = 20; // 最大キャッシュサイズ
 
 };
 

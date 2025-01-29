@@ -96,6 +96,8 @@ public:
 	static void SetViewMatrix(DirectX::SimpleMath::Matrix* ViewMatrix);
 	static void SetProjectionMatrix(DirectX::SimpleMath::Matrix* ProjectionMatrix);
 
+	static auto GetRenderTargetView() { return m_RenderTargetView; }
+
 	// デバイスを返す
 	static ID3D11Device* GetDevice(void) { return m_Device; }
 	// デバイスコンテキストを返す
@@ -116,6 +118,8 @@ private:
 	static ID3D11DeviceContext* m_DeviceContext;
 	static IDXGISwapChain* m_SwapChain;
 	static ID3D11RenderTargetView* m_RenderTargetView;
+	static ID3D11Texture2D* render_target_texture_;
+	static ID3D11ShaderResourceView* render_target_SRV_;
 	static ID3D11DepthStencilView* m_DepthStencilView;
 
 	static ID3D11Buffer* m_WorldBuffer;

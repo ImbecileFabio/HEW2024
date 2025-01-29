@@ -8,11 +8,17 @@
 #include "SteePillarRight.h"
 #include "Group/SteePillarRightGroup.h"
 #include "../../Component/RenderComponent/SpriteComponent.h"
+#include "../../Component/RenderComponent/AnimationComponent.h"
+#include "../../Component/RigidbodyComponent/VelocityComponent.h"
+#include "../../Component/GravityComponent.h"
+using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
 SteePillarRight::SteePillarRight(GameManager* _gameManager)
 	:GameObject(_gameManager, "SteePillarRight")
+	, sprite_component_(nullptr)
+	, animation_component_(nullptr)
 {
 	this->InitGameObject();
 }
@@ -22,13 +28,22 @@ SteePillarRight::SteePillarRight(GameManager* _gameManager)
 SteePillarRight::~SteePillarRight(void)
 {
 	delete sprite_component_;
+	delete animation_component_;
+	delete gravity_component_;
+	delete velocity_component_;
 }
 //--------------------------------------------------
 // @brief 初期化処理
 //--------------------------------------------------
 void SteePillarRight::InitGameObject(void)
 {
-	sprite_component_ = new SpriteComponent(this, "steelpillar_pillar_normal");
+	sprite_component_ = new SpriteComponent(this, "steelpillar_pillar_normal", 1);
+	animation_component_ = new AnimationComponent(this, sprite_component_);
+	velocity_component_ = new VelocityComponent(this);
+	gravity_component_ = new GravityComponent(this);
+	gravity_component_->SetGravity(-1.2f);
+	gravity_component_->SetIsRobot(false);
+	gravity_component_->SetUseGravityFlg(false);
 }
 
 //--------------------------------------------------
@@ -36,6 +51,10 @@ void SteePillarRight::InitGameObject(void)
 //--------------------------------------------------
 void SteePillarRight::UpdateGameObject(void)
 {
+	if (isDown_)
+	{
+		gravity_component_->SetUseGravityFlg(true);
+	}
 
 }
 //--------------------------------------------------

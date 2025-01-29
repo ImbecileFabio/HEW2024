@@ -29,7 +29,7 @@ RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 	std::cout << std::format("ƒRenderComponent„ -> Constructor\n");
 
 	// •`‰æƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä“o˜^
-	this->owner_->GetGameManager()->GetRenderer()->AddSprite(this);
+	if (owner_) { owner_->GetGameManager()->GetRenderer()->AddSprite(this); }
 
 }
 
@@ -41,7 +41,7 @@ RenderComponent::~RenderComponent(void)
 	std::cout << std::format("ƒRenderComponent„ -> Destructor\n");
 
 	// •`‰æƒIƒuƒWƒFƒNƒg‚Æ‚µ‚Ä“o˜^‰ðœ
-	this->owner_->GetGameManager()->GetRenderer()->RemoveSprite(this);
+	if (owner_) { this->owner_->GetGameManager()->GetRenderer()->RemoveSprite(this); }
 
 
 

@@ -65,5 +65,7 @@ public:
 	void	SetUseVelocity(const bool _use_velocity);
 	bool	GetUseVelocity() const;
 
+	void ResetVelocity() { velocity_ = DirectX::SimpleMath::Vector3::Zero; }
+
 	virtual TypeID GetComponentType() const override { return TypeID::VelocityComponent; }
 };

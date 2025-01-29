@@ -47,7 +47,7 @@ void AnimationComponent::Init(void)
 	frame_duration_ = texture->GetAnmSpeed();
 	is_loop_ = texture->GetLoopFlg();
 	// 分割数から総フレーム数を計算 (最後のフレームが何もなかったりすると透明になるかも)
-	total_frame_ = texture->GetCutU() * texture->GetCutV();
+	total_frame_ = texture->GetTotalFrame();
 
 }
 //--------------------------------------------------
@@ -69,7 +69,6 @@ void AnimationComponent::Update(void)
 	// 経過時間が超えたら
 	if (elapsed_time_ >= frame_duration_) {
 		elapsed_time_ -= frame_duration_;
-
 		++current_frame_;
 		// 総フレーム数を超えたら
 		if (current_frame_ >= total_frame_) {
@@ -83,7 +82,6 @@ void AnimationComponent::Update(void)
 				is_playing_ = false;
 			}
 		}
-
 		// UV座標を計算
 		UpdateUV();
 
@@ -122,7 +120,10 @@ void AnimationComponent::UpdateUV()
 	std::cout << "UV : " << uv.x << ",  " << uv.y << std::endl;
 	sprite_component_->SetUV(uv);
 }
-
+bool AnimationComponent::GetIsPlaying()
+{
+	return is_playing_;
+}
 void AnimationComponent::ResetAnimation()
 {
 	this->Init();

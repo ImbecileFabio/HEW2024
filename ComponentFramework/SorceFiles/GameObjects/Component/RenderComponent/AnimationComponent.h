@@ -29,7 +29,7 @@ public:
 
 	void UpdateUV();
 
-
+	bool GetIsPlaying();
 private:
 	SpriteComponent* sprite_component_{};	// アニメーションをするスプライトの参照を持つ
 
@@ -38,9 +38,8 @@ private:
 	int current_frame_;		// 現在のフレーム
 	float elapsed_time_;	// 経過時間
 	float frame_duration_;	// 1フレームの時間
-	bool is_loop_;				// ループするかどうか
+	bool is_loop_;			// ループするかどうか
 	bool is_playing_;		// アニメーションを再生中かどうか
-
 };
 
 #endif // ANIMATION_COMPONENT_H_

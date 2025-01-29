@@ -48,6 +48,7 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	// ギミック
 	, "LiftComponent"		// リフトギミック
 	, "LiftInteractionComponent"	// リフトとのやり取りコンポーネント
+	, "RailComponent"		// リフトのレール
 	, "PulleyComponent"		// 滑車ギミック
 	, "WeakFloorComponent"	// 脆い床ギミック
 	, "SteePillarComponent"	// 鉄柱ギミック
@@ -74,7 +75,7 @@ Component::Component(GameObject* _owner, int _updateOrder)
 		std::cout << std::format("[Component]-> UpdateOrder が範囲外で指定されました\n");
 		update_order_ = 0; 
 	}
-	owner_->AddComponent(this);
+	if (owner_) { owner_->AddComponent(this); }
 }
 
 //--------------------------------------------------
@@ -82,7 +83,7 @@ Component::Component(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 Component::~Component()
 {
-	owner_->RemoveComponent(this);
+	if (owner_) { owner_->RemoveComponent(this); }
 }
 
 

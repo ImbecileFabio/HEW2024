@@ -29,6 +29,7 @@ public:
 
 	void SetUseGravityFlg(bool _flg) { use_gravity_ = _flg; }	// 重力使用フラグセッター
 	void SetIsRobot(bool _flg) { is_robot_ = _flg; }			// ロボットフラグセッター
+	void SetGravity(float _gravity) { gravity_ = _gravity; }	// 重力セッター
 	bool GetIsGround() const { return is_ground_; }
 
     TypeID GetComponentType(void) const override { return TypeID::GravityComponent; }

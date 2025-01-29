@@ -62,9 +62,6 @@ void Stage1_4Scene::Init()
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 
-	auto obj = new Player(game_manager_);
-	obj->GetTransformComponent()->SetSize(100.0f, 100.0f);
-
 	state_ = Game;
 
 	// GameManager‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é

@@ -22,11 +22,20 @@ public:
 	TypeID GetType(void) override { return TypeID::SteePillarLeft; }
 
 	void SetPillarLeftGroup(class SteePillarLeftGroup* _group);
+
+	void SetIsDown(bool _fg) { isDown_ = _fg; }
+	bool GetIsDown() { return isDown_; }
 private:
 	class SteePillarLeftGroup* stee_pillar_left_group_;
 
 	class SpriteComponent* sprite_component_;
+	class AnimationComponent* animation_component_;
+	class VelocityComponent* velocity_component_;
+	class GravityComponent* gravity_component_;
+
 	bool offsetFg_ = false;
+	bool isDown_ = false;
 	DirectX::SimpleMath::Vector2 offset_;
+
 };
 #endif // STEE_PILLAR_H_
