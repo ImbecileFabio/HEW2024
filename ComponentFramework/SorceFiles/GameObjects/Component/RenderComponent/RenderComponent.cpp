@@ -26,7 +26,6 @@ RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 	: Component(_owner, _updateOrder)
 	, draw_order_(_updateOrder)
 {
-	std::cout << std::format("＜RenderComponent＞ -> Constructor\n");
 
 	// 描画オブジェクトとして登録
 	if (owner_) { owner_->GetGameManager()->GetRenderer()->AddSprite(this); }
@@ -38,13 +37,8 @@ RenderComponent::RenderComponent(GameObject* _owner, int _updateOrder)
 //--------------------------------------------------
 RenderComponent::~RenderComponent(void)
 {
-	std::cout << std::format("＜RenderComponent＞ -> Destructor\n");
-
 	// 描画オブジェクトとして登録解除
 	if (owner_) { this->owner_->GetGameManager()->GetRenderer()->RemoveSprite(this); }
-
-
-
 }
 //--------------------------------------------------
 // バッファ初期化

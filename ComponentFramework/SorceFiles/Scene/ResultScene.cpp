@@ -61,67 +61,67 @@ void ResultScene::Init()
 	if (old_scene_name_ == "Stage1_1")	// リザルトの前のシーンによって次のシーンを変更
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage1_2);
+			game_manager_->TransitionToScene(SceneName::Stage1_2);
 			};
 	}
 	if (old_scene_name_ == "Stage1_2")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage1_3);
+			game_manager_->TransitionToScene(SceneName::Stage1_3);
 			};
 	}
 	if (old_scene_name_ == "Stage1_3")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage1_4);
+			game_manager_->TransitionToScene(SceneName::Stage1_4);
 			};
 	}
 	if (old_scene_name_ == "Stage1_4")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage2_1);
+			game_manager_->TransitionToScene(SceneName::Stage2_1);
 			};
 	}
 	if (old_scene_name_ == "Stage2_1")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage2_2);
+			game_manager_->TransitionToScene(SceneName::Stage2_2);
 			};
 	}
 	if (old_scene_name_ == "Stage2_2")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage2_3);
+			game_manager_->TransitionToScene(SceneName::Stage2_3);
 			};
 	}
 	if (old_scene_name_ == "Stage2_3")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage2_4);
+			game_manager_->TransitionToScene(SceneName::Stage2_4);
 			};
 	}
 	if (old_scene_name_ == "Stage2_4")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage3_1);
+			game_manager_->TransitionToScene(SceneName::Stage3_1);
 			};
 	}
 	if (old_scene_name_ == "Stage3_1")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage3_2);
+			game_manager_->TransitionToScene(SceneName::Stage3_2);
 			};
 	}
 	if (old_scene_name_ == "Stage3_2")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage3_3);
+			game_manager_->TransitionToScene(SceneName::Stage3_3);
 			};
 	}
 	if (old_scene_name_ == "Stage3_3")
 	{
 		func = [this]() {
-			game_manager_->ChangeScene(SceneName::Stage3_4);
+			game_manager_->TransitionToScene(SceneName::Stage3_4);
 			};
 	}
 	if (old_scene_name_ == "Stage3_4")
@@ -129,7 +129,7 @@ void ResultScene::Init()
 		// 最後のステージは特殊なリザルト？
 	}
 	select_button_functions_[0] = [this]() {	// ボタンに関数を登録
-		game_manager_->ChangeScene(SceneName::Title);
+		game_manager_->TransitionToScene(SceneName::Title);
 		};
 	select_button_functions_[1] = [func]() {	// ifの結果を代入
 		func();

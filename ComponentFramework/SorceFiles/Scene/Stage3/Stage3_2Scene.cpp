@@ -144,7 +144,7 @@ void Stage3_2Scene::Update()
 		}
 		break;
 	case Stage3_2Scene::Result:
-		game_manager_->ChangeScene(SceneName::Result);
+		game_manager_->TransitionToScene(SceneName::Result);
 		break;
 	case Stage3_2Scene::Pouse:
 		// ‚±‚±‚Éƒ|[ƒY‰æ–Ê‚Å‚Ì‘€ì‚ð
@@ -167,7 +167,7 @@ void Stage3_2Scene::Update()
 		break;
 	case Stage3_2Scene::Rewind:
 		game_manager_->ResetItemCount();
-		game_manager_->ChangeScene(SceneName::Stage3_2);
+		game_manager_->TransitionToScene(SceneName::Stage3_2);
 		break;
 	default:
 		break;

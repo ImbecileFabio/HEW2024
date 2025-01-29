@@ -26,8 +26,6 @@ StickMoveComponent::StickMoveComponent(GameObject* _owner, Pendulum* _pendulum, 
 	, length_state_(LengthState::Middle)
 	, stick_length_{}
 {
-	std::cout << std::format("ƒStickMoveComponent„ -> Constructor\n");
-
 	owner_transform_ = owner_->GetTransformComponent();
 	pendulum_transform_ = owner_pendulum_->GetTransformComponent();
 	this->Init();
@@ -38,7 +36,6 @@ StickMoveComponent::StickMoveComponent(GameObject* _owner, Pendulum* _pendulum, 
 //--------------------------------------------------
 StickMoveComponent::~StickMoveComponent()
 {
-	std::cout << std::format("ƒStickMoveComponent„ -> Destructor\n");
 	this->Uninit();
 }
 

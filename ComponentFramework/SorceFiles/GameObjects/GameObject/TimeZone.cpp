@@ -17,7 +17,6 @@ TimeZone::TimeZone(GameManager* _gameManager, GameObject* _ownerPendulum)
 	: GameObject(_gameManager, "TimeZone")
 	, owner_pendulum_(_ownerPendulum)
 {
-	std::cout << std::format("ƒTimeZone„ -> Constructor\n");
 	sprite_component_		 = new SpriteComponent(this, "timezone", 11);
 	collider_base_component_ = new CircleColliderComponent(this);
 	event_base_component_ = new ColliderEventComponent(this);

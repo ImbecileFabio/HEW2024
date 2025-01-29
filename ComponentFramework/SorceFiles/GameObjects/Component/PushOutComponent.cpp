@@ -60,7 +60,6 @@ void PushOutComponent::ResolveCollision(GameObject* _other) {
     auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider);
 
     if (!myBoxCollider || !otherBoxCollider) {
-		std::cout << "PushOutComponent::ResolveCollision -> BoxColliderComponent Not Found\n";
         return;
     }
        // ˆÊ’u‚ðŽæ“¾

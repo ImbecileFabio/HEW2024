@@ -30,8 +30,6 @@ using namespace DirectX::SimpleMath;
 SpriteComponent::SpriteComponent(GameObject* _owner, const std::string _imgname, int _drawOrder)
 	: RenderComponent(_owner, _drawOrder)
 {
-	std::cout << std::format("＜SpriteComponent＞ -> Constructor\n");
-	
 	// テクスチャ取得
 	texture_ = TextureManager::GetInstance().GetTexture(_imgname);
 	if (!texture_)
@@ -49,7 +47,6 @@ SpriteComponent::SpriteComponent(GameObject* _owner, const std::string _imgname,
 //--------------------------------------------------
 SpriteComponent::~SpriteComponent()
 {
-	std::cout << std::format("＜SpriteComponent＞ -> Destructor\n");
 
 	Uninit();
 }
@@ -110,7 +107,6 @@ void SpriteComponent::Draw()
 	}
 	else 
 	{
-		std::cout << std::format("＜SpriteComponent＞ -> default position\n");
 		rot = Matrix::CreateFromYawPitchRoll(0.0f, 0.0f, 0.0f);
 		pos = Matrix::CreateTranslation(0.0f, 0.0f, 0.0f);
 		scale = Matrix::CreateScale(1.0f, 1.0f, 1.0f);

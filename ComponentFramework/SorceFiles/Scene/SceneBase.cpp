@@ -23,7 +23,6 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 	: game_manager_(_gameManager)	// Š—LÒ
 	, scene_name_(_sceneName)		// ƒV[ƒ“–¼
 {
-	std::cout << std::format("\n[{}] -> Constructor\n", scene_name_);
 	tile_map_manager_ = std::make_unique<TileMapManager>(game_manager_);
 
 	stageUIs_[0] = new Revolution(game_manager_, "stageUI", "stageUI",2);
@@ -75,7 +74,7 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 
 SceneBase::~SceneBase()
 {
-	std::cout << std::format("[{}] -> Destructor\n", scene_name_);
+
 }
 
 void SceneBase::PauseWindow()

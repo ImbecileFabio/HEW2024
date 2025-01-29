@@ -31,6 +31,8 @@ Wall::Wall(GameManager* _gameManager)
 	auto f = std::function<void(GameObject*)>(std::bind(&Wall::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
 
+	//collider_component_->SetOffset();
+
 	InitGameObject();
 }
 //--------------------------------------------------

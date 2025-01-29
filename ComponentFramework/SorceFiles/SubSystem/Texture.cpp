@@ -72,8 +72,8 @@ bool Texture::Load(const std::string& filename)
 }
 
 // テクスチャをメモリからロード
-bool Texture::LoadFromFemory(const unsigned char* Data,int len) {
-
+bool Texture::LoadFromFemory(const unsigned char* Data,int len)
+{
 	bool sts = true;
 	unsigned char* pixels;
 

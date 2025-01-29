@@ -55,17 +55,14 @@ void ColliderEventComponent::AddEvent(std::function<void(GameObject* _other)>&_e
 	generalId_++;
 	id_ = generalId_;
 	this->functions_[id_] = _event;
-	std::cout << std::format("＜ColliderEventComponent＞ -> イベント追加\n");
 }
 
 void ColliderEventComponent::RemoveEvent()
 {	
-	std::cout << std::format("＜ColliderEventComponent＞ -> イベント削除実行\n");
 	// 自身のIDをキーとして、渡されたイベントを削除
 	auto it = functions_.find(id_);
 	if (it != functions_.end())
 	{
-		std::cout << std::format("＜ColliderEventComponent＞ -> イベントが削除\n");
 		functions_.erase(it);
 	}
 	else
