@@ -62,27 +62,41 @@ void PushOutComponent::ResolveCollision(GameObject* _other) {
     if (!myBoxCollider || !otherBoxCollider) {
         return;
     }
-       // 位置を取得
-    auto myPos = myTransform->GetPosition();
-    auto otherPos = otherTransform->GetPosition();
 
-    // 自分と相手の AABB を取得
+    // AABB を取得
     auto myhitbox = myBoxCollider->GetWorldHitBox();
     auto otherhitbox = otherBoxCollider->GetWorldHitBox();
 
+    // 衝突判定
+    if (myhitbox.max_.x > otherhitbox.min_.x &&
+        myhitbox.min_.x < otherhitbox.max_.x &&
+        myhitbox.max_.y > otherhitbox.min_.y &&
+        myhitbox.min_.y < otherhitbox.max_.y)
+    {
+        // 衝突の深さを計算
+        float overlapX = min(myhitbox.max_.x - otherhitbox.min_.x, otherhitbox.max_.x - myhitbox.min_.x);
+        float overlapY = min(myhitbox.max_.y - otherhitbox.min_.y, otherhitbox.max_.y - myhitbox.min_.y);
 
-
-    // 衝突しているか判定
-        if (myhitbox.max_.x > otherhitbox.min_.x &&
-            myhitbox.min_.x < otherhitbox.max_.x &&
-            myhitbox.max_.y > otherhitbox.min_.y &&
-            myhitbox.min_.y < otherhitbox.max_.y)
-        {
-            // ownerのサイズを取得（高さのみを使用）
-            float ownerHeight = myhitbox.max_.y - myhitbox.min_.y;
-
-            // 新しい位置を計算 (現在位置の y をサイズの半分だけ上げる)
-            auto myPos = myTransform->GetPosition();
-            myTransform->SetPosition({ myPos.x, otherhitbox.max_.y + ownerHeight / 2.0f, myPos.z });
+        // XとYどちらの衝突が深いかを判定
+        if (overlapX < overlapY) {
+            // 横方向の補正（左右の押し出し）
+            if (myhitbox.min_.x < otherhitbox.min_.x) {
+                myTransform->SetPosition({ otherhitbox.min_.x - (myhitbox.max_.x - myhitbox.min_.x) / 2.0f, myTransform->GetPosition().y, myTransform->GetPosition().z });
+            }
+            else {
+                myTransform->SetPosition({ otherhitbox.max_.x + (myhitbox.max_.x - myhitbox.min_.x) / 2.0f, myTransform->GetPosition().y, myTransform->GetPosition().z });
+            }
         }
+        else {
+            // 縦方向の補正（上または下からの押し出し）
+            if (myhitbox.min_.y < otherhitbox.min_.y) {
+                // 上から当たっている場合 → 床の上に補正
+                myTransform->SetPosition({ myTransform->GetPosition().x, otherhitbox.min_.y - (myhitbox.max_.y - myhitbox.min_.y) / 2.0f, myTransform->GetPosition().z });
+            }
+            else {
+                // 下から当たっている場合 → 床の下に補正
+                myTransform->SetPosition({ myTransform->GetPosition().x, otherhitbox.max_.y + (myhitbox.max_.y - myhitbox.min_.y) / 2.0f, myTransform->GetPosition().z });
+            }
+        }
+    }
 }

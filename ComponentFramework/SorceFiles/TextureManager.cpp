@@ -109,6 +109,48 @@ std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _textureN
 }
 
 //-----------------------------------------------------------------
+// @param  _imgName 画像名
+// @brief	テクスチャのプリロード
+//-----------------------------------------------------------------
+void TextureManager::LoadTexture(const std::string& _textureName)
+{
+	// キャッシュに存在する場合
+	auto it = texture_cache_.find(_textureName);
+	if (it != texture_cache_.end()) {
+		// LRUリストを更新
+		lru_list_.erase(lru_map_[_textureName]);
+		lru_list_.push_front(_textureName);
+		lru_map_[_textureName] = lru_list_.begin();
+		return;
+	}
+
+	// 新規テクスチャの生成
+	auto texInfo = texture_info_[_textureName];
+	auto texture = std::make_shared<Texture>(texInfo.offsetPos, texInfo.offsetSize, texInfo.loop, texInfo.cutU, texInfo.cutV, texInfo.animationSpeed, texInfo.totalFrame);
+	if (texture->Load(texInfo.filePath)) {
+		// キャッシュサイズの確認
+		if (texture_cache_.size() >= max_cache_size_) {
+			// 最後に使用された要素を削除
+			std::string old_texture = lru_list_.back();
+			lru_list_.pop_back();
+			lru_map_.erase(old_texture);
+			texture_cache_.erase(old_texture);
+		}
+
+		// 新しいテクスチャをキャッシュに追加
+		texture_cache_[_textureName] = texture;
+		lru_list_.push_front(_textureName);
+		lru_map_[_textureName] = lru_list_.begin();
+
+		return;
+	}
+
+	// 失敗
+	std::cout << std::format("＜TextureManager＞ -> {} GetTexture Error\n", _textureName);
+
+}
+
+//-----------------------------------------------------------------
 // @brief  すべてのテクスチャを登録する
 // 
 // テクスチャのoffsetを設定する際
@@ -170,9 +212,9 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("weakfloor_left", GIMMICK_PATH"weakfloor/v01/weakfloor_left_01.png", { -6.0f, -3.0f }, { 1.2f, 1.5f });		// 左
 	RegisterTexture("weakfloor_right", GIMMICK_PATH"weakfloor/v01/weakfloor_right_01.png", { 6.5f, -3.0f }, { 1.2f, 1.5f });	// 右
 	// 鉄柱
-	RegisterTexture("steelpillar_floor_center", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_center_01.png", { 0.0f, 8.0f }, { 1.0f, 1.25f });			// 床, 中央
-	RegisterTexture("steelpillar_floor_end_01", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_01.png", { -7.9f, 8.0f }, { 1.25f, 1.25f });			// 床, 左
-	RegisterTexture("steelpillar_floor_end_02", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_02.png", { 8.0f, 8.0f }, { 1.25f, 1.25f });			// 床, 右
+	RegisterTexture("steelpillar_floor_center", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_center_01.png", { 0.0f, -8.0f }, { 1.0f, 1.25f });			// 床, 中央
+	RegisterTexture("steelpillar_floor_end_01", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_01.png", { -7.9f, -8.0f }, { 1.25f, 1.25f });			// 床, 左
+	RegisterTexture("steelpillar_floor_end_02", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_02.png", { 8.0f, -8.0f }, { 1.25f, 1.25f });			// 床, 右
 
 	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png",		 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 上
 	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 下
@@ -180,7 +222,7 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// 柱, 通常
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 欠け
 	// 煙
-	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f, 0.0f }, { 2.25f, 1.5f }, true, 4, 8, 0.05f, 31);	// 煙本体 512, 1024
+	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f, 0.0f }, { 2.25f, 1.0f }, true, 4, 8, 0.05f, 31);	// 煙本体
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png", { 0.0f, 6.0f }, { 2.0f, 1.25f });		// 柱の奥
 	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png", { 0.0f, 6.0f }, { 2.0f, 1.25f });	// 柱の手前
 	// 滑車
