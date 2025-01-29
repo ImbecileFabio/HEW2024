@@ -64,6 +64,7 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 		auto robot = dynamic_cast<Robot*>(_other);
 
 		auto robotVelocity = robot->GetComponent<VelocityComponent>();
+		if (!robotVelocity) return;
 		// ‘¬“x‚ª‚Ü‚¾•ÏX‚³‚ê‚Ä‚¢‚È‚¢‚È‚ç
 
 		if (!robotVelocity->GetChangeSpeedRateFlg()) 

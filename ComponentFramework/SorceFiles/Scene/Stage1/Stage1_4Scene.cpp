@@ -6,9 +6,6 @@
 #include "../../TileMapManager.h"
 #include "../../AudioManager.h"
 
-#include "../../GameObjects/GameObject.h"
-#include "../../GameObjects/GameObject/Player.h"
-#include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
 #include "../../GameObjects/GameObject/Pendulum.h"
@@ -32,7 +29,6 @@ constexpr int hammerCounter_1_4 = 2;	// ’@‚¯‚éãŒÀ
 //--------------------------------------------------
 Stage1_4Scene::Stage1_4Scene(GameManager* _gameManager)
 	:SceneBase(_gameManager, "Stage1_4")
-	, state_(Game)
 {
 	Init();
 }
@@ -62,7 +58,7 @@ void Stage1_4Scene::Init()
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 
-	state_ = Game;
+	stageState_ = Game;
 
 	// GameManager‚Å¶¬‚µ‚ÄAColliderManager‚É“o˜^‚·‚é
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
@@ -119,13 +115,15 @@ void Stage1_4Scene::Init()
 void Stage1_4Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	switch (state_)
+	if (input.GetKeyTrigger(VK_R))
+		stageState_ = StageState::Rewind;
+	switch (stageState_)
 	{
 	case Stage1_4Scene::Game:
 		NumberChange();
 		if (game_manager_->GetItemCount() == gearCounter_1_4)
 		{
-			state_ = Result;
+			stageState_ = Result;
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ƒ|[ƒY‰æ–Ê‚ÉˆÚ“®
@@ -140,7 +138,7 @@ void Stage1_4Scene::Update()
 				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-			state_ = Pouse;
+			stageState_ = Pouse;
 		}
 		break;
 	case Stage1_4Scene::Result:
@@ -160,7 +158,7 @@ void Stage1_4Scene::Update()
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			state_ = Game;
+			stageState_ = Game;
 		}
 		break;
 	case Stage1_4Scene::Rewind:

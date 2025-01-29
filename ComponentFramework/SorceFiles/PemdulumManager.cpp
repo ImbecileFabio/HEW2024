@@ -30,6 +30,10 @@ void PendulumManager::PendulumSearch()
 				break;
 			}
 		}
+		if (!pSelectedPendulum)
+		{
+			pHammerCursor_->SetOriginPos({-1000.0f, 0.0f, 0.0f});
+		}	
 		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
 		pHammerCursor_->HammerCursorMove();
 }
@@ -195,16 +199,19 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 		}
 	}
 #else
+	//if (GM->GetIsHammerMax()) return;	
 	// Iキー（短くする）
 	if (IM.GetKeyTrigger(VK_I)) {
 		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::shortLangth) {
 			SPM->SetLangthState(static_cast<PendulumMovementComponent::LangthState>(static_cast<int>(SPM->GetLangthState()) - 1));
+			GM->HammerCountDown();
 		}
 	}
 	// Kキー（長くする）
 	if (IM.GetKeyTrigger(VK_K)) {
 		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::longLangth) {
 			SPM->SetLangthState(static_cast<PendulumMovementComponent::LangthState>(static_cast<int>(SPM->GetLangthState()) + 1));
+			GM->HammerCountDown();
 		}
 	}
 #endif
