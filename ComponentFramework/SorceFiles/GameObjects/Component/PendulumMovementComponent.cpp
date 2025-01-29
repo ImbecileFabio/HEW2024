@@ -47,6 +47,8 @@ void PendulumMovementComponent::Init() {
 	pendulumMovement_ = false;
 	pendulumSelected_ = false;
 	pendulumDirection_ = 1;
+
+	m_langeState = 1;
 }
 
 //--------------------------------------------------
