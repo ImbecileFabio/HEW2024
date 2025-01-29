@@ -223,9 +223,11 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		
 		//std::cout << std::format("Robot -> Smoke -> OnCollisionEnter\n");
 		if (smokepipe->GetBrakeFlg())
-			this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x),
+			if (pos.y <= smoke->GetTransformComponent()->GetPosition().y + smoke->GetTransformComponent()->GetSize().y) {
+				this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x / smoke->GetSize()),
 														pos.y + fabs((robotMove->GetSpeed() * robotMove->GetDirection().x)) * smoke->GetSize(),
 														pos.z });
+			}
 		break;
 	}
 	case GameObject::TypeID::SteePillarFloor:

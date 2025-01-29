@@ -56,5 +56,7 @@ void Smoke::UpdateGameObject() {
 	auto transform = this->GetTransformComponent();
 	transform->SetPosition(m_ownerObj->GetTransformComponent()->GetPosition().x,
 		m_ownerObj->GetTransformComponent()->GetPosition().y + (m_smokeSize * (m_gimmickSize - 1) / 2));
-	collider_component_->SetSize(this->GetTransformComponent()->GetSize());
+	collider_component_->SetSize(Vector3(this->GetTransformComponent()->GetSize().x,
+		this->GetTransformComponent()->GetSize().y - 10.0f,
+		this->GetTransformComponent()->GetSize().z));
 }
