@@ -259,7 +259,7 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("stageselect_return", SCENE_PATH"stageselect/v01/return_title_button_01.png");
 	RegisterTexture("stageselect_right", SCENE_PATH"stageselect/v01/right_button_01.png");
 	RegisterTexture("stageselect_left", SCENE_PATH"stageselect/v01/left_button_01.png");
-	RegisterTexture("stageselect_chapter", SCENE_PATH"stageselect/v01/chapter_numbers_01.png", false, 3, 1, 1.0f, 3);
+	RegisterTexture("stageselect_chapter", SCENE_PATH"stageselect/v02/chapter_numbers_01.png", false, 4, 2, 1.0f, 3);
 	RegisterTexture("stageselect_gear_left", SCENE_PATH"stageselect/v01/gear_left_rotation_01.png", true, 4, 4, 0.5f, 16);
 	RegisterTexture("stageselect_gear_right", SCENE_PATH"stageselect/v01/gear_right_rotation_01.png", true, 4, 4, 0.5f, 16);
 	RegisterTexture("stageselect_stage_numbers_s", SCENE_PATH"stageselect/v01/stage_numbers_s_01.png", false, 4, 4, 1.0f, 15);

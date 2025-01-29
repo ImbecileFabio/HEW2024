@@ -402,7 +402,7 @@ void TitleScene::MoveSelect()
 
 	if (chapter_ == 0)
 	{
-		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 0.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 3.0f * frameSize.x, 0.0f * frameSize.y });
 		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 2.0f * frameSize.x, 0.0f * frameSize.y });
 		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
 		switch (stage_)
@@ -433,7 +433,7 @@ void TitleScene::MoveSelect()
 	}
 	else if (chapter_ == 1)
 	{
-		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 0.0f * frameSize.x, 1.0f * frameSize.y });
 		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 0.0f * frameSize.x, 0.0f * frameSize.y });
 		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 2.0f * frameSize.x, 0.0f * frameSize.y });
 		switch (stage_)
@@ -464,7 +464,7 @@ void TitleScene::MoveSelect()
 	}
 	else if (chapter_ == 2)
 	{
-		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 2.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 1.0f * frameSize.y });
 		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
 		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 0.0f * frameSize.x, 0.0f * frameSize.y });
 		switch (stage_)
@@ -494,8 +494,20 @@ void TitleScene::MoveSelect()
 		}
 	}
 	// ”ÍˆÍŠO‚Ìˆ—
-	if (chapter_ > CHAPTER_MAX) chapter_ = 0;
-	if (chapter_ < 0) chapter_ = 3;
-	if (stage_ < 0) stage_ = 3;
-	if (stage_ > STAGE_MAX) stage_ = 0;
+	if (chapter_ > CHAPTER_MAX)
+	{
+		chapter_ = 0;
+	}
+	if (chapter_ < 0)
+	{
+		chapter_ = 3;
+	}
+	if (stage_ < 0)
+	{
+		stage_ = 3;
+	}
+	if (stage_ > STAGE_MAX)
+	{
+		stage_ = 0;
+	}
 }

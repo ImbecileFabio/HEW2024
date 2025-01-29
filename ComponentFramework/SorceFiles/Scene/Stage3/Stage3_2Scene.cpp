@@ -117,6 +117,8 @@ void Stage3_2Scene::Init()
 void Stage3_2Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
+	if (input.GetKeyTrigger(VK_R))
+		stageState_ = StageState::Rewind;
 	switch (stageState_)
 	{
 	case Stage3_2Scene::Game:

@@ -50,7 +50,7 @@ void Item::OnCollisionEnter(GameObject* _other)
 {
 	switch (_other->GetType())
 	{
-	case GameObject::TypeID::Robot:
+		case GameObject::TypeID::Robot:
 		// ƒƒ{ƒbƒg‚ªÚG‚µ‚½‚ç
 		std::cout << "Item -> Robot -> OnCollisionEnter\n" << std::endl;
 		this->GetGameManager()->itemCountUp();
