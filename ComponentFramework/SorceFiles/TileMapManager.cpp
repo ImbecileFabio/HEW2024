@@ -367,7 +367,16 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	}
 	else if (_tileID == 200)	// ‚¯‚Þ‚è
 	{
-		obj = new SmokePipe(game_manager_);
+		bool New = false;
+		for (int i = 1; i < 10;i++) {
+			bool up = GetAdjacentTile(201, _x, _y, 0, -i);
+			if (up) {
+				obj = new SmokePipe(game_manager_, i);
+				New = true;
+				break;
+			}
+		}
+		if (!New) obj = new SmokePipe(game_manager_);
 	}
 	else if (_tileID == 998)	// Ž•ŽÔ
 	{
