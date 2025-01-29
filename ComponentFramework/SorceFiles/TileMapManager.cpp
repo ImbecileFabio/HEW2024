@@ -191,7 +191,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			if (left) {// 左にタイルがある
 				if (right) {// 右にタイルがある
 					sprite->SetTexture("weakfloor_center");	// 中央
-					
+
 				}
 				else {
 					sprite->SetTexture("weakfloor_right");	// 右
@@ -216,7 +216,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				group->AddWeakFloorTile(obj);
 				weak_floor_groups_.push_back(group); // グループリストに追加
 				// 振り子を生成 
-				auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f, Pendulum::LangthState::Short);
+				auto pendulum_ = new Pendulum(game_manager_, objPos, true, 30.f, Pendulum::LangthState::Short);
 				auto weakFloorGroup = dynamic_cast<WeakFloorGroup*>(group);
 				// 振り子と連動させたい振り子をセット
 				weakFloorGroup->SetPendulumANDMovement(pendulum_);
@@ -331,7 +331,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	{
 		obj = new Pendulum(game_manager_, objPos, false, 30.0f, Pendulum::LangthState::Short);
 	}
-	else if (_tileID == 33)	
+	else if (_tileID == 33)
 	{
 		obj = new Pendulum(game_manager_, objPos, false, 30.0f, Pendulum::LangthState::Normal);
 	}
@@ -412,7 +412,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				}
 			}
 			// 左にタイルがない
-			else if (right) 
+			else if (right)
 			{// 右にタイルがある
 				sprite->SetTexture("steelpillar_floor_end_01");	// 左
 			}
@@ -463,7 +463,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 				}
 			}
 			// 左にタイルがない
-			else if (right) 
+			else if (right)
 			{// 右にタイルがある
 				sprite->SetTexture("steelpillar_floor_end_01");	// 左
 			}
@@ -551,16 +551,16 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		if (!New) obj = new SmokePipe(game_manager_);
 	}
 
-		else if (_tileID == 8)	// 右向き壁
-		{
-			obj = new Wall(game_manager_);
-		}
+	else if (_tileID == 8)	// 右向き壁
+	{
+		obj = new Wall(game_manager_);
+	}
 
-		else if (_tileID == 9)	// 左向き壁
-		{
-			obj = new Wall(game_manager_);
-			obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
-		}
+	else if (_tileID == 9)	// 左向き壁
+	{
+		obj = new Wall(game_manager_);
+		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
+	}
 
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
