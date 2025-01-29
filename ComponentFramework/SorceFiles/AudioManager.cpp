@@ -146,9 +146,9 @@ void AudioManager::Uninit(void) {
 // 再生/停止/一時停止
 //--------------------------------------------------
 void AudioManager::Play(SOUND_LABEL _label) {
+	m_pSourceVoice[(int)_label]->FlushSourceBuffers(); // バッファをクリア
 	// ボイスキューに新しいオーディオバッファーを追加
 	m_pSourceVoice[(int)_label]->SubmitSourceBuffer(&(m_buffer[(int)_label]));
-
 	// 再生
 	m_pSourceVoice[(int)_label]->Start(0);
 

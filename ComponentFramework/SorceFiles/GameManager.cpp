@@ -197,6 +197,8 @@ void GameManager::ChangeScene(SceneName _nextScene)
 	std::cout << "\n[GameManager] -> ChangeScene\n";
 	// 前のシーン名を保存しておく
 	std::string old_scene_name = current_scene_->GetSceneName();
+	// 前のシーンのギア獲得数を保存
+	int gearMaxCount = current_scene_->GetGearMaxCount();
 	// 現在のシーンの終了処理
 	if (current_scene_) {
 		try {
@@ -273,10 +275,14 @@ void GameManager::ChangeScene(SceneName _nextScene)
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Result:
+		{
 			itemCount = 0;
 			current_scene_ = new ResultScene(this);
+			auto result = dynamic_cast<ResultScene*>(current_scene_);
+			result->SetGearMaxNum(gearMaxCount);
 			current_scene_->SetOldSceneName(old_scene_name);
 			current_scene_->Init();
+		}
 			break;
 		default:
 			std::cout << std::format("[GameManager] -> ChangeScene Error\n");

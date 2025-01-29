@@ -64,6 +64,7 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 		auto robot = dynamic_cast<Robot*>(_other);
 
 		auto robotVelocity = robot->GetComponent<VelocityComponent>();
+		if (!robotVelocity) return;
 		// ‘¬“x‚ª‚Ü‚¾•ÏX‚³‚ê‚Ä‚¢‚È‚¢‚È‚ç
 
 		if (!robotVelocity->GetChangeSpeedRateFlg()) 
@@ -95,6 +96,20 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 		SmokeComponent* smoke = _other->GetComponent<SmokeComponent>();
 		if (time_zone_component_->GetActiveFlg()) {
 			smoke->SetTimeZoneFlg(true);
+			switch (state_)
+			{
+			case TimeZone::TimeZoneState::Slow:
+				smoke->SetTimeSpeed(0.5f);
+				break;
+			case TimeZone::TimeZoneState::Normal:
+				smoke->SetTimeSpeed(1.0f);
+				break;
+			case TimeZone::TimeZoneState::Fast:
+				smoke->SetTimeSpeed(1.5f);
+				break;
+			default:
+				break;
+			}
 		}
 		else {
 			smoke->SetTimeZoneFlg(false);
