@@ -8,6 +8,7 @@
 // 998. 歯車
 // 999. ロボット
 // 1. タイル
+// 8. 壁
 // 2. 脆いタイル
 // 3, 33, 333. 振り子
 // 4. 鉄柱の足場
@@ -33,6 +34,7 @@
 #include "TileMapManager.h"
 
 #include "GameObjects/GameObject/Tile.h"
+#include "GameObjects/GameObject/Wall.h"
 #include "GameObjects/GameObject/Gimmick/WeakFloor.h"
 #include "GameObjects/GameObject/Pendulum.h"
 
@@ -323,12 +325,24 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		// タイルの位置とグループを関連付ける
 		stee_pillar_left_to_group_[{_x, _y}] = group;
 	}
-	else if (_tileID == 7)
+	else if (_tileID == 7)	// 排煙管
 	{
 		obj = new SmokePipe(game_manager_);
-		
+	}
+	else if (_tileID == 8)	// 壁
+	{
+		obj = new Wall(game_manager_);
+
+		// 左に壁があるかどうか。
+		if (GetAdjacentTile(_tileID, _x, _y, -1, 0))
+		{
+			// あれば反転する
+			obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
+		}
 
 	}
+
+
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
 		// リフトの終点を探す	見つからなかったらとりあえず初期位置に

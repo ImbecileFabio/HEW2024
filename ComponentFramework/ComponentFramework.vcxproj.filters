@@ -100,6 +100,7 @@
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_2Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_3Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_4Scene.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\PushOutComponent.h" />
@@ -200,6 +201,7 @@
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_2Scene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_3Scene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_4Scene.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Asset\Texture\backdrop_02.png" />

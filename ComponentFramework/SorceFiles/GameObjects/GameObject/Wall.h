@@ -1,11 +1,11 @@
 //==================================================
-// [Tile.h] タイルオブジェクト
+// [Wall.h] 壁オブジェクト
 // 著者：有馬啓太
 //--------------------------------------------------
-// 説明：床のタイルオブジェクト
+// 説明：壁のタイルオブジェクト
 //==================================================
-#ifndef TILE_H_
-#define TILE_H_
+#ifndef WALL_H_
+#define WALL_H_
 
 /*----- インクルード -----*/
 #include <memory>
@@ -13,19 +13,19 @@
 
 /*----- 構造体定義 -----*/
 //--------------------------------------------------
-// タイルオブジェクト
+// 壁オブジェクト
 //--------------------------------------------------
-class Tile
+class Wall
 	: public GameObject
 {
 public:
-	Tile(GameManager* _gameManager);
-	~Tile(void);
+	Wall(GameManager* _gameManager);
+	~Wall(void);
 
-	void InitGameObject	 (void) override;
+	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
-	TypeID GetType(void) override { return TypeID::Tile; }
+	TypeID GetType(void) override { return TypeID::Wall; }
 
 	void OnCollisionEnter(GameObject* _other = nullptr) override;
 private:
@@ -36,4 +36,4 @@ private:
 
 
 };
-#endif	// TILE_H_
+#endif	// WALL_H_

@@ -45,6 +45,7 @@ public:
 		, Player
 		, Camera
 		, Tile
+		, Wall
 		, Robot
 		, Lift
 		, Item
