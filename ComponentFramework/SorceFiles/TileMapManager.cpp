@@ -484,3 +484,14 @@ bool TileMapManager::IsTileInGroup(int x, int y, LiftGroup*& _group)
 	return false;
 }
 ;
+bool TileMapManager::IsTileInGroup(int x, int y, SteePillarFloorGroup*& _group)
+{
+	auto it = stee_pillar_to_group_.find({ x, y });
+	if (it != stee_pillar_to_group_.end())
+	{
+		_group = it->second;
+		return true;
+	}
+	_group = nullptr;
+	return false;
+}
