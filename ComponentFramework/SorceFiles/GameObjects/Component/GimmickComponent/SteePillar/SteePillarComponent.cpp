@@ -1,15 +1,15 @@
 ////==================================================
-//// [SteePillarComponent.cpp] 鉄柱ギミックコンポーネントソース
+//// [SteePillarFloorDown.cpp] 鉄柱ギミックコンポーネントソース
 //// 著者：有馬啓太
 ////--------------------------------------------------
 //// 説明：鉄柱ギミックコンポーネントの定義
 ////==================================================
 ///*----- インクルード -----*/
-////#include "SteePillarComponent.h"
+//#include "SteePillarFloorDown.h"
 ////--------------------------------------------------
 //// @brief コンストラクタ
 ////--------------------------------------------------
-//SteePillarComponent::SteePillarComponent(GameObject* _owner, int _updateOrder)
+//SteePillarFloorMove::SteePillarFloorMove(GameObject* _owner, int _updateOrder)
 //	:Component(_owner, _updateOrder)
 //{
 //
@@ -20,7 +20,7 @@
 ////--------------------------------------------------
 //// @brief デストラクタ
 ////--------------------------------------------------
-//SteePillarComponent::~SteePillarComponent()
+//SteePillarFloorMove::~SteePillarFloorMove()
 //{
 //	this->Uninit();
 //}
@@ -28,19 +28,19 @@
 ////--------------------------------------------------
 //// @brief 初期化処理
 ////--------------------------------------------------
-//void SteePillarComponent::Init()
+//void SteePillarFloorMove::Init()
 //{
 //}
 ////--------------------------------------------------
 //// @brief 終了処理
 ////--------------------------------------------------
-//void SteePillarComponent::Uninit()
+//void SteePillarFloorMove::Uninit()
 //{
 //
 //}
 ////--------------------------------------------------
 //// @brief 更新処理
 ////--------------------------------------------------
-//void SteePillarComponent::Update()
+//void SteePillarFloorMove::Update()
 //{
 //}
