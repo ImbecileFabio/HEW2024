@@ -58,7 +58,8 @@ void PendulumMovementComponent::Uninit() {
 //--------------------------------------------------
 // XVˆ—
 //--------------------------------------------------
-void PendulumMovementComponent::Update() {	
+void PendulumMovementComponent::Update()
+{	
 	// U‚èq‚Ìó‘Ô‘JˆÚ
 	switch (langthState_)
 	{
@@ -181,6 +182,7 @@ void PendulumMovementComponent::PendulumInit(DirectX::SimpleMath::Vector3 _fulcr
 	pendulumMovement_ = _movement;
 	maxPendulumAngle_ = _pendulumAngle;
 	SetPendulumAngle(0.0f);
+	//SetPendulumAngle(_pendulumAngle);
 }
 
 //--------------------------------------------------

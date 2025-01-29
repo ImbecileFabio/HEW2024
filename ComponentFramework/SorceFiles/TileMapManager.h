@@ -57,7 +57,7 @@ private:
 	bool IsTileInGroup(int x, int y, SteePillarRightGroup*& _group);
 	bool IsTileInGroup(int x, int y, SteePillarLeftGroup*& _group);
 
-	void hogehoge();
+	void SteePillarFloorGroupSearch();
 private:
 	GameManager* game_manager_{};
 	std::vector<std::vector<std::vector<int>>> map_data_;

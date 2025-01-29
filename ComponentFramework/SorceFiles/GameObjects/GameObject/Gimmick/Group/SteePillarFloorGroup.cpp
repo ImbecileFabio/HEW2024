@@ -47,7 +47,6 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 	if (!isCenterMedian_)
 	{
 		if (steePillarFloorTiles_.empty()) return;
-		owner_pendulum_movement_->SetPendulumAngle(1.0f);
 		if (initialPositions_.empty()) // 初期位置のキャッシュがまだの場合
 		{
 			// 初期位置をキャッシュ

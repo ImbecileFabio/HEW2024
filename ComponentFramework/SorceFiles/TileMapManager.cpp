@@ -136,7 +136,7 @@ void TileMapManager::GenerateGameObjects()
 			}
 		}
 	}
-	hogehoge();
+	SteePillarFloorGroupSearch();
 }
 
 //-----------------------------------------------------------------
@@ -954,7 +954,7 @@ bool TileMapManager::IsTileInGroup(int x, int y, SteePillarLeftGroup*& _group)
 	return false;
 }
 
-void TileMapManager::hogehoge()
+void TileMapManager::SteePillarFloorGroupSearch()
 {
 	for (int i = 0; i < stee_pillar_floor_groups_.size(); i++)
 	{

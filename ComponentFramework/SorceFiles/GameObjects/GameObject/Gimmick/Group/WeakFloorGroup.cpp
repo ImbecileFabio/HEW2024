@@ -48,8 +48,7 @@ void WeakFloorGroup::UpdateGameObject(void)
     // 振り子を中心に調整する処理
     if (!isCenterMedian)
     {
-		owner_pendulum_movement_->SetPendulumAngle(1.0f);
-        size_t size = weakFloorTiles_.size();
+		size_t size = weakFloorTiles_.size();
         if (size == 0)
         {
             // タイルが存在しない場合は処理をスキップ
@@ -81,7 +80,7 @@ void WeakFloorGroup::UpdateGameObject(void)
         // 振り子の中心を設定
 		owner_pendulum_movement_->SetPendulumFulcrum(centerPos);
         isCenterMedian = true;
-    }
+    }		
 	// 脆い床が壊れたかどうかかつ、振り子が動いている場合
 	if (isWeakFloorBreak_ && owner_pendulum_movement_->GetPendulumMovement())
 	{
