@@ -38,6 +38,8 @@ void LiftGroup::UpdateGameObject(void)
     if (!isCenterMedian)
     {
         if (liftTiles_.empty()) return;
+        owner_pendulum_movement_->SetPendulumAngle(1.0f);
+
         if (initialPositions_.empty()) // 初期位置のキャッシュがまだの場合
         {
             // 初期位置をキャッシュ
