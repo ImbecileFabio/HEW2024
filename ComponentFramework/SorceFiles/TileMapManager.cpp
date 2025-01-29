@@ -13,13 +13,12 @@
 // 4. 鉄柱の足場
 // 5. 鉄柱の右柱
 // 6. 鉄柱の左柱
-// 7. 鉄柱の左一番上柱
-// 8. 鉄柱の右一番上柱
+// 7. 排煙管の始点
+// 8. 排煙管の終点
 // 
 // 100~109. リフトの始点
 // 110~119. リフトの終点
 // 
-// 200. けむりの始点 / 201. けむりの終点
 // 
 // 滑車、鉄柱、
 //=================================================================
@@ -40,8 +39,6 @@
 #include "GameObjects/GameObject/Gimmick/SmokePipe.h"
 #include "GameObjects/GameObject/Gimmick/SteePillarLeft.h"
 #include "GameObjects/GameObject/Gimmick/SteePillarRight.h"
-#include "GameObjects/GameObject/Gimmick/SteePillarLeftTop.h"
-#include "GameObjects/GameObject/Gimmick/SteePillarRightTop.h"
 #include "GameObjects/GameObject/Gimmick/SteePillarFloor.h"
 #include "GameObjects/GameObject/Gimmick/Pulley.h"
 
@@ -259,15 +256,22 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);	// 左側だけ反転
 		obj->GetComponent<SpriteComponent>()->SetUV();
 	}
-	else if (_tileID == 7)	// 鉄柱の一番上柱（左）
+	else if (_tileID == 7)	// 排煙管の始点
 	{
-		obj = new SteePillarLeftTop(game_manager_);
-		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);	// 左側だけ反転
-		obj->GetComponent<SpriteComponent>()->SetUV();
+		bool New = false;
+		// 煙の終点を探す
+		for (int i = 1; i < 10; i++) {
+			bool up = GetAdjacentTile(8, _x, _y, 0, -i);
+			if (up) {
+				obj = new SmokePipe(game_manager_, i + 1);
+				New = true;
+				break;
+			}
+		}
+		if (!New) obj = new SmokePipe(game_manager_);
 	}
-	else if (_tileID == 8)	// 鉄柱の一番上柱（右）
+	else if (_tileID == 8)	// 排煙管の終点
 	{
-		obj = new SteePillarRightTop(game_manager_);
 	}
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
@@ -365,19 +369,8 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 
 
 	}
-	else if (_tileID == 200)	// けむり
+	else if (_tileID == 200)
 	{
-		bool New = false;
-		// 煙の終点を探す
-		for (int i = 1; i < 10;i++) {
-			bool up = GetAdjacentTile(201, _x, _y, 0, -i);
-			if (up) {
-				obj = new SmokePipe(game_manager_, i + 1);
-				New = true;
-				break;
-			}
-		}
-		if (!New) obj = new SmokePipe(game_manager_);
 	}
 	else if (_tileID == 998)	// 歯車
 	{
