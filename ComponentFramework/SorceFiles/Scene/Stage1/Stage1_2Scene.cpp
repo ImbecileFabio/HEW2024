@@ -7,8 +7,6 @@
 #include "../../TileMapManager.h"
 #include "../../AudioManager.h"
 
-#include "../../GameObjects/GameObject.h"
-#include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
 #include "../../GameObjects/GameObject/Pendulum.h"
@@ -31,7 +29,6 @@ constexpr int hammerCounter_1_2 = 3;	// 叩ける上限
 //--------------------------------------------------
 Stage1_2Scene::Stage1_2Scene(GameManager* _gameManager)
 	:SceneBase(_gameManager, "Stage1_2")
-	, state_(Game)
 {
 	this->Init();
 }
@@ -61,7 +58,7 @@ void Stage1_2Scene::Init()
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 
-	state_ = Game;
+    stageState_ = Game;
 
 	// GameManagerで生成して、ColliderManagerに登録する
 	for (auto& colliderObjects : game_manager_->GetGameObjects())
@@ -117,13 +114,13 @@ void Stage1_2Scene::Init()
 void Stage1_2Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	switch (state_)
+	switch (stageState_)
 	{
 	case Stage1_2Scene::Game:
 		NumberChange();
 		if (game_manager_->GetItemCount() == gearCounter_1_2)	// デバッグ用
 		{
-			state_ = Result;
+			stageState_ = Result;
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
@@ -138,7 +135,7 @@ void Stage1_2Scene::Update()
 				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-			state_ = Pouse;
+			stageState_ = Pouse;
 		}
 		break;
 	case Stage1_2Scene::Result:
@@ -150,6 +147,7 @@ void Stage1_2Scene::Update()
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
+				isWindowOpen = false;
 				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全てポーズ状態に
 			}
 			for (auto& it : pauseButtons_)
@@ -158,7 +156,7 @@ void Stage1_2Scene::Update()
 			}
 			pauseWindow_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			state_ = Game;
+			stageState_ = Game;
 		}
 		PauseWindow();
 		break;

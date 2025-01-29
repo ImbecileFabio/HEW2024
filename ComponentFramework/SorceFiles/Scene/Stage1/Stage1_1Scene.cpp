@@ -20,7 +20,6 @@
 #include "../../GameObjects/Component/PendulumMovementComponent.h"
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
-#include "../../GameObjects/GameObject.h"
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
 #include "../../GameObjects/GameObject/Pendulum.h"

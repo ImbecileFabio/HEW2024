@@ -242,6 +242,8 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("result_front_ribbon", SCENE_PATH"result/v01/front_ribbon_01.png");
 	RegisterTexture("result_select", SCENE_PATH"result/v01/select_button_01.png");
 	RegisterTexture("result_next", SCENE_PATH"result/v01/next_button_01.png");
+	RegisterTexture("result_gear", SCENE_PATH"result/v01/result_gear_01.png");
+	RegisterTexture("result_gear_frame", SCENE_PATH"result/v01/result_gear_frame_01.png");
 	// ƒ^ƒCƒgƒ‹
 	RegisterTexture("title_ribbon", SCENE_PATH"title/v01/ribbon_title_01.png");
 	RegisterTexture("title_logo", SCENE_PATH"title/v01/titlelogo_01.png");
