@@ -210,7 +210,7 @@ float PendulumMovementComponent::GetPendulumVelocity() {
 // U‚èŽq‚Ì’âŽ~AŽn“®
 //--------------------------------------------------
 void PendulumMovementComponent::StartPendulumMovement() {
-	AudioManager::GetInstance()->Play(SoundLabel_HitSE);
+	AudioManager::GetInstance()->Play(SoundLabel_PendulumHitSE);
 	maxPendulumVelocity_ = 0;
 	for (int i = 1;;i++) {
 		maxPendulumVelocity_ += pendulumAcceleration * i;
