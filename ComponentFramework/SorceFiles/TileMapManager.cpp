@@ -8,7 +8,8 @@
 // 998. 歯車
 // 999. ロボット
 // 1. タイル
-// 8. 壁
+// 8. 右向き壁
+// 9, 左向き壁
 // 2. 脆いタイル
 // 3, 33, 333. 振り子
 // 4. 鉄柱の足場
@@ -21,7 +22,7 @@
 // 
 //
 // 
-// 滑車
+// 滑車00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
 //=================================================================
 
 /*----- インクルード -----*/
@@ -329,19 +330,16 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	{
 		obj = new SmokePipe(game_manager_);
 	}
-	else if (_tileID == 8)	// 壁
+	else if (_tileID == 8)	// 右向き壁
 	{
 		obj = new Wall(game_manager_);
-
-		// 左に壁があるかどうか。
-		if (GetAdjacentTile(_tileID, _x, _y, -1, 0))
-		{
-			// あれば反転する
-			obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
-		}
-
 	}
 
+	else if (_tileID == 9)	// 左向き壁
+	{
+		obj = new Wall(game_manager_);
+		obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
+	}
 
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{

@@ -2,6 +2,8 @@
 #include "../../GameManager.h"
 #include "../../ColliderManager.h"
 #include "../../AudioManager.h"
+#include "../../TileMapManager.h"
+
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 
@@ -34,6 +36,9 @@ Item::~Item()
 //--------------------------------------------------
 void Item::InitGameObject(void)
 {
+	transform_component_->SetSize(TILE_SIZE_X * 2, TILE_SIZE_Y * 2);
+
+
 	sprite_component_->SetState(SpriteComponent::State::draw);
 	this->state_ = GameObject::State::Active;
 }

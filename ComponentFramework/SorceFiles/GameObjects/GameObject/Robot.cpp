@@ -74,7 +74,7 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+	transform_component_->SetSize(TILE_SIZE_X * 2.0f, TILE_SIZE_Y * 2.0f);
 	collider_component_->SetSize(transform_component_->GetSize().x * 0.7f, transform_component_->GetSize().y * 0.95f);
 }
 
@@ -91,8 +91,8 @@ void Robot::UpdateGameObject(void)
 	if (input.GetMouseButtonPress(0)) {
 		auto mousePos = input.GetMousePosition();
 		transform_component_->SetPosition(
-			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 4),
-			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 4)));
+			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
+			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
 	}
 
 
