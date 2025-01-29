@@ -41,16 +41,17 @@ constexpr float normalLangth = TILE_SIZE_Y * 4;
 constexpr float langthChange = TILE_SIZE_Y;
 constexpr float pendulumAcceleration = 0.1f;
 
-enum class LangthState
-{
-	shortLangth,
-	normalLangth,
-	longLangth
-};
 
 class PendulumMovementComponent : public Component
 {
 public:
+	enum class LangthState
+	{
+		shortLangth,
+		normalLangth,
+		longLangth
+	};
+
 	PendulumMovementComponent(GameObject* _owner, int _updateOrder = 49);
 	~PendulumMovementComponent();
 

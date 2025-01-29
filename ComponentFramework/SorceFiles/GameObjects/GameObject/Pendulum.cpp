@@ -27,7 +27,7 @@
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, float _pendulumAngle)
+Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, float _pendulumAngle, LangthState _langthState)
 	:GameObject(_gameManager, "Pendulum")
 {
 	// スプライトコンポーネント
@@ -41,11 +41,6 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	// 子スティック
 	stick_ = new Stick(game_manager_, this);
 
-	//// 子スティック
-	//stick_ = new Stick(game_manager_, this);
-	//stick_->GetComponent<StickMoveComponent>()->StickInit(_fulcrum, _movement, _pendulumAngle);
-	//stick_->GetComponent<StickMoveComponent>()->SetPendulumTransform(transform_component_);
-
 	// 子オブジェクト管理コンポーネント
 	children_component_ = new ChildrenComponent(this, this);
 	children_component_->AddChild(time_zone_);
@@ -56,6 +51,7 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	collider_event_component_->AddEvent(f);
 
 	pendulum_component_->PendulumInit(_fulcrum, _movement, _pendulumAngle);
+	pendulum_component_->SetLangthState(static_cast<PendulumMovementComponent::LangthState>(_langthState));
 	this->InitGameObject();
 
 	transform_component_->SetSize(TILE_SIZE_X * 1.3, TILE_SIZE_Y * 1.3);
