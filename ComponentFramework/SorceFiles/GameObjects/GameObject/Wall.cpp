@@ -18,6 +18,8 @@
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/PushOutComponent.h"
 
+#include "../Component/RenderComponent/DebugColliderDrawComponent.h"
+
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -31,7 +33,10 @@ Wall::Wall(GameManager* _gameManager)
 	auto f = std::function<void(GameObject*)>(std::bind(&Wall::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
 
-	//collider_component_->SetOffset();
+	auto offsetPos = sprite_component_->GetTexture()->GetOffsetPos();
+	collider_component_->SetOffset({ offsetPos.x, offsetPos.y , 0.0f});
+
+	new DebugColliderDrawComponent(this);
 
 	InitGameObject();
 }
