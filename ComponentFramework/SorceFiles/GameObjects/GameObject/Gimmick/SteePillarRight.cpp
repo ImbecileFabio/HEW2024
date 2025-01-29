@@ -55,6 +55,11 @@ void SteePillarRight::UpdateGameObject(void)
 	{
 		gravity_component_->SetUseGravityFlg(true);
 	}
+	else
+	{
+		//auto pos = transform_component_->GetPosition();
+		//transform_component_->SetPosition()
+	}
 
 }
 //--------------------------------------------------

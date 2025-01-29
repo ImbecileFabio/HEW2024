@@ -63,6 +63,8 @@ public:
 		, PulleyComponent		// 滑車ギミック
 		, WeakFloorComponent	// 脆い床ギミック
 		, SteePillarComponent	// 鉄柱ギミック
+		, SteePillarFloorDown	// 鉄柱落下ギミック
+		, SteePillarFloorUp		// 鉄柱上昇ギミック
 		, SmokeComponent		// 煙ギミック
 		// デルタタイム関連
 		, TimerComponent

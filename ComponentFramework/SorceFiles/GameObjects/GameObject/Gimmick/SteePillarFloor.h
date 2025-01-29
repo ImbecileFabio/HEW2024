@@ -15,6 +15,16 @@
 class SteePillarFloor : public GameObject
 {
 public:
+	enum class FloorState
+	{
+		Up,
+		Stop,
+		Falling,
+		OnLift,
+		OnTile,
+		OnLiftAndTile,
+		Down,
+	};
 	SteePillarFloor(GameManager* _gameManager);
 	~SteePillarFloor(void);
 
@@ -28,6 +38,9 @@ public:
 	void SetSteePillarFloorGroup(class SteePillarFloorGroup* _stee_pillar_floor_group);
 
 	void SetIsDown(bool _isDown) { isDown_ = _isDown; }
+	void SetLeftTilePosition(const DirectX::SimpleMath::Vector3& _leftTilePosition) { leftTilePosition_ = _leftTilePosition; }
+	void SetTilePosition(const DirectX::SimpleMath::Vector3& _tilePosition) { tilePosition_ = _tilePosition; }
+	DirectX::SimpleMath::Vector3 GetTilePosition() { return tilePosition_; }
 private:
 	class SteePillarFloorGroup* stee_pillar_floor_group_;	// “S’Œ‚Ì‘«êƒOƒ‹[ƒv
 
@@ -37,7 +50,12 @@ private:
 	class ColliderBaseComponent* box_collider_component_;
 	class EventBaseComponent* event_component_;
 
+	//class SteePillarFloorMove* stee_pillar_floor_move_;	// “S’Œ‚Ì‘«ê‚Ì“®ì
+
 	bool isDown_ = false;	// —‰º‚·‚é‚©‚Ç‚¤‚©
-	float offsetY_ = 8.0f;	// —‰º‚·‚é‚‚³
+	float offsetY_ = 50.0f;	// —‰º‚·‚é‚‚³
+
+	DirectX::SimpleMath::Vector3 leftTilePosition_;
+	DirectX::SimpleMath::Vector3 tilePosition_;
 };
 #endif // STEE_PILLAR_FLOOR_H_

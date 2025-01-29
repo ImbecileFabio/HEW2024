@@ -58,7 +58,6 @@ void WeakFloor::InitGameObject(void)
 //--------------------------------------------------
 void WeakFloor::UpdateGameObject(void)
 {
-
 }
 //--------------------------------------------------
 // @brief “–‚½‚è”»’èÀsˆ—

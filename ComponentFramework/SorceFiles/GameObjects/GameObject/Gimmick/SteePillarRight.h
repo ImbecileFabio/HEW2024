@@ -25,12 +25,16 @@ public:
 
 	void SetIsDown(bool _fg) { isDown_ = _fg; }
 	bool GetIsDown() { return isDown_; }
+
+	void SetFloorPosition(DirectX::SimpleMath::Vector3 _pos) { floorPosition_ = _pos; }
 private:
 	class SteePillarRightGroup* stee_pillar_right_group_;
 	class SpriteComponent*			   sprite_component_;
 	class AnimationComponent*		animation_component_;
 	class VelocityComponent*		 velocity_component_;
 	class GravityComponent*			  gravity_component_;
+
+	DirectX::SimpleMath::Vector3 floorPosition_;
 
 	bool isDown_   = false;
 };
