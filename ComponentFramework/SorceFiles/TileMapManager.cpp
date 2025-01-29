@@ -10,8 +10,8 @@
 // 1. タイル
 // 8. 壁
 // 2. 22. 222. 脆いタイル
-// 8. 右向き壁
-// 9, 左向き壁
+// 8. 左向き壁
+// 9, 右向き壁
 // 2. 脆いタイル
 // 3, 33, 333. 振り子
 // 4. 44, 444, 鉄柱の足場
@@ -44,7 +44,8 @@
 #include "TileMapManager.h"
 
 #include "GameObjects/GameObject/Tile.h"
-#include "GameObjects/GameObject/Wall.h"
+#include "GameObjects/GameObject/WallLeft.h"
+#include "GameObjects/GameObject/WallRight.h"
 #include "GameObjects/GameObject/Gimmick/WeakFloor.h"
 #include "GameObjects/GameObject/Pendulum.h"
 
@@ -535,32 +536,16 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		// タイルの位置とグループを関連付ける
 		stee_pillar_left_to_group_[{_x, _y}] = group;
 	}
-	else if (_tileID == 7)	// 排煙管の始点
+
+
+	else if (_tileID == 8)	// 左向き壁
 	{
-		bool New = false;
-		// 煙の終点を探す
-		for (int i = 1; i < 10; i++) {
-			bool up = GetAdjacentTile(10, _x, _y, 0, -i);
-			if (up) {
-				obj = new SmokePipe(game_manager_, i + 1);
-				New = true;
-				break;
-			}
-		}
-		// 終点が見つからなかった場合、デフォルト（3マス）
-		if (!New) obj = new SmokePipe(game_manager_);
+		obj = new WallLeft(game_manager_); 
 	}
-
-		else if (_tileID == 8)	// 右向き壁
-		{
-			obj = new Wall(game_manager_);
-		}
-
-		else if (_tileID == 9)	// 左向き壁
-		{
-			obj = new Wall(game_manager_);
-			obj->GetComponent<SpriteComponent>()->SetFlip(true, false);
-		}
+	else if (_tileID == 9)	// 右向き壁
+	{
+		obj = new WallRight(game_manager_);
+	}
 
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
@@ -847,6 +832,21 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			// タイルの位置とグループを関連付ける
 			lift_tile_to_group_[{_x, _y}] = group;
 		}
+	}
+	else if (_tileID >= 400 && _tileID <= 409)	// 煙
+	{
+		bool New = false;
+		// 煙の終点を探す
+		for (int i = 1; i < 10; i++) {
+			bool up = GetAdjacentTile(_tileID + 10, _x, _y, 0, -i);
+			if (up) {
+				obj = new SmokePipe(game_manager_, i + 1);
+				New = true;
+				break;
+			}
+		}
+		// 終点が見つからなかった場合、デフォルト（3マス）
+		if (!New) obj = new SmokePipe(game_manager_);
 	}
 	else if (_tileID == 998)	// 歯車
 	{

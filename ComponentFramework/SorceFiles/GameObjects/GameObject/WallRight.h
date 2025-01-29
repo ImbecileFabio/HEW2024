@@ -1,11 +1,11 @@
 //==================================================
-// [Wall.h] 壁オブジェクト
+// [WallRight.h] 壁オブジェクト
 // 著者：有馬啓太
 //--------------------------------------------------
 // 説明：壁のタイルオブジェクト
 //==================================================
-#ifndef WALL_H_
-#define WALL_H_
+#ifndef WALL_RIGHT_H_
+#define WALL_RIGHT_H_
 
 /*----- インクルード -----*/
 #include <memory>
@@ -15,12 +15,12 @@
 //--------------------------------------------------
 // 壁オブジェクト
 //--------------------------------------------------
-class Wall
+class WallRight
 	: public GameObject
 {
 public:
-	Wall(GameManager* _gameManager);
-	~Wall(void);
+	WallRight(GameManager* _gameManager);
+	~WallRight(void);
 
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
@@ -36,4 +36,4 @@ private:
 
 
 };
-#endif	// WALL_H_
+#endif	// WALL_RIGHT_H_

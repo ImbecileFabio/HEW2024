@@ -97,7 +97,7 @@
     <ClCompile Include="SorceFiles\TextureManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarFloor.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloor.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillarComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\WeakFloorComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\StickMoveComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent.cpp" />
@@ -115,8 +115,8 @@
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_2Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_3Scene.cpp" />
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_4Scene.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\GameObject\Wall.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarFloorMove.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\WallLeft.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\GameObject\WallRight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\FadeManager.h" />
@@ -205,7 +205,7 @@
     <ClInclude Include="SorceFiles\TextureManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarFloor.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloor.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillarComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\WeakFloorComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\StickMoveComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent.h" />
@@ -223,8 +223,8 @@
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_2Scene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_3Scene.h" />
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_4Scene.h" />
-    <ClInclude Include="SorceFiles\GameObjects\GameObject\Wall.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarFloorMove.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\WallLeft.h" />
+    <ClInclude Include="SorceFiles\GameObjects\GameObject\WallRight.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\drawColliderGS.hlsl">

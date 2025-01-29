@@ -12,7 +12,6 @@
 #include "../../Component/GravityComponent.h"
 #include "../../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../../Component/EventComponent/ColliderEventComponent.h"
-#include "../../Component/GimmickComponent/SteePillar/SteePillarFloorMove.h"
 
 #include "../../Component/RenderComponent/DebugColliderDrawComponent.h"
 //--------------------------------------------------
@@ -44,11 +43,15 @@ void SteePillarFloor::InitGameObject(void)
 	box_collider_component_ = new BoxColliderComponent(this);
 	velocity_component_		= new VelocityComponent(this);
 	event_component_		= new ColliderEventComponent(this);
-	//transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+
 	gravity_component_->SetIsRobot(false);
 	gravity_component_->SetUseGravityFlg(false);
 
-	box_collider_component_->SetSize(transform_component_->GetSize().x, transform_component_->GetSize().y * 0.8f);
+
+	auto size = transform_component_->GetSize();
+	box_collider_component_->SetSize(size.x * 0.95f, size.y * 0.5);
+	box_collider_component_->SetOffset(Vector3(0.0f, -size.y * 0.25f, 0.0f));
+
 	new DebugColliderDrawComponent(this);
 
 	auto f = std::function<void(GameObject*)>(std::bind(&SteePillarFloor::OnCollisionEnter, this, std::placeholders::_1));
@@ -69,8 +72,6 @@ void SteePillarFloor::UpdateGameObject(void)
 		gravity_component_->SetUseGravityFlg(false);
 		velocity_component_->ResetVelocity();
 	}
-
-	// 鉄柱の足場の位置を揃える
 	stee_pillar_floor_group_->UpdateSteePillarFloorTilePositions();
 }
 //--------------------------------------------------
@@ -79,20 +80,11 @@ void SteePillarFloor::UpdateGameObject(void)
 void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 {
 	if (state_ == State::Paused) return;
-	if (_other->GetType() == TypeID::Lift)	// リフトと接触したら
-	{
-		leftTilePosition_ = _other->GetTransformComponent()->GetPosition();
-		stee_pillar_floor_group_->AlignSteePillarFloorTilesWithTile(leftTilePosition_.y);
-		stee_pillar_floor_group_->SetHitLeft(true);
-	}
 	if (_other->GetType() == TypeID::Tile)	// タイルと鉄柱床タイルが接触したら
 	{
-		if (!stee_pillar_floor_group_->GetIsHitLift_())  // すでにリフトと接触していない場合のみ更新
-		{
-			tilePosition_ = _other->GetTransformComponent()->GetPosition();
-			stee_pillar_floor_group_->AlignSteePillarFloorTilesWithTile(tilePosition_.y);
-			stee_pillar_floor_group_->SetHitTile(true);
-		}
+		float posY = transform_component_->GetPosition().y;
+		transform_component_->SetPositionY(posY + offsetY_);
+		stee_pillar_floor_group_->SetHitTile(true);
 	}
 }
 //--------------------------------------------------
