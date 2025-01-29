@@ -34,7 +34,7 @@ public:
 		diagonalLeft,	// éŒÇﬂà⁄ìÆ(ç∂)
 	};
 
-	LiftComponent(GameObject* _owner, LiftComMoveState _moveState, Vector3 _startPos, Vector3 _endPpos, Pendulum* _pendulum, int _updateOrder = 50);
+	LiftComponent(GameObject* _owner, LiftComMoveState _moveState, Vector3 _startPos, Vector3 _endPpos, Pendulum* _pendulum, int _updateOrder = 27);
 	~LiftComponent();
 
 	void Init() override;

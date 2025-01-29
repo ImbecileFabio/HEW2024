@@ -43,9 +43,14 @@ void SteePillarFloor::InitGameObject(void)
 	box_collider_component_ = new BoxColliderComponent(this);
 	velocity_component_		= new VelocityComponent(this);
 	event_component_		= new ColliderEventComponent(this);
-	//transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+
 	gravity_component_->SetIsRobot(false);
 	gravity_component_->SetUseGravityFlg(false);
+
+
+	auto size = transform_component_->GetSize();
+	box_collider_component_->SetSize(size.x * 0.95f, size.y * 0.5);
+	box_collider_component_->SetOffset(Vector3(0.0f, -size.y * 0.25f, 0.0f));
 
 	new DebugColliderDrawComponent(this);
 

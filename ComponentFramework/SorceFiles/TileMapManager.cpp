@@ -838,7 +838,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		bool New = false;
 		// ‰Œ‚ÌI“_‚ğ’T‚·
 		for (int i = 1; i < 10; i++) {
-			bool up = GetAdjacentTile(10, _x, _y, 0, -i);
+			bool up = GetAdjacentTile(_tileID + 10, _x, _y, 0, -i);
 			if (up) {
 				obj = new SmokePipe(game_manager_, i + 1);
 				New = true;

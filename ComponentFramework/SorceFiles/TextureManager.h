@@ -68,6 +68,8 @@ public:
 
 	// テクスチャの取得
 	std::shared_ptr<Texture> GetTexture(const std::string& _imgName);
+	// テクスチャのプリロード(シーンの途中で生成されるけど固まるのが嫌な時に最初に読み込んでおくよう)
+	void LoadTexture(const std::string& _imgName);
 
 private:
 	// シングルトンなのでprivateに

@@ -6,6 +6,7 @@
 #include "../../InputManager.h"
 #include "../../TileMapManager.h"
 #include "../../AudioManager.h"
+#include "../../TextureManager.h"
 
 #include "../../GameObjects/GameObject/BackGround.h"
 #include "../../GameObjects/GameObject/Camera.h"
@@ -46,6 +47,8 @@ void Stage1_2Scene::Init()
 {
 	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage1/Stage1_2.csv");
 	tile_map_manager_->LoadTileMap(mapData);
+
+
 
 	camera_			 = new Camera(game_manager_);
 	back_ground_	 = new BackGround(game_manager_);
@@ -106,6 +109,10 @@ void Stage1_2Scene::Init()
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
+
+	// テクスチャのプリロード
+	TextureManager::GetInstance().LoadTexture("smoke00");	// 煙
+
 
 }
 //--------------------------------------------------

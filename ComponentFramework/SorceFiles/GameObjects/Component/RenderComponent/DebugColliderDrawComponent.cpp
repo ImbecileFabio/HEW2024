@@ -89,11 +89,13 @@ void DebugColliderDrawComponent::Draw()
 			auto r = transform->GetRotation();
 			auto sc = transform->GetScale();
 
-			auto finalSize = Vector3(si * sc);	// 最終的なサイズ
+			auto offsetPos = boxCollider->GetOffset();	// オフセット
 
+			auto finalSize = Vector3(si * sc);	// 最終的なサイズ
+			auto finalPos = t + offsetPos;		// 最終的な位置
 
 			rot = Matrix::CreateFromYawPitchRoll(r.x, r.y, r.z);
-			pos = Matrix::CreateTranslation(t);
+			pos = Matrix::CreateTranslation(finalPos);
 			scale = Matrix::CreateScale(finalSize);
 		}
 		else
