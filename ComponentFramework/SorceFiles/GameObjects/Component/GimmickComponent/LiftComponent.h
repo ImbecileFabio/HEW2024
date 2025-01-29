@@ -23,6 +23,7 @@ class LiftComponent : public Component
 public:
 	enum class LiftComState {
 		Move,
+		Wait,
 		Stop
 	};
 

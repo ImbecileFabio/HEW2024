@@ -46,7 +46,7 @@ Lift::Lift(GameManager* _gameManager)
 Lift::Lift(GameManager* _gameManager, MoveState _moveState, Vector3 _startPos, Vector3 _endPos, Pendulum* _pendulum)
 	:GameObject(_gameManager, "Lift")
 	, pendulum_(_pendulum)
-	, turn_count_(0)
+	, turn_count_(180)
 	, lift_state_(Lift::LiftState::Stop)
 	, move_state_(_moveState)
 {
@@ -77,7 +77,7 @@ Lift::~Lift()
 void Lift::InitGameObject(void)
 {
 	lift_state_ = Lift::LiftState::Stop;
-	turn_count_ = 0;
+	turn_count_ = 180;
 }
 
 
@@ -99,7 +99,7 @@ void Lift::UpdateGameObject(void)
 		if (turn_count_  <= 0) {
 			if (pendulumMoveFlg)
 			{
-				lift_state_ = Lift::LiftState::Move;
+				lift_state_ = Lift::LiftState::Wait;
 				turn_count_ = 180;
 			}
 		}
@@ -108,6 +108,18 @@ void Lift::UpdateGameObject(void)
 		}
 		break;
 	}
+	case Lift::LiftState::Wait:
+	{
+		if(turn_count_ <= 0)
+		{
+			lift_state_ = Lift::LiftState::Move;
+		}
+		else {
+			--turn_count_;
+		}
+		break;
+	}
+
 	case Lift::LiftState::Move:
 	{
 		if (!pendulumMoveFlg)
@@ -144,6 +156,10 @@ void Lift::OnCollisionEnter(GameObject* _other)
 			{
 				// ロボットにリフトをセット
 				interaction->SetLift(this);
+				if (lift_state_ == Lift::LiftState::Wait)
+				{
+					lift_state_ = Lift::LiftState::Move;
+				}
 			}
 		}
 		break;

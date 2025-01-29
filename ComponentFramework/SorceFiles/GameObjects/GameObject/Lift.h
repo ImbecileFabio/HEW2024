@@ -20,6 +20,7 @@ class Lift : public GameObject
 public:
 	enum class LiftState {
 		Move,
+		Wait,
 		Stop
 	};
 
@@ -44,8 +45,11 @@ public:
 	void SetPendulum(Pendulum* _pendulum);
 
 	void SetMoveState(Lift::MoveState _moveState);
+	auto GetMoveState() { return move_state_; }
 
+	void SetLiftState(LiftState _state) { lift_state_ = _state; }
 	auto GetLiftState() { return lift_state_; }
+
 	void SetLiftGroup(LiftGroup* _group) { lift_group_ = _group; }
 	LiftGroup* GetLiftGroup() { return lift_group_; }
 private:

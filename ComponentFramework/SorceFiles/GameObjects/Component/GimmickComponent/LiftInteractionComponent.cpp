@@ -67,3 +67,11 @@ void LiftInteractionComponent::Update()
 
 	}
 }
+
+void LiftInteractionComponent::SetLift(Lift* _lift)
+{
+	if (current_lift_ == _lift) return;
+
+	current_lift_ = _lift;
+
+}
