@@ -14,6 +14,7 @@
 #include "../TileMapManager.h"
 #include "../InputManager.h"
 #include "../PemdulumManager.h"
+#include "../AudioManager.h"
 //--------------------------------------------------
 // @param	_gameManager シーンの所有者, _sceneName シーン名
 // @brief	コンストラクタ
@@ -22,7 +23,6 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 	: game_manager_(_gameManager)	// 所有者
 	, scene_name_(_sceneName)		// シーン名
 {
-	std::cout << std::format("\n[{}] -> Constructor\n", scene_name_);
 	tile_map_manager_ = std::make_unique<TileMapManager>(game_manager_);
 
 	stageUIs_[0] = new Revolution(game_manager_, "stageUI", "stageUI",2);
@@ -74,7 +74,7 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 
 SceneBase::~SceneBase()
 {
-	std::cout << std::format("[{}] -> Destructor\n", scene_name_);
+
 }
 
 void SceneBase::PauseWindow()
@@ -146,6 +146,7 @@ void SceneBase::PauseWindow()
 		case 2:	// セレクト画面に戻る
 			game_manager_->ResetItemCount();
 			game_manager_->ChangeScene(SceneName::Title);
+			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 			break;
 		case 3:	// 操作説明を表示
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);

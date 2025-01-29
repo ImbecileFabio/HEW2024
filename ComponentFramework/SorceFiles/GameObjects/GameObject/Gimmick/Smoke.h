@@ -17,14 +17,14 @@ public:
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 	
-	float GetSize() { return m_gimmickSize; }
+	auto GetSize() { return m_gimmickSize; }
+	auto GetOwnerObj() { return m_ownerObj; }
 
 	TypeID GetType(void) override { return TypeID::Smoke; }
 private:
 	GameObject* m_ownerObj;
 	float m_gimmickSize;	// ギミックのサイズ
-
-	void OnCollisionEnter(GameObject* _other);
+	float m_smokeSize;
 
 	class SpriteComponent* sprite_component_{};					// スプライト
 	class ColliderBaseComponent* collider_component_{};			// 当たり判定

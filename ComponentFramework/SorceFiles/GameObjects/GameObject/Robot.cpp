@@ -14,9 +14,10 @@
 #include "../../GameManager.h"
 #include "../../TileMapManager.h"
 #include "Lift.h"
+#include "Gimmick/Smoke.h"
+#include "Gimmick/SmokePipe.h"
 
 #include "../Component.h"
-
 #include "../Component/TransformComponent.h"
 #include "../Component/RenderComponent/SpriteComponent.h"
 #include "../Component/RenderComponent/AnimationComponent.h"
@@ -37,7 +38,7 @@ Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
 	, robot_state_(RobotState::Move)
 {
-	sprite_component_ = new SpriteComponent(this, "robot_walk");	// スプライト
+	sprite_component_ = new SpriteComponent(this, "robot_walk",80);	// スプライト
 	animation_component_ = new AnimationComponent( this, sprite_component_);	// アニメーション
 	velocity_component_ = new VelocityComponent(this);	// 速度
 	gravity_component_ = new GravityComponent(this);	// 重力
@@ -74,7 +75,7 @@ Robot::~Robot(void)
 //--------------------------------------------------
 void Robot::InitGameObject(void)
 {
-	transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+	transform_component_->SetSize(TILE_SIZE_X * 2.0f, TILE_SIZE_Y * 2.0f);
 	collider_component_->SetSize(transform_component_->GetSize().x * 0.7f, transform_component_->GetSize().y * 0.95f);
 }
 
@@ -91,8 +92,8 @@ void Robot::UpdateGameObject(void)
 	if (input.GetMouseButtonPress(0)) {
 		auto mousePos = input.GetMousePosition();
 		transform_component_->SetPosition(
-			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 4),
-			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 4)));
+			  static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
+			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
 	}
 
 
@@ -176,7 +177,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Tile:
 	{
-		//std::cout << std::format("Robot -> Tile -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
@@ -185,7 +185,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Lift:
 	{
-		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
 		auto lift = dynamic_cast<Lift*>(_other);
 
 		if (push_out_component_)
@@ -193,7 +192,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
 		}
 		break;
-		//std::cout << std::format("Robot -> Lift -> OnCollisionEnter\n");
 		if (auto lift = dynamic_cast<Lift*>(_other))
 		{
 			// 乗っているリフトをセット
@@ -206,7 +204,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::WeakFloor:
 	{
-		//std::cout << std::format("Robot -> WeakFloor -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
@@ -216,17 +213,19 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Smoke:
 	{
 		auto pos = this->GetTransformComponent()->GetPosition();
-		auto robotMove = this->GetComponent<RobotMoveComponent>();
-
-		//std::cout << std::format("Robot -> Smoke -> OnCollisionEnter\n");
-		this->GetTransformComponent()->SetPosition({ pos.x + (robotMove->GetSpeed() * robotMove->GetDirection().x),
-														pos.y + 3.0f + (robotMove->GetSpeed() * robotMove->GetDirection().x) * _other->GetSize(),
+		auto smoke = dynamic_cast<Smoke*>(_other);
+		auto smokepipe = dynamic_cast<SmokePipe*>(smoke->GetOwnerObj());
+		
+		if (smokepipe->GetBrakeFlg())
+			if (pos.y <= smoke->GetTransformComponent()->GetPosition().y + smoke->GetTransformComponent()->GetSize().y) {
+				this->GetTransformComponent()->SetPosition({ pos.x,
+														pos.y + fabs((robot_move_component_->GetSpeed() * robot_move_component_->GetDirection().x)) * smoke->GetSize(),
 														pos.z });
+			}
 		break;
 	}
 	case GameObject::TypeID::SteePillarFloor:
 	{
-		std::cout << std::format("Robot -> SteePillarFloor -> OnCollisionEnter\n");
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
@@ -234,20 +233,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		break;
 	}
 	default:
-		//std::cout << std::format("Robot -> default -> OnCollisionEnter\n");
 		break;
 	}
 }
-
-//void Robot::OnCollisionStay(GameObject* _other) {
-//	auto v = velocity_component_->GetVelocity();
-//
-//	switch (_other->GetType())
-//	{
-//	case GameObject::TypeID::Smoke:
-//
-//		velocity_component_->SetVelocity({ v.x,1.0f,v.z });
-//	default:
-//		break;
-//	}
-//}

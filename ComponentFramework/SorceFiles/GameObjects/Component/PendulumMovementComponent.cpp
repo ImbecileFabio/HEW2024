@@ -14,7 +14,6 @@
 //--------------------------------------------------
 PendulumMovementComponent::PendulumMovementComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder) {
-	std::cout << std::format("＜PendulumMovementComponent＞ -> Constructor\n");
 
 	Init();
 }
@@ -23,7 +22,6 @@ PendulumMovementComponent::PendulumMovementComponent(GameObject* _owner, int _up
 // デストラクタ
 //--------------------------------------------------
 PendulumMovementComponent::~PendulumMovementComponent() {
-	std::cout << std::format("＜PendulumMovementComponent＞ -> Destructor\n");
 
 	Uninit();
 }

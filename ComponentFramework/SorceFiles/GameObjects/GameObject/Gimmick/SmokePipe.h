@@ -24,9 +24,11 @@ public:
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
+	auto GetBrakeFlg() { return brakeFlg_; }
+
 	TypeID GetType(void) override { return TypeID::SmokePipe; }
 private:
-	int fpsCounter_;		// 時間計測用
+	float fpsCounter_;		// 時間計測用
 	bool brakeFlg_ = false;	// 破壊状態フラグ
 
 	GameObject* smoke_;

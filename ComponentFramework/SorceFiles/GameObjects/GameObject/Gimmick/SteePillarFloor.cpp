@@ -12,6 +12,8 @@
 #include "../../Component/GravityComponent.h"
 #include "../../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../../Component/EventComponent/ColliderEventComponent.h"
+
+#include "../../Component/RenderComponent/DebugColliderDrawComponent.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -44,7 +46,8 @@ void SteePillarFloor::InitGameObject(void)
 	//transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
 	gravity_component_->SetIsRobot(false);
 	gravity_component_->SetUseGravityFlg(false);
-	box_collider_component_->SetSize(transform_component_->GetSize().x, transform_component_->GetSize().y * 0.2f);
+
+	new DebugColliderDrawComponent(this);
 
 	auto f = std::function<void(GameObject*)>(std::bind(&SteePillarFloor::OnCollisionEnter, this, std::placeholders::_1));
 	event_component_->AddEvent(f);

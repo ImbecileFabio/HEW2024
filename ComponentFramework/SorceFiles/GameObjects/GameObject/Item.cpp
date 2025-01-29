@@ -2,6 +2,8 @@
 #include "../../GameManager.h"
 #include "../../ColliderManager.h"
 #include "../../AudioManager.h"
+#include "../../TileMapManager.h"
+
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/EventComponent/ColliderEventComponent.h"
 
@@ -34,6 +36,9 @@ Item::~Item()
 //--------------------------------------------------
 void Item::InitGameObject(void)
 {
+	transform_component_->SetSize(TILE_SIZE_X * 1.5f, TILE_SIZE_Y * 1.5f);
+
+
 	sprite_component_->SetState(SpriteComponent::State::draw);
 	this->state_ = GameObject::State::Active;
 }
@@ -52,7 +57,7 @@ void Item::OnCollisionEnter(GameObject* _other)
 	{
 		case GameObject::TypeID::Robot:
 		// ƒƒ{ƒbƒg‚ªÚG‚µ‚½‚ç
-		std::cout << "Item -> Robot -> OnCollisionEnter\n" << std::endl;
+
 		this->GetGameManager()->itemCountUp();
 		this->event_base_component_->RemoveEvent();
 		this->sprite_component_->SetState(SpriteComponent::State::notDraw);
