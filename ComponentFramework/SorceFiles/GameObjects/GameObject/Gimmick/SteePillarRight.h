@@ -25,6 +25,8 @@ public:
 
 	void SetIsDown(bool _fg) { isDown_ = _fg; }
 	bool GetIsDown() { return isDown_; }
+	void SetIsFloorVelocityStop(bool _fg) { isFloorVelocityStop_ = _fg; }
+	bool GetIsFloorVelocityStop() { return isFloorVelocityStop_; }
 
 	void SetFloorPosition(DirectX::SimpleMath::Vector3 _pos) { floorPosition_ = _pos; }
 private:
@@ -35,7 +37,9 @@ private:
 	class GravityComponent*			  gravity_component_;
 
 	DirectX::SimpleMath::Vector3 floorPosition_;
+	DirectX::SimpleMath::Vector3 offset_;
 
+	bool isFloorVelocityStop_ = false;
 	bool isDown_   = false;
 };
 #endif // STEE_PILLAR_H_

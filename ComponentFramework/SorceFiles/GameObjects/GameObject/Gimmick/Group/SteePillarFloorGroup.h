@@ -35,6 +35,7 @@ public:
 	void UpdateSteePillarFloorTilePositions();	// タイルの位置を同期させる関数
 	void AlignSteePillarFloorTilesWithTile(float _y);
 	bool GetIsHitLift_() { return isHitLift_; }
+
 private:
 	// グループ単体が管理しているもの
 	bool isCenterMedian_ = false;						// 中心値を調べたかどうか
@@ -55,6 +56,7 @@ private:
 
 	// キャッシュしたコンポーネント
 	class PendulumMovementComponent* owner_pendulum_movement_{};	// 振り子の動き
+	class TransformComponent* owner_floor_transform_{};				// 床の位置
 
 	// グループが管理しているもの
 	class SteePillarLeftGroup*  steePillarLeftGroup_  = nullptr;		// 左側のグループ

@@ -31,6 +31,8 @@ public:
 	bool GetIsBreakStop() { return isBreakStop_; }
 	void SetVelocityStop();
 	void AddSteePillarLeftTile(GameObject* _tile);	// グループにタイルを追加
+
+	auto GetSteePillarLeftTiles() { return steePillarLeftTiles_; }	
 private:
 	// グループ単体が管理しているもの
 	std::vector<GameObject*> steePillarLeftTiles_;	// グループが管理したいタイル
@@ -41,6 +43,7 @@ private:
 	bool isBreakStart_;		// 劣化状態（始動）
 	bool isDownStart_;		// 落下	   （始動）
 	bool isAnimationEnd_;	// アニメーションが終わったら
+	bool isTopChangeTile_ = false;
 	// 柱の一番上のタイルをキャッシュ
 	class AnimationComponent* owner_top_animation_component_;
 	class SpriteComponent*	  owner_top_sprite_component_;
