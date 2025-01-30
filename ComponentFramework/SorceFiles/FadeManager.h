@@ -15,6 +15,8 @@
 
 #include <SimpleMath.h>
 
+#include "TextureManager.h"
+
 #include "SubSystem/Shader.h"
 #include "SubSystem/VertexBuffer.h"
 #include "SubSystem/IndexBuffer.h"
@@ -42,6 +44,8 @@ public:
 	FadeManager(GameManager* _gameManager);
 	~FadeManager();
 
+	
+
 	// フェードアウト開始
 	void StartFadeOut(const std::string& _fadeOutTex, std::function<void()> on_complete = nullptr);
 	// フェードイン開始
@@ -53,6 +57,8 @@ public:
 	void UpdateUV();
 
 	bool GetIsPlaying() const { return is_playing_; } // フェード中かどうか
+
+	void SetTexture(const std::string& _textureName) { fade_texture_ = TextureManager::GetInstance().GetTexture(_textureName); }
 
 private:
 	void InitBuffers(float _cutU = 1, float _cutV = 1);	// バッファの初期化
@@ -75,6 +81,8 @@ private:
 	float elapsed_time_;    // 累積経過時間 (秒単位)
 	float frame_duration_;  // 1フレームあたりの時間 (秒単位)	bool is_loop_;				// ループするかどうか
 	bool is_playing_;		// アニメーションを再生中かどうか
+
+	bool is_loading_ = false;	// 画像が切り替わっているか
 };
 
 #endif // FADE_MANAGER_H_

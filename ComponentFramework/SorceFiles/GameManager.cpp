@@ -22,6 +22,8 @@
 
 #include "Renderer.h"
 
+#include "GameObjects/GameObject.h"
+
 //-----------------------------------------------------------------
 // コンストラクタ
 //-----------------------------------------------------------------
@@ -168,8 +170,11 @@ void GameManager::TransitionToScene(SceneName _nextScene)
 
 	// フェードアウト開始
 	fade_manager_->StartFadeOut("fade_out", [this, _nextScene]() {
+
 		// フェードアウト終了時にシーンを切り替え
 		ChangeScene(_nextScene);
+
+
 		// シーン変更後にフェードインを開始
 		fade_manager_->StartFadeIn("fade_in");
 
@@ -182,7 +187,10 @@ void GameManager::TransitionToScene(SceneName _nextScene)
 //-----------------------------------------------------------------
 void GameManager::ChangeScene(SceneName _nextScene) 
 {
-	// 前のシーン名を保存しておく
+
+
+
+// 前のシーン名を保存しておく
 	std::string old_scene_name = current_scene_->GetSceneName();
 	// 前のシーンのギア獲得数を保存
 	int gearMaxCount = current_scene_->GetGearMaxCount();
@@ -205,6 +213,9 @@ void GameManager::ChangeScene(SceneName _nextScene)
 	catch (const std::exception& e) {
 		std::cerr << "[ClearAllObjects] -> 例外 : " << e.what() << std::endl;
 	}
+
+
+
 
 	// 新しいシーンの初期化
 	try {
@@ -279,6 +290,7 @@ void GameManager::ChangeScene(SceneName _nextScene)
 	catch (const std::exception& e) {
 		std::cerr << "[ChangeScene] -> 例外 : " << e.what() << std::endl;
 	}
+
 
 	ImGuiManager::staticPointer->ResetSelectObject();
 }
