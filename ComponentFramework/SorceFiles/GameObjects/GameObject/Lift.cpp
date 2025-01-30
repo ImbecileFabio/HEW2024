@@ -54,7 +54,7 @@ Lift::Lift(GameManager* _gameManager, MoveState _moveState, Vector3 _startPos, V
 	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocity_component_ = new VelocityComponent(this);
-	lift_component_ = new LiftComponent(this, static_cast<LiftComponent::LiftComMoveState>(move_state_), _startPos, _endPos, pendulum_);
+	lift_component_ = new LiftComponent(this, static_cast<LiftComponent::LiftComMoveState>(move_state_), _startPos, _endPos, pendulum_, 3);
 	// イベント追加処理
 	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -150,9 +150,8 @@ void Lift::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Robot:
-		if (auto robot = dynamic_cast<Robot*>(_other))
-		{
-			if (auto interaction = robot->GetComponent<LiftInteractionComponent>())
+	{
+			if (auto interaction = _other->GetComponent<LiftInteractionComponent>())
 			{
 				// ロボットにリフトをセット
 				interaction->SetLift(this);
@@ -161,8 +160,7 @@ void Lift::OnCollisionEnter(GameObject* _other)
 					lift_state_ = Lift::LiftState::Move;
 				}
 			}
-		}
-		break;
+	}
 	case GameObject::TypeID::Tile:
 		break;
 	default:

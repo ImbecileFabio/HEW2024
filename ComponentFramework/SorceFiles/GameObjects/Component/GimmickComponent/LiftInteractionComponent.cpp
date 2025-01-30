@@ -50,22 +50,30 @@ void LiftInteractionComponent::Uninit()
 void LiftInteractionComponent::Update()
 {
 	// リフトが存在する場合
-	if (current_lift_) {
-		// 動いている場合
-		if(current_lift_->GetLiftState() == Lift::LiftState::Move)
-		{
-			// リフトの速度と速度倍率を取得し、所有者に設定
-			auto liftVelocity = current_lift_->GetComponent<VelocityComponent>();
-			owner_->GetComponent<VelocityComponent>()->SetVelocity(liftVelocity->GetVelocity());
-			owner_->GetComponent<VelocityComponent>()->SetSpeedRate(liftVelocity->GetSpeedRate());
-		}
-		// 停止している場合
-		else if(current_lift_->GetLiftState() == Lift::LiftState::Stop) {
-			// リフトの参照を切る
-			current_lift_ = nullptr;
-		}
+	if (!current_lift_) return;
+
+	// 動いている場合
+	if (current_lift_->GetLiftState() == Lift::LiftState::Move)
+	{
+
+		owner_->GetComponent<VelocityComponent>()->SetVelocity({ 0.0f, 0.0f, 0.0f });
+
+		// リフトの速度と速度倍率を取得し、所有者に設定
+		auto liftVelocity = current_lift_->GetComponent<VelocityComponent>();
+		owner_->GetComponent<VelocityComponent>()->SetVelocity(liftVelocity->GetVelocity());
+		owner_->GetComponent<VelocityComponent>()->SetSpeedRate(liftVelocity->GetSpeedRate());
+	} 
+	else if (current_lift_->GetLiftState() == Lift::LiftState::Wait)
+	{
+		current_lift_->SetLiftState(Lift::LiftState::Move);
 
 	}
+	// 停止している場合
+	else if (current_lift_->GetLiftState() == Lift::LiftState::Stop) {
+		// リフトの参照を切る
+		current_lift_ = nullptr;
+	}
+
 }
 
 void LiftInteractionComponent::SetLift(Lift* _lift)

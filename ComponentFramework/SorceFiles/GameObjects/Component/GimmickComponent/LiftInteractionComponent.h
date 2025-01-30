@@ -17,7 +17,7 @@ class Lift;
 class LiftInteractionComponent : public Component
 {
 public:
-    LiftInteractionComponent(class GameObject* _owner, int _updateOrder = 27);
+    LiftInteractionComponent(class GameObject* _owner, int _updateOrder = 20);
     ~LiftInteractionComponent();
 
     void Init() override;
