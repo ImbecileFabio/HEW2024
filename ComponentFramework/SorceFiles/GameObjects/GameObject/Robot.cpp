@@ -13,6 +13,7 @@
 
 #include "../../GameManager.h"
 #include "../../TileMapManager.h"
+#include "../../AudioManager.h"
 #include "Lift.h"
 #include "Gimmick/Smoke.h"
 #include "Gimmick/SmokePipe.h"
@@ -78,6 +79,7 @@ void Robot::InitGameObject(void)
 {
 	transform_component_->SetSize(TILE_SIZE_X * 2.0f, TILE_SIZE_Y * 2.0f);
 	collider_component_->SetSize(transform_component_->GetSize().x * 0.7f, transform_component_->GetSize().y * 0.95f);
+	collider_component_->SetLayer(ColliderBaseComponent::Robot);
 }
 
 //--------------------------------------------------
@@ -125,6 +127,9 @@ void Robot::UpdateGameObject(void)
 				sprite_component_->SetTexture("robot_drop");
 			}
 		}
+		// ƒTƒEƒ“ƒh‚ðŒJ‚è•Ô‚·ˆ—
+		if (!AudioManager::GetInstance()->GetPlayingState(SoundLabel_RobotMoveSE))
+			AudioManager::GetInstance()->Play(SoundLabel_RobotMoveSE);
 		break;
 	}
 	case RobotState::Fall:	// —Ž‰ºó‘Ô
@@ -137,6 +142,7 @@ void Robot::UpdateGameObject(void)
 				robot_state_ = RobotState::Move;
 				sprite_component_->SetTexture("robot_walk");
 			}
+			AudioManager::GetInstance()->Play(SoundLabel_RobotLandingSE);
 		}
 		break;
 	}

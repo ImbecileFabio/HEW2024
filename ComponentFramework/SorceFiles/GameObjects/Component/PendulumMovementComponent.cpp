@@ -45,6 +45,8 @@ void PendulumMovementComponent::Init() {
 	pendulumMovement_ = false;
 	pendulumSelected_ = false;
 	pendulumDirection_ = 1;
+
+	m_langeState = 1;
 }
 
 //--------------------------------------------------
@@ -207,7 +209,6 @@ float PendulumMovementComponent::GetPendulumVelocity() {
 // U‚èŽq‚Ì’âŽ~AŽn“®
 //--------------------------------------------------
 void PendulumMovementComponent::StartPendulumMovement() {
-	AudioManager::GetInstance()->Play(SoundLabel_HitSE);
 	maxPendulumVelocity_ = 0;
 	for (int i = 1;;i++) {
 		maxPendulumVelocity_ += pendulumAcceleration * i;
@@ -216,6 +217,7 @@ void PendulumMovementComponent::StartPendulumMovement() {
 			break;
 		}
 	}
+	AudioManager::GetInstance()->Play(SoundLabel_PendulumHitSE);
 }
 void PendulumMovementComponent::StopPendulumMovement() {
 	SetPendulumAngle(0);

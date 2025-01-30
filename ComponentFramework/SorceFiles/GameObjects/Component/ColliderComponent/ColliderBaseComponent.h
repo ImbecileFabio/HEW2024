@@ -29,6 +29,13 @@ class BoxColliderComponent;
 class ColliderBaseComponent :public Component
 {
 public:
+	enum Layer
+	{
+		Nothing,
+		Default,
+		WeakFloor,
+		Robot,
+	};
 	ColliderBaseComponent(GameObject* _owner, int _updateOrder = 50);
 	virtual ~ColliderBaseComponent();
 
@@ -52,9 +59,19 @@ public:
 	auto GetOffset(void) { return offset_; }
 
 	TypeID GetComponentType(void) const override { return TypeID::ColliderBaseComponent; }
+
+	void SetLayer(Layer _layer) { layer_ = _layer; }
+	Layer GetLayer() { return layer_; }
+	void SetIgnoreLayer(Layer _ignoreLayer) { ignoreLayer_ = _ignoreLayer; }
+	Layer GetIgnoreLayer() { return ignoreLayer_; }
+	void SetTargetLayer(Layer _layer) { targetLayer_ = _layer; }
+	Layer GetTargetLayer() { return targetLayer_; }
 protected:
 	bool hitFg_ = false;	// 当たっているかどうか
 	Vector3 size_{ 100.0f, 100.0f, 0.0f };		// サイズ
 	Vector3 offset_{0.0f, 0.0f, 0.0f};		// オフセット
+	Layer layer_ = Default;
+	Layer ignoreLayer_ = Nothing;
+	Layer targetLayer_ = Nothing;
 };
 #endif // COLLIDER_BASE_COMPONENT_H_

@@ -21,6 +21,8 @@
   <ItemGroup>
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeInteractionComponent.cpp" />
     <ClCompile Include="SorceFiles\FadeManager.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarComponent.cpp" />
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarFloorMove.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftInteractionComponent.cpp" />
     <ClCompile Include="SorceFiles\AudioManager.cpp" />
@@ -98,7 +100,6 @@
     <ClCompile Include="SorceFiles\TextureManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarFloor.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloor.cpp" />
-    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillarComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\WeakFloorComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\StickMoveComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\TimeZoneComponent.cpp" />
@@ -122,6 +123,8 @@
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeInteractionComponent.h" />
     <ClInclude Include="SorceFiles\FadeManager.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarComponent.h" />
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarFloorMove.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\Smoke.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\LiftInteractionComponent.h" />
     <ClInclude Include="SorceFiles\AudioManager.h" />
@@ -207,7 +210,6 @@
     <ClInclude Include="SorceFiles\TextureManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\SteePillarFloor.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\Gimmick\WeakFloor.h" />
-    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillarComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\WeakFloorComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\StickMoveComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\TimeZoneComponent.h" />

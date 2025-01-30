@@ -83,6 +83,15 @@ bool BoxColliderComponent::CheckCollisionCollider(CircleColliderComponent* _othe
 //--------------------------------------------------
 bool BoxColliderComponent::CheckCollisionCollider(BoxColliderComponent* _other)
 {
+	std::string name = _other->GetOwner()->GetObjectName();
+	if (name == "WeakFloor")
+	{
+		int i = 0;
+	}
+	if (name == "Robot")
+	{
+		int i = 0;
+	}
 	auto myHitbox    = this->GetWorldHitBox();		// ©
 	auto otherHitbox = _other->GetWorldHitBox();	// ‘¼
 	// x•ûŒü

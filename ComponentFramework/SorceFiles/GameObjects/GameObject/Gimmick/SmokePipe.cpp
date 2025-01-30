@@ -53,26 +53,27 @@ void SmokePipe::InitGameObject(void)
 //--------------------------------------------------
 void SmokePipe::UpdateGameObject(void)
 {
-	// ƒ^ƒCƒ€ƒ][ƒ“‚ª“®‚¢‚Ä‚¢‚é‚©‚Ì”»’è
-	if (smoke_component_->GetTimeZoneFlg()) {
-		if (brakeFlg_) {
-			smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-			smoke_->SetState(GameObject::State::Active);
-
+	// ƒ^ƒCƒ€ƒ][ƒ“‚ÉG‚ê‚Ä‚¢‚é‚©‚Ì”»’è
+	if (smoke_component_->GetTimeZoneHitFlg()) {
+		// ƒ^ƒCƒ€ƒ][ƒ“‚ª“®‚¢‚Ä‚¢‚é‚©‚Ì”»’è
+		if (smoke_component_->GetTimeZoneONFlg()) {
+			if (brakeFlg_) {
+				smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+			}
+			else {	// [BRAKE_DEFAULT_TIME]•bŒã‚É”j‰ói‘Ò‹@ó‘Ô‚ð”²‚¯‚éj
+				fpsCounter_ += smoke_component_->GetTimeSpeed();
+				if (fpsCounter_ >= 60.0f * BRAKE_DEFAULT_TIME) brakeFlg_ = true;
+				smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+			}
 		}
-		else {	// [BRAKE_DEFAULT_TIME]•bŒã‚É”j‰ói‘Ò‹@ó‘Ô‚ð”²‚¯‚éj
-			fpsCounter_ += smoke_component_->GetTimeSpeed();
-			if (fpsCounter_ >= 60.0f * BRAKE_DEFAULT_TIME) brakeFlg_ = true;
+		else {
 			smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			smoke_->SetState(GameObject::State::Paused);
-
 		}
 	}
 	else {
-		smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-		smoke_->SetState(GameObject::State::Paused);
-
+		if (brakeFlg_) smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	}
 
-	smoke_component_->SetTimeZoneFlg(false);
+	smoke_component_->SetTimeZoneONFlg(false);
+	smoke_component_->SetTimeZoneHitFlg(false);
 }
