@@ -117,7 +117,6 @@ void AnimationComponent::UpdateUV()
 
 	Vector2 uv = { frameX * frameSize.x, frameY * frameSize.y };
 
-	std::cout << "UV : " << uv.x << ",  " << uv.y << std::endl;
 	sprite_component_->SetUV(uv);
 }
 bool AnimationComponent::GetIsPlaying()

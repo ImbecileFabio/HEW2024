@@ -32,7 +32,8 @@ void PendulumManager::PendulumSearch()
 		}
 		if (!pSelectedPendulum)
 		{
-			pHammerCursor_->SetOriginPos({-1000.0f, 0.0f, 0.0f});
+			pHammerCursor_->SetOriginPos({-10000.0f, 0.0f, 0.0f});
+			return;
 		}	
 		if (pSelectedPendulum != nullptr) 
 			pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());

@@ -96,31 +96,3 @@ bool CircleColliderComponent::CheckCollisionCollider(BoxColliderComponent* _othe
 void CircleColliderComponent::Uninit(void)
 {
 }
-//--------------------------------------------------
-// @brief ‰~‚Ì“–‚½‚è”»’è‚ð‚Æ‚éŠÖ”
-// @param _other ‰~‚ÌÀ•W‚Æ”¼Œa
-//--------------------------------------------------
-//void CircleColliderComponent::CheckCollision(const CIRCLE& _other)
-//{
-//	//float a = this->circle_.position.x - _other.position.x;
-//	//float b = this->circle_.position.y - _other.position.y;
-//	//float c = (a * a) + (b * b);
-//	//float sumRadius = this->circle_.radius + _other.radius;
-//
-//	//if (c <= sumRadius * sumRadius)
-//	//{
-//	//	std::cout << std::format("[CircleColliderComponent] -> CheckCollision\n");
-//	//	this->testFg = true;
-//	//	return;
-//	//}
-//	//float a = std::pow((this->circle_.position.x - _other.position.x ), 2.0f);
-//	//float b = std::pow((this->circle_.position.y - _other.position.y ), 2.0f);
-//	//float c = a + b;	
-//	//float sumRadius = std::pow((this->circle_.radius + _other.radius) , 2.0f);
-//	//if (c < sumRadius)
-//	//{
-//	//	std::cout << std::format("[CircleColliderComponent] -> CheckCollision\n");
-//	//	this->testFg = true;
-//	//	return;
-//	//}
-//}

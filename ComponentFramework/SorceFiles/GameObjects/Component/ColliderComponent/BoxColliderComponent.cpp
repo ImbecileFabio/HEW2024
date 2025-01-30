@@ -74,6 +74,7 @@ bool BoxColliderComponent::CheckCollisionCollider(CircleColliderComponent* _othe
 		this->hitFg_ = true;
 		return true;
 	}
+	this->hitFg_ = false;
 	return false;
 }
 

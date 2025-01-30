@@ -193,37 +193,37 @@ void TitleScene::Init()
 		game_manager_->TransitionToScene(SceneName::Stage1_1);
 		};
 	select_stages_[0][1] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage1_2);
+		game_manager_->TransitionToScene(SceneName::Stage1_2);
 		};
 	select_stages_[0][2] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage1_3);
+		game_manager_->TransitionToScene(SceneName::Stage1_3);
 		};
 	select_stages_[0][3] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage1_4);
+		game_manager_->TransitionToScene(SceneName::Stage1_4);
 		};
 	select_stages_[1][0] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage2_1);
+		game_manager_->TransitionToScene(SceneName::Stage2_1);
 		};
 	select_stages_[1][1] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage2_2);
+		game_manager_->TransitionToScene(SceneName::Stage2_2);
 		};
 	select_stages_[1][2] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage2_3);
+		game_manager_->TransitionToScene(SceneName::Stage2_3);
 		};
 	select_stages_[1][3] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage2_4);
+		game_manager_->TransitionToScene(SceneName::Stage2_4);
 		};
 	select_stages_[2][0] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage3_1);
+		game_manager_->TransitionToScene(SceneName::Stage3_1);
 		};
 	select_stages_[2][1] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage3_2);
+		game_manager_->TransitionToScene(SceneName::Stage3_2);
 		};
 	select_stages_[2][2] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage3_3);
+		game_manager_->TransitionToScene(SceneName::Stage3_3);
 		};
 	select_stages_[2][3] = [this]() {
-		game_manager_->ChangeScene(SceneName::Stage3_4);
+		game_manager_->TransitionToScene(SceneName::Stage3_4);
 		};
 
 	AudioManager::GetInstance()->Play(SoundLabel_TitleBGM);

@@ -31,8 +31,10 @@ public:
 
 	void SetSteePillarLeftGroup(class SteePillarLeftGroup* _steePillarLeftGroup);		// 左側のグループを設定
 	void SetSteePillarRightGroup(class SteePillarRightGroup* _steePillarRightGroup);	// 右側のグループを設定
-
+	void SetHitLeft(bool _fg) { isHitLift_ = _fg; }
 	void UpdateSteePillarFloorTilePositions();	// タイルの位置を同期させる関数
+	void AlignSteePillarFloorTilesWithTile(float _y);
+	bool GetIsHitLift_() { return isHitLift_; }
 private:
 	// グループ単体が管理しているもの
 	bool isCenterMedian_ = false;						// 中心値を調べたかどうか
@@ -40,6 +42,7 @@ private:
 	bool isBreakStart_	 = false;
 	bool isDownStart_	 = false;						
 	bool isHitTile_		 = false;						// タイルが当たったかどうか
+	bool isHitLift_		 = false;						// リフトが当たったかどうか
 	bool isPendulumDelete_ = false;						// 振り子を消すかどうか
 	int tileCenterNum_ = 0;								// タイルの中心の添え字
 	int leftIndex_ = 0;
@@ -56,6 +59,11 @@ private:
 	// グループが管理しているもの
 	class SteePillarLeftGroup*  steePillarLeftGroup_  = nullptr;		// 左側のグループ
 	class SteePillarRightGroup* steePillarRightGroup_ = nullptr;		// 右側のグループ
+
+	void CacheInitPosition();	// 初期位置をキャッシュする関数
+	void UpdatePendulumState();	// 振り子の状態を更新する関数
+	void StartFalling();		// 落下処理を開始する関数	
+	DirectX::SimpleMath::Vector3 GetCenterPosition();	// タイルの中心位置を取得する関数
 };
 #endif // STEE_PILLAE_FLOOR_GROUP_H_
 

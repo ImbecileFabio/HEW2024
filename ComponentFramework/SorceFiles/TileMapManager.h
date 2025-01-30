@@ -54,10 +54,10 @@ private:
 	bool IsTileInGroup(int x, int y, WeakFloorGroup*& _group);
 	bool IsTileInGroup(int x, int y, LiftGroup*& _group);
 	bool IsTileInGroup(int x, int y, SteePillarFloorGroup*& _group);
-	//bool IsTileInGroup(int x, int y, SteePillarRightGroup*& _group);
-	//bool IsTileInGroup(int x, int y, SteePillarLeftGroup*& _group);
+	bool IsTileInGroup(int x, int y, SteePillarRightGroup*& _group);
+	bool IsTileInGroup(int x, int y, SteePillarLeftGroup*& _group);
 
-	//void hogehoge();
+	void hogehoge();
 private:
 	GameManager* game_manager_{};
 	std::vector<std::vector<std::vector<int>>> map_data_;

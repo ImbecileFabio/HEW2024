@@ -48,6 +48,7 @@ void WeakFloorGroup::UpdateGameObject(void)
     // U‚èŽq‚ð’†S‚É’²®‚·‚éˆ—
     if (!isCenterMedian)
     {
+		owner_pendulum_movement_->SetPendulumAngle(1.0f);
         size_t size = weakFloorTiles_.size();
         if (size == 0)
         {
@@ -81,6 +82,28 @@ void WeakFloorGroup::UpdateGameObject(void)
 		owner_pendulum_movement_->SetPendulumFulcrum(centerPos);
         isCenterMedian = true;
     }
+	int hitCount = 0;
+	for (auto& tile : weakFloorTiles_)
+	{
+		bool hit = false;
+		hit = tile->GetComponent<BoxColliderComponent>()->GetHitFg();
+		if (hit)
+		{
+			hitCount++;
+		}
+	}
+	if (hitCount == 0)
+	{
+		isWeakFloorBreak_ = false;
+	}
+	else
+	{
+		isWeakFloorBreak_ = true;
+	}
+	if (!isWeakFloorBreak_)
+	{
+		timer_component_->StopTimer();
+	}
 	// Æ‚¢°‚ª‰ó‚ê‚½‚©‚Ç‚¤‚©‚©‚ÂAU‚èŽq‚ª“®‚¢‚Ä‚¢‚éê‡
 	if (isWeakFloorBreak_ && owner_pendulum_movement_->GetPendulumMovement())
 	{

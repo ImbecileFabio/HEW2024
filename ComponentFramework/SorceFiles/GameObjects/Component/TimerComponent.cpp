@@ -13,6 +13,7 @@
 TimerComponent::TimerComponent(GameObject* _owner, float _triggerTime ,int _updateOrder)
 	:Component(_owner, _updateOrder)
 	, elapse_time_(0.0f)
+	, old_time_(0.0f)
 	, trigger_time_(_triggerTime)
 	, is_active_(false)
 	, is_triggered_(false)

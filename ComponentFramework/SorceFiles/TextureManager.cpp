@@ -61,7 +61,7 @@ void TextureManager::RegisterTexture(const std::string& _imgName, const std::str
 // すべて
 void TextureManager::RegisterTexture(const std::string& _textureName, const std::string& _fileName, const DirectX::SimpleMath::Vector2& _offsetPos, const DirectX::SimpleMath::Vector2& _offsetSize, bool _loopFlg, int _cutU, int _cutV, float _anmSpeed, int _totalFrame)
 {
-	texture_info_[_textureName] = { _fileName, _offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed , _totalFrame};
+	texture_info_[_textureName] = { _fileName, _offsetPos, _offsetSize, _loopFlg, _cutU, _cutV, _anmSpeed , _totalFrame };
 }
 
 //-----------------------------------------------------------------
@@ -100,8 +100,49 @@ std::shared_ptr<Texture> TextureManager::GetTexture(const std::string& _textureN
 		lru_list_.push_front(_textureName);
 		lru_map_[_textureName] = lru_list_.begin();
 
-		std::cout << std::format("＜TextureManager＞ -> {} GetTexture Success\n", _textureName);
 		return texture;
+	}
+
+	// 失敗
+	std::cout << std::format("＜TextureManager＞ -> {} GetTexture Error\n", _textureName);
+
+}
+
+//-----------------------------------------------------------------
+// @param  _imgName 画像名
+// @brief	テクスチャのプリロード
+//-----------------------------------------------------------------
+void TextureManager::LoadTexture(const std::string& _textureName)
+{
+	// キャッシュに存在する場合
+	auto it = texture_cache_.find(_textureName);
+	if (it != texture_cache_.end()) {
+		// LRUリストを更新
+		lru_list_.erase(lru_map_[_textureName]);
+		lru_list_.push_front(_textureName);
+		lru_map_[_textureName] = lru_list_.begin();
+		return;
+	}
+
+	// 新規テクスチャの生成
+	auto texInfo = texture_info_[_textureName];
+	auto texture = std::make_shared<Texture>(texInfo.offsetPos, texInfo.offsetSize, texInfo.loop, texInfo.cutU, texInfo.cutV, texInfo.animationSpeed, texInfo.totalFrame);
+	if (texture->Load(texInfo.filePath)) {
+		// キャッシュサイズの確認
+		if (texture_cache_.size() >= max_cache_size_) {
+			// 最後に使用された要素を削除
+			std::string old_texture = lru_list_.back();
+			lru_list_.pop_back();
+			lru_map_.erase(old_texture);
+			texture_cache_.erase(old_texture);
+		}
+
+		// 新しいテクスチャをキャッシュに追加
+		texture_cache_[_textureName] = texture;
+		lru_list_.push_front(_textureName);
+		lru_map_[_textureName] = lru_list_.begin();
+
+		return;
 	}
 
 	// 失敗
@@ -135,50 +176,55 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("piyo", TEXTURE_PATH"piyo.jpg", true, 8, 12, 0.05f);
 	RegisterTexture("fade_out", TEXTURE_PATH"fadeout.png", false, 5, 5, 0.1f);
 
-	
+
 	// インゲームのオブジェクト系
 	/*--------------- ロボット ---------------*/
-	RegisterTexture("robot_drop" , TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3, 1, 0.05f, 3);	// 落下
+	RegisterTexture("robot_drop", TEXTURE_PATH"robot/v03/robot_dorp_01.png", false, 3, 1, 0.05f, 3);	// 落下
 	RegisterTexture("robot_still", TEXTURE_PATH"robot/v03/robot_still_01.png");	// 静止
-	RegisterTexture("robot_walk" , TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.5f, 2);	// 歩行
+	RegisterTexture("robot_walk", TEXTURE_PATH"robot/v03/robot_walk_01.png", true, 2, 1, 0.5f, 2);	// 歩行
+
+	/*--------------- ギア ---------------*/
+	RegisterTexture("gear", UI_PATH"v02/gear_01.png", { 0.0f, 15.0f }, { 1.0f, 1.0f });
 
 	/*--------------- 振り子 ---------------*/
-	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png", {0.0f, 0.0f}, {1.25f, 1.25f});		// ボール
-	RegisterTexture("stick", TEXTURE_PATH"huriko/v03/stick_01.png", {0.0f, 0.0f}, { 0.75f, 1.0f});	// 棒
+	RegisterTexture("ball", TEXTURE_PATH"huriko/v02/ball_01.png", { 0.0f, 0.0f }, { 1.25f, 1.25f });		// ボール
+	RegisterTexture("stick", TEXTURE_PATH"huriko/v03/stick_01.png", { 0.0f, 0.0f }, { 0.75f, 1.0f });	// 棒
 
 	/*--------------- タイル ---------------*/
 	// 床
-	RegisterTexture("tile_center", TEXTURE_PATH"tile/v02/tile_center_01.png", { 0.0f, -3.0f }, {1.0f, 1.501f});	// 中央
+	RegisterTexture("tile_center", TEXTURE_PATH"tile/v02/tile_center_01.png", { 0.0f, -3.0f }, { 1.0f, 1.501f });	// 中央
 	RegisterTexture("tile_left", TEXTURE_PATH"tile/v02/tile_left_01.png", { -6.0f, -3.0f }, { 1.2f, 1.5f });	// 左
 	RegisterTexture("tile_right", TEXTURE_PATH"tile/v02/tile_right_01.png", { 6.0f, -3.0f }, { 1.2f, 1.5f });	// 右
 	// 壁
-	RegisterTexture("tile_wall", TEXTURE_PATH"tile/v02/tile_wall_01.png", { 13.0f, 0.0f }, { 1.48f, 1.0f });		// 壁
+	RegisterTexture("wall_left", TEXTURE_PATH"tile/v02/tile_wall_01.png", { 9.0f, 0.0f }, { 1.2f, 1.0f });		// 壁（左向き）
+	RegisterTexture("wall_right", TEXTURE_PATH"tile/v02/tile_wall_01.png", { -9.0f, 0.0f }, { 1.2f, 1.0f });		// 壁（右向き）
+
 
 	/*--------------- ギミック ---------------*/
 	// リフト
 	RegisterTexture("lift_floor_center", GIMMICK_PATH"lift/v02/lift_floor_center_01.png", { 0.0f, 8.0f }, { 1.0f, 1.25f });	// 中央
 	RegisterTexture("lift_floor_left", GIMMICK_PATH"lift/v02/lift_floor_left_01.png", { -7.9f, 8.0f }, { 1.25f, 1.25f });		// 左
-	RegisterTexture("lift_floor_right", GIMMICK_PATH"lift/v02/lift_floor_right_01.png", {8.0f, 8.0f}, { 1.25f, 1.25f });	// 右
+	RegisterTexture("lift_floor_right", GIMMICK_PATH"lift/v02/lift_floor_right_01.png", { 8.0f, 8.0f }, { 1.25f, 1.25f });	// 右
 	RegisterTexture("lift_circle", GIMMICK_PATH"lift/v02/lift_circle_01.png");					// 留め具
 	RegisterTexture("lift_rail", GIMMICK_PATH"lift/v02/lift_rail_01.png");						// レール
 	// 脆い床 （氷だったもの）
-	RegisterTexture("weakfloor_center", GIMMICK_PATH"weakfloor/v01/weakfloor_center_01.png", { 0.0f, -3.0f }, {1.0f, 1.501f});	// 中央
+	RegisterTexture("weakfloor_center", GIMMICK_PATH"weakfloor/v01/weakfloor_center_01.png", { 0.0f, -3.0f }, { 1.0f, 1.501f });	// 中央
 	RegisterTexture("weakfloor_left", GIMMICK_PATH"weakfloor/v01/weakfloor_left_01.png", { -6.0f, -3.0f }, { 1.2f, 1.5f });		// 左
 	RegisterTexture("weakfloor_right", GIMMICK_PATH"weakfloor/v01/weakfloor_right_01.png", { 6.5f, -3.0f }, { 1.2f, 1.5f });	// 右
 	// 鉄柱
-	RegisterTexture("steelpillar_floor_center", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_center_01.png");			// 床, 中央
-	RegisterTexture("steelpillar_floor_end_01", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_01.png");			// 床, 左
-	RegisterTexture("steelpillar_floor_end_02", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_02.png");			// 床, 右
+	RegisterTexture("steelpillar_floor_center", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_center_01.png", { 0.0f, -8.0f }, { 1.0f, 1.25f });			// 床, 中央
+	RegisterTexture("steelpillar_floor_end_01", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_01.png", { -7.9f, -8.0f }, { 1.25f, 1.25f });			// 床, 左
+	RegisterTexture("steelpillar_floor_end_02", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_02.png", { 8.0f, -8.0f }, { 1.25f, 1.25f });			// 床, 右
 
 	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png",		 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 上
 	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 下
-	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f }, false, 4, 4, 0.0001f, 15);			// 柱, 壊れ
+	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f }, false, 4, 4, 0.3f, 15);			// 柱, 壊れ
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// 柱, 通常
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 欠け
 	// 煙
-	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", true, 4, 8, 0.05f, 31);	// 煙本体
-	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png");		// 柱の奥
-	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png");	// 柱の手前
+	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f, 0.0f }, { 2.25f, 1.0f }, true, 4, 8, 0.05f, 31);	// 煙本体
+	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png", { 0.0f, 6.0f }, { 2.0f, 1.25f });		// 柱の奥
+	RegisterTexture("smoke02", GIMMICK_PATH"smoke/v01/smoke_bace_front_01.png", { 0.0f, 6.0f }, { 2.0f, 1.25f });	// 柱の手前
 	// 滑車
 	RegisterTexture("pulley", GIMMICK_PATH"pulley/v01/pulley_01.png");
 	// タイムゾーン
@@ -198,7 +244,7 @@ void TextureManager::RegisterAllTextures()
 	// ヒットエフェクト
 	RegisterTexture("hammer_hit_effect", UI_PATH"v02/hit_effect_01.png", false, 4, 4, 0.1f, 16);
 	// ギア
-	RegisterTexture("gear", UI_PATH"v02/gear_01.png");
+	RegisterTexture("gearUI", UI_PATH"v02/gear_01.png");
 	// 数字
 	RegisterTexture("numbers", UI_PATH"v02/numbers_01.png", false, 4, 3, 1.0f, 10);
 	// ポーズボタン

@@ -83,6 +83,12 @@ void LiftComponent::Update()
 		owner_velocity_->SetVelocity({ 0.0f, 0.0f, 0.0f });
 		break;
 	}
+	case LiftComState::Wait:
+	{
+		owner_velocity_->SetVelocity({ 0.0f, 0.0f, 0.0f });
+		break;
+	}
+
 	case LiftComponent::LiftComState::Move:
 	{
 		switch (lift_com_move_state_)

@@ -32,6 +32,7 @@ public:
 
 	void StartTimer();        // タイマーを開始
 	void StopTimer();         // タイマーを停止
+	void TimeStop();		  // タイマーを一時停止
 	void ResetTimer();        // タイマーをリセット
 
 	void SetTriggerTime(float _triggerTime); // トリガー時間の設定
@@ -43,6 +44,7 @@ public:
 private:
     float elapse_time_;   // 経過時間
 	float trigger_time_;  // トリガー時間
+	float old_time_;	  // 前回の時間
 	bool is_active_;      // タイマーが動作中かどうか
 	bool is_triggered_;   // トリガーが発生したかどうか
 };

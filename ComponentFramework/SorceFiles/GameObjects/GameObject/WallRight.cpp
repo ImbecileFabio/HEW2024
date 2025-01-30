@@ -1,5 +1,5 @@
 //==================================================
-// [Wall.cpp] タイルオブジェクト
+// [WallRight.cpp] タイルオブジェクト
 // 著者：有馬啓太
 //--------------------------------------------------
 // 説明：タイルの処理を定義
@@ -9,7 +9,7 @@
 #include <iostream>
 #include <format>
 
-#include "Wall.h"
+#include "WallRight.h"
 #include "../../GameManager.h"
 #include "../../TileMapManager.h"
 #include "../Component.h"
@@ -18,25 +18,28 @@
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/PushOutComponent.h"
 
+
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-Wall::Wall(GameManager* _gameManager)
-	:GameObject(_gameManager, "Wall")
+WallRight::WallRight(GameManager* _gameManager)
+	:GameObject(_gameManager, "WallRight")
 {
-	sprite_component_ = new SpriteComponent(this, "tile_wall");
+	sprite_component_ = new SpriteComponent(this, "wall_right");
 	collider_event_component_ = new ColliderEventComponent(this);
 	collider_component_ = new BoxColliderComponent(this);
 
-	auto f = std::function<void(GameObject*)>(std::bind(&Wall::OnCollisionEnter, this, std::placeholders::_1));
+	auto f = std::function<void(GameObject*)>(std::bind(&WallRight::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
+
+	sprite_component_->SetFlip(true, false);
 
 	InitGameObject();
 }
 //--------------------------------------------------
 // デストラクタ
 //--------------------------------------------------
-Wall::~Wall(void)
+WallRight::~WallRight(void)
 {
 	// ここでコンポーネントを削除
 	delete sprite_component_;
@@ -48,19 +51,19 @@ Wall::~Wall(void)
 //--------------------------------------------------
 // 初期化処理
 //--------------------------------------------------
-void Wall::InitGameObject(void)
+void WallRight::InitGameObject(void)
 {
 }
 
 //--------------------------------------------------
 // 更新処理
 //--------------------------------------------------
-void Wall::UpdateGameObject(void)
+void WallRight::UpdateGameObject(void)
 {
 
 }
 
-void Wall::OnCollisionEnter(GameObject* _other)
+void WallRight::OnCollisionEnter(GameObject* _other)
 {
 	switch (_other->GetType())
 	{

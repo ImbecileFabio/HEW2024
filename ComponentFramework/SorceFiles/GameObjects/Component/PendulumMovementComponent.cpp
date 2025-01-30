@@ -14,7 +14,6 @@
 //--------------------------------------------------
 PendulumMovementComponent::PendulumMovementComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder) {
-	std::cout << std::format("＜PendulumMovementComponent＞ -> Constructor\n");
 
 	Init();
 }
@@ -23,7 +22,6 @@ PendulumMovementComponent::PendulumMovementComponent(GameObject* _owner, int _up
 // デストラクタ
 //--------------------------------------------------
 PendulumMovementComponent::~PendulumMovementComponent() {
-	std::cout << std::format("＜PendulumMovementComponent＞ -> Destructor\n");
 
 	Uninit();
 }
@@ -183,7 +181,6 @@ void PendulumMovementComponent::PendulumInit(DirectX::SimpleMath::Vector3 _fulcr
 	pendulumMovement_ = _movement;
 	maxPendulumAngle_ = _pendulumAngle;
 	SetPendulumAngle(0.0f);
-	//SetPendulumAngle(_pendulumAngle);
 }
 
 //--------------------------------------------------

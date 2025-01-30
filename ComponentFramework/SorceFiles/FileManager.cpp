@@ -7,7 +7,6 @@
 //--------------------------------------------------
 bool FileManager::SaveFile(const std::string& _fileName, const std::string& _data)
 {
-    std::cout << std::format("＜FileManager＞ -> SaveFile\n");
     std::ofstream outFile(_fileName, std::ios::out | std::ios::trunc);
     if (!IsFileStreamValid(outFile))
     {
@@ -24,7 +23,6 @@ bool FileManager::SaveFile(const std::string& _fileName, const std::string& _dat
 //--------------------------------------------------
 bool FileManager::LoadFile(const std::string& _fileName, std::vector<std::string>& _data)
 {
-    std::cout << std::format("＜FileManager＞ -> LoadFile\n");
     std::ifstream inFile(_fileName, std::ios::in);
 	if (!IsFileStreamValid(inFile)) // ファイルが開けなかった場合
     {
@@ -35,7 +33,6 @@ bool FileManager::LoadFile(const std::string& _fileName, std::vector<std::string
     std::string line;
 	while (std::getline(inFile, line))  // 1行ずつ読み込む
     {
-        std::cout << std::format("＜FileManager＞ -> LoadFile -> push_back\n");
 		_data.push_back(line);  // 追加
     }
 
@@ -47,7 +44,6 @@ bool FileManager::LoadFile(const std::string& _fileName, std::vector<std::string
 //--------------------------------------------------
 bool FileManager::FileExists(const std::string& _fileName)
 {
-    std::cout << std::format("＜FileManager＞ -> FileExists\n");
     std::ifstream file(_fileName);
     return file.good();
 }
@@ -56,7 +52,6 @@ bool FileManager::FileExists(const std::string& _fileName)
 //--------------------------------------------------
 size_t FileManager::GetFileSize(const std::string& _fileName)
 {
-    std::cout << std::format("＜FileManager＞ -> GetFileSize\n");
     std::ifstream file(_fileName, std::ios::binary | std::ios::ate);
 	if (!file)  // ファイルが開けなかった場合
     {

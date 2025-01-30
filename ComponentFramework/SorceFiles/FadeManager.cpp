@@ -36,7 +36,6 @@ FadeManager::~FadeManager()
 //-----------------------------------------------------------------
 void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<void()> _onComplete)
 {
-	std::cout << "<FadeManager> ------------ StartFadeOut ------------\n";
 	fade_texture_ = TextureManager::GetInstance().GetTexture(_fadeOutTex);
 
 	// 経過時間などなどをリセット
@@ -55,7 +54,6 @@ void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<voi
 //-----------------------------------------------------------------
 void FadeManager::StartFadeIn(const std::string& _fadeInTex, std::function<void()> _onComplete)
 {
-	std::cout << "<FadeManager> ------------ StartFadeIn ------------\n";
 	fade_texture_ = TextureManager::GetInstance().GetTexture(_fadeInTex);
 
 	// 経過時間などなどをリセット
