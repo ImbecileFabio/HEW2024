@@ -107,8 +107,6 @@ void Stage2_2Scene::Init()
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
-
-
 }
 //--------------------------------------------------
 // XVˆ—

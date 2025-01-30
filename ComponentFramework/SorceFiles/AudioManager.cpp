@@ -29,7 +29,8 @@
 // コンストラクタ/デストラクタ
 //--------------------------------------------------
 AudioManager::AudioManager() {
-	Init();
+	General_Init();
+	Sound_Init();
 }
 AudioManager::~AudioManager() {
 	Uninit();
@@ -38,7 +39,7 @@ AudioManager::~AudioManager() {
 //--------------------------------------------------
 // 初期化/開放処理
 //--------------------------------------------------
-HRESULT AudioManager::Init() {
+HRESULT AudioManager::General_Init() {
 	HRESULT hr;
 
 	HANDLE hFile;
@@ -122,6 +123,15 @@ HRESULT AudioManager::Init() {
 
 	return hr;
 }
+void AudioManager::Sound_Init(void) {
+	SetVolume(SoundLabel_UIDecisionSE, 0.7f);
+	SetVolume(SoundLabel_UICancelSE, 1.3f);
+	SetVolume(SoundLabel_UISceneChangeSE, 1.8f);
+	SetVolume(SoundLabel_RobotMoveSE, 1.5f);
+	SetVolume(SoundLabel_RobotLandingSE, 0.5f);
+	SetVolume(SoundLabel_PendulumHitSE, 1.3f);
+	SetCategoryVolume(BGM, 0.7f);
+}
 void AudioManager::Uninit(void) {
 	for (int i = 0; i < SoundLabel_MAX; i++){
 		if (m_pSourceVoice[i]){
@@ -146,6 +156,7 @@ void AudioManager::Uninit(void) {
 // 再生/停止/一時停止
 //--------------------------------------------------
 void AudioManager::Play(SOUND_LABEL _label) {
+	m_pSourceVoice[(int)_label]->Stop(0);
 	m_pSourceVoice[(int)_label]->FlushSourceBuffers(); // バッファをクリア
 	// ボイスキューに新しいオーディオバッファーを追加
 	m_pSourceVoice[(int)_label]->SubmitSourceBuffer(&(m_buffer[(int)_label]));
@@ -170,13 +181,23 @@ void AudioManager::Resume(SOUND_LABEL _label) {
 
 
 //--------------------------------------------------
-// 音量・再生速度設定
+// 音量設定
 //--------------------------------------------------
 void AudioManager::SetVolume(SOUND_LABEL _label, float _volume) {
 	m_pSourceVoice[(int)_label]->SetVolume(_volume);
 }
 void AudioManager::SetCategoryVolume(SOUND_CATEGORY _category, float _volume) {
 	m_pSubmixVoice[(int)_category]->SetVolume(_volume);
+}
+
+
+//--------------------------------------------------
+// 再生状況取得
+//--------------------------------------------------
+bool AudioManager::GetPlayingState(SOUND_LABEL _label) {
+	XAUDIO2_VOICE_STATE state;
+	m_pSourceVoice[(int)_label]->GetState(&state);
+	return state.BuffersQueued > 0;
 }
 
 

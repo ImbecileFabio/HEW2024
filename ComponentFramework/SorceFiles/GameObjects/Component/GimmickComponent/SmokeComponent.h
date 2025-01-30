@@ -22,14 +22,17 @@ public:
     void Uninit() override;
     void Update() override;
 
-    void SetTimeZoneFlg(bool _flg) {timeZoneFlg_ = _flg; }
-    auto GetTimeZoneFlg() { return timeZoneFlg_; }
+    void SetTimeZoneONFlg(bool _flg) {timeZoneONFlg_ = _flg; }
+    auto GetTimeZoneONFlg() { return timeZoneONFlg_; }
+    void SetTimeZoneHitFlg(bool _flg) { timeZoneHitFlg_ = _flg; }
+    auto GetTimeZoneHitFlg() { return timeZoneHitFlg_; }
     void SetTimeSpeed(float _speed) { timeSpeed_ = _speed; };
     auto GetTimeSpeed() { return timeSpeed_; }
 
     TypeID GetComponentType(void) const override { return TypeID::SmokeComponent; }
 private:
-    bool timeZoneFlg_ = false;
+    bool timeZoneONFlg_ = false;
+    bool timeZoneHitFlg_ = false;
     float timeSpeed_ = 1.0f;
 };
 #endif // SMOKE_COMPONENT_H_

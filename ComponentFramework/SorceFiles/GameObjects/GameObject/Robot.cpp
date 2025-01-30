@@ -13,6 +13,7 @@
 
 #include "../../GameManager.h"
 #include "../../TileMapManager.h"
+#include "../../AudioManager.h"
 #include "Lift.h"
 #include "Gimmick/Smoke.h"
 #include "Gimmick/SmokePipe.h"
@@ -123,6 +124,9 @@ void Robot::UpdateGameObject(void)
 				sprite_component_->SetTexture("robot_drop");
 			}
 		}
+		// ƒTƒEƒ“ƒh‚ðŒJ‚è•Ô‚·ˆ—
+		if (!AudioManager::GetInstance()->GetPlayingState(SoundLabel_RobotMoveSE))
+			AudioManager::GetInstance()->Play(SoundLabel_RobotMoveSE);
 		break;
 	}
 	case RobotState::Fall:	// —Ž‰ºó‘Ô
@@ -135,6 +139,7 @@ void Robot::UpdateGameObject(void)
 				robot_state_ = RobotState::Move;
 				sprite_component_->SetTexture("robot_walk");
 			}
+			AudioManager::GetInstance()->Play(SoundLabel_RobotLandingSE);
 		}
 		break;
 	}

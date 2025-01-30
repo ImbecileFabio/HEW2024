@@ -15,9 +15,9 @@
 // 
 //		SetPendulumAngle(float);				振り子の角度をセット（初期値用）
 //		GetPendulumAngle();					振り子の角度を取得
-//		SetPendulumVelocity(float);			角速度をセット
-//		GetPendulumVelocity();				角速度を取得
-//		SetPendulumAcceleration(float);		角加速度をセット
+//		SetPendulumVelocity(float);				角速度をセット
+//		GetPendulumVelocity();					角速度を取得
+//		SetPendulumAcceleration(float);			角加速度をセット
 //		GetPendulumAcceleration();				角加速度を取得
 //		SetPendulumFulcrum(VECTOR3型);			支点の座標をセット
 //		GetPendulumFulcrum();					支点の座標を取得
@@ -51,6 +51,7 @@ public:
 		normalLangth,
 		longLangth
 	};
+	int m_langeState;	// 長さの添え字
 
 	PendulumMovementComponent(GameObject* _owner, int _updateOrder = 49);
 	~PendulumMovementComponent();
@@ -97,6 +98,9 @@ public:
 	bool GetPendulumSelected() { return pendulumSelected_; }
 	void SetPendulumDirection(int _pendulumDirection) { pendulumDirection_ = _pendulumDirection; }
 	int GetPendulumDirection() { return pendulumDirection_; }
+
+	void SetLangeState(int _state) { m_langeState = _state; }
+	auto GetLangeState() { return m_langeState; }
 
 private:
 	DirectX::SimpleMath::Vector3 pendulumPosition_;	// -位置
