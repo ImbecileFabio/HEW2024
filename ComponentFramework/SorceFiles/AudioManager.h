@@ -37,6 +37,9 @@ typedef enum {
 	SoundLabel_StageGearSE,			// アイテム取得SE
 	SoundLabel_StageResultGearSE,	// リザルトでアイテムが嵌まる時のSE
 	SoundLabel_StageRewindSteamSE,	// 巻き戻し煙SE
+	// ギミック関連SE
+	SoundLabel_GimmickLiftMove,		// リフト移動SE
+	SoundLabel_GimmickWeakFloorStay,// 弱い床の待機SE
 	// UI関連SE
 	SoundLabel_UIDecisionSE,		// UIの決定とかのSE
 	SoundLabel_UICancelSE,			// UIの決定とかのSE
@@ -64,20 +67,28 @@ private:
 
 	PARAM m_param[SoundLabel_MAX] =
 	{
-		{ "Asset/Sound/BGM/TitleBGM.wav",		true,  BGM },	// タイトルBGM
-		{ "Asset/Sound/BGM/StageBGM1.1.wav",	true,  BGM },	// ステージBGM
-		{ "Asset/Sound/BGM/ResultBGM.wav",		true,  BGM },	// リザルトBGM
-		{ "Asset/Sound/SE/PendulumHit.wav",		false, SE },	// 叩くSE
-		{ "Asset/Sound/SE/PendulumCreak.wav",	false, SE },	// 軋むSE
-		{ "Asset/Sound/SE/RobotMove.wav",		false, SE },	// 歩行SE
-		{ "Asset/Sound/SE/RobotLanding1.1.wav",	false, SE },	// 着地SE
-		{ "Asset/Sound/SE/StageGear1.1.wav",	false, SE },	// アイテム取得SE
-		{ "Asset/Sound/SE/StageResultGear.wav",	false, SE },	// リザルトでアイテムが嵌まる時のSE
-		{ "Asset/Sound/SE/StageRewindSmoke.wav",false, SE },	// 巻き戻し煙SE
-		{ "Asset/Sound/SE/UIDecision.wav",		false, SE },	// UIの決定とかのSE
-		{ "Asset/Sound/SE/UICancel.wav",		false, SE },	// UIの決定とかのSE
-		{ "Asset/Sound/SE/UISceneChange.wav",	false, SE },	// 歯車が回るSE
-		{ "Asset/Sound/SE/UICursorMove.wav",	false, SE },	// カーソル移動SE
+		// BGM
+		{ "Asset/Sound/BGM/TitleBGM.wav",				true,  BGM },	// タイトルBGM
+		{ "Asset/Sound/BGM/StageBGM1.1.wav",			true,  BGM },	// ステージBGM
+		{ "Asset/Sound/BGM/ResultBGM.wav",				true,  BGM },	// リザルトBGM
+		// 振り子関連SE
+		{ "Asset/Sound/SE/PendulumHit.wav",				false, SE },	// 叩くSE
+		{ "Asset/Sound/SE/PendulumCreak.wav",			false, SE },	// 軋むSE
+		// ロボット関連SE
+		{ "Asset/Sound/SE/RobotMove.wav",				false, SE },	// 歩行SE
+		{ "Asset/Sound/SE/RobotLanding1.1.wav",			false, SE },	// 着地SE
+		// ステージ、リザルト関連SE
+		{ "Asset/Sound/SE/StageGear1.1.wav",			false, SE },	// アイテム取得SE
+		{ "Asset/Sound/SE/StageResultGear.wav",			false, SE },	// リザルトでアイテムが嵌まる時のSE
+		{ "Asset/Sound/SE/StageRewindSmoke.wav",		false, SE },	// 巻き戻し煙SE
+		// ギミック関連SE
+		{ "Asset/Sound/SE/GimmickLiftMove.wav",			false, SE },	// リフト移動SE
+		{ "Asset/Sound/SE/GimmickWeakFloorStay.wav",	false, SE },	// 弱い床の待機SE
+		// UI関連SE
+		{ "Asset/Sound/SE/UIDecision.wav",				false, SE },	// UIの決定とかのSE
+		{ "Asset/Sound/SE/UICancel.wav",				false, SE },	// UIの決定とかのSE
+		{ "Asset/Sound/SE/UISceneChange.wav",			false, SE },	// 歯車が回るSE
+		{ "Asset/Sound/SE/UICursorMove.wav",			false, SE },	// カーソル移動SE
 
 	};
 

@@ -7,6 +7,7 @@
 
 #include "AudioManager.h"
 #include <iostream>
+#include <cstdlib>
 
 #ifdef _XBOX //Big-Endian
 #define fourccRIFF 'RIFF'
@@ -29,7 +30,7 @@
 // コンストラクタ/デストラクタ
 //--------------------------------------------------
 AudioManager::AudioManager() {
-	General_Init();
+	if (FAILED(General_Init())) exit(EXIT_FAILURE);
 	Sound_Init();
 }
 AudioManager::~AudioManager() {
@@ -50,19 +51,19 @@ HRESULT AudioManager::General_Init() {
 	// COM,Xaudio2,MasteringVoiceの初期化
 	hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	if (FAILED(hr)) {
-		std::cerr << "COM Init FAILED\n";
+		std::cerr << "AudioManager : COM Init FAILED\n";
 		Uninit();
 		return -1;
 	}
 	hr = XAudio2Create(&m_pXAudio2, 0);
 	if (FAILED(hr)) {
-		std::cerr << "Xaudio2 Init FAILED\n";
+		std::cerr << "AudioManager : Xaudio2 Init FAILED\n";
 		Uninit();
 		return -1;
 	}
 	hr = m_pXAudio2->CreateMasteringVoice(&m_pMasteringVoice);
 	if (FAILED(hr)) {
-		std::cerr << "MasteringVoice Init FAILED\n";
+		std::cerr << "AudioManager : MasteringVoice Init FAILED\n";
 		Uninit();
 		return -1;
 	}
@@ -102,7 +103,7 @@ HRESULT AudioManager::General_Init() {
 		if (!(m_pSubmixVoice[m_param[i].soundCategory])) {
 			hr = m_pXAudio2->CreateSubmixVoice(&m_pSubmixVoice[m_param[i].soundCategory], m_wfx[i].Format.nChannels, m_wfx[i].Format.nSamplesPerSec);
 			if (FAILED(hr)) {
-				std::cerr << "SubmixVoice Init FAILED\n";
+				std::cerr << "AudioManager : SubmixVoice Init FAILED\n";
 				Uninit();
 				return -1;
 			}
@@ -115,7 +116,7 @@ HRESULT AudioManager::General_Init() {
 		// ソースボイスの作成
 		hr = m_pXAudio2->CreateSourceVoice(&m_pSourceVoice[i], &(m_wfx[i].Format), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, &m_sendList[m_param[i].soundCategory]);
 		if (FAILED(hr)) {
-			std::cerr << "SourceVoice Init FAILED\n";
+			std::cerr << "AudioManager : SourceVoice Init FAILED\n";
 			Uninit();
 			return -1;
 		}
