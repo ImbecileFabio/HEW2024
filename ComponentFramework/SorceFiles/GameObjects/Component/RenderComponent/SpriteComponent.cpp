@@ -196,6 +196,7 @@ void SpriteComponent::SetTexture(const std::string _imgname)
 	{
 		anmComp->ResetAnimation();	// アニメーションをリセット
 	}
+
 }
 
 //--------------------------------------------------

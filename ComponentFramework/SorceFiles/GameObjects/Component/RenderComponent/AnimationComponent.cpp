@@ -46,9 +46,10 @@ void AnimationComponent::Init(void)
 	auto texture = sprite_component_->GetTexture();
 	frame_duration_ = texture->GetAnmSpeed();
 	is_loop_ = texture->GetLoopFlg();
-	// 分割数から総フレーム数を計算 (最後のフレームが何もなかったりすると透明になるかも)
+	// 分割数
 	total_frame_ = texture->GetTotalFrame();
 
+	this->UpdateUV();
 }
 //--------------------------------------------------
 // 終了処理

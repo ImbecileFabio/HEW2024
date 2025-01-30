@@ -18,6 +18,7 @@ BackGround::~BackGround(void)
 void BackGround::InitGameObject(void)
 {
 	transform_component_->SetSize(2880, 1080);
+	sprite_component_->SetColor({ 0.7f, 0.7f, 0.7f, 1.0f });
 }
 
 void BackGround::UpdateGameObject(void)
