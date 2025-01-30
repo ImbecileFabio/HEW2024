@@ -211,13 +211,13 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 		{
 		case 0:
 			SPM->SetLangthState(PendulumMovementComponent::LangthState::normalLangth);
-			GM->HammerCountDown();
 			SPM->SetLangeState(1);
+			GM->HammerCountDown();
 			break;
 		case 1:
 			SPM->SetLangthState(PendulumMovementComponent::LangthState::longLangth);
-			GM->HammerCountDown();
 			SPM->SetLangeState(2);
+			GM->HammerCountDown();
 			break;
 		case 2:
 			break;
@@ -233,13 +233,13 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 			break;
 		case 1:
 			SPM->SetLangthState(PendulumMovementComponent::LangthState::shortLangth);
-			GM->HammerCountDown();
 			SPM->SetLangeState(0);
+			GM->HammerCountDown();
 			break;
 		case 2:
 			SPM->SetLangthState(PendulumMovementComponent::LangthState::normalLangth);
-			GM->HammerCountDown();
 			SPM->SetLangeState(1);
+			GM->HammerCountDown();
 			break;
 		}
 	}
@@ -249,13 +249,13 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 		{
 		case 0:
 			SPM->SetLangthState(PendulumMovementComponent::LangthState::normalLangth);
-			GM->HammerCountDown();
 			SPM->SetLangeState(1);
+			GM->HammerCountDown();
 			break;
 		case 1:
 			SPM->SetLangthState(PendulumMovementComponent::LangthState::longLangth);
-			GM->HammerCountDown();
 			SPM->SetLangeState(2);
+			GM->HammerCountDown();
 			break;
 		case 2:
 			break;
