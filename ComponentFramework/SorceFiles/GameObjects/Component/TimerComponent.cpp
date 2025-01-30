@@ -6,7 +6,7 @@
 //==================================================
 /*----- インクルード -----*/
 #include "TimerComponent.h"
-
+#include <iostream>
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -17,6 +17,7 @@ TimerComponent::TimerComponent(GameObject* _owner, float _triggerTime ,int _upda
 	, trigger_time_(_triggerTime)
 	, is_active_(false)
 	, is_triggered_(false)
+	, is_start_(false)
 {
 	this->Init();
 }
@@ -62,7 +63,14 @@ void TimerComponent::Update()
 void TimerComponent::StartTimer()
 {
 	is_active_	  = true;
-	elapse_time_  = 0.0f;
+	if (is_start_)	
+	{
+	}
+	else
+	{
+		elapse_time_ = 0.0f;
+
+	}
 	is_triggered_ = false;
 }
 //--------------------------------------------------
@@ -71,6 +79,7 @@ void TimerComponent::StartTimer()
 void TimerComponent::StopTimer()
 {
 	is_active_ = false;
+	is_start_ = true;
 }
 //--------------------------------------------------
 // @brief タイマーのリセット
@@ -104,4 +113,9 @@ bool TimerComponent::GetIsActive() const
 bool TimerComponent::GetIsTriggered() const
 {
 	return is_triggered_;
+}
+
+bool TimerComponent::GetIsStart() const
+{
+	return is_start_;
 }

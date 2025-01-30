@@ -130,8 +130,8 @@ void Pendulum::OnCollisionEnter(GameObject* _other)
 //--------------------------------------------------
 void Pendulum::NotDrawAndStopPendulum(void)
 {
-	game_manager_->GetPendulumManager()->RemoveGameObject(this);	// 振り子マネージャーから振り子を削除
 	game_manager_->GetPendulumManager()->PendulumSearch();
+	game_manager_->GetPendulumManager()->RemoveGameObject(this);	// 振り子マネージャーから振り子を削除
 
 	state_ = State::Dead;
 	time_zone_->SetState(State::Dead);

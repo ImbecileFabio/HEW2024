@@ -114,6 +114,23 @@ void ColliderManager::UpdateGameObjects(void)
 			auto collider2 = (*it2)->GetComponent<ColliderBaseComponent>();
 			if (collider2 == nullptr) continue;
 
+			// ƒŒƒC‚â[ˆ—
+			if (collider1->GetLayer() == collider2->GetIgnoreLayer())
+				continue;
+
+			if (collider2->GetLayer() == collider1->GetIgnoreLayer())
+				continue;
+			if (collider1->GetTargetLayer() != ColliderBaseComponent::Nothing)
+			{
+				if (collider1->GetTargetLayer() != collider2->GetLayer())
+					continue;
+			}	
+			if (collider2->GetTargetLayer() != ColliderBaseComponent::Nothing)
+			{
+				if (collider2->GetTargetLayer() != collider1->GetLayer())
+					continue;
+			}
+
 			// Õ“Ë”»’è
 			if (collider1->CheckCollisionCollider(collider2))
 			{

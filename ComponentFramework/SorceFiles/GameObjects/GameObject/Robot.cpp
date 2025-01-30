@@ -77,6 +77,7 @@ void Robot::InitGameObject(void)
 {
 	transform_component_->SetSize(TILE_SIZE_X * 2.0f, TILE_SIZE_Y * 2.0f);
 	collider_component_->SetSize(transform_component_->GetSize().x * 0.7f, transform_component_->GetSize().y * 0.95f);
+	collider_component_->SetLayer(ColliderBaseComponent::Robot);
 }
 
 //--------------------------------------------------

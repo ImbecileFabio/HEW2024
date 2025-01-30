@@ -50,7 +50,9 @@ void WeakFloor::SetWeakFloorGroup(WeakFloorGroup* _weak_floor_group)
 //--------------------------------------------------
 void WeakFloor::InitGameObject(void)
 {
-
+	collider_component_->SetLayer(ColliderBaseComponent::WeakFloor);
+	//collider_component_->SetIgnoreLayer(ColliderBaseComponent::WeakFloor);
+	collider_component_->SetTargetLayer(ColliderBaseComponent::Robot);
 }
 
 //--------------------------------------------------

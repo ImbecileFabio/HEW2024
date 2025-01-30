@@ -20,23 +20,28 @@ PendulumManager* PendulumManager::instance_ = nullptr;
 //--------------------------------------------------
 void PendulumManager::PendulumSearch()
 {
-		pSelectedPendulum = nullptr;
-		for (auto& pemdulum : pendulum_list_) 
+	pSelectedPendulum = nullptr;
+
+	for (auto& pemdulum : pendulum_list_)
+	{
+		if (pOldPendulum != pemdulum)
 		{
-			if (pOldPendulum != pemdulum) 
-			{
-				pSelectedPendulum = pemdulum;
-				pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
-				break;
-			}
+			pSelectedPendulum = pemdulum;
+			pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+			break;
 		}
-		if (!pSelectedPendulum)
-		{
-			pHammerCursor_->SetOriginPos({-10000.0f, 0.0f, 0.0f});
-			return;
-		}	
-		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
-		pHammerCursor_->HammerCursorMove();
+	}
+
+	if (!pSelectedPendulum)
+	{
+		pHammerCursor_->SetOriginPos({ -10000.0f, 0.0f, 0.0f });
+		pHammerCursor_->SetIsUiDraw(false); // UIの描画をオフにする
+		return;
+	}
+
+	pHammerCursor_->SetIsUiDraw(true); // UIの描画をオンにする
+	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
+	pHammerCursor_->HammerCursorMove();
 }
 //--------------------------------------------------
 // コンストラクタ・デストラクタ
@@ -58,7 +63,11 @@ void PendulumManager::Uninit() {
 	pSelectedPendulum = nullptr;
 }
 void PendulumManager::Update(){
-	if (pSelectedPendulum != nullptr) {
+	if (!pHammerCursor_) return;
+	if (!pSelectedPendulum) {
+		PendulumSearch(); // 選択中の振り子が消えたら検索を実行
+	}
+	if (pSelectedPendulum) {
 		PendulumSelect();
 		PendulumMovementChange();
 		PendulumLangthChange();
@@ -86,6 +95,7 @@ void PendulumManager::RemoveGameObject(GameObject* _gameObject)
 // 内積が一定以内かつ最も近いオブジェクトのポインタを返す（選択）
 //--------------------------------------------------
 void PendulumManager::PendulumSelect() {
+	if (!pSelectedPendulum) return;
 #ifdef ControllerPlay
 	DirectX::XMFLOAT2 IMGLA = IM.GetLeftAnalogStick();	// InputManager GetLeftAnalogstick
 	nextPendulumVector_Langth_ = 9999.f;
@@ -114,15 +124,13 @@ void PendulumManager::PendulumSelect() {
 	}
 #else
 	pNextPendulum = nullptr;
+
 	if (IM.GetKeyTrigger(VK_L)) {
 		for (auto& pemdulum : pendulum_list_) {
 			if (pSelectedPendulum != pemdulum &&
 				pSelectedPendulum->GetTransformComponent()->GetPosition().x <
 				pemdulum->GetTransformComponent()->GetPosition().x) {
-				if (pNextPendulum == nullptr) {
-					pNextPendulum = pemdulum;
-				}
-				else if (pNextPendulum->GetTransformComponent()->GetPosition().x >
+				if (!pNextPendulum || pNextPendulum->GetTransformComponent()->GetPosition().x >
 					pemdulum->GetTransformComponent()->GetPosition().x) {
 					pNextPendulum = pemdulum;
 				}
@@ -134,25 +142,27 @@ void PendulumManager::PendulumSelect() {
 			if (pSelectedPendulum != pemdulum &&
 				pSelectedPendulum->GetTransformComponent()->GetPosition().x >
 				pemdulum->GetTransformComponent()->GetPosition().x) {
-				if (pNextPendulum == nullptr) {
-					pNextPendulum = pemdulum;
-				}
-				else if (pNextPendulum->GetTransformComponent()->GetPosition().x <
+				if (!pNextPendulum || pNextPendulum->GetTransformComponent()->GetPosition().x <
 					pemdulum->GetTransformComponent()->GetPosition().x) {
 					pNextPendulum = pemdulum;
 				}
 			}
 		}
 	}
-	if (pNextPendulum != nullptr) 
+
+	if (pNextPendulum)
 	{
-		pOldPendulum = pNextPendulum;
-		pHammerCursor_->SetIsUiDraw(true);
+		pOldPendulum = pSelectedPendulum; // pSelectedPendulum を保存
 		pSelectedPendulum = pNextPendulum;
 		pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
 	}
-	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
-	pHammerCursor_->HammerCursorMove();
+
+	if (pSelectedPendulum)
+	{
+		pHammerCursor_->SetIsUiDraw(true);
+		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
+		pHammerCursor_->HammerCursorMove();
+	}
 #endif
 }
 

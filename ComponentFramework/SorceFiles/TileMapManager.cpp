@@ -19,6 +19,7 @@
 // 6. 鉄柱の左柱
 // 7. 排煙管の始点
 // 10. 排煙管の終点
+// 20. 脆い床（振り子なし）
 // 
 // 100~109. リフトの始点(Short)
 // 110~119. リフトの終点
@@ -209,12 +210,14 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			{
 				// 隣接グループが見つかった場合、そのグループに追加
 				group->AddWeakFloorTile(obj);
+				group->SetPendulumOn(true);
 			}
 			else
 			{
 				// 新しいグループを作成
 				group = new WeakFloorGroup(game_manager_);
 				group->AddWeakFloorTile(obj);
+				group->SetPendulumOn(true);
 				weak_floor_groups_.push_back(group); // グループリストに追加
 				// 振り子を生成 
 				auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f, Pendulum::LangthState::Short);
@@ -259,12 +262,14 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			{
 				// 隣接グループが見つかった場合、そのグループに追加
 				group->AddWeakFloorTile(obj);
+				group->SetPendulumOn(true);
 			}
 			else
 			{
 				// 新しいグループを作成
 				group = new WeakFloorGroup(game_manager_);
 				group->AddWeakFloorTile(obj);
+				group->SetPendulumOn(true);
 				weak_floor_groups_.push_back(group); // グループリストに追加
 				// 振り子を生成 
 				auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f, Pendulum::LangthState::Normal);
@@ -309,12 +314,14 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			{
 				// 隣接グループが見つかった場合、そのグループに追加
 				group->AddWeakFloorTile(obj);
+				group->SetPendulumOn(true);
 			}
 			else
 			{
 				// 新しいグループを作成
 				group = new WeakFloorGroup(game_manager_);
 				group->AddWeakFloorTile(obj);
+				group->SetPendulumOn(true);
 				weak_floor_groups_.push_back(group); // グループリストに追加
 				// 振り子を生成 
 				auto pendulum_ = new Pendulum(game_manager_, objPos, false, 30.f, Pendulum::LangthState::Long);
@@ -546,7 +553,54 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 	{
 		obj = new WallRight(game_manager_);
 	}
+	else if (_tileID == 20)
+	{
+		obj = new WeakFloor(game_manager_);
+		if (auto sprite = obj->GetComponent<SpriteComponent>())
+		{
+			// 周囲のタイルを取得
+			bool up = GetAdjacentTile(_tileID, _x, _y, 0, 1);
+			bool down = GetAdjacentTile(_tileID, _x, _y, 0, -1);
+			bool left = GetAdjacentTile(_tileID, _x, _y, -1, 0);
+			bool right = GetAdjacentTile(_tileID, _x, _y, 1, 0);
 
+			// テクスチャを設定
+			if (left) {// 左にタイルがある
+				if (right) {// 右にタイルがある
+					sprite->SetTexture("weakfloor_center");	// 中央
+
+				}
+				else {
+					sprite->SetTexture("weakfloor_right");	// 右
+				}
+			}
+			// 左にタイルがない
+			else if (right) {// 右にタイルがある
+				sprite->SetTexture("weakfloor_left");	// 左
+			}
+			// 既存のグループを探す
+			WeakFloorGroup* group = nullptr;
+			if (IsTileInGroup(_x - 1, _y, group) || IsTileInGroup(_x + 1, _y, group) ||
+				IsTileInGroup(_x, _y - 1, group) || IsTileInGroup(_x, _y + 1, group))
+			{
+				// 隣接グループが見つかった場合、そのグループに追加
+				group->AddWeakFloorTile(obj);
+			}
+			else
+			{
+				// 新しいグループを作成
+				group = new WeakFloorGroup(game_manager_);
+				group->AddWeakFloorTile(obj);
+				group->SetPendulumOn(false);
+				weak_floor_groups_.push_back(group); // グループリストに追加
+				// 振り子を生成 
+				auto weakFloorGroup = dynamic_cast<WeakFloorGroup*>(group);
+			}
+
+			// タイルの位置とグループを関連付ける
+			weak_tile_to_group_[{_x, _y}] = group;
+		}
+	}
 	else if (_tileID >= 100 && _tileID <= 109)	// リフト
 	{
 		// リフトの終点を探す	見つからなかったらとりあえず初期位置に
