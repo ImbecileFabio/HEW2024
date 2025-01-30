@@ -9,6 +9,7 @@
 #include "ResultScene.h"
 
 #include "../GameManager.h"
+#include "../AudioManager.h"
 #include "../GameObjects/GameObject/Revolution.h"
 #include "../GameObjects/GameObject/Camera.h"
 //--------------------------------------------------
@@ -134,7 +135,7 @@ void ResultScene::Init()
 	select_button_functions_[1] = [func]() {	// ifの結果を代入
 		func();
 		};
-
+	AudioManager::GetInstance()->Play(SoundLabel_ResultBGM);
 }
 //--------------------------------------------------
 // 終了処理
@@ -215,10 +216,14 @@ void ResultScene::Update()
 		isStart_ = true;
 	}
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT))
+	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {
 		select_button_++;
-	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT))
+		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+	}
+	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {
 		select_button_--;
+		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+	}
 	if (select_button_ > 1)	// 折り返し処理
 		select_button_ = 0;
 	if (select_button_ < 0)
@@ -240,5 +245,7 @@ void ResultScene::Update()
 	if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))
 	{
 		select_button_functions_[select_button_]();	// ボタンの関数を実行
+		AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
+		AudioManager::GetInstance()->Stop(SoundLabel_ResultBGM);
 	}
 }

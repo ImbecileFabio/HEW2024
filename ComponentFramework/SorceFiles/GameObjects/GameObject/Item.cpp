@@ -64,7 +64,7 @@ void Item::OnCollisionEnter(GameObject* _other)
 		this->state_ = GameObject::State::Dead;
 
 		// ƒTƒEƒ“ƒhÄ¶
-		AudioManager::GetInstance()->Play(SoundLabel_ItemGet);
+		AudioManager::GetInstance()->Play(SoundLabel_StageGearSE);
 		break;
 	default:
 		break;

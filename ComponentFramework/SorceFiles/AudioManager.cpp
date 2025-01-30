@@ -7,6 +7,7 @@
 
 #include "AudioManager.h"
 #include <iostream>
+#include <cstdlib>
 
 #ifdef _XBOX //Big-Endian
 #define fourccRIFF 'RIFF'
@@ -29,7 +30,8 @@
 // コンストラクタ/デストラクタ
 //--------------------------------------------------
 AudioManager::AudioManager() {
-	Init();
+	if (FAILED(General_Init())) exit(EXIT_FAILURE);
+	Sound_Init();
 }
 AudioManager::~AudioManager() {
 	Uninit();
@@ -38,7 +40,7 @@ AudioManager::~AudioManager() {
 //--------------------------------------------------
 // 初期化/開放処理
 //--------------------------------------------------
-HRESULT AudioManager::Init() {
+HRESULT AudioManager::General_Init() {
 	HRESULT hr;
 
 	HANDLE hFile;
@@ -49,19 +51,19 @@ HRESULT AudioManager::Init() {
 	// COM,Xaudio2,MasteringVoiceの初期化
 	hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	if (FAILED(hr)) {
-		std::cerr << "COM Init FAILED\n";
+		std::cerr << "AudioManager : COM Init FAILED\n";
 		Uninit();
 		return -1;
 	}
 	hr = XAudio2Create(&m_pXAudio2, 0);
 	if (FAILED(hr)) {
-		std::cerr << "Xaudio2 Init FAILED\n";
+		std::cerr << "AudioManager : Xaudio2 Init FAILED\n";
 		Uninit();
 		return -1;
 	}
 	hr = m_pXAudio2->CreateMasteringVoice(&m_pMasteringVoice);
 	if (FAILED(hr)) {
-		std::cerr << "MasteringVoice Init FAILED\n";
+		std::cerr << "AudioManager : MasteringVoice Init FAILED\n";
 		Uninit();
 		return -1;
 	}
@@ -101,7 +103,7 @@ HRESULT AudioManager::Init() {
 		if (!(m_pSubmixVoice[m_param[i].soundCategory])) {
 			hr = m_pXAudio2->CreateSubmixVoice(&m_pSubmixVoice[m_param[i].soundCategory], m_wfx[i].Format.nChannels, m_wfx[i].Format.nSamplesPerSec);
 			if (FAILED(hr)) {
-				std::cerr << "SubmixVoice Init FAILED\n";
+				std::cerr << "AudioManager : SubmixVoice Init FAILED\n";
 				Uninit();
 				return -1;
 			}
@@ -114,13 +116,22 @@ HRESULT AudioManager::Init() {
 		// ソースボイスの作成
 		hr = m_pXAudio2->CreateSourceVoice(&m_pSourceVoice[i], &(m_wfx[i].Format), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, &m_sendList[m_param[i].soundCategory]);
 		if (FAILED(hr)) {
-			std::cerr << "SourceVoice Init FAILED\n";
+			std::cerr << "AudioManager : SourceVoice Init FAILED\n";
 			Uninit();
 			return -1;
 		}
 	}
 
 	return hr;
+}
+void AudioManager::Sound_Init(void) {
+	SetVolume(SoundLabel_UIDecisionSE, 0.7f);
+	SetVolume(SoundLabel_UICancelSE, 1.3f);
+	SetVolume(SoundLabel_UISceneChangeSE, 1.8f);
+	SetVolume(SoundLabel_RobotMoveSE, 1.5f);
+	SetVolume(SoundLabel_RobotLandingSE, 0.5f);
+	SetVolume(SoundLabel_PendulumHitSE, 1.3f);
+	SetCategoryVolume(BGM, 0.7f);
 }
 void AudioManager::Uninit(void) {
 	for (int i = 0; i < SoundLabel_MAX; i++){
@@ -146,6 +157,7 @@ void AudioManager::Uninit(void) {
 // 再生/停止/一時停止
 //--------------------------------------------------
 void AudioManager::Play(SOUND_LABEL _label) {
+	m_pSourceVoice[(int)_label]->Stop(0);
 	m_pSourceVoice[(int)_label]->FlushSourceBuffers(); // バッファをクリア
 	// ボイスキューに新しいオーディオバッファーを追加
 	m_pSourceVoice[(int)_label]->SubmitSourceBuffer(&(m_buffer[(int)_label]));
@@ -170,13 +182,23 @@ void AudioManager::Resume(SOUND_LABEL _label) {
 
 
 //--------------------------------------------------
-// 音量・再生速度設定
+// 音量設定
 //--------------------------------------------------
 void AudioManager::SetVolume(SOUND_LABEL _label, float _volume) {
 	m_pSourceVoice[(int)_label]->SetVolume(_volume);
 }
 void AudioManager::SetCategoryVolume(SOUND_CATEGORY _category, float _volume) {
 	m_pSubmixVoice[(int)_category]->SetVolume(_volume);
+}
+
+
+//--------------------------------------------------
+// 再生状況取得
+//--------------------------------------------------
+bool AudioManager::GetPlayingState(SOUND_LABEL _label) {
+	XAUDIO2_VOICE_STATE state;
+	m_pSourceVoice[(int)_label]->GetState(&state);
+	return state.BuffersQueued > 0;
 }
 
 

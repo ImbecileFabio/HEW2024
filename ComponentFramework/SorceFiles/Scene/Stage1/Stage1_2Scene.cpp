@@ -1,6 +1,5 @@
 #include "Stage1_2Scene.h"
 #include "../../GameManager.h"
-#include "../../GameManager.h"
 #include "../../ColliderManager.h"
 #include "../../PemdulumManager.h"
 #include "../../InputManager.h"
@@ -111,7 +110,7 @@ void Stage1_2Scene::Init()
 	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
 
 	// テクスチャのプリロード
-	TextureManager::GetInstance().LoadTexture("smoke00");	// 煙
+	//TextureManager::GetInstance().LoadTexture("smoke00");	// 煙
 
 
 }

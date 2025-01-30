@@ -7,17 +7,20 @@
 #ifndef LIFT_INTERACTION_COMPONENT_H_
 #define LIFT_INTERACTION_COMPONENT_H_
 /*----- インクルード -----*/
+#include <SimpleMath.h>
+
 #include "../../Component.h"
 /*----- 前方宣言 -----*/
 class Lift;
 
+using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // リフトインタラクションコンポーネント
 //--------------------------------------------------
 class LiftInteractionComponent : public Component
 {
 public:
-    LiftInteractionComponent(class GameObject* _owner, int _updateOrder = 27);
+    LiftInteractionComponent(class GameObject* _owner, int _updateOrder = 20);
     ~LiftInteractionComponent();
 
     void Init() override;
@@ -28,7 +31,11 @@ public:
 	Lift* GetLift(void) { return current_lift_; } // 現在乗っているリフトを取得
 
     TypeID GetComponentType(void) const override { return TypeID::LiftInteractionComponent; }
+
+	bool IsTouchingLiftCenter(Lift* _lift); // リフトの中央に触れているか
 private:
+
+
     Lift* current_lift_;
 
 };

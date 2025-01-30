@@ -11,6 +11,7 @@
 #include"FadeManager.h"
 
 #include"GameManager.h"
+#include"AudioManager.h"
 #include"Renderer.h"
 #include"TextureManager.h"
 
@@ -47,6 +48,7 @@ void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<voi
 	is_playing_ = true;
     on_complete_ = _onComplete;
 
+	AudioManager::GetInstance()->Play(SoundLabel_UISceneChangeSE);
 }
 
 //-----------------------------------------------------------------
@@ -65,6 +67,8 @@ void FadeManager::StartFadeIn(const std::string& _fadeInTex, std::function<void(
 
 	is_playing_ = true;
     on_complete_ = _onComplete;
+
+	AudioManager::GetInstance()->Play(SoundLabel_UISceneChangeSE);
 }
 
 //-----------------------------------------------------------------

@@ -53,6 +53,7 @@ const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 	, "WeakFloorComponent"	// 脆い床ギミック
 	, "SteePillarComponent"	// 鉄柱ギミック
 	, "SmokeComponent"		// 煙ギミック
+	, "SmokeInteractionComponent"		// 煙とのやり取りコンポーネント「
 	// デルタタイム関連
 	, "TimerComponent"
 	// カメラ

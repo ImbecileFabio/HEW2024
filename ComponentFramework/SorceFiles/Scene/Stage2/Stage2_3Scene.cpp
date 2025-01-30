@@ -22,7 +22,7 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 
-constexpr int gearCounter_2_3 = 1;		// ギアの獲得数
+constexpr int gearCounter_2_3 = 2;		// ギアの獲得数
 constexpr int hammerCounter_2_3 = 3;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
@@ -106,8 +106,6 @@ void Stage2_3Scene::Init()
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
-
-
 }
 //--------------------------------------------------
 // 更新処理

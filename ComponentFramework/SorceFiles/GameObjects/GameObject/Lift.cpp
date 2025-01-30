@@ -46,7 +46,8 @@ Lift::Lift(GameManager* _gameManager)
 Lift::Lift(GameManager* _gameManager, MoveState _moveState, Vector3 _startPos, Vector3 _endPos, Pendulum* _pendulum)
 	:GameObject(_gameManager, "Lift")
 	, pendulum_(_pendulum)
-	, turn_count_(180)
+	, turn_count_(0)
+	, max_count_(180)
 	, lift_state_(Lift::LiftState::Stop)
 	, move_state_(_moveState)
 {
@@ -54,7 +55,7 @@ Lift::Lift(GameManager* _gameManager, MoveState _moveState, Vector3 _startPos, V
 	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocity_component_ = new VelocityComponent(this);
-	lift_component_ = new LiftComponent(this, static_cast<LiftComponent::LiftComMoveState>(move_state_), _startPos, _endPos, pendulum_);
+	lift_component_ = new LiftComponent(this, static_cast<LiftComponent::LiftComMoveState>(move_state_), _startPos, _endPos, pendulum_, 3);
 	// イベント追加処理
 	auto f = std::function<void(GameObject*)>(std::bind(&Lift::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -77,7 +78,7 @@ Lift::~Lift()
 void Lift::InitGameObject(void)
 {
 	lift_state_ = Lift::LiftState::Stop;
-	turn_count_ = 180;
+	turn_count_ = 0;
 }
 
 
@@ -91,16 +92,16 @@ void Lift::UpdateGameObject(void)
 	// 振り子が動いているかどうか
 	auto pendulumMoveFlg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
 
-	switch (lift_state_) 
+	switch (lift_state_)
 	{
 	case Lift::LiftState::Stop:
 	{
 		// カウントが0になったら次の状態に遷移
-		if (turn_count_  <= 0) {
+		if (turn_count_ <= 0) {
 			if (pendulumMoveFlg)
 			{
 				lift_state_ = Lift::LiftState::Wait;
-				turn_count_ = 180;
+				turn_count_ = max_count_;
 			}
 		}
 		else {
@@ -110,9 +111,13 @@ void Lift::UpdateGameObject(void)
 	}
 	case Lift::LiftState::Wait:
 	{
-		if(turn_count_ <= 0)
+		if (turn_count_ <= 0)
 		{
-			lift_state_ = Lift::LiftState::Move;
+			if (pendulumMoveFlg)
+			{
+				lift_state_ = Lift::LiftState::Move;
+				turn_count_ = max_count_;
+			}
 		}
 		else {
 			--turn_count_;
@@ -150,19 +155,10 @@ void Lift::OnCollisionEnter(GameObject* _other)
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Robot:
-		if (auto robot = dynamic_cast<Robot*>(_other))
-		{
-			if (auto interaction = robot->GetComponent<LiftInteractionComponent>())
-			{
-				// ロボットにリフトをセット
-				interaction->SetLift(this);
-				if (lift_state_ == Lift::LiftState::Wait)
-				{
-					lift_state_ = Lift::LiftState::Move;
-				}
-			}
-		}
-		break;
+	{
+
+	break;
+	}
 	case GameObject::TypeID::Tile:
 		break;
 	default:

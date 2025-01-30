@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeInteractionComponent.cpp" />
     <ClCompile Include="SorceFiles\FadeManager.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarComponent.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarFloorMove.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="SorceFiles\GameObjects\GameObject\WallRight.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeInteractionComponent.h" />
     <ClInclude Include="SorceFiles\FadeManager.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarComponent.h" />
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SteePillar\SteePillarFloorMove.h" />
