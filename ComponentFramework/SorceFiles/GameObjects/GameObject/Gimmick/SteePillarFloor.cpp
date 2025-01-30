@@ -86,10 +86,6 @@ void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 		stee_pillar_floor_group_->AlignSteePillarFloorTilesWithTile(leftTilePosition_.y);
 		stee_pillar_floor_group_->SetHitLeft(true);
 
-
-		//float posY = transform_component_->GetPosition().y;
-		//transform_component_->SetPositionY(posY + offsetY_);
-		//stee_pillar_floor_group_->SetHitLeft(true);
 	}
 	if (_other->GetType() == TypeID::Tile)	// ƒ^ƒCƒ‹‚Æ“S’Œ°ƒ^ƒCƒ‹‚ªÚG‚µ‚½‚ç
 	{
@@ -99,9 +95,6 @@ void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 			stee_pillar_floor_group_->AlignSteePillarFloorTilesWithTile(tilePosition_.y);
 			stee_pillar_floor_group_->SetHitTile(true);
 		}
-		//float posY = transform_component_->GetPosition().y;
-		//transform_component_->SetPositionY(posY + offsetY_);
-		//stee_pillar_floor_group_->SetHitTile(true);
 	}
 }
 //--------------------------------------------------

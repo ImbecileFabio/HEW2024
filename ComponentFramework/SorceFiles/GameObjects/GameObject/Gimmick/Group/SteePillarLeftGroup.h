@@ -31,6 +31,8 @@ public:
 	bool GetIsBreakStop() { return isBreakStop_; }
 	void SetVelocityStop();
 	void AddSteePillarLeftTile(GameObject* _tile);	// グループにタイルを追加
+
+	auto GetSteePillarLeftTiles() { return steePillarLeftTiles_; }	
 private:
 	// グループ単体が管理しているもの
 	std::vector<GameObject*> steePillarLeftTiles_;	// グループが管理したいタイル

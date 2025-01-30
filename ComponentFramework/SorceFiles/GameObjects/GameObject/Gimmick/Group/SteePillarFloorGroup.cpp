@@ -7,6 +7,7 @@
 /*----- インクルード -----*/
 #include "SteePillarFloorGroup.h"
 #include "../SteePillarFloor.h"
+#include "../SteePillarLeft.h"
 #include "../../../GameObject/Pendulum.h"
 #include "../../../Component/PendulumMovementComponent.h"
 #include "../../../Component/EventComponent/ColliderEventComponent.h"
@@ -57,7 +58,25 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 	{
 		StartFalling();
 	}
-	
+	// 落ちた状態に一回でもなっていればずっとオフセットを適用する
+	if (isDownStart_)
+	{
+		auto leftTiles = steePillarLeftGroup_->GetSteePillarLeftTiles();
+		if (leftTiles.size() <= 1) return; // 鉄柱が1つ以下なら処理不要
+		// 0番を省いて、大きい添え字から適用
+		for (int i = static_cast<int>(leftTiles.size()) - 1; i > 0; i--)
+		{
+			auto tile = dynamic_cast<SteePillarLeft*>(leftTiles[i]);
+			if (!tile) continue;
+			tile->SetIsFloorVelocity(true);
+			// 基準の床座標
+			Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+
+			// 添え字 i を利用したオフセット計算
+			float offsetY = static_cast<float>(i) * 42.0f; // 例えば10ずつ高さをずらす
+			tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
+		}
+	}
 	// 振り子の中心を再設定
 	owner_pendulum_movement_->SetPendulumFulcrum(GetCenterPosition());
 
@@ -146,7 +165,7 @@ void SteePillarFloorGroup::AlignSteePillarFloorTilesWithTile(float _y)
 	for (auto& tile : steePillarFloorTiles_)
 	{
 		auto transform = tile->GetTransformComponent();
-		transform->SetPositionY(_y + 50.0f);
+		transform->SetPositionY(_y + 60.0f);
 	}
 
 }

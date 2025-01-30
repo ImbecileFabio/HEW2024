@@ -19,7 +19,7 @@ SteePillarLeft::SteePillarLeft(GameManager* _gameManager)
 	:GameObject(_gameManager, "SteePillarLeft")
 	, sprite_component_(nullptr)
 	, animation_component_(nullptr)
-	, offset_(0.0f, 0.0f)
+	, offset_(0.0f, 0.0f, 0.0f)
 {
 	this->InitGameObject();
 }
@@ -59,10 +59,27 @@ void SteePillarLeft::UpdateGameObject(void)
 		transform_component_->SetPosition(pos.x - offset_.x, pos.y + offset_.y);
 		offsetFg_ = true;
 	}
-	if (isDown_)
+	// 床のVelocityが動いていたら
+	if (isFloorDown_)
 	{
-		gravity_component_->SetUseGravityFlg(true);
+		// 床の位置を取得
+		auto floorPos = floorPosition_;
+		Vector3 pos = transform_component_->GetPosition();
+
+		// 床との差分をオフセットとして設定
+		offset_ = Vector3(floorPos.x - pos.x, floorPos.y - pos.y, 0.0f);
+
+		// 位置をオフセットを適用して更新
+		transform_component_->SetPositionY(pos.y + offset_.y);
 	}
+	else
+	{
+
+	}
+	//if (isDown_)
+	//{
+	//	gravity_component_->SetUseGravityFlg(true);
+	//}
 }
 //--------------------------------------------------
 // @brief 左鉄柱グループの参照を設定
