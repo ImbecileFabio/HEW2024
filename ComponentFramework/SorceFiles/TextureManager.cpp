@@ -258,7 +258,7 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("loading_backdrop", SCENE_PATH"loading/v01/loading_startup_01.png");
 	// フェード...?
 	RegisterTexture("fade_out", SCENE_PATH"loading/v01/loading_result_01.png", false, 5, 6, 0.02f, 30);
-	RegisterTexture("fade_in", SCENE_PATH"loading/v01/loading_result_02.png", false, 4, 5, 2.0f, 20);
+	RegisterTexture("fade_in", SCENE_PATH"loading/v01/loading_result_02.png", false, 4, 5, 0.02f, 20);
 	// 真っ黒画像
 	RegisterTexture("black_backdrop", SCENE_PATH"loding/v01/black_01.png");
 
