@@ -48,7 +48,6 @@ Robot::Robot(GameManager* _gameManager)
 	robot_move_component_ = new RobotMoveComponent(this, 3);	// ロボット移動
 	push_out_component_ = new PushOutComponent(this, 15);	// 押し出し
 	lift_interaction_component_ = new LiftInteractionComponent(this, 20);	// リフトとのやり取り
-	smoke_interaction_component_ = new SmokeInteractionComponent(this, 21);	// 煙とのやり取り
 
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
@@ -143,7 +142,15 @@ void Robot::UpdateGameObject(void)
 	}
 	case RobotState::OnLift:	// リフトに乗っている状態
 	{
-		sprite_component_->SetTexture("robot_still");
+		
+
+
+		if (lift_interaction_component_->GetLift() == nullptr)
+		{
+			robot_state_ = RobotState::Move;
+			sprite_component_->SetTexture("robot_walk");
+		}
+
 		break;
 	}
 	}
@@ -160,12 +167,6 @@ void Robot::UpdateGameObject(void)
 		sprite_component_->SetFlip(false, false);
 	}
 
-
-	// 止まっているならアニメーションを止める( 機能していない )
-	if (velocity_component_->GetSpeedRate() == 0.0f)
-		animation_component_->StopAnimation();
-	else
-		animation_component_->PlayAnimation();
 }
 
 
@@ -193,8 +194,20 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
 		}
-		// 乗っているリフトをセット
-		lift_interaction_component_->SetLift(lift);
+		// リフトが動いているなら
+		if (lift->GetLiftState() == Lift::LiftState::Move)
+		{
+			// Stateを変更
+			if (robot_state_ != RobotState::OnLift)
+			{
+				sprite_component_->SetTexture("robot_still");
+				robot_state_ = RobotState::OnLift;
+			}
+
+
+			lift_interaction_component_->SetLift(lift);
+		}
+
 		break;
 	}
 	case GameObject::TypeID::WeakFloor:
@@ -234,6 +247,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		break;
 	}
 	default:
+
 		break;
 	}
-	}
+}

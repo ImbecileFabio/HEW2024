@@ -46,7 +46,8 @@ Lift::Lift(GameManager* _gameManager)
 Lift::Lift(GameManager* _gameManager, MoveState _moveState, Vector3 _startPos, Vector3 _endPos, Pendulum* _pendulum)
 	:GameObject(_gameManager, "Lift")
 	, pendulum_(_pendulum)
-	, turn_count_(180)
+	, turn_count_(0)
+	, max_count_(180)
 	, lift_state_(Lift::LiftState::Stop)
 	, move_state_(_moveState)
 {
@@ -77,7 +78,7 @@ Lift::~Lift()
 void Lift::InitGameObject(void)
 {
 	lift_state_ = Lift::LiftState::Stop;
-	turn_count_ = 180;
+	turn_count_ = 0;
 }
 
 
@@ -91,16 +92,16 @@ void Lift::UpdateGameObject(void)
 	// 振り子が動いているかどうか
 	auto pendulumMoveFlg = pendulum_->GetComponent<PendulumMovementComponent>()->GetPendulumMovement();
 
-	switch (lift_state_) 
+	switch (lift_state_)
 	{
 	case Lift::LiftState::Stop:
 	{
 		// カウントが0になったら次の状態に遷移
-		if (turn_count_  <= 0) {
+		if (turn_count_ <= 0) {
 			if (pendulumMoveFlg)
 			{
 				lift_state_ = Lift::LiftState::Wait;
-				turn_count_ = 180;
+				turn_count_ = max_count_;
 			}
 		}
 		else {
@@ -110,9 +111,13 @@ void Lift::UpdateGameObject(void)
 	}
 	case Lift::LiftState::Wait:
 	{
-		if(turn_count_ <= 0)
+		if (turn_count_ <= 0)
 		{
-			lift_state_ = Lift::LiftState::Move;
+			if (pendulumMoveFlg)
+			{
+				lift_state_ = Lift::LiftState::Move;
+				turn_count_ = max_count_;
+			}
 		}
 		else {
 			--turn_count_;
@@ -124,7 +129,7 @@ void Lift::UpdateGameObject(void)
 	{
 		if (!pendulumMoveFlg)
 		{
-			lift_state_ = Lift::LiftState::Stop;
+			lift_state_ = Lift::LiftState::Wait;
 			turn_count_ = 0;	// 移動中に止まったら次動くときはすぐ動かせるように
 		}
 
@@ -151,15 +156,18 @@ void Lift::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Robot:
 	{
-			if (auto interaction = _other->GetComponent<LiftInteractionComponent>())
-			{
-				// ロボットにリフトをセット
-				interaction->SetLift(this);
-				if (lift_state_ == Lift::LiftState::Wait)
-				{
-					lift_state_ = Lift::LiftState::Move;
-				}
-			}
+		if (lift_state_ == LiftState::Wait)
+		{
+			lift_state_ = LiftState::Move;
+			_other->GetComponent<LiftInteractionComponent>()->SetLift(this);
+		}
+		else if (lift_state_ == LiftState::Move)
+		{
+			_other->GetComponent<LiftInteractionComponent>()->SetLift(this);
+ 
+		}
+
+	break;
 	}
 	case GameObject::TypeID::Tile:
 		break;

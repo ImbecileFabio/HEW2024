@@ -96,7 +96,7 @@ private:
 	// LRUキャッシュ管理用
 	std::list<std::string> lru_list_;
 	std::unordered_map<std::string, std::list<std::string>::iterator> lru_map_;
-	size_t max_cache_size_ = 20; // 最大キャッシュサイズ
+	size_t max_cache_size_ = 40; // 最大キャッシュサイズ
 
 };
 

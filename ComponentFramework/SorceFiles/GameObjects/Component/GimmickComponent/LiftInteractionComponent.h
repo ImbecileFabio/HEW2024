@@ -7,10 +7,13 @@
 #ifndef LIFT_INTERACTION_COMPONENT_H_
 #define LIFT_INTERACTION_COMPONENT_H_
 /*----- インクルード -----*/
+#include <SimpleMath.h>
+
 #include "../../Component.h"
 /*----- 前方宣言 -----*/
 class Lift;
 
+using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // リフトインタラクションコンポーネント
 //--------------------------------------------------
@@ -29,6 +32,8 @@ public:
 
     TypeID GetComponentType(void) const override { return TypeID::LiftInteractionComponent; }
 private:
+
+
     Lift* current_lift_;
 
 };

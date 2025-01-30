@@ -62,10 +62,9 @@ void LiftInteractionComponent::Update()
 		auto liftVelocity = current_lift_->GetComponent<VelocityComponent>();
 		owner_->GetComponent<VelocityComponent>()->SetVelocity(liftVelocity->GetVelocity());
 		owner_->GetComponent<VelocityComponent>()->SetSpeedRate(liftVelocity->GetSpeedRate());
-	} 
+	}
 	else if (current_lift_->GetLiftState() == Lift::LiftState::Wait)
 	{
-		current_lift_->SetLiftState(Lift::LiftState::Move);
 
 	}
 	// ’â~‚µ‚Ä‚¢‚éê‡
@@ -80,6 +79,10 @@ void LiftInteractionComponent::SetLift(Lift* _lift)
 {
 	if (current_lift_ == _lift) return;
 
-	current_lift_ = _lift;
+	if (!current_lift_) {
+		current_lift_ = _lift;	// ‰½‚à‚È‚¢ê‡‚ÍV‚µ‚¢‚Ì‚É
+		return;
+	}
+		current_lift_ = _lift;
 
 }

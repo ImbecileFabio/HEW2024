@@ -40,7 +40,7 @@ GameManager::GameManager()
 
 	// コライダーマネージャー初期化
 	collider_manager_ = ColliderManager::Create();
-
+	
 	// 振り子マネージャー初期化
 	pendulum_manager_ = PendulumManager::GetInstance();
 	pendulum_manager_->SetGM(this);

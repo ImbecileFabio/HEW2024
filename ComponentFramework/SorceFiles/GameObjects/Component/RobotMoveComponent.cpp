@@ -75,7 +75,7 @@ RobotMoveComponent::~RobotMoveComponent()
 //--------------------------------------------------
 void RobotMoveComponent::Init()
 {
-	direction_ = Vector2(1.0f, 0.0f);
+	direction_ = Vector2(-1.0f, 0.0f);
 
 }
 

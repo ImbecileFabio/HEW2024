@@ -15,7 +15,7 @@ class Texture;
 class AnimationComponent : public Component
 {
 public:
-	AnimationComponent(GameObject* _owner, SpriteComponent* _spriteComponent);
+	AnimationComponent(GameObject* _owner, SpriteComponent* _spriteComponent, int _updateOrder = 80);
 	~AnimationComponent();
 	void Init(void)   override;
 	void Uninit(void) override;

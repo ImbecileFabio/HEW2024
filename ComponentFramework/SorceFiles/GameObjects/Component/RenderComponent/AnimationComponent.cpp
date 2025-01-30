@@ -13,8 +13,8 @@ using namespace DirectX::SimpleMath;
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-AnimationComponent::AnimationComponent(GameObject* _owner, SpriteComponent* _spriteComponent)
-	: Component(_owner)
+AnimationComponent::AnimationComponent(GameObject* _owner, SpriteComponent* _spriteComponent, int _updateOrder)
+	: Component(_owner, _updateOrder)
 	, sprite_component_(_spriteComponent)
 	, total_frame_(0)
 	, current_frame_(0)
