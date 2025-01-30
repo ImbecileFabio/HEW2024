@@ -287,6 +287,7 @@ void TitleScene::Update()
 			switch (title_select_button_)
 			{
 			case 0:	// オプション
+				AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
 				state_ = State::option;		// オプションに移動
 				// タイトル画面のオブジェクトを非表示に
 				title_ribbon_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// リボンを非表示に
@@ -321,6 +322,7 @@ void TitleScene::Update()
 				select_numbers_w_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 				break;
 			case 2:	// ゲーム終了
+				AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
 				state_ = State::end;
 				break;
 			default:
@@ -336,6 +338,7 @@ void TitleScene::Update()
 		}
 		if (input.GetKeyTrigger(VK_X))		// タイトル戻る
 		{
+			AudioManager::GetInstance()->Play(SoundLabel_UICancelSE);
 			state_ = State::title;
 			select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
 			select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// 戻るボタンを表示
@@ -354,6 +357,7 @@ void TitleScene::Update()
 		// ここにオプション
 		if (input.GetKeyTrigger(VK_X))		// タイトル戻る
 		{
+			AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
 			state_ = State::title;
 			for (auto& option_image : option_images_)
 				option_image->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);

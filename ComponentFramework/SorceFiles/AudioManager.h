@@ -29,15 +29,16 @@ typedef enum {
 	SoundLabel_PendulumHitSE,		// 叩くSE
 	SoundLabel_PendulumCreakSE,		// 軋むSE
 	// ロボット関連SE
-	SoundLabel_RobotWalkingSE,		// 歩行SE
+	SoundLabel_RobotMoveSE,			// 歩行SE
 	SoundLabel_RobotLandingSE,		// 着地SE
 	// ステージ、リザルト関連SE
-	SoundLabel_ItemGetSE,			// アイテム取得SE
-	SoundLabel_ReturnSteamSE,		// 巻き戻し煙SE
-	SoundLabel_ResultItemSE,		// リザルトでアイテムが嵌まる時のSE
+	SoundLabel_StageGearSE,			// アイテム取得SE
+	SoundLabel_StageRewindSteamSE,	// 巻き戻し煙SE
 	// UI関連SE
-	SoundLabel_UIGeneralSE,			// UIの決定とかのSE
-	SoundLabel_UIGearSE,			// 歯車が回るSE
+	SoundLabel_UIGearSE,			// リザルトでアイテムが嵌まる時のSE
+	SoundLabel_UIDecisionSE,		// UIの決定とかのSE
+	SoundLabel_UICancelSE,			// UIの決定とかのSE
+	SoundLabel_GeneralGearSE,		// 歯車が回るSE
 
 	SoundLabel_MAX,
 } SOUND_LABEL;
@@ -63,15 +64,16 @@ private:
 		{ "Asset/Sound/BGM/TitleBGM.wav",		true,  BGM },	// タイトルBGM
 		{ "Asset/Sound/BGM/StageBGM1.1.wav",	true,  BGM },	// ステージBGM
 		{ "Asset/Sound/BGM/ResultBGM.wav",		true,  BGM },	// リザルトBGM
-		{ "Asset/Sound/SE/叩く音.wav",			false, SE },	// 叩くSE
-		{ "Asset/Sound/SE/軋む音.wav",			false, SE },	// 軋むSE
-		{ "Asset/Sound/SE/進む音.wav",			false, SE },	// 歩行SE
-		{ "Asset/Sound/SE/着地 1案目.wav",		false, SE },	// 着地SE
-		{ "Asset/Sound/SE/ギア.wav",			false, SE },	// アイテム取得SE
-		{ "Asset/Sound/SE/巻き戻し煙.wav",		false, SE },	// 巻き戻し煙SE
-		{ "Asset/Sound/SE/歯車はめる音.wav",	false, SE },	// リザルトでアイテムが嵌まる時のSE
-		{ "Asset/Sound/SE/決定(トーン調整が必要？)音.wav",	false, SE },	// UIの決定とかのSE
-		{ "Asset/Sound/SE/汎用歯車.wav",		false, SE }		// 歯車が回るSE
+		{ "Asset/Sound/SE/PendulumHit.wav",		false, SE },	// 叩くSE
+		{ "Asset/Sound/SE/PendulumCreak.wav",	false, SE },	// 軋むSE
+		{ "Asset/Sound/SE/RobotMove.wav",		false, SE },	// 歩行SE
+		{ "Asset/Sound/SE/RobotLanding1.wav",	false, SE },	// 着地SE
+		{ "Asset/Sound/SE/StageGear1.1.wav",		false, SE },	// アイテム取得SE
+		{ "Asset/Sound/SE/StageRewindSmoke.wav",false, SE },	// 巻き戻し煙SE
+		{ "Asset/Sound/SE/UIGear.wav",			false, SE },	// リザルトでアイテムが嵌まる時のSE
+		{ "Asset/Sound/SE/UIDecision.wav",		false, SE },	// UIの決定とかのSE
+		{ "Asset/Sound/SE/UICancel.wav",		false, SE },	// UIの決定とかのSE
+		{ "Asset/Sound/SE/GeneralGear.wav",		false, SE }		// 歯車が回るSE
 
 	};
 
