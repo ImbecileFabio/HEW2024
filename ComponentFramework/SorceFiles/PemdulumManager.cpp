@@ -68,6 +68,11 @@ void PendulumManager::Update()
 	if (!pHammerCursor_) return;
 	if (pendulum_list_.size() > 0)
 	{
+		if (!is_sort_)
+		{
+
+			is_sort_ = true;
+		}
 		PendulumSelect();
 		PendulumMovementChange();
 		PendulumLangthChange();
