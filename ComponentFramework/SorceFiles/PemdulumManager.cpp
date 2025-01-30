@@ -20,24 +20,28 @@ PendulumManager* PendulumManager::instance_ = nullptr;
 //--------------------------------------------------
 void PendulumManager::PendulumSearch()
 {
-		pSelectedPendulum = nullptr;
-		for (auto& pemdulum : pendulum_list_) 
+	pSelectedPendulum = nullptr;
+
+	for (auto& pemdulum : pendulum_list_)
+	{
+		if (pOldPendulum != pemdulum)
 		{
-			if (pOldPendulum != pemdulum) 
-			{
-				pSelectedPendulum = pemdulum;
-				pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
-				break;
-			}
+			pSelectedPendulum = pemdulum;
+			pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+			break;
 		}
-		if (!pSelectedPendulum)
-		{
-			pHammerCursor_->SetOriginPos({-10000.0f, 0.0f, 0.0f});
-			return;
-		}	
-		if (pSelectedPendulum != nullptr) 
-			pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
-		pHammerCursor_->HammerCursorMove();
+	}
+
+	if (!pSelectedPendulum)
+	{
+		pHammerCursor_->SetOriginPos({ -10000.0f, 0.0f, 0.0f });
+		pHammerCursor_->SetIsUiDraw(false); // UIの描画をオフにする
+		return;
+	}
+
+	pHammerCursor_->SetIsUiDraw(true); // UIの描画をオンにする
+	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
+	pHammerCursor_->HammerCursorMove();
 }
 //--------------------------------------------------
 // コンストラクタ・デストラクタ
@@ -59,7 +63,11 @@ void PendulumManager::Uninit() {
 	pSelectedPendulum = nullptr;
 }
 void PendulumManager::Update(){
-	if (pSelectedPendulum != nullptr) {
+	if (!pHammerCursor_) return;
+	if (!pSelectedPendulum) {
+		PendulumSearch(); // 選択中の振り子が消えたら検索を実行
+	}
+	if (pSelectedPendulum) {
 		PendulumSelect();
 		PendulumMovementChange();
 		PendulumLangthChange();
@@ -87,6 +95,7 @@ void PendulumManager::RemoveGameObject(GameObject* _gameObject)
 // 内積が一定以内かつ最も近いオブジェクトのポインタを返す（選択）
 //--------------------------------------------------
 void PendulumManager::PendulumSelect() {
+	if (!pSelectedPendulum) return;
 #ifdef ControllerPlay
 	DirectX::XMFLOAT2 IMGLA = IM.GetLeftAnalogStick();	// InputManager GetLeftAnalogstick
 	nextPendulumVector_Langth_ = 9999.f;
@@ -115,15 +124,13 @@ void PendulumManager::PendulumSelect() {
 	}
 #else
 	pNextPendulum = nullptr;
+
 	if (IM.GetKeyTrigger(VK_L)) {
 		for (auto& pemdulum : pendulum_list_) {
 			if (pSelectedPendulum != pemdulum &&
 				pSelectedPendulum->GetTransformComponent()->GetPosition().x <
 				pemdulum->GetTransformComponent()->GetPosition().x) {
-				if (pNextPendulum == nullptr) {
-					pNextPendulum = pemdulum;
-				}
-				else if (pNextPendulum->GetTransformComponent()->GetPosition().x >
+				if (!pNextPendulum || pNextPendulum->GetTransformComponent()->GetPosition().x >
 					pemdulum->GetTransformComponent()->GetPosition().x) {
 					pNextPendulum = pemdulum;
 				}
@@ -135,25 +142,27 @@ void PendulumManager::PendulumSelect() {
 			if (pSelectedPendulum != pemdulum &&
 				pSelectedPendulum->GetTransformComponent()->GetPosition().x >
 				pemdulum->GetTransformComponent()->GetPosition().x) {
-				if (pNextPendulum == nullptr) {
-					pNextPendulum = pemdulum;
-				}
-				else if (pNextPendulum->GetTransformComponent()->GetPosition().x <
+				if (!pNextPendulum || pNextPendulum->GetTransformComponent()->GetPosition().x <
 					pemdulum->GetTransformComponent()->GetPosition().x) {
 					pNextPendulum = pemdulum;
 				}
 			}
 		}
 	}
-	if (pNextPendulum != nullptr) 
+
+	if (pNextPendulum)
 	{
-		pOldPendulum = pNextPendulum;
-		pHammerCursor_->SetIsUiDraw(true);
+		pOldPendulum = pSelectedPendulum; // pSelectedPendulum を保存
 		pSelectedPendulum = pNextPendulum;
 		pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
 	}
-	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
-	pHammerCursor_->HammerCursorMove();
+
+	if (pSelectedPendulum)
+	{
+		pHammerCursor_->SetIsUiDraw(true);
+		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
+		pHammerCursor_->HammerCursorMove();
+	}
 #endif
 }
 
@@ -189,77 +198,31 @@ void PendulumManager::PendulumLangthChange() {
 PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovementComponent>();
 #ifdef ControllerPlay
 	// 十字↑（短くする）
-	if (IM.GetKeyTrigger(VK_I)) {
-		switch (SPM->GetLangeState())
-		{
-		case 0:
-			break;
-		case 1:
-			SPM->SetLangthState(PendulumMovementComponent::LangthState::shortLangth);
-			GM->HammerCountDown();
-			SPM->SetLangeState(0);
-			break;
-		case 2:
-			SPM->SetLangthState(PendulumMovementComponent::LangthState::normalLangth);
-			GM->HammerCountDown();
-			SPM->SetLangeState(1);
-			break;
+	if (IM.GetButtonTrigger(XINPUT_UP)) {
+		if (SPM->GetLangthState() != LangthState::shortLangth) {
+			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) - 1));
 		}
 	}
 	// 十字↓（長くする）
-	if (IM.GetKeyTrigger(VK_K)) {
-		switch (SPM->GetLangeState())
-		{
-		case 0:
-			SPM->SetLangthState(PendulumMovementComponent::LangthState::normalLangth);
-			SPM->SetLangeState(1);
-			GM->HammerCountDown();
-			break;
-		case 1:
-			SPM->SetLangthState(PendulumMovementComponent::LangthState::longLangth);
-			SPM->SetLangeState(2);
-			GM->HammerCountDown();
-			break;
-		case 2:
-			break;
+	if (IM.GetButtonTrigger(XINPUT_DOWN)) {
+		if (SPM->GetLangthState() != LangthState::longLangth) {
+			SPM->SetLangthState(static_cast<LangthState>(static_cast<int>(SPM->GetLangthState()) + 1));
 		}
-}
+	}
 #else
 	//if (GM->GetIsHammerMax()) return;	
 	// Iキー（短くする）
 	if (IM.GetKeyTrigger(VK_I)) {
-		switch (SPM->GetLangeState())
-		{
-		case 0:
-			break;
-		case 1:
-			SPM->SetLangthState(PendulumMovementComponent::LangthState::shortLangth);
-			SPM->SetLangeState(0);
+		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::shortLangth) {
+			SPM->SetLangthState(static_cast<PendulumMovementComponent::LangthState>(static_cast<int>(SPM->GetLangthState()) - 1));
 			GM->HammerCountDown();
-			break;
-		case 2:
-			SPM->SetLangthState(PendulumMovementComponent::LangthState::normalLangth);
-			SPM->SetLangeState(1);
-			GM->HammerCountDown();
-			break;
 		}
 	}
 	// Kキー（長くする）
 	if (IM.GetKeyTrigger(VK_K)) {
-		switch (SPM->GetLangeState())
-		{
-		case 0:
-			SPM->SetLangthState(PendulumMovementComponent::LangthState::normalLangth);
-			SPM->SetLangeState(1);
+		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::longLangth) {
+			SPM->SetLangthState(static_cast<PendulumMovementComponent::LangthState>(static_cast<int>(SPM->GetLangthState()) + 1));
 			GM->HammerCountDown();
-			break;
-		case 1:
-			SPM->SetLangthState(PendulumMovementComponent::LangthState::longLangth);
-			SPM->SetLangeState(2);
-			GM->HammerCountDown();
-			break;
-		case 2:
-			break;
 		}
 	}
 #endif

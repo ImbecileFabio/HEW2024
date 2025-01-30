@@ -25,6 +25,8 @@ HammerCursor::HammerCursor(GameManager* _gameManager)
 HammerCursor::~HammerCursor(void)
 {
 	delete sprite_component_;
+	delete hit_effect_component_;
+	delete animation_component_;
 }
 //--------------------------------------------------
 // @brief 初期化処理
@@ -44,6 +46,7 @@ void HammerCursor::InitGameObject(void)
 //--------------------------------------------------
 void HammerCursor::UpdateGameObject(void)
 {
+	if (!sprite_component_) return;  // nullptrチェックを追加
 	// 描画切り替え
 	if (isUiDraw_)
 		sprite_component_->SetState(RenderComponent::State::draw);
@@ -53,6 +56,7 @@ void HammerCursor::UpdateGameObject(void)
 }
 void HammerCursor::HammerCursorMove()
 {
+	if (!transform_component_) return;  // nullptrチェック追加
 	if (direction_ == -1)
 	{
 		transform_component_->SetRotation(-13.0f);
