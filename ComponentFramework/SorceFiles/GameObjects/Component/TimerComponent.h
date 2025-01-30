@@ -39,6 +39,7 @@ public:
 
     bool GetIsActive()    const; // タイマーが稼働しているかどうか
 	bool GetIsTriggered() const; // トリガーが発生したかどうか
+	bool GetIsStart()	  const; // タイマーが開始されたかどうか
 
     TypeID GetComponentType(void) const override { return TypeID::TimerComponent; }
 private:
@@ -47,5 +48,6 @@ private:
 	float old_time_;	  // 前回の時間
 	bool is_active_;      // タイマーが動作中かどうか
 	bool is_triggered_;   // トリガーが発生したかどうか
+	bool is_start_;		  // タイマーが開始されたかどうか　startするのは一回きりで、途中で止めて再開できるようにするため
 };
 #endif // TIMER_COMPONENT_H_

@@ -28,11 +28,17 @@ public:
 
 	void AddWeakFloorTile (GameObject* _tile);					// グループにタイルを追加
 	void SetPendulumANDMovement(GameObject* _centerPendulum);	// グループに中心の振り子を設定
+
+	int GetHitCount() { return hitCount_; }
+
+	void SetPendulumOn(bool _fg) { isPendulumOn_ = _fg; }
 private:
+	int hitCount_ = 0;
 	class TimerComponent* timer_component_;				// タイマーコンポーネント
 	// グループ単体が管理しているもの
 	bool isWeakFloorBreak_		 = false;				// 脆い床が壊れたかどうか
 	bool isCenterMedian			 = false;				// 中心値を調べたかどうか
+	bool isPendulumOn_			 = false;				// 振り子あるかないか
 	int tileCenterNum_			 = 0;					// タイルの中心の添え字
 	GameObject* centerPendulum_ = nullptr;				// 中心の振り子
 	std::vector<GameObject*> weakFloorTiles_;			// グループが管理したいタイル
