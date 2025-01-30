@@ -118,7 +118,7 @@ void RobotMoveComponent::Update()
 					Vector3 stepUpPosition = currentPosition + Vector3(speed_ * direction_.x, max_step_height_, 0.0f);
 
 					// スムーズに上るための線形補間
-					Vector3 newPosition = Vector3::Lerp(currentPosition, stepUpPosition, 0.5f); // 適宜補間率を調整
+					Vector3 newPosition = Vector3::Lerp(currentPosition, stepUpPosition, 0.6f); // 適宜補間率を調整
 					owner_transform_->SetPosition(newPosition);
 
 					// 上る際に速度をリセット（必要なら）
