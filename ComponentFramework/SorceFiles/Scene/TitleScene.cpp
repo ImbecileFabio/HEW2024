@@ -252,10 +252,15 @@ void TitleScene::Update()
 		title_cursor_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// カーソルを表示に
 		for (auto& title_button : title_buttons_)	// ボタンを表示
 			title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-		if (input.GetKeyTrigger(VK_RIGHT))			// 左右移動
+		// 左右移動
+		if (input.GetKeyTrigger(VK_RIGHT)) {
 			title_select_button_++;
-		if (input.GetKeyTrigger(VK_LEFT))
+			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+		}
+		if (input.GetKeyTrigger(VK_LEFT)) {
 			title_select_button_--;
+			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+		}
 		if (title_select_button_ > 2)				// 折り返し処理
 			title_select_button_ = 0;
 		if (title_select_button_ < 0)
@@ -300,6 +305,8 @@ void TitleScene::Update()
 				option_ball_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 				option_stick_slider_bgm_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 				option_stick_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+
+				AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
 				break;
 			case 1:	// セレクト画面に移動
 				state_ = State::select;		// セレクトに移動
@@ -322,6 +329,7 @@ void TitleScene::Update()
 				break;
 			case 2:	// ゲーム終了
 				state_ = State::end;
+				AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
 				break;
 			default:
 				break;
@@ -348,6 +356,8 @@ void TitleScene::Update()
 			select_numbers_m_left_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			select_numbers_m_right_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			select_numbers_w_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+
+			AudioManager::GetInstance()->Play(SoundLabel_UICancelSE);
 		}
 		break;
 	case TitleScene::State::option:
@@ -361,6 +371,8 @@ void TitleScene::Update()
 			option_ball_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			option_stick_slider_bgm_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			option_stick_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+			
+			AudioManager::GetInstance()->Play(SoundLabel_UICancelSE);
 		}
 		break;
 	case TitleScene::State::end:
@@ -389,17 +401,23 @@ void TitleScene::MoveSelect()
 	{
 		chapter_++;
 		stage_ = 0;	// 章が変わったらステージをリセット
+		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
 	if (input.GetKeyTrigger(VK_Q))		// Lボタン
 	{
 		chapter_--;
 		stage_ = 0;	// 章が変わったらステージをリセット
+		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
-	if (input.GetKeyTrigger(VK_RIGHT))	// 右
+	if (input.GetKeyTrigger(VK_RIGHT)) {	// 右
 		stage_++;
-	if (input.GetKeyTrigger(VK_LEFT))	// 左
+		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+	}
+	if (input.GetKeyTrigger(VK_LEFT)) {		// 左
 		stage_--;
-
+		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+	}
+		
 	if (chapter_ == 0)
 	{
 		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 3.0f * frameSize.x, 0.0f * frameSize.y });
