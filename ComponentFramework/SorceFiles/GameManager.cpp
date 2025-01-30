@@ -40,7 +40,7 @@ GameManager::GameManager()
 
 	// コライダーマネージャー初期化
 	collider_manager_ = ColliderManager::Create();
-
+	
 	// 振り子マネージャー初期化
 	pendulum_manager_ = PendulumManager::GetInstance();
 	pendulum_manager_->SetGM(this);
@@ -280,7 +280,7 @@ void GameManager::ChangeScene(SceneName _nextScene)
 		std::cerr << "[ChangeScene] -> 例外 : " << e.what() << std::endl;
 	}
 
-	ImGuiManager::staticPointer->ResetSelectObject();
+	//ImGuiManager::staticPointer->ResetSelectObject();
 }
 
 

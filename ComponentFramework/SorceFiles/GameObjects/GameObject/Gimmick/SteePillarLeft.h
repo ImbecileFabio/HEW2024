@@ -25,6 +25,11 @@ public:
 
 	void SetIsDown(bool _fg) { isDown_ = _fg; }
 	bool GetIsDown() { return isDown_; }
+	void SetIsFloorVelocity(bool _fg) { isFloorDown_ = _fg; }
+	bool GetIsFloorVelocity() { return isFloorDown_; }
+
+	void SetFloorPosition(DirectX::SimpleMath::Vector3 _floorPos)  { floorPosition_ = _floorPos; }
+	void SetFloorOffset(DirectX::SimpleMath::Vector3 _floorOffset) { floorOffset_ = _floorOffset; }
 private:
 	class SteePillarLeftGroup* stee_pillar_left_group_;
 
@@ -34,8 +39,11 @@ private:
 	class GravityComponent* gravity_component_;
 
 	bool offsetFg_ = false;
+	bool isFloorDown_ = false;	// 鉄柱が落下したときに行うオフセット処理
 	bool isDown_ = false;
-	DirectX::SimpleMath::Vector2 offset_;
+	DirectX::SimpleMath::Vector3 offset_;
+	DirectX::SimpleMath::Vector3 floorOffset_;		// 鉄柱の床が落下したときのオフセット値
+	DirectX::SimpleMath::Vector3 floorPosition_;	// 鉄柱の床の座標を保存
 
 };
 #endif // STEE_PILLAR_H_

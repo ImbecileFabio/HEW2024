@@ -61,6 +61,24 @@ void SteePillarRight::UpdateGameObject(void)
 		//transform_component_->SetPosition()
 	}
 
+	// 床のVelocityが動いていたら
+	if (isFloorVelocityStop_)
+	{
+		// 床の位置を取得
+		auto floorPos = floorPosition_;
+		Vector3 pos = transform_component_->GetPosition();
+
+		// 床との差分をオフセットとして設定
+		offset_ = Vector3(floorPos.x - pos.x, floorPos.y - pos.y, 0.0f);
+
+		// 位置をオフセットを適用して更新
+		transform_component_->SetPositionY(pos.y + offset_.y);
+	}
+	else
+	{
+
+	}
+
 }
 //--------------------------------------------------
 // @brief 所有されるグループの参照を設定

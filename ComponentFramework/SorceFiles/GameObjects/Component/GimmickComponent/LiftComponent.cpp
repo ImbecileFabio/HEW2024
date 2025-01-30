@@ -60,7 +60,7 @@ LiftComponent::~LiftComponent()
 void LiftComponent::Init()
 {
 	traveled_distance_ = { 0.0f, 0.0f };
-	lift_com_state_ = LiftComState::Stop;																															
+	lift_com_state_ = LiftComState::Stop;
 }
 //--------------------------------------------------
 // @brief I—¹ˆ—
