@@ -43,6 +43,7 @@ private:
 	bool isBreakStart_;		// 劣化状態（始動）
 	bool isDownStart_;		// 落下	   （始動）
 	bool isAnimationEnd_;	// アニメーションが終わったら
+	bool isTopChangeTile_ = false;
 	// 柱の一番上のタイルをキャッシュ
 	class AnimationComponent* owner_top_animation_component_;
 	class SpriteComponent*	  owner_top_sprite_component_;

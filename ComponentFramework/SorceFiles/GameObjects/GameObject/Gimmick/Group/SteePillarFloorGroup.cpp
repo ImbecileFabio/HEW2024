@@ -8,6 +8,7 @@
 #include "SteePillarFloorGroup.h"
 #include "../SteePillarFloor.h"
 #include "../SteePillarLeft.h"
+#include "../SteePillarRight.h"
 #include "../../../GameObject/Pendulum.h"
 #include "../../../Component/PendulumMovementComponent.h"
 #include "../../../Component/EventComponent/ColliderEventComponent.h"
@@ -62,9 +63,11 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 	if (isDownStart_)
 	{
 		auto leftTiles = steePillarLeftGroup_->GetSteePillarLeftTiles();
-		if (leftTiles.size() <= 1) return; // 鉄柱が1つ以下なら処理不要
+		auto rightTiles = steePillarRightGroup_->GetSteePillarRightTiles();
+
+		if (rightTiles.size() <= 1  || leftTiles.size() <= 1) return; // 鉄柱が1つ以下なら処理不要
 		// 0番を省いて、大きい添え字から適用
-		for (int i = static_cast<int>(leftTiles.size()) - 1; i > 0; i--)
+		for (int i = static_cast<int>(leftTiles.size()) - 1; i > 1; i--)
 		{
 			auto tile = dynamic_cast<SteePillarLeft*>(leftTiles[i]);
 			if (!tile) continue;
@@ -73,8 +76,44 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 			Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
 
 			// 添え字 i を利用したオフセット計算
-			float offsetY = static_cast<float>(i) * 42.0f; // 例えば10ずつ高さをずらす
+			float offsetY = static_cast<float>(i) * 30.0f; // 例えば10ずつ高さをずらす
 			tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
+		}
+		// 切れ目の柱の位置を調整
+		if (leftTiles.size() >= 3)
+		{
+			Vector3 offsetY = leftTiles[2]->GetTransformComponent()->GetPosition();
+			leftTiles[1]->GetTransformComponent()->SetPositionY(offsetY.y + 90.0f);
+		}
+		if (leftTiles.size() == 2)
+		{
+			Vector3 offsetY = leftTiles[1]->GetTransformComponent()->GetPosition();
+			Vector3 pos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+			leftTiles[1]->GetTransformComponent()->SetPositionY(pos.y + 60.0f);
+		}
+		for (int i = static_cast<int>(rightTiles.size()) - 1; i > 1; i--)
+		{
+			auto tile = dynamic_cast<SteePillarRight*>(rightTiles[i]);
+			if (!tile) continue;
+			tile->SetIsFloorVelocityStop(true);
+			// 基準の床座標
+			Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+
+			// 添え字 i を利用したオフセット計算
+			float offsetY = static_cast<float>(i) * 30.0f; // 例えば10ずつ高さをずらす
+			tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
+		}
+		// 切れ目の柱の位置を調整
+		if (rightTiles.size() >= 3)
+		{
+			Vector3 offsetY = rightTiles[2]->GetTransformComponent()->GetPosition();
+			rightTiles[1]->GetTransformComponent()->SetPositionY(offsetY.y + 90.0f);
+		}
+		if (rightTiles.size() == 2)
+		{
+			Vector3 offsetY = rightTiles[1]->GetTransformComponent()->GetPosition();
+			Vector3 pos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+			rightTiles[1]->GetTransformComponent()->SetPositionY(pos.y + 60.0f);
 		}
 	}
 	// 振り子の中心を再設定

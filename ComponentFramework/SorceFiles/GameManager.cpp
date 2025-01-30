@@ -75,7 +75,7 @@ void GameManager::InitAll(void)
     // ゲームオブジェクト初期化
 	current_scene_->Init();
 
-	//ImGuiManager::staticPointer->SetObjectList(game_objects_);
+	ImGuiManager::staticPointer->SetObjectList(game_objects_);
 }
 
 //-----------------------------------------------------------------
@@ -100,7 +100,7 @@ void GameManager::UpdateAll(float _deltaTime)
 	this->UpdateGameObjects(_deltaTime);
 	this->collider_manager_->UpdateAll();
 	this->pendulum_manager_->Update();
-	//ImGuiManager::staticPointer->ImGuiShowWindow();
+	ImGuiManager::staticPointer->ImGuiShowWindow();
 }
 
 //-----------------------------------------------------------------
@@ -116,7 +116,7 @@ void GameManager::GenerateOutputAll(void)
 
 		fade_manager_->Draw();
 
-		//ImGuiManager::staticPointer->ImGuiRender();
+		ImGuiManager::staticPointer->ImGuiRender();
 
 		renderer_->End();
 

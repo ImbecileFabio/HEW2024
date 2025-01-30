@@ -216,11 +216,12 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_floor_end_01", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_01.png", { -7.9f, -8.0f }, { 1.25f, 1.25f });			// è∞, ç∂
 	RegisterTexture("steelpillar_floor_end_02", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_02.png", { 8.0f, -8.0f }, { 1.25f, 1.25f });			// è∞, âE
 
-	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png",		 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// íå, è„
-	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });			// íå, â∫
-	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f }, false, 4, 4, 0.3f, 15);			// íå, âÛÇÍ
-	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// íå, í èÌ
-	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// íå, åáÇØ
+	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// íå, è„
+	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// íå, â∫
+	//RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f }, false, 4, 4, 0.3f, 15);			// íå, âÛÇÍ
+	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f }, false, 4, 4, 0.001f, 15);			// íå, âÛÇÍ
+	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 15.5f, 0.0f }, { 1.0f, 2.0f });				// íå, í èÌ
+	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// íå, åáÇØ
 	// âå
 	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f, 0.0f }, { 2.25f, 1.0f }, true, 4, 8, 0.05f, 31);	// âåñ{ëÃ
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png", { 0.0f, 6.0f }, { 2.0f, 1.25f });		// íåÇÃâú

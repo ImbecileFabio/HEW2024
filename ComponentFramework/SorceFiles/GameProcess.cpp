@@ -19,7 +19,7 @@
 #include "Renderer.h"
 #include "InputManager.h"
 
-//#define IMGUI_DEBUG	//ImGuiを使うときはコメントアウトを外すといける
+#define IMGUI_DEBUG	//ImGuiを使うときはコメントアウトを外すといける
 #ifdef IMGUI_DEBUG
 #include "ImGuiManager.h"
 #endif

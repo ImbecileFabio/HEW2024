@@ -38,7 +38,7 @@ SteePillarLeft::~SteePillarLeft(void)
 //--------------------------------------------------
 void SteePillarLeft::InitGameObject(void)
 {
-	offset_ = {11.0f, 0.0f };
+	offset_ = {31.0f, 0.0f };
 	sprite_component_	 = new SpriteComponent(this, "steelpillar_pillar_normal", 1);
 	animation_component_ = new AnimationComponent(this, sprite_component_);
 	velocity_component_	 = new VelocityComponent(this);
