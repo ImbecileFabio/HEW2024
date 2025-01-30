@@ -56,9 +56,9 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	select_right_button_ = new Revolution(game_manager_, "stageselect_right", "StageSelectRight");
 	select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	select_right_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-	select_right_button_->GetTransformComponent()->SetPosition(849.0f, 458.0f);
-	select_left_button_->GetTransformComponent()->SetPosition(-840.0f, 458.0f);
-	select_left_button_->GetTransformComponent()->SetSize(228.0f, 228.0f);
+	select_right_button_->GetTransformComponent()->SetPosition(-828.0f, 423.0f);
+	select_left_button_->GetTransformComponent()->SetPosition(828.0f, 421.0f);
+	select_left_button_->GetTransformComponent()->SetSize(215.0f, 215.0f);
 	select_right_button_->GetTransformComponent()->SetSize(228.0f, 228.0f);
 	// セレクト画面のチャプターナンバー画像
 	select_chapter_left = new Revolution(game_manager_, "stageselect_chapter", "StageSelectChapterLeft");
@@ -70,18 +70,18 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	select_chapter_left->GetTransformComponent()->SetSize(380.0f, 380.0f);
 	select_chapter_right->GetTransformComponent()->SetSize(380.0f, 380.0f);
 	select_chapter_center->GetTransformComponent()->SetSize(380.0f, 380.0f);
-	select_chapter_center->GetTransformComponent()->SetPosition(0.0f, 461.0f);
-	select_chapter_left->GetTransformComponent()->SetPosition(-528.0f, 461.0f);
-	select_chapter_right->GetTransformComponent()->SetPosition(528.0f, 461.0f);
+	select_chapter_center->GetTransformComponent()->SetPosition(0.0f, 421.0f);
+	select_chapter_left->GetTransformComponent()->SetPosition(-519.0f, 421.0f);
+	select_chapter_right->GetTransformComponent()->SetPosition(519.0f, 421.0f);
 
 	select_option_button_ = new Revolution(game_manager_, "stageselect_option");
 	select_return_button_ = new Revolution(game_manager_, "stageselect_return");
 	select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-	select_option_button_->GetTransformComponent()->SetPosition(842.0f, 304.0f);
-	select_return_button_->GetTransformComponent()->SetPosition(-842.0f, 304.0f);
-	select_option_button_->GetTransformComponent()->SetSize(210.0f, 210.0f);
-	select_return_button_->GetTransformComponent()->SetSize(210.0f, 210.0f);
+	select_option_button_->GetTransformComponent()->SetPosition(842.0f, 246.0f);
+	select_return_button_->GetTransformComponent()->SetPosition(-842.0f, 246.0f);
+	select_option_button_->GetTransformComponent()->SetSize(200.0f, 200.0f);
+	select_return_button_->GetTransformComponent()->SetSize(200.0f, 200.0f);
 	// オプション画面
 	option_images_[0] = new Revolution(game_manager_, "option_window", "option_window",11);
 	option_images_[0]->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
@@ -133,9 +133,9 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	// セレクト画面のステージナンバー
 //select_numbers_s_ = new Revolution(game_manager_, "stageselect_stage_numbers_s", "StageNumber_S");
 	select_numbers_m_left_ = new Revolution(game_manager_, "stageselect_stage_numbers_m", "StageNumber_M_Left_");
-	select_numbers_m_left_->GetTransformComponent()->SetPosition(-643.0f, 0.0f);
+	select_numbers_m_left_->GetTransformComponent()->SetPosition(-653.0f, -131.0f);
 	select_numbers_m_right_ = new Revolution(game_manager_, "stageselect_stage_numbers_m", "StageNumber_M_Right_");
-	select_numbers_m_right_->GetTransformComponent()->SetPosition(643.0f, 0.0f);
+	select_numbers_m_right_->GetTransformComponent()->SetPosition(653.0f, -134.0f);
 	select_numbers_w_ = new Revolution(game_manager_, "stageselect_stage_numbers_w", "StageNumber_W");
 	//select_numbers_s_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	select_numbers_m_left_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
@@ -144,8 +144,8 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	//select_numbers_s_->GetTransformComponent()->SetSize(512.0f, 512.0f);
 	select_numbers_m_left_->GetTransformComponent()->SetSize(512.0f, 512.0f);
 	select_numbers_m_right_->GetTransformComponent()->SetSize(512.0f, 512.0f);
-	select_numbers_w_->GetTransformComponent()->SetSize(800.0f, 800.0f);
-	select_numbers_w_->GetTransformComponent()->SetPosition(9.0f, 84.0f);
+	select_numbers_w_->GetTransformComponent()->SetSize(830.0f, 830.0f);
+	select_numbers_w_->GetTransformComponent()->SetPosition(9.0f, -52.0f);
 
 	for (auto& option_image : option_images_)
 		option_image->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
