@@ -216,10 +216,14 @@ void ResultScene::Update()
 		isStart_ = true;
 	}
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT))
+	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {
 		select_button_++;
-	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT))
+		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+	}
+	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {
 		select_button_--;
+		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+	}
 	if (select_button_ > 1)	// Ü‚è•Ô‚µˆ—
 		select_button_ = 0;
 	if (select_button_ < 0)
@@ -241,6 +245,7 @@ void ResultScene::Update()
 	if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))
 	{
 		select_button_functions_[select_button_]();	// ƒ{ƒ^ƒ“‚ÌŠÖ”‚ğÀs
+		AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
 		AudioManager::GetInstance()->Stop(SoundLabel_ResultBGM);
 	}
 }
