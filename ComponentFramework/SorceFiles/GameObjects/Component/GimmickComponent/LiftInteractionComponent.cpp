@@ -11,6 +11,7 @@
 
 #include "../../GameObject/Lift.h"
 #include "../../Component/RigidbodyComponent/VelocityComponent.h"
+#include "../../Component/ColliderComponent/BoxColliderComponent.h"
 
 //--------------------------------------------------
 // @brief コンストラクタ
@@ -55,17 +56,10 @@ void LiftInteractionComponent::Update()
 	// 動いている場合
 	if (current_lift_->GetLiftState() == Lift::LiftState::Move)
 	{
-
-		owner_->GetComponent<VelocityComponent>()->SetVelocity({ 0.0f, 0.0f, 0.0f });
-
 		// リフトの速度と速度倍率を取得し、所有者に設定
 		auto liftVelocity = current_lift_->GetComponent<VelocityComponent>();
 		owner_->GetComponent<VelocityComponent>()->SetVelocity(liftVelocity->GetVelocity());
 		owner_->GetComponent<VelocityComponent>()->SetSpeedRate(liftVelocity->GetSpeedRate());
-	}
-	else if (current_lift_->GetLiftState() == Lift::LiftState::Wait)
-	{
-
 	}
 	// 停止している場合
 	else if (current_lift_->GetLiftState() == Lift::LiftState::Stop) {
@@ -75,14 +69,36 @@ void LiftInteractionComponent::Update()
 
 }
 
+//--------------------------------------------------
+// @param _lift: リフト
+// @brief リフトをセット
+//--------------------------------------------------
 void LiftInteractionComponent::SetLift(Lift* _lift)
 {
-	if (current_lift_ == _lift) return;
+	if (current_lift_ == _lift) { return; }
+
+
+	if (_lift->GetLiftState() == Lift::LiftState::Stop) { return; }
 
 	if (!current_lift_) {
 		current_lift_ = _lift;	// 何もない場合は新しいのに
 		return;
 	}
-		current_lift_ = _lift;
+}
 
+
+//--------------------------------------------------
+// @param _lift: リフト
+// @brief リフトの中央に触れているか
+// @return 触れている: true, 触れていない: false
+//--------------------------------------------------
+bool LiftInteractionComponent::IsTouchingLiftCenter(Lift* _lift)
+{
+	// Liftの中心
+	auto liftCenter = _lift->GetTransformComponent()->GetPosition().x;
+
+	// ownerのAABB
+	auto ownerHitbox = owner_->GetComponent<BoxColliderComponent>()->GetWorldHitBox();
+
+	return (liftCenter > ownerHitbox.min_.x && liftCenter < ownerHitbox.max_.x);
 }

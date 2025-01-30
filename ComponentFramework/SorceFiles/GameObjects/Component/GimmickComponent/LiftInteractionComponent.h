@@ -31,6 +31,8 @@ public:
 	Lift* GetLift(void) { return current_lift_; } // 現在乗っているリフトを取得
 
     TypeID GetComponentType(void) const override { return TypeID::LiftInteractionComponent; }
+
+	bool IsTouchingLiftCenter(Lift* _lift); // リフトの中央に触れているか
 private:
 
 

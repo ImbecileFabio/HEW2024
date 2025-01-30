@@ -127,6 +127,8 @@ void Robot::UpdateGameObject(void)
 				sprite_component_->SetTexture("robot_drop");
 			}
 		}
+
+
 		// サウンドを繰り返す処理
 		if (!AudioManager::GetInstance()->GetPlayingState(SoundLabel_RobotMoveSE))
 			AudioManager::GetInstance()->Play(SoundLabel_RobotMoveSE);
@@ -148,9 +150,6 @@ void Robot::UpdateGameObject(void)
 	}
 	case RobotState::OnLift:	// リフトに乗っている状態
 	{
-		
-
-
 		if (lift_interaction_component_->GetLift() == nullptr)
 		{
 			robot_state_ = RobotState::Move;
@@ -200,19 +199,28 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
 		}
-		// リフトが動いているなら
-		if (lift->GetLiftState() == Lift::LiftState::Move)
-		{
-			// Stateを変更
-			if (robot_state_ != RobotState::OnLift)
-			{
-				sprite_component_->SetTexture("robot_still");
-				robot_state_ = RobotState::OnLift;
-			}
 
-
-			lift_interaction_component_->SetLift(lift);
+		// リフトが動いていないなら
+		if (lift->GetLiftState() == Lift::LiftState::Stop) {
+			robot_state_ = RobotState::Move;
+			sprite_component_->SetTexture("robot_walk");
+			return;
 		}
+
+		// まだOnLiftではなければ
+		if(robot_state_ != RobotState::OnLift)
+		{
+			if (lift_interaction_component_->IsTouchingLiftCenter(lift))
+			{
+				lift_interaction_component_->SetLift(lift);
+				robot_state_ = RobotState::OnLift;
+				lift->SetLiftState(Lift::LiftState::Move);
+				sprite_component_->SetTexture("robot_still");
+			}
+		}
+
+
+
 
 		break;
 	}

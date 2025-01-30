@@ -129,7 +129,7 @@ void Lift::UpdateGameObject(void)
 	{
 		if (!pendulumMoveFlg)
 		{
-			lift_state_ = Lift::LiftState::Wait;
+			lift_state_ = Lift::LiftState::Stop;
 			turn_count_ = 0;	// ˆÚ“®’†‚ÉŽ~‚Ü‚Á‚½‚çŽŸ“®‚­‚Æ‚«‚Í‚·‚®“®‚©‚¹‚é‚æ‚¤‚É
 		}
 
@@ -156,16 +156,6 @@ void Lift::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Robot:
 	{
-		if (lift_state_ == LiftState::Wait)
-		{
-			lift_state_ = LiftState::Move;
-			_other->GetComponent<LiftInteractionComponent>()->SetLift(this);
-		}
-		else if (lift_state_ == LiftState::Move)
-		{
-			_other->GetComponent<LiftInteractionComponent>()->SetLift(this);
- 
-		}
 
 	break;
 	}
