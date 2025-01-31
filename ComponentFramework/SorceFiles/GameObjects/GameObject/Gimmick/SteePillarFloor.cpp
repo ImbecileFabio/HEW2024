@@ -50,7 +50,7 @@ void SteePillarFloor::InitGameObject(void)
 
 
 	auto size = transform_component_->GetSize();
-	box_collider_component_->SetSize(size.x * 0.99f, size.y * 0.6);
+	box_collider_component_->SetSize(size.x * 0.99f, size.y * 0.7);
 	box_collider_component_->SetOffset(Vector3(0.0f, -size.y * 0.25f, 0.0f));
 
 	new DebugColliderDrawComponent(this);
