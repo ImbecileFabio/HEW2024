@@ -14,6 +14,7 @@
 #include "../../Component/EventComponent/ColliderEventComponent.h"
 
 #include "../../Component/RenderComponent/DebugColliderDrawComponent.h"
+#include "../../GameObject/Robot.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -49,7 +50,7 @@ void SteePillarFloor::InitGameObject(void)
 
 
 	auto size = transform_component_->GetSize();
-	box_collider_component_->SetSize(size.x * 0.99f, size.y * 0.6);
+	box_collider_component_->SetSize(size.x * 0.99f, size.y * 0.7);
 	box_collider_component_->SetOffset(Vector3(0.0f, -size.y * 0.25f, 0.0f));
 
 	new DebugColliderDrawComponent(this);
@@ -77,6 +78,7 @@ void SteePillarFloor::UpdateGameObject(void)
 //--------------------------------------------------
 // @brief 当たり判定実行処理
 //--------------------------------------------------
+bool isRobotOn = false;
 void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 {
 	if (state_ == State::Paused) return;
@@ -95,6 +97,12 @@ void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 			stee_pillar_floor_group_->AlignSteePillarFloorTilesWithTile(tilePosition_.y);
 			stee_pillar_floor_group_->SetHitTile(true);
 		}
+	}
+	if (_other->GetType() == TypeID::Robot)
+	{
+		auto robotPos = _other->GetTransformComponent()->GetPosition();
+		_other->GetTransformComponent()->SetPositionY(robotPos.y);
+		stee_pillar_floor_group_->SetIsRobotOn(true);
 	}
 }
 //--------------------------------------------------

@@ -8,6 +8,7 @@
 #define WEAK_FLOOR_H_
 /*----- インクルード -----*/
 #include "../../GameObject.h"
+
 //-----------------------------------------------------------------
 // 脆い床のオブジェクト
 //-----------------------------------------------------------------
@@ -32,6 +33,10 @@ private:
 	class ColliderBaseComponent*		collider_component_{};	// 当たり判定
 	class ColliderEventComponent* collider_event_component_{};	// 当たり判定イベント
 	class WeakFloorComponent*		  weak_floor_component_{};	// 脆い床ギミックコンポネート
+
+	class Effect* dust_effect_{};	// エフェクト
+	class Effect* break_effect_{};	// エフェクト
+
 };
 
 #endif  // WEAK_FLOOR_H_

@@ -158,6 +158,18 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 	}
 	else
 	{
+		if (isRobotOn_)
+		{
+			steePillarLeftGroup_->SetIsBreak(true);
+			steePillarLeftGroup_->SetIsBreakStop(false);
+			steePillarRightGroup_->SetIsBreakStop(false);
+			steePillarRightGroup_->SetIsBreak(true);
+		}
+		else
+		{
+			steePillarLeftGroup_->SetIsBreakStop(true);
+			steePillarRightGroup_->SetIsBreakStop(true);
+		}
 		// 左鉄柱のアニメーションが終了したら
 		if (steePillarRightGroup_->GetIsAnimationEnd() && !isDownStart_)
 		{
@@ -233,7 +245,6 @@ void SteePillarFloorGroup::UpdateGameObject(void)
 		}
 		if (isHitLift_)
 		{
-			isPendulumDelete_ = true;
 			for (auto& it : steePillarFloorTiles_)
 			{
 				auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);

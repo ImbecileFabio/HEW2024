@@ -218,7 +218,7 @@ void TextureManager::RegisterAllTextures()
 
 	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// 柱, 上
 	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// 柱, 下
-	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f }, false, 4, 4, 0.001f, 15);			// 柱, 壊れ
+	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f }, false, 4, 4, 0.5f, 15);			// 柱, 壊れ
 	//RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f }, false, 4, 4, 0.001f, 15);			// 柱, 壊れ
 	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 15.5f, 0.0f }, { 1.0f, 2.0f });				// 柱, 通常
 	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// 柱, 欠け
@@ -231,6 +231,8 @@ void TextureManager::RegisterAllTextures()
 	// タイムゾーン
 	RegisterTexture("timezone", TEXTURE_PATH"kouka/v02/pendulum_area_01.png");	// 青い円
 
+	/*--------------- エフェクト ---------------*/
+	RegisterTexture("smoke_impact_effect", GIMMICK_PATH"steelpillar/v02/smoke_impact_effect_01.png", {0.0f, 0.0f}, {4.0f, 1.0f}, false, 4, 5, 0.02f, 16);	// 接地時エフェクト
 
 
 
