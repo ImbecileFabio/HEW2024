@@ -15,14 +15,22 @@
 class EffectBase : public GameObject
 {
 public:
-	EffectBase(GameManager* _gameManager);
+	EffectBase(GameManager* _gameManager, std::string& _effectName);
 	~EffectBase(void);
 
-	virturl void InitGameObject(void) override;
-	virturl void UpdateGameObject(void) override;
+	virtual void InitGameObject(void) override;
+	virtual void UpdateGameObject(void) override;
 
 	TypeID GetType(void) override { return TypeID::EffectBase; }
+
+	
 private:
+
+	class SpriteComponent* sprite_component_ {};
+	class AnimationComponent* animation_component_{};	// アニメーション
+	class TimerComponent* timer_component_{};	// タイマー
+
+
 
 };
 #endif // DFFECT_BASE_H_
