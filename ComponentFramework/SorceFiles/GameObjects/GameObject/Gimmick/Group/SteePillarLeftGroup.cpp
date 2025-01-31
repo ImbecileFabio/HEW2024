@@ -47,10 +47,6 @@ void SteePillarLeftGroup::UpdateGameObject(void)
 		steePillarLeftTiles_[0]->SetObjectName("SteelPillar_Top_Left");
 		owner_top_animation_component_ = steePillarLeftTiles_[0]->GetComponent<AnimationComponent>();
 		owner_top_sprite_component_	   = steePillarLeftTiles_[0]->GetComponent<SpriteComponent>();
-
-		//auto leftTile = dynamic_cast<SteePillarLeft*>(steePillarLeftTiles_[0]);
-		//leftTile->SetBoxCollider();
-		
 		isStart_ = true;
 	}
 	// —ò‰»ó‘Ô‚ÉØ‚è‘Ö‚¦iˆê‰ñ‚Ì‚İj
