@@ -32,6 +32,8 @@
 #include "../Component/GimmickComponent/LiftInteractionComponent.h"
 #include "../Component/GimmickComponent/SmokeInteractionComponent.h"
 
+#include "Effect//Effect.h"
+
 
 //--------------------------------------------------
 // コンストラクタ
@@ -143,6 +145,7 @@ void Robot::UpdateGameObject(void)
 			{
 				robot_state_ = RobotState::Move;
 				sprite_component_->SetTexture("robot_walk");
+				new Effect(game_manager_, this, "smoke_impact_effect");
 			}
 			AudioManager::GetInstance()->Play(SoundLabel_RobotLandingSE);
 		}

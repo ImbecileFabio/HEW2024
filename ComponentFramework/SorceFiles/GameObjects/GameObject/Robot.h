@@ -57,7 +57,6 @@ private:
 	class RobotMoveComponent* robot_move_component_{};	// ロボットの移動
 	class PushOutComponent* push_out_component_{};	// 押し出し
 	class LiftInteractionComponent* lift_interaction_component_{};	// リフトとのやり取り
-	class SmokeInteractionComponent* smoke_interaction_component_{};	// 煙とのやり取り
 
 };
 #endif	// ROBOT_H_
