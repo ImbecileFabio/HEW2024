@@ -231,6 +231,8 @@ void TextureManager::RegisterAllTextures()
 	// タイムゾーン
 	RegisterTexture("timezone", TEXTURE_PATH"kouka/v02/pendulum_area_01.png");	// 青い円
 
+	/*--------------- エフェクト ---------------*/
+	RegisterTexture("smoke_impact_effect", GIMMICK_PATH"steelpillar/v02/smoke_impact_effect_01.png", {0.0f, 0.0f}, {4.0f, 1.0f}, false, 4, 5, 0.02f, 16);	// 接地時エフェクト
 
 
 

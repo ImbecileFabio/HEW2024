@@ -62,8 +62,7 @@ public:
 		, SmokePipe			// 煙管
 		, Pulley			// 滑車ギミック
 		, HammerCursor		// ハンマーカーソル
-		// エフェクト
-		, EffectBase			// エフェクト基底クラス
+		, Effect			// エフェクト
 
 		// タイルを一括で管理するグループクラス
 		, WeakFloorGroup// 脆い床
