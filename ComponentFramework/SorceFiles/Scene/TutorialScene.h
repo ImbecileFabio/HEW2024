@@ -27,8 +27,10 @@ public:
 	void Update() override;
 
 private:
+	std::function<void()> next_scene_{};	// 次のシーンへ遷移する関数
 	class Camera* camera_{};	// カメラ
-
+	class Revolution* tutorial_scene_{};	// ゲーム画面
+	class Revolution* tutorial_play_{};		// 操作画面
 };
 
 #endif  // TUTORIAL_SCENE_H_

@@ -262,7 +262,9 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("fade_in", SCENE_PATH"loading/v01/loading_result_02.png", false, 4, 5, 0.02f, 20);
 	// 真っ黒画像
 	RegisterTexture("black_backdrop", SCENE_PATH"loding/v01/black_01.png");
-
+	// チュートリアル画像
+	RegisterTexture("tutorial_01", SCENE_PATH"tutorial/v02/tutorial_01.png");
+	RegisterTexture("tutorial_02", SCENE_PATH"tutorial/v02/tutorial_02.png");
 	// チームロゴ
 	//RegisterTexture("introduction_backdrop", SCENE_PATH"introduction/v01/backdrop_introduction_01.png");
 	//RegisterTexture("introduction_teamlogo", SCENE_PATH"introduction/v01/teamlogo_01.png");

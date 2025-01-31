@@ -200,6 +200,15 @@ void GameManager::TransitionToScene(SceneName _nextScene)
 //-----------------------------------------------------------------
 void GameManager::ChangeScene(SceneName _nextScene) 
 {
+	bool is_tutorial_ = false;
+	if (current_scene_->GetSceneName() == "TitleScene")
+	{
+		auto title = dynamic_cast<TitleScene*>(current_scene_);
+		if (title->GetCreateCount() == 1)
+		{
+			is_tutorial_ = true;
+		}
+	}
 	// 前のシーン名を保存しておく
 	std::string old_scene_name = current_scene_->GetSceneName();
 	// 前のシーンのギア獲得数を保存
@@ -223,7 +232,6 @@ void GameManager::ChangeScene(SceneName _nextScene)
 	catch (const std::exception& e) {
 		std::cerr << "[ClearAllObjects] -> 例外 : " << e.what() << std::endl;
 	}
-
 	// 新しいシーンの初期化
 	try {
 		switch (_nextScene) {
@@ -233,53 +241,138 @@ void GameManager::ChangeScene(SceneName _nextScene)
 			break;
 		case Tutorial:
 			current_scene_ = new TutorialScene(this);
-
+			current_scene_->SetNextSceneName(_nextScene);
+			current_scene_->Init();
 			break;
 		case Stage1_1:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage1_1Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage1_2:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage1_2Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage1_3:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage1_3Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage1_4:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage1_4Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage2_1:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage2_1Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage2_2:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage2_2Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage2_3:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage2_3Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage2_4:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage2_4Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage3_1:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage3_1Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage3_2:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage3_2Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage3_3:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage3_3Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
 		case Stage3_4:
+			if (is_tutorial_)
+			{
+				current_scene_ = new TutorialScene(this);
+				current_scene_->SetNextSceneName(_nextScene);
+				current_scene_->Init();
+				break;
+			}
 			current_scene_ = new Stage3_4Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;
@@ -302,7 +395,10 @@ void GameManager::ChangeScene(SceneName _nextScene)
 		std::cerr << "[ChangeScene] -> 例外 : " << e.what() << std::endl;
 	}
 
-	//ImGuiManager::staticPointer->ResetSelectObject();
+	// タイトルを実行した回数が一回のみなら
+
+
+	ImGuiManager::staticPointer->ResetSelectObject();
 }
 
 
