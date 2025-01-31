@@ -217,7 +217,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		auto smoke = dynamic_cast<Smoke*>(_other);
 		auto smokepipe = dynamic_cast<SmokePipe*>(smoke->GetOwnerObj());
 
-		if (smokepipe->GetBrakeFlg())
+		if (smokepipe->GetBreakFlg())
 			if (pos.y <= smoke->GetTransformComponent()->GetPosition().y + smoke->GetTransformComponent()->GetSize().y) {
 				this->GetTransformComponent()->SetPosition({ pos.x,
 														pos.y + fabs((robot_move_component_->GetSpeed() * robot_move_component_->GetDirection().x)) * smoke->GetSize(),

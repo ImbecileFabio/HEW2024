@@ -149,6 +149,8 @@ public:
 
 	auto& GetGameManager(void) { return game_manager_; }
 
+	auto GetObjectFier(void) { return object_fier; }
+
 	// GameObject固有の衝突した後の処理
 	virtual void OnCollisionEnter(GameObject* _other) {};	// 接触した時
 	virtual void OnCollisionStay(GameObject* _other) {};	// 接触し続けている
@@ -177,6 +179,9 @@ protected:
 	// オブジェクトごとに定まるID
 	static int next_object_id_;	// 生成されたときに加算される
 	int		   object_id_{};
+
+	// 同オブジェクト間の識別子
+	int object_fier = 0;
 };
 
 #endif	// GAMEOBJECT_H_
