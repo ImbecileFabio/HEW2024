@@ -11,42 +11,25 @@
 #include "GameObjects/GameObject.h"
 #include "GameObjects/GameObject/HammerCursor.h"
 #include "GameObjects/Component/PendulumMovementComponent.h"
-
+#include <algorithm>
 //#define ControllerPlay
 
 PendulumManager* PendulumManager::instance_ = nullptr;
-//--------------------------------------------------
-// @brief 振り子の検索
-//--------------------------------------------------
-//void PendulumManager::PendulumSearch()
-//{
-//	pSelectedPendulum = nullptr;
-//
-//	for (auto& pemdulum : pendulum_list_)
-//	{
-//		if (pOldPendulum != pemdulum)
-//		{
-//			pSelectedPendulum = pemdulum;
-//			pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
-//			break;
-//		}
-//	}
-//
-//	if (!pSelectedPendulum)
-//	{
-//		pHammerCursor_->SetOriginPos({ -10000.0f, 0.0f, 0.0f });
-//		pHammerCursor_->SetIsUiDraw(false); // UIの描画をオフにする
-//		pHammerCursor_->HammerCursorMove();
-//		return;
-//	}
-//
-//	pHammerCursor_->SetIsUiDraw(true); // UIの描画をオンにする
-//	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
-//	pHammerCursor_->HammerCursorMove();
-//}
-//--------------------------------------------------
-// コンストラクタ・デストラクタ
-//--------------------------------------------------
+bool PendulumManager::ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b)
+{
+	if (a.y != b.y) {
+		return a.y > b.y; // Y座標が小さい順
+	}
+	return a.x < b.x; // X座標が小さい順（Yが同じなら）
+}
+void PendulumManager::SortPendulums(std::vector<GameObject*>& pendulum_list_)
+{
+	std::sort(pendulum_list_.begin(), pendulum_list_.end(),
+		[](GameObject* a, GameObject* b) {
+			return ComparePendulum(a->GetTransformComponent()->GetPosition(),
+				b->GetTransformComponent()->GetPosition());
+		});
+}
 PendulumManager::PendulumManager(){
 	Init();
 }
@@ -70,7 +53,7 @@ void PendulumManager::Update()
 	{
 		if (!is_sort_)
 		{
-
+			SortPendulums(pendulum_list_); // ここでソート
 			is_sort_ = true;
 		}
 		PendulumSelect();

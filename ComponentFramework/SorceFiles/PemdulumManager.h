@@ -45,6 +45,9 @@ private:
 	int selectIndex_ = 0;
 
 	int maxIndex_ = 0;
+
+	static bool ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b);
+	void SortPendulums(std::vector<GameObject*>& pendulum_list_);
 public:
 	PendulumManager();
 	~PendulumManager();
