@@ -22,7 +22,7 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 
-constexpr int gearCounter_3_1 = 1;		// ギアの獲得数
+constexpr int gearCounter_3_1 = 2;		// ギアの獲得数
 constexpr int hammerCounter_3_1 = 3;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
@@ -53,7 +53,8 @@ void Stage3_1Scene::Init()
 
 	gearMaxCount_ = gearCounter_3_1;	// 定数を代入
 	hammerMaxCount_ = hammerCounter_3_1;
-
+	stageUIs_[0]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+	stageUIs_[1]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
@@ -113,8 +114,8 @@ void Stage3_1Scene::Init()
 void Stage3_1Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_R))
-		stageState_ = StageState::Rewind;
+	//if (input.GetKeyTrigger(VK_R))
+	//	stageState_ = StageState::Rewind;
 	switch (stageState_)
 	{
 	case Stage3_1Scene::Game:
@@ -125,7 +126,7 @@ void Stage3_1Scene::Update()
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
@@ -144,7 +145,7 @@ void Stage3_1Scene::Update()
 		break;
 	case Stage3_1Scene::Pouse:
 		// ここにポーズ画面での操作を
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{

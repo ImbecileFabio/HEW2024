@@ -13,7 +13,7 @@
 #include "../../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../../Component/EventComponent/ColliderEventComponent.h"
 
-#include "../../Component/RenderComponent/DebugColliderDrawComponent.h"
+#include "../../GameObject/Robot.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -38,7 +38,7 @@ SteePillarFloor::~SteePillarFloor(void)
 //--------------------------------------------------
 void SteePillarFloor::InitGameObject(void)
 {
-	sprite_component_		= new SpriteComponent(this, "steelpillar_floor_center", 1);
+	sprite_component_		= new SpriteComponent(this, "steelpillar_floor_center", 70);
 	gravity_component_		= new GravityComponent(this);
 	box_collider_component_ = new BoxColliderComponent(this);
 	velocity_component_		= new VelocityComponent(this);
@@ -49,11 +49,8 @@ void SteePillarFloor::InitGameObject(void)
 
 
 	auto size = transform_component_->GetSize();
-	box_collider_component_->SetSize(size.x * 0.95f, size.y * 0.5);
+	box_collider_component_->SetSize(size.x * 0.99f, size.y * 0.7);
 	box_collider_component_->SetOffset(Vector3(0.0f, -size.y * 0.25f, 0.0f));
-
-	new DebugColliderDrawComponent(this);
-
 	auto f = std::function<void(GameObject*)>(std::bind(&SteePillarFloor::OnCollisionEnter, this, std::placeholders::_1));
 	event_component_->AddEvent(f);
 }
@@ -77,6 +74,7 @@ void SteePillarFloor::UpdateGameObject(void)
 //--------------------------------------------------
 // @brief 当たり判定実行処理
 //--------------------------------------------------
+bool isRobotOn = false;
 void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 {
 	if (state_ == State::Paused) return;
@@ -86,10 +84,6 @@ void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 		stee_pillar_floor_group_->AlignSteePillarFloorTilesWithTile(leftTilePosition_.y);
 		stee_pillar_floor_group_->SetHitLeft(true);
 
-
-		//float posY = transform_component_->GetPosition().y;
-		//transform_component_->SetPositionY(posY + offsetY_);
-		//stee_pillar_floor_group_->SetHitLeft(true);
 	}
 	if (_other->GetType() == TypeID::Tile)	// タイルと鉄柱床タイルが接触したら
 	{
@@ -99,9 +93,12 @@ void SteePillarFloor::OnCollisionEnter(GameObject* _other)
 			stee_pillar_floor_group_->AlignSteePillarFloorTilesWithTile(tilePosition_.y);
 			stee_pillar_floor_group_->SetHitTile(true);
 		}
-		//float posY = transform_component_->GetPosition().y;
-		//transform_component_->SetPositionY(posY + offsetY_);
-		//stee_pillar_floor_group_->SetHitTile(true);
+	}
+	if (_other->GetType() == TypeID::Robot)
+	{
+		auto robotPos = _other->GetTransformComponent()->GetPosition();
+		_other->GetTransformComponent()->SetPositionY(robotPos.y);
+		stee_pillar_floor_group_->SetIsRobotOn(true);
 	}
 }
 //--------------------------------------------------

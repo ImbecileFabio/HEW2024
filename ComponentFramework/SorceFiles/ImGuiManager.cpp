@@ -4,7 +4,7 @@
 //--------------------------------------------------
 // 説明：ImGuiの機能を自作関数としてまとめたもの
 //==================================================
-#define IMGUI_DEBUG  // 使うときはコメントアウトを外す
+//#define IMGUI_DEBUG  // 使うときはコメントアウトを外す
 #ifdef IMGUI_DEBUG
 #include <iostream>
 #include "ImGuiManager.h"

@@ -15,5 +15,5 @@ class BackGround :
 
 	private:
 		// 所有するコンポーネント
-		class RenderComponent* sprite_component_{};
+		class SpriteComponent* sprite_component_{};
 };

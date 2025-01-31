@@ -31,7 +31,7 @@ Pendulum::Pendulum(GameManager* _gameManager, Vector3 _fulcrum, bool _movement, 
 	:GameObject(_gameManager, "Pendulum")
 {
 	// スプライトコンポーネント
-	sprite_component_ = new SpriteComponent(this, "ball");
+	sprite_component_ = new SpriteComponent(this, "ball", 31);
 	// 当たり判定コンポーネント
 	collider_component_ = new CircleColliderComponent(this);
 	// 振り子コンポーネント
@@ -130,8 +130,8 @@ void Pendulum::OnCollisionEnter(GameObject* _other)
 //--------------------------------------------------
 void Pendulum::NotDrawAndStopPendulum(void)
 {
-	game_manager_->GetPendulumManager()->PendulumSearch();
 	game_manager_->GetPendulumManager()->RemoveGameObject(this);	// 振り子マネージャーから振り子を削除
+	game_manager_->GetPendulumManager()->PendulumSearch();
 
 	state_ = State::Dead;
 	time_zone_->SetState(State::Dead);

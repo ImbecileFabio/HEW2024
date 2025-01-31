@@ -19,7 +19,7 @@
 #include "Renderer.h"
 #include "InputManager.h"
 
-#define IMGUI_DEBUG	//ImGuiを使うときはコメントアウトを外すといける
+//#define IMGUI_DEBUG	//ImGuiを使うときはコメントアウトを外すといける
 #ifdef IMGUI_DEBUG
 #include "ImGuiManager.h"
 #endif
@@ -331,10 +331,10 @@ LRESULT CALLBACK GameProcess::WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARA
 
 	case WM_KEYDOWN:	// キー入力があったメッセージ
 	{
-		if (LOWORD(wParam) == VK_ESCAPE)	// 入力されたキーがESCなら
-		{
-			PostMessage(hWnd, WM_CLOSE, wParam, lParam);	// 「WM_CLOSE」を送る
-		}
+		//if (LOWORD(wParam) == VK_ESCAPE)	// 入力されたキーがESCなら
+		//{
+		//	PostMessage(hWnd, WM_CLOSE, wParam, lParam);	// 「WM_CLOSE」を送る
+		//}
 	}
 	break;
 

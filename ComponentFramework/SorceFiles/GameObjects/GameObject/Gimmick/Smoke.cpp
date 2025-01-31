@@ -34,19 +34,19 @@ Smoke::~Smoke() {
 // èâä˙âª
 //--------------------------------------------------
 void Smoke::InitGameObject() {
-	sprite_component_ = new SpriteComponent(this,"smoke00");
+	sprite_component_ = new SpriteComponent(this,"smoke00", 21);
 	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	animation_component_ = new AnimationComponent(this, sprite_component_);
-	auto debug = new DebugColliderDrawComponent(this);
+
+
 	auto f = std::function<void(GameObject*)>(std::bind(&Smoke::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
-
-	sprite_component_->SetState(RenderComponent::State::notDraw);
 
 	auto transform = this->GetTransformComponent();
 	m_smokeSize = transform->GetSize().y;
 	transform->SetSize(transform->GetSize().x, transform->GetSize().y * m_gimmickSize);
+
 }
 
 //--------------------------------------------------

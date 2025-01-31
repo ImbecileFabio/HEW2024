@@ -35,6 +35,10 @@ public:
 	void UpdateSteePillarFloorTilePositions();	// タイルの位置を同期させる関数
 	void AlignSteePillarFloorTilesWithTile(float _y);
 	bool GetIsHitLift_() { return isHitLift_; }
+	bool SetIsPendulumOn(bool _fg) { return isPendulumOn_ = _fg; }
+
+	void SetIsRobotOn(bool _fg) { isRobotOn_ = _fg; }
+	bool GetIsRobotOn() { return isRobotOn_; }
 private:
 	// グループ単体が管理しているもの
 	bool isCenterMedian_ = false;						// 中心値を調べたかどうか
@@ -44,6 +48,8 @@ private:
 	bool isHitTile_		 = false;						// タイルが当たったかどうか
 	bool isHitLift_		 = false;						// リフトが当たったかどうか
 	bool isPendulumDelete_ = false;						// 振り子を消すかどうか
+	bool isPendulumOn_	= false;						// 振り子があるかどうか
+	bool isRobotOn_ = false;						// ロボットがあるかどうか
 	int tileCenterNum_ = 0;								// タイルの中心の添え字
 	int leftIndex_ = 0;
 	int rightIndex_ = 0;
@@ -55,6 +61,7 @@ private:
 
 	// キャッシュしたコンポーネント
 	class PendulumMovementComponent* owner_pendulum_movement_{};	// 振り子の動き
+	class TransformComponent* owner_floor_transform_{};				// 床の位置
 
 	// グループが管理しているもの
 	class SteePillarLeftGroup*  steePillarLeftGroup_  = nullptr;		// 左側のグループ
@@ -65,5 +72,4 @@ private:
 	void StartFalling();		// 落下処理を開始する関数	
 	DirectX::SimpleMath::Vector3 GetCenterPosition();	// タイルの中心位置を取得する関数
 };
-#endif // STEE_PILLAE_FLOOR_GROUP_H_
-
+#endif 

@@ -61,9 +61,12 @@ private:
 
 	LiftState lift_state_;		// リフトの状態
 	MoveState move_state_;		// 移動方向
-	int turn_count_;			// 切り返しまでの時間 多分こいつもComponentに移動させるべき
+	int turn_count_;			// 経過時間
+	int max_count_;				// 切り返しまでの時間
 
 	Pendulum* pendulum_;					// 連動させたい振り子
 	LiftGroup* lift_group_{};					// リフトをまとめるグループ
+
+
 };
 #endif // _LIFT_H_

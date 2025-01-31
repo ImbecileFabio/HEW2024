@@ -65,6 +65,7 @@ void TimerComponent::StartTimer()
 	is_active_	  = true;
 	if (is_start_)	
 	{
+
 	}
 	else
 	{

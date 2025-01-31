@@ -216,11 +216,12 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("steelpillar_floor_end_01", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_01.png", { -7.9f, -8.0f }, { 1.25f, 1.25f });			// 床, 左
 	RegisterTexture("steelpillar_floor_end_02", GIMMICK_PATH"steelpillar/v02/steelpillar_floor_end_02.png", { 8.0f, -8.0f }, { 1.25f, 1.25f });			// 床, 右
 
-	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png",		 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 上
-	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 下
-	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f }, false, 4, 4, 0.3f, 15);			// 柱, 壊れ
-	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 5.4f, 0.0f }, { 0.8f, 1.0f });				// 柱, 通常
-	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png",	 { 5.4f, 0.0f }, { 0.8f, 1.0f });			// 柱, 欠け
+	RegisterTexture("steelpillar_pillar_top", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_top_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// 柱, 上
+	RegisterTexture("steelpillar_pillar_bottom", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_bottom_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// 柱, 下
+	RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f }, false, 4, 4, 0.5f, 15);			// 柱, 壊れ
+	//RegisterTexture("steelpillar_pillar_break", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_break_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f }, false, 4, 4, 0.001f, 15);			// 柱, 壊れ
+	RegisterTexture("steelpillar_pillar_normal", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_normal_01.png", { 15.5f, 0.0f }, { 1.0f, 2.0f });				// 柱, 通常
+	RegisterTexture("steelpillar_pillar_still", GIMMICK_PATH"steelpillar/v02/steelpillar_pillar_still_01.png", { 15.5f, 0.0f }, { 1.0f, 1.0f });			// 柱, 欠け
 	// 煙
 	RegisterTexture("smoke00", GIMMICK_PATH"smoke/v01/smoke_anime_scale_01.png", { 0.0f, 0.0f }, { 2.25f, 1.0f }, true, 4, 8, 0.05f, 31);	// 煙本体
 	RegisterTexture("smoke01", GIMMICK_PATH"smoke/v01/smoke_bace_back_01.png", { 0.0f, 6.0f }, { 2.0f, 1.25f });		// 柱の奥
@@ -230,6 +231,8 @@ void TextureManager::RegisterAllTextures()
 	// タイムゾーン
 	RegisterTexture("timezone", TEXTURE_PATH"kouka/v02/pendulum_area_01.png");	// 青い円
 
+	/*--------------- エフェクト ---------------*/
+	RegisterTexture("smoke_impact_effect", GIMMICK_PATH"steelpillar/v02/smoke_impact_effect_01.png", {0.0f, 0.0f}, {4.0f, 1.0f}, false, 4, 5, 0.02f, 16);	// 接地時エフェクト
 
 
 
@@ -255,13 +258,15 @@ void TextureManager::RegisterAllTextures()
 	// 操作説明画像
 	RegisterTexture("instruction_window", SCENE_PATH"instruction/v02/window_instruction_01.png");
 	// ロード画面
-	RegisterTexture("loding_backdrop", SCENE_PATH"loading_startup_01.png");
+	RegisterTexture("loading_backdrop", SCENE_PATH"loading/v01/loading_startup_01.png");
 	// フェード...?
-	RegisterTexture("fade_out", SCENE_PATH"loding/v01/loading_result_01.png", false, 5, 6, 0.04f, 30);
-	RegisterTexture("fade_in", SCENE_PATH"loding/v01/loading_result_02.png", false, 4, 5, 0.04f, 20);
+	RegisterTexture("fade_out", SCENE_PATH"loading/v01/loading_result_01.png", false, 5, 6, 0.02f, 30);
+	RegisterTexture("fade_in", SCENE_PATH"loading/v01/loading_result_02.png", false, 4, 5, 0.02f, 20);
 	// 真っ黒画像
 	RegisterTexture("black_backdrop", SCENE_PATH"loding/v01/black_01.png");
-
+	// チュートリアル画像
+	RegisterTexture("tutorial_01", SCENE_PATH"tutorial/v02/tutorial_01.png");
+	RegisterTexture("tutorial_02", SCENE_PATH"tutorial/v02/tutorial_02.png");
 	// チームロゴ
 	//RegisterTexture("introduction_backdrop", SCENE_PATH"introduction/v01/backdrop_introduction_01.png");
 	//RegisterTexture("introduction_teamlogo", SCENE_PATH"introduction/v01/teamlogo_01.png");

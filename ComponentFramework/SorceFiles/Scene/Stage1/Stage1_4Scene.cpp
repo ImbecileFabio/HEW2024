@@ -23,7 +23,7 @@
 
 
 constexpr int gearCounter_1_4 = 2;		// ギアの獲得数
-constexpr int hammerCounter_1_4 = 2;	// 叩ける上限
+constexpr int hammerCounter_1_4 = 3;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -50,7 +50,8 @@ void Stage1_4Scene::Init()
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
 	hammerCursor_ = new HammerCursor(game_manager_);
-
+	stageUIs_[0]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+	stageUIs_[1]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMaxCount_ = gearCounter_1_4;	// 定数を代入
 	hammerMaxCount_ = hammerCounter_1_4;
 
@@ -113,8 +114,8 @@ void Stage1_4Scene::Init()
 void Stage1_4Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_R))
-		stageState_ = StageState::Rewind;
+	//if (input.GetKeyTrigger(VK_R))
+	//	stageState_ = StageState::Rewind;
 	switch (stageState_)
 	{
 	case Stage1_4Scene::Game:
@@ -125,7 +126,7 @@ void Stage1_4Scene::Update()
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
@@ -144,10 +145,11 @@ void Stage1_4Scene::Update()
 		break;
 	case Stage1_4Scene::Pouse:
 		// ここにポーズ画面での操作を
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
+				isWindowOpen = false;
 				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全てポーズ状態に
 			}
 			for (auto& it : pauseButtons_)
@@ -158,6 +160,7 @@ void Stage1_4Scene::Update()
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			stageState_ = Game;
 		}
+		PauseWindow();
 		break;
 	case Stage1_4Scene::Rewind:
 		game_manager_->ResetItemCount();

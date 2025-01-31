@@ -22,8 +22,8 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 
-constexpr int gearCounter_3_3 = 1;		// ƒMƒA‚ÌŠl“¾”
-constexpr int hammerCounter_3_3 = 3;	// ’@‚¯‚éãŒÀ
+constexpr int gearCounter_3_3 = 2;		// ƒMƒA‚ÌŠl“¾”
+constexpr int hammerCounter_3_3 = 8;	// ’@‚¯‚éãŒÀ
 //--------------------------------------------------
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //--------------------------------------------------
@@ -44,7 +44,7 @@ Stage3_3Scene::~Stage3_3Scene()
 //--------------------------------------------------
 void Stage3_3Scene::Init()
 {
-	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage3/Stage3_1.csv");
+	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage3/Stage3_3.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
 	camera_ = new Camera(game_manager_);
@@ -53,7 +53,8 @@ void Stage3_3Scene::Init()
 
 	gearMaxCount_ = gearCounter_3_3;	// ’è”‚ð‘ã“ü
 	hammerMaxCount_ = hammerCounter_3_3;
-
+	stageUIs_[0]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+	stageUIs_[1]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
@@ -113,8 +114,8 @@ void Stage3_3Scene::Init()
 void Stage3_3Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_R))
-		stageState_ = StageState::Rewind;
+	//if (input.GetKeyTrigger(VK_R))
+	//	stageState_ = StageState::Rewind;
 	switch (stageState_)
 	{
 	case Stage3_3Scene::Game:
@@ -125,7 +126,7 @@ void Stage3_3Scene::Update()
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ƒ|[ƒY‰æ–Ê‚ÉˆÚ“®
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
@@ -144,7 +145,7 @@ void Stage3_3Scene::Update()
 		break;
 	case Stage3_3Scene::Pouse:
 		// ‚±‚±‚Éƒ|[ƒY‰æ–Ê‚Å‚Ì‘€ì‚ð
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{

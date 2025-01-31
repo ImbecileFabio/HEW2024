@@ -16,6 +16,29 @@
 /*----- 前方宣言 -----*/
 class TileMapManager;
 class GameManager;
+
+// シーン名	
+enum SceneName {
+	Title,
+
+	Tutorial,
+	Stage1_1,
+	Stage1_2,
+	Stage1_3,
+	Stage1_4,
+
+	Stage2_1,
+	Stage2_2,
+	Stage2_3,
+	Stage2_4,
+
+	Stage3_1,
+	Stage3_2,
+	Stage3_3,
+	Stage3_4,
+
+	Result,
+};
 //--------------------------------------------------
 // シーンベースクラス
 //--------------------------------------------------
@@ -42,7 +65,8 @@ public:
 	int GetGearMaxCount() { return gearMaxCount_; }
 	bool GetIsHammerMax() { return isHammerMax_; }
 
-	std::string GetSceneName() const { return scene_name_; }								// 現在のシーン名を取得
+	std::string GetSceneName() const { return scene_name_; }	
+	void SetNextSceneName(SceneName _nextScene) { next_scene_name_ = _nextScene; }	// 次のシーンへ遷移する関数
 	void SetOldSceneName(std::string _oldSceneName) { old_scene_name_ = _oldSceneName; }	// 前のシーン名を設定
 protected:
 	StageState stageState_ = StageState::None;
@@ -56,6 +80,7 @@ protected:
 
 	std::string scene_name_{};
 	std::string old_scene_name_{};	// 前のシーン名を保存
+	SceneName next_scene_name_;		// 次のシーン名を保存
 
 	// ステージUI関連
 	int gearMaxCount_ = 0;	// 最大ギア獲得数の定数を代入
@@ -70,6 +95,6 @@ protected:
 	int pause_select_button_ = 0;					// ポーズ画面のボタンの添え字
 	Revolution* pauseWindow_{};						// ポーズ画面のウィンドウ
 	Revolution* pause_instruction_{};				// 操作説明画像
-	std::array<Revolution*, 5>	 pauseButtons_{};	// ポーズ画面のボタン
+	std::array<Revolution*, 4>	 pauseButtons_{};	// ポーズ画面のボタン
 };
 #endif  // SCENE_BASE_H_

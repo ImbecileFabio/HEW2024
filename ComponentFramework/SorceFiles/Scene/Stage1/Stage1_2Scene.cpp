@@ -1,6 +1,5 @@
 #include "Stage1_2Scene.h"
 #include "../../GameManager.h"
-#include "../../GameManager.h"
 #include "../../ColliderManager.h"
 #include "../../PemdulumManager.h"
 #include "../../InputManager.h"
@@ -57,6 +56,9 @@ void Stage1_2Scene::Init()
 	gearMaxCount_ = gearCounter_1_2;	// 定数を代入
 	hammerMaxCount_ = hammerCounter_1_2;
 
+	stageUIs_[0]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+	stageUIs_[1]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
@@ -111,7 +113,7 @@ void Stage1_2Scene::Init()
 	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
 
 	// テクスチャのプリロード
-	TextureManager::GetInstance().LoadTexture("smoke00");	// 煙
+	//TextureManager::GetInstance().LoadTexture("smoke00");	// 煙
 
 
 }
@@ -121,8 +123,8 @@ void Stage1_2Scene::Init()
 void Stage1_2Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_R))
-		stageState_ = StageState::Rewind;
+	//if (input.GetKeyTrigger(VK_R))
+	//	stageState_ = StageState::Rewind;
 	switch (stageState_)
 	{
 	case Stage1_2Scene::Game:
@@ -133,7 +135,7 @@ void Stage1_2Scene::Update()
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
@@ -152,7 +154,7 @@ void Stage1_2Scene::Update()
 		break;
 	case Stage1_2Scene::Pouse:
 		// ここにポーズ画面での操作を
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{

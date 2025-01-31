@@ -46,7 +46,10 @@ void SteePillarRightGroup::UpdateGameObject(void)
 	// 劣化状態に切り替え（一回のみ）
 	if (isBreak_ && !isBreakStart_)
 	{
-		owner_top_sprite_component_->SetTexture("steelpillar_pillar_break");
+		if(!isTopChangeTile_)
+		{ 
+			owner_top_sprite_component_->SetTexture("steelpillar_pillar_break");
+		}
 		owner_top_animation_component_->PlayAnimation();
 		isBreak_ = false;
 		isBreakStart_ = true;
@@ -61,6 +64,7 @@ void SteePillarRightGroup::UpdateGameObject(void)
 	// アニメーションが停止したらかつ劣化が始まっていたら
 	if (!owner_top_animation_component_->GetIsPlaying() && isBreakStart_ && !isBreakStop_ && !isDownStart_)
 	{
+		steePillarRightTiles_[1]->GetComponent<SpriteComponent>()->SetTexture("steelpillar_pillar_bottom");
 		isAnimationEnd_ = true;
 		isBreakStart_ = false;
 		isDownStart_ = true;
@@ -79,6 +83,7 @@ void SteePillarRightGroup::UpdateGameObject(void)
 		auto steePillarTile = dynamic_cast<SteePillarRight*>(steePillarRightTiles_[0]);
 		steePillarTile->GetComponent<SpriteComponent>()->SetTexture("steelpillar_pillar_top");
 		isDownStart_ = false;
+		isTopChangeTile_ = true;
 	}
 }
 //--------------------------------------------------

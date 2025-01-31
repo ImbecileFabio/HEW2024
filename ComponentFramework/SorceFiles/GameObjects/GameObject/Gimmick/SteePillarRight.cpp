@@ -37,7 +37,7 @@ SteePillarRight::~SteePillarRight(void)
 //--------------------------------------------------
 void SteePillarRight::InitGameObject(void)
 {
-	sprite_component_ = new SpriteComponent(this, "steelpillar_pillar_normal", 1);
+	sprite_component_ = new SpriteComponent(this, "steelpillar_pillar_normal", 70);
 	animation_component_ = new AnimationComponent(this, sprite_component_);
 	velocity_component_ = new VelocityComponent(this);
 	gravity_component_ = new GravityComponent(this);
@@ -59,6 +59,24 @@ void SteePillarRight::UpdateGameObject(void)
 	{
 		//auto pos = transform_component_->GetPosition();
 		//transform_component_->SetPosition()
+	}
+
+	// 床のVelocityが動いていたら
+	if (isFloorVelocityStop_)
+	{
+		// 床の位置を取得
+		auto floorPos = floorPosition_;
+		Vector3 pos = transform_component_->GetPosition();
+
+		// 床との差分をオフセットとして設定
+		offset_ = Vector3(floorPos.x - pos.x, floorPos.y - pos.y, 0.0f);
+
+		// 位置をオフセットを適用して更新
+		transform_component_->SetPositionY(pos.y + offset_.y);
+	}
+	else
+	{
+
 	}
 
 }

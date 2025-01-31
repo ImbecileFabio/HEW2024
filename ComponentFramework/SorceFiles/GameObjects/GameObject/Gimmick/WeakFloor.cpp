@@ -12,13 +12,14 @@
 #include "../../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../../Component/GimmickComponent/WeakFloorComponent.h"
 #include "../../GameObject/Gimmick/Group/WeakFloorGroup.h"
+#include "../../GameObject/Robot.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
 WeakFloor::WeakFloor(GameManager* _gameManager)
 	:GameObject(_gameManager, "WeakFloor")
 {
-	sprite_component_		  = new SpriteComponent(this, "weakfloor_center");
+	sprite_component_		  = new SpriteComponent(this, "weakfloor_center", 90);
 	collider_component_		  = new BoxColliderComponent(this);			// 当たり判定
 	collider_event_component_ = new ColliderEventComponent(this);		// 当たり判定イベント
 	auto f = std::function<void(GameObject*)>(std::bind(&WeakFloor::OnCollisionEnter, this, std::placeholders::_1));
@@ -70,6 +71,11 @@ void WeakFloor::OnCollisionEnter(GameObject* _other)
 	if (_other->GetType() == TypeID::Robot)	// タイルとロボットが接触したら
 	{
 		weak_floor_group_->SetWeakFloorBreak(true);	// グループに通知
+		if (weak_floor_group_->GetIsOnRobot() == false)
+		{
+			auto robot = dynamic_cast<Robot*>(_other);
+			weak_floor_group_->SetRobot(robot);
+		}
 	}
 }
 

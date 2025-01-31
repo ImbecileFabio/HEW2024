@@ -15,6 +15,7 @@
 #include "../GameObjects/GameObject/Robot.h"
 
 int TitleScene::create_count = 0;
+//#define ControllerPlay
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -28,37 +29,32 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	backdrop_->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
 	// タイトル画面のボタン背景（リボン）
 	title_ribbon_ = new Revolution(game_manager_, "title_ribbon", "TitleRibbon");
-	title_ribbon_->GetTransformComponent()->SetSize(1920.0f, 1000.0f);
-	title_ribbon_->GetTransformComponent()->SetPosition(0.0f, -48.0f);
+	title_ribbon_->GetTransformComponent()->SetSize(3250.0f, 1250.0f);
+	title_ribbon_->GetTransformComponent()->SetPosition(0.0f, 44.0f);
 	// タイトルロゴ
 	title_logo_ = new Revolution(game_manager_, "title_logo", "TitleLogo");
-	title_logo_->GetTransformComponent()->SetSize(761.0f, 777.0f);
-	title_logo_->GetTransformComponent()->SetPosition(580.0f, 210.0f);
+	title_logo_->GetTransformComponent()->SetSize(1024.0f, 1024.0f);
+	title_logo_->GetTransformComponent()->SetPosition(-457.0f, 167.0f);
 	// タイトル画面のボタン(Option, Start, End)
-	title_buttons_[0] = new Revolution(game_manager_, "title_option", "TitleOption_Button");
-	title_buttons_[1] = new Revolution(game_manager_, "title_start", "TitleStart_Button");
-	title_buttons_[2] = new Revolution(game_manager_, "title_end", "TitleEnd_Button");	title_buttons_[0]->GetTransformComponent()->SetSize(400.0f, 400.0f);
-	title_buttons_[0]->GetTransformComponent()->SetSize(400.0f, 400.0f);
-	title_buttons_[1]->GetTransformComponent()->SetSize(349.0f, 340.0f);
-	title_buttons_[2]->GetTransformComponent()->SetSize(278.0f, 255.0f);
-	title_buttons_[0]->GetTransformComponent()->SetPosition(-589.0f, -375.0f);
-	title_buttons_[1]->GetTransformComponent()->SetPosition(15.0f, -381.0f);
-	title_buttons_[2]->GetTransformComponent()->SetPosition(555.0f, -387.0f);
-	title_buttons_[0]->GetTransformComponent()->SetPosition(-589.0f, -343.0f);
-	title_buttons_[1]->GetTransformComponent()->SetPosition(15.0f, -349.0f);
-	title_buttons_[2]->GetTransformComponent()->SetPosition(555.0f, -355.0f);
-	// タイトル画面のカーソル
+	//title_buttons_[0] = new Revolution(game_manager_, "title_option", "TitleOption_Button");
+	title_buttons_[0] = new Revolution(game_manager_, "title_start", "TitleStart_Button");
+	title_buttons_[1] = new Revolution(game_manager_, "title_end", "TitleEnd_Button");
+	title_buttons_[0]->GetTransformComponent()->SetSize(512.0f, 512.0f);
+	title_buttons_[1]->GetTransformComponent()->SetSize(256.0f, 256.0f);
+	title_buttons_[0]->GetTransformComponent()->SetPosition(-183.0f, -332.0f);
+	title_buttons_[1]->GetTransformComponent()->SetPosition(314.0f, -359.0f);	// タイトル画面のカーソル
+	
 	title_cursor_ = new Revolution(game_manager_, "title_cursor", "TitleCursor");
 	title_cursor_->GetTransformComponent()->SetSize(151.0f, 137.0f);
 	title_cursor_->GetTransformComponent()->SetPosition(-834.0f, -342.0f);
 	// セレクト画面のLB・RBボタン
-	select_left_button_ = new Revolution(game_manager_, "stageselect_left", "StageSelectLeft");
-	select_right_button_ = new Revolution(game_manager_, "stageselect_right", "StageSelectRight");
+	select_left_button_ = new Revolution(game_manager_, "stageselect_right", "StageSelectLeft");
+	select_right_button_ = new Revolution(game_manager_, "stageselect_left", "StageSelectRight");
 	select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	select_right_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-	select_right_button_->GetTransformComponent()->SetPosition(849.0f, 458.0f);
-	select_left_button_->GetTransformComponent()->SetPosition(-840.0f, 458.0f);
-	select_left_button_->GetTransformComponent()->SetSize(228.0f, 228.0f);
+	select_right_button_->GetTransformComponent()->SetPosition(-828.0f, 423.0f);
+	select_left_button_->GetTransformComponent()->SetPosition(828.0f, 421.0f);
+	select_left_button_->GetTransformComponent()->SetSize(215.0f, 215.0f);
 	select_right_button_->GetTransformComponent()->SetSize(228.0f, 228.0f);
 	// セレクト画面のチャプターナンバー画像
 	select_chapter_left = new Revolution(game_manager_, "stageselect_chapter", "StageSelectChapterLeft");
@@ -70,18 +66,18 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	select_chapter_left->GetTransformComponent()->SetSize(380.0f, 380.0f);
 	select_chapter_right->GetTransformComponent()->SetSize(380.0f, 380.0f);
 	select_chapter_center->GetTransformComponent()->SetSize(380.0f, 380.0f);
-	select_chapter_center->GetTransformComponent()->SetPosition(0.0f, 461.0f);
-	select_chapter_left->GetTransformComponent()->SetPosition(-528.0f, 461.0f);
-	select_chapter_right->GetTransformComponent()->SetPosition(528.0f, 461.0f);
+	select_chapter_center->GetTransformComponent()->SetPosition(0.0f, 421.0f);
+	select_chapter_left->GetTransformComponent()->SetPosition(-519.0f, 421.0f);
+	select_chapter_right->GetTransformComponent()->SetPosition(519.0f, 421.0f);
 
-	select_option_button_ = new Revolution(game_manager_, "stageselect_option");
+	//select_option_button_ = new Revolution(game_manager_, "stageselect_option");
 	select_return_button_ = new Revolution(game_manager_, "stageselect_return");
-	select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+	//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-	select_option_button_->GetTransformComponent()->SetPosition(842.0f, 304.0f);
-	select_return_button_->GetTransformComponent()->SetPosition(-842.0f, 304.0f);
-	select_option_button_->GetTransformComponent()->SetSize(210.0f, 210.0f);
-	select_return_button_->GetTransformComponent()->SetSize(210.0f, 210.0f);
+	//select_option_button_->GetTransformComponent()->SetPosition(842.0f, 246.0f);
+	select_return_button_->GetTransformComponent()->SetPosition(-842.0f, 246.0f);
+	//select_option_button_->GetTransformComponent()->SetSize(200.0f, 200.0f);
+	select_return_button_->GetTransformComponent()->SetSize(200.0f, 200.0f);
 	// オプション画面
 	option_images_[0] = new Revolution(game_manager_, "option_window", "option_window",11);
 	option_images_[0]->GetTransformComponent()->SetSize(1920.0f, 1080.0f);
@@ -133,9 +129,9 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	// セレクト画面のステージナンバー
 //select_numbers_s_ = new Revolution(game_manager_, "stageselect_stage_numbers_s", "StageNumber_S");
 	select_numbers_m_left_ = new Revolution(game_manager_, "stageselect_stage_numbers_m", "StageNumber_M_Left_");
-	select_numbers_m_left_->GetTransformComponent()->SetPosition(-643.0f, 0.0f);
+	select_numbers_m_left_->GetTransformComponent()->SetPosition(-653.0f, -131.0f);
 	select_numbers_m_right_ = new Revolution(game_manager_, "stageselect_stage_numbers_m", "StageNumber_M_Right_");
-	select_numbers_m_right_->GetTransformComponent()->SetPosition(643.0f, 0.0f);
+	select_numbers_m_right_->GetTransformComponent()->SetPosition(653.0f, -134.0f);
 	select_numbers_w_ = new Revolution(game_manager_, "stageselect_stage_numbers_w", "StageNumber_W");
 	//select_numbers_s_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	select_numbers_m_left_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
@@ -144,8 +140,8 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	//select_numbers_s_->GetTransformComponent()->SetSize(512.0f, 512.0f);
 	select_numbers_m_left_->GetTransformComponent()->SetSize(512.0f, 512.0f);
 	select_numbers_m_right_->GetTransformComponent()->SetSize(512.0f, 512.0f);
-	select_numbers_w_->GetTransformComponent()->SetSize(800.0f, 800.0f);
-	select_numbers_w_->GetTransformComponent()->SetPosition(9.0f, 84.0f);
+	select_numbers_w_->GetTransformComponent()->SetSize(830.0f, 830.0f);
+	select_numbers_w_->GetTransformComponent()->SetPosition(9.0f, -52.0f);
 
 	for (auto& option_image : option_images_)
 		option_image->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
@@ -162,7 +158,7 @@ TitleScene::TitleScene(GameManager* _gameManager)
 		select_chapter_left->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 		select_chapter_right->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 		select_chapter_center->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-		select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
+		//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
 		select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// 戻るボタンを表示
 		select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// LBボタンを表示
 		select_right_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// RBボタンを表示
@@ -252,12 +248,11 @@ void TitleScene::Update()
 		title_cursor_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// カーソルを表示に
 		for (auto& title_button : title_buttons_)	// ボタンを表示
 			title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-		// 左右移動
-		if (input.GetKeyTrigger(VK_RIGHT)) {
+		if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {
 			title_select_button_++;
 			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 		}
-		if (input.GetKeyTrigger(VK_LEFT)) {
+		if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {
 			title_select_button_--;
 			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 		}
@@ -273,13 +268,10 @@ void TitleScene::Update()
 				switch (i)
 				{
 				case 0:
-					title_cursor_->GetTransformComponent()->SetPosition(-834.0f, -342.0f);
+					title_cursor_->GetTransformComponent()->SetPosition(-600.0f, -342.0f);
 					break;
 				case 1:
-					title_cursor_->GetTransformComponent()->SetPosition(-207.0f, -342.0f);
-					break;
-				case 2:
-					title_cursor_->GetTransformComponent()->SetPosition(356.0f, -342.0f);
+					title_cursor_->GetTransformComponent()->SetPosition(100.0f, -342.0f);
 					break;
 				default:
 					break;
@@ -287,35 +279,18 @@ void TitleScene::Update()
 			}
 		}
 
-		if (input.GetKeyTrigger(VK_RETURN))	// 決定
+		if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))	// 決定
 		{
 			switch (title_select_button_)
 			{
 			case 0:	// オプション
-				state_ = State::option;		// オプションに移動
-				// タイトル画面のオブジェクトを非表示に
-				title_ribbon_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// リボンを非表示に
-				title_logo_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// ロゴを非表示に
-				title_cursor_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// カーソルを非表示に
-				for (auto& title_button : title_buttons_)	// ボタンを非表示に
-					title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-				for (auto& option_image : option_images_)
-					option_image->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-				option_ball_slider_bgm_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-				option_ball_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-				option_stick_slider_bgm_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-				option_stick_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-
-				AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
-				break;
-			case 1:	// セレクト画面に移動
 				state_ = State::select;		// セレクトに移動
 				title_ribbon_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// リボンを非表示に
 				title_logo_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// ロゴを非表示に
 				title_cursor_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// カーソルを非表示に
 				for (auto& title_button : title_buttons_)	// ボタンを非表示に
 					title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-				select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
+				//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
 				select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// 戻るボタンを表示
 				select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// LBボタンを表示
 				select_right_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// RBボタンを表示
@@ -326,8 +301,9 @@ void TitleScene::Update()
 				select_numbers_m_left_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 				select_numbers_m_right_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 				select_numbers_w_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+
 				break;
-			case 2:	// ゲーム終了
+			case 1:	// セレクト画面に移動
 				state_ = State::end;
 				AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
 				break;
@@ -338,14 +314,14 @@ void TitleScene::Update()
 		break;
 	case TitleScene::State::select:
 		MoveSelect();						// セレクトの添え字の動きを管理
-		if (input.GetKeyTrigger(VK_RETURN))	// ゲームスタート
+		if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))	// ゲームスタート
 		{
 			StageSelect();
 		}
-		if (input.GetKeyTrigger(VK_X))		// タイトル戻る
+		if (input.GetKeyTrigger(VK_BACK) || input.GetButtonTrigger(XINPUT_B) || input.GetButtonTrigger(XINPUT_GAMEPAD_BACK))		// タイトル戻る
 		{
 			state_ = State::title;
-			select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
+			//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
 			select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// 戻るボタンを表示
 			select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// LBボタンを表示
 			select_right_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// RBボタンを表示
@@ -361,19 +337,19 @@ void TitleScene::Update()
 		}
 		break;
 	case TitleScene::State::option:
-		// ここにオプション
-		if (input.GetKeyTrigger(VK_X))		// タイトル戻る
-		{
-			state_ = State::title;
-			for (auto& option_image : option_images_)
-				option_image->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			option_ball_slider_bgm_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			option_ball_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			option_stick_slider_bgm_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			option_stick_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			
-			AudioManager::GetInstance()->Play(SoundLabel_UICancelSE);
-		}
+		//// ここにオプション
+		//if (input.GetKeyTrigger(VK_BACK) || input.GetButtonTrigger(XINPUT_B))		// タイトル戻る
+		//{
+		//	state_ = State::title;
+		//	for (auto& option_image : option_images_)
+		//		option_image->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+		//	option_ball_slider_bgm_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+		//	option_ball_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+		//	option_stick_slider_bgm_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+		//	option_stick_slider_se_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+		//	
+		//	AudioManager::GetInstance()->Play(SoundLabel_UICancelSE);
+		//}
 		break;
 	case TitleScene::State::end:
 		game_manager_->SetEndFlag(true);
@@ -397,32 +373,32 @@ void TitleScene::MoveSelect()
 	DirectX::SimpleMath::Vector2 frameSize = select_chapter_center->GetComponent<SpriteComponent>()->GetTexture().get()->GetFrameSize();
 	DirectX::SimpleMath::Vector2 numberFrameSize = select_numbers_m_left_->GetComponent<SpriteComponent>()->GetTexture().get()->GetFrameSize();
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_E))		// Rボタン
+	if (input.GetKeyTrigger(VK_OEM_PERIOD) || input.GetButtonTrigger(XINPUT_RIGHT_SHOULDER))		// Rボタン
 	{
 		chapter_++;
 		stage_ = 0;	// 章が変わったらステージをリセット
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
-	if (input.GetKeyTrigger(VK_Q))		// Lボタン
+	if (input.GetKeyTrigger(VK_OEM_COMMA) || input.GetButtonTrigger(XINPUT_LEFT_SHOULDER))		// Lボタン
 	{
 		chapter_--;
 		stage_ = 0;	// 章が変わったらステージをリセット
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
-	if (input.GetKeyTrigger(VK_RIGHT)) {	// 右
+	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {	// 右
 		stage_++;
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
-	if (input.GetKeyTrigger(VK_LEFT)) {		// 左
+	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {		// 左
 		stage_--;
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
 		
 	if (chapter_ == 0)
 	{
-		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 3.0f * frameSize.x, 0.0f * frameSize.y });
-		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 2.0f * frameSize.x, 0.0f * frameSize.y });
-		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 3.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 2.0f * frameSize.x, 0.0f * frameSize.y });
 		switch (stage_)
 		{
 		case 0:
@@ -482,9 +458,9 @@ void TitleScene::MoveSelect()
 	}
 	else if (chapter_ == 2)
 	{
-		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 1.0f * frameSize.y });
-		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
-		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 0.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 0.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 1.0f * frameSize.y });
 		switch (stage_)
 		{
 		case 0:
@@ -512,19 +488,21 @@ void TitleScene::MoveSelect()
 		}
 	}
 	// 範囲外の処理
-	if (chapter_ > CHAPTER_MAX)
+	// 章の選択
+	if (chapter_ >= CHAPTER_MAX)
 	{
 		chapter_ = 0;
 	}
 	if (chapter_ < 0)
 	{
-		chapter_ = 3;
+		chapter_ = CHAPTER_MAX - 1;
 	}
+	// ステージの選択
 	if (stage_ < 0)
 	{
-		stage_ = 3;
+		stage_ = STAGE_MAX - 1;
 	}
-	if (stage_ > STAGE_MAX)
+	if (stage_ >= STAGE_MAX)
 	{
 		stage_ = 0;
 	}

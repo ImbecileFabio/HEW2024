@@ -34,7 +34,7 @@ HammerCursor::~HammerCursor(void)
 void HammerCursor::InitGameObject(void)
 {
 	isUiDraw_ = true;
-	sprite_component_	  = new SpriteComponent(this, "hammer", 3);
+	sprite_component_	  = new SpriteComponent(this, "hammer", 99);
 	transform_component_->SetSize(50.0f, 50.0f);
 	transform_component_->SetRotation(-13.0f);
 	transform_component_->SetPosition(-2000.0f, 0.0f);

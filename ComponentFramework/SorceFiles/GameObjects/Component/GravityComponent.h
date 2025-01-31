@@ -17,7 +17,7 @@
 class GravityComponent : public Component
 {
 public:
-    GravityComponent(GameObject* _owner, int _updateOrder = 20);
+    GravityComponent(GameObject* _owner, int _updateOrder = 6);
     ~GravityComponent();
 
     void Init() override;
