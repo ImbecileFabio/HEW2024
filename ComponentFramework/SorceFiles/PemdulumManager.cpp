@@ -15,6 +15,10 @@
 //#define ControllerPlay
 
 PendulumManager* PendulumManager::instance_ = nullptr;
+void PendulumManager::PendulumSearch()
+{
+	pHammerCursor_->SetIsUiDraw(false);
+}
 bool PendulumManager::ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b)
 {
 	if (a.y != b.y) {
