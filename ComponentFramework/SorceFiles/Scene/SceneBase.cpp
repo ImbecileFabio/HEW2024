@@ -59,17 +59,16 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 	pauseButtons_[1] = new Revolution(game_manager_, "pose_restart", "pose_restart", 201);
 	pauseButtons_[2] = new Revolution(game_manager_, "pose_select", "pose_select", 201);
 	pauseButtons_[3] = new Revolution(game_manager_, "pose_instruction", "pose_instruction", 201);
-	pauseButtons_[4] = new Revolution(game_manager_, "pose_option", "pose_option", 201);
 	pauseButtons_[0]->GetTransformComponent()->SetSize(900.0f, 900.0f);
-	pauseButtons_[0]->GetTransformComponent()->SetPosition(0.0f, 365.0f);
+	pauseButtons_[0]->GetTransformComponent()->SetPosition(0.0f, 275.0f);
 	pauseButtons_[1]->GetTransformComponent()->SetSize(900.0f, 900.0f);
-	pauseButtons_[1]->GetTransformComponent()->SetPosition(0.0f, 200.0f);
+	pauseButtons_[1]->GetTransformComponent()->SetPosition(0.0f, 101.0f);
 	pauseButtons_[2]->GetTransformComponent()->SetSize(900.0f, 900.0f);
-	pauseButtons_[2]->GetTransformComponent()->SetPosition(0.0f, 35.0f);
+	pauseButtons_[2]->GetTransformComponent()->SetPosition(0.0f, -76.0f);
 	pauseButtons_[3]->GetTransformComponent()->SetSize(900.0f, 900.0f);
-	pauseButtons_[3]->GetTransformComponent()->SetPosition(0.0f, -130.0f);
-	pauseButtons_[4]->GetTransformComponent()->SetSize(900.0f, 900.0f);
-	pauseButtons_[4]->GetTransformComponent()->SetPosition(0.0f, -295.0f);
+	pauseButtons_[3]->GetTransformComponent()->SetPosition(0.0f, -252.0f);
+	//pauseButtons_[4]->GetTransformComponent()->SetSize(900.0f, 900.0f);
+	//pauseButtons_[4]->GetTransformComponent()->SetPosition(0.0f, -252.0f);
 	for(auto& it : pauseButtons_)
 		it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 }
@@ -90,23 +89,19 @@ void SceneBase::PauseWindow()
 			pause_select_button_--;
 		if (input.GetKeyTrigger(VK_DOWN) || input.GetButtonTrigger(XINPUT_DOWN))
 			pause_select_button_++;
-		if (pause_select_button_ > 4)				// 折り返し処理
+		if (pause_select_button_ >= 4)				// 折り返し処理
 			pause_select_button_ = 0;
 		if (pause_select_button_ < 0)
-			pause_select_button_ = 4;
+			pause_select_button_ = 3;
 	}
 	else
 	{
-		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B))
+		if (input.GetKeyTrigger(VK_BACK) || input.GetButtonTrigger(XINPUT_B))
 		{
 			if (pause_select_button_ == 3) 
 			{
 				isWindowOpen = false;
 				pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-			}
-			if (pause_select_button_ == 4)
-			{
-				isWindowOpen = false;
 			}
 		}
 	}
@@ -152,10 +147,6 @@ void SceneBase::PauseWindow()
 			break;
 		case 3:	// 操作説明を表示
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-			isWindowOpen = true;
-			break;
-		case 4:	// オプションウィンドウを表示
-			OptionWindow();
 			isWindowOpen = true;
 			break;
 		default:

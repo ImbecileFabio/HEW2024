@@ -157,11 +157,11 @@ void PendulumManager::PendulumSelect()
 // 振り子の状態変異
 //--------------------------------------------------
 void PendulumManager::PendulumMovementChange() {
-	//if (GM->GetIsHammerMax()) return;
+	if (GM->GetIsHammerMax()) return;
 	if (pendulum_list_.size() <= selectIndex_) return;
 	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
-	// Mキー（動作の変更）
-	if (IM.GetKeyTrigger(VK_RETURN) || IM.GetButtonTrigger(XINPUT_A))
+	// Spaceキー（動作の変更）
+	if (IM.GetKeyTrigger(VK_SPACE) || IM.GetButtonTrigger(XINPUT_A))
 	{
 		bool isPendulumMove = SPM->GetPendulumMovement();
 		SPM->SetPendulumMovement(!isPendulumMove);
@@ -177,10 +177,10 @@ void PendulumManager::PendulumMovementChange() {
 //--------------------------------------------------
 void PendulumManager::PendulumLangthChange() 
 {
-	//if (GM->GetIsHammerMax()) return;	
+	if (GM->GetIsHammerMax()) return;	
 	if (pendulum_list_.size() <= selectIndex_) return;
 	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
-	// Iキー（短くする）
+	// ↑キー（短くする）
 	if (IM.GetKeyTrigger(VK_UP) || IM.GetButtonTrigger(XINPUT_UP))
 	{
 		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::shortLangth)
@@ -189,7 +189,7 @@ void PendulumManager::PendulumLangthChange()
 			GM->HammerCountDown();
 		}
 	}
-	// Kキー（長くする）
+	// ↓キー（長くする）
 	if (IM.GetKeyTrigger(VK_DOWN) || IM.GetButtonTrigger(XINPUT_DOWN))
 	{
 		if (SPM->GetLangthState() != PendulumMovementComponent::LangthState::longLangth) 
@@ -249,8 +249,8 @@ void PendulumManager::PendulumDirectionChange()
 		SPM->SetPendulumDirection(1);
 		pHammerCursor_->SetDirection(1);
 	}
-	// Nキー（向きの変更）
-	if (IM.GetKeyTrigger(VK_N)) 
+	// Shiftキー（向きの変更）
+	if (IM.GetKeyTrigger(VK_RSHIFT) || IM.GetKeyTrigger(VK_LSHIFT)) 
 	{
 		if (SPM->GetPendulumDirection() != -1)
 		{
