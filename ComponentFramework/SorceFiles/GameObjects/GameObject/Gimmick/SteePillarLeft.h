@@ -30,6 +30,8 @@ public:
 
 	void SetFloorPosition(DirectX::SimpleMath::Vector3 _floorPos)  { floorPosition_ = _floorPos; }
 	void SetFloorOffset(DirectX::SimpleMath::Vector3 _floorOffset) { floorOffset_ = _floorOffset; }
+	void SetBoxCollider(class BoxColliderComponent* _box) { box_collider_ = _box; }
+	void SetEvent(class ColliderEventComponent* _event) { event_component_ = _event; }
 private:
 	class SteePillarLeftGroup* stee_pillar_left_group_;
 
@@ -37,6 +39,8 @@ private:
 	class AnimationComponent* animation_component_;
 	class VelocityComponent* velocity_component_;
 	class GravityComponent* gravity_component_;
+	class BoxColliderComponent* box_collider_{};
+	class ColliderEventComponent* event_component_{};
 
 	bool offsetFg_ = false;
 	bool isFloorDown_ = false;	// 鉄柱が落下したときに行うオフセット処理
