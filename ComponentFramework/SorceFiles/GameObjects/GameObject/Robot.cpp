@@ -93,13 +93,13 @@ void Robot::UpdateGameObject(void)
 	// 入力処理
 	InputManager& input = InputManager::GetInstance();
 
-	// マウスクリックで移動
-	if (input.GetMouseButtonPress(0)) {
-		auto mousePos = input.GetMousePosition();
-		transform_component_->SetPosition(
-			static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
-			-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
-	}
+	//// マウスクリックで移動
+	//if (input.GetMouseButtonPress(0)) {
+	//	auto mousePos = input.GetMousePosition();
+	//	transform_component_->SetPosition(
+	//		static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
+	//		-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
+	//}
 
 
 
