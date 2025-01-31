@@ -82,7 +82,7 @@ void LiftComponent::Update()
 	case LiftComState::Stop:
 	{
 		owner_velocity_->SetVelocity({ 0.0f, 0.0f, 0.0f });
-		AudioManager::GetInstance()->Stop(SoundLabel_GimmickLiftMoveSE);
+		AudioManager::GetInstance()->Stop(this->GetOwner()->GetType(),this->GetOwner()->GetObjectFier());
 		break;
 	}
 	case LiftComState::Wait:
@@ -130,7 +130,8 @@ void LiftComponent::Update()
 			break;
 		}
 
-		if (!AudioManager::GetInstance()->GetPlayingState(SoundLabel_GimmickLiftMoveSE)) AudioManager::GetInstance()->Play(SoundLabel_GimmickLiftMoveSE);
+		if (!AudioManager::GetInstance()->GetPlayingState(this->GetOwner()->GetType(), this->GetOwner()->GetObjectFier()))
+			AudioManager::GetInstance()->Play(this->GetOwner()->GetType(), this->GetOwner()->GetObjectFier());
 	}
 	}
 
