@@ -25,7 +25,7 @@ Stick::~Stick()
 void Stick::InitGameObject(void)
 {
 	stick_move_component_ = new StickMoveComponent(this, owner_pendulum_);
-	sprite_component_	= new SpriteComponent(this, "stick", 1);
+	sprite_component_	= new SpriteComponent(this, "stick", 30);
 	stick_length_state_ = StickLengthState::Middle;
 }
 //--------------------------------------------------

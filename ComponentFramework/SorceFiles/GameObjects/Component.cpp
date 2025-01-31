@@ -71,11 +71,6 @@ Component::Component(GameObject* _owner, int _updateOrder)
 	: owner_(_owner)				// 所有者
 	, update_order_(_updateOrder)	// 更新順
 {
-	// updateOrderは0以上、100以下で設定
-	if (update_order_ < 0 || update_order_ > 100) { 
-		std::cout << std::format("[Component]-> UpdateOrder が範囲外で指定されました\n");
-		update_order_ = 0; 
-	}
 	if (owner_) { owner_->AddComponent(this); }
 }
 

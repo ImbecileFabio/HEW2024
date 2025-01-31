@@ -89,45 +89,36 @@ void PendulumManager::RemoveGameObject(GameObject* _gameObject)
 // 内積が一定以内かつ最も近いオブジェクトのポインタを返す（選択）
 //--------------------------------------------------
 void PendulumManager::PendulumSelect() {
-#ifdef ControllerPlay
-	DirectX::XMFLOAT2 IMGLA = IM.GetLeftAnalogStick();	// InputManager GetLeftAnalogstick
-	nextPendulumVector_Langth_ = 9999.f;
-	// スティックの入力があるとき
-	if (IMGLA.x != 0 && IMGLA.y != 0) {
-		for (auto& pemdulum : pendulum_list_) {
-			if (pSelectedPendulum != pemdulum) {
-				DirectX::SimpleMath::Vector3 PP = pemdulum->GetTransformComponent()->GetPosition();			// PemdulumPosition
-				DirectX::SimpleMath::Vector3 SPP = pSelectedPendulum->GetTransformComponent()->GetPosition();	// SelectedPemdulumPosition
-				// ベクトルの正規化
-				stickVector_Langth_ = std::sqrt(IMGLA.x * IMGLA.x + IMGLA.y * IMGLA.y);
-				stickVector_Normalize_ = { IMGLA.x / stickVector_Langth_, IMGLA.y / stickVector_Langth_ };
-				pendulumVector_Langth_ = std::sqrt((PP.x - SPP.x) * (PP.x - SPP.x) + (PP.y - SPP.y) * (PP.y - SPP.y));
-				pendulumVector_Normalize_ = { (PP.x - SPP.x) / pendulumVector_Langth_,(PP.y - SPP.y) / pendulumVector_Langth_ };
-				// 内積の計算
-				innerProduct_ = stickVector_Normalize_.x * pendulumVector_Normalize_.x + stickVector_Normalize_.y * pendulumVector_Normalize_.y;
-
-				if (innerProduct_ > InnerProductLimit && nextPendulumVector_Langth_ > pendulumVector_Langth_) {
-					nextPendulumVector_Langth_ = pendulumVector_Langth_;
-					pNextPendulum = pemdulum;
-				}
-			}
-		}
-	}
-
-	if (pNextPendulum)
-	{
-		pOldPendulum = pSelectedPendulum; // pSelectedPendulum を保存
-		pSelectedPendulum = pNextPendulum;
-		pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
-	}
-
-	if (pSelectedPendulum)
-	{
-		pHammerCursor_->SetIsUiDraw(true);
-		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
-		pHammerCursor_->HammerCursorMove();
-	}
-#else
+//#ifdef ControllerPlay
+//	maxIndex_ = pendulum_list_.size() - 1;	// 添え字の調整
+//
+//	DirectX::XMFLOAT2 IMGLA = IM.GetLeftAnalogStick();	// InputManager GetLeftAnalogstick
+//	nextPendulumVector_Langth_ = 9999.f;
+//	// スティックの入力があるとき
+//	if (IMGLA.x != 0 && IMGLA.y != 0) 
+//	{
+//		if (IMGLA.x > 0)
+//		{
+//			selectIndex_++;
+//		}
+//		if (IMGLA.x < 0)
+//		{
+//			selectIndex_--;
+//		}
+//		if (maxIndex_ < selectIndex_)
+//		{
+//			selectIndex_ = 0;
+//		}
+//		if (-1 == selectIndex_)
+//		{
+//			selectIndex_ = maxIndex_;
+//		}
+//	}
+//	pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+//	pHammerCursor_->SetIsUiDraw(true);
+//	pHammerCursor_->SetOriginPos(pendulum_list_[selectIndex_]->GetTransformComponent()->GetPosition());
+//	pHammerCursor_->HammerCursorMove();
+//#else
 	maxIndex_ = pendulum_list_.size() - 1;	// 添え字の調整
 	if (IM.GetKeyTrigger(VK_L))
 	{
@@ -150,7 +141,7 @@ void PendulumManager::PendulumSelect() {
 	pHammerCursor_->SetOriginPos(pendulum_list_[selectIndex_]->GetTransformComponent()->GetPosition());
 	pHammerCursor_->HammerCursorMove();
 
-#endif
+//#endif
 }
 
 //--------------------------------------------------

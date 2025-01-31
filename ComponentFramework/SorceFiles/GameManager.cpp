@@ -27,6 +27,7 @@
 //-----------------------------------------------------------------
 GameManager::GameManager()
 	:updating_game_objects_(false)
+	, tutorial_completed_(false)
 {
 	// レンダラー初期化
 	renderer_ = new Renderer();
@@ -166,7 +167,24 @@ void GameManager::TransitionToScene(SceneName _nextScene)
 		return; // フェード中なら二重実行を防ぐ
 	}
 
-	// フェードアウト開始
+	
+	// ここのコメントアウト外したらチュートリアルにはいれるようになるよ
+	//// 初回プレイならチュートリアルに入る
+	//if (!tutorial_completed_) {
+	//	fade_manager_->StartFadeOut("fade_out", [this]() {
+	//		// フェードアウト終了時にシーンを切り替え
+	//		ChangeScene(SceneName::Tutorial);
+	//		// シーン変更後にフェードインを開始
+	//		fade_manager_->StartFadeIn("fade_in");
+	//		});
+	//	// チュートリアル完了フラグを立てる
+	//	tutorial_completed_ = true;
+	//	return;
+	//}
+
+
+
+	// 二回目以降は通常のシーン遷移
 	fade_manager_->StartFadeOut("fade_out", [this, _nextScene]() {
 		// フェードアウト終了時にシーンを切り替え
 		ChangeScene(_nextScene);
@@ -212,6 +230,10 @@ void GameManager::ChangeScene(SceneName _nextScene)
 		case Title:
 			current_scene_ = new TitleScene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
+			break;
+		case Tutorial:
+			current_scene_ = new TutorialScene(this);
+
 			break;
 		case Stage1_1:
 			current_scene_ = new Stage1_1Scene(this);

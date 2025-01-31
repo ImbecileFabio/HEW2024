@@ -17,7 +17,7 @@ TimeZone::TimeZone(GameManager* _gameManager, GameObject* _ownerPendulum)
 	: GameObject(_gameManager, "TimeZone")
 	, owner_pendulum_(_ownerPendulum)
 {
-	sprite_component_		 = new SpriteComponent(this, "timezone", 11);
+	sprite_component_		 = new SpriteComponent(this, "timezone", 10);
 	collider_base_component_ = new CircleColliderComponent(this);
 	event_base_component_ = new ColliderEventComponent(this);
 	time_zone_component_ = new TimeZoneComponent(this, owner_pendulum_);
@@ -42,7 +42,7 @@ TimeZone::~TimeZone()
 void TimeZone::InitGameObject(void)
 {
 	// タイムゾーンの主張が少し強い気がするので透明度下げてみてます
-	dynamic_cast<SpriteComponent*>(sprite_component_)->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.5f));
+	dynamic_cast<SpriteComponent*>(sprite_component_)->SetColor(Vector4(1.0f, 1.0f, 1.0f, 0.4f));
 }
 //--------------------------------------------------
 // @brief 更新処理

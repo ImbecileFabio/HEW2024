@@ -18,7 +18,7 @@
 WeakFloor::WeakFloor(GameManager* _gameManager)
 	:GameObject(_gameManager, "WeakFloor")
 {
-	sprite_component_		  = new SpriteComponent(this, "weakfloor_center");
+	sprite_component_		  = new SpriteComponent(this, "weakfloor_center", 90);
 	collider_component_		  = new BoxColliderComponent(this);			// “–‚½‚è”»’è
 	collider_event_component_ = new ColliderEventComponent(this);		// “–‚½‚è”»’èƒCƒxƒ“ƒg
 	auto f = std::function<void(GameObject*)>(std::bind(&WeakFloor::OnCollisionEnter, this, std::placeholders::_1));
