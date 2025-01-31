@@ -114,8 +114,8 @@ void Stage1_4Scene::Init()
 void Stage1_4Scene::Update()
 {
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_R))
-		stageState_ = StageState::Rewind;
+	//if (input.GetKeyTrigger(VK_R))
+	//	stageState_ = StageState::Rewind;
 	switch (stageState_)
 	{
 	case Stage1_4Scene::Game:
@@ -126,7 +126,7 @@ void Stage1_4Scene::Update()
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
-		if (input.GetKeyTrigger(VK_P) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
@@ -145,7 +145,7 @@ void Stage1_4Scene::Update()
 		break;
 	case Stage1_4Scene::Pouse:
 		// ここにポーズ画面での操作を
-		if (input.GetKeyTrigger(VK_P) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{

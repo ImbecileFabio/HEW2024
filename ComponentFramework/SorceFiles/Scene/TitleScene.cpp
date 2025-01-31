@@ -342,7 +342,7 @@ void TitleScene::Update()
 		{
 			StageSelect();
 		}
-		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B) || input.GetButtonTrigger(XINPUT_GAMEPAD_BACK))		// タイトル戻る
+		if (input.GetKeyTrigger(VK_BACK) || input.GetButtonTrigger(XINPUT_B) || input.GetButtonTrigger(XINPUT_GAMEPAD_BACK))		// タイトル戻る
 		{
 			state_ = State::title;
 			select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
@@ -362,7 +362,7 @@ void TitleScene::Update()
 		break;
 	case TitleScene::State::option:
 		// ここにオプション
-		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B))		// タイトル戻る
+		if (input.GetKeyTrigger(VK_BACK) || input.GetButtonTrigger(XINPUT_B))		// タイトル戻る
 		{
 			state_ = State::title;
 			for (auto& option_image : option_images_)
@@ -397,13 +397,13 @@ void TitleScene::MoveSelect()
 	DirectX::SimpleMath::Vector2 frameSize = select_chapter_center->GetComponent<SpriteComponent>()->GetTexture().get()->GetFrameSize();
 	DirectX::SimpleMath::Vector2 numberFrameSize = select_numbers_m_left_->GetComponent<SpriteComponent>()->GetTexture().get()->GetFrameSize();
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_E) || input.GetButtonTrigger(XINPUT_RIGHT_SHOULDER))		// Rボタン
+	if (input.GetKeyTrigger(VK_OEM_PERIOD) || input.GetButtonTrigger(XINPUT_RIGHT_SHOULDER))		// Rボタン
 	{
 		chapter_++;
 		stage_ = 0;	// 章が変わったらステージをリセット
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
-	if (input.GetKeyTrigger(VK_Q) || input.GetButtonTrigger(XINPUT_LEFT_SHOULDER))		// Lボタン
+	if (input.GetKeyTrigger(VK_OEM_COMMA) || input.GetButtonTrigger(XINPUT_LEFT_SHOULDER))		// Lボタン
 	{
 		chapter_--;
 		stage_ = 0;	// 章が変わったらステージをリセット
