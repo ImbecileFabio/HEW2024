@@ -38,7 +38,7 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	// タイトル画面のボタン(Option, Start, End)
 	title_buttons_[0] = new Revolution(game_manager_, "title_option", "TitleOption_Button");
 	title_buttons_[1] = new Revolution(game_manager_, "title_start", "TitleStart_Button");
-	title_buttons_[2] = new Revolution(game_manager_, "title_end", "TitleEnd_Button");	title_buttons_[0]->GetTransformComponent()->SetSize(400.0f, 400.0f);
+	title_buttons_[2] = new Revolution(game_manager_, "title_end", "TitleEnd_Button");	
 	title_buttons_[0]->GetTransformComponent()->SetSize(400.0f, 400.0f);
 	title_buttons_[1]->GetTransformComponent()->SetSize(349.0f, 340.0f);
 	title_buttons_[2]->GetTransformComponent()->SetSize(278.0f, 255.0f);
