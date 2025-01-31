@@ -15,6 +15,7 @@
 #include "../GameObjects/GameObject/Robot.h"
 
 int TitleScene::create_count = 0;
+//#define ControllerPlay
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -253,6 +254,8 @@ void TitleScene::Update()
 		for (auto& title_button : title_buttons_)	// ボタンを表示
 			title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 		// 左右移動
+//#ifdef ControllerPlay
+//#else
 		if (input.GetKeyTrigger(VK_RIGHT)) {
 			title_select_button_++;
 			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);

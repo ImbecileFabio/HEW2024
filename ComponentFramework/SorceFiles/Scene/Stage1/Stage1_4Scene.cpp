@@ -148,6 +148,7 @@ void Stage1_4Scene::Update()
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
+				isWindowOpen = false;
 				it->SetState(GameObject::State::Active);	// 稼働コンテナのオブジェクトを全てポーズ状態に
 			}
 			for (auto& it : pauseButtons_)
@@ -158,6 +159,7 @@ void Stage1_4Scene::Update()
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			stageState_ = Game;
 		}
+		PauseWindow();
 		break;
 	case Stage1_4Scene::Rewind:
 		game_manager_->ResetItemCount();
