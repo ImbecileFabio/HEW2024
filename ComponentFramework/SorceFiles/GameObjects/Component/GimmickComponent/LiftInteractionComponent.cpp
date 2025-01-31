@@ -62,7 +62,7 @@ void LiftInteractionComponent::Update()
 		auto liftHitBox = current_lift_->GetComponent<BoxColliderComponent>()->GetWorldHitBox();
 
 		// y軸の位置を補正する
-		auto newY = (liftHitBox.max_.y + ownerSize.y / 2) - 2.5f;
+		auto newY = (liftHitBox.max_.y + ownerSize.y / 2) - 4.0f;
 		ownerTransform->SetPosition(ownerPos.x, newY, ownerPos.z);
 
 		// リフトの速度と速度倍率を取得し、所有者に設定

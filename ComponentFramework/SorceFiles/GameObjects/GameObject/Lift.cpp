@@ -101,7 +101,7 @@ void Lift::UpdateGameObject(void)
 			if (pendulumMoveFlg)
 			{
 				lift_state_ = Lift::LiftState::Wait;
-				turn_count_ = max_count_;
+				turn_count_ = max_count_ * 2;
 			}
 		}
 		else {
@@ -116,7 +116,7 @@ void Lift::UpdateGameObject(void)
 			if (pendulumMoveFlg)
 			{
 				lift_state_ = Lift::LiftState::Move;
-				turn_count_ = max_count_;
+				turn_count_ = max_count_ * 0.5;
 			}
 		}
 		else {
