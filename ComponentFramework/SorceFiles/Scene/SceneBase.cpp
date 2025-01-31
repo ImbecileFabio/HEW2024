@@ -96,7 +96,7 @@ void SceneBase::PauseWindow()
 	}
 	else
 	{
-		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B))
+		if (input.GetKeyTrigger(VK_BACK) || input.GetButtonTrigger(XINPUT_B))
 		{
 			if (pause_select_button_ == 3) 
 			{

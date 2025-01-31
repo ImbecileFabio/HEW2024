@@ -13,7 +13,6 @@
 #include "../../Component/RigidbodyComponent/VelocityComponent.h"
 #include "../../Component/EventComponent/ColliderEventComponent.h"
 
-#include "../../Component/RenderComponent/DebugColliderDrawComponent.h"
 #include "../../GameObject/Robot.h"
 //--------------------------------------------------
 // @brief コンストラクタ
@@ -52,9 +51,6 @@ void SteePillarFloor::InitGameObject(void)
 	auto size = transform_component_->GetSize();
 	box_collider_component_->SetSize(size.x * 0.99f, size.y * 0.7);
 	box_collider_component_->SetOffset(Vector3(0.0f, -size.y * 0.25f, 0.0f));
-
-	new DebugColliderDrawComponent(this);
-
 	auto f = std::function<void(GameObject*)>(std::bind(&SteePillarFloor::OnCollisionEnter, this, std::placeholders::_1));
 	event_component_->AddEvent(f);
 }

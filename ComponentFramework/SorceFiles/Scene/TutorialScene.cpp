@@ -147,7 +147,7 @@ void TutorialScene::Update()
 		}
 	}
 	// –ß‚é
-	if (input.GetButtonTrigger(XINPUT_B) || input.GetKeyTrigger(VK_X))
+	if (input.GetButtonTrigger(XINPUT_B) || input.GetKeyTrigger(VK_BACK))
 	{
 		if (tutorial_play_->GetComponent<RenderComponent>()->GetState() == RenderComponent::State::draw)
 		{
