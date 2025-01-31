@@ -145,7 +145,6 @@ void Robot::UpdateGameObject(void)
 			{
 				robot_state_ = RobotState::Move;
 				sprite_component_->SetTexture("robot_walk");
-				new Effect(game_manager_, this, "smoke_impact_effect");
 			}
 			AudioManager::GetInstance()->Play(SoundLabel_RobotLandingSE);
 		}
@@ -244,7 +243,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		auto smoke = dynamic_cast<Smoke*>(_other);
 		auto smokepipe = dynamic_cast<SmokePipe*>(smoke->GetOwnerObj());
 
-		if (smokepipe->GetBrakeFlg())
+		if (smokepipe->GetBreakFlg())
 		{
 			if (pos.y <= smoke->GetTransformComponent()->GetPosition().y + smoke->GetTransformComponent()->GetSize().y) {
 				transform_component_->SetPosition({
