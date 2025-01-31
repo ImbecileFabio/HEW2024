@@ -7,7 +7,6 @@
 /*----- インクルード -----*/
 #include "SmokePipe.h"
 #include "Smoke.h"
-#include "../../../AudioManager.h"
 #include "../../Component/TransformComponent.h"
 #include "../../Component/RenderComponent/SpriteComponent.h"
 #include "../../Component/EventComponent/ColliderEventComponent.h"
@@ -47,7 +46,6 @@ void SmokePipe::InitGameObject(void)
 	smoke_component_ = new SmokeComponent(this);
 	auto f = std::function<void(GameObject*)>(std::bind(&SmokePipe::OnCollisionStay, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
-	SetBreakFlg(false);
 }
 
 //--------------------------------------------------
@@ -59,15 +57,12 @@ void SmokePipe::UpdateGameObject(void)
 	if (smoke_component_->GetTimeZoneHitFlg()) {
 		// タイムゾーンが動いているかの判定
 		if (smoke_component_->GetTimeZoneONFlg()) {
-			if (breakFlg_) {
+			if (brakeFlg_) {
 				smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 			}
 			else {	// [BRAKE_DEFAULT_TIME]秒後に破壊（待機状態を抜ける）
 				fpsCounter_ += smoke_component_->GetTimeSpeed();
-				if (fpsCounter_ >= 60.0f * BRAKE_DEFAULT_TIME)
-				{
-					SetBreakFlg(true);
-				}
+				if (fpsCounter_ >= 60.0f * BRAKE_DEFAULT_TIME) brakeFlg_ = true;
 				smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			}
 		}
@@ -76,17 +71,7 @@ void SmokePipe::UpdateGameObject(void)
 		}
 	}
 	else {
-		if (breakFlg_) smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-	}
-
-	if ((this->GetBreakFlg() && !smoke_component_->GetTimeZoneHitFlg()) ||
-		(this->GetBreakFlg() && smoke_component_->GetTimeZoneHitFlg() && smoke_component_->GetTimeZoneONFlg())) {
-		if (!AudioManager::GetInstance()->GetPlayingState(this->GetType(), this->GetObjectFier())) {
-			AudioManager::GetInstance()->Play(this->GetType(), this->GetObjectFier());
-		}
-	}
-	else {
-		AudioManager::GetInstance()->Stop(this->GetType(), this->GetObjectFier());
+		if (brakeFlg_) smoke_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	}
 
 	smoke_component_->SetTimeZoneONFlg(false);
