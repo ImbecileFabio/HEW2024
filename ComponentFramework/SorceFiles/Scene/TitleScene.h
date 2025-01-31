@@ -38,6 +38,8 @@ public:
 	void Init  () override;
 	void Uninit() override;
 	void Update() override;
+
+	int GetCreateCount() { return create_count; }
 private:
 	State state_;
 	class Camera*	   camera_;					// ƒJƒƒ‰

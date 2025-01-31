@@ -49,6 +49,7 @@ private:
 	static bool ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b);
 	void SortPendulums(std::vector<GameObject*>& pendulum_list_);
 public:
+	void PendulumSearch();
 	PendulumManager();
 	~PendulumManager();
 

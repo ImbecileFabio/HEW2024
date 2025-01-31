@@ -61,6 +61,9 @@ void Stage1_1Scene::Init()
 	gearMaxCount_ = gearCounter_1_1;	// ’è”‚ð‘ã“ü
 	hammerMaxCount_ = hammerCounter_1_1;
 
+	stageUIs_[0]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+	stageUIs_[1]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+
 	gearGet_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMax_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	hammerNum_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);

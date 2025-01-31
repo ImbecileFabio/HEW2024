@@ -15,6 +15,10 @@
 //#define ControllerPlay
 
 PendulumManager* PendulumManager::instance_ = nullptr;
+void PendulumManager::PendulumSearch()
+{
+	pHammerCursor_->SetIsUiDraw(false);
+}
 bool PendulumManager::ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b)
 {
 	if (a.y != b.y) {
@@ -119,7 +123,7 @@ void PendulumManager::PendulumSelect() {
 //	pHammerCursor_->SetOriginPos(pendulum_list_[selectIndex_]->GetTransformComponent()->GetPosition());
 //	pHammerCursor_->HammerCursorMove();
 //#else
-	maxIndex_ = pendulum_list_.size() - 1;	// “Y‚¦š‚Ì’²®
+	maxIndex_ = static_cast<int>(pendulum_list_.size()) - 1;	// “Y‚¦š‚Ì’²®
 	if (IM.GetKeyTrigger(VK_L))
 	{
 		selectIndex_++;
