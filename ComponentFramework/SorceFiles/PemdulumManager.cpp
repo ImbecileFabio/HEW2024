@@ -123,7 +123,7 @@ void PendulumManager::PendulumSelect() {
 //	pHammerCursor_->SetOriginPos(pendulum_list_[selectIndex_]->GetTransformComponent()->GetPosition());
 //	pHammerCursor_->HammerCursorMove();
 //#else
-	maxIndex_ = pendulum_list_.size() - 1;	// “Y‚¦š‚Ì’²®
+	maxIndex_ = static_cast<int>(pendulum_list_.size()) - 1;	// “Y‚¦š‚Ì’²®
 	if (IM.GetKeyTrigger(VK_L))
 	{
 		selectIndex_++;

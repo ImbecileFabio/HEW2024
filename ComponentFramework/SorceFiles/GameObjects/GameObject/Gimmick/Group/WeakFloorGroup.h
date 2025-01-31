@@ -32,6 +32,8 @@ public:
 	int GetHitCount() { return hitCount_; }
 
 	void SetPendulumOn(bool _fg) { isPendulumOn_ = _fg; }
+	void SetRobot(class Robot* _robot);
+	bool GetIsOnRobot() { return isOnRobot_; }
 private:
 	int hitCount_ = 0;
 	class TimerComponent* timer_component_;				// タイマーコンポーネント
@@ -39,12 +41,15 @@ private:
 	bool isWeakFloorBreak_		 = false;				// 脆い床が壊れたかどうか
 	bool isCenterMedian			 = false;				// 中心値を調べたかどうか
 	bool isPendulumOn_			 = false;				// 振り子あるかないか
+	bool isOnRobot_				 = false;				// ロボットが一回乗ったかどうか
 	int tileCenterNum_			 = 0;					// タイルの中心の添え字
 	GameObject* centerPendulum_ = nullptr;				// 中心の振り子
 	std::vector<GameObject*> weakFloorTiles_;			// グループが管理したいタイル
 
 	// キャッシュしたコンポーネント
 	class PendulumMovementComponent* owner_pendulum_movement_{};	// 振り子の動き
+
+	class Robot* robot_ = nullptr;
 };
 #endif // WEAK_FLOOR_GROUP_H_
 

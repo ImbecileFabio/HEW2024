@@ -12,6 +12,7 @@
 #include "../../../Component/EventComponent/ColliderEventComponent.h"
 #include "../../../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../../../Component/TimerComponent.h"
+#include "../../../GameObject/Robot.h"
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
@@ -120,14 +121,27 @@ void WeakFloorGroup::UpdateGameObject(void)
 			{
 				timer_component_->StopTimer();
 				// グループの方で脆いタイルを一括で変更をかける この処理は一度だけ
-				for (auto& tile : weakFloorTiles_)
-				{
-					tile->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-					tile->GetComponent<EventBaseComponent>()->RemoveEvent();
-					tile->SetState(GameObject::State::Dead);
+				if (weakFloorTiles_[0]->GetState() == GameObject::State::Dead) return;
+				for (int i = 0; i < weakFloorTiles_.size(); i++)
+				{	// 左端タイルがロボットより左にある場合、ロボットをちょっと戻す
+					auto robotTransForm = robot_->GetTransformComponent();
+					auto robotPos = robotTransForm->GetPosition();
+					if (robotTransForm->GetPosition().x <= weakFloorTiles_[0]->GetTransformComponent()->GetPosition().x)
+					{
+						robotTransForm->SetPosition(weakFloorTiles_[0]->GetTransformComponent()->GetPosition().x + 20.0f, robotPos.y);
+					}
+					else if (robotTransForm->GetPosition().x >= weakFloorTiles_[weakFloorTiles_.size() - 1]->GetTransformComponent()->GetPosition().x)
+					{
+						// 右端タイルがロボットより右にある場合、ロボットをちょっと戻す
+						robotTransForm->SetPosition(weakFloorTiles_[weakFloorTiles_.size() - 1]->GetTransformComponent()->GetPosition().x - 20.0f, robotPos.y);
+					}
+					weakFloorTiles_[i]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+					weakFloorTiles_[i]->GetComponent<EventBaseComponent>()->RemoveEvent();
+					weakFloorTiles_[i]->SetState(GameObject::State::Dead);
 				}
 				auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
 				pendulum->NotDrawAndStopPendulum();
+				//robot_ = nullptr;	// 壊れたら参照を削除
 			}
 		}
 	}
@@ -199,5 +213,11 @@ void WeakFloorGroup::SetPendulumANDMovement(GameObject* _centerPendulum)
 	centerPendulum_ = _centerPendulum;
 	// 振り子のコンポーネントを取得しておく
 	owner_pendulum_movement_ = centerPendulum_->GetComponent<PendulumMovementComponent>();
+}
+
+void WeakFloorGroup::SetRobot(Robot* _robot)
+{
+	isOnRobot_ = true;
+	robot_ = _robot;
 }
 
