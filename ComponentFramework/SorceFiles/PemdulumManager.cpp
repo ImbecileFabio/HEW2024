@@ -157,7 +157,7 @@ void PendulumManager::PendulumSelect()
 // 振り子の状態変異
 //--------------------------------------------------
 void PendulumManager::PendulumMovementChange() {
-	//if (GM->GetIsHammerMax()) return;
+	if (GM->GetIsHammerMax()) return;
 	if (pendulum_list_.size() <= selectIndex_) return;
 	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
 	// Mキー（動作の変更）
@@ -177,7 +177,7 @@ void PendulumManager::PendulumMovementChange() {
 //--------------------------------------------------
 void PendulumManager::PendulumLangthChange() 
 {
-	//if (GM->GetIsHammerMax()) return;	
+	if (GM->GetIsHammerMax()) return;	
 	if (pendulum_list_.size() <= selectIndex_) return;
 	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
 	// Iキー（短くする）

@@ -69,13 +69,13 @@ TitleScene::TitleScene(GameManager* _gameManager)
 	select_chapter_left->GetTransformComponent()->SetPosition(-519.0f, 421.0f);
 	select_chapter_right->GetTransformComponent()->SetPosition(519.0f, 421.0f);
 
-	select_option_button_ = new Revolution(game_manager_, "stageselect_option");
+	//select_option_button_ = new Revolution(game_manager_, "stageselect_option");
 	select_return_button_ = new Revolution(game_manager_, "stageselect_return");
-	select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+	//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 	select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-	select_option_button_->GetTransformComponent()->SetPosition(842.0f, 246.0f);
+	//select_option_button_->GetTransformComponent()->SetPosition(842.0f, 246.0f);
 	select_return_button_->GetTransformComponent()->SetPosition(-842.0f, 246.0f);
-	select_option_button_->GetTransformComponent()->SetSize(200.0f, 200.0f);
+	//select_option_button_->GetTransformComponent()->SetSize(200.0f, 200.0f);
 	select_return_button_->GetTransformComponent()->SetSize(200.0f, 200.0f);
 	// オプション画面
 	option_images_[0] = new Revolution(game_manager_, "option_window", "option_window",11);
@@ -157,7 +157,7 @@ TitleScene::TitleScene(GameManager* _gameManager)
 		select_chapter_left->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 		select_chapter_right->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 		select_chapter_center->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-		select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
+		//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
 		select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// 戻るボタンを表示
 		select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// LBボタンを表示
 		select_right_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// RBボタンを表示
@@ -292,7 +292,7 @@ void TitleScene::Update()
 				title_cursor_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// カーソルを非表示に
 				for (auto& title_button : title_buttons_)	// ボタンを非表示に
 					title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
-				select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
+				//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// オプションボタンを表示
 				select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// 戻るボタンを表示
 				select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// LBボタンを表示
 				select_right_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// RBボタンを表示
@@ -337,7 +337,7 @@ void TitleScene::Update()
 		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B) || input.GetButtonTrigger(XINPUT_GAMEPAD_BACK))		// タイトル戻る
 		{
 			state_ = State::title;
-			select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
+			//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
 			select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// 戻るボタンを表示
 			select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// LBボタンを表示
 			select_right_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// RBボタンを表示
