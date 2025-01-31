@@ -14,6 +14,7 @@
 
 #include "Scene/TitleScene.h"
 #include "Scene/ResultScene.h"
+#include "Scene/TutorialScene.h"
 #include "Scene/Stage1/Stage1_1Scene.h"
 #include "Scene/Stage1/Stage1_2Scene.h"
 #include "Scene/Stage1/Stage1_3Scene.h"
@@ -34,6 +35,7 @@
 enum SceneName {
 	Title,
 
+	Tutorial,
 	Stage1_1,
 	Stage1_2,
 	Stage1_3,
@@ -113,6 +115,8 @@ private:
 	// シーン
 	SceneBase* current_scene_{};
 	bool is_transitioning_scene_{};	// シーン切り替え状態か
+
+	bool tutorial_completed_;	// チュートリアルクリアフラグ
 
 	// オブジェクトが更新中か確認
 	bool updating_game_objects_;

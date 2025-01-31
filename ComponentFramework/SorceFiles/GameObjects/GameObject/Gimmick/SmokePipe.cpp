@@ -19,9 +19,9 @@
 SmokePipe::SmokePipe(GameManager* _gameManager, float _gimmickSize)
 	:GameObject(_gameManager, "SmokePipe")
 {
-	sprite_component_1_ = new SpriteComponent(this, "smoke01");
+	sprite_component_1_ = new SpriteComponent(this, "smoke01", 20);
 	smoke_ = new Smoke(_gameManager,this, _gimmickSize);
-	sprite_component_2_ = new SpriteComponent(this, "smoke02");
+	sprite_component_2_ = new SpriteComponent(this, "smoke02", 61);
 	this->InitGameObject();
 }
 //--------------------------------------------------

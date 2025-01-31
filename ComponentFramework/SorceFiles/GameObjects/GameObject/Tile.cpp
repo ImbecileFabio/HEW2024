@@ -24,7 +24,7 @@
 Tile::Tile(GameManager* _gameManager)
 	:GameObject(_gameManager, "Tile")
 {
-	sprite_component_ = new SpriteComponent(this, "tile_center");
+	sprite_component_ = new SpriteComponent(this, "tile_center", 81);
 	collider_event_component_ = new ColliderEventComponent(this);
 	collider_component_ = new BoxColliderComponent(this);
 

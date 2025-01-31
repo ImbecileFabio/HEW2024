@@ -51,7 +51,7 @@ Lift::Lift(GameManager* _gameManager, MoveState _moveState, Vector3 _startPos, V
 	, lift_state_(Lift::LiftState::Stop)
 	, move_state_(_moveState)
 {
-	sprite_component_ = new SpriteComponent(this, "lift_floor_center");
+	sprite_component_ = new SpriteComponent(this, "lift_floor_center", 60);
 	collider_component_ = new BoxColliderComponent(this);
 	collider_event_component_ = new ColliderEventComponent(this);
 	velocity_component_ = new VelocityComponent(this);

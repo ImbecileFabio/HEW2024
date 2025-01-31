@@ -40,7 +40,7 @@ Robot::Robot(GameManager* _gameManager)
 	:GameObject(_gameManager, "Robot")
 	, robot_state_(RobotState::Move)
 {
-	sprite_component_ = new SpriteComponent(this, "robot_walk", 80);	// スプライト
+	sprite_component_ = new SpriteComponent(this, "robot_walk", 50);	// スプライト
 	animation_component_ = new AnimationComponent(this, sprite_component_);	// アニメーション
 	velocity_component_ = new VelocityComponent(this, 5);	// 速度
 	gravity_component_ = new GravityComponent(this, 6);	// 重力
