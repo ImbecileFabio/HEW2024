@@ -22,8 +22,8 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 
-constexpr int gearCounter_3_3 = 1;		// ƒMƒA‚ÌŠl“¾”
-constexpr int hammerCounter_3_3 = 3;	// ’@‚¯‚éãŒÀ
+constexpr int gearCounter_3_3 = 3;		// ƒMƒA‚ÌŠl“¾”
+constexpr int hammerCounter_3_3 = 8;	// ’@‚¯‚éãŒÀ
 //--------------------------------------------------
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //--------------------------------------------------
@@ -44,7 +44,7 @@ Stage3_3Scene::~Stage3_3Scene()
 //--------------------------------------------------
 void Stage3_3Scene::Init()
 {
-	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage3/Stage3_1.csv");
+	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage3/Stage3_3.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
 	camera_ = new Camera(game_manager_);
