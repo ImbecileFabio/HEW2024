@@ -95,6 +95,6 @@ protected:
 	int pause_select_button_ = 0;					// ポーズ画面のボタンの添え字
 	Revolution* pauseWindow_{};						// ポーズ画面のウィンドウ
 	Revolution* pause_instruction_{};				// 操作説明画像
-	std::array<Revolution*, 5>	 pauseButtons_{};	// ポーズ画面のボタン
+	std::array<Revolution*, 4>	 pauseButtons_{};	// ポーズ画面のボタン
 };
 #endif  // SCENE_BASE_H_
