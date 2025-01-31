@@ -15,12 +15,16 @@
 #include"Renderer.h"
 #include"TextureManager.h"
 
+#include "GameObjects/GameObject.h"
+
+
 //-----------------------------------------------------------------
 // @brief コンストラクタ
 //-----------------------------------------------------------------
 FadeManager::FadeManager(GameManager* _gameManager)
 	:game_manager_(_gameManager)
 	, is_playing_ (false)
+	, is_loading_(false)
 	, current_frame_(0)
 	, elapsed_time_ (0.0f)
 	, frame_duration_(0.0f)
@@ -39,6 +43,8 @@ void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<voi
 {
 	fade_texture_ = TextureManager::GetInstance().GetTexture(_fadeOutTex);
 
+	UpdateUV();
+
 	// 経過時間などなどをリセット
 	current_frame_ = 0;
 	elapsed_time_ = 0.0f;
@@ -46,7 +52,12 @@ void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<voi
 	total_frame_ = fade_texture_->GetTotalFrame();
 
 	is_playing_ = true;
+	is_loading_ = false;
     on_complete_ = _onComplete;
+
+
+
+
 
 	AudioManager::GetInstance()->Play(SoundLabel_UISceneChangeSE);
 }
@@ -57,6 +68,8 @@ void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<voi
 void FadeManager::StartFadeIn(const std::string& _fadeInTex, std::function<void()> _onComplete)
 {
 	fade_texture_ = TextureManager::GetInstance().GetTexture(_fadeInTex);
+
+	UpdateUV();
 
 	// 経過時間などなどをリセット
 	current_frame_ = 0;
@@ -76,8 +89,13 @@ void FadeManager::StartFadeIn(const std::string& _fadeInTex, std::function<void(
 //-----------------------------------------------------------------
 void FadeManager::Update(float _deltaTime)
 {
+	// 再生中でなければ更新しない
 	if (!is_playing_) return;
 
+	// ロード画像を表示してからon_completeを呼び出したいのでここ
+	if (is_loading_) { is_playing_ = false; }
+
+	// 経過時間を加算
 	elapsed_time_ += _deltaTime;
 
 	// 経過時間が超えたら
@@ -87,9 +105,10 @@ void FadeManager::Update(float _deltaTime)
 		++current_frame_;
 		// 総フレーム数を超えたら
 		if (current_frame_ >= total_frame_) {
-			// 停止状態を維持する
-			current_frame_ = total_frame_ - 1;
-			is_playing_ = false;
+
+			// ロード画像に切り替える
+			SetTexture("loading_backdrop");
+			is_loading_ = true;
 
 		}
 	}

@@ -11,41 +11,25 @@
 #include "GameObjects/GameObject.h"
 #include "GameObjects/GameObject/HammerCursor.h"
 #include "GameObjects/Component/PendulumMovementComponent.h"
-
+#include <algorithm>
 //#define ControllerPlay
 
 PendulumManager* PendulumManager::instance_ = nullptr;
-//--------------------------------------------------
-// @brief 振り子の検索
-//--------------------------------------------------
-void PendulumManager::PendulumSearch()
+bool PendulumManager::ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b)
 {
-	pSelectedPendulum = nullptr;
-
-	for (auto& pemdulum : pendulum_list_)
-	{
-		if (pOldPendulum != pemdulum)
-		{
-			pSelectedPendulum = pemdulum;
-			pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
-			break;
-		}
+	if (a.y != b.y) {
+		return a.y > b.y; // Y座標が小さい順
 	}
-
-	if (!pSelectedPendulum)
-	{
-		pHammerCursor_->SetOriginPos({ -10000.0f, 0.0f, 0.0f });
-		pHammerCursor_->SetIsUiDraw(false); // UIの描画をオフにする
-		return;
-	}
-
-	pHammerCursor_->SetIsUiDraw(true); // UIの描画をオンにする
-	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
-	pHammerCursor_->HammerCursorMove();
+	return a.x < b.x; // X座標が小さい順（Yが同じなら）
 }
-//--------------------------------------------------
-// コンストラクタ・デストラクタ
-//--------------------------------------------------
+void PendulumManager::SortPendulums(std::vector<GameObject*>& pendulum_list_)
+{
+	std::sort(pendulum_list_.begin(), pendulum_list_.end(),
+		[](GameObject* a, GameObject* b) {
+			return ComparePendulum(a->GetTransformComponent()->GetPosition(),
+				b->GetTransformComponent()->GetPosition());
+		});
+}
 PendulumManager::PendulumManager(){
 	Init();
 }
@@ -62,12 +46,16 @@ void PendulumManager::Uninit() {
 	pendulum_list_.clear();
 	pSelectedPendulum = nullptr;
 }
-void PendulumManager::Update(){
+void PendulumManager::Update()
+{
 	if (!pHammerCursor_) return;
-	if (!pSelectedPendulum) {
-		PendulumSearch(); // 選択中の振り子が消えたら検索を実行
-	}
-	if (pSelectedPendulum) {
+	if (pendulum_list_.size() > 0)
+	{
+		if (!is_sort_)
+		{
+			SortPendulums(pendulum_list_); // ここでソート
+			is_sort_ = true;
+		}
 		PendulumSelect();
 		PendulumMovementChange();
 		PendulumLangthChange();
@@ -87,15 +75,20 @@ void PendulumManager::AddGameObject(GameObject* _gameObject)
 //-----------------------------------------------------------------
 void PendulumManager::RemoveGameObject(GameObject* _gameObject)
 {
-	pendulum_list_.remove(_gameObject);
-
+	auto iter = std::find(pendulum_list_.begin(), pendulum_list_.end(), _gameObject);
+	// 稼働コンテナ
+	iter = std::find(pendulum_list_.begin(), pendulum_list_.end(), _gameObject);
+	if (iter != pendulum_list_.end())
+	{
+		std::iter_swap(iter, pendulum_list_.end() - 1);	// コンテナの最後尾と入れ替え
+		pendulum_list_.pop_back();						// 稼働コンテナから削除
+	}
 }
 
 //--------------------------------------------------
 // 内積が一定以内かつ最も近いオブジェクトのポインタを返す（選択）
 //--------------------------------------------------
 void PendulumManager::PendulumSelect() {
-	if (!pSelectedPendulum) return;
 #ifdef ControllerPlay
 	DirectX::XMFLOAT2 IMGLA = IM.GetLeftAnalogStick();	// InputManager GetLeftAnalogstick
 	nextPendulumVector_Langth_ = 9999.f;
@@ -135,52 +128,28 @@ void PendulumManager::PendulumSelect() {
 		pHammerCursor_->HammerCursorMove();
 	}
 #else
-	pNextPendulum = nullptr;
-
-	if (IM.GetKeyTrigger(VK_L)) {
-		for (auto& pemdulum : pendulum_list_) {
-			// 縦方向に振り子があったら
-			
-			if (pSelectedPendulum != pemdulum &&
-				pSelectedPendulum->GetTransformComponent()->GetPosition().x <=
-				pemdulum->GetTransformComponent()->GetPosition().x) 
-			{
-				if (!pNextPendulum || pNextPendulum->GetTransformComponent()->GetPosition().x >=
-					pemdulum->GetTransformComponent()->GetPosition().x)
-				{
-					pNextPendulum = pemdulum;
-				}
-			}
-		}
-	}
-	if (IM.GetKeyTrigger(VK_J)) 
+	maxIndex_ = pendulum_list_.size() - 1;	// 添え字の調整
+	if (IM.GetKeyTrigger(VK_L))
 	{
-		for (auto& pemdulum : pendulum_list_)
-		{
-			if (pSelectedPendulum != pemdulum &&
-				pSelectedPendulum->GetTransformComponent()->GetPosition().x >=
-				pemdulum->GetTransformComponent()->GetPosition().x) {
-				if (!pNextPendulum || pNextPendulum->GetTransformComponent()->GetPosition().x <=
-					pemdulum->GetTransformComponent()->GetPosition().x) {
-					pNextPendulum = pemdulum;
-				}
-			}
-		}
+		selectIndex_++;
 	}
-
-	if (pNextPendulum)
+	if (IM.GetKeyTrigger(VK_J))
 	{
-		pOldPendulum = pSelectedPendulum; // pSelectedPendulum を保存
-		pSelectedPendulum = pNextPendulum;
-		pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+		selectIndex_--;
 	}
-
-	if (pSelectedPendulum)
+	if (maxIndex_ < selectIndex_)
 	{
-		pHammerCursor_->SetIsUiDraw(true);
-		pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
-		pHammerCursor_->HammerCursorMove();
+		selectIndex_ = 0;
 	}
+	if (-1 == selectIndex_)
+	{
+		selectIndex_ = maxIndex_;
+	}
+	pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+	pHammerCursor_->SetIsUiDraw(true);
+	pHammerCursor_->SetOriginPos(pendulum_list_[selectIndex_]->GetTransformComponent()->GetPosition());
+	pHammerCursor_->HammerCursorMove();
+
 #endif
 }
 
@@ -188,7 +157,7 @@ void PendulumManager::PendulumSelect() {
 // 振り子の状態変異
 //--------------------------------------------------
 void PendulumManager::PendulumMovementChange() {
-	PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovementComponent>();
+	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
 #ifdef ControllerPlay
 	// Aボタン（動作の変更）
 	if (IM.GetButtonTrigger(XINPUT_A)) {
@@ -213,7 +182,7 @@ void PendulumManager::PendulumMovementChange() {
 // 長さの変更
 //--------------------------------------------------
 void PendulumManager::PendulumLangthChange() {
-PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovementComponent>();
+PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
 #ifdef ControllerPlay
 	// 十字↑（短くする）
 	if (IM.GetButtonTrigger(XINPUT_UP)) {
@@ -252,7 +221,7 @@ PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovemen
 // 振り子を叩く向きの変更
 //--------------------------------------------------
 void PendulumManager::PendulumDirectionChange() {
-	PendulumMovementComponent* SPM = pSelectedPendulum->GetComponent<PendulumMovementComponent>();
+	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
 	pHammerCursor_->SetDirection(SPM->GetPendulumDirection());
 
 #ifdef ControllerPlay
@@ -281,7 +250,7 @@ void PendulumManager::PendulumDirectionChange() {
 		}
 	}
 #endif
-	pHammerCursor_->SetOriginPos(pSelectedPendulum->GetTransformComponent()->GetPosition());
+	pHammerCursor_->SetOriginPos(pendulum_list_[selectIndex_]->GetTransformComponent()->GetPosition());
 	pHammerCursor_->HammerCursorMove();
 }
 
@@ -289,6 +258,5 @@ void PendulumManager::PendulumDirectionChange() {
 // インスタンスの生成
 //--------------------------------------------------
 void PendulumManager::SetSelectedPendulum(GameObject* _pSelectedPemdulum) {
-	pSelectedPendulum = _pSelectedPemdulum;
-	pSelectedPendulum->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+	pendulum_list_[0]->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
 }

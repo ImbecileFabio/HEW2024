@@ -67,6 +67,5 @@ void ColliderEventComponent::RemoveEvent()
 	}
 	else
 	{
-		std::cout << std::format("ƒColliderEventComponent„ -> ƒCƒxƒ“ƒg‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ\n");
 	}
 }
