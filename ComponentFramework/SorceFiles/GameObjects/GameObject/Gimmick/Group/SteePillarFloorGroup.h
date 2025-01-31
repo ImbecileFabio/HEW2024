@@ -36,6 +36,9 @@ public:
 	void AlignSteePillarFloorTilesWithTile(float _y);
 	bool GetIsHitLift_() { return isHitLift_; }
 	bool SetIsPendulumOn(bool _fg) { return isPendulumOn_ = _fg; }
+
+	void SetIsRobotOn(bool _fg) { isRobotOn_ = _fg; }
+	bool GetIsRobotOn() { return isRobotOn_; }
 private:
 	// グループ単体が管理しているもの
 	bool isCenterMedian_ = false;						// 中心値を調べたかどうか
@@ -46,6 +49,7 @@ private:
 	bool isHitLift_		 = false;						// リフトが当たったかどうか
 	bool isPendulumDelete_ = false;						// 振り子を消すかどうか
 	bool isPendulumOn_	= false;						// 振り子があるかどうか
+	bool isRobotOn_ = false;						// ロボットがあるかどうか
 	int tileCenterNum_ = 0;								// タイルの中心の添え字
 	int leftIndex_ = 0;
 	int rightIndex_ = 0;

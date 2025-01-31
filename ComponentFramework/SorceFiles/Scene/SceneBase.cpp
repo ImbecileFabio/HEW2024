@@ -197,10 +197,22 @@ void SceneBase::NumberChange()
 		hammerSpriteComponent->SetUV({ 3.0f * frameSize.x, 0.0f * frameSize.y});
 		break;
 	case 4:
-		hammerSpriteComponent->SetUV({ 4.0f * frameSize.x, 0.0f * frameSize.y});
+		hammerSpriteComponent->SetUV({ 0.0f * frameSize.x, 1.0f * frameSize.y});
 		break;
 	case 5:
-		hammerSpriteComponent->SetUV({ 5.0f * frameSize.x, 0.0f * frameSize.y});
+		hammerSpriteComponent->SetUV({ 1.0f * frameSize.x, 1.0f * frameSize.y});
+		break;
+	case 6:
+		hammerSpriteComponent->SetUV({ 2.0f * frameSize.x, 1.0f * frameSize.y});
+		break;
+	case 7:
+		hammerSpriteComponent->SetUV({ 3.0f * frameSize.x, 1.0f * frameSize.y});
+		break;
+	case 8:
+		hammerSpriteComponent->SetUV({ 0.0f * frameSize.x, 2.0f * frameSize.y});
+		break;
+	case 9:
+		hammerSpriteComponent->SetUV({ 1.0f * frameSize.x, 2.0f * frameSize.y});
 		break;
 	}
 	if (hammerMaxCount_ == 0)
