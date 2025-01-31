@@ -9,9 +9,9 @@
 /*----- インクルード -----*/
 #include "EffectBase.h"
 
-#include "../Component/RenderComponent/SpriteComponent.h"
-#include "../Component/RenderComponent/AnimationComponent.h"
-#include "../Component/TimerComponent.h"
+#include "../../Component/RenderComponent/SpriteComponent.h"
+#include "../../Component/RenderComponent/AnimationComponent.h"
+#include "../../Component/TimerComponent.h"
 
 //--------------------------------------------------
 // @brief コンストラクタ
@@ -41,7 +41,7 @@ EffectBase::~EffectBase(void)
 //--------------------------------------------------
 void EffectBase::InitGameObject(void)
 {
-
+	
 }
 
 //--------------------------------------------------
