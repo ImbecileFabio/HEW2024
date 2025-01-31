@@ -37,7 +37,7 @@ SteePillarRight::~SteePillarRight(void)
 //--------------------------------------------------
 void SteePillarRight::InitGameObject(void)
 {
-	sprite_component_ = new SpriteComponent(this, "steelpillar_pillar_normal", 1);
+	sprite_component_ = new SpriteComponent(this, "steelpillar_pillar_normal", 70);
 	animation_component_ = new AnimationComponent(this, sprite_component_);
 	velocity_component_ = new VelocityComponent(this);
 	gravity_component_ = new GravityComponent(this);

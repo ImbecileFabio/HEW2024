@@ -119,6 +119,7 @@
     <ClCompile Include="SorceFiles\Scene\Stage3\Stage3_4Scene.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\WallLeft.cpp" />
     <ClCompile Include="SorceFiles\GameObjects\GameObject\WallRight.cpp" />
+    <ClCompile Include="SorceFiles\Scene\TutorialScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SorceFiles\GameObjects\Component\GimmickComponent\SmokeInteractionComponent.h" />
@@ -229,6 +230,7 @@
     <ClInclude Include="SorceFiles\Scene\Stage3\Stage3_4Scene.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\WallLeft.h" />
     <ClInclude Include="SorceFiles\GameObjects\GameObject\WallRight.h" />
+    <ClInclude Include="SorceFiles\Scene\TutorialScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\drawColliderGS.hlsl">

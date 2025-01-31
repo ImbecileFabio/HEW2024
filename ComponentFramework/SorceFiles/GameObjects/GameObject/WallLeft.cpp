@@ -24,7 +24,7 @@
 WallLeft::WallLeft(GameManager* _gameManager)
 	:GameObject(_gameManager, "WallLeft")
 {
-	sprite_component_ = new SpriteComponent(this, "wall_left");
+	sprite_component_ = new SpriteComponent(this, "wall_left", 80);
 	collider_event_component_ = new ColliderEventComponent(this);
 	collider_component_ = new BoxColliderComponent(this);
 

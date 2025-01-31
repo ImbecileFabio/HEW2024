@@ -25,7 +25,7 @@
 WallRight::WallRight(GameManager* _gameManager)
 	:GameObject(_gameManager, "WallRight")
 {
-	sprite_component_ = new SpriteComponent(this, "wall_right");
+	sprite_component_ = new SpriteComponent(this, "wall_right", 80);
 	collider_event_component_ = new ColliderEventComponent(this);
 	collider_component_ = new BoxColliderComponent(this);
 
