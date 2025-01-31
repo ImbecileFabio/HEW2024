@@ -193,12 +193,16 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Lift:
 	{
-		auto lift = dynamic_cast<Lift*>(_other);
 
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// ‰Ÿ‚µo‚µˆ—
 		}
+
+		if (robot_state_ == RobotState::OnLift) { return; }	// OnLiftó‘Ô‚È‚çˆ—‚µ‚È‚¢
+
+
+		auto lift = dynamic_cast<Lift*>(_other);
 
 		// ƒŠƒtƒg‚ª“®‚¢‚Ä‚¢‚È‚¢‚È‚ç
 		if (lift->GetLiftState() == Lift::LiftState::Stop) {
@@ -207,17 +211,14 @@ void Robot::OnCollisionEnter(GameObject* _other)
 			return;
 		}
 
-		// ‚Ü‚¾OnLift‚Å‚Í‚È‚¯‚ê‚Î
-		if(robot_state_ != RobotState::OnLift)
+		if (lift_interaction_component_->IsTouchingLiftCenter(lift))
 		{
-			if (lift_interaction_component_->IsTouchingLiftCenter(lift))
-			{
-				lift_interaction_component_->SetLift(lift);
-				robot_state_ = RobotState::OnLift;
-				lift->SetLiftState(Lift::LiftState::Move);
-				sprite_component_->SetTexture("robot_still");
-			}
+			lift_interaction_component_->SetLift(lift);
+			robot_state_ = RobotState::OnLift;
+			lift->SetLiftState(Lift::LiftState::Move);
+			sprite_component_->SetTexture("robot_still");
 		}
+
 
 
 
