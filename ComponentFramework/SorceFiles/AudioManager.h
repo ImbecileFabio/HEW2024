@@ -24,27 +24,30 @@
 // サウンドファイル
 typedef enum {
 	// BGM
-	SoundLabel_TitleBGM = 0,		// タイトルBGM
-	SoundLabel_StageBGM,			// ステージBGM
-	SoundLabel_ResultBGM,			// リザルトBGM
+	SoundLabel_TitleBGM = 0,			// タイトルBGM
+	SoundLabel_StageBGM,				// ステージBGM
+	SoundLabel_ResultBGM,				// リザルトBGM
 	// 振り子関連SE
-	SoundLabel_PendulumHitSE,		// 叩くSE
-	SoundLabel_PendulumCreakSE,		// 軋むSE
+	SoundLabel_PendulumHitSE,			// 叩くSE
+	SoundLabel_PendulumCreakSE,			// 軋むSE
 	// ロボット関連SE
-	SoundLabel_RobotMoveSE,			// 歩行SE
-	SoundLabel_RobotLandingSE,		// 着地SE
+	SoundLabel_RobotMoveSE,				// 歩行SE
+	SoundLabel_RobotLandingSE,			// 着地SE
 	// ステージ、リザルト関連SE
-	SoundLabel_StageGearSE,			// アイテム取得SE
-	SoundLabel_StageResultGearSE,	// リザルトでアイテムが嵌まる時のSE
-	SoundLabel_StageRewindSteamSE,	// 巻き戻し煙SE
+	SoundLabel_StageGearSE,				// アイテム取得SE
+	SoundLabel_StageResultGearSE,		// リザルトでアイテムが嵌まる時のSE
+	SoundLabel_StageRewindSteamSE,		// 巻き戻し煙SE
 	// ギミック関連SE
-	SoundLabel_GimmickLiftMove,		// リフト移動SE
-	SoundLabel_GimmickWeakFloorStay,// 弱い床の待機SE
+	SoundLabel_GimmickLiftMoveSE,		// リフト移動SE
+	SoundLabel_GimmickWeakFloorStaySE,	// 弱い床の待機SE
+	SoundLabel_GimmickWeakFloorDropSE,	// 弱い床の落下SE
+	SoundLabel_GimmickSmokeSE,			// 煙SE
+
 	// UI関連SE
-	SoundLabel_UIDecisionSE,		// UIの決定とかのSE
-	SoundLabel_UICancelSE,			// UIの決定とかのSE
-	SoundLabel_UISceneChangeSE,		// 歯車が回るSE
-	SoundLabel_UICursorMoveSE,		// カーソル移動SE
+	SoundLabel_UIDecisionSE,			// UIの決定とかのSE
+	SoundLabel_UICancelSE,				// UIの決定とかのSE
+	SoundLabel_UISceneChangeSE,			// 歯車が回るSE
+	SoundLabel_UICursorMoveSE,			// カーソル移動SE
 
 	SoundLabel_MAX,
 } SOUND_LABEL;
@@ -82,8 +85,10 @@ private:
 		{ "Asset/Sound/SE/StageResultGear.wav",			false, SE },	// リザルトでアイテムが嵌まる時のSE
 		{ "Asset/Sound/SE/StageRewindSmoke.wav",		false, SE },	// 巻き戻し煙SE
 		// ギミック関連SE
-		{ "Asset/Sound/SE/GimmickLiftMove.wav",			false, SE },	// リフト移動SE
+		{ "Asset/Sound/SE/GimmickLiftMove1.1.wav",		false, SE },	// リフト移動SE
 		{ "Asset/Sound/SE/GimmickWeakFloorStay.wav",	false, SE },	// 弱い床の待機SE
+		{ "Asset/Sound/SE/GimmickWeakFloorDrop1.1.wav",	false, SE },	// 弱い床の落下SE
+		{ "Asset/Sound/SE/GimmickSmoke1.wav",			false, SE },	// 煙SE
 		// UI関連SE
 		{ "Asset/Sound/SE/UIDecision.wav",				false, SE },	// UIの決定とかのSE
 		{ "Asset/Sound/SE/UICancel.wav",				false, SE },	// UIの決定とかのSE

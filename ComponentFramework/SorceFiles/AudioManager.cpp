@@ -131,6 +131,7 @@ void AudioManager::Sound_Init(void) {
 	SetVolume(SoundLabel_RobotMoveSE, 1.5f);
 	SetVolume(SoundLabel_RobotLandingSE, 0.5f);
 	SetVolume(SoundLabel_PendulumHitSE, 1.3f);
+	SetVolume(SoundLabel_GimmickLiftMoveSE, 0.5f);
 	SetCategoryVolume(BGM, 0.7f);
 }
 void AudioManager::Uninit(void) {
