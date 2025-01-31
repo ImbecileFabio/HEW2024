@@ -24,13 +24,12 @@ public:
 	void InitGameObject(void) override;
 	void UpdateGameObject(void) override;
 
-	void SetBreakFlg(bool _flg) { breakFlg_ = _flg; }
-	auto GetBreakFlg() { return breakFlg_; }
+	auto GetBrakeFlg() { return brakeFlg_; }
 
 	TypeID GetType(void) override { return TypeID::SmokePipe; }
 private:
 	float fpsCounter_;		// 時間計測用
-	bool breakFlg_;	// 破壊状態フラグ
+	bool brakeFlg_ = false;	// 破壊状態フラグ
 
 	GameObject* smoke_;
 

@@ -48,12 +48,6 @@ GameObject::GameObject(GameManager* _gameManager, std::string _objectName)
 
 	// ゲームオブジェクトの初期化
 	this->Init();
-
-	for (auto ObjctList : game_manager_->GetGameObjects()) {
-		if (this->GetType() == ObjctList->GetType()) {
-			object_fier++;
-		}
-	}
 }
 //--------------------------------------------------
 // デストラクタ

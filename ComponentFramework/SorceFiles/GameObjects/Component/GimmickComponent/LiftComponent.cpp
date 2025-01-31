@@ -10,7 +10,6 @@
 #include "../../GameObject.h"
 #include "../..//GameObject/Pendulum.h"
 
-#include "../../../AudioManager.h"
 #include "../../GameObject/Lift.h"
 
 #include "LiftComponent.h"
@@ -82,7 +81,6 @@ void LiftComponent::Update()
 	case LiftComState::Stop:
 	{
 		owner_velocity_->SetVelocity({ 0.0f, 0.0f, 0.0f });
-		AudioManager::GetInstance()->Stop(this->GetOwner()->GetType(),this->GetOwner()->GetObjectFier());
 		break;
 	}
 	case LiftComState::Wait:
@@ -130,8 +128,6 @@ void LiftComponent::Update()
 			break;
 		}
 
-		if (!AudioManager::GetInstance()->GetPlayingState(this->GetOwner()->GetType(), this->GetOwner()->GetObjectFier()))
-			AudioManager::GetInstance()->Play(this->GetOwner()->GetType(), this->GetOwner()->GetObjectFier());
 	}
 	}
 
