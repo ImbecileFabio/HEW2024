@@ -515,19 +515,21 @@ void TitleScene::MoveSelect()
 		}
 	}
 	// 範囲外の処理
-	if (chapter_ > CHAPTER_MAX)
+	// 章の選択
+	if (chapter_ >= CHAPTER_MAX)
 	{
 		chapter_ = 0;
 	}
 	if (chapter_ < 0)
 	{
-		chapter_ = 3;
+		chapter_ = CHAPTER_MAX - 1;
 	}
+	// ステージの選択
 	if (stage_ < 0)
 	{
-		stage_ = 3;
+		stage_ = STAGE_MAX - 1;
 	}
-	if (stage_ > STAGE_MAX)
+	if (stage_ >= STAGE_MAX)
 	{
 		stage_ = 0;
 	}
