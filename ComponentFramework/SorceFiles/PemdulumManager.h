@@ -11,7 +11,6 @@
 #pragma once
 #include "GameObjects/GameObject.h"
 #include <iostream>
-#include <list>
 #include <vector>
 #include <SimpleMath.h>
 
@@ -20,7 +19,7 @@ constexpr float InnerProductLimit = 0.7f;
 class PendulumManager
 {
 private:
-	bool isDelete_ = false;	// U‚èq‚ªíœ‚³‚ê‚½
+	bool is_sort_ = false;	// ‚¢‚¢Š´‚¶‚É®—‚³‚ê‚½‚©‚Ç‚¤‚©
 	int hammerMaxCount_ = 0;
 	class HammerCursor* pHammerCursor_{};
 	GameObject* pOldPendulum{};
@@ -30,7 +29,7 @@ private:
 	GameManager* GM;
 	InputManager& IM = InputManager::GetInstance();
 
-	std::list<GameObject*> pendulum_list_;
+	std::vector<GameObject*> pendulum_list_;
 
 	DirectX::SimpleMath::Vector3 pendulumPosition_;
 	DirectX::SimpleMath::Vector2 stickVector_Normalize_;
@@ -43,8 +42,13 @@ private:
 
 	static PendulumManager* instance_;
 
+	int selectIndex_ = 0;
+
+	int maxIndex_ = 0;
+
+	static bool ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b);
+	void SortPendulums(std::vector<GameObject*>& pendulum_list_);
 public:
-	void PendulumSearch();	// U‚èq‚ªÁ‚¦‚½‚ÉÀs‚·‚éŒŸõŠÖ”
 	PendulumManager();
 	~PendulumManager();
 
@@ -79,6 +83,6 @@ public:
 	 }
 	 void SetSelectedPendulum(GameObject* _pSelectedPendulum);
 	 GameObject* GetSelectedPendulum() { return pSelectedPendulum; }
-	 std::list<GameObject*> GetPendulumList() { return pendulum_list_; }
+	 std::vector<GameObject*> GetPendulumList() { return pendulum_list_; }
 	 void SetHammerCursor(HammerCursor* _hammerCursor) { pHammerCursor_ = _hammerCursor; }
 };

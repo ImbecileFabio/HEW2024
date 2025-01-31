@@ -111,7 +111,6 @@ void Stage1_1Scene::Init()
 		}
 	}
 
-	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
 	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
 }
 
