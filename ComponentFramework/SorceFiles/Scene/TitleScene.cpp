@@ -253,9 +253,6 @@ void TitleScene::Update()
 		title_cursor_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);	// カーソルを表示に
 		for (auto& title_button : title_buttons_)	// ボタンを表示
 			title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
-		// 左右移動
-//#ifdef ControllerPlay
-//#else
 		if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {
 			title_select_button_++;
 			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
@@ -345,7 +342,7 @@ void TitleScene::Update()
 		{
 			StageSelect();
 		}
-		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B))		// タイトル戻る
+		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B) || input.GetButtonTrigger(XINPUT_GAMEPAD_BACK))		// タイトル戻る
 		{
 			state_ = State::title;
 			select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
