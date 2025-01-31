@@ -17,7 +17,11 @@
 PendulumManager* PendulumManager::instance_ = nullptr;
 void PendulumManager::PendulumSearch()
 {
-	pHammerCursor_->SetIsUiDraw(false);
+	if (pendulum_list_.size() == 0) return;
+	pendulum_list_[0]->GetComponent<PendulumMovementComponent>()->SetPendulumSelected(true);
+	pHammerCursor_->SetIsUiDraw(true);
+	pHammerCursor_->SetOriginPos(pendulum_list_[0]->GetTransformComponent()->GetPosition());
+	pHammerCursor_->HammerCursorMove();
 }
 bool PendulumManager::ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b)
 {
@@ -46,7 +50,8 @@ PendulumManager::~PendulumManager(){
 //--------------------------------------------------
 void PendulumManager::Init(){
 }
-void PendulumManager::Uninit() {
+void PendulumManager::Uninit()
+{
 	pendulum_list_.clear();
 	pSelectedPendulum = nullptr;
 }
@@ -131,11 +136,11 @@ void PendulumManager::PendulumSelect()
 	// **共通処理：範囲調整**
 	if (indexChanged)
 	{
-		if (selectIndex_ > maxIndex_)
+		if (selectIndex_ >= maxIndex_)
 		{
 			selectIndex_ = 0;
 		}
-		else if (selectIndex_ < 0)
+		if (selectIndex_ < 0)
 		{
 			selectIndex_ = maxIndex_;
 		}
@@ -153,6 +158,7 @@ void PendulumManager::PendulumSelect()
 //--------------------------------------------------
 void PendulumManager::PendulumMovementChange() {
 	//if (GM->GetIsHammerMax()) return;
+	if (pendulum_list_.size() <= selectIndex_) return;
 	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
 	// Mキー（動作の変更）
 	if (IM.GetKeyTrigger(VK_RETURN) || IM.GetButtonTrigger(XINPUT_A))
@@ -172,6 +178,7 @@ void PendulumManager::PendulumMovementChange() {
 void PendulumManager::PendulumLangthChange() 
 {
 	//if (GM->GetIsHammerMax()) return;	
+	if (pendulum_list_.size() <= selectIndex_) return;
 	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
 	// Iキー（短くする）
 	if (IM.GetKeyTrigger(VK_UP) || IM.GetButtonTrigger(XINPUT_UP))
@@ -224,6 +231,7 @@ void PendulumManager::PendulumDirectionChange()
 	//// カーソルの位置更新
 	//pHammerCursor_->SetOriginPos(pendulum_list_[selectIndex_]->GetTransformComponent()->GetPosition());
 	//pHammerCursor_->HammerCursorMove();
+	if (pendulum_list_.size() <= selectIndex_) return;
 	PendulumMovementComponent* SPM = pendulum_list_[selectIndex_]->GetComponent<PendulumMovementComponent>();
 	pHammerCursor_->SetDirection(SPM->GetPendulumDirection());
 
