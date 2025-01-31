@@ -15,6 +15,7 @@
 // 2. 脆いタイル
 // 3, 33, 333. 振り子
 // 4. 44, 444, 鉄柱の足場
+// 21, 振り子なしの鉄柱の床
 // 5. 鉄柱の右柱
 // 6. 鉄柱の左柱
 // 7. 排煙管の始点
@@ -381,6 +382,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		{
 			// 隣接グループが見つかった場合、そのグループに追加
 			group->AddSteePillarFloorTile(obj);
+			group->SetIsPendulumOn(true);
 		}
 		else
 		{
@@ -393,6 +395,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			auto steePillarFloorGroup = dynamic_cast<SteePillarFloorGroup*>(group);
 			// 振り子と連動させたい振り子をセット
 			steePillarFloorGroup->SetPendulumANDMovement(pendulum_);
+			group->SetIsPendulumOn(true);
 		}
 		// タイルの位置とグループを関連付ける
 		stee_pillar_to_group_[{_x, _y}] = group;
@@ -432,6 +435,8 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		{
 			// 隣接グループが見つかった場合、そのグループに追加
 			group->AddSteePillarFloorTile(obj);
+			group->SetIsPendulumOn(true);
+
 		}
 		else
 		{
@@ -444,6 +449,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			auto steePillarFloorGroup = dynamic_cast<SteePillarFloorGroup*>(group);
 			// 振り子と連動させたい振り子をセット
 			steePillarFloorGroup->SetPendulumANDMovement(pendulum_);
+			group->SetIsPendulumOn(true);
 		}
 		// タイルの位置とグループを関連付ける
 		stee_pillar_to_group_[{_x, _y}] = group;
@@ -483,6 +489,7 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 		{
 			// 隣接グループが見つかった場合、そのグループに追加
 			group->AddSteePillarFloorTile(obj);
+			group->SetIsPendulumOn(true);
 		}
 		else
 		{
@@ -495,9 +502,60 @@ void TileMapManager::CreateGameObject(int _x, int _y, int _tileID)
 			auto steePillarFloorGroup = dynamic_cast<SteePillarFloorGroup*>(group);
 			// 振り子と連動させたい振り子をセット
 			steePillarFloorGroup->SetPendulumANDMovement(pendulum_);
+			group->SetIsPendulumOn(true);
 		}
 		// タイルの位置とグループを関連付ける
 		stee_pillar_to_group_[{_x, _y}] = group;
+	}
+	else if (_tileID == 21)
+	{
+		obj = new SteePillarFloor(game_manager_);
+		if (auto sprite = obj->GetComponent<SpriteComponent>())
+		{
+			// 周囲のタイルを取得
+			bool up = GetAdjacentTile(_tileID, _x, _y, 0, 1);
+			bool down = GetAdjacentTile(_tileID, _x, _y, 0, -1);
+			bool left = GetAdjacentTile(_tileID, _x, _y, -1, 0);
+			bool right = GetAdjacentTile(_tileID, _x, _y, 1, 0);
+
+			// テクスチャを設定
+			if (left) {// 左にタイルがある
+				if (right) {// 右にタイルがある
+					sprite->SetTexture("steelpillar_floor_center");	// 中央
+					sprite->SetFlip(true, false);
+					sprite->SetUV();
+				}
+				else {
+					sprite->SetTexture("steelpillar_floor_end_02");	// 右
+				}
+			}
+			// 左にタイルがない
+			else if (right) {// 右にタイルがある
+				sprite->SetTexture("steelpillar_floor_end_01");	// 左
+			}
+		}
+		// 既存のグループを探す
+		SteePillarFloorGroup* group = nullptr;
+		if (IsTileInGroup(_x - 1, _y, group) || IsTileInGroup(_x + 1, _y, group) ||
+			IsTileInGroup(_x, _y - 1, group) || IsTileInGroup(_x, _y + 1, group))
+		{
+			// 隣接グループが見つかった場合、そのグループに追加
+			group->AddSteePillarFloorTile(obj);
+			group->SetIsPendulumOn(false);
+		}
+		else
+		{
+			// 新しいグループを作成
+			group = new SteePillarFloorGroup(game_manager_);
+			group->AddSteePillarFloorTile(obj);
+			stee_pillar_floor_groups_.push_back(group); // グループリストに追加
+			group->SetIsPendulumOn(false);
+			// 振り子を生成 
+			auto steePillarFloorGroup = dynamic_cast<SteePillarFloorGroup*>(group);
+		}
+		// タイルの位置とグループを関連付ける
+		stee_pillar_to_group_[{_x, _y}] = group;
+
 	}
 	else if (_tileID == 5)	// 鉄柱の右柱
 	{

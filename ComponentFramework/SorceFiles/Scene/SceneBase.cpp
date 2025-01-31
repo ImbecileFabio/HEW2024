@@ -86,9 +86,9 @@ void SceneBase::PauseWindow()
 	// ウィンドウが更に開いていないときだけボタン操作を実行
 	if (!isWindowOpen)
 	{
-		if (input.GetKeyTrigger(VK_UP))				// 上下移動
+		if (input.GetKeyTrigger(VK_UP) || input.GetButtonTrigger(XINPUT_UP))				// 上下移動
 			pause_select_button_--;
-		if (input.GetKeyTrigger(VK_DOWN))
+		if (input.GetKeyTrigger(VK_DOWN) || input.GetButtonTrigger(XINPUT_DOWN))
 			pause_select_button_++;
 		if (pause_select_button_ > 4)				// 折り返し処理
 			pause_select_button_ = 0;
@@ -97,7 +97,7 @@ void SceneBase::PauseWindow()
 	}
 	else
 	{
-		if (input.GetKeyTrigger(VK_X))
+		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B))
 		{
 			if (pause_select_button_ == 3) 
 			{
@@ -125,7 +125,7 @@ void SceneBase::PauseWindow()
 		}
 	}
 	// 現在選択されている添え字によって決定処理を変更
-	if (input.GetKeyTrigger(VK_RETURN))
+	if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))
 	{
 		switch (pause_select_button_)
 		{

@@ -37,6 +37,8 @@ private:
 	class AnimationComponent* animation_component_;
 	class VelocityComponent* velocity_component_;
 	class GravityComponent* gravity_component_;
+	class ColliderBaseComponent* box_collider_{};
+	class EventBaseComponent* event_component_{};
 
 	bool offsetFg_ = false;
 	bool isFloorDown_ = false;	// 鉄柱が落下したときに行うオフセット処理

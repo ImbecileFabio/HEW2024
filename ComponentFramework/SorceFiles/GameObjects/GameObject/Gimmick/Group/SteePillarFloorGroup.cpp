@@ -46,112 +46,203 @@ void SteePillarFloorGroup::InitGameObject(void)
 //--------------------------------------------------
 void SteePillarFloorGroup::UpdateGameObject(void)
 {
-	// 振り子を中心に調整する処理
-	if (!isCenterMedian_)
+	if (isPendulumOn_)
 	{
-		CacheInitPosition();
-	}
-	// 振り子の状態を更新
-	UpdatePendulumState();
+		// 振り子を中心に調整する処理
+		if (!isCenterMedian_)
+		{
+			CacheInitPosition();
+		}
+		// 振り子の状態を更新
+		UpdatePendulumState();
 
-	// 左鉄柱のアニメーションが終了したら
-	if (steePillarRightGroup_->GetIsAnimationEnd() && !isDownStart_)
-	{
-		StartFalling();
-	}
-	// 落ちた状態に一回でもなっていればずっとオフセットを適用する
-	if (isDownStart_)
-	{
-		auto leftTiles = steePillarLeftGroup_->GetSteePillarLeftTiles();
-		auto rightTiles = steePillarRightGroup_->GetSteePillarRightTiles();
+		// 左鉄柱のアニメーションが終了したら
+		if (steePillarRightGroup_->GetIsAnimationEnd() && !isDownStart_)
+		{
+			StartFalling();
+		}
+		// 落ちた状態に一回でもなっていればずっとオフセットを適用する
+		if (isDownStart_)
+		{
+			auto leftTiles = steePillarLeftGroup_->GetSteePillarLeftTiles();
+			auto rightTiles = steePillarRightGroup_->GetSteePillarRightTiles();
 
-		if (rightTiles.size() <= 1  || leftTiles.size() <= 1) return; // 鉄柱が1つ以下なら処理不要
-		// 0番を省いて、大きい添え字から適用
-		for (int i = static_cast<int>(leftTiles.size()) - 1; i > 1; i--)
-		{
-			auto tile = dynamic_cast<SteePillarLeft*>(leftTiles[i]);
-			if (!tile) continue;
-			tile->SetIsFloorVelocity(true);
-			// 基準の床座標
-			Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+			if (rightTiles.size() <= 1 || leftTiles.size() <= 1) return; // 鉄柱が1つ以下なら処理不要
+			// 0番を省いて、大きい添え字から適用
+			for (int i = static_cast<int>(leftTiles.size()) - 1; i > 1; i--)
+			{
+				auto tile = dynamic_cast<SteePillarLeft*>(leftTiles[i]);
+				if (!tile) continue;
+				tile->SetIsFloorVelocity(true);
+				// 基準の床座標
+				Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
 
-			// 添え字 i を利用したオフセット計算
-			float offsetY = static_cast<float>(i) * 30.0f; // 例えば10ずつ高さをずらす
-			tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
-		}
-		// 切れ目の柱の位置を調整
-		if (leftTiles.size() >= 3)
-		{
-			Vector3 offsetY = leftTiles[2]->GetTransformComponent()->GetPosition();
-			leftTiles[1]->GetTransformComponent()->SetPositionY(offsetY.y + 90.0f);
-		}
-		if (leftTiles.size() == 2)
-		{
-			Vector3 offsetY = leftTiles[1]->GetTransformComponent()->GetPosition();
-			Vector3 pos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
-			leftTiles[1]->GetTransformComponent()->SetPositionY(pos.y + 60.0f);
-		}
-		for (int i = static_cast<int>(rightTiles.size()) - 1; i > 1; i--)
-		{
-			auto tile = dynamic_cast<SteePillarRight*>(rightTiles[i]);
-			if (!tile) continue;
-			tile->SetIsFloorVelocityStop(true);
-			// 基準の床座標
-			Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+				// 添え字 i を利用したオフセット計算
+				float offsetY = static_cast<float>(i) * 30.0f; // 例えば10ずつ高さをずらす
+				tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
+			}
+			// 切れ目の柱の位置を調整
+			if (leftTiles.size() >= 3)
+			{
+				Vector3 offsetY = leftTiles[2]->GetTransformComponent()->GetPosition();
+				leftTiles[1]->GetTransformComponent()->SetPositionY(offsetY.y + 90.0f);
+			}
+			if (leftTiles.size() == 2)
+			{
+				Vector3 offsetY = leftTiles[1]->GetTransformComponent()->GetPosition();
+				Vector3 pos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+				leftTiles[1]->GetTransformComponent()->SetPositionY(pos.y + 60.0f);
+			}
+			for (int i = static_cast<int>(rightTiles.size()) - 1; i > 1; i--)
+			{
+				auto tile = dynamic_cast<SteePillarRight*>(rightTiles[i]);
+				if (!tile) continue;
+				tile->SetIsFloorVelocityStop(true);
+				// 基準の床座標
+				Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
 
-			// 添え字 i を利用したオフセット計算
-			float offsetY = static_cast<float>(i) * 30.0f; // 例えば10ずつ高さをずらす
-			tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
+				// 添え字 i を利用したオフセット計算
+				float offsetY = static_cast<float>(i) * 30.0f; // 例えば10ずつ高さをずらす
+				tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
+			}
+			// 切れ目の柱の位置を調整
+			if (rightTiles.size() >= 3)
+			{
+				Vector3 offsetY = rightTiles[2]->GetTransformComponent()->GetPosition();
+				rightTiles[1]->GetTransformComponent()->SetPositionY(offsetY.y + 90.0f);
+			}
+			if (rightTiles.size() == 2)
+			{
+				Vector3 offsetY = rightTiles[1]->GetTransformComponent()->GetPosition();
+				Vector3 pos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+				rightTiles[1]->GetTransformComponent()->SetPositionY(pos.y + 60.0f);
+			}
 		}
-		// 切れ目の柱の位置を調整
-		if (rightTiles.size() >= 3)
+		// 振り子の中心を再設定
+		owner_pendulum_movement_->SetPendulumFulcrum(GetCenterPosition());
+
+		// 鉄柱の床がタイルと当たっていたら
+		if (isHitTile_ && !isPendulumDelete_)
 		{
-			Vector3 offsetY = rightTiles[2]->GetTransformComponent()->GetPosition();
-			rightTiles[1]->GetTransformComponent()->SetPositionY(offsetY.y + 90.0f);
+			auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
+			pendulum->NotDrawAndStopPendulum();
+			isPendulumDelete_ = true;
+			for (auto& it : steePillarFloorTiles_)
+			{
+				auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);
+				steePillarFloor->SetIsDown(false);
+			}
+			steePillarLeftGroup_->SetVelocityStop();
+			steePillarRightGroup_->SetVelocityStop();
 		}
-		if (rightTiles.size() == 2)
+		if (isHitLift_ && !isPendulumDelete_)
 		{
-			Vector3 offsetY = rightTiles[1]->GetTransformComponent()->GetPosition();
-			Vector3 pos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
-			rightTiles[1]->GetTransformComponent()->SetPositionY(pos.y + 60.0f);
+			auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
+			pendulum->NotDrawAndStopPendulum();
+			isPendulumDelete_ = true;
+			for (auto& it : steePillarFloorTiles_)
+			{
+				auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);
+				steePillarFloor->SetIsDown(false);
+			}
+			steePillarLeftGroup_->SetVelocityStop();
+			steePillarRightGroup_->SetVelocityStop();
+		}
+		// 画面外処理
+		if (steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition().y < -500.0f && !isPendulumDelete_)
+		{
+			auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
+			pendulum->NotDrawAndStopPendulum();
+			isPendulumDelete_ = true;
 		}
 	}
-	// 振り子の中心を再設定
-	owner_pendulum_movement_->SetPendulumFulcrum(GetCenterPosition());
+	else
+	{
+		// 左鉄柱のアニメーションが終了したら
+		if (steePillarRightGroup_->GetIsAnimationEnd() && !isDownStart_)
+		{
+			StartFalling();
+		}
+		// 落ちた状態に一回でもなっていればずっとオフセットを適用する
+		if (isDownStart_)
+		{
+			auto leftTiles = steePillarLeftGroup_->GetSteePillarLeftTiles();
+			auto rightTiles = steePillarRightGroup_->GetSteePillarRightTiles();
 
-	// 鉄柱の床がタイルと当たっていたら
-	if (isHitTile_ && !isPendulumDelete_)
-	{
-		auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
-		pendulum->NotDrawAndStopPendulum();
-		isPendulumDelete_ = true;
-		for (auto& it : steePillarFloorTiles_)
-		{
-			auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);
-			steePillarFloor->SetIsDown(false);
+			if (rightTiles.size() <= 1 || leftTiles.size() <= 1) return; // 鉄柱が1つ以下なら処理不要
+			// 0番を省いて、大きい添え字から適用
+			for (int i = static_cast<int>(leftTiles.size()) - 1; i > 1; i--)
+			{
+				auto tile = dynamic_cast<SteePillarLeft*>(leftTiles[i]);
+				if (!tile) continue;
+				tile->SetIsFloorVelocity(true);
+				// 基準の床座標
+				Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+
+				// 添え字 i を利用したオフセット計算
+				float offsetY = static_cast<float>(i) * 30.0f; // 例えば10ずつ高さをずらす
+				tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
+			}
+			// 切れ目の柱の位置を調整
+			if (leftTiles.size() >= 3)
+			{
+				Vector3 offsetY = leftTiles[2]->GetTransformComponent()->GetPosition();
+				leftTiles[1]->GetTransformComponent()->SetPositionY(offsetY.y + 90.0f);
+			}
+			if (leftTiles.size() == 2)
+			{
+				Vector3 offsetY = leftTiles[1]->GetTransformComponent()->GetPosition();
+				Vector3 pos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+				leftTiles[1]->GetTransformComponent()->SetPositionY(pos.y + 60.0f);
+			}
+			for (int i = static_cast<int>(rightTiles.size()) - 1; i > 1; i--)
+			{
+				auto tile = dynamic_cast<SteePillarRight*>(rightTiles[i]);
+				if (!tile) continue;
+				tile->SetIsFloorVelocityStop(true);
+				// 基準の床座標
+				Vector3 basePos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+
+				// 添え字 i を利用したオフセット計算
+				float offsetY = static_cast<float>(i) * 30.0f; // 例えば10ずつ高さをずらす
+				tile->SetFloorPosition(Vector3(basePos.x, basePos.y + offsetY, basePos.z));
+			}
+			// 切れ目の柱の位置を調整
+			if (rightTiles.size() >= 3)
+			{
+				Vector3 offsetY = rightTiles[2]->GetTransformComponent()->GetPosition();
+				rightTiles[1]->GetTransformComponent()->SetPositionY(offsetY.y + 90.0f);
+			}
+			if (rightTiles.size() == 2)
+			{
+				Vector3 offsetY = rightTiles[1]->GetTransformComponent()->GetPosition();
+				Vector3 pos = steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition();
+				rightTiles[1]->GetTransformComponent()->SetPositionY(pos.y + 60.0f);
+			}
 		}
-		steePillarLeftGroup_->SetVelocityStop();
-		steePillarRightGroup_->SetVelocityStop();
-	}
-	if (isHitLift_ && !isPendulumDelete_)
-	{
-		auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
-		pendulum->NotDrawAndStopPendulum();
-		isPendulumDelete_ = true;
-		for (auto& it : steePillarFloorTiles_)
+		// 鉄柱の床がタイルと当たっていたら
+		if (isHitTile_)
 		{
-			auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);
-			steePillarFloor->SetIsDown(false);
+			for (auto& it : steePillarFloorTiles_)
+			{
+				auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);
+				steePillarFloor->SetIsDown(false);
+			}
+			steePillarLeftGroup_->SetVelocityStop();
+			steePillarRightGroup_->SetVelocityStop();
 		}
-		steePillarLeftGroup_->SetVelocityStop();
-		steePillarRightGroup_->SetVelocityStop();
-	}
-	// 画面外処理
-	if (steePillarFloorTiles_[0]->GetTransformComponent()->GetPosition().y < -500.0f && !isPendulumDelete_)
-	{
-		auto pendulum = dynamic_cast<Pendulum*>(centerPendulum_);
-		pendulum->NotDrawAndStopPendulum();
-		isPendulumDelete_ = true;
+		if (isHitLift_)
+		{
+			isPendulumDelete_ = true;
+			for (auto& it : steePillarFloorTiles_)
+			{
+				auto steePillarFloor = dynamic_cast<SteePillarFloor*>(it);
+				steePillarFloor->SetIsDown(false);
+			}
+			steePillarLeftGroup_->SetVelocityStop();
+			steePillarRightGroup_->SetVelocityStop();
+		}
+
 	}
 }
 //--------------------------------------------------

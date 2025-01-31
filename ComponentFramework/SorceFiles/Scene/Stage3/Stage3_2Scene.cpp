@@ -128,7 +128,7 @@ void Stage3_2Scene::Update()
 			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_P) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
@@ -147,7 +147,7 @@ void Stage3_2Scene::Update()
 		break;
 	case Stage3_2Scene::Pouse:
 		// ここにポーズ画面での操作を
-		if (input.GetKeyTrigger(VK_P))
+		if (input.GetKeyTrigger(VK_P) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
