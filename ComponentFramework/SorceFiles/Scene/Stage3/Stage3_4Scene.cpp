@@ -22,8 +22,8 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 
-constexpr int gearCounter_3_4 = 4;		// ƒMƒA‚ÌŠl“¾”
-constexpr int hammerCounter_3_4 = 1;	// ’@‚¯‚éãŒÀ
+constexpr int gearCounter_3_4 = 2;		// ƒMƒA‚ÌŠl“¾”
+constexpr int hammerCounter_3_4 = 8;	// ’@‚¯‚éãŒÀ
 //--------------------------------------------------
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 //--------------------------------------------------
