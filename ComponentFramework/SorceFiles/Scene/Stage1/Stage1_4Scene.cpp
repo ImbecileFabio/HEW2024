@@ -50,7 +50,8 @@ void Stage1_4Scene::Init()
 	camera_ = new Camera(game_manager_);
 	back_ground_ = new BackGround(game_manager_);
 	hammerCursor_ = new HammerCursor(game_manager_);
-
+	stageUIs_[0]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
+	stageUIs_[1]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 	gearMaxCount_ = gearCounter_1_4;	// ’è”‚ğ‘ã“ü
 	hammerMaxCount_ = hammerCounter_1_4;
 

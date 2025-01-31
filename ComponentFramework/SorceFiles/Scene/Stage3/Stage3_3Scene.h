@@ -28,7 +28,6 @@ private:
 	class Camera* camera_{};					// カメラ
 	class HammerCursor* hammerCursor_{};		// ハンマーカーソル
 	std::vector<class Item*> items_;			// アイテムリスト
-	std::array<class Revolution*, 2> stageUIs_;	// 動きのないステージUI
 };
 
 #endif // STAGE3_1SCENE_H_
