@@ -22,7 +22,7 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 
-constexpr int gearCounter_3_3 = 3;		// ƒMƒA‚ÌŠl“¾”
+constexpr int gearCounter_3_3 = 2;		// ƒMƒA‚ÌŠl“¾”
 constexpr int hammerCounter_3_3 = 8;	// ’@‚¯‚éãŒÀ
 //--------------------------------------------------
 // ƒRƒ“ƒXƒgƒ‰ƒNƒ^
