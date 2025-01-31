@@ -256,11 +256,11 @@ void TitleScene::Update()
 		// 左右移動
 //#ifdef ControllerPlay
 //#else
-		if (input.GetKeyTrigger(VK_RIGHT)) {
+		if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {
 			title_select_button_++;
 			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 		}
-		if (input.GetKeyTrigger(VK_LEFT)) {
+		if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {
 			title_select_button_--;
 			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 		}
@@ -290,7 +290,7 @@ void TitleScene::Update()
 			}
 		}
 
-		if (input.GetKeyTrigger(VK_RETURN))	// 決定
+		if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))	// 決定
 		{
 			switch (title_select_button_)
 			{
@@ -341,11 +341,11 @@ void TitleScene::Update()
 		break;
 	case TitleScene::State::select:
 		MoveSelect();						// セレクトの添え字の動きを管理
-		if (input.GetKeyTrigger(VK_RETURN))	// ゲームスタート
+		if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))	// ゲームスタート
 		{
 			StageSelect();
 		}
-		if (input.GetKeyTrigger(VK_X))		// タイトル戻る
+		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B))		// タイトル戻る
 		{
 			state_ = State::title;
 			select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
@@ -365,7 +365,7 @@ void TitleScene::Update()
 		break;
 	case TitleScene::State::option:
 		// ここにオプション
-		if (input.GetKeyTrigger(VK_X))		// タイトル戻る
+		if (input.GetKeyTrigger(VK_X) || input.GetButtonTrigger(XINPUT_B))		// タイトル戻る
 		{
 			state_ = State::title;
 			for (auto& option_image : option_images_)
@@ -400,32 +400,32 @@ void TitleScene::MoveSelect()
 	DirectX::SimpleMath::Vector2 frameSize = select_chapter_center->GetComponent<SpriteComponent>()->GetTexture().get()->GetFrameSize();
 	DirectX::SimpleMath::Vector2 numberFrameSize = select_numbers_m_left_->GetComponent<SpriteComponent>()->GetTexture().get()->GetFrameSize();
 	auto& input = InputManager::GetInstance();
-	if (input.GetKeyTrigger(VK_E))		// Rボタン
+	if (input.GetKeyTrigger(VK_E) || input.GetButtonTrigger(XINPUT_RIGHT_SHOULDER))		// Rボタン
 	{
 		chapter_++;
 		stage_ = 0;	// 章が変わったらステージをリセット
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
-	if (input.GetKeyTrigger(VK_Q))		// Lボタン
+	if (input.GetKeyTrigger(VK_Q) || input.GetButtonTrigger(XINPUT_LEFT_SHOULDER))		// Lボタン
 	{
 		chapter_--;
 		stage_ = 0;	// 章が変わったらステージをリセット
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
-	if (input.GetKeyTrigger(VK_RIGHT)) {	// 右
+	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {	// 右
 		stage_++;
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
-	if (input.GetKeyTrigger(VK_LEFT)) {		// 左
+	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {		// 左
 		stage_--;
 		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
 	}
 		
 	if (chapter_ == 0)
 	{
-		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 3.0f * frameSize.x, 0.0f * frameSize.y });
-		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 2.0f * frameSize.x, 0.0f * frameSize.y });
-		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 3.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 2.0f * frameSize.x, 0.0f * frameSize.y });
 		switch (stage_)
 		{
 		case 0:
@@ -485,9 +485,9 @@ void TitleScene::MoveSelect()
 	}
 	else if (chapter_ == 2)
 	{
-		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 1.0f * frameSize.y });
-		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
-		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 0.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_center->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_left->GetComponent<SpriteComponent>()->SetUV({ 0.0f * frameSize.x, 0.0f * frameSize.y });
+		select_chapter_right->GetComponent<SpriteComponent>()->SetUV({ 1.0f * frameSize.x, 1.0f * frameSize.y });
 		switch (stage_)
 		{
 		case 0:

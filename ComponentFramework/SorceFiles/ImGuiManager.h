@@ -6,7 +6,7 @@
 // 説明：GUIを使えるようにするヘッダ　開発のときだけ使う
 //==================================================
 #pragma once
-#define IMGUI_DEBUG	// ImGuiを使うときはコメントアウトを外すといける
+//#define IMGUI_DEBUG	// ImGuiを使うときはコメントアウトを外すといける
 #ifdef IMGUI_DEBUG
 #include <stack>
 #include "ImGui/imgui_impl_dx11.h"	// 追加したImGuiフォルダから  
