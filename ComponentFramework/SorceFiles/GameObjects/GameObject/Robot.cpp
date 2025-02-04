@@ -55,6 +55,7 @@ Robot::Robot(GameManager* _gameManager)
 	auto f = std::function<void(GameObject*)>(std::bind(&Robot::OnCollisionEnter, this, std::placeholders::_1));
 	collider_event_component_->AddEvent(f);
 
+	audio_manager_ = std::make_unique<AudioManager>();
 
 	this->InitGameObject();
 }
@@ -132,8 +133,8 @@ void Robot::UpdateGameObject(void)
 
 
 		// ƒTƒEƒ“ƒh‚ðŒJ‚è•Ô‚·ˆ—
-		if (!AudioManager::GetInstance()->GetPlayingState(SoundLabel_RobotMoveSE))
-			AudioManager::GetInstance()->Play(SoundLabel_RobotMoveSE);
+		if (!audio_manager_->GetPlayingState(SoundLabel_RobotMoveSE))
+			audio_manager_->Play(SoundLabel_RobotMoveSE);
 		break;
 	}
 	case RobotState::Fall:	// —Ž‰ºó‘Ô
@@ -146,7 +147,7 @@ void Robot::UpdateGameObject(void)
 				robot_state_ = RobotState::Move;
 				sprite_component_->SetTexture("robot_walk");
 			}
-			AudioManager::GetInstance()->Play(SoundLabel_RobotLandingSE);
+			audio_manager_->Play(SoundLabel_RobotLandingSE);
 		}
 		break;
 	}

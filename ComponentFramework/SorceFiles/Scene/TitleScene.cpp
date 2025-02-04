@@ -222,7 +222,8 @@ void TitleScene::Init()
 		game_manager_->TransitionToScene(SceneName::Stage3_4);
 		};
 
-	AudioManager::GetInstance()->Play(SoundLabel_TitleBGM);
+	audio_manager_ = std::make_unique<AudioManager>();
+	audio_manager_->Play(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------
@@ -230,7 +231,7 @@ void TitleScene::Init()
 //--------------------------------------------------
 void TitleScene::Uninit()
 {
-	AudioManager::GetInstance()->Stop(SoundLabel_TitleBGM);
+	audio_manager_->Stop(SoundLabel_TitleBGM);
 }
 
 //--------------------------------------------------
@@ -250,11 +251,11 @@ void TitleScene::Update()
 			title_button->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);
 		if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {
 			title_select_button_++;
-			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+			audio_manager_->Play(SoundLabel_UICursorMoveSE);
 		}
 		if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {
 			title_select_button_--;
-			AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+			audio_manager_->Play(SoundLabel_UICursorMoveSE);
 		}
 		if (title_select_button_ > 2)				// 折り返し処理
 			title_select_button_ = 0;
@@ -305,7 +306,7 @@ void TitleScene::Update()
 				break;
 			case 1:	// セレクト画面に移動
 				state_ = State::end;
-				AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
+				audio_manager_->Play(SoundLabel_UIDecisionSE);
 				break;
 			default:
 				break;
@@ -333,7 +334,7 @@ void TitleScene::Update()
 			select_numbers_m_right_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			select_numbers_w_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 
-			AudioManager::GetInstance()->Play(SoundLabel_UICancelSE);
+			audio_manager_->Play(SoundLabel_UICancelSE);
 		}
 		break;
 	case TitleScene::State::option:
@@ -377,21 +378,21 @@ void TitleScene::MoveSelect()
 	{
 		chapter_++;
 		stage_ = 0;	// 章が変わったらステージをリセット
-		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+		audio_manager_->Play(SoundLabel_UICursorMoveSE);
 	}
 	if (input.GetKeyTrigger(VK_OEM_COMMA) || input.GetButtonTrigger(XINPUT_LEFT_SHOULDER))		// Lボタン
 	{
 		chapter_--;
 		stage_ = 0;	// 章が変わったらステージをリセット
-		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+		audio_manager_->Play(SoundLabel_UICursorMoveSE);
 	}
 	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {	// 右
 		stage_++;
-		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+		audio_manager_->Play(SoundLabel_UICursorMoveSE);
 	}
 	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {		// 左
 		stage_--;
-		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+		audio_manager_->Play(SoundLabel_UICursorMoveSE);
 	}
 		
 	if (chapter_ == 0)

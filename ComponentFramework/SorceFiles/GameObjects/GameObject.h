@@ -184,6 +184,8 @@ protected:
 
 	// 同オブジェクト間の識別子
 	int object_fier = 0;
+
+	std::unique_ptr<class AudioManager> audio_manager_;
 };
 
 #endif	// GAMEOBJECT_H_

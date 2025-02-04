@@ -45,22 +45,10 @@ typedef enum {
 	SoundLabel_UISceneChangeSE,			// 歯車が回るSE
 	SoundLabel_UICursorMoveSE,			// カーソル移動SE
 	// ギミック関連SE
-	SoundLabel_GimmickLiftMoveSE0,		// リフト移動SE
-	SoundLabel_GimmickLiftMoveSE1,		// リフト移動SE
-	SoundLabel_GimmickLiftMoveSE2,		// リフト移動SE
-	SoundLabel_GimmickLiftMoveSE3,		// リフト移動SE
-	SoundLabel_GimmickLiftMoveSE4,		// リフト移動SE
-	SoundLabel_GimmickWeakFloorStaySE0,	// 弱い床の待機SE
-	SoundLabel_GimmickWeakFloorStaySE1,	// 弱い床の待機SE
-	SoundLabel_GimmickWeakFloorStaySE2,	// 弱い床の待機SE
-	SoundLabel_GimmickWeakFloorStaySE3,	// 弱い床の待機SE
-	SoundLabel_GimmickWeakFloorStaySE4,	// 弱い床の待機SE
+	SoundLabel_GimmickLiftMoveSE,		// リフト移動SE
+	SoundLabel_GimmickWeakFloorStaySE,	// 弱い床の待機SE
 	SoundLabel_GimmickWeakFloorDropSE,	// 弱い床の落下SE
-	SoundLabel_GimmickSmokeSE0,			// 煙SE
-	SoundLabel_GimmickSmokeSE1,			// 煙SE
-	SoundLabel_GimmickSmokeSE2,			// 煙SE
-	SoundLabel_GimmickSmokeSE3,			// 煙SE
-	SoundLabel_GimmickSmokeSE4,			// 煙SE
+	SoundLabel_GimmickSmokeSE,			// 煙SE
 
 	SoundLabel_MAX,
 } SOUND_LABEL;
@@ -103,22 +91,10 @@ private:
 		{ "Asset/Sound/SE/UISceneChange.wav",			false, SE },	// 12.歯車が回るSE
 		{ "Asset/Sound/SE/UICursorMove.wav",			false, SE },	// 13.カーソル移動SE
 		// ギミック関連SE
-		{ "Asset/Sound/SE/GimmickLiftMove1.1.wav",		false, SE },	// 14.リフト移動SE
-		{ "Asset/Sound/SE/GimmickLiftMove1.1.wav",		false, SE },	// 14.リフト移動SE
-		{ "Asset/Sound/SE/GimmickLiftMove1.1.wav",		false, SE },	// 14.リフト移動SE
-		{ "Asset/Sound/SE/GimmickLiftMove1.1.wav",		false, SE },	// 14.リフト移動SE
-		{ "Asset/Sound/SE/GimmickLiftMove1.1.wav",		false, SE },	// 14.リフト移動SE
+		{ "Asset/Sound/SE/GimmickLiftMove.wav",			false, SE },	// 14.リフト移動SE
 		{ "Asset/Sound/SE/GimmickWeakFloorStay.wav",	false, SE },	// 15.弱い床の待機SE
-		{ "Asset/Sound/SE/GimmickWeakFloorStay.wav",	false, SE },	// 15.弱い床の待機SE
-		{ "Asset/Sound/SE/GimmickWeakFloorStay.wav",	false, SE },	// 15.弱い床の待機SE
-		{ "Asset/Sound/SE/GimmickWeakFloorStay.wav",	false, SE },	// 15.弱い床の待機SE
-		{ "Asset/Sound/SE/GimmickWeakFloorStay.wav",	false, SE },	// 15.弱い床の待機SE
-		{ "Asset/Sound/SE/GimmickWeakFloorDrop1.1.wav",	false, SE },	// 16.弱い床の落下SE
-		{ "Asset/Sound/SE/GimmickSmoke1.wav",			false, SE },	// 17.煙SE
-		{ "Asset/Sound/SE/GimmickSmoke1.wav",			false, SE },	// 17.煙SE
-		{ "Asset/Sound/SE/GimmickSmoke1.wav",			false, SE },	// 17.煙SE
-		{ "Asset/Sound/SE/GimmickSmoke1.wav",			false, SE },	// 17.煙SE
-		{ "Asset/Sound/SE/GimmickSmoke1.wav",			false, SE },	// 17.煙SE
+		{ "Asset/Sound/SE/GimmickWeakFloorDrop.wav",	false, SE },	// 16.弱い床の落下SE
+		{ "Asset/Sound/SE/GimmickSmoke.wav",			false, SE },	// 17.煙SE
 
 	};
 
@@ -136,29 +112,22 @@ private:
 	HRESULT ReadChunkData(HANDLE, void*, DWORD, DWORD);
 
 	static std::unique_ptr<AudioManager> m_instance;
+
 public:
 	AudioManager();
 	~AudioManager();
-
-	static std::unique_ptr<AudioManager>& GetInstance() {
-		if (!m_instance) m_instance = std::make_unique<AudioManager>();
-		return m_instance;
-	}
 
 	HRESULT General_Init(void);
 	void Sound_Init(void);
 	void Uninit(void);
 
 	void Play(SOUND_LABEL _label);
-	void Play(GameObject::TypeID _id, int _fier);
 	void Stop(SOUND_LABEL _label);
-	void Stop(GameObject::TypeID _id, int _fier);
 	void Resume(SOUND_LABEL _label);
 	void Pause(SOUND_LABEL _label);
 
+	bool GetPlayingState(SOUND_LABEL _label);
+
 	void SetVolume(SOUND_LABEL _label, float _volume);
 	void SetCategoryVolume(SOUND_CATEGORY _category, float _volume);
-
-	bool GetPlayingState(SOUND_LABEL _label);
-	bool GetPlayingState(GameObject::TypeID _id, int _fier);
 };

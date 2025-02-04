@@ -110,7 +110,9 @@ void Stage1_2Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
-	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
+
+	audio_manager_ = std::make_unique<AudioManager>();
+	audio_manager_->Play(SoundLabel_StageBGM);
 
 	// テクスチャのプリロード
 	//TextureManager::GetInstance().LoadTexture("smoke00");	// 煙
@@ -132,7 +134,7 @@ void Stage1_2Scene::Update()
 		if (game_manager_->GetItemCount() == gearCounter_1_2)	// デバッグ用
 		{
 			stageState_ = Result;
-			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
+			audio_manager_->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
 		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))

@@ -23,6 +23,9 @@ SmokePipe::SmokePipe(GameManager* _gameManager, float _gimmickSize)
 	sprite_component_1_ = new SpriteComponent(this, "smoke01", 20);
 	smoke_ = new Smoke(_gameManager,this, _gimmickSize);
 	sprite_component_2_ = new SpriteComponent(this, "smoke02", 61);
+
+	audio_manager_ = std::make_unique<AudioManager>();
+
 	this->InitGameObject();
 }
 //--------------------------------------------------
@@ -81,12 +84,12 @@ void SmokePipe::UpdateGameObject(void)
 
 	if ((this->GetBreakFlg() && !smoke_component_->GetTimeZoneHitFlg()) ||
 		(this->GetBreakFlg() && smoke_component_->GetTimeZoneHitFlg() && smoke_component_->GetTimeZoneONFlg())) {
-		if (!AudioManager::GetInstance()->GetPlayingState(SoundLabel_GimmickSmokeSE0)) {
-			AudioManager::GetInstance()->Play(SoundLabel_GimmickSmokeSE0);
+		if (!audio_manager_->GetPlayingState(SoundLabel_GimmickSmokeSE)) {
+			audio_manager_->Play(SoundLabel_GimmickSmokeSE);
 		}
 	}
 	else {
-		AudioManager::GetInstance()->Stop(this->GetType(), this->GetObjectFier());
+		audio_manager_->Stop(SoundLabel_GimmickSmokeSE);
 	}
 
 	smoke_component_->SetTimeZoneONFlg(false);
