@@ -16,7 +16,7 @@
 class WeakFloorComponent : public Component
 {
 public:
-    WeakFloorComponent(GameObject* _owner, int _updateOrder = 50);
+    WeakFloorComponent(GameObject* _owner, int _updateOrder = 20);
     ~WeakFloorComponent();
 
     void Init() override;

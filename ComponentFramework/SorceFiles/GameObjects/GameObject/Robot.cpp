@@ -30,7 +30,6 @@
 #include "../Component/PushOutComponent.h"
 #include "../Component/GimmickComponent/SmokeComponent.h"
 #include "../Component/GimmickComponent/LiftInteractionComponent.h"
-#include "../Component/GimmickComponent/SmokeInteractionComponent.h"
 
 #include "Effect//Effect.h"
 
@@ -94,6 +93,7 @@ void Robot::UpdateGameObject(void)
 	// 入力処理
 	InputManager& input = InputManager::GetInstance();
 
+#ifdef _DEBUG || DEBUG)	// デバッグ用
 	//// マウスクリックで移動
 	//if (input.GetMouseButtonPress(0)) {
 	//	auto mousePos = input.GetMousePosition();
@@ -101,7 +101,7 @@ void Robot::UpdateGameObject(void)
 	//		static_cast<float>(mousePos.x) - (GameProcess::GetWidth() / 2),
 	//		-(static_cast<float>(mousePos.y) - (GameProcess::GetHeight() / 2)));
 	//}
-
+#endif
 
 
 
@@ -161,8 +161,22 @@ void Robot::UpdateGameObject(void)
 
 		break;
 	}
-	}
 
+
+
+	// 常に地面判定を行い、重力の有効/無効を切り替える
+	if (gravity_component_)
+	{
+		// リフトに乗っている時は重力を無効化、それ以外は地面判定に応じて重力を適用
+		if (robot_state_ == RobotState::OnLift)
+		{
+			gravity_component_->SetUseGravityFlg(false);
+		}
+		else
+		{
+			gravity_component_->SetUseGravityFlg(!gravity_component_->CheckGroundCollision());
+		}
+	}
 
 	// ロボットの動きを切り替える
 	robot_move_component_->SetState(static_cast<RobotMoveComponent::RobotMoveState>(robot_state_));
@@ -196,13 +210,12 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Lift:
 	{
+		if (robot_state_ == RobotState::OnLift) { return; }	// OnLift状態なら処理しない
 
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// 押し出し処理
 		}
-
-		if (robot_state_ == RobotState::OnLift) { return; }	// OnLift状態なら処理しない
 
 
 		auto lift = dynamic_cast<Lift*>(_other);
@@ -211,6 +224,11 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		if (lift->GetLiftState() == Lift::LiftState::Stop) {
 			robot_state_ = RobotState::Move;
 			sprite_component_->SetTexture("robot_walk");
+			lift_interaction_component_->SetLift(nullptr);
+
+			if (gravity_component_) {
+				gravity_component_->SetUseGravityFlg(true);
+			}
 			return;
 		}
 
@@ -221,8 +239,6 @@ void Robot::OnCollisionEnter(GameObject* _other)
 			lift->SetLiftState(Lift::LiftState::Move);
 			sprite_component_->SetTexture("robot_still");
 		}
-
-
 
 
 

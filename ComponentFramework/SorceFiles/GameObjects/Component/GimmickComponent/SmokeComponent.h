@@ -15,7 +15,7 @@
 class SmokeComponent : public Component
 {
 public:
-    SmokeComponent(GameObject* _owner, int _updateOrder = 50);
+    SmokeComponent(GameObject* _owner, int _updateOrder = 20);
     ~SmokeComponent();
 
     void Init() override;

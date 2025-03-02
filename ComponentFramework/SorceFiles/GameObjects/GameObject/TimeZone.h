@@ -20,7 +20,7 @@ public:
 		Fast,
 	};
 
-	TimeZone(GameManager* _gameManager, GameObject* _ownerPendulum);
+	TimeZone(GameManager* _gameManager, GameObject* _ownerPendulum, int _order = 40);
 	~TimeZone();
 
 	void InitGameObject(void)   override;

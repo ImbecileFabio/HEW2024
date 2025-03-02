@@ -18,7 +18,7 @@
 GravityComponent::GravityComponent(GameObject* _owner, int _updateOrder)
 	:Component(_owner, _updateOrder)
 	, is_ground_(false)	// 地面に接地しているか
-	, is_robot_ (true)	// ロボットかどうか
+	, is_robot_(true)	// ロボットかどうか
 	, use_gravity_(true)	// 重力の使用
 	, gravity_(-1.0f)	// 重力
 {
@@ -54,37 +54,35 @@ void GravityComponent::Uninit()
 //--------------------------------------------------
 void GravityComponent::Update()
 {
-	if (auto ownerVelocityCom = owner_->GetComponent<VelocityComponent>())
+	auto ownerVelocityCom = owner_->GetComponent<VelocityComponent>();
+	if (!ownerVelocityCom) return;
+
+	// 地面判定の更新
+	bool wasGrounded = is_ground_;
+	if (is_robot_)
 	{
-		if (!is_robot_ && use_gravity_)
+		CheckGroundCollision();
+	}
+
+	// 重力の適用
+	if (use_gravity_)
+	{
+		if (!is_ground_)  //空中にいる場合
 		{
-			// 速度が一定以上にならないように制限
-			if (ownerVelocityCom->GetVelocity().y < -10.0f)
+			Vector3 currentVel = ownerVelocityCom->GetVelocity();
+
+			// 落下速度制限
+			const float maxFallSpeed = -10.0f;
+			if (currentVel.y <= maxFallSpeed)
 			{
-				ownerVelocityCom->SetVelocity({ 0.0f, -10.0f, 0.0f });
+				currentVel.y = maxFallSpeed;
 			}
 			else
 			{
-				ownerVelocityCom->SetVelocity({ 0.0f, ownerVelocityCom->GetVelocity().y + gravity_, 0.0f });
+				currentVel.y += gravity_;
 			}
-			return;
-		}
-		if (is_robot_)
-		{
-			CheckGroundCollision();
-		}
-		// 重力適用
-		if (use_gravity_ && !is_ground_ && is_robot_)
-		{
-			// 速度が一定以上にならないように制限
-			if (ownerVelocityCom->GetVelocity().y < -10.0f)
-			{
-				ownerVelocityCom->SetVelocity({ 0.0f, -10.0f, 0.0f });
-			}
-			else
-			{
-				ownerVelocityCom->SetVelocity({ 0.0f, ownerVelocityCom->GetVelocity().y + gravity_, 0.0f });
-			}
+
+			ownerVelocityCom->SetVelocity(currentVel);
 		}
 	}
 }
@@ -97,36 +95,62 @@ void GravityComponent::Update()
 //--------------------------------------------------
 bool GravityComponent::CheckGroundCollision()
 {
-	auto robotHitbox = owner_->GetComponent<BoxColliderComponent>()->GetWorldHitBox();
-	AABB groundCheckHitbox = robotHitbox;
+    auto boxCollider = owner_->GetComponent<BoxColliderComponent>();
+    if (!boxCollider) return false;
 
-	// 足元のスキャン範囲を設定（キャラクターサイズに応じて調整）
-	float groundCheckHeight = (robotHitbox.max_.y - robotHitbox.min_.y) * 0.02;
-	groundCheckHitbox.min_.y -= groundCheckHeight; // 足元少し下に範囲を作成
-	groundCheckHitbox.max_.y = robotHitbox.min_.y;
-	auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
+    auto hitbox = boxCollider->GetWorldHitBox();
+    AABB groundCheckHitbox = hitbox;
 
-	// 地面との当たり判定
-	for (const auto& obj : objects)
-	{
-		if (obj == owner_) continue; // 自分自身との判定はスキップ
-		else if (obj->GetType() == GameObject::TypeID::Item) continue; // 歯車でも浮いちゃうので無視
-		//else if (obj->GetType() == GameObject::TypeID::Smoke) continue; // 歯車でも浮いちゃうので無視
-		//else if (obj->GetType() == GameObject::TypeID::SmokePipe) continue; // 歯車でも浮いちゃうので無視
+    const float checkOffset = 0.1f;  // 地面判定のオフセット
+    const float checkHeight = 4.0f;  // 地面判定の高さ範囲
 
-		auto otherCollider = obj->GetComponent<ColliderBaseComponent>();
-		if (auto otherBoxCollider = dynamic_cast<BoxColliderComponent*>(otherCollider))
-		{
-			auto otherHitbox = otherBoxCollider->GetWorldHitBox();
+    // 足元のスキャン範囲を正しく設定
+    groundCheckHitbox.min_.y = hitbox.min_.y - checkOffset;  // 現在位置から少し下
+    groundCheckHitbox.max_.y = hitbox.min_.y + checkHeight;  // 少し上まで
 
-			if (groundCheckHitbox.max_.x > otherHitbox.min_.x && groundCheckHitbox.min_.x < otherHitbox.max_.x &&
-				groundCheckHitbox.max_.y > otherHitbox.min_.y && groundCheckHitbox.min_.y < otherHitbox.max_.y) {
-				is_ground_ = true; // 地面に接している
-				return true; // 地面に接している
-			}
-		}
-	}
+    auto objects = owner_->GetGameManager()->GetColliderManager()->GetColliderGameObjects();
 
-	is_ground_ = false; // 地面に接していない
-	return false; // 地面に接していない
+    // 地面との当たり判定
+    for (const auto& obj : objects)
+    {
+        // 判定除外
+        if (obj == owner_) continue;
+        if (obj->GetType() == GameObject::TypeID::Item) continue;
+
+        auto otherCollider = obj->GetComponent<BoxColliderComponent>();
+        if (!otherCollider) continue;
+
+        auto otherHitbox = otherCollider->GetWorldHitBox();
+
+        // AABB同士の衝突判定
+        if (groundCheckHitbox.max_.x > otherHitbox.min_.x &&
+            groundCheckHitbox.min_.x < otherHitbox.max_.x &&
+            groundCheckHitbox.max_.y > otherHitbox.min_.y &&
+            groundCheckHitbox.min_.y < otherHitbox.max_.y)
+        {
+            // Y軸方向の貫通深度を計算
+            float penetrationDepth = otherHitbox.max_.y - groundCheckHitbox.min_.y;
+
+            // 適切な接地判定
+            if (penetrationDepth >= 0.0f && penetrationDepth <= checkOffset + checkHeight)
+            {
+                is_ground_ = true;
+
+                // 接地時に速度をリセット
+                if (auto vel = owner_->GetComponent<VelocityComponent>())
+                {
+                    Vector3 currentVel = vel->GetVelocity();
+                    if (currentVel.y < 0)  // 下降中の場合のみ
+                    {
+                        vel->SetVelocity(Vector3(currentVel.x, 0.0f, currentVel.z));
+                    }
+                }
+
+                return true;
+            }
+        }
+    }
+
+    is_ground_ = false;
+    return false;
 }

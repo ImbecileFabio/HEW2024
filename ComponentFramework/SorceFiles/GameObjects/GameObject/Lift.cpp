@@ -20,8 +20,8 @@
 #include "../Component/GimmickComponent/LiftInteractionComponent.h"
 #include "Gimmick/Group/LiftGroup.h"
 
-Lift::Lift(GameManager* _gameManager)
-	:GameObject(_gameManager, "Lift")
+Lift::Lift(GameManager* _gameManager, int _order)
+	:GameObject(_gameManager, "Lift", _order)
 	, lift_state_(Lift::LiftState::Stop)
 	, move_state_(MoveState::length)
 	, turn_count_(0)
@@ -156,7 +156,6 @@ void Lift::OnCollisionEnter(GameObject* _other)
 	{
 	case GameObject::TypeID::Robot:
 	{
-
 	break;
 	}
 	case GameObject::TypeID::Tile:
