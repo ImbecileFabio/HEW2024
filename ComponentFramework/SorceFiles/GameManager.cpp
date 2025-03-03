@@ -245,13 +245,15 @@ void GameManager::ChangeScene(SceneName _nextScene)
 			current_scene_->Init();
 			break;
 		case Stage1_1:
-			if (is_tutorial_)
+			if (is_tutorial_ || !stage1_1_)
 			{
 				current_scene_ = new TutorialScene(this);
 				current_scene_->SetNextSceneName(_nextScene);
 				current_scene_->Init();
+				stage1_1_ = true;
 				break;
 			}
+			stage1_1_ = false;
 			current_scene_ = new Stage1_1Scene(this);
 			current_scene_->SetOldSceneName(old_scene_name);
 			break;

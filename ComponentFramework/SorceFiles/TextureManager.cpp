@@ -316,7 +316,16 @@ void TextureManager::RegisterAllTextures()
 	RegisterTexture("stageselect_stage_numbers_s", SCENE_PATH"stageselect/v01/stage_numbers_s_01.png", false, 4, 4, 1.0f, 15);
 	RegisterTexture("stageselect_stage_numbers_m", SCENE_PATH"stageselect/v01/stage_numbers_m_01.png", false, 4, 4, 1.0f, 15);
 	RegisterTexture("stageselect_stage_numbers_w", SCENE_PATH"stageselect/v01/stage_numbers_w_01.png", false, 4, 4, 1.0f, 15);
-
+	// セレクトゲーム画像
+	RegisterTexture("1-1", SCENE_PATH"stageselect/v02/1-1.png");
+	RegisterTexture("1-2", SCENE_PATH"stageselect/v02/1-2.png");
+	RegisterTexture("1-3", SCENE_PATH"stageselect/v02/1-3.png");
+	RegisterTexture("1-4", SCENE_PATH"stageselect/v02/1-4.png");
+	RegisterTexture("2-1", SCENE_PATH"stageselect/v02/2-1.png");
+	RegisterTexture("2-2", SCENE_PATH"stageselect/v02/2-2.png");
+	RegisterTexture("2-3", SCENE_PATH"stageselect/v02/2-3.png");
+	RegisterTexture("2-4", SCENE_PATH"stageselect/v02/2-4.png");
+	RegisterTexture("3-1", SCENE_PATH"stageselect/v02/3-1.png");
 }
 
 //-----------------------------------------------------------------

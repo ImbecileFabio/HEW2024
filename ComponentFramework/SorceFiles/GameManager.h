@@ -84,6 +84,7 @@ public:
 	// ゲームオブジェクトの削除
 	void RemoveGameObject(GameObject* _gameObject);
 private:
+	bool stage1_1_ = false;
 	// ゲームの終了フラグ
 	bool endFg = false;
 

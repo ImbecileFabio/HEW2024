@@ -73,6 +73,10 @@ private:
 	Revolution* option_ball_slider_se_;			// SEボールスライダー
 	Revolution* option_stick_slider_bgm_;		// BGMスティックスライダー
 	Revolution* option_stick_slider_se_;		// SEスティックスライダー
+
+
+	std::array<Revolution*, 9> select_images_;	// オプション画面の動きがなさそうなも
+
 	void StageSelect();
 	void MoveSelect();
 };
