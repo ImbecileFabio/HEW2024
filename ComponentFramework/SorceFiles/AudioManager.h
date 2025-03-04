@@ -94,7 +94,7 @@ private:
 		{ "Asset/Sound/SE/GimmickLiftMove.wav",			false, SE },	// 14.ƒŠƒtƒgˆÚ“®SE
 		{ "Asset/Sound/SE/GimmickWeakFloorStay.wav",	false, SE },	// 15.ã‚¢°‚Ì‘Ò‹@SE
 		{ "Asset/Sound/SE/GimmickWeakFloorDrop.wav",	false, SE },	// 16.ã‚¢°‚Ì—‰ºSE
-		{ "Asset/Sound/SE/GimmickSmoke.wav",			false, SE },	// 17.‰ŒSE
+		{ "Asset/Sound/SE/GimmickSmoke1.1.wav",			false, SE },	// 17.‰ŒSE
 
 	};
 
