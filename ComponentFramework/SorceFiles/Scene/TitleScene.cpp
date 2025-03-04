@@ -15,6 +15,9 @@
 #include "../GameObjects/GameObject/Robot.h"
 
 int TitleScene::create_count = 0;
+int TitleScene::old_chapter_ = 0;
+int TitleScene::old_stage_	 = 0;
+
 //#define ControllerPlay
 //--------------------------------------------------
 // コンストラクタ
@@ -184,6 +187,9 @@ TitleScene::TitleScene(GameManager* _gameManager)
 		state_ = State::select;
 	}
 
+	chapter_ = old_chapter_;
+	stage_ = old_stage_;
+
 	this->Init();
 }
 
@@ -273,10 +279,10 @@ void TitleScene::Update()
 			title_select_button_--;
 			audio_manager_->Play(SoundLabel_UICursorMoveSE);
 		}
-		if (title_select_button_ > 2)				// 折り返し処理
+		if (title_select_button_ > 1)				// 折り返し処理
 			title_select_button_ = 0;
 		if (title_select_button_ < 0)
-			title_select_button_ = 2;
+			title_select_button_ = 1;
 		// 全ボタンの色を更新
 		for (int i = 0; i < title_buttons_.size(); ++i)
 		{
@@ -285,10 +291,10 @@ void TitleScene::Update()
 				switch (i)
 				{
 				case 0:
-					title_cursor_->GetTransformComponent()->SetPosition(-600.0f, -342.0f);
+					title_cursor_->GetTransformComponent()->SetPosition(-500.0f, -330.0f);
 					break;
 				case 1:
-					title_cursor_->GetTransformComponent()->SetPosition(100.0f, -342.0f);
+					title_cursor_->GetTransformComponent()->SetPosition(130.0f, -360.0f);
 					break;
 				default:
 					break;
@@ -338,6 +344,10 @@ void TitleScene::Update()
 		if (input.GetKeyTrigger(VK_BACK) || input.GetButtonTrigger(XINPUT_B) || input.GetButtonTrigger(XINPUT_GAMEPAD_BACK))		// タイトル戻る
 		{
 			state_ = State::title;
+			for (auto& it : select_images_)
+			{
+				it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+			}
 			//select_option_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// オプションボタンを表示
 			select_return_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// 戻るボタンを表示
 			select_left_button_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);	// LBボタンを表示
@@ -380,6 +390,8 @@ void TitleScene::Update()
 //--------------------------------------------------
 void TitleScene::StageSelect()
 {
+	old_chapter_ = chapter_;
+	old_stage_ = stage_;
 	select_stages_[chapter_][stage_]();	// 添え字によってChangeSceneを呼びだす
 }
 //--------------------------------------------------

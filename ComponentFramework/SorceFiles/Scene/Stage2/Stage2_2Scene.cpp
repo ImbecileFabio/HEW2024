@@ -129,7 +129,7 @@ void Stage2_2Scene::Update()
 			audio_manager_->Stop(SoundLabel_StageBGM);
 		}
 		// ƒ|[ƒY‰æ–Ê‚ÉˆÚ“®
-		if (input.GetKeyTrigger(VK_P) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
+		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))
 		{
 			for (auto& it : game_manager_->GetGameObjects())
 			{
