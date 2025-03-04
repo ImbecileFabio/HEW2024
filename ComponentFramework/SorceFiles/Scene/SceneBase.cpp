@@ -144,6 +144,7 @@ void SceneBase::PauseWindow()
 			break;
 		case 2:	// セレクト画面に戻る
 			game_manager_->ResetItemCount();
+			audio_manager_->Stop(SoundLabel_StageBGM);
 			game_manager_->ChangeScene(SceneName::Title);
 			break;
 		case 3:	// 操作説明を表示

@@ -173,7 +173,7 @@ void AudioManager::Play(SOUND_LABEL _label) {
 
 void AudioManager::Stop(SOUND_LABEL _label) {
 	HRESULT hr;
-	IXAudio2SourceVoice* pSV = m_pSourceVoice[(int)_label];
+	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)_label];
 
 	if (pSV == NULL) return;
 

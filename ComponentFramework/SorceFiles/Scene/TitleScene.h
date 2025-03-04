@@ -41,6 +41,9 @@ public:
 
 	int GetCreateCount() { return create_count; }
 private:
+	static int old_chapter_;
+	static int old_stage_;
+
 	State state_;
 	class Camera*	   camera_;					// カメラ
 	Revolution*		 backdrop_;					// タイトルとセレクトの背景
