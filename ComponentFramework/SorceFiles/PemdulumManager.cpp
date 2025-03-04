@@ -25,7 +25,8 @@ void PendulumManager::PendulumSearch()
 }
 bool PendulumManager::ComparePendulum(const DirectX::SimpleMath::Vector3& a, const DirectX::SimpleMath::Vector3& b)
 {
-	if (a.y != b.y) {
+	if (a.y != b.y) 
+	{
 		return a.y > b.y; // Y座標が小さい順
 	}
 	return a.x < b.x; // X座標が小さい順（Yが同じなら）
@@ -84,6 +85,8 @@ void PendulumManager::AddGameObject(GameObject* _gameObject)
 //-----------------------------------------------------------------
 void PendulumManager::RemoveGameObject(GameObject* _gameObject)
 {
+	maxIndex_ = static_cast<int>(pendulum_list_.size()) ;	// 添え字の調整
+	selectIndex_ = maxIndex_ - 1;
 	auto iter = std::find(pendulum_list_.begin(), pendulum_list_.end(), _gameObject);
 	// 稼働コンテナ
 	iter = std::find(pendulum_list_.begin(), pendulum_list_.end(), _gameObject);
@@ -99,7 +102,7 @@ void PendulumManager::RemoveGameObject(GameObject* _gameObject)
 //--------------------------------------------------
 void PendulumManager::PendulumSelect() 
 {
-	maxIndex_ = static_cast<int>(pendulum_list_.size()) - 1;	// 添え字の調整
+	maxIndex_ = static_cast<int>(pendulum_list_.size()) ;	// 添え字の調整
 
 	DirectX::XMFLOAT2 IMGLA = IM.GetLeftAnalogStick();	// InputManager GetLeftAnalogstick
 	nextPendulumVector_Langth_ = 9999.f;
@@ -142,7 +145,7 @@ void PendulumManager::PendulumSelect()
 		}
 		if (selectIndex_ < 0)
 		{
-			selectIndex_ = maxIndex_;
+			selectIndex_ = maxIndex_ - 1;
 		}
 
 		// **選択した振り子の処理**
