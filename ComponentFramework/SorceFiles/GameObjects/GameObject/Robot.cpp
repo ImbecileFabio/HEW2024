@@ -207,7 +207,7 @@ void Robot::OnCollisionEnter(GameObject* _other)
 
 
 	if (gravity_component_->CheckGroundCollision()) {
-
+		gravity_component_->SetUseGravityFlg(true);
 	}
 
 
@@ -271,16 +271,26 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Smoke:
 	{
 
-		auto pos = transform_component_->GetPosition();
+		auto robotPos = transform_component_->GetPosition();
+		auto robotHitbox = collider_component_->GetWorldHitBox();
 		auto smoke = dynamic_cast<Smoke*>(_other);
 		auto smokepipe = dynamic_cast<SmokePipe*>(smoke->GetOwnerObj());
-		auto speed = robot_move_component_->GetSpeed();
-		auto direction = robot_move_component_->GetDirection();
+		auto smokeHitbox = smoke->GetComponent<BoxColliderComponent>()->GetWorldHitBox();
 
+
+
+		// ”r‰ŒŠÇ‚ª‰ó‚ê‚Ä‚¢‚é‚È‚ç
 		if (smokepipe->GetBreakFlg())
 		{
+			// d—Í‚ð–³Œø‰»
 			gravity_component_->SetUseGravityFlg(false);
-			transform_component_->SetPosition(pos.x, pos.y + 10.0f, pos.z);
+
+			if(robotHitbox.min_.y <= smokeHitbox.max_.y)
+			{
+				// Ž©g‚ðã‚É‰Ÿ‚µã‚°‚é
+				float up = 10.0f;
+				transform_component_->SetPosition(robotPos.x, robotPos.y + up, robotPos.z);
+			}
 		}
 		break;
 	}

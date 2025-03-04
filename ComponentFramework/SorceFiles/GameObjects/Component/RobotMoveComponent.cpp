@@ -290,7 +290,7 @@ bool RobotMoveComponent::CheckGround()
 		{
 		case GameObject::TypeID::Robot:
 		case GameObject::TypeID::Item:
-		//case GameObject::TypeID::Smoke:
+		case GameObject::TypeID::Smoke:
 		case GameObject::TypeID::SmokePipe:
 			continue;
 		}
