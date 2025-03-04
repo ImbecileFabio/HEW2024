@@ -35,7 +35,7 @@ public:
 		OnLift
 	};
 
-    RobotMoveComponent(GameObject* _owner, int _updateOrder = 21);
+    RobotMoveComponent(GameObject* _owner, int _updateOrder = 20);
     ~RobotMoveComponent();
 
     void Init() override;
@@ -61,7 +61,7 @@ private:
 	bool CheckStepUp(); 		 // 段差の上り判定
 	bool CheckGround();		 // 地面の判定
 
-	float GetStepHeight();	// 段差の高さを調べる
+	float ComputeStepHeight();	// 段差の高さを調べる
 
 private:
     // ownerのコンポーネントをキャッシュ

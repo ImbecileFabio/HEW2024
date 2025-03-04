@@ -50,32 +50,42 @@ void LiftInteractionComponent::Uninit()
 //--------------------------------------------------
 void LiftInteractionComponent::Update()
 {
-	// リフトが存在する場合
+	// リフトが存在しない場合
 	if (!current_lift_) return;
 
 	// 動いている場合
 	if (current_lift_->GetLiftState() == Lift::LiftState::Move)
 	{
+
 		auto ownerTransform = owner_->GetTransformComponent();
-		auto ownerSize = ownerTransform->GetSize();
 		auto ownerPos = ownerTransform->GetPosition();
 		auto liftHitBox = current_lift_->GetComponent<BoxColliderComponent>()->GetWorldHitBox();
+		auto liftVelocity = current_lift_->GetComponent<VelocityComponent>();
 
-		// y軸の位置を補正する
-		auto newY = (liftHitBox.max_.y + ownerSize.y / 2) - 4.0f;
+		// Y軸の位置調整
+		float targetY = liftHitBox.max_.y + (ownerTransform->GetSize().y * 0.5f);
+
+		const float smoothFactor = 0.15f;
+		float newY = std::lerp(ownerPos.y, targetY, smoothFactor);
+
+		// 位置変更
 		ownerTransform->SetPosition(ownerPos.x, newY, ownerPos.z);
 
-		// リフトの速度と速度倍率を取得し、所有者に設定
-		auto liftVelocity = current_lift_->GetComponent<VelocityComponent>();
-		owner_->GetComponent<VelocityComponent>()->SetVelocity(liftVelocity->GetVelocity());
-		owner_->GetComponent<VelocityComponent>()->SetSpeedRate(liftVelocity->GetSpeedRate());
+
+		// 速度の同期
+		auto ownerVelocity = owner_->GetComponent<VelocityComponent>();
+		if (ownerVelocity && liftVelocity)
+		{
+			Vector3 liftVel = liftVelocity->GetVelocity();
+			ownerVelocity->SetVelocity(liftVel);
+			ownerVelocity->SetSpeedRate(liftVelocity->GetSpeedRate());
+		}
 	}
-	// 停止している場合
-	else if (current_lift_->GetLiftState() == Lift::LiftState::Stop) {
-		// リフトの参照を切る
+	// 停止状態の場合
+	else if (current_lift_->GetLiftState() == Lift::LiftState::Stop)
+	{
 		current_lift_ = nullptr;
 	}
-
 }
 
 //--------------------------------------------------
@@ -84,15 +94,32 @@ void LiftInteractionComponent::Update()
 //--------------------------------------------------
 void LiftInteractionComponent::SetLift(Lift* _lift)
 {
-    if (current_lift_ == _lift) return;  // すでに同じリフトなら何もしない
-
-    if (_lift->GetLiftState() == Lift::LiftState::Stop) return; // 停止リフトには乗らない
-
-    // まだ乗っていないが、少し浮いている場合も `SetLift()` する
-	if (!current_lift_ || IsTouchingLiftCenter(_lift))
+	if (!_lift || _lift->GetLiftState() == Lift::LiftState::Stop)
 	{
-		current_lift_ = _lift;
-		owner_->GetComponent<VelocityComponent>()->SetVelocity(Vector3::Zero); // 速度リセット
+		current_lift_ = nullptr;
+		return;
+	}
+
+	// 既にセットされているリフトと同じなら虫場合は無視
+	if (current_lift_ == _lift) return;
+
+
+	// 前のリフトとの関連を解除
+	if (current_lift_) {
+		auto ownerVelocity = owner_->GetComponent<VelocityComponent>();
+		ownerVelocity->SetVelocity(Vector3::Zero);
+	}
+
+	// 新しいリフトをセット
+	current_lift_ = _lift;
+
+	// 初期速度をセット
+	auto ownerVelocity = owner_->GetComponent<VelocityComponent>();
+	auto liftVelocity = _lift->GetComponent<VelocityComponent>();
+	if (ownerVelocity && liftVelocity)
+	{
+		ownerVelocity->SetVelocity(liftVelocity->GetVelocity());
+		ownerVelocity->SetSpeedRate(liftVelocity->GetSpeedRate());
 	}
 }
 
@@ -104,11 +131,17 @@ void LiftInteractionComponent::SetLift(Lift* _lift)
 //--------------------------------------------------
 bool LiftInteractionComponent::IsTouchingLiftCenter(Lift* _lift)
 {
-	// Liftの中心
-	auto liftCenter = _lift->GetTransformComponent()->GetPosition().x;
+	if (!_lift) return false;
 
-	// ownerのAABB
-	auto ownerHitbox = owner_->GetComponent<BoxColliderComponent>()->GetWorldHitBox();
+	// リフトの中心と幅を取得
+	auto liftHitbox = _lift->GetComponent<BoxColliderComponent>()->GetWorldHitBox();
+	float liftCenter = (liftHitbox.max_.x + liftHitbox.min_.x) * 0.5f;
+	float liftWidth = liftHitbox.max_.x - liftHitbox.min_.x;
 
-	return (liftCenter > ownerHitbox.min_.x && liftCenter < ownerHitbox.max_.x);
+	// プレイヤーのヒットボックスを取得
+	auto ownerPos = owner_->GetTransformComponent()->GetPosition();
+
+	// プレイヤーがリフトの中心付近にいるかチェック
+	float allowedOffset = liftWidth * 0.4f;  // リフト幅の40%を許容範囲とする
+	return abs(ownerPos.x - liftCenter) < allowedOffset;
 }

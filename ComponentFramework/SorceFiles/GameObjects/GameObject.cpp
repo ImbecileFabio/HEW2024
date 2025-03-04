@@ -29,9 +29,10 @@ const char* GameObject::GameObjectTypeNames[static_cast<int>(TypeID::MAX)] =
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
-GameObject::GameObject(GameManager* _gameManager, std::string _objectName)
+GameObject::GameObject(GameManager* _gameManager, std::string _objectName, int _order)
 	: game_manager_(_gameManager)	// 所有者
 	, object_name_(_objectName)		// オブジェクト名
+	, update_order_(_order)			// 更新順q
 	, state_(State::Active)			// 状態
 	, re_compute_transform_(true)	// 姿勢情報の再計算
 {

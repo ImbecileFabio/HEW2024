@@ -36,7 +36,7 @@ public:
 		WeakFloor,
 		Robot,
 	};
-	ColliderBaseComponent(GameObject* _owner, int _updateOrder = 50);
+	ColliderBaseComponent(GameObject* _owner, int _updateOrder = 30);
 	virtual ~ColliderBaseComponent();
 
 	void Init(void) override {};

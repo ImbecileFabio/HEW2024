@@ -88,7 +88,7 @@ public:
 	};
 
 public:
-	GameObject(GameManager* _gameManager, std::string _objectName);
+	GameObject(GameManager* _gameManager, std::string _objectName, int _order = 50);
 	virtual ~GameObject(void);
 
 	void Init(void);
@@ -100,6 +100,8 @@ public:
 
 	virtual void InitGameObject(void) {};	// オーバーライド用
 	virtual void UpdateGameObject(void) {};	// オーバーライド用
+
+	int GetUpdateOrder(void) const { return update_order_; }	// 更新順の取得
 
 	void SetDeltaTime(float _deltaTime) { delta_time_ = _deltaTime; }	// デルタタイムの設定
 	auto GetDeltaTime(void) const { return delta_time_; }	// デルタタイムの取得
@@ -165,6 +167,8 @@ protected:
 
 	 // オブジェクトの名前
 	 std::string object_name_{};
+	 // オブジェクトの更新順
+	 int update_order_{};
 
 	// GameObjectの状態
 	State state_{};

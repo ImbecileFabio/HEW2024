@@ -13,8 +13,8 @@
 //--------------------------------------------------
 // @brief コンストラクタ
 //--------------------------------------------------
-TimeZone::TimeZone(GameManager* _gameManager, GameObject* _ownerPendulum)
-	: GameObject(_gameManager, "TimeZone")
+TimeZone::TimeZone(GameManager* _gameManager, GameObject* _ownerPendulum, int _order)
+	: GameObject(_gameManager, "TimeZone", _order)
 	, owner_pendulum_(_ownerPendulum)
 {
 	sprite_component_ = new SpriteComponent(this, "timezone", 10);
@@ -64,7 +64,6 @@ void TimeZone::OnCollisionEnter(GameObject* _other)
 		auto robotVelocity = _other->GetComponent<VelocityComponent>();
 		if (!robotVelocity) return;
 
-		// リフトに乗っていたら無視
 		if (auto liftInteraction = _other->GetComponent<LiftInteractionComponent>())
 		{
 			// リフトに乗っていたら処理しない

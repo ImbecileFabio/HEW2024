@@ -20,7 +20,7 @@ using namespace DirectX::SimpleMath;
 class LiftInteractionComponent : public Component
 {
 public:
-    LiftInteractionComponent(class GameObject* _owner, int _updateOrder = 20);
+    LiftInteractionComponent(class GameObject* _owner, int _updateOrder = 25);
     ~LiftInteractionComponent();
 
     void Init() override;

@@ -26,7 +26,7 @@ public:
         OnLiftAndTile,
         Down,
     };
-    SteePillarFloorMove(GameObject* _owner, int _updateOrder = 50);
+    SteePillarFloorMove(GameObject* _owner, int _updateOrder = 20);
     ~SteePillarFloorMove();
 
     void Init() override;
