@@ -167,24 +167,6 @@ void GameManager::TransitionToScene(SceneName _nextScene)
 		return; // フェード中なら二重実行を防ぐ
 	}
 
-	
-	// ここのコメントアウト外したらチュートリアルにはいれるようになるよ
-	//// 初回プレイならチュートリアルに入る
-	//if (!tutorial_completed_) {
-	//	fade_manager_->StartFadeOut("fade_out", [this]() {
-	//		// フェードアウト終了時にシーンを切り替え
-	//		ChangeScene(SceneName::Tutorial);
-	//		// シーン変更後にフェードインを開始
-	//		fade_manager_->StartFadeIn("fade_in");
-	//		});
-	//	// チュートリアル完了フラグを立てる
-	//	tutorial_completed_ = true;
-	//	return;
-	//}
-
-
-
-	// 二回目以降は通常のシーン遷移
 	fade_manager_->StartFadeOut("fade_out", [this, _nextScene]() {
 		// フェードアウト終了時にシーンを切り替え
 		ChangeScene(_nextScene);
@@ -409,14 +391,30 @@ void GameManager::ChangeScene(SceneName _nextScene)
 //-----------------------------------------------------------------
 void GameManager::AddGameObject (GameObject* gameObject)
 {
-	// ゲームオブジェクトの更新中かで登録先を変更
+	// 更新中なら pending_game_objects_ に挿入
 	if (updating_game_objects_)
 	{
-		pending_game_objects_.emplace_back(gameObject);	// 待機コンテナ
+		auto it = std::lower_bound(
+			pending_game_objects_.begin(),
+			pending_game_objects_.end(),
+			gameObject,
+			[](const GameObject* a, const GameObject* b) {
+				return a->GetUpdateOrder() < b->GetUpdateOrder();
+			}
+		);
+		pending_game_objects_.insert(it, gameObject);
 	}
 	else
 	{
-		game_objects_.emplace_back(gameObject);			// 稼働コンテナ
+		auto it = std::lower_bound(
+			game_objects_.begin(),
+			game_objects_.end(),
+			gameObject,
+			[](const GameObject* a, const GameObject* b) {
+				return a->GetUpdateOrder() < b->GetUpdateOrder();
+			}
+		);
+		game_objects_.insert(it, gameObject);
 	}
 }
 
@@ -465,7 +463,7 @@ void GameManager::UpdateGameObjects(float _deltaTime)
 	{
 		pendingGameObject->SetDeltaTime(_deltaTime);
 		pendingGameObject->Update();
-		game_objects_.emplace_back(pendingGameObject);
+		AddGameObject(pendingGameObject);
 	}
 	pending_game_objects_.clear();
 

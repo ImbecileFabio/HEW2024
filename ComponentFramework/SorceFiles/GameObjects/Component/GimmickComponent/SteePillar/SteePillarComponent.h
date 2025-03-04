@@ -15,7 +15,7 @@
 class SteePillarComponent : public Component
 {
 public:
-    SteePillarComponent(GameObject* _owner, int _updateOrder = 50);
+    SteePillarComponent(GameObject* _owner, int _updateOrder = 20);
     ~SteePillarComponent();
 
     void Init() override;

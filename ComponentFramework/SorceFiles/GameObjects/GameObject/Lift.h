@@ -31,7 +31,7 @@ public:
 		diagonalRight,	// Î‚ßˆÚ“®(‰E)
 		diagonalLeft,	// Î‚ßˆÚ“®(¶)
 	};
-	Lift(GameManager* _gameManager);
+	Lift(GameManager* _gameManager, int _order = 45);
 	Lift(GameManager* _gameManager, Lift::MoveState _moveState, Vector3 _startpos, Vector3 _endPos, Pendulum* _pendulum = nullptr);
 
 	~Lift(void);

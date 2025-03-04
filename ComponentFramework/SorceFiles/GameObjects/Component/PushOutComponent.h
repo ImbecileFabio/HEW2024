@@ -20,7 +20,7 @@
 //-----------------------------------------------------------------
 class PushOutComponent : public Component {
 public:
-    PushOutComponent(GameObject* _owner, int _updateOrder = 15);
+    PushOutComponent(GameObject* _owner, int _updateOrder = 35);
     ~PushOutComponent();
 
 	void Init(void) override;

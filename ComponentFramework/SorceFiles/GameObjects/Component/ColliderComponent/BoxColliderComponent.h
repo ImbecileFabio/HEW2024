@@ -26,7 +26,7 @@ class TransformComponent;
 class BoxColliderComponent :public ColliderBaseComponent
 {
 public:
-	BoxColliderComponent(GameObject* _owner, int _updateOrder = 10);
+	BoxColliderComponent(GameObject* _owner, int _updateOrder = 30);
 	~BoxColliderComponent();
 
 	void Init(void) override;

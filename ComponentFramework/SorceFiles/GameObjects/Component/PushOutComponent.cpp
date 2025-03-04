@@ -12,6 +12,7 @@
 
 #include "../Component/ColliderComponent/BoxColliderComponent.h"
 #include "../Component/TransformComponent.h"
+#include "../Component/GimmickComponent/LiftInteractionComponent.h"
 
 
 //-----------------------------------------------------------------
@@ -51,6 +52,10 @@ void PushOutComponent::Uninit(void)
 //-----------------------------------------------------------------
 void PushOutComponent::ResolveCollision(GameObject* _other) {
 
+    // リフトに乗っている場合は横方向の押し出しのみを行う
+    auto liftInteraction = owner_->GetComponent<LiftInteractionComponent>();
+    bool isOnLift = liftInteraction && liftInteraction->GetLift() != nullptr;
+
     auto myTransform = owner_->GetTransformComponent();
     auto myCollider = owner_->GetComponent<ColliderBaseComponent>();
     auto otherTransform = _other->GetTransformComponent();
@@ -77,17 +82,28 @@ void PushOutComponent::ResolveCollision(GameObject* _other) {
         float overlapX = min(myhitbox.max_.x - otherhitbox.min_.x, otherhitbox.max_.x - myhitbox.min_.x);
         float overlapY = min(myhitbox.max_.y - otherhitbox.min_.y, otherhitbox.max_.y - myhitbox.min_.y);
 
+        // リフトに乗っている場合は垂直方向の押し出しをスキップ
+        if (isOnLift && overlapX > overlapY) {
+            return;
+        }
+
         // XとYどちらの衝突が深いかを判定
         if (overlapX < overlapY) {
             // 横方向の補正（左右の押し出し）
             if (myhitbox.min_.x < otherhitbox.min_.x) {
-                myTransform->SetPosition({ otherhitbox.min_.x - (myhitbox.max_.x - myhitbox.min_.x) / 2.0f, myTransform->GetPosition().y, myTransform->GetPosition().z });
+                myTransform->SetPosition({
+                    otherhitbox.min_.x - (myhitbox.max_.x - myhitbox.min_.x) / 2.0f,
+                    myTransform->GetPosition().y,
+                    myTransform->GetPosition().z });
             }
             else {
-                myTransform->SetPosition({ otherhitbox.max_.x + (myhitbox.max_.x - myhitbox.min_.x) / 2.0f, myTransform->GetPosition().y, myTransform->GetPosition().z });
+                myTransform->SetPosition({
+                    otherhitbox.max_.x + (myhitbox.max_.x - myhitbox.min_.x) / 2.0f,
+                    myTransform->GetPosition().y,
+                    myTransform->GetPosition().z });
             }
         }
-        else {
+        else if(!isOnLift){
             // 縦方向の補正（上または下からの押し出し）
             if (myhitbox.min_.y < otherhitbox.min_.y) {
                 // 上から当たっている場合 → 床の上に補正

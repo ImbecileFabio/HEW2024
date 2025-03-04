@@ -22,7 +22,7 @@ public:
 		Fast
     };
 
-    TimeZoneComponent(GameObject* _owner, GameObject* _ownerPendulum, int _updateOrder = 50);
+    TimeZoneComponent(GameObject* _owner, GameObject* _ownerPendulum, int _updateOrder = 11);
     ~TimeZoneComponent();
 
     void Init() override;

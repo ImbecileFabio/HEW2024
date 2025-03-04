@@ -25,7 +25,7 @@ class TransformComponent;
 class ScanColliderComponent :public ColliderBaseComponent
 {
 public:
-	ScanColliderComponent(GameObject* _owner, int _updateOrder = 5);
+	ScanColliderComponent(GameObject* _owner, int _updateOrder = 30);
 	~ScanColliderComponent();
 
 	void Init(void) override;
