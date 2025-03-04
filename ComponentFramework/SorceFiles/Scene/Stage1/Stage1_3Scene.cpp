@@ -23,7 +23,7 @@
 
 
 constexpr int gearCounter_1_3 = 2;		// ギアの獲得数
-constexpr int hammerCounter_1_3 = 3;	// 叩ける上限
+constexpr int hammerCounter_1_3 = 2;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -106,7 +106,9 @@ void Stage1_3Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
-	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
+
+	audio_manager_->Play(SoundLabel_StageBGM);
+	audio_manager_->Play(SoundLabel_StageBGM);
 }
 //--------------------------------------------------
 // 更新処理
@@ -123,7 +125,7 @@ void Stage1_3Scene::Update()
 		if (game_manager_->GetItemCount() == gearCounter_1_3)
 		{
 			stageState_ = Result;
-			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
+			audio_manager_->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
 		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))

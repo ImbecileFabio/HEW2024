@@ -96,5 +96,7 @@ protected:
 	Revolution* pauseWindow_{};						// ポーズ画面のウィンドウ
 	Revolution* pause_instruction_{};				// 操作説明画像
 	std::array<Revolution*, 4>	 pauseButtons_{};	// ポーズ画面のボタン
+
+	std::unique_ptr<class AudioManager> audio_manager_;
 };
 #endif  // SCENE_BASE_H_

@@ -8,6 +8,7 @@
 /*----- インクルード -----*/
 #include "GameObject.h"
 #include "../GameManager.h"
+#include "../AudioManager.h"
 #include "Component/ColliderComponent/BoxColliderComponent.h"
 // オブジェクトの加算されていくID
 int GameObject::next_object_id_ = 0;

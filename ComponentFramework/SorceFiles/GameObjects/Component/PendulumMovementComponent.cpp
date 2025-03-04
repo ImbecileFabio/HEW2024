@@ -47,6 +47,8 @@ void PendulumMovementComponent::Init() {
 	pendulumDirection_ = 1;
 
 	m_langeState = 1;
+
+	audio_manager_ = std::make_unique<AudioManager>();
 }
 
 //--------------------------------------------------
@@ -217,7 +219,7 @@ void PendulumMovementComponent::StartPendulumMovement() {
 			break;
 		}
 	}
-	AudioManager::GetInstance()->Play(SoundLabel_PendulumHitSE);
+	audio_manager_->Play(SoundLabel_PendulumHitSE);
 }
 void PendulumMovementComponent::StopPendulumMovement() {
 	SetPendulumAngle(0);

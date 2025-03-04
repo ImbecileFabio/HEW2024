@@ -112,6 +112,8 @@ protected:
 
 	GameObject* owner_;				// 自分（コンポーネント）の所有者
 	int update_order_{};			// 自分自身の更新順位
+
+	std::unique_ptr<class AudioManager> audio_manager_;
 };
 
 

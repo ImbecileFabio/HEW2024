@@ -22,8 +22,8 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 
-constexpr int gearCounter_3_3 = 1;		// ギアの獲得数
-constexpr int hammerCounter_3_3 = 3;	// 叩ける上限
+constexpr int gearCounter_3_3 = 4;		// ギアの獲得数
+constexpr int hammerCounter_3_3 = 1;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
@@ -44,7 +44,7 @@ Stage3_3Scene::~Stage3_3Scene()
 //--------------------------------------------------
 void Stage3_3Scene::Init()
 {
-	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage3/Stage3_1.csv");
+	auto mapData = tile_map_manager_->LoadCSV("MapData/Stage3/Stage3_3.csv");
 	tile_map_manager_->LoadTileMap(mapData);
 
 	camera_ = new Camera(game_manager_);
@@ -106,7 +106,9 @@ void Stage3_3Scene::Init()
 	}
 
 	PendulumManager::GetInstance()->SetSelectedPendulum(PendulumManager::GetInstance()->GetPendulumList().front());
-	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
+
+	audio_manager_ = std::make_unique<AudioManager>();
+	audio_manager_->Play(SoundLabel_StageBGM);
 }
 //--------------------------------------------------
 // 更新処理
@@ -123,7 +125,7 @@ void Stage3_3Scene::Update()
 		if (game_manager_->GetItemCount() == gearCounter_3_3)
 		{
 			stageState_ = Result;
-			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
+			audio_manager_->Stop(SoundLabel_StageBGM);
 		}
 		// ポーズ画面に移動
 		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))

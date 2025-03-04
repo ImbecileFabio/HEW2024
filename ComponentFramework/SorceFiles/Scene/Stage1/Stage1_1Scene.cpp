@@ -114,7 +114,8 @@ void Stage1_1Scene::Init()
 		}
 	}
 
-	AudioManager::GetInstance()->Play(SoundLabel_StageBGM);
+	audio_manager_ = std::make_unique<AudioManager>();
+	audio_manager_->Play(SoundLabel_StageBGM);
 }
 
 //--------------------------------------------------
@@ -139,7 +140,7 @@ void Stage1_1Scene::Update()
 		if(game_manager_->GetItemCount() == gearCounter_1_1) 
 		{
 		 	stageState_ = Result;
-			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
+			audio_manager_->Stop(SoundLabel_StageBGM);
 		}
 		// ƒ|[ƒY‰æ–Ê‚ÉˆÚ“®
 		if (input.GetKeyTrigger(VK_ESCAPE) || input.GetButtonTrigger(XINPUT_GAMEPAD_START))

@@ -135,7 +135,9 @@ void ResultScene::Init()
 	select_button_functions_[1] = [func]() {	// ifの結果を代入
 		func();
 		};
-	AudioManager::GetInstance()->Play(SoundLabel_ResultBGM);
+
+	audio_manager_ = std::make_unique<AudioManager>();
+	audio_manager_->Play(SoundLabel_ResultBGM);
 }
 //--------------------------------------------------
 // 終了処理
@@ -218,11 +220,11 @@ void ResultScene::Update()
 	auto& input = InputManager::GetInstance();
 	if (input.GetKeyTrigger(VK_RIGHT) || input.GetButtonTrigger(XINPUT_RIGHT)) {
 		select_button_++;
-		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+		audio_manager_->Play(SoundLabel_UICursorMoveSE);
 	}
 	if (input.GetKeyTrigger(VK_LEFT) || input.GetButtonTrigger(XINPUT_LEFT)) {
 		select_button_--;
-		AudioManager::GetInstance()->Play(SoundLabel_UICursorMoveSE);
+		audio_manager_->Play(SoundLabel_UICursorMoveSE);
 	}
 	if (select_button_ > 1)	// 折り返し処理
 		select_button_ = 0;
@@ -245,7 +247,7 @@ void ResultScene::Update()
 	if (input.GetKeyTrigger(VK_RETURN) || input.GetButtonTrigger(XINPUT_A))
 	{
 		select_button_functions_[select_button_]();	// ボタンの関数を実行
-		AudioManager::GetInstance()->Play(SoundLabel_UIDecisionSE);
-		AudioManager::GetInstance()->Stop(SoundLabel_ResultBGM);
+		audio_manager_->Play(SoundLabel_UIDecisionSE);
+		audio_manager_->Stop(SoundLabel_ResultBGM);
 	}
 }

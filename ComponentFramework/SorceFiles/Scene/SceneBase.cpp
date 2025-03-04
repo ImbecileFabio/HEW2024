@@ -71,6 +71,8 @@ SceneBase::SceneBase(GameManager* _gameManager, std::string _sceneName)
 	//pauseButtons_[4]->GetTransformComponent()->SetPosition(0.0f, -252.0f);
 	for(auto& it : pauseButtons_)
 		it->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
+
+	audio_manager_ = std::make_unique<AudioManager>();
 }
 
 SceneBase::~SceneBase()
@@ -143,7 +145,7 @@ void SceneBase::PauseWindow()
 		case 2:	// セレクト画面に戻る
 			game_manager_->ResetItemCount();
 			game_manager_->ChangeScene(SceneName::Title);
-			AudioManager::GetInstance()->Stop(SoundLabel_StageBGM);
+			audio_manager_->Stop(SoundLabel_StageBGM);
 			break;
 		case 3:	// 操作説明を表示
 			pause_instruction_->GetComponent<RenderComponent>()->SetState(RenderComponent::State::draw);

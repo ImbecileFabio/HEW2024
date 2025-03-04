@@ -31,9 +31,9 @@
 // コンストラクタ/デストラクタ
 //--------------------------------------------------
 AudioManager::AudioManager() {
-	if (FAILED(General_Init())) exit(EXIT_FAILURE);
-	Sound_Init();
+	General_Init();
 }
+
 AudioManager::~AudioManager() {
 	Uninit();
 }
@@ -52,19 +52,19 @@ HRESULT AudioManager::General_Init() {
 	// COM,Xaudio2,MasteringVoiceの初期化
 	hr = CoInitializeEx(NULL, COINIT_MULTITHREADED);
 	if (FAILED(hr)) {
-		std::cerr << "AudioManager : COM Init FAILED\n";
+		std::cerr << "COM Init FAILED\n";
 		Uninit();
 		return -1;
 	}
 	hr = XAudio2Create(&m_pXAudio2, 0);
 	if (FAILED(hr)) {
-		std::cerr << "AudioManager : Xaudio2 Init FAILED\n";
+		std::cerr << "Xaudio2 Init FAILED\n";
 		Uninit();
 		return -1;
 	}
 	hr = m_pXAudio2->CreateMasteringVoice(&m_pMasteringVoice);
 	if (FAILED(hr)) {
-		std::cerr << "AudioManager : MasteringVoice Init FAILED\n";
+		std::cerr << "MasteringVoice Init FAILED\n";
 		Uninit();
 		return -1;
 	}
@@ -104,7 +104,7 @@ HRESULT AudioManager::General_Init() {
 		if (!(m_pSubmixVoice[m_param[i].soundCategory])) {
 			hr = m_pXAudio2->CreateSubmixVoice(&m_pSubmixVoice[m_param[i].soundCategory], m_wfx[i].Format.nChannels, m_wfx[i].Format.nSamplesPerSec);
 			if (FAILED(hr)) {
-				std::cerr << "AudioManager : SubmixVoice Init FAILED\n";
+				std::cerr << "SubmixVoice Init FAILED\n";
 				Uninit();
 				return -1;
 			}
@@ -117,7 +117,7 @@ HRESULT AudioManager::General_Init() {
 		// ソースボイスの作成
 		hr = m_pXAudio2->CreateSourceVoice(&m_pSourceVoice[i], &(m_wfx[i].Format), 0, XAUDIO2_DEFAULT_FREQ_RATIO, nullptr, &m_sendList[m_param[i].soundCategory]);
 		if (FAILED(hr)) {
-			std::cerr << "AudioManager : SourceVoice Init FAILED\n";
+			std::cerr << "SourceVoice Init FAILED\n";
 			Uninit();
 			return -1;
 		}
@@ -125,23 +125,14 @@ HRESULT AudioManager::General_Init() {
 
 	return hr;
 }
+
 void AudioManager::Sound_Init(void) {
-	SetVolume(SoundLabel_UIDecisionSE, 0.7f);
-	SetVolume(SoundLabel_UICancelSE, 1.3f);
-	SetVolume(SoundLabel_UISceneChangeSE, 1.8f);
-	SetVolume(SoundLabel_RobotMoveSE, 1.5f);
-	SetVolume(SoundLabel_RobotLandingSE, 0.5f);
-	SetVolume(SoundLabel_PendulumHitSE, 1.3f);
-	SetVolume(SoundLabel_GimmickLiftMoveSE0, 0.5f);
-	SetVolume(SoundLabel_GimmickLiftMoveSE1, 0.5f);
-	SetVolume(SoundLabel_GimmickLiftMoveSE2, 0.5f);
-	SetVolume(SoundLabel_GimmickLiftMoveSE3, 0.5f);
-	SetVolume(SoundLabel_GimmickLiftMoveSE4, 0.5f);
-	SetCategoryVolume(BGM, 0.7f);
+
 }
+
 void AudioManager::Uninit(void) {
-	for (int i = 0; i < SoundLabel_MAX; i++){
-		if (m_pSourceVoice[i]){
+	for (int i = 0; i < SoundLabel_MAX; i++) {
+		if (m_pSourceVoice[i]) {
 			m_pSourceVoice[i]->Stop(0);
 			m_pSourceVoice[i]->FlushSourceBuffers();
 			m_pSourceVoice[i]->DestroyVoice();			// オーディオグラフからソースボイスを削除
@@ -153,7 +144,7 @@ void AudioManager::Uninit(void) {
 			m_pSubmixVoice[i]->DestroyVoice();
 		}
 	}
-	if(m_pMasteringVoice) m_pMasteringVoice->DestroyVoice();
+	if (m_pMasteringVoice) m_pMasteringVoice->DestroyVoice();
 	if (m_pXAudio2) m_pXAudio2->Release();
 	CoUninitialize();
 }
@@ -165,9 +156,12 @@ void AudioManager::Uninit(void) {
 void AudioManager::Play(SOUND_LABEL _label) {
 	HRESULT hr;
 	IXAudio2SourceVoice* pSV = m_pSourceVoice[(int)_label];
+
+	// 停止
 	hr = pSV->Stop(0);
 	if (FAILED(hr)) std::cerr << "AudioManager : Sound Stop FAILED";
-	hr = pSV->FlushSourceBuffers(); // バッファをクリア
+	// ソースボイスのキューをフラッシュ
+	hr = pSV->FlushSourceBuffers();
 	if (FAILED(hr)) std::cerr << "AudioManager : FlushSourceBuffers FAILED";
 	// ボイスキューに新しいオーディオバッファーを追加
 	hr = pSV->SubmitSourceBuffer(&(m_buffer[(int)_label]));
@@ -176,223 +170,38 @@ void AudioManager::Play(SOUND_LABEL _label) {
 	hr = pSV->Start(0);
 	if (FAILED(hr)) std::cerr << "AudioManager : Sound Start FAILED";
 }
-void AudioManager::Play(GameObject::TypeID _id, int _fier) {
-	IXAudio2SourceVoice* pSV;
-	SOUND_LABEL SV = SoundLabel_TitleBGM;
-	switch (_id)
-	{
-	case GameObject::TypeID::SmokePipe:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickSmokeSE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickSmokeSE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickSmokeSE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickSmokeSE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickSmokeSE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	case GameObject::TypeID::Pulley:
 
-		break;
-	case GameObject::TypeID::WeakFloorGroup:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickWeakFloorStaySE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickWeakFloorStaySE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickWeakFloorStaySE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickWeakFloorStaySE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickWeakFloorStaySE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	case GameObject::TypeID::SteePillarFloorGroup:
-
-		break;
-	case GameObject::TypeID::LiftGroup:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickLiftMoveSE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickLiftMoveSE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickLiftMoveSE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickLiftMoveSE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickLiftMoveSE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	default:
-		break;
-	}
-	pSV = m_pSourceVoice[SV];
-	pSV->Stop(0);
-	pSV->FlushSourceBuffers();
-	pSV->SubmitSourceBuffer(&(m_buffer[SV]));
-	pSV->Start(0);
-}
 void AudioManager::Stop(SOUND_LABEL _label) {
 	HRESULT hr;
-
-	if (m_pSourceVoice[(int)_label] == NULL) return;
-
-	XAUDIO2_VOICE_STATE xa2state;
-	m_pSourceVoice[(int)_label]->GetState(&xa2state);
-	if (xa2state.BuffersQueued)
-	{
-		hr = m_pSourceVoice[(int)_label]->Stop(0);
-		if (FAILED(hr)) std::cerr << "AudioManager : Sound Stop FAILED";
-		hr = m_pSourceVoice[(int)_label]->FlushSourceBuffers(); // バッファをクリア
-		if (FAILED(hr)) std::cerr << "AudioManager : FlushSourceBuffers FAILED";
-	}
-}
-void AudioManager::Stop(GameObject::TypeID _id, int _fier) {
-	IXAudio2SourceVoice* pSV;
-	SOUND_LABEL SV = SoundLabel_TitleBGM;
-	switch (_id)
-	{
-	case GameObject::TypeID::SmokePipe:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickSmokeSE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickSmokeSE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickSmokeSE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickSmokeSE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickSmokeSE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	case GameObject::TypeID::Pulley:
-
-		break;
-	case GameObject::TypeID::WeakFloorGroup:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickWeakFloorStaySE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickWeakFloorStaySE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickWeakFloorStaySE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickWeakFloorStaySE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickWeakFloorStaySE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	case GameObject::TypeID::SteePillarFloorGroup:
-
-		break;
-	case GameObject::TypeID::LiftGroup:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickLiftMoveSE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickLiftMoveSE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickLiftMoveSE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickLiftMoveSE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickLiftMoveSE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	default:
-		break;
-	}
-	pSV = m_pSourceVoice[SV];
+	IXAudio2SourceVoice* pSV = m_pSourceVoice[(int)_label];
 
 	if (pSV == NULL) return;
 
-	XAUDIO2_VOICE_STATE xa2state;
-	pSV->GetState(&xa2state);
-	if (xa2state.BuffersQueued)
-	{
-		pSV->Stop(0);
-		pSV->FlushSourceBuffers(); // バッファをクリア
+	// バッファがキューに入っていたら
+	if (GetPlayingState(_label)) {
+		hr = pSV->Stop(0);
+		if (FAILED(hr)) std::cerr << "AudioManager : Sound Stop FAILED";
+		// バッファがキューに入っていたら
+		hr = pSV->FlushSourceBuffers();
+		if (FAILED(hr)) std::cerr << "AudioManager : FlushSourceBuffers FAILED";
 	}
 }
+
 void AudioManager::Resume(SOUND_LABEL _label) {
 	IXAudio2SourceVoice* pSV = m_pSourceVoice[(int)_label];
+
 	pSV->Start(0);
 }
+
 void AudioManager::Pause(SOUND_LABEL _label) {
-	if (m_pSourceVoice[(int)_label] == NULL) return;
+	IXAudio2SourceVoice*& pSV = m_pSourceVoice[(int)_label];
 
-	XAUDIO2_VOICE_STATE xa2state;
-	m_pSourceVoice[(int)_label]->GetState(&xa2state);
-	if (xa2state.BuffersQueued)
-	{
-		m_pSourceVoice[(int)_label]->Stop(0);
+	if (pSV == NULL) return;
+
+	// バッファがキューに入っていたら
+	if (GetPlayingState(_label)) {
+		pSV->Stop(0);
 	}
-}
-
-
-//--------------------------------------------------
-// 音量設定
-//--------------------------------------------------
-void AudioManager::SetVolume(SOUND_LABEL _label, float _volume) {
-	m_pSourceVoice[(int)_label]->SetVolume(_volume);
-}
-void AudioManager::SetCategoryVolume(SOUND_CATEGORY _category, float _volume) {
-	m_pSubmixVoice[(int)_category]->SetVolume(_volume);
 }
 
 
@@ -401,94 +210,29 @@ void AudioManager::SetCategoryVolume(SOUND_CATEGORY _category, float _volume) {
 //--------------------------------------------------
 bool AudioManager::GetPlayingState(SOUND_LABEL _label) {
 	XAUDIO2_VOICE_STATE state;
+	// ボイスの状態を取得
 	m_pSourceVoice[(int)_label]->GetState(&state);
-	return state.BuffersQueued > 0;
-}
-bool AudioManager::GetPlayingState(GameObject::TypeID _id, int _fier) {
-	XAUDIO2_VOICE_STATE state;
-	IXAudio2SourceVoice* pSV;
-	SOUND_LABEL SV = SoundLabel_TitleBGM;
-	switch (_id)
-	{
-	case GameObject::TypeID::SmokePipe:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickSmokeSE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickSmokeSE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickSmokeSE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickSmokeSE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickSmokeSE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	case GameObject::TypeID::Pulley:
-
-		break;
-	case GameObject::TypeID::WeakFloorGroup:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickWeakFloorStaySE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickWeakFloorStaySE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickWeakFloorStaySE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickWeakFloorStaySE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickWeakFloorStaySE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	case GameObject::TypeID::SteePillarFloorGroup:
-
-		break;
-	case GameObject::TypeID::LiftGroup:
-		switch (_fier)
-		{
-		case 0:
-			SV = SoundLabel_GimmickLiftMoveSE0;
-			break;
-		case 1:
-			SV = SoundLabel_GimmickLiftMoveSE1;
-			break;
-		case 2:
-			SV = SoundLabel_GimmickLiftMoveSE2;
-			break;
-		case 3:
-			SV = SoundLabel_GimmickLiftMoveSE3;
-			break;
-		case 4:
-			SV = SoundLabel_GimmickLiftMoveSE4;
-			break;
-		default:
-			break;
-		}
-		break;
-	default:
-		break;
+	// バッファがキューに入っていたら（再生中なら）true
+	if (state.BuffersQueued > 0) {
+		return true;
 	}
-	pSV = m_pSourceVoice[SV];
-	pSV->GetState(&state);
-	return state.BuffersQueued > 0;
+	else {
+		return false;
+	}
 }
+
+
+//--------------------------------------------------
+// 音量・再生速度設定
+//--------------------------------------------------
+void AudioManager::SetVolume(SOUND_LABEL _label, float _volume) {
+	m_pSourceVoice[(int)_label]->SetVolume(_volume);
+}
+
+void AudioManager::SetCategoryVolume(SOUND_CATEGORY _category, float _volume) {
+	m_pSubmixVoice[(int)_category]->SetVolume(_volume);
+}
+
 
 //=============================================================================
 // ユーティリティ関数群
@@ -535,6 +279,7 @@ HRESULT AudioManager::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, 
 	}
 	return S_OK;
 }
+
 HRESULT AudioManager::ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize, DWORD bufferoffset)
 {
 	HRESULT hr = S_OK;
@@ -545,6 +290,7 @@ HRESULT AudioManager::ReadChunkData(HANDLE hFile, void* buffer, DWORD buffersize
 		hr = HRESULT_FROM_WIN32(GetLastError());
 	return hr;
 }
+
 
 // 静的メンバ変数の定義
 std::unique_ptr<AudioManager> AudioManager::m_instance = nullptr;

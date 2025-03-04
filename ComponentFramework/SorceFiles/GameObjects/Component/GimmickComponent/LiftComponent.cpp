@@ -62,6 +62,8 @@ void LiftComponent::Init()
 {
 	traveled_distance_ = { 0.0f, 0.0f };
 	lift_com_state_ = LiftComState::Stop;
+
+	audio_manager_ = std::make_unique<AudioManager>();
 }
 //--------------------------------------------------
 // @brief I—¹ˆ—
@@ -82,7 +84,7 @@ void LiftComponent::Update()
 	case LiftComState::Stop:
 	{
 		owner_velocity_->SetVelocity({ 0.0f, 0.0f, 0.0f });
-		AudioManager::GetInstance()->Stop(this->GetOwner()->GetType(),this->GetOwner()->GetObjectFier());
+		audio_manager_->Stop(SoundLabel_GimmickLiftMoveSE);
 		break;
 	}
 	case LiftComState::Wait:
@@ -130,8 +132,8 @@ void LiftComponent::Update()
 			break;
 		}
 
-		if (!AudioManager::GetInstance()->GetPlayingState(this->GetOwner()->GetType(), this->GetOwner()->GetObjectFier()))
-			AudioManager::GetInstance()->Play(this->GetOwner()->GetType(), this->GetOwner()->GetObjectFier());
+		if (!audio_manager_->GetPlayingState(SoundLabel_GimmickLiftMoveSE))
+			audio_manager_->Play(SoundLabel_GimmickLiftMoveSE);
 	}
 	}
 

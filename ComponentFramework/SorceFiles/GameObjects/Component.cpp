@@ -11,6 +11,8 @@
 #include "Component.h"
 #include "GameObject.h"
 
+#include "../AudioManager.h"
+
 // コンポーネントのリスト
 const char* Component::ComponentTypeNames[static_cast<int>(TypeID::MAX)] =
 {

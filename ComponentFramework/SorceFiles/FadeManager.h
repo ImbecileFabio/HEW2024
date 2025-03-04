@@ -83,6 +83,8 @@ private:
 	bool is_playing_;		// アニメーションを再生中かどうか
 
 	bool is_loading_ = false;	// 画像が切り替わっているか
+
+	std::unique_ptr<class AudioManager> audio_manager_;
 };
 
 #endif // FADE_MANAGER_H_

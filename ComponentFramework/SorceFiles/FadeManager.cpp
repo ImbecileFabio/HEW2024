@@ -9,11 +9,11 @@
 #include <format>
 
 #include"FadeManager.h"
-
 #include"GameManager.h"
 #include"AudioManager.h"
-#include"Renderer.h"
 #include"TextureManager.h"
+
+#include"Renderer.h"
 
 #include "GameObjects/GameObject.h"
 
@@ -30,6 +30,7 @@ FadeManager::FadeManager(GameManager* _gameManager)
 	, frame_duration_(0.0f)
 {
 	InitBuffers();
+	audio_manager_ = std::make_unique<AudioManager>();
 }
 
 FadeManager::~FadeManager()
@@ -59,7 +60,7 @@ void FadeManager::StartFadeOut(const std::string& _fadeOutTex, std::function<voi
 
 
 
-	AudioManager::GetInstance()->Play(SoundLabel_UISceneChangeSE);
+	audio_manager_->Play(SoundLabel_UISceneChangeSE);
 }
 
 //-----------------------------------------------------------------
@@ -81,10 +82,9 @@ void FadeManager::StartFadeIn(const std::string& _fadeInTex, std::function<void(
 	is_playing_ = true;
     on_complete_ = _onComplete;
 
-	AudioManager::GetInstance()->Play(SoundLabel_UISceneChangeSE);
+	audio_manager_->Play(SoundLabel_UISceneChangeSE);
 }
 
-//-----------------------------------------------------------------
 // @brief XVˆ—
 //-----------------------------------------------------------------
 void FadeManager::Update(float _deltaTime)

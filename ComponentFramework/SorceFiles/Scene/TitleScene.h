@@ -61,7 +61,7 @@ private:
 	Revolution* select_chapter_center;			// 現在の選択チャプター（中央）に表示されるチャプターナンバー
 	Revolution* select_numbers_s_;				// ステージナンバーのSサイズ
 	Revolution* select_numbers_m_left_;			// ステージナンバー（左）
-	Revolution* select_numbers_m_center_;		// ステージナンバー（中）
+	Revolution* select_numbers_m_center_;		// ステージナンバー（中）  
 	Revolution* select_numbers_m_right_;		// ステージナンバー（右）
 	Revolution* select_numbers_w_;				// ステージナンバーのLサイズ
 	int chapter_ = 0;							// 章
