@@ -32,7 +32,8 @@ public:
 		Idle,
 		Move,
 		Fall,
-		OnLift
+		OnLift,
+		OnSmoke
 	};
 
     RobotMoveComponent(GameObject* _owner, int _updateOrder = 20);
