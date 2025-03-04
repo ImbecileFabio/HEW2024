@@ -45,7 +45,7 @@ void Smoke::InitGameObject() {
 
 	auto transform = this->GetTransformComponent();
 	m_smokeSize = transform->GetSize().y;
-	transform->SetSize(transform->GetSize().x, transform->GetSize().y * m_gimmickSize);
+	transform->SetSize(transform->GetSize().x, (transform->GetSize().y * m_gimmickSize));
 
 }
 

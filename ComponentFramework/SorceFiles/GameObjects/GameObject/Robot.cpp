@@ -192,6 +192,8 @@ void Robot::UpdateGameObject(void)
 		sprite_component_->SetFlip(false, false);
 	}
 
+	std::cout << "x : " << velocity_component_->GetVelocity().x << std::endl;
+	std::cout << "y : " << velocity_component_->GetVelocity().y << std::endl;
 
 }
 
@@ -200,13 +202,20 @@ void Robot::UpdateGameObject(void)
 void Robot::OnCollisionEnter(GameObject* _other)
 {
 
+
 	if (state_ == State::Paused) return;
+
+
+	if (gravity_component_->CheckGroundCollision()) {
+
+	}
 
 
 	switch (_other->GetType())
 	{
 	case GameObject::TypeID::Tile:
 	{
+
 		if (push_out_component_)
 		{
 			push_out_component_->ResolveCollision(_other);	// ‰Ÿ‚µo‚µˆ—
@@ -216,6 +225,8 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Lift:
 	{
 		if (robot_state_ == RobotState::OnLift) { return; }	// OnLiftó‘Ô‚È‚çˆ—‚µ‚È‚¢
+
+
 
 		if (push_out_component_)
 		{
@@ -259,23 +270,17 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	}
 	case GameObject::TypeID::Smoke:
 	{
+
 		auto pos = transform_component_->GetPosition();
 		auto smoke = dynamic_cast<Smoke*>(_other);
 		auto smokepipe = dynamic_cast<SmokePipe*>(smoke->GetOwnerObj());
+		auto speed = robot_move_component_->GetSpeed();
+		auto direction = robot_move_component_->GetDirection();
 
 		if (smokepipe->GetBreakFlg())
 		{
-			robot_state_ = RobotState::OnSmoke;
-			if (pos.y <= smoke->GetTransformComponent()->GetPosition().y + smoke->GetTransformComponent()->GetSize().y) {
-				transform_component_->SetPosition({
-					pos.x,
-					pos.y + 10.0f,
-					pos.z
-					});
-			}
-			else {
-				
-			}
+			gravity_component_->SetUseGravityFlg(false);
+			transform_component_->SetPosition(pos.x, pos.y + 10.0f, pos.z);
 		}
 		break;
 	}
@@ -288,7 +293,9 @@ void Robot::OnCollisionEnter(GameObject* _other)
 		break;
 	}
 	default:
-
+	{
 		break;
+
+	}
 	}
 }

@@ -276,7 +276,6 @@ bool RobotMoveComponent::CheckWallCollision()
 	return false;
 }
 
-
 //--------------------------------------------------
 // @brief ’n–ÊŒŸ’m
 // @return ’n–Ê‚ª‚ ‚é: true, ‚È‚¢: false
@@ -359,3 +358,12 @@ float RobotMoveComponent::ComputeStepHeight()
 	return (minStepHeight == MAX_FLOAT ? 0.0f : minStepHeight);
 
 }
+
+
+
+
+
+
+
+
+
