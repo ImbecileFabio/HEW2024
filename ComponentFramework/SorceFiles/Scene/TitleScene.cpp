@@ -543,16 +543,19 @@ void TitleScene::MoveSelect()
 			select_numbers_m_right_->GetComponent<SpriteComponent>()->SetUV({ 3.0f * numberFrameSize.x, 2.0f * numberFrameSize.y });
 			break;
 		case 1:
+			select_images_[8]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			select_numbers_w_->GetComponent<SpriteComponent>()->SetUV({ 3.0f * numberFrameSize.x, 2.0f * numberFrameSize.y });
 			select_numbers_m_left_->GetComponent<SpriteComponent>()->SetUV({ 2.0f * numberFrameSize.x, 2.0f * numberFrameSize.y });
 			select_numbers_m_right_->GetComponent<SpriteComponent>()->SetUV({ 0.0f * numberFrameSize.x, 3.0f * numberFrameSize.y });
 			break;
 		case 2:
+			select_images_[8]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			select_numbers_w_->GetComponent<SpriteComponent>()->SetUV({ 0.0f * numberFrameSize.x, 3.0f * numberFrameSize.y });
 			select_numbers_m_left_->GetComponent<SpriteComponent>()->SetUV({ 3.0f * numberFrameSize.x, 2.0f * numberFrameSize.y });
 			select_numbers_m_right_->GetComponent<SpriteComponent>()->SetUV({ 1.0f * numberFrameSize.x, 3.0f * numberFrameSize.y });
 			break;
 		case 3:
+			select_images_[8]->GetComponent<RenderComponent>()->SetState(RenderComponent::State::notDraw);
 			select_numbers_w_->GetComponent<SpriteComponent>()->SetUV({ 1.0f * numberFrameSize.x, 3.0f * numberFrameSize.y });
 			select_numbers_m_left_->GetComponent<SpriteComponent>()->SetUV({ 0.0f * numberFrameSize.x, 3.0f * numberFrameSize.y });
 			select_numbers_m_right_->GetComponent<SpriteComponent>()->SetUV({ 2.0f * numberFrameSize.x, 2.0f * numberFrameSize.y });
