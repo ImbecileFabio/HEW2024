@@ -11,7 +11,7 @@
 #include "../SceneBase.h"                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
 
 constexpr int gearCounter_1_1 = 3;      // ÉMÉAÇÃälìæêî
-constexpr int hammerCounter_1_1 = 3;	// í@ÇØÇÈè„å¿
+constexpr int hammerCounter_1_1 = 5;	// í@ÇØÇÈè„å¿
 
 #include <array>
 

@@ -23,7 +23,7 @@
 #include "../../GameObjects/Component/ChildrenComponent.h"
 
 constexpr int gearCounter_1_2 = 2;		// ギアの獲得数
-constexpr int hammerCounter_1_2 = 2;	// 叩ける上限
+constexpr int hammerCounter_1_2 = 4;	// 叩ける上限
 //--------------------------------------------------
 // コンストラクタ
 //--------------------------------------------------
