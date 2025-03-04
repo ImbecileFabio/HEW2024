@@ -161,7 +161,7 @@ void Robot::UpdateGameObject(void)
 
 		break;
 	}
-
+	}
 
 
 	// 常に地面判定を行い、重力の有効/無効を切り替える
@@ -190,6 +190,7 @@ void Robot::UpdateGameObject(void)
 	}
 
 }
+
 
 
 void Robot::OnCollisionEnter(GameObject* _other)
