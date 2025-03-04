@@ -161,8 +161,11 @@ void Robot::UpdateGameObject(void)
 
 		break;
 	}
+	case RobotState::OnSmoke:
+	{
+		break;
 	}
-
+	}
 
 	// 常に地面判定を行い、重力の有効/無効を切り替える
 	if (gravity_component_)
@@ -188,6 +191,7 @@ void Robot::UpdateGameObject(void)
 	else if (velocity_component_->GetVelocity().x < 0) {	// 左向き
 		sprite_component_->SetFlip(false, false);
 	}
+
 
 }
 
@@ -256,19 +260,21 @@ void Robot::OnCollisionEnter(GameObject* _other)
 	case GameObject::TypeID::Smoke:
 	{
 		auto pos = transform_component_->GetPosition();
-		auto vel = velocity_component_->GetVelocity();
-
 		auto smoke = dynamic_cast<Smoke*>(_other);
 		auto smokepipe = dynamic_cast<SmokePipe*>(smoke->GetOwnerObj());
 
 		if (smokepipe->GetBreakFlg())
 		{
+			robot_state_ = RobotState::OnSmoke;
 			if (pos.y <= smoke->GetTransformComponent()->GetPosition().y + smoke->GetTransformComponent()->GetSize().y) {
 				transform_component_->SetPosition({
 					pos.x,
 					pos.y + 10.0f,
 					pos.z
 					});
+			}
+			else {
+				
 			}
 		}
 		break;

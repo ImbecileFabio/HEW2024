@@ -23,6 +23,7 @@
 #include "../GameObject.h"
 #include "../GameObject/Robot.h"
 #include "../GameObject/Lift.h"
+#include "../GameObject/Gimmick/Smoke.h"
 
 #include "RigidbodyComponent/VelocityComponent.h"
 #include "ColliderComponent/BoxColliderComponent.h"
@@ -127,7 +128,6 @@ void RobotMoveComponent::Update()
 				owner_velocity_->SetVelocity({ 0.0f, owner_velocity_->GetVelocity().y, 0.0f }); // 横の速度をリセット
 			}
 		}
-
 		// 床の衝突判定
 		else if (!CheckGround()) // 進行方向に地面がない
 		{
@@ -151,8 +151,14 @@ void RobotMoveComponent::Update()
 
 		break;
 	}
+	case RobotMoveState::OnSmoke:
+	{
+
+		break;
+	}
 	}
 }
+
 //--------------------------------------------------
 // ロボットの速度を変更
 //--------------------------------------------------
@@ -164,6 +170,7 @@ float RobotMoveComponent::GetSpeed(void)
 {
 	return speed_;
 }
+
 //--------------------------------------------------
 // ウォールスキャン用ヒットボックスの更新
 //--------------------------------------------------
@@ -202,9 +209,9 @@ void RobotMoveComponent::UpdateStepScanCollider()
 
 	Vector3 offset = { 0.0f, 0.0f, 0.0f };
 	if (direction_.x > 0)
-		offset = {  scan_distance_ / 2, robotSize.y, 0.0f};
+		offset = { scan_distance_ / 2, robotSize.y, 0.0f };
 	else
-		offset = { -scan_distance_ / 2, robotSize.y, 0.0f};
+		offset = { -scan_distance_ / 2, robotSize.y, 0.0f };
 	step_scan_collider_->SetOffset(offset);
 	step_scan_collider_->SetWorldHitBox(robotPos);
 
@@ -284,7 +291,7 @@ bool RobotMoveComponent::CheckGround()
 		{
 		case GameObject::TypeID::Robot:
 		case GameObject::TypeID::Item:
-		case GameObject::TypeID::Smoke:
+		//case GameObject::TypeID::Smoke:
 		case GameObject::TypeID::SmokePipe:
 			continue;
 		}
